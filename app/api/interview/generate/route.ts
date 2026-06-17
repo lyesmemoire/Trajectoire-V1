@@ -1,0 +1,99 @@
+export const dynamic = "force-dynamic";
+
+import { NextRequest, NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { getPersonaPrompt } from "@/lib/interview/personas";
+import { mistralSmallModel } from "@/lib/mistral";
+import { streamText } from "ai";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(10, "1 m"),
+  prefix: "interview_generate",
+});
+
+export async function POST(req: NextRequest) {
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    // ✅ 1. Auth
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    }
+
+    // ✅ 2. Rate Limiting
+    try {
+      const { success } = await ratelimit.limit(user.id);
+      if (!success) {
+        return NextResponse.json(
+          { error: "Too many requests. Please try again later." },
+          { status: 429 },
+        );
+      }
+    } catch (rateLimitError) {
+      console.warn(
+        "[Generate] Rate limiter indisponible:",
+        (rateLimitError as Error).message,
+      );
+    }
+
+    // ✅ 3. Validation
+    const body = await req.json();
+    const { messages, personaId, jobContext, sessionId } = body;
+
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json(
+        { error: "Tableau de messages requis." },
+        { status: 400 },
+      );
+    }
+
+    if (!personaId || !sessionId) {
+      return NextResponse.json(
+        { error: "personaId et sessionId requis." },
+        { status: 400 },
+      );
+    }
+
+    // ✅ 4. Ownership de la session
+    const { data: session, error: sessionError } = await supabase
+      .from("interview_sessions")
+      .select("id, status")
+      .eq("id", sessionId)
+      .eq("user_id", user.id)
+      .single();
+
+    if (sessionError || !session || session.status === "completed") {
+      return NextResponse.json(
+        { error: "Session invalide ou terminée." },
+        { status: 403 },
+      );
+    }
+
+    // ✅ 5. Génération stream via Mistral (Vercel AI SDK)
+    const systemPrompt = getPersonaPrompt(personaId, jobContext);
+
+    const result = await streamText({
+      model: mistralSmallModel,
+      system: systemPrompt,
+      messages,
+      temperature: 0.7,
+    });
+
+    return result.toTextStreamResponse();
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+  }
+}

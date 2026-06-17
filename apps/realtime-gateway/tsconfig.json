@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "composite": true,
+    "declaration": true,
+    "incremental": true,
+    "outDir": "../../dist/gateway",
+    "rootDir": "../..",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo/realtime-gateway.tsbuildinfo"
+  },
+  "include": [
+    "src",
+    "../../src/**/*.ts",
+    "../../core/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/__tests__/**",
+    "node_modules"
+  ]
+}

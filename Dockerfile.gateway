@@ -1,0 +1,35 @@
+FROM node:20-alpine AS base
+WORKDIR /app
+RUN corepack enable
+
+FROM base AS deps
+COPY . .
+RUN pnpm install --frozen-lockfile
+
+FROM deps AS build
+RUN pnpm exec tsc -p apps/realtime-gateway/tsconfig.json
+
+FROM node:20-alpine AS prod
+WORKDIR /app
+RUN corepack enable
+ENV NODE_ENV=production
+
+# pnpm store + root links
+COPY --from=deps /app/node_modules ./node_modules
+
+# gateway deps (là où pnpm les a réellement mises)
+COPY --from=deps /app/apps/realtime-gateway/node_modules ./apps/realtime-gateway/node_modules
+COPY --from=deps /app/apps/realtime-gateway/package.json ./apps/realtime-gateway/package.json
+
+# compiled output
+COPY --from=build /app/dist ./dist
+
+# force CommonJS for files under dist/gateway/apps/realtime-gateway/...
+COPY --from=deps /app/apps/realtime-gateway/package.json \
+  ./dist/gateway/apps/realtime-gateway/package.json
+
+# make Node resolve deps from dist/
+RUN ln -s /app/apps/realtime-gateway/node_modules /app/dist/gateway/apps/realtime-gateway/node_modules
+
+EXPOSE 3000
+CMD ["node", "dist/gateway/apps/realtime-gateway/src/index.js"]

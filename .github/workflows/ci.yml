@@ -1,0 +1,58 @@
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Type-check API
+      run: npm run type-check:tests:api
+    - name: Type-check Gateway
+      run: npm run type-check:tests:gateway
+    - name: Run lint
+      run: npm run lint
+      env:
+        CI: true
+    - name: Run tests
+      run: npm test
+    - name: Run Architecture Invariant Test
+      run: npx vitest run --globals tests/architecture-invariant.test.ts
+    - name: Verify sample trace
+      run: npx tsx scripts/verify.ts artifacts/sample.json
+    - name: Diff threshold enforcement
+      run: npx tsx scripts/diff.ts artifacts/oldSample.json artifacts/newSample.json
+    - name: Run Golden CI Lock
+      run: npm run golden-diff -- "${{ steps.prepare.outputs.oldTrace }}" "${{ steps.prepare.outputs.newTrace
+        }}" --mode=strict
+    - name: Upload Golden Report (JSON + Markdown)
+      uses: actions/upload-artifact@v4
+      with:
+        name: golden-ci-report
+        path: golden-artifacts
+    - if: failure() && github.event_name == 'pull_request'
+      name: Post Golden Drift Comment
+      uses: actions/github-script@v7
+      with:
+        script: "const fs = require('fs');\nconst path = require('path');\nconst mdPath\
+          \ = path.join('golden-artifacts', 'report.md');\nif (!fs.existsSync(mdPath))\
+          \ { console.log('No golden report found.'); return; }\nconst body = fs.readFileSync(mdPath,\
+          \ 'utf8');\nconst marker = '<!-- golden-ci-bot -->';\n// Find existing comment\
+          \ with marker\nconst comments = await github.rest.issues.listComments({\n\
+          \  owner: context.repo.owner,\n  repo: context.repo.repo,\n  issue_number:\
+          \ context.issue.number\n});\nconst existing = comments.data.find(c => c.body\
+          \ && c.body.includes(marker));\nif (existing) {\n  await github.rest.issues.updateComment({\n\
+          \    owner: context.repo.owner,\n    repo: context.repo.repo,\n    comment_id:\
+          \ existing.id,\n    body: `## \xF0\u0178\xA7\xAA Golden CI Drift Report\n\
+          \n${body}`\n  });\n} else {\n  await github.rest.issues.createComment({\n\
+          \    owner: context.repo.owner,\n    repo: context.repo.repo,\n    issue_number:\
+          \ context.issue.number,\n    body: `## \xF0\u0178\xA7\xAA Golden CI Drift\
+          \ Report\n\n${body}`\n  });\n}\n"
+name: CI
+'on':
+  pull_request: {}
+  push: {}

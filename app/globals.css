@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #0B0F14;
+    --bg-surface: #10151C;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --accent-indigo: #4F46E5;
+    --accent-gold: #C8A94B;
+  }
+
+  body {
+    @apply bg-[#0B0F14] text-[#E5E7EB] font-sans antialiased;
+    letter-spacing: 0.01em; /* Cabinet is structured, slightly spaced, not bunched up */
+  }
+
+  /* Typography tweaks */
+  h1, h2, h3, h4, h5, h6 {
+    /* Tracking wide applied via Tailwind classes where needed, but default is standard */
+    line-height: 1.1;
+  }
+
+  p {
+    line-height: 1.8; /* Respiration */
+  }
+}
+
+@layer utilities {
+  .bg-base {
+    background-color: var(--bg-base);
+  }
+  .bg-surface {
+    background-color: var(--bg-surface);
+  }
+  .text-primary {
+    color: var(--text-primary);
+  }
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .accent-indigo {
+    color: var(--accent-indigo);
+  }
+  
+  /* Replace shadows with subtle 1px border */
+  .cabinet-card {
+    @apply bg-[#10151C] border border-white/5 rounded-none; /* Sharp edges or very subtle rounding for cabinet */
+    box-shadow: none !important; 
+  }
+}
+
+/* Custom Scrollbar Premium - Very minimal */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Global Transition Override for everything to be sober */
+* {
+  transition-duration: 150ms !important;
+  transition-timing-function: linear !important;
+}
