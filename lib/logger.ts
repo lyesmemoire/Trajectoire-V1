@@ -1,54 +1,53 @@
-type LogLevel = "INFO" | "WARN" | "ERROR";
+import { envServer } from "../lib/env.server.js";
+import pino from 'pino';
 
-interface LogContext {
-  requestId?: string;
+const isDev = envServer.NODE_ENV !== 'production';
+
+export const logger = pino({
+  level: envServer.LOG_LEVEL || (isDev ? 'debug' : 'info'),
+  ...(isDev && {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'pid,hostname',
+      },
+    },
+  }),
+  formatters: {
+    level: (label) => ({ level: label }),
+  },
+  base: {
+    service: 'trajectoire',
+    env: envServer.NODE_ENV || 'development',
+  },
+});
+
+export type LogContext = {
+  sessionId?: string;
   userId?: string;
-  route?: string;
+  interviewId?: string;
+  munitionId?: string;
+  component?: string;
+  duration?: number;
   [key: string]: any;
-}
+};
 
-function formatLog(
-  level: LogLevel,
-  prefix: string,
-  message: string,
-  context?: LogContext
-) {
-  return {
-    level,
-    prefix,
-    message,
-    context: context || {},
-    timestamp: new Date().toISOString(),
-  };
-}
+export const createChildLogger = (context: LogContext) => {
+  return logger.child(context);
+};
 
+// Legacy compatibility wrappers
 export function logInfo(prefix: string, message: string, context?: LogContext) {
-  console.log(formatLog("INFO", prefix, message, context));
+  logger.info({ ...context, prefix }, message);
 }
 
 export function logWarn(prefix: string, message: string, context?: LogContext) {
-  console.warn(formatLog("WARN", prefix, message, context));
+  logger.warn({ ...context, prefix }, message);
 }
 
-export function logError(
-  prefix: string,
-  error: any,
-  context?: LogContext
-) {
-  console.error(
-    formatLog("ERROR", prefix, error?.message || "Unknown error", {
-      ...context,
-      stack:
-        process.env.NODE_ENV === "development"
-          ? error?.stack
-          : undefined,
-    })
-  );
+export function logError(prefix: string, error: any, context?: LogContext) {
+  logger.error({ ...context, prefix, err: error }, error?.message || "Unknown error");
 }
 
-export const logger = {
-  info: logInfo,
-  warn: logWarn,
-  error: logError,
-  child: (context?: any) => logger,
-};

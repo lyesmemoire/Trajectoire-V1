@@ -1,3 +1,4 @@
+import { envServer } from "../../../lib/env.server.js";
 /**
  * stt.ts — Wrapper Deepgram Live Transcription (Speech-to-Text)
  * Correction B6 :
@@ -40,7 +41,7 @@ export class SttSession {
    * Doit être appelé une seule fois par session.
    */
   async open(): Promise<void> {
-    const apiKey = process.env.DEEPGRAM_API_KEY;
+    const apiKey = envServer.DEEPGRAM_API_KEY;
     if (!apiKey) throw new Error("DEEPGRAM_API_KEY manquant");
 
     const deepgram = createClient(apiKey);

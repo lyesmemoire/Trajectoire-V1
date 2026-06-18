@@ -150,14 +150,14 @@ export async function handleVoiceConnectionV2(
       targetRole: input.targetRole ?? "generic",
       startedAt: Date.now(),
       transcript: []
-    });
+    }).catch(console.error);
 
     const opening = await openingTurn(session.state, tts);
     deps.sessions.updateSession(sessionId, opening.state);
 
     const existing = await repository.get(sessionId);
     if (existing) {
-      void repository.update(sessionId, { transcript: [...existing.transcript, `AI: ${opening.question}`] });
+      repository.update(sessionId, { transcript: [...existing.transcript, `AI: ${opening.question}`] }).catch(console.error);
     }
 
     sendJson({ type: "ready", sessionId, question: opening.question });
@@ -182,7 +182,7 @@ export async function handleVoiceConnectionV2(
 
         const existing = await repository.get(sessionId);
         if (existing && t.trim()) {
-          void repository.update(sessionId, { transcript: [...existing.transcript, `User: ${t.trim()}`] });
+          repository.update(sessionId, { transcript: [...existing.transcript, `User: ${t.trim()}`] }).catch(console.error);
         }
       } catch (e) {
         console.error("Error in onFinalTranscript:", e);
@@ -227,7 +227,7 @@ export async function handleVoiceConnectionV2(
 
     const existing = await repository.get(sessionId);
     if (existing && turn.nextQuestion) {
-      void repository.update(sessionId, { transcript: [...existing.transcript, `AI: ${turn.nextQuestion}`] });
+      repository.update(sessionId, { transcript: [...existing.transcript, `AI: ${turn.nextQuestion}`] }).catch(console.error);
     }
 
     deps.sessions.recordTurn(sessionId, {
@@ -300,10 +300,10 @@ export async function handleVoiceConnectionV2(
   ws.on("close", () => {
     stt.stop();
     log("session_close", { sessionId });
-    void repository.update(sessionId, { endedAt: Date.now() });
+    repository.update(sessionId, { endedAt: Date.now() }).catch(console.error);
 
     // Scoring async post-session (fire and forget)
-    void finalizeInterview(sessionId, log);
+    finalizeInterview(sessionId, log).catch(console.error);
   });
 
   return sessionId;

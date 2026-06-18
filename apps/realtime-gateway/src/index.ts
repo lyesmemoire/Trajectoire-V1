@@ -1,3 +1,4 @@
+import { envServer } from "../../../lib/env.server.js";
 import { createHttpServer } from "./server/http.js";
 import { registerSignaling } from "./server/signaling.js";
 import { registerVoiceWs } from "./server/ws.voice.js";
@@ -15,7 +16,7 @@ async function bootstrap() {
   await registerBillingRoutes(app);
   await registerEngineRoutes(app);
 
-  const port = Number(process.env.PORT || 3000);
+  const port = Number(envServer.PORT || 3000);
   await app.listen({ host: "0.0.0.0", port });
   logger.info({ port }, "Realtime gateway started");
 }

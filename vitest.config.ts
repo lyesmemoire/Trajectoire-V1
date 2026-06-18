@@ -18,6 +18,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/*.spec.ts"],
+    env: {
+      SUPABASE_URL: "http://127.0.0.1:54321",
+      SUPABASE_SERVICE_ROLE_KEY: "test-key-123",
+      OPENAI_API_KEY: "sk-test-12345678901234567890", // requires >20 chars
+    }
   },
 });

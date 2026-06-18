@@ -1,3 +1,4 @@
+import { envServer } from "../../../../lib/env.server.js";
 /**
  * Rate Limiter & Session Guards — Upstash Redis
  * 
@@ -13,8 +14,8 @@ import { Ratelimit } from "@upstash/ratelimit";
 
 // ── Redis Client ──────────────────────────────────────────────
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: envServer.UPSTASH_REDIS_REST_URL,
+  token: envServer.UPSTASH_REDIS_REST_TOKEN,
 });
 
 // ── HTTP Rate Limiters (3 tiers) ──────────────────────────────
@@ -120,7 +121,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
   console.warn(message);
 
   // Slack webhook (if configured)
-  const slackUrl = process.env.SLACK_ALERT_WEBHOOK_URL;
+  const slackUrl = envServer.SLACK_ALERT_WEBHOOK_URL;
   if (slackUrl) {
     try {
       await fetch(slackUrl, {
@@ -138,14 +139,14 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
   }
 
   // Email fallback (if configured, via simple SMTP or Resend)
-  const emailAlertTo = process.env.ALERT_EMAIL_TO;
-  if (emailAlertTo && process.env.RESEND_API_KEY) {
+  const emailAlertTo = envServer.ALERT_EMAIL_TO;
+  if (emailAlertTo && envServer.RESEND_API_KEY) {
     try {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          Authorization: `Bearer ${envServer.RESEND_API_KEY}`,
         },
         body: JSON.stringify({
           from: "alerts@trajectoire.app",

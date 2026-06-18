@@ -29,7 +29,13 @@ export default function DashboardPage() {
         supabase.auth.getUser()
       ]);
       
-      setInterviews(data);
+      const mappedInterviews: InterviewSummary[] = data.map((d: any) => ({
+        sessionId: d.id,
+        startedAt: new Date(d.created_at).getTime(),
+        createdAt: d.created_at,
+        score: d.analysis ? { overall: d.analysis.global_score } : undefined,
+      }));
+      setInterviews(mappedInterviews);
       const userPlan = authData?.user?.user_metadata?.plan;
       if (userPlan) setPlan(userPlan);
     } catch (err: unknown) {

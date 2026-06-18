@@ -7,6 +7,7 @@ import type { Clock } from "./clock.js";
 import type { PerceptionUX } from "../core/simulation/perception-ux.js";
 import type { Rng } from "./rng.js";
 import { buildTurnPlan, type TurnPlan } from "./turn-timing.js";
+import { createChildLogger } from "../../../../../lib/logger";
 
 export type VoiceInstruction =
   | { type: "wait"; ms: number }
@@ -102,6 +103,13 @@ export class VoiceRuntime {
     private readonly sessionId: string
   ) {}
 
+  private get log() {
+    return createChildLogger({
+      sessionId: this.sessionId,
+      component: 'voice-runtime'
+    });
+  }
+
   start(): void {
     this.binding.onEvent(async (event) => {
       // Guard: ne rien traiter si le runtime est disposé
@@ -111,6 +119,10 @@ export class VoiceRuntime {
         
         // 1. Interrompre le tour précédent (Barge-in)
         if (this.currentTurn) {
+          this.log.warn({ 
+            event: 'barge_in_triggered',
+            stopReason: 'superseded_by_new_transcript' 
+          });
           this.currentTurn.abort(new Error("superseded_by_new_transcript"));
         }
         
@@ -171,7 +183,7 @@ export class VoiceRuntime {
               this.isSpeaking = false;
             }
           } else {
-            console.error("Runtime error:", err);
+            this.log.error({ err, event: 'runtime_error' });
           }
         }
       }

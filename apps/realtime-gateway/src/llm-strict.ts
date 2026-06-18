@@ -1,3 +1,4 @@
+import { envServer } from "../../../lib/env.server.js";
 /**
  * llm-strict.ts — Appels LLM robustes (OpenAI / Mistral)
  * Fonctionnalités existantes conservées :
@@ -18,6 +19,7 @@
  * Coût et occupation mémoire non annulables
  */
 import { type ZodSchema } from "zod";
+import { captureError } from "../../../lib/sentry-context.js";
 
 // ── Configuration ─────────────────────────────────────────────────────────
 
@@ -218,8 +220,8 @@ async function fetchLLM(
   const isOpenAI = provider === "openai";
 
   const apiKey = isOpenAI
-    ? process.env.OPENAI_API_KEY
-    : process.env.MISTRAL_API_KEY;
+    ? envServer.OPENAI_API_KEY
+    : envServer.MISTRAL_API_KEY;
 
   if (!apiKey) {
     throw new Error(`Clé API manquante pour le provider: ${provider}`);
@@ -227,8 +229,8 @@ async function fetchLLM(
 
   const url = isOpenAI ? OPENAI_API_URL : MISTRAL_API_URL;
   const model = isOpenAI
-    ? (process.env.OPENAI_MODEL ?? "gpt-4o-mini")
-    : (process.env.MISTRAL_MODEL ?? "mistral-small-latest");
+    ? (envServer.OPENAI_MODEL ?? "gpt-4o-mini")
+    : (envServer.MISTRAL_MODEL ?? "mistral-small-latest");
 
   const response = await fetch(url, {
     method: "POST",
@@ -248,9 +250,11 @@ async function fetchLLM(
 
   if (!response.ok) {
     const body = await response.text().catch(() => "");
-    throw new Error(
+    const err = new Error(
       `${provider} API error: ${response.status} ${response.statusText} — ${body.slice(0, 300)}`
     );
+    captureError(err, { component: 'llm-strict', provider, model, status: response.status });
+    throw err;
   }
 
   return response.json() as Promise<{ choices: Array<{ message: { content: string } }> }>;

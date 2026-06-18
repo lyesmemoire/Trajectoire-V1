@@ -1,16 +1,17 @@
+import { envServer } from "../../../../../lib/env.server.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import Stripe from "stripe";
 import { verifyVoiceToken } from "../auth.js";
 import { createClient } from "@supabase/supabase-js";
 
 export async function registerBillingRoutes(app: FastifyInstance) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  const stripe = new Stripe(envServer.STRIPE_SECRET_KEY, {
     apiVersion: "2025-08-27.basil",
   });
 
   const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    envServer.SUPABASE_URL,
+    envServer.SUPABASE_SERVICE_ROLE_KEY,
   );
 
   app.post("/api/create-checkout-session", async (request, reply) => {
@@ -25,7 +26,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
       return reply.status(401).send({ error: "Unauthorized" });
     }
 
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const frontendUrl = envServer.FRONTEND_URL || "http://localhost:3000";
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -34,7 +35,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
       ...(user.email ? { customer_email: user.email as string } : {}),
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_PRO_ID!,
+          price: envServer.STRIPE_PRICE_PRO_ID,
           quantity: 1,
         },
       ],
@@ -70,7 +71,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
       return reply.status(400).send({ error: "No active subscription found." });
     }
 
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const frontendUrl = envServer.FRONTEND_URL || "http://localhost:3000";
 
     const session = await stripe.billingPortal.sessions.create({
       customer: usage.stripe_customer_id,
@@ -105,7 +106,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
           event = stripe.webhooks.constructEvent(
             request.body as Buffer,
             sig,
-            process.env.STRIPE_WEBHOOK_SECRET!,
+            envServer.STRIPE_WEBHOOK_SECRET,
           );
         } catch (err: any) {
           return reply.status(400).send(`Webhook Error: ${err.message}`);

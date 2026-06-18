@@ -9,10 +9,17 @@ import { initInterviewV3, nextV3Step, InterviewStateV3 } from "../core/v3/interv
 import { generateExecutiveImpression } from "../core/v3/executive-impression.js";
 import { simulateDecision } from "../core/v3/decision-simulator.js";
 import { createClient } from "@supabase/supabase-js";
+import { createChildLogger } from "../../../../../lib/logger.js";
+import { envServer } from "../../../../../lib/env.server.js";
+import { withTimeout, CircuitBreaker, SessionRateLimiter } from "../../../../../lib/resilience.js";
+import { captureError, setSentryContext } from "../../../../../lib/sentry-context.js";
+
+const redisCircuit = new CircuitBreaker({ failureThreshold: 3, resetTimeoutMs: 30000 });
+const intentRateLimiter = new SessionRateLimiter(500, 1);
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  envServer.SUPABASE_URL,
+  envServer.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 export interface VoiceConnectionV3Deps {
@@ -53,13 +60,27 @@ export async function handleVoiceConnectionV3(
   const connIp = (input as any).ip || "unknown";
   const connUserId = input.userId || "anon";
 
+  const log = createChildLogger({
+    sessionId: input.sessionId,
+    userId: input.userId,
+    component: 'voice-websocket-v3'
+  });
+
+  log.info({ event: 'ws_connected', ip: connIp });
+
+  setSentryContext({ sessionId: input.sessionId, userId: input.userId, component: 'voice-websocket-v3' });
+
   // ── 0. WebSocket Session Guards (Redis) ──
-  let sessionAcquired = false;
+  let sessionAcquired = true;
   try {
     const { acquireWsSession } = await import("../../server/rate-limiter.js");
-    sessionAcquired = await acquireWsSession(connUserId, connIp);
-  } catch {
-    // Redis unavailable — allow through (graceful degradation)
+    sessionAcquired = await redisCircuit.execute(
+      () => withTimeout(acquireWsSession(connUserId, connIp), 500),
+      true
+    );
+  } catch (err) {
+    log.warn({ event: 'redis_circuit_breaker_open', err });
+    captureError(err, { component: 'voice-websocket-v3', event: 'redis_acquire_session', sessionId: input.sessionId });
     sessionAcquired = true;
   }
 
@@ -77,12 +98,20 @@ export async function handleVoiceConnectionV3(
 
   const { state: initialState, question: initialQuestion } = initInterviewV3(initOptions);
 
-  // 1. DB Kill Switch
-  const { data: settings } = await supabase
-    .from("engine_settings")
-    .select("engine_enabled")
-    .eq("id", "default")
-    .single();
+  // 1. DB Kill Switch (with timeout + fail-open)
+  let settings: any = null;
+  try {
+    const res = await withTimeout(
+      supabase.from("engine_settings").select("engine_enabled").eq("id", "default").single(),
+      3000,
+      { data: { engine_enabled: true }, error: null, count: null, status: 200, statusText: "OK" }
+    );
+    if (res.error) throw res.error;
+    settings = res.data;
+  } catch (err) {
+    log.warn({ event: 'db_kill_switch_failed_or_timeout', fallback: 'engine_enabled=true', err });
+    settings = { engine_enabled: true };
+  }
 
   if (settings && settings.engine_enabled === false) {
     ws.send(JSON.stringify({
@@ -160,6 +189,13 @@ export async function handleVoiceConnectionV3(
       safeSend({ type: "transcript", text: transcript, final: true });
 
       if (processing) return;
+
+      // Anti-spam : max 1 intent detection / 500ms
+      if (!intentRateLimiter.consume(session.id)) {
+        log.warn({ event: 'rate_limit_exceeded_intent', sessionId: session.id });
+        return;
+      }
+
       processing = true;
 
       const t0 = now();
@@ -172,8 +208,10 @@ export async function handleVoiceConnectionV3(
         // ── LLM success → reset error counter ──
         try {
           const { resetLlmErrors } = await import("../../server/rate-limiter.js");
-          await resetLlmErrors(session.id);
-        } catch { /* noop */ }
+          await redisCircuit.execute(() => withTimeout(resetLlmErrors(session.id), 500));
+        } catch (err) {
+          log.warn({ event: 'redis_reset_llm_errors_failed', err });
+        }
 
         session.state = result.updatedState;
         
@@ -253,34 +291,42 @@ export async function handleVoiceConnectionV3(
             consistencyGap: result.finalScores?.consistencyGap || 0
           });
 
-          await repository.update(session.id, {
-            endedAt: session.endedAt,
-            transcript: session.turns,
-            score: {
-              finalExecutiveScore: FinalExecutiveScore,
-              integrityRiskIndex: state.integrityRiskIndex,
-              integrityRiskLevel: result.finalScores?.integrityRisk,
-              interviewScore: FinalExecutiveScore,
-              communicationScore: avgComm,
-              technicalDepthScore: avgTech,
-              quantificationDepthScore: avgQuant,
-              leadershipCompositeScore: leadershipComposite,
-              consistencyGap: result.finalScores?.consistencyGap,
-              executiveImpression,
-              decisionSimulation,
-              phase1Scores: state.phase1Scores,
-              phase2Scores: state.phase2Scores,
-              phase3Scores: state.phase3Scores,
-              phase4Scores: state.phase4Scores,
-              integrityRiskTimeline: state.integrityRiskTimeline,
-              pressureTimeline: state.pressureTimeline,
-              metadata: {
-                engineVersion: "v3_stable_realistic",
-                model: "gpt-4o-mini", // Or whatever standard we output
-                timestamp: new Date().toISOString()
-              }
-            }
-          });
+          try {
+            await withTimeout(
+              repository.update(session.id, {
+                endedAt: session.endedAt,
+                transcript: session.turns,
+                score: {
+                  finalExecutiveScore: FinalExecutiveScore,
+                  integrityRiskIndex: state.integrityRiskIndex,
+                  integrityRiskLevel: result.finalScores?.integrityRisk,
+                  interviewScore: FinalExecutiveScore,
+                  communicationScore: avgComm,
+                  technicalDepthScore: avgTech,
+                  quantificationDepthScore: avgQuant,
+                  leadershipCompositeScore: leadershipComposite,
+                  consistencyGap: result.finalScores?.consistencyGap,
+                  executiveImpression,
+                  decisionSimulation,
+                  phase1Scores: state.phase1Scores,
+                  phase2Scores: state.phase2Scores,
+                  phase3Scores: state.phase3Scores,
+                  phase4Scores: state.phase4Scores,
+                  integrityRiskTimeline: state.integrityRiskTimeline,
+                  pressureTimeline: state.pressureTimeline,
+                  metadata: {
+                    engineVersion: "v3_stable_realistic",
+                    model: "gpt-4o-mini",
+                    timestamp: new Date().toISOString()
+                  }
+                }
+              }),
+              5000
+            );
+          } catch (dbErr) {
+            log.error({ err: dbErr, event: 'db_final_save_failed' });
+            captureError(dbErr, { component: 'voice-websocket-v3', event: 'db_final_save_failed', sessionId: session.id });
+          }
 
           safeSend({
             type: "summary",
@@ -296,8 +342,8 @@ export async function handleVoiceConnectionV3(
           try {
             await supabase.from("engine_health_log").insert({
               interview_id: session.id,
-              engine_version: "v3_stable_realistic", // Locked after 30 E2E tests
-              engine_instance_id: process.env.RENDER_INSTANCE_ID || "local",
+              engine_version: "v3_stable_realistic",
+              engine_instance_id: envServer.RENDER_INSTANCE_ID || "local",
               final_executive_score: FinalExecutiveScore,
               integrity_risk_index: state.integrityRiskIndex,
               max_pressure_level: state.maxPressureLevel || 1,
@@ -312,12 +358,13 @@ export async function handleVoiceConnectionV3(
                 phase3_turns: state.phase3Scores ? Object.keys(state.phase3Scores).length : 0,
                 phase4_turns: state.phase4Scores ? Object.keys(state.phase4Scores).length : 0
               },
-              job_category: "Executive", // We would pull this from Context if we had it mapped
-              candidate_level: "C-Level", // Placeholder until we extract from CV
+              job_category: "Executive",
+              candidate_level: "C-Level",
               role_target: session.targetRole || "Unknown"
             });
           } catch (logErr) {
-            console.error("Failed to insert health log", logErr);
+            log.error({ err: logErr, event: 'db_health_log_failed' });
+            captureError(logErr, { component: 'voice-websocket-v3', event: 'db_health_log_failed', sessionId: session.id });
           }
           
           setTimeout(() => ws.close(), 1000);
@@ -325,11 +372,14 @@ export async function handleVoiceConnectionV3(
 
       } catch (err) {
         // ── LLM Fail Safe: track consecutive errors ──
+        captureError(err, { component: 'voice-websocket-v3', event: 'llm_turn_failed', sessionId: session.id });
         let shouldKill = false;
         try {
           const { trackLlmError } = await import("../../server/rate-limiter.js");
-          shouldKill = await trackLlmError(session.id);
-        } catch { /* noop */ }
+          shouldKill = await redisCircuit.execute(() => withTimeout(trackLlmError(session.id), 500), false);
+        } catch (err2) {
+          log.warn({ event: 'redis_track_llm_error_failed', err: err2 });
+        }
 
         if (shouldKill) {
           safeSend({ type: "error", message: "Technical interruption. Please restart the session." });
@@ -394,8 +444,10 @@ export async function handleVoiceConnectionV3(
     // Release Redis session lock
     try {
       const { releaseWsSession } = await import("../../server/rate-limiter.js");
-      await releaseWsSession(connUserId, connIp);
-    } catch { /* noop */ }
+      await redisCircuit.execute(() => withTimeout(releaseWsSession(connUserId, connIp), 500));
+    } catch (err) {
+      log.warn({ event: 'redis_release_failed', err });
+    }
+    intentRateLimiter.cleanup(session.id);
   });
 }
-

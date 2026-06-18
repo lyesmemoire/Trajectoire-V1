@@ -1,3 +1,4 @@
+import { envServer } from "../../../lib/env.server.js";
 /**
  * gateway.ts — Realtime Gateway (Fastify + WebSocket)
  *
@@ -24,19 +25,19 @@ import {
 // Fastify setup
 // ────────────────────────────────────────────────────────────────────────────
 
-const isDev = process.env.NODE_ENV !== "production";
+const isDev = envServer.NODE_ENV !== "production";
 
 const app = Fastify({
   logger: isDev
     ? {
-        level: process.env.LOG_LEVEL ?? "info",
+        level: envServer.LOG_LEVEL ?? "info",
         transport: {
           target: "pino-pretty",
           options: { colorize: true },
         },
       }
     : {
-        level: process.env.LOG_LEVEL ?? "info",
+        level: envServer.LOG_LEVEL ?? "info",
       },
 });
 
@@ -97,7 +98,7 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
           return;
         }
 
-        const bypass = process.env.STRESS_TEST_BYPASS === "true" && msg.token === "stress-test-bypass";
+        const bypass = envServer.STRESS_TEST_BYPASS === "true" && msg.token === "stress-test-bypass";
         const payload = bypass ? null : await verifyToken(msg.token);
         if (!bypass && !payload) throw new Error("Invalid token");
 
@@ -168,8 +169,8 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
 // Server start
 // ────────────────────────────────────────────────────────────────────────────
 
-const PORT = Number(process.env.PORT ?? 3001);
-const HOST = process.env.HOST ?? "0.0.0.0";
+const PORT = Number(envServer.PORT ?? 3001);
+const HOST = envServer.HOST ?? "0.0.0.0";
 
 try {
   await app.listen({ port: PORT, host: HOST });

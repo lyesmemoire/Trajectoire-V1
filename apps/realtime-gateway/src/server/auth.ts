@@ -1,3 +1,4 @@
+import { envServer } from "../../../../lib/env.server.js";
 import { createClient } from "@supabase/supabase-js";
 
 export interface VoiceTokenPayload {
@@ -6,8 +7,8 @@ export interface VoiceTokenPayload {
 }
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  envServer.SUPABASE_URL,
+  envServer.SUPABASE_SERVICE_ROLE_KEY
 );
 
 export async function verifyVoiceToken(token?: string): Promise<VoiceTokenPayload | null> {

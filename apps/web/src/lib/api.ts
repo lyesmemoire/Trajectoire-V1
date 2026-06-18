@@ -145,3 +145,36 @@ export async function fetchInterviews(): Promise<
 
   return res.json();
 }
+
+export async function fetchInterview(sessionId: string): Promise<any> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/interview/${sessionId}`, { headers });
+  if (!res.ok) {
+    throw new Error(`fetchInterview failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function createCheckoutSession(): Promise<{ url: string }> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/stripe/checkout`, {
+    method: "POST",
+    headers,
+  });
+  if (!res.ok) {
+    throw new Error(`createCheckoutSession failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function createPortalSession(): Promise<{ url: string }> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/stripe/portal`, {
+    method: "POST",
+    headers,
+  });
+  if (!res.ok) {
+    throw new Error(`createPortalSession failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}

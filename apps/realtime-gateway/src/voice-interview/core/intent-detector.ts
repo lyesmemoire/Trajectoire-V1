@@ -4,6 +4,7 @@
  * PURE, sans LLM. Repère des intentions de pilotage de l'entretien dans le
  * transcript de l'utilisateur (FR principalement), avant toute évaluation.
  */
+import { createChildLogger } from "../../../../../lib/logger.js";
 
 export type UserCommand = "repeat" | "clarify" | "next" | "stop" | "slower";
 
@@ -67,15 +68,29 @@ export function detectIntent(transcript: string): UserIntent {
   // Une commande de pilotage est typiquement brève (<= 10 mots).
   const looksLikeCommand = wordCount <= 10;
 
+  const log = createChildLogger({ component: 'intent-detector' });
+  let result: UserIntent = { kind: "answer", text: transcript.trim() };
+
   for (const { intent, markers } of PATTERNS) {
     if (markers.some((m) => text.includes(m))) {
       // "stop" et "repeat"/"clarify" explicites sont fiables même un peu plus longs ;
       // pour les autres on exige une phrase courte.
       if (intent === "stop" || intent === "repeat" || intent === "clarify") {
-        return { kind: "command", action: intent };
+        result = { kind: "command", action: intent };
+        break;
       }
-      if (looksLikeCommand) return { kind: "command", action: intent };
+      if (looksLikeCommand) {
+        result = { kind: "command", action: intent };
+        break;
+      }
     }
   }
-  return { kind: "answer", text: transcript.trim() };
+  
+  log.info({ 
+    event: 'intent_detected', 
+    intent: result.kind === "command" ? result.action : result.kind,
+    confidence: result.kind === "answer" ? "low" : "high"
+  });
+
+  return result;
 }

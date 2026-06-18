@@ -1,9 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 import type { InterviewRecord, InterviewRepository } from "./interview-repository.js";
+import { envServer } from "../../../../../lib/env.server.js";
+import { captureError } from "../../../../../lib/sentry-context.js";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  envServer.SUPABASE_URL,
+  envServer.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 export class SupabaseInterviewRepository implements InterviewRepository {
@@ -20,8 +22,10 @@ export class SupabaseInterviewRepository implements InterviewRepository {
       premium_report: record.premiumReport ?? null,
     });
     if (error) {
+      const err = new Error("Database write failed");
+      captureError(err, { component: 'supabase', table: 'interviews', operation: 'create', details: error.message });
       console.error(error);
-      throw new Error("Database write failed");
+      throw err;
     }
   }
 
@@ -38,8 +42,10 @@ export class SupabaseInterviewRepository implements InterviewRepository {
       .eq("session_id", sessionId);
 
     if (error) {
+      const err = new Error("Database write failed");
+      captureError(err, { component: 'supabase', table: 'interviews', operation: 'update', sessionId, details: error.message });
       console.error(error);
-      throw new Error("Database write failed");
+      throw err;
     }
   }
 
@@ -51,8 +57,10 @@ export class SupabaseInterviewRepository implements InterviewRepository {
       .single();
 
     if (error && error.code !== 'PGRST116') { // PGRST116 is 'row not found', acceptable for get
+      const err = new Error("Database read failed");
+      captureError(err, { component: 'supabase', table: 'interviews', operation: 'get', sessionId, details: error.message });
       console.error(error);
-      throw new Error("Database read failed");
+      throw err;
     }
 
     if (!data) return null;

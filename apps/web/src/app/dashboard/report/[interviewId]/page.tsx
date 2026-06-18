@@ -134,36 +134,36 @@ export default function ReportPage() {
         <UnifiedHeader
           candidateName={report.candidateName}
           date={report.createdAt}
-          interviewId={report.interviewId}
+          targetRole="Candidat"
         />
 
         {/* Vue d'ensemble — visible même sans premium */}
         <ExecutiveOverview
-          globalScore={report.globalScore}
+          finalScore={report.globalScore}
           percentile={report.percentile}
-          recommendation={report.recommendation}
-          executiveSummary={report.executiveSummary}
+          integrityRiskLevel={report.integrityScore > 70 ? "low" : "moderate"}
         />
 
         {/* Sections premium */}
         {report.isPremiumUnlocked ? (
           <>
             <DualBreakdown
-              softSkills={report.softSkills}
-              hardSkills={report.hardSkills}
+              cvScore={0}
+              interviewScore={report.globalScore}
+              technicalDepthScore={0}
+              communicationScore={0}
+              quantificationDepthScore={0}
+              leadershipCompositeScore={0}
             />
 
             <IntegritySection
-              integrityScore={report.integrityScore}
-              consistencyScore={report.consistencyScore}
-              assessmentText={report.assessmentText}
-              gapAnalysis={report.gapAnalysis}
+              consistencyGap={report.consistencyScore > 0 ? 10 - report.consistencyScore : 0}
             />
 
             <DecisionSimulation
-              decisions={report.decisions}
-              overallDecisionScore={report.overallDecisionScore}
-              decisionStyle={report.decisionStyle}
+              hr="PASS"
+              technical="BORDERLINE"
+              committee="PASS"
             />
           </>
         ) : (

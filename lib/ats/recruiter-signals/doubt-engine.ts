@@ -2,6 +2,8 @@ import { mistralModel } from "@/lib/mistral";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { PressureMunition, PressureMunitionSchema } from "../contracts/munitions";
+import { createChildLogger } from "../../logger";
+import { captureError } from "../../sentry-context";
 
 /**
  * 👔 Moteur de Doute Recruteur
@@ -25,7 +27,10 @@ export async function generateRecruiterDoubts(
   
   CV: ${cvText}`;
 
+  const log = createChildLogger({ component: 'doubt-engine' });
+
   for (let attempt = 1; attempt <= 2; attempt++) {
+    const start = Date.now();
     try {
       const { object } = await generateObject({
         model: mistralModel,
@@ -37,13 +42,21 @@ export async function generateRecruiterDoubts(
         prompt: PROMPT,
       });
 
+      log.info({ 
+        event: 'llm_munitions_generated',
+        duration: Date.now() - start,
+        count: object.doubts.length,
+        attempt
+      });
+
       return object.doubts;
     } catch (error) {
       if (attempt === 2) {
-        console.error("[Doubt Engine] Extraction failed after retry", error);
+        log.error({ err: error, event: 'llm_extraction_failed_fatal', duration: Date.now() - start });
+        captureError(error, { component: 'doubt-engine', event: 'llm_extraction_failed_fatal', duration: Date.now() - start });
         return [];
       }
-      console.warn("[Doubt Engine] Extraction failed, retrying", attempt);
+      log.warn({ event: 'llm_extraction_retry', attempt, duration: Date.now() - start });
     }
   }
   return [];
