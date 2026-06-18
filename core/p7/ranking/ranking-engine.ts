@@ -1,7 +1,7 @@
-import { CandidateEvaluation } from "../evaluation-contract";
-import { GlobalRankingReport, GlobalRankingEntry } from "./ranking-contract";
-import { normalizeScores } from "./normalizer";
-import { computeCohortStats, labelCohort } from "./cohort-analyzer";
+import { CandidateEvaluation } from "../evaluation-contract.js";
+import { GlobalRankingReport, GlobalRankingEntry } from "./ranking-contract.js";
+import { normalizeScores } from "./normalizer.js";
+import { computeCohortStats, labelCohort } from "./cohort-analyzer.js";
 
 /**
  * Cross-session ranking engine.

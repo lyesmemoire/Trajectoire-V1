@@ -1,4 +1,4 @@
-import { Emotion } from "../execution-contract";
+import { Emotion } from "../execution-contract.js";
 
 /**
  * Represents a decision emitted by the P4 Control Plane (Governor).

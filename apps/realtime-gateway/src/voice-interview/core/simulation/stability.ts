@@ -8,8 +8,8 @@
  * PURE, déterministe.
  */
 
-import type { SimulationState } from "./simulation-state";
-import type { RecruiterMindState } from "./recruiter-mind";
+import type { SimulationState } from "./simulation-state.js";
+import type { RecruiterMindState } from "./recruiter-mind.js";
 
 export interface StabilityViolation {
   invariant: string;

@@ -5,9 +5,9 @@
  * moteur de flux la parcourt dynamiquement (avec retours arrière possibles).
  */
 
-import type { CandidateProfile } from "./candidate-profile";
-import type { InterviewerPersona } from "./personas";
-import type { QuestionCategory } from "./question-bank";
+import type { CandidateProfile } from "./candidate-profile.js";
+import type { InterviewerPersona } from "./personas.js";
+import type { QuestionCategory } from "./question-bank.js";
 
 export type V2Phase =
   | "warmup"

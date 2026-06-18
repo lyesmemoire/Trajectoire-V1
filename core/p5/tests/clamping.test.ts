@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { reduceMind } from "../reduceMind";
-import { MindState } from "../execution-contract";
+import { reduceMind } from "../reduceMind.js";
+import { MindState } from "../execution-contract.js";
 
 describe("reduceMind - Clamping", () => {
   const getInitialState = (): MindState => ({

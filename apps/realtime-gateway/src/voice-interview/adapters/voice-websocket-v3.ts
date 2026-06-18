@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { VoiceWsLike, VoiceServerMessage } from "./voice-websocket";
-import { SessionManager, VoiceTurnRecord } from "../sessions/session-manager";
-import { DeepgramAdapter } from "./deepgram";
-import { TTSAdapter, DefaultTTSAdapter } from "./tts";
-import { now, logMetrics } from "../core/metrics";
-import { interviewRepository as repository } from "../persistence/singleton";
-import { initInterviewV3, nextV3Step, InterviewStateV3 } from "../core/v3/interview-engine-v3";
-import { generateExecutiveImpression } from "../core/v3/executive-impression";
-import { simulateDecision } from "../core/v3/decision-simulator";
+import { VoiceWsLike } from "./voice-websocket.js";
+import { SessionManager, VoiceTurnRecord } from "../sessions/session-manager.js";
+import { DeepgramAdapter } from "./deepgram.js";
+import { TTSAdapter, DefaultTTSAdapter } from "./tts/index.js";
+import { now } from "../core/metrics.js";
+import { interviewRepository as repository } from "../persistence/singleton.js";
+import { initInterviewV3, nextV3Step, InterviewStateV3 } from "../core/v3/interview-engine-v3.js";
+import { generateExecutiveImpression } from "../core/v3/executive-impression.js";
+import { simulateDecision } from "../core/v3/decision-simulator.js";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -56,7 +56,7 @@ export async function handleVoiceConnectionV3(
   // ── 0. WebSocket Session Guards (Redis) ──
   let sessionAcquired = false;
   try {
-    const { acquireWsSession } = await import("../../server/rate-limiter");
+    const { acquireWsSession } = await import("../../server/rate-limiter.js");
     sessionAcquired = await acquireWsSession(connUserId, connIp);
   } catch {
     // Redis unavailable — allow through (graceful degradation)
@@ -91,7 +91,7 @@ export async function handleVoiceConnectionV3(
     }));
     ws.close(1011, "Engine disabled");
     try {
-      const { releaseWsSession } = await import("../../server/rate-limiter");
+      const { releaseWsSession } = await import("../../server/rate-limiter.js");
       await releaseWsSession(connUserId, connIp);
     } catch { /* noop */ }
     return;
@@ -171,7 +171,7 @@ export async function handleVoiceConnectionV3(
 
         // ── LLM success → reset error counter ──
         try {
-          const { resetLlmErrors } = await import("../../server/rate-limiter");
+          const { resetLlmErrors } = await import("../../server/rate-limiter.js");
           await resetLlmErrors(session.id);
         } catch { /* noop */ }
 
@@ -327,7 +327,7 @@ export async function handleVoiceConnectionV3(
         // ── LLM Fail Safe: track consecutive errors ──
         let shouldKill = false;
         try {
-          const { trackLlmError } = await import("../../server/rate-limiter");
+          const { trackLlmError } = await import("../../server/rate-limiter.js");
           shouldKill = await trackLlmError(session.id);
         } catch { /* noop */ }
 
@@ -393,7 +393,7 @@ export async function handleVoiceConnectionV3(
 
     // Release Redis session lock
     try {
-      const { releaseWsSession } = await import("../../server/rate-limiter");
+      const { releaseWsSession } = await import("../../server/rate-limiter.js");
       await releaseWsSession(connUserId, connIp);
     } catch { /* noop */ }
   });

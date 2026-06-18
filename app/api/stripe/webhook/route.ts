@@ -78,14 +78,15 @@ export async function POST(req: NextRequest) {
             console.log(
               `[Stripe Webhook] Event ${event.id} already processed. Ignored.`,
             );
-          } else {
-            console.log(
-              `[Stripe] User ${userId} purchased ${credits} credits (${packName})`,
-            );
-            logInfo("[PAYMENT_SUCCESS]", "Payment unlocked", {
-              route: "api/stripe/webhook",
-              userId: userId
-            });
+            } else {
+              console.log(
+                `[Stripe] User ${userId} purchased ${credits} credits (${packName})`,
+              );
+              logInfo("[PAYMENT_SUCCESS]", "Payment unlocked", {
+                route: "api/stripe/webhook",
+                userId: userId
+              });
+            }
           }
         } else {
           console.error(

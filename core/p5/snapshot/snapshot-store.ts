@@ -1,4 +1,4 @@
-import { MindSnapshot } from "./snapshot-contract";
+import { MindSnapshot } from "./snapshot-contract.js";
 
 /**
  * Minimal in-memory snapshot store.

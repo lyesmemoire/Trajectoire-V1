@@ -1,22 +1,66 @@
 /**
- * runtime/transport-binding.ts — Frontière I/O « bête » (P4.2).
- * Exécute une séquence de VoiceInstruction via TTSAdapter + VoiceSink.
- * Ne décide rien : traduit des instructions déjà décidées.
+ * runtime/transport-binding.ts — Frontière I/O (P4.2).
+ * Sépare strictement les flux entrants (Inbound) et sortants (Outbound).
  */
-import type { TTSAdapter } from "../adapters/tts/types";
-import type { VoiceInstruction } from "./voice-runtime";
+import type { TTSAdapter } from "../adapters/tts/types.js";
+import type { VoiceInstruction } from "./voice-runtime.js";
 
-export interface VoiceSink {
-  sendAudio(buffer: ArrayBuffer, meta: { speechRate: number }): void;
-  sendEvent(event: VoiceTransportEvent): void;
-}
-
-export type VoiceTransportEvent =
+export type OutboundVoiceSignal =
   | { type: "thinking"; ms: number }
   | { type: "silence"; ms: number }
   | { type: "interrupt"; atMs: number }
   | { type: "speaking_start"; estimatedMs: number; speechRate: number }
+  | { type: "speaking_stop" }
   | { type: "turn_done"; latencyMs: number };
+
+export type InboundVoiceEvent =
+  | { type: "transcript"; text: string; isFinal: boolean }
+  | { type: "user_silence"; ms: number };
+
+export interface OutboundTransport {
+  send(instruction: VoiceInstruction): void;
+}
+
+export interface InboundTransport {
+  onEvent(handler: (event: InboundVoiceEvent) => void): void;
+}
+
+export interface InboundEventSource {
+  dispatch(event: InboundVoiceEvent): void;
+}
+
+export interface TransportBinding
+  extends OutboundTransport,
+    InboundTransport,
+    InboundEventSource {
+  onInstruction(handler: (instruction: VoiceInstruction) => void): void;
+}
+
+export class DefaultTransportBinding implements TransportBinding {
+  private eventHandlers: Array<(event: InboundVoiceEvent) => void> = [];
+  private instructionHandlers: Array<(instruction: VoiceInstruction) => void> = [];
+
+  onEvent(handler: (event: InboundVoiceEvent) => void): void {
+    this.eventHandlers.push(handler);
+  }
+
+  dispatch(event: InboundVoiceEvent): void {
+    for (const h of this.eventHandlers) h(event);
+  }
+
+  onInstruction(handler: (instruction: VoiceInstruction) => void): void {
+    this.instructionHandlers.push(handler);
+  }
+
+  send(instruction: VoiceInstruction): void {
+    for (const h of this.instructionHandlers) h(instruction);
+  }
+}
+
+export interface VoiceSink {
+  sendAudio(buffer: ArrayBuffer, meta: { speechRate: number }): void;
+  sendSignal(signal: OutboundVoiceSignal): void;
+}
 
 export async function bindAndPlay(
   instructions: VoiceInstruction[],
@@ -26,16 +70,16 @@ export async function bindAndPlay(
   for (const instr of instructions) {
     switch (instr.type) {
       case "wait":
-        sink.sendEvent({ type: "thinking", ms: instr.ms });
+        sink.sendSignal({ type: "thinking", ms: instr.ms });
         break;
       case "emphatic_silence":
-        sink.sendEvent({ type: "silence", ms: instr.ms });
+        sink.sendSignal({ type: "silence", ms: instr.ms });
         break;
       case "interrupt_candidate":
-        sink.sendEvent({ type: "interrupt", atMs: instr.atMs });
+        sink.sendSignal({ type: "interrupt", atMs: instr.atMs });
         break;
       case "speak": {
-        sink.sendEvent({
+        sink.sendSignal({
           type: "speaking_start",
           estimatedMs: instr.estimatedMs,
           speechRate: instr.speechRate,
@@ -44,11 +88,14 @@ export async function bindAndPlay(
         sink.sendAudio(audio, { speechRate: instr.speechRate });
         break;
       }
+      case "speaking_stop":
+        sink.sendSignal({ type: "speaking_stop" });
+        break;
       case "turn_done":
-        sink.sendEvent({ type: "turn_done", latencyMs: instr.latencyMs });
+        sink.sendSignal({ type: "turn_done", latencyMs: instr.latencyMs });
         break;
       default: {
-        const _never: never = instr;
+        const _never: never = instr as never;
         void _never;
       }
     }

@@ -5,8 +5,8 @@
  * en une phrase de retour brève, calme et non jugeante (1 idée à la fois).
  */
 
-import type { FeedbackSignal } from "./interview-engine";
-import type { AnswerEvaluation } from "./evaluation";
+import type { FeedbackSignal } from "./interview-engine.js";
+import type { AnswerEvaluation } from "./evaluation.js";
 
 export function buildFeedbackText(
   signal: FeedbackSignal,

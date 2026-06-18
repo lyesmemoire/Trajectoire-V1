@@ -16,14 +16,14 @@
  *                      | interrupted | error
  */
 
-import { SessionManager } from "../sessions/session-manager";
-import { DeepgramAdapter } from "./deepgram";
-import type { TTSAdapter } from "./tts";
-import { DefaultTTSAdapter } from "./tts";
-import { openingTurn, processVoiceTurn } from "../core/voice-orchestrator";
-import { now, logMetrics, type VoiceMetrics } from "../core/metrics";
-import { interviewRepository as repository } from "../persistence/singleton";
-import { finalizeInterview } from "../core/post-interview-processor";
+import { SessionManager } from "../sessions/session-manager.js";
+import { DeepgramAdapter } from "./deepgram.js";
+import type { TTSAdapter } from "./tts/index.js";
+import { DefaultTTSAdapter } from "./tts/index.js";
+import { openingTurn, processVoiceTurn } from "../core/voice-orchestrator.js";
+import { now, logMetrics, type VoiceMetrics } from "../core/metrics.js";
+import { interviewRepository as repository } from "../persistence/singleton.js";
+import { finalizeInterview } from "../core/post-interview-processor.js";
 
 /** Socket minimal supportant l'envoi binaire (audio). */
 export interface VoiceWsLike {
@@ -50,7 +50,7 @@ export type VoiceServerMessage =
   | { type: "interrupted"; eventId: string }
   | {
       type: "summary";
-      summary: import("../core/interview-summary").InterviewSummary;
+      summary: import("../core/interview-summary.js").InterviewSummary;
       eventId: string;
     }
   | { type: "error"; message: string; eventId: string };

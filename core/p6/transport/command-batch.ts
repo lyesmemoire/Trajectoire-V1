@@ -1,6 +1,6 @@
-import { VoiceExecutionPlan } from "../voice/voice-contract";
-import { TransportCommand } from "./transport-contract";
-import { buildTransportCommands } from "./command-builder";
+import { VoiceExecutionPlan } from "../voice/voice-contract.js";
+import { TransportCommand } from "./transport-contract.js";
+import { buildTransportCommands } from "./command-builder.js";
 
 export function buildCommandBatch(plans: readonly VoiceExecutionPlan[]): readonly TransportCommand[] {
   const allCommands: TransportCommand[] = [];

@@ -1,7 +1,7 @@
-import { P5Event } from "../execution-contract";
-import { GovernorDecision, ValidationResult } from "./normalization-contract";
-import { validateDecision } from "./validation";
-import { normalizeDecision } from "./normalize-decision";
+import { P5Event } from "../execution-contract.js";
+import { GovernorDecision, ValidationResult } from "./normalization-contract.js";
+import { validateDecision } from "./validation.js";
+import { normalizeDecision } from "./normalize-decision.js";
 
 /**
  * Result of processing a batch of GovernorDecisions.

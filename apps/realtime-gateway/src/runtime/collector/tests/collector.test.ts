@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RuntimeTraceCollector } from "../runtime-trace-collector";
-import { RuntimeWireEvent } from "../runtime-wire-event";
+import { RuntimeTraceCollector } from "../runtime-trace-collector.js";
 
 describe("P6.6 bis - RuntimeTraceCollector", () => {
   it("should securely construct a trace from raw events (C1-C4)", () => {

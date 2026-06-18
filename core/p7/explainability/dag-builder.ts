@@ -4,10 +4,10 @@ import {
   ScoreComponentNode,
   AggregatedScoreNode,
   ExplanationGraph,
-} from "./explanation-contract";
-import { Signal } from "../scoring-engine/scoring-contract";
-import { CompetencyScore, CandidateEvaluation } from "../evaluation-contract";
-import { P7_WEIGHTS } from "../scoring-engine/scoring-contract";
+} from "./explanation-contract.js";
+import { Signal } from "../scoring-engine/scoring-contract.js";
+import { CompetencyScore } from "../evaluation-contract.js";
+import { P7_WEIGHTS } from "../scoring-engine/scoring-contract.js";
 
 /**
  * DAG Builder — Assembles the full Explanation Graph

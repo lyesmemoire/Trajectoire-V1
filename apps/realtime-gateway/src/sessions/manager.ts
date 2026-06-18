@@ -1,7 +1,7 @@
 import type WebSocket from "ws";
-import { RtcPeer } from "../rtc/peer";
-import { DeepgramWrapper } from "../ai/deepgram";
-import { logger } from "../telemetry/logger";
+import { RtcPeer } from "../rtc/peer.js";
+import { DeepgramWrapper } from "../ai/deepgram.js";
+import { logger } from "../telemetry/logger.js";
 
 export const SESSION_IDLE_TIMEOUT_MS = 300_000; // 5 min
 export const SESSION_CLEANUP_INTERVAL_MS = 30_000; // 30 s

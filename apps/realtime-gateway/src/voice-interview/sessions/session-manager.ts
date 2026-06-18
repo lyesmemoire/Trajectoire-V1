@@ -6,26 +6,32 @@
  */
 
 import {
+  DefaultTransportBinding,
+  type InboundEventSource,
+} from "../runtime/transport-binding.js";
+import { VoiceRuntime } from "../runtime/voice-runtime.js";
+import {
   type InterviewState,
   createInitialState,
   applyPatch,
-} from "../core/state";
+} from "../core/state.js";
+import { metrics } from "../metrics.js";
 
 export interface VoiceSession {
   id: string;
   state: InterviewState;
   createdAt: number;
   updatedAt: number;
-  // ── Champs P3.2 (runtime conversationnel, in-memory) ──────────
-  /** Numéro du tour courant (incrémenté à chaque réponse traitée). */
   currentTurn: number;
-  /** Dernière réponse audio synthétisée (optionnelle). */
   lastAudioResponse?: ArrayBuffer;
-  /** Historique des tours (transcript + question + score). */
   history: VoiceTurnRecord[];
+  sink?: InboundEventSource;
+  /** Timer de TTL glissant */
+  ttlHandle?: NodeJS.Timeout;
+  /** Callback appelé lors de la suppression de la session (dispose du runtime). */
+  onDispose?: () => void;
 }
 
-/** Trace minimale d'un tour, conservée en mémoire (pas de DB). */
 export interface VoiceTurnRecord {
   turn: number;
   transcript: string;
@@ -34,18 +40,17 @@ export interface VoiceTurnRecord {
 }
 
 export interface CreateSessionInput {
+  /** ID explicite (si fourni, remplace l'ID auto-généré). */
+  id?: string;
   jobGap?: string;
   initialTopic?: string;
-  interviewerStyle?: import("../core/state").InterviewerStyle;
-  /** Question initiale déjà connue (issue de P1/P2), optionnelle. */
+  interviewerStyle?: import("../core/state.js").InterviewerStyle;
   initialQuestion?: string;
 }
 
-/** Horloge injectable pour la testabilité. */
 export type Clock = () => number;
 
 export interface SessionManagerOptions {
-  /** Durée de vie d'une session sans activité (ms). Défaut : 30 min. */
   ttlMs?: number;
   clock?: Clock;
 }
@@ -55,10 +60,16 @@ export class SessionManager {
   private readonly ttlMs: number;
   private readonly clock: Clock;
   private seq = 0;
+  private sweeperHandle?: NodeJS.Timeout;
 
   constructor(options: SessionManagerOptions = {}) {
-    this.ttlMs = options.ttlMs ?? 30 * 60 * 1000;
+    // 10 minutes par défaut
+    this.ttlMs = options.ttlMs ?? 10 * 60 * 1000;
     this.clock = options.clock ?? (() => Date.now());
+    
+    // Sweeper périodique (belt and suspenders) toutes les 5 minutes
+    this.sweeperHandle = setInterval(() => this.sweep(), 5 * 60 * 1000);
+    this.sweeperHandle.unref();
   }
 
   private genId(): string {
@@ -67,40 +78,46 @@ export class SessionManager {
   }
 
   createSession(input: CreateSessionInput = {}): VoiceSession {
-    this.evictExpired();
+    this.sweep();
     const now = this.clock();
-    const stateInput: {
-      jobGap?: string;
-      initialTopic?: string;
-      interviewerStyle?: import("../core/state").InterviewerStyle;
-    } = {};
+    const stateInput: any = {};
     if (input.jobGap !== undefined) stateInput.jobGap = input.jobGap;
-    if (input.initialTopic !== undefined)
-      stateInput.initialTopic = input.initialTopic;
-    if (input.interviewerStyle !== undefined)
-      stateInput.interviewerStyle = input.interviewerStyle;
+    if (input.initialTopic !== undefined) stateInput.initialTopic = input.initialTopic;
+    if (input.interviewerStyle !== undefined) stateInput.interviewerStyle = input.interviewerStyle;
+    
     let state = createInitialState(stateInput);
     if (input.initialQuestion?.trim()) {
       state = applyPatch(state, {
         askedQuestions: [input.initialQuestion.trim()],
       });
     }
+    
     const session: VoiceSession = {
-      id: this.genId(),
+      id: input.id ?? this.genId(),
       state,
       createdAt: now,
       updatedAt: now,
       currentTurn: 0,
       history: [],
     };
+    
     this.sessions.set(session.id, session);
+    metrics.recordSessionCreated();
+    this.bumpActivity(session.id); // Init the sliding TTL
     return session;
   }
 
-  /**
-   * Enregistre un tour conversationnel terminé (P3.2) : met à jour l'état,
-   * incrémente le compteur de tours, stocke l'audio et l'historique.
-   */
+  bumpActivity(id: string): void {
+    const s = this.sessions.get(id);
+    if (!s) return;
+    s.updatedAt = this.clock();
+    if (s.ttlHandle) clearTimeout(s.ttlHandle);
+    s.ttlHandle = setTimeout(() => {
+      this.deleteSession(id);
+    }, this.ttlMs);
+    s.ttlHandle.unref();
+  }
+
   recordTurn(
     id: string,
     args: {
@@ -111,7 +128,7 @@ export class SessionManager {
       audio?: ArrayBuffer;
     },
   ): VoiceSession | undefined {
-    const s = this.getSession(id);
+    const s = this.sessions.get(id);
     if (!s) return undefined;
     s.state = args.state;
     s.currentTurn += 1;
@@ -122,7 +139,7 @@ export class SessionManager {
       score: args.score,
       question: args.question,
     });
-    s.updatedAt = this.clock();
+    this.bumpActivity(id);
     return s;
   }
 
@@ -130,9 +147,11 @@ export class SessionManager {
     const s = this.sessions.get(id);
     if (!s) return undefined;
     if (this.isExpired(s)) {
-      this.sessions.delete(id);
+      this.deleteSession(id);
       return undefined;
     }
+    // Accessing the session bumps the activity (useful for active interactions)
+    this.bumpActivity(id);
     return s;
   }
 
@@ -140,20 +159,26 @@ export class SessionManager {
     id: string,
     nextState: InterviewState,
   ): VoiceSession | undefined {
-    const s = this.getSession(id);
+    const s = this.sessions.get(id);
     if (!s) return undefined;
     s.state = nextState;
-    s.updatedAt = this.clock();
+    this.bumpActivity(id);
     return s;
   }
 
   deleteSession(id: string): boolean {
+    const s = this.sessions.get(id);
+    if (s) {
+      if (s.ttlHandle) clearTimeout(s.ttlHandle);
+      // Propager l'abort au runtime en cours (TTL, disconnect, etc.)
+      s.onDispose?.();
+      metrics.recordSessionDuration(this.clock() - s.createdAt);
+    }
     return this.sessions.delete(id);
   }
 
-  /** Nombre de sessions actives (après éviction). */
   size(): number {
-    this.evictExpired();
+    this.sweep();
     return this.sessions.size;
   }
 
@@ -161,20 +186,33 @@ export class SessionManager {
     return this.clock() - s.updatedAt > this.ttlMs;
   }
 
-  private evictExpired(): void {
+  public sweep(): void {
     for (const [id, s] of this.sessions) {
-      if (this.isExpired(s)) this.sessions.delete(id);
+      if (this.isExpired(s)) {
+        this.deleteSession(id);
+      }
     }
+    // V3 Support
     for (const [id, s] of this.v3Sessions) {
-      if (this.clock() - s.updatedAt > this.ttlMs) this.v3Sessions.delete(id);
+      if (this.clock() - s.updatedAt > this.ttlMs) {
+        this.v3Sessions.delete(id);
+      }
     }
+  }
+
+  destroy(): void {
+    if (this.sweeperHandle) clearInterval(this.sweeperHandle);
+    for (const id of this.sessions.keys()) {
+      this.deleteSession(id);
+    }
+    this.v3Sessions.clear();
   }
 
   // --- V3 Support ---
   private v3Sessions = new Map<string, any>();
 
   createV3(input: any) {
-    this.evictExpired();
+    this.sweep();
     const session = {
       ...input,
       turns: [],
@@ -185,7 +223,53 @@ export class SessionManager {
   }
 
   close(id: string) {
-    this.sessions.delete(id);
+    this.deleteSession(id);
     this.v3Sessions.delete(id);
   }
 }
+
+// ── Singleton Instance pour gateway.ts ──────────────────────────────────
+const defaultManager = new SessionManager();
+
+export function createVoiceSession(
+  sessionId: string,
+  userId: string,
+  ws: any,
+  config: any
+): VoiceSession {
+  // Utiliser l'ID externe du gateway comme clé de session
+  const session = defaultManager.createSession({ id: sessionId, initialTopic: "Intro" });
+  
+  const binding = new DefaultTransportBinding();
+  
+  binding.onInstruction((instr) => {
+    try {
+      ws.send(JSON.stringify(instr));
+      // Activité sortante = on bump la session
+      defaultManager.bumpActivity(session.id);
+    } catch {
+      // Ignorer si le socket est fermé
+    }
+  });
+
+  const runtime = new VoiceRuntime(binding, defaultManager, session.id);
+  runtime.start();
+
+  session.sink = binding;
+  // Câbler le cycle de vie : deleteSession → runtime.dispose() → abort du tour en cours
+  session.onDispose = () => runtime.dispose();
+  return session;
+}
+
+export function getVoiceSession(sessionId: string): VoiceSession | undefined {
+  return defaultManager.getSession(sessionId);
+}
+
+export function removeVoiceSession(sessionId: string, reason?: string): boolean {
+  return defaultManager.deleteSession(sessionId);
+}
+
+export function getActiveVoiceSessionCount(): number {
+  return defaultManager.size();
+}
+

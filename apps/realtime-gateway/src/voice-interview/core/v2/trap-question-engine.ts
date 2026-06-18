@@ -5,7 +5,7 @@
  * pour vérifier la profondeur réelle. Déterministe.
  */
 
-import { type CandidateProfile, claimsSkill } from "./candidate-profile";
+import { type CandidateProfile, claimsSkill } from "./candidate-profile.js";
 
 interface TrapDef {
   skill: string;

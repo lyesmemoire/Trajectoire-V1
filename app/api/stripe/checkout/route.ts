@@ -8,7 +8,7 @@ import { logInfo, logError } from "@/lib/logger";
 
 let stripeClient: Stripe | null = null;
 
-let stripeClient: Stripe | null = null;
+
 function getStripe(): Stripe {
   if (!stripeClient) {
     stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY || "dummy", {
@@ -59,9 +59,23 @@ export async function POST(request: NextRequest) {
   // Récupérer l'email depuis le profil si non disponible dans le header
   const { data } = await supabase
     .from("profiles")
-    .select("email, full_name")
+    .select("email, full_name, plan")
     .eq("id", userId)
     .single();
+
+  const profile = data as any;
+
+  // Empêcher le double abonnement si l'utilisateur a déjà un plan actif
+  // On autorise l'achat de crédits ou upgrades, mais pas le rachat du même abonnement
+  if (profile?.plan && profile.plan !== "STARTER") {
+    const isTryingToBuySubscription = priceId.includes("pro") || priceId === "price_premium_access";
+    if (isTryingToBuySubscription) {
+      return NextResponse.json(
+        { error: "Vous avez déjà un abonnement actif." },
+        { status: 400 }
+      );
+    }
+  }
 
   let resolvedPriceId = priceId;
 
@@ -78,7 +92,6 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const profile = data as any;
   const customerEmail = profile?.email ?? userEmail;
 
   logInfo("[STRIPE_CHECKOUT]", "Creating checkout session", {

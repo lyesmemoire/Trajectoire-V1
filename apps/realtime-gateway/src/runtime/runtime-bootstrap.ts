@@ -1,10 +1,10 @@
-import { createRuntime } from "./runtime-container";
-import { SessionRegistry } from "./session-registry";
-import { WebSocketAdapter, WebSocketMessage, WebSocketFrame } from "./ws-adapter";
-import { TTSAdapter } from "./tts-adapter";
-import { STTAdapter } from "./stt-adapter";
-import { RuntimeTraceCollector } from "./collector/runtime-trace-collector";
-import { RuntimeTrace, TurnTrace } from "../../../../core/p6/trace-contract";
+import { createRuntime } from "./runtime-container.js";
+import { SessionRegistry } from "./session-registry.js";
+import { WebSocketAdapter, WebSocketMessage, WebSocketFrame } from "./ws-adapter.js";
+import { TTSAdapter } from "./tts-adapter.js";
+import { STTAdapter } from "./stt-adapter.js";
+import { RuntimeTraceCollector } from "./collector/runtime-trace-collector.js";
+import { RuntimeTrace } from "../../../../core/p6/trace-contract.js";
 
 export class RuntimeBootstrap {
   public readonly container = createRuntime();

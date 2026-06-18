@@ -1,5 +1,5 @@
-import { MindState } from "../p5/execution-contract";
-import { RuntimeDecision } from "../p5/integration/integration-contract";
+import { MindState } from "../p5/execution-contract.js";
+import { RuntimeDecision } from "../p5/integration/integration-contract.js";
 
 export interface CandidateMessage {
   text: string;

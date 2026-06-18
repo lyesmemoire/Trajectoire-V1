@@ -1,9 +1,9 @@
-import { bus } from "../events/bus";
-import { SessionMemory } from "./memory";
-import { buildPrompt } from "./promptBuilder";
-import { streamChat } from "./openai";
-import { bufferChunk } from "./responseStreamer";
-import { OpenAITTS } from "./tts/openai";
+import { bus } from "../events/bus.js";
+import { SessionMemory } from "./memory.js";
+import { buildPrompt } from "./promptBuilder.js";
+import { streamChat } from "./openai.js";
+import { bufferChunk } from "./responseStreamer.js";
+import { OpenAITTS } from "./tts/openai.js";
 
 type SessionState = {
   memory: SessionMemory;

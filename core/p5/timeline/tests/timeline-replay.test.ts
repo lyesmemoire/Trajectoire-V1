@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { createTimeline } from "../timeline";
-import { appendTick } from "../append-tick";
-import { replayTimeline } from "../timeline-replay";
-import { createSnapshot } from "../../snapshot/create-snapshot";
-import { applyEvents } from "../../execution-engine";
-import { MindState, P5Event } from "../../execution-contract";
+import { createTimeline } from "../timeline.js";
+import { appendTick } from "../append-tick.js";
+import { replayTimeline } from "../timeline-replay.js";
+import { createSnapshot } from "../../snapshot/create-snapshot.js";
+import { applyEvents } from "../../execution-engine.js";
+import { MindState, P5Event } from "../../execution-contract.js";
 
 describe("timeline-replay — T3: Determinism & T5: Causal order", () => {
   const getState = (): MindState => ({

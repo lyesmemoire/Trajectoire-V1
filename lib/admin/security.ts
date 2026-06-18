@@ -1,6 +1,5 @@
 import { getStrictUser } from "@/lib/auth/session-logic";
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/service";
 
 /**
  * Guard centralisé pour sécuriser de manière stricte les routes `/api/admin`.

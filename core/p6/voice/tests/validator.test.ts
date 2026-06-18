@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { validateVoicePlan } from "../plan-validator";
-import { VoiceExecutionPlan } from "../voice-contract";
-import { clampVoicePlan } from "../clamp-plan";
+import { validateVoicePlan } from "../plan-validator.js";
+import { VoiceExecutionPlan } from "../voice-contract.js";
+import { clampVoicePlan } from "../clamp-plan.js";
 
 describe("P6.2 - V2 Validation and Clamp", () => {
   const validPlan: VoiceExecutionPlan = {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { adaptDecision } from "../governor-adapter";
+import { adaptDecision } from "../governor-adapter.js";
 
 describe("governor-adapter", () => {
   it("should adapt a valid decision into P5Events", () => {

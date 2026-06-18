@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { verifyReplay } from "../replay-verifier";
-import { MindState } from "../../execution-contract";
+import { verifyReplay } from "../replay-verifier.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("replay-verifier — J5: Verification", () => {
   it("should report valid when states are identical", () => {

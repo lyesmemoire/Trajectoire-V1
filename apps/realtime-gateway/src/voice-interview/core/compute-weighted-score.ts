@@ -1,5 +1,5 @@
-import type { StructuredScore } from "./scoring";
-import { ROLE_WEIGHT_MATRIX, type RoleType } from "./role-weights";
+import type { StructuredScore } from "./scoring.js";
+import { ROLE_WEIGHT_MATRIX, type RoleType } from "./role-weights.js";
 
 export function computeWeightedOverall(
   score: StructuredScore,

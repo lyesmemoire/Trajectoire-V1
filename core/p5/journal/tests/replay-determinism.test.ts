@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { replay } from "../replay";
-import { createJournal } from "../journal";
-import { appendEvent } from "../append-event";
-import { createSnapshot } from "../../snapshot/create-snapshot";
-import { MindState, P5Event } from "../../execution-contract";
+import { replay } from "../replay.js";
+import { createJournal } from "../journal.js";
+import { appendEvent } from "../append-event.js";
+import { createSnapshot } from "../../snapshot/create-snapshot.js";
+import { MindState, P5Event } from "../../execution-contract.js";
 
 describe("replay — J4: Determinism", () => {
   it("should produce identical results for two identical replays", () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { serializePlan, deserializePlan } from "../plan-replay";
-import { VoiceExecutionPlan } from "../voice-contract";
+import { serializePlan, deserializePlan } from "../plan-replay.js";
+import { VoiceExecutionPlan } from "../voice-contract.js";
 
 describe("P6.2 - V3 Roundtrip Serialization", () => {
   it("should successfully serialize and deserialize a valid plan", () => {

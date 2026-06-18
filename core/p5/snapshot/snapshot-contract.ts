@@ -1,4 +1,4 @@
-import { MindState } from "../execution-contract";
+import { MindState } from "../execution-contract.js";
 
 /**
  * A serializable snapshot of the P5 execution state.

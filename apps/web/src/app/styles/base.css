@@ -1,0 +1,103 @@
+/* ============================================================
+BASE — Reset, éléments HTML fondamentaux, typographie globale
+============================================================ */
+
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+html {
+font-size: 16px;
+-webkit-text-size-adjust: 100%;
+scroll-behavior: smooth;
+}
+
+body {
+font-family: var(--font-sans);
+font-size: 1rem;
+line-height: 1.6;
+color: var(--text-primary);
+background-color: var(--bg-primary);
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Typographie --- */
+h1, h2, h3, h4, h5, h6 {
+line-height: 1.2;
+color: var(--text-primary);
+font-weight: 700;
+}
+
+p {
+color: var(--text-secondary);
+line-height: 1.7;
+}
+
+a {
+color: var(--accent-primary);
+text-decoration: none;
+transition: color var(--transition-normal);
+}
+a:hover {
+color: var(--text-primary);
+}
+
+/* --- Formulaires --- */
+input,
+textarea,
+select {
+font-family: var(--font-sans);
+font-size: 1rem;
+}
+
+button {
+font-family: var(--font-sans);
+cursor: pointer;
+border: none;
+background: none;
+}
+
+/* --- Utilitaires de focus accessibles --- */
+:focus-visible {
+outline: 2px solid var(--accent-primary);
+outline-offset: 3px;
+border-radius: var(--radius-sm);
+}
+
+/* --- Images --- */
+img, video {
+max-width: 100%;
+display: block;
+}
+
+/* --- Listes --- */
+ul, ol {
+list-style: none;
+}
+
+/* --- Sélection de texte --- */
+::selection {
+background: rgba(99, 102, 241, 0.35);
+color: var(--text-primary);
+}
+
+/* --- Scrollbar (Webkit) --- */
+::-webkit-scrollbar {
+width: 6px;
+height: 6px;
+}
+::-webkit-scrollbar-track {
+background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+background: rgba(99, 102, 241, 0.4);
+border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+background: rgba(99, 102, 241, 0.7);
+}

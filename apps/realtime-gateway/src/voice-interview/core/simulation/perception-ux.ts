@@ -10,7 +10,7 @@
  * déjà garanti (les entrées sont bornées).
  */
 
-import type { RecruiterMindState, RecruiterEmotion } from "./recruiter-mind";
+import type { RecruiterMindState, RecruiterEmotion } from "./recruiter-mind.js";
 
 /** Paramètres perceptifs consommés par le runtime (voix/UI). */
 export interface PerceptionUX {

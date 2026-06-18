@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { createSession, executeDecision } from "../execution-session";
-import { replay } from "../../journal/replay";
-import { replayTimeline } from "../../timeline/timeline-replay";
-import { MindState } from "../../execution-contract";
+import { createSession, executeDecision } from "../execution-session.js";
+import { replay } from "../../journal/replay.js";
+import { replayTimeline } from "../../timeline/timeline-replay.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("execution-session — R1, R3, R4, R5", () => {
   const getState = (): MindState => ({

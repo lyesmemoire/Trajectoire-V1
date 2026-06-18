@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { verifyTimeline } from "../timeline-verifier";
-import { createTimeline } from "../timeline";
-import { appendTick } from "../append-tick";
-import { Timeline } from "../timeline-contract";
+import { verifyTimeline } from "../timeline-verifier.js";
+import { createTimeline } from "../timeline.js";
+import { appendTick } from "../append-tick.js";
+import { Timeline } from "../timeline-contract.js";
 
 describe("timeline-verifier — T1/T2: Structural validation", () => {
   it("should accept a valid timeline built with appendTick", () => {

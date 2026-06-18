@@ -1,4 +1,4 @@
-import { RuntimeOrchestrator } from "../../../apps/realtime-gateway/src/interview/runtime/fsm/orchestrator/RuntimeOrchestrator";
+import { RuntimeOrchestrator } from "../../../apps/realtime-gateway/src/voice-interview/runtime/fsm/orchestrator/RuntimeOrchestrator";
 import { AttackSuite, AttackType } from "./AttackSuite";
 import { FaultTelemetry } from "../../observability/FaultTelemetry";
 

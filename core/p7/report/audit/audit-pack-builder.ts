@@ -1,4 +1,4 @@
-import { AuditPack, ReplayInstruction, ReportInput } from "../report-contract";
+import { AuditPack, ReplayInstruction, ReportInput } from "../report-contract.js";
 import * as crypto from "crypto";
 
 export function buildAuditPack(input: ReportInput): AuditPack {

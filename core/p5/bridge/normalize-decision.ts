@@ -1,5 +1,5 @@
-import { P5Event } from "../execution-contract";
-import { GovernorDecision } from "./normalization-contract";
+import { P5Event } from "../execution-contract.js";
+import { GovernorDecision } from "./normalization-contract.js";
 
 /**
  * Transforms a GovernorDecision into a deterministic, ordered list of P5Events.

@@ -5,8 +5,8 @@
  * les oscillations rapides (mémoire des derniers états UX).
  */
 
-import type { PerceptionUX } from "../perception-ux";
-import type { RecruiterEmotion } from "../recruiter-mind";
+import type { PerceptionUX } from "../perception-ux.js";
+import type { RecruiterEmotion } from "../recruiter-mind.js";
 
 /** Cibles stables vers lesquelles le système est attiré, par émotion dominante. */
 interface Attractor {

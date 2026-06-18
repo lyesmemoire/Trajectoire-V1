@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BillingService } from "@/lib/db/billing.service";
-import { createServerClient } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
-    const supabase = await createServerClient();
+    const supabase = await createSupabaseServerClient();
     const {
       data: { user },
       error: authError,

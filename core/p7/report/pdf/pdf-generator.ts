@@ -1,5 +1,5 @@
-import { ReportSummary } from "../report-contract";
-import { ReportJSON, PdfArtifact } from "../report-contract";
+import { ReportSummary } from "../report-contract.js";
+import { ReportJSON, PdfArtifact } from "../report-contract.js";
 
 export function generatePDF(summary: ReportSummary, json: ReportJSON): PdfArtifact {
   // In a real environment, we would use PDFKit or similar.

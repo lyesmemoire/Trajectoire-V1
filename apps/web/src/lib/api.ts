@@ -1,15 +1,35 @@
+/**
+ * api.ts — Client HTTP vers le backend NestJS / realtime-gateway
+ * Corrections appliquées :
+ * B1B — fetchReport typé avec RawReportResponse (plus de any).
+ *       RawReportResponse reflète exactement la structure retournée
+ *       par Prisma (snake_case, champ `analysis` JSONB déjà parsé).
+ * Auth — getUser() pour vérification identité + getSession() pour token.
+ */
 import { createClient } from "@/lib/supabase/client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
-async function getAuthHeaders(): Promise<Record<string, string>> {
+// ── Auth headers ──────────────────────────────────────────────────────────
+
+async function getAuthHeaders(): Promise<HeadersInit> {
   const supabase = createClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    throw new Error("No authenticated user");
+  }
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
   if (!session?.access_token) {
-    throw new Error("Not authenticated");
+    throw new Error("No active session");
   }
 
   return {
@@ -18,45 +38,110 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
   };
 }
 
-export async function fetchInterviews() {
-  const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/interviews`, { headers });
-  if (!res.ok) throw new Error("Failed to fetch interviews");
-  return res.json();
+// ── Types — structure brute retournée par l'API (snake_case Prisma) ───────
+
+/** Score individuel d'une dimension comportementale ou cognitive */
+export interface RawDimensionScore {
+  label: string;
+  score: number;
+  comment?: string;
 }
 
-export async function fetchInterview(sessionId: string) {
-  const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/interviews/${sessionId}`, {
-    headers,
-  });
-  if (!res.ok) throw new Error("Failed to fetch interview");
-  return res.json();
+/** Scénario de décision analysé */
+export interface RawDecisionItem {
+  scenario: string;
+  response: string;
+  analysis: string;
+  score: number;
 }
 
-export async function createCheckoutSession() {
+/**
+ * Contenu du champ JSONB analysis stocké dans InterviewSession.
+ * Structure produite par report-generator.ts et validée par AnalysisSchema.
+ */
+export interface RawAnalysis {
+  global_score: number;
+  percentile: number;
+  recommendation: string;
+  executive_summary: string;
+  soft_skills: RawDimensionScore[];
+  hard_skills: RawDimensionScore[];
+  integrity_score: number;
+  consistency_score: number;
+  assessment_text: string;
+  gap_analysis?: string;
+  decisions: RawDecisionItem[];
+  overall_decision_score: number;
+  decision_style: string;
+  schema_version: "1.0";
+}
+
+/**
+ * Réponse brute de GET /report/:interviewId
+ * Correspond aux colonnes de la table InterviewSession dans Prisma.
+ */
+export interface RawReportResponse {
+  id: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  status: "pending" | "in_progress" | "completed" | "error";
+  candidate_name: string;
+  /* Contenu JSONB déjà parsé en objet par le backend */
+  analysis: RawAnalysis | null;
+  /* Indique si l'utilisateur a accès au rapport complet */
+  is_premium_unlocked: boolean;
+}
+
+// ── fetchReport ───────────────────────────────────────────────────────────
+
+/**
+ * Récupère le rapport d'un entretien par son ID.
+ * Retourne RawReportResponse typé — utiliser toReportViewModel()
+ * de lib/report-adapter.ts pour convertir vers le format UI.
+ */
+export async function fetchReport(
+  interviewId: string
+): Promise<RawReportResponse> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/create-checkout-session`, {
+  const res = await fetch(`${API_URL}/report/${interviewId}`, { headers });
+  if (!res.ok) {
+    throw new Error(`fetchReport failed: ${res.status} ${res.statusText}`);
+  }
+
+  return res.json() as Promise<RawReportResponse>;
+}
+
+// ── Autres appels API existants ───────────────────────────────────────────
+
+export async function createInterview(): Promise<{ sessionId: string }> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/interview`, {
     method: "POST",
     headers,
   });
-  if (!res.ok) throw new Error("Failed to create checkout session");
+
+  if (!res.ok) {
+    throw new Error(`createInterview failed: ${res.status} ${res.statusText}`);
+  }
+
   return res.json();
 }
 
-export async function createPortalSession() {
+export async function fetchInterviews(): Promise<
+  Array<{
+    id: string;
+    created_at: string;
+    status: string;
+    analysis: Pick<RawAnalysis, "global_score" | "recommendation"> | null;
+  }>
+> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/create-portal-session`, {
-    method: "POST",
-    headers,
-  });
-  if (!res.ok) throw new Error("Failed to create portal session");
-  return res.json();
-}
+  const res = await fetch(`${API_URL}/interviews`, { headers });
 
-export function getWsUrl(token: string, role?: string): string {
-  const wsBase = API_URL.replace(/^http/, "ws");
-  const params = new URLSearchParams({ token });
-  if (role) params.set("role", role);
-  return `${wsBase}/api/voice?${params.toString()}`;
+  if (!res.ok) {
+    throw new Error(`fetchInterviews failed: ${res.status} ${res.statusText}`);
+  }
+
+  return res.json();
 }

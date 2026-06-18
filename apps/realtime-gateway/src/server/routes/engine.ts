@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { createClient } from "@supabase/supabase-js";
-import { verifyVoiceToken } from "../auth";
+import { verifyVoiceToken } from "../auth.js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -118,7 +118,7 @@ export async function registerEngineRoutes(app: FastifyInstance) {
 
     // ── Automated Alerting ──────────────────────────────────
     if (globalStats.count > 0) {
-      const { triggerAlert } = await import("../rate-limiter");
+      const { triggerAlert } = await import("../rate-limiter.js");
       const ENGINE = "v3_stable_realistic";
       const WINDOW = "last 7 days";
 

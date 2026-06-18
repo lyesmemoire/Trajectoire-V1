@@ -5,7 +5,7 @@
  * est étayée par des réponses précises et profondes.
  */
 
-import type { AnswerSignals } from "./answer-signals";
+import type { AnswerSignals } from "./answer-signals.js";
 
 export interface BluffSignals {
   vagueness: number; // 0–1

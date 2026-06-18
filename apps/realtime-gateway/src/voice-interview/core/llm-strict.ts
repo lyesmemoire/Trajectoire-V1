@@ -132,7 +132,8 @@ export async function callLlmStrict<T>(
   userPrompt: string,
   schema: z.ZodSchema<T>,
   schemaDescription: string,
-  maxRetries = 2
+  maxRetries = 2,
+  options?: { signal?: AbortSignal }
 ): Promise<T> {
   const client = createLlmClient();
   const model = getLlmModel();
@@ -145,6 +146,10 @@ export async function callLlmStrict<T>(
   console.log(`[llm-strict] Provider: ${provider} | Model: ${model}`);
 
   while (currentRetry <= maxRetries) {
+    if (options?.signal?.aborted) {
+      throw new Error("Evaluation aborted");
+    }
+
     const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
       { role: "system", content: systemPrompt },
       {
@@ -176,7 +181,7 @@ export async function callLlmStrict<T>(
           temperature: 0.2,
           response_format: { type: "json_object" },
           messages,
-        }),
+        }, { signal: options?.signal }),
         timeoutPromise
       ]);
     } catch (err) {

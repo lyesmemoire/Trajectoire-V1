@@ -5,7 +5,7 @@
  * Aucune dépendance SDK obligatoire au build.
  */
 
-import type { TTSProvider } from "./types";
+import type { TTSProvider } from "./types.js";
 
 export interface OpenAITTSOptions {
   apiKey?: string;

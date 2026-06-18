@@ -16,9 +16,10 @@ import {
   nextPhase,
   turnCount,
   isFinished,
-} from "./state";
-import { evaluateTranscript, type AnswerEvaluation } from "./evaluation";
-import { generateQuestion } from "./question-generator";
+} from "./state.js";
+import { evaluateTranscript, type AnswerEvaluation } from "./evaluation.js";
+import { generateQuestion } from "./question-generator.js";
+import { selectNextMunition, formatMunitionQuestion } from "./strategies/munition-selector.js";
 
 export type FeedbackSignal = "probe" | "deepen" | "move-on";
 
@@ -61,22 +62,79 @@ export function nextStep(
       ? nextPhase(state.phase)
       : state.phase;
 
+  // Track candidate response to current munition
+  let munitionsUsage = state.munitionsUsage;
+  let currentMunitionId = state.currentMunitionId;
+
+  const isSilence = transcript.trim().length === 0;
+  const responseType = isSilence ? "silence" : (signal === "probe" ? "deflected" : "engaged");
+
+  if (currentMunitionId) {
+     const usage = munitionsUsage[currentMunitionId];
+     if (usage) {
+       munitionsUsage = {
+         ...munitionsUsage,
+         [currentMunitionId]: { ...usage, lastResponse: responseType }
+       };
+     }
+     
+     if (signal !== "probe" || phase !== state.phase) {
+       currentMunitionId = undefined;
+     }
+  }
+
   // Génère la question suivante.
   const probe = signal === "probe";
-  const nextQuestion = generateQuestion({
-    phase,
-    gap: state.jobGap,
-    askedQuestions: state.askedQuestions,
-    lastEvaluation: evaluation,
-    probe,
-    style: state.interviewerStyle,
-  });
+  let nextQuestion = "";
+  
+  if (probe && currentMunitionId) {
+    nextQuestion = generateQuestion({
+      phase,
+      gap: state.jobGap,
+      askedQuestions: state.askedQuestions,
+      lastEvaluation: evaluation,
+      probe,
+      style: state.interviewerStyle,
+    });
+  } else if (!currentMunitionId && phase === "pressure") {
+    const munition = selectNextMunition({
+      state: { ...state, munitionsUsage },
+      currentPhase: phase,
+      currentTurnNumber: turnCount(state)
+    });
+    
+    if (munition) {
+      nextQuestion = formatMunitionQuestion(munition);
+      currentMunitionId = munition.id;
+      munitionsUsage = {
+        ...munitionsUsage,
+        [munition.id]: {
+          firstUsedAtTurn: munitionsUsage[munition.id]?.firstUsedAtTurn ?? turnCount(state),
+          attempts: (munitionsUsage[munition.id]?.attempts ?? 0) + 1,
+          lastResponse: null
+        }
+      };
+    }
+  }
+  
+  if (!nextQuestion) {
+    nextQuestion = generateQuestion({
+      phase,
+      gap: state.jobGap,
+      askedQuestions: state.askedQuestions,
+      lastEvaluation: evaluation,
+      probe,
+      style: state.interviewerStyle,
+    });
+  }
 
   const updatedState = applyPatch(state, {
     phase,
     scoreSignals,
     askedQuestions: [...state.askedQuestions, nextQuestion],
     currentTopic: state.jobGap || state.currentTopic,
+    munitionsUsage,
+    currentMunitionId,
   });
 
   return {

@@ -1,5 +1,5 @@
-import { VoiceExecutionPlan } from "./voice-contract";
-import { validateVoicePlan } from "./plan-validator";
+import { VoiceExecutionPlan } from "./voice-contract.js";
+import { validateVoicePlan } from "./plan-validator.js";
 
 export function serializePlan(plan: VoiceExecutionPlan): string {
   return JSON.stringify(plan);

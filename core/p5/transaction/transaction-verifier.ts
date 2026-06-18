@@ -1,7 +1,7 @@
-import { MindState } from "../execution-contract";
-import { applyEvents } from "../execution-engine";
-import { restoreSnapshot } from "../snapshot/restore-snapshot";
-import { Transaction } from "./transaction-contract";
+import { MindState } from "../execution-contract.js";
+import { applyEvents } from "../execution-engine.js";
+import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
+import { Transaction } from "./transaction-contract.js";
 
 /**
  * Verifies that a committed state matches what a replay of the

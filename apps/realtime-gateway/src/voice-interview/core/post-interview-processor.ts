@@ -1,9 +1,9 @@
-import { interviewRepository } from "../persistence/singleton";
-import { scoreStructuredInterview, callMistral } from "./scoring";
-import { computeWeightedOverall } from "./compute-weighted-score";
-import type { RoleType } from "./role-weights";
-import { getUserPlan } from "../billing/usage-service";
-import { generatePremiumReport } from "./premium-report";
+import { interviewRepository } from "../persistence/singleton.js";
+import { scoreStructuredInterview, callMistral } from "./scoring.js";
+import { computeWeightedOverall } from "./compute-weighted-score.js";
+import type { RoleType } from "./role-weights.js";
+import { getUserPlan } from "../billing/usage-service.js";
+import { generatePremiumReport } from "./premium-report.js";
 
 export async function finalizeInterview(
   sessionId: string,

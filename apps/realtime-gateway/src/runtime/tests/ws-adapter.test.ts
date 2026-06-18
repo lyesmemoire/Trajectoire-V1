@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { WebSocketAdapter } from "../ws-adapter";
-import { TransportCommand } from "../../../../../core/p6/transport/transport-contract";
+import { WebSocketAdapter } from "../ws-adapter.js";
+import { TransportCommand } from "../../../../../core/p6/transport/transport-contract.js";
 
 describe("P6.6 - W1 WebSocket Adapter", () => {
   it("should correctly translate WS message to CandidateMessage", () => {

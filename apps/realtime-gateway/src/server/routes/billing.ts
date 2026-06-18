@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import Stripe from "stripe";
-import { verifyVoiceToken } from "../auth";
+import { verifyVoiceToken } from "../auth.js";
 import { createClient } from "@supabase/supabase-js";
 
 export async function registerBillingRoutes(app: FastifyInstance) {

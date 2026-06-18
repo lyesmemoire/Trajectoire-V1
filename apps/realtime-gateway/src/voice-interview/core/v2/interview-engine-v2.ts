@@ -6,7 +6,7 @@
  * Aucune I/O, aucun LLM. Indépendant du moteur V1 (P3.1→P3.5 inchangé).
  */
 
-import { type CandidateProfile } from "./candidate-profile";
+import { type CandidateProfile } from "./candidate-profile.js";
 // Step A (pré-P4) : V2 dépend UNIQUEMENT de ses contrats, jamais de la simulation.
 import {
   // interviewer-brain
@@ -42,7 +42,9 @@ import {
   type HiringRecommendation,
   buildRecruiterReport,
   type RecruiterReport,
-} from "./contracts/index";
+} from "./contracts/index.js";
+import { detectIntent } from "../intent-detector.js";
+import { handlePilotCommand, extractPilotAction } from "../strategies/pilot-commands.js";
 
 /** Mémoire conversationnelle (Bloc 9). */
 export interface InterviewMemory {
@@ -134,6 +136,29 @@ export function nextV2Step(
   state: InterviewStateV2,
   transcript: string,
 ): NextV2Result {
+  // 0) Détection d'intention (interception des commandes de pilotage)
+  const intent = detectIntent(transcript);
+  const pilotAction = extractPilotAction(intent);
+
+  if (pilotAction) {
+    const lastQuestion = state.memory.askedQuestions[state.memory.askedQuestions.length - 1] ?? "";
+    const result = handlePilotCommand(pilotAction, lastQuestion);
+    
+    console.info("[interview-engine-v2] pilot_command_handled", {
+      phase: state.phase,
+      command: pilotAction
+    });
+
+    return {
+      question: result.speakText ?? "",
+      updatedState: state, // Pas de mutation d'état pour éviter de pénaliser
+      evaluationScore: 0,
+      signals: { specificity: 0, quantifiedResults: 0, ownership: 0, technicalDepth: 0 },
+      bluff: { bluffProbability: 0, flags: [] },
+      finished: !!result.finished,
+    };
+  }
+
   // 1) Évaluer la réponse précédente.
   const evaluation = evaluateTranscript(transcript, state.profile.gaps[0]);
   const signals = extractSignals(transcript);

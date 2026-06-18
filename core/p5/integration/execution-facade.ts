@@ -1,7 +1,7 @@
-import { MindState } from "../execution-contract";
-import { RuntimeDecision, ExecutionResult } from "./integration-contract";
-import { createSession, executeDecision } from "./execution-session";
-import { RuntimeStateStore } from "./runtime-state-store";
+import { MindState } from "../execution-contract.js";
+import { RuntimeDecision, ExecutionResult } from "./integration-contract.js";
+import { createSession, executeDecision } from "./execution-session.js";
+import { RuntimeStateStore } from "./runtime-state-store.js";
 
 /**
  * High-level facade for the P5 execution engine.

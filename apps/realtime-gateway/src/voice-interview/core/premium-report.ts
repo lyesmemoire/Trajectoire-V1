@@ -1,4 +1,4 @@
-import type { StructuredScore } from "./scoring";
+import type { StructuredScore } from "./scoring.js";
 
 export interface PremiumReport {
   detailedAnalysis: Record<string, string>;

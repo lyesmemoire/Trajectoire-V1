@@ -1,5 +1,5 @@
 import { EventEmitter } from "eventemitter3";
-import type { TranscriptMessage } from "../contracts/transcript";
+import type { TranscriptMessage } from "../contracts/transcript.js";
 
 export interface GatewayEvents {
   transcript: (msg: TranscriptMessage) => void;

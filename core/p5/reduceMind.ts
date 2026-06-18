@@ -1,4 +1,4 @@
-import { MindState, P5Event } from "./execution-contract";
+import { MindState, P5Event } from "./execution-contract.js";
 
 export function reduceMind(state: MindState, event: P5Event): MindState {
   switch (event.type) {

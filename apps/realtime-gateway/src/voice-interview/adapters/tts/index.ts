@@ -9,16 +9,16 @@
  * et tourne même si un SDK est absent. Aucune dépendance obligatoire.
  */
 
-import type { TTSAdapter, TTSProvider } from "./types";
-import { MockTTSProvider, createSilentWav } from "./mock";
-import { ElevenLabsTTSProvider } from "./elevenlabs";
-import { OpenAITTSProvider } from "./openai";
+import type { TTSAdapter, TTSProvider } from "./types.js";
+import { MockTTSProvider, createSilentWav } from "./mock.js";
+import { ElevenLabsTTSProvider } from "./elevenlabs.js";
+import { OpenAITTSProvider } from "./openai.js";
 
-export type { TTSAdapter, TTSProvider } from "./types";
-export { createSilentWav } from "./mock";
-export { MockTTSProvider } from "./mock";
-export { ElevenLabsTTSProvider } from "./elevenlabs";
-export { OpenAITTSProvider } from "./openai";
+export type { TTSAdapter, TTSProvider } from "./types.js";
+export { createSilentWav } from "./mock.js";
+export { MockTTSProvider } from "./mock.js";
+export { ElevenLabsTTSProvider } from "./elevenlabs.js";
+export { OpenAITTSProvider } from "./openai.js";
 
 export interface ChainTTSOptions {
   /** Liste ordonnée de providers (le premier configuré gagne, fallback en cascade). */

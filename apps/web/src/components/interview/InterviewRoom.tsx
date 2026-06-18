@@ -20,8 +20,16 @@ export default function InterviewRoom({
   const [state, setState] = useState<State>("Listening");
   const [error, setError] = useState<string | null>(null);
 
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+
   useEffect(() => {
     let disposed = false;
+
+    const addTimeout = (fn: () => void, delay: number) => {
+      const id = setTimeout(fn, delay);
+      timeoutsRef.current.push(id);
+      return id;
+    };
 
     async function startInterview() {
       try {
@@ -86,7 +94,7 @@ export default function InterviewRoom({
               setQuestion(data.question);
               setState("Responding");
               // After TTS finishes, switch to Listening (simulated delay)
-              setTimeout(() => {
+              addTimeout(() => {
                 if (!disposed) setState("Listening");
               }, 4000);
             }
@@ -102,19 +110,19 @@ export default function InterviewRoom({
               const delay = 600 + Math.random() * 600;
 
               if (data.finished) {
-                setTimeout(() => {
+                addTimeout(() => {
                   if (!disposed) {
                     cleanup();
                     router.push(`/dashboard/report/${sessionId}`);
                   }
                 }, delay);
               } else {
-                setTimeout(() => {
+                addTimeout(() => {
                   if (!disposed) {
                     setQuestion(data.question);
                     setState("Responding");
                     // Back to Listening after TTS plays
-                    setTimeout(() => {
+                    addTimeout(() => {
                       if (!disposed) setState("Listening");
                     }, 4000);
                   }
@@ -150,6 +158,9 @@ export default function InterviewRoom({
     }
 
     function cleanup() {
+      // Clear timeouts
+      timeoutsRef.current.forEach((id) => clearTimeout(id));
+      timeoutsRef.current = [];
       // Stop all mic tracks
       streamRef.current?.getTracks().forEach((track) => track.stop());
       // Close AudioContext

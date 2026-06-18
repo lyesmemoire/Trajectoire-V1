@@ -1,6 +1,6 @@
-import { initInterviewPipeline, runInterviewPipeline } from "../core/simulation/pipeline";
-import { buildCandidateProfile } from "../core/v2/candidate-profile";
-import { syntheticAnswer } from "./synthetic-candidate";
+import { initInterviewPipeline, runInterviewPipeline } from "../core/simulation/pipeline.js";
+import { buildCandidateProfile } from "../core/v2/candidate-profile.js";
+import { syntheticAnswer } from "./synthetic-candidate.js";
 
 for (const arch of ["strong","weak","bluffer"] as const) {
   const profile = buildCandidateProfile({ strengths:["react","node"], gaps:["aws"], matchScore:60, targetRole:"SE" });

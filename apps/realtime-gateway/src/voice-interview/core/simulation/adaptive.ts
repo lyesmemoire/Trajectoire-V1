@@ -11,4 +11,4 @@ export {
   adaptDifficulty,
   nextTopicInTree,
   inferDomain,
-} from "../v2/difficulty-adapter";
+} from "../v2/difficulty-adapter.js";

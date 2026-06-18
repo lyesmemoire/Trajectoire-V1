@@ -1,7 +1,7 @@
 import { createClient, LiveTranscriptionEvents } from "@deepgram/sdk";
-import { logger } from "../telemetry/logger";
-import { bus } from "../events/bus";
-import { TranscriptMessage } from "../contracts/transcript";
+import { logger } from "../telemetry/logger.js";
+import { bus } from "../events/bus.js";
+import { TranscriptMessage } from "../contracts/transcript.js";
 
 export class DeepgramWrapper {
   private connection: any;

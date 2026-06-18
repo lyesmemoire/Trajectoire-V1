@@ -1,5 +1,5 @@
-import { RuntimeTrace, TurnTrace } from "../../trace-contract";
-import { Signal, SignalExtractor } from "../scoring-contract";
+import { RuntimeTrace } from "../../trace-contract.js";
+import { Signal, SignalExtractor } from "../scoring-contract.js";
 
 export class TrustExtractor implements SignalExtractor {
   name = "TrustExtractor";

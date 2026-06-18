@@ -12,28 +12,28 @@ import {
   type PressureState,
   createPressureState,
   updatePressure,
-} from "./pressure";
+} from "./pressure.js";
 import {
   type MemoryState,
   createMemoryState,
   updateMemory,
   type MemoryUpdate,
-} from "./memory";
+} from "./memory.js";
 import {
   type CrossSessionState,
   createCrossSessionState,
   type PreviousSession,
-} from "./cross-session";
+} from "./cross-session.js";
 import {
   type HiddenEval,
   createHiddenEval,
   updateHiddenEval,
-} from "./hidden-eval";
+} from "./hidden-eval.js";
 import {
   type ReactivePersona,
   createReactivePersona,
   updatePersona,
-} from "./persona-reactivity";
+} from "./persona-reactivity.js";
 
 export interface SimulationState {
   pressure: PressureState;

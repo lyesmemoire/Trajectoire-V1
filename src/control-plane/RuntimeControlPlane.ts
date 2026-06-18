@@ -5,7 +5,7 @@ import { EventStreamBus } from "../distributed/stream/EventStreamBus";
 import { GlobalStateStore } from "../observability/GlobalStateStore";
 import { LoopGovernor } from "../governor/LoopGovernor";
 import { AutonomousLoopEngine } from "../distributed/loop/AutonomousLoopEngine";
-import { HealingEngine } from "../../apps/realtime-gateway/src/interview/runtime/fsm/distributed/healing/HealingEngine";
+import { HealingEngine } from "../../apps/realtime-gateway/src/voice-interview/runtime/fsm/distributed/healing/HealingEngine";
 import { CoordinatorNode } from "../distributed/core/CoordinatorNode";
 
 /**

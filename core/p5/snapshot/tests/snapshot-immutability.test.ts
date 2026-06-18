@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { createSnapshot } from "../create-snapshot";
-import { restoreSnapshot } from "../restore-snapshot";
-import { MindState } from "../../execution-contract";
+import { createSnapshot } from "../create-snapshot.js";
+import { restoreSnapshot } from "../restore-snapshot.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("snapshot — S2: Immutability", () => {
   it("should not share references between original state and snapshot", () => {

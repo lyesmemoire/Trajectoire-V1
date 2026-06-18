@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const resolvedParams = await params;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // Or anon key if RLS handles it. Assuming service role for this endpoint.
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder"; // Or anon key if RLS handles it. Assuming service role for this endpoint.
     
     if (!supabaseUrl || !supabaseKey) {
       console.warn("Supabase credentials missing");
@@ -19,7 +20,7 @@ export async function GET(
     const { data: interview, error } = await supabase
       .from("interviews")
       .select("*")
-      .eq("session_id", params.id)
+      .eq("session_id", resolvedParams.id)
       .single();
 
     if (error || !interview) {

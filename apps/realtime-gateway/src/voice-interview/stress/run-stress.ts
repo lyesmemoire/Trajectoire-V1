@@ -9,20 +9,20 @@ import {
   initInterviewPipeline,
   runInterviewPipeline,
   type PipelineState,
-} from "../core/simulation/pipeline";
-import { buildCandidateProfile } from "../core/v2/candidate-profile";
-import { checkMindBounds, checkSimulationBounds } from "../core/simulation/stability";
+} from "../core/simulation/pipeline.js";
+import { buildCandidateProfile } from "../core/v2/candidate-profile.js";
+import { checkMindBounds, checkSimulationBounds } from "../core/simulation/stability.js";
 import {
   type Archetype,
   ARCHETYPES,
   syntheticAnswer,
-} from "./synthetic-candidate";
+} from "./synthetic-candidate.js";
 import {
   type Trajectory,
   type TrajectoryMetrics,
   computeTrajectoryMetrics,
   trajectoryDistance,
-} from "./metrics";
+} from "./metrics.js";
 
 const MAX_TURNS = 40; // garde-fou anti-boucle infinie
 

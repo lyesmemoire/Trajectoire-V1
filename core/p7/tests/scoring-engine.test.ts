@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { ScoringEngine } from "../scoring-engine/scoring-engine";
-import { RuntimeTrace, TurnTrace } from "../trace-contract";
+import { ScoringEngine } from "../scoring-engine/scoring-engine.js";
+import { RuntimeTrace } from "../trace-contract.js";
 
 function buildFixedTrace(): RuntimeTrace {
   return {

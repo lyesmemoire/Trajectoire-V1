@@ -1,11 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { RuntimeOrchestrator } from "../runtime-orchestrator";
-import { ExecutionFacade } from "../../../p5/integration/execution-facade";
-import { SessionGovernor, CandidateMessage } from "../../types";
-import { VoiceUXCalculator } from "../orchestrator-contract";
-import { MindState } from "../../../p5/execution-contract";
-import { RuntimeDecision } from "../../../p5/integration/integration-contract";
-import { VoiceInput } from "../../voice/voice-contract";
+import { RuntimeOrchestrator } from "../runtime-orchestrator.js";
+import { ExecutionFacade } from "../../../p5/integration/execution-facade.js";
+import { SessionGovernor } from "../../types.js";
+import { VoiceUXCalculator } from "../orchestrator-contract.js";
+import { RuntimeDecision } from "../../../p5/integration/integration-contract.js";
+import { VoiceInput } from "../../voice/voice-contract.js";
 
 class DummyGovernor implements SessionGovernor {
   decide(): RuntimeDecision { return {}; }

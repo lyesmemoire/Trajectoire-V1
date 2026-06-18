@@ -1,5 +1,5 @@
 import { SILState } from "../contracts/session-state";
-import { FailureType, SILEvent } from "../contracts/sil-events";
+import { FailureType } from "../contracts/sil-events";
 import { EventRouter } from "../services/event-router";
 
 export class FailureController {

@@ -23,14 +23,14 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://studioentretien.fr",
+    process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.io",
   ),
   title: {
-    default: "StudioEntretien — Entraîne-toi. Progresse. Réussis.",
-    template: "%s | StudioEntretien",
+    default: "Trajectoire — Révélez votre potentiel avant l'entretien.",
+    template: "%s | Trajectoire",
   },
   description:
-    "Simule des entretiens d'embauche réalistes avec l'IA et progresse à chaque session. 1 session Premium offerte à l'inscription.",
+    "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel, détection d'incohérence CV/oral, et Career DNA.",
   keywords: [
     "ATS",
     "CV",
@@ -42,21 +42,21 @@ export const metadata: Metadata = {
     "carrière",
     "recrutement",
   ],
-  authors: [{ name: "StudioEntretien" }],
-  creator: "StudioEntretien",
+  authors: [{ name: "Trajectoire" }],
+  creator: "Trajectoire",
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://studioentretien.fr",
-    siteName: "StudioEntretien",
-    title: "StudioEntretien — Entraîne-toi. Progresse. Réussis.",
+    url: process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.io",
+    siteName: "Trajectoire",
+    title: "Trajectoire — Révélez votre potentiel avant l'entretien.",
     description:
-      "Simule des entretiens réalistes avec l'IA. 1 session Premium offerte.",
+      "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "StudioEntretien",
-    description: "Simule des entretiens réalistes avec l'IA et progresse.",
+    title: "Trajectoire",
+    description: "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel.",
   },
   robots: {
     index: true,

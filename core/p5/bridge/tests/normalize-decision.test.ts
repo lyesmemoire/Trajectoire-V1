@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { normalizeDecision } from "../normalize-decision";
-import { GovernorDecision } from "../normalization-contract";
+import { normalizeDecision } from "../normalize-decision.js";
+import { GovernorDecision } from "../normalization-contract.js";
 
 describe("normalize-decision", () => {
   // B1 — Déterminisme: même décision → mêmes événements
@@ -40,7 +40,7 @@ describe("normalize-decision", () => {
     const events = normalizeDecision(decision);
 
     expect(events).toHaveLength(1);
-    expect(events[0]!!).toEqual({ type: "TRUST_DELTA", delta: 0.1 });
+    expect(events[0]!).toEqual({ type: "TRUST_DELTA", delta: 0.1 });
   });
 
   it("should return an empty array for an empty decision", () => {
@@ -57,7 +57,7 @@ describe("normalize-decision", () => {
 
     const events = normalizeDecision(decision);
 
-    expect(events[0]!!).toEqual({ type: "TRUST_DELTA", delta: 0.123456789 });
+    expect(events[0]!).toEqual({ type: "TRUST_DELTA", delta: 0.123456789 });
     expect(events[1]).toEqual({ type: "SUSPICION_DELTA", delta: -0.999 });
     expect(events[2]).toEqual({ type: "PRESSURE_DELTA", delta: 99.5 });
   });

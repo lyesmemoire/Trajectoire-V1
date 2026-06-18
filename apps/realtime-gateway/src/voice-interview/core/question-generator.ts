@@ -5,8 +5,8 @@
  * ton calme et non jugeant. Sélection basée sur la phase + le gap + les faiblesses STAR.
  */
 
-import type { InterviewPhase, InterviewerStyle } from "./state";
-import type { AnswerEvaluation } from "./evaluation";
+import type { InterviewPhase, InterviewerStyle } from "./state.js";
+import type { AnswerEvaluation } from "./evaluation.js";
 
 /** Applique le ton du recruteur à une question (P3.5). Le sens reste identique. */
 export function applyStyle(question: string, style: InterviewerStyle): string {

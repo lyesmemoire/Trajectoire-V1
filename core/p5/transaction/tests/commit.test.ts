@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { beginTransaction } from "../begin-transaction";
-import { applyTransaction } from "../apply-transaction";
-import { commitTransaction } from "../commit-transaction";
-import { rollbackTransaction } from "../rollback-transaction";
-import { MindState, P5Event } from "../../execution-contract";
+import { beginTransaction } from "../begin-transaction.js";
+import { applyTransaction } from "../apply-transaction.js";
+import { commitTransaction } from "../commit-transaction.js";
+import { rollbackTransaction } from "../rollback-transaction.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("transaction — commit vs rollback", () => {
   const getState = (): MindState => ({

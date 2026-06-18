@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateDecision } from "../validation";
+import { validateDecision } from "../validation.js";
 
 describe("validation — B3: No invalid events", () => {
   it("should accept a valid decision with all fields", () => {

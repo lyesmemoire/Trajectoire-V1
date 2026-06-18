@@ -12,13 +12,12 @@
  *   npx tsx apps/realtime-gateway/scripts/test-cv-engine.ts
  */
 
-import * as path from "path";
 import "dotenv/config";
 
 import { extractStructuredCV } from "../src/voice-interview/core/cv-structurer";
-import { generateCvDiagnostic, type FinalCabinetCvReport } from "../src/voice-interview/core/cv-diagnostic";
+import { generateCvDiagnostic } from "../src/voice-interview/core/cv-diagnostic";
 import { generateExecutiveRewrite } from "../src/voice-interview/core/cv-rewriter";
-import { getScoreTier, scoreToPercentile, getEngineMetadata } from "../src/voice-interview/core/llm-strict";
+import { getEngineMetadata } from "../src/voice-interview/core/llm-strict";
 
 // ─── Test CVs ──────────────────────────────────────────────────
 

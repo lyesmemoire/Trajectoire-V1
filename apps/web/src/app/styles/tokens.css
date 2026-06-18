@@ -1,0 +1,63 @@
+/* ============================================================
+DESIGN TOKENS — Variables CSS globales
+Source unique de vérité pour couleurs, typographie, espacements.
+============================================================ */
+
+:root {
+/* Couleurs de fond */
+--bg-primary: #0a0a0f;
+--bg-secondary: #111118;
+--bg-card: #13131a;
+--bg-elevated: #1a1a24;
+
+/* Texte */
+--text-primary: #f0f0f5;
+--text-secondary: #9ca3af;
+--text-muted: #6b7280;
+
+/* Accent & gradient Pro */
+--accent-primary: #6366f1;
+--accent-hover: #4f46e5;
+--pro-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+
+/* Bordures */
+--border-color: rgba(255, 255, 255, 0.08);
+--border-color-hover: rgba(99, 102, 241, 0.4);
+
+/* Statuts sémantiques */
+--color-success: #34d399;
+--color-warning: #fbbf24;
+--color-danger: #ef4444;
+--color-info: #60a5fa;
+
+/* Typographie */
+--font-sans: 'Inter', system-ui, sans-serif;
+--font-serif: 'Playfair Display', Georgia, serif;
+--font-mono: 'Courier New', Courier, monospace;
+
+/* Rayons */
+--radius-sm: 6px;
+--radius-md: 10px;
+--radius-lg: 16px;
+--radius-xl: 20px;
+--radius-full: 9999px;
+
+/* Ombres */
+--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+--shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+--shadow-pro: 0 4px 24px rgba(99, 102, 241, 0.35);
+
+/* Transitions */
+--transition-fast: 0.15s ease;
+--transition-normal: 0.2s ease;
+--transition-slow: 0.3s ease;
+
+/* Espacements */
+--space-xs: 0.25rem;
+--space-sm: 0.5rem;
+--space-md: 1rem;
+--space-lg: 1.5rem;
+--space-xl: 2rem;
+--space-2xl: 3rem;
+--space-3xl: 5rem;
+}

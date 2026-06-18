@@ -1,5 +1,5 @@
-import { P5Event } from "../execution-contract";
-import { Transaction } from "./transaction-contract";
+import { P5Event } from "../execution-contract.js";
+import { Transaction } from "./transaction-contract.js";
 
 /**
  * Adds an event to a pending transaction, returning a new transaction.

@@ -1,7 +1,7 @@
 export default function DecisionSimulation({
   hr,
   technical,
-  committee
+  committee,
 }: {
   hr: "PASS" | "BORDERLINE" | "FAIL";
   technical: "PASS" | "BORDERLINE" | "FAIL";
@@ -13,25 +13,35 @@ export default function DecisionSimulation({
     return "Évaluation approfondie requise";
   };
 
+  const getOutcomeClass = (decision: string) => {
+    if (decision === "PASS") return "outcome-pass";
+    if (decision === "BORDERLINE") return "outcome-borderline";
+    return "outcome-fail";
+  };
+
   return (
-    <section className="mt-8 border-t border-white/5 pt-8">
-      <h3 className="text-xs font-bold font-sans text-[#9CA3AF] uppercase tracking-widest mb-6">
-        Simulation Décisionnelle
-      </h3>
-      <div className="space-y-4">
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-[#9CA3AF] font-sans">Filtrage RH</span>
-          <span className="text-[#E5E7EB] font-serif tracking-wide">{getOutcomeText(hr)}</span>
-        </div>
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-[#9CA3AF] font-sans">Entretien technique</span>
-          <span className="text-[#E5E7EB] font-serif tracking-wide">{getOutcomeText(technical)}</span>
-        </div>
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-[#9CA3AF] font-sans">Comité final</span>
-          <span className="text-[#E5E7EB] font-serif tracking-wide">{getOutcomeText(committee)}</span>
-        </div>
-      </div>
+    <section className="decision-simulation">
+      <h3 className="section-title">Simulation Décisionnelle</h3>
+      
+      <ul className="decision-list">
+        <li className={`decision-item ${getOutcomeClass(hr)}`}>
+          <span className="bullet">■</span>
+          <span className="row-label" style={{ minWidth: "180px" }}>Filtrage RH</span>
+          <span className="row-value">{getOutcomeText(hr)}</span>
+        </li>
+        
+        <li className={`decision-item ${getOutcomeClass(technical)}`}>
+          <span className="bullet">■</span>
+          <span className="row-label" style={{ minWidth: "180px" }}>Entretien technique</span>
+          <span className="row-value">{getOutcomeText(technical)}</span>
+        </li>
+        
+        <li className={`decision-item ${getOutcomeClass(committee)}`}>
+          <span className="bullet">■</span>
+          <span className="row-label" style={{ minWidth: "180px" }}>Comité final</span>
+          <span className="row-value">{getOutcomeText(committee)}</span>
+        </li>
+      </ul>
     </section>
   );
 }

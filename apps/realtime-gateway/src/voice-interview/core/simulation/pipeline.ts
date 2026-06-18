@@ -17,32 +17,32 @@ import {
   type InterviewStateV2,
   type InitV2Input,
   type NextV2Result,
-} from "../v2/interview-engine-v2";
+} from "../v2/interview-engine-v2.js";
 import {
   type SimulationState,
   createSimulationState,
   updateSimulation,
-} from "./simulation-state";
+} from "./simulation-state.js";
 import {
   deriveSignal,
   buildSimulationContext,
   applySimulationToQuestion,
   applyOpeningContext,
   type SimulationContext,
-} from "./integration";
-import type { PreviousSession } from "./cross-session";
+} from "./integration.js";
+import type { PreviousSession } from "./cross-session.js";
 import {
   deriveRecruiterMind,
   personaFromMind,
   type RecruiterMindState,
-} from "./recruiter-mind";
-import { perceiveUX, type PerceptionUX } from "./perception-ux";
+} from "./recruiter-mind.js";
+import { perceiveUX, type PerceptionUX } from "./perception-ux.js";
 // P4.1 : Emotional UX Control System (contraintes globales sur l'UX).
 import {
   type GovernorState,
   createGovernorState,
   governUX,
-} from "./governor/index";
+} from "./governor/index.js";
 
 /** Décision brute issue de V2 (entrée du contrat de simulation). */
 export interface V2Decision {

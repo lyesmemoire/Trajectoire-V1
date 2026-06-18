@@ -1,5 +1,5 @@
-import { MindState } from "../execution-contract";
-import { MindSnapshot } from "./snapshot-contract";
+import { MindState } from "../execution-contract.js";
+import { MindSnapshot } from "./snapshot-contract.js";
 
 /**
  * Restores a MindState from a MindSnapshot.

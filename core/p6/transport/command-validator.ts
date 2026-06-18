@@ -1,4 +1,4 @@
-import { TransportCommand } from "./transport-contract";
+import { TransportCommand } from "./transport-contract.js";
 
 export interface TransportCommandValidationResult {
   valid: boolean;

@@ -1,4 +1,4 @@
-import { CohortStats, CohortLabel } from "./ranking-contract";
+import { CohortStats, CohortLabel } from "./ranking-contract.js";
 
 /**
  * Computes cohort-level statistics from a set of raw scores.

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { MindSnapshot } from "./snapshot-contract";
+import { MindSnapshot } from "./snapshot-contract.js";
 
 /**
  * Produces a deterministic SHA-256 hash of a MindSnapshot's logical state.

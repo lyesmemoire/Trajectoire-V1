@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { EventRouter } from "../services/event-router";
 import { MemoryEventStore } from "../services/memory-event-store";
 import { SILRuntimeLoop } from "../core/runtime-loop";

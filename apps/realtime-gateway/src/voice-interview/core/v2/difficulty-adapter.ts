@@ -5,7 +5,7 @@
  * technique (Docker → Kubernetes → Helm → GitOps → ArgoCD, etc.).
  */
 
-import type { Difficulty } from "./question-bank";
+import type { Difficulty } from "./question-bank.js";
 
 /** Étape suivante : monte si bon, stagne si moyen, descend si faible. */
 export function adaptDifficulty(current: Difficulty, score: number): Difficulty {

@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { createSnapshot } from "../create-snapshot";
-import { restoreSnapshot } from "../restore-snapshot";
-import { applyEvents } from "../../execution-engine";
-import { MindState, P5Event } from "../../execution-contract";
+import { createSnapshot } from "../create-snapshot.js";
+import { restoreSnapshot } from "../restore-snapshot.js";
+import { applyEvents } from "../../execution-engine.js";
+import { MindState, P5Event } from "../../execution-contract.js";
 
 describe("snapshot — S5: Recovery", () => {
   const events: P5Event[] = [

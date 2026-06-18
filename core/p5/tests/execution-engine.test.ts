@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { applyEvents } from "../execution-engine";
-import { MindState, P5Event } from "../execution-contract";
+import { applyEvents } from "../execution-engine.js";
+import { MindState, P5Event } from "../execution-contract.js";
 
 describe("execution-engine", () => {
   const getInitialState = (): MindState => ({

@@ -2,7 +2,7 @@
   "name": "realtime-gateway",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "engines": {
     "node": ">=20"
   },
@@ -14,7 +14,8 @@
     "cert:evaluate": "tsx ../../scripts/cert-evaluator.ts",
     "cert:gate": "tsx ../../scripts/cert-ci-gate.ts",
     "cert:history": "tsx ../../scripts/cert-history.ts",
-    "cert:full": "npm run cert:run && npm run cert:evaluate && npm run cert:gate",
+    "cert:architecture": "tsx ../../scripts/cert-architecture.ts",
+    "cert:full": "npm run cert:run && npm run cert:evaluate && npm run cert:gate && npm run cert:architecture",
     "cert:full-history": "npm run cert:full && npm run cert:history"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
-import { applyEvents } from "../execution-engine";
-import { restoreSnapshot } from "../snapshot/restore-snapshot";
-import { Transaction, CommitResult } from "./transaction-contract";
+import { applyEvents } from "../execution-engine.js";
+import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
+import { Transaction, CommitResult } from "./transaction-contract.js";
 
 /**
  * Commits a transaction: applies ALL pending events atomically.

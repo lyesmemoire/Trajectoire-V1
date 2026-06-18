@@ -2,8 +2,8 @@
  * runtime/turn-timing.ts — Réalisation des paramètres UX en plan d'exécution (P4.2). PURE.
  * PerceptionUX (déclaratif) -> TurnPlan (concret). Déterministe (Rng injecté).
  */
-import type { PerceptionUX } from "../core/simulation/perception-ux";
-import type { Rng } from "./rng";
+import type { PerceptionUX } from "../core/simulation/perception-ux.js";
+import type { Rng } from "./rng.js";
 
 export const TIMING = {
   msPerCharBase: 55,

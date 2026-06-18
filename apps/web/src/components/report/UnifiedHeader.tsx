@@ -1,26 +1,50 @@
 export default function UnifiedHeader({
   targetRole,
   date,
+  candidateName, // added as optional if not provided
 }: {
   candidateName?: string;
   targetRole: string;
   date: string;
 }) {
+  const formattedDate = new Date(date).toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <header className="border-b border-white/5 pb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
-      <div className="space-y-1">
-        <div className="font-serif text-2xl font-semibold tracking-[0.08em] text-[#E5E7EB] uppercase">
-          TRAJECTOIRE
+    <header className="report-header">
+      <div className="report-header-top">
+        <span className="report-cabinet-label">TRAJECTOIRE</span>
+        <span className="report-confidential-label">CONFIDENTIEL</span>
+      </div>
+
+      <div className="report-header-body">
+        <h1 className="report-title">Rapport d'Évaluation Exécutif</h1>
+        <p className="report-subtitle">
+          Analyse comportementale et cognitive par intelligence artificielle
+        </p>
+      </div>
+
+      <div className="report-meta">
+        {candidateName && (
+          <div className="report-meta-item">
+            <span className="report-meta-label">Candidat</span>
+            <span className="report-meta-value">{candidateName}</span>
+          </div>
+        )}
+        <div className="report-meta-item">
+          <span className="report-meta-label">Rôle cible</span>
+          <span className="report-meta-value">{targetRole}</span>
         </div>
-        <div className="text-xs font-mono text-[#9CA3AF] tracking-widest uppercase">
-          Executive Evaluation Dossier
+        <div className="report-meta-item">
+          <span className="report-meta-label">Date</span>
+          <span className="report-meta-value">{formattedDate}</span>
         </div>
       </div>
-      <div className="flex flex-col md:text-right gap-1 text-[10px] font-mono text-[#9CA3AF] uppercase tracking-widest">
-        <div>Role Target: {targetRole}</div>
-        <div>Date: {new Date(date).toLocaleDateString()}</div>
-        <div>Status: Confidentiel</div>
-      </div>
+
+      <div className="report-header-divider" />
     </header>
   );
 }

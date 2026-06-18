@@ -1,4 +1,4 @@
-import { P5Event } from "../execution-contract";
+import { P5Event } from "../execution-contract.js";
 
 /**
  * A single journal entry: an event with its sequence number.

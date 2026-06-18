@@ -16,8 +16,6 @@ import {
   HelpCircle,
   BarChart3,
   Target,
-  Layers,
-  Award,
   Lock,
   Loader2,
 } from "lucide-react";
@@ -215,7 +213,6 @@ function ATSDashboardContent() {
             setInterruption(randomInterrupt);
             setStressEvents((prev) => prev + 1);
           }
-        }
         }
 
         return prev - 1;
@@ -1045,36 +1042,6 @@ function ATSDashboardContent() {
                         <li>• Structurer votre projection 90 jours en priorités exécutives.</li>
                       </ul>
                     </div>
-                      <p className="text-xs uppercase tracking-widest text-slate-400 mb-4">
-                        Strategic Risk Zones
-                      </p>
-                      <ul className="space-y-3 text-slate-700">
-                        {executiveScore < 60 && (
-                          <li>• Positionnement perçu comme opérationnel.</li>
-                        )}
-                        {narrativeCoherenceScore < 60 && (
-                          <li>• Incohérence narrative perceptible.</li>
-                        )}
-                        {leadershipDensityScore < 50 && (
-                          <li>• Autorité décisionnelle perçue comme fragile.</li>
-                        )}
-                        {stressResilienceScore < 60 && (
-                          <li>• Stabilité sous pression à renforcer.</li>
-                        )}
-                      </ul>
-                    </div>
-
-                    <div className="mt-10 p-8 rounded-2xl bg-slate-50 border">
-                      <p className="text-xs uppercase tracking-widest text-slate-400 mb-4">
-                        J‑3 Executive Blueprint
-                      </p>
-                      <ul className="space-y-4 text-slate-700">
-                        <li>• Reformuler vos arbitrages clés en angle stratégique clair.</li>
-                        <li>• Préparer une décision impopulaire assumée avec impact business mesurable.</li>
-                        <li>• Structurer votre projection 90 jours en priorités exécutives.</li>
-                      </ul>
-                    </div>
-
                     <div className="mt-12 p-10 rounded-2xl bg-gradient-to-br from-slate-900 to-black text-white shadow-xl">
                       <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">
                         Executive Deep Analysis
@@ -1227,7 +1194,7 @@ function ATSDashboardContent() {
                 </motion.div>
               )}
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { P5Event } from "../execution-contract";
-import { MindSnapshot } from "../snapshot/snapshot-contract";
+import { P5Event } from "../execution-contract.js";
+import { MindSnapshot } from "../snapshot/snapshot-contract.js";
 
 /**
  * A pending transaction: a snapshot of the state before the transaction
@@ -16,6 +16,6 @@ export interface Transaction {
  * Result of committing a transaction.
  */
 export interface CommitResult {
-  readonly state: import("../execution-contract").MindState;
+  readonly state: import("../execution-contract.js").MindState;
   readonly appliedCount: number;
 }

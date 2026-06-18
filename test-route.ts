@@ -1,5 +1,4 @@
 import Fastify from "fastify";
-import { registerEngineRoutes } from "./apps/realtime-gateway/src/server/routes/engine";
 
 const app = Fastify();
 

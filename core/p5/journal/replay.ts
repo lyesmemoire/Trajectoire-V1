@@ -1,8 +1,8 @@
-import { MindState } from "../execution-contract";
-import { reduceMind } from "../reduceMind";
-import { MindSnapshot } from "../snapshot/snapshot-contract";
-import { restoreSnapshot } from "../snapshot/restore-snapshot";
-import { EventJournal } from "./journal-contract";
+import { MindState } from "../execution-contract.js";
+import { reduceMind } from "../reduceMind.js";
+import { MindSnapshot } from "../snapshot/snapshot-contract.js";
+import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
+import { EventJournal } from "./journal-contract.js";
 
 /**
  * Replays a journal from a snapshot, producing the final MindState.

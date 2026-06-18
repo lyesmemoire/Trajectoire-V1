@@ -1,5 +1,4 @@
 import { buildPrompt } from "@/lib/interview/prompts";
-import { OpenAI } from "openai";
 import { NextResponse } from "next/server";
 import { getOpenAIClient } from "@/lib/openai";
 

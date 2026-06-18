@@ -3,7 +3,7 @@ import { SILPublicAPI } from "../sil/contracts/public-api";
 import { EventSigner } from "./services/event-signer";
 import { JwtVerifier } from "./services/auth";
 import { TenantResolver } from "./services/tenant-resolver";
-import { AuthorizationService, Permission } from "./services/rbac";
+import { AuthorizationService } from "./services/rbac";
 import { SecurityAuditStore } from "../sil/contracts/security-audit-store";
 import { createAuthMiddleware } from "./middlewares/auth-middleware";
 import { createTenantMiddleware } from "./middlewares/tenant-middleware";

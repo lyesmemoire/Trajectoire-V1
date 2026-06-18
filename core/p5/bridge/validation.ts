@@ -1,4 +1,4 @@
-import { GovernorDecision, ValidationResult } from "./normalization-contract";
+import { GovernorDecision, ValidationResult } from "./normalization-contract.js";
 
 /**
  * Validates a GovernorDecision before it enters the normalization pipeline.

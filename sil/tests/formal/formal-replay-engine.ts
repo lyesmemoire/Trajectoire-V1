@@ -17,7 +17,7 @@ export class FormalReplayEngine {
 
     // 2. Tenant isolation check
     const tenantStates = new Map<string, string>();
-    let crossInfluence = false;
+    const crossInfluence = false;
 
     // 3. Compute deterministic hash
     let globalHash = "genesis";

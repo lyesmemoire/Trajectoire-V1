@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { buildTransportCommands } from "../command-builder";
-import { VoiceExecutionPlan } from "../../voice/voice-contract";
+import { buildTransportCommands } from "../command-builder.js";
+import { VoiceExecutionPlan } from "../../voice/voice-contract.js";
 
 describe("P6.3 - T1 & T2 Command Builder", () => {
   it("T1: should produce exactly the same commands for the same plan", () => {

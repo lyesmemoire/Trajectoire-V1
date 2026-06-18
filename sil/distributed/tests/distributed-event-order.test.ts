@@ -4,7 +4,6 @@ import { ShardRouter } from "../sharding/shard-router";
 import { GlobalEventIndex } from "../index/global-event-index";
 import { MemoryEventStore } from "../../services/memory-event-store";
 import { SILEvent } from "../../contracts/sil-events";
-import * as crypto from "crypto";
 
 describe("Phase 2-K: Distributed Event Order", () => {
   it("events inserted across nodes must respect global index order", async () => {

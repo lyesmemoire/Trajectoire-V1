@@ -12,7 +12,7 @@ export function resolveConsensus(opinions: AgentOpinion[]): SystemDecision {
   const cvAgent = opinions.find(o => o.agent === "cv");
 
   const explanationGraph: string[] = [];
-  let overrideSource: "fraud" | "billing" | "system" | undefined = undefined;
+  const overrideSource: "fraud" | "billing" | "system" | undefined = undefined;
 
   // 1. HARD OVERRIDE LAYER
   
@@ -66,7 +66,7 @@ export function resolveConsensus(opinions: AgentOpinion[]): SystemDecision {
   const variance = scores.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / scores.length;
 
   let status: SystemDecision["status"] = "allow";
-  let finalConfidence = 0.8;
+  const finalConfidence = 0.8;
 
   // 3. DECISION MATRIX
   if (behaviorAgent && behaviorAgent.recommendation === "escalate" && finalScore < 0.6) {

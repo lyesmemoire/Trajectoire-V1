@@ -10,15 +10,15 @@ import {
   type AnsweredTurn,
   type InterviewReport,
   type HiringDecision,
-} from "./interview-report";
+} from "./interview-report.js";
 import {
   buildCredibilityScore,
   type CredibilityScore,
   type BluffSignals,
-} from "./bluff-detector";
-import type { AnswerSignals } from "./answer-signals";
-import type { Contradiction } from "./candidate-facts";
-import type { Seniority } from "./candidate-profile";
+} from "./bluff-detector.js";
+import type { AnswerSignals } from "./answer-signals.js";
+import type { Contradiction } from "./candidate-facts.js";
+import type { Seniority } from "./candidate-profile.js";
 
 export interface RecruiterReport {
   hireDecision: HiringDecision;

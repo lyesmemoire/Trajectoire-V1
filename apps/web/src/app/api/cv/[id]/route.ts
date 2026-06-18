@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const resolvedParams = await params;
   const supabase = await createClient()
 
   // 1. Check session
@@ -19,7 +20,7 @@ export async function GET(
     )
   }
 
-  const interviewId = params.id
+  const interviewId = resolvedParams.id
 
   // 2. Fetch interview (ownership enforced implicitly by RLS, but we verify anyway)
   const { data: interview, error } = await supabase

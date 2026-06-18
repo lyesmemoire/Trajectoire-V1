@@ -1,4 +1,4 @@
-import { SessionLifecycleState, LifecycleEvent } from "./lifecycle-contract";
+import { SessionLifecycleState, LifecycleEvent } from "./lifecycle-contract.js";
 
 export class InvalidLifecycleTransitionError extends Error {
   constructor(public readonly state: SessionLifecycleState, public readonly event: LifecycleEvent["type"]) {

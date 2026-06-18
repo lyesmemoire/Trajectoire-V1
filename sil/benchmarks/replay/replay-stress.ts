@@ -1,6 +1,5 @@
 import * as crypto from "crypto";
 import { MemoryEventStore } from "../../services/memory-event-store";
-import { ReplayEngine } from "../../services/replay/replay-engine";
 import { DefaultEventQueryService } from "../../services/query/event-query-service";
 import { SILEvent } from "../../contracts/sil-events";
 

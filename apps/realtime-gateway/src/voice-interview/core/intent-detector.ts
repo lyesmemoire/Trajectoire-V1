@@ -5,10 +5,15 @@
  * transcript de l'utilisateur (FR principalement), avant toute évaluation.
  */
 
-export type Intent = "repeat" | "clarify" | "next" | "stop" | "slower" | "none";
+export type UserCommand = "repeat" | "clarify" | "next" | "stop" | "slower";
+
+export type UserIntent =
+  | { kind: "command"; action: UserCommand }
+  | { kind: "answer"; text: string }
+  | { kind: "silence" };
 
 /** Motifs lexicaux par intention (ordre = priorité de désambiguïsation). */
-const PATTERNS: Array<{ intent: Intent; markers: string[] }> = [
+const PATTERNS: Array<{ intent: UserCommand; markers: string[] }> = [
   {
     intent: "stop",
     markers: [
@@ -54,9 +59,9 @@ const PATTERNS: Array<{ intent: Intent; markers: string[] }> = [
  * Heuristique de sûreté : on n'active une intention que si la phrase est COURTE
  * (commande), pour éviter de confondre une vraie réponse mentionnant un mot-clé.
  */
-export function detectIntent(transcript: string): Intent {
+export function detectIntent(transcript: string): UserIntent {
   const text = (transcript ?? "").trim().toLowerCase();
-  if (!text) return "none";
+  if (!text) return { kind: "silence" };
 
   const wordCount = text.split(/\s+/).length;
   // Une commande de pilotage est typiquement brève (<= 10 mots).
@@ -67,10 +72,10 @@ export function detectIntent(transcript: string): Intent {
       // "stop" et "repeat"/"clarify" explicites sont fiables même un peu plus longs ;
       // pour les autres on exige une phrase courte.
       if (intent === "stop" || intent === "repeat" || intent === "clarify") {
-        return intent;
+        return { kind: "command", action: intent };
       }
-      if (looksLikeCommand) return intent;
+      if (looksLikeCommand) return { kind: "command", action: intent };
     }
   }
-  return "none";
+  return { kind: "answer", text: transcript.trim() };
 }

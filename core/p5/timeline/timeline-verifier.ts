@@ -1,4 +1,4 @@
-import { Timeline } from "./timeline-contract";
+import { Timeline } from "./timeline-contract.js";
 
 /**
  * Result of structural validation of a Timeline.

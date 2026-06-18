@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { initInterviewV3, nextV3Step } from "../../src/voice-interview/core/v3/interview-engine-v3";
 import { simulateDecision } from "../../src/voice-interview/core/v3/decision-simulator";
-import { generateExecutiveImpression } from "../../src/voice-interview/core/v3/executive-impression";
 
 const resultsDir = path.join(__dirname, "results");
 if (!fs.existsSync(resultsDir)) {
@@ -23,7 +22,7 @@ async function runProfile(profile: any) {
   const { state: initialState } = initInterviewV3({ context, targetRole: profile.jobOffer });
   let state = initialState;
 
-  let escalationActions = [];
+  const escalationActions = [];
   let pressureIncreases = 0;
   let previousPressure = 1;
 

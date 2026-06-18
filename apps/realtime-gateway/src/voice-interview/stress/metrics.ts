@@ -10,8 +10,8 @@
  *  4. Enveloppe         : variance fin vs variance début (convergence).
  *  5. Path dependency   : distance entre trajectoires de seeds adjacents.
  */
-import type { RecruiterMindState } from "../core/simulation/recruiter-mind";
-import type { PerceptionUX } from "../core/simulation/perception-ux";
+import type { RecruiterMindState } from "../core/simulation/recruiter-mind.js";
+import type { PerceptionUX } from "../core/simulation/perception-ux.js";
 
 export interface TrajectoryPoint {
   mind: RecruiterMindState;

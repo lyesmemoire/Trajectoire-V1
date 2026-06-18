@@ -1,4 +1,4 @@
-import { EventJournal } from "./journal-contract";
+import { EventJournal } from "./journal-contract.js";
 
 /**
  * Creates a new, empty EventJournal.

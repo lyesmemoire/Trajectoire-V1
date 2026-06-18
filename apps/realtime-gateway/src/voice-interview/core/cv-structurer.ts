@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { callLlmStrict, clampScore } from "./llm-strict";
+import { callLlmStrict, clampScore } from "./llm-strict.js";
 
 const ExperienceSchema = z.object({
   company: z.string(),

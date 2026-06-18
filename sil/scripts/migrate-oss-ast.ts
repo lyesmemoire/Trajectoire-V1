@@ -1,4 +1,4 @@
-import { Project, SyntaxKind, ImportDeclaration } from "ts-morph";
+import { Project, ImportDeclaration } from "ts-morph";
 import fs from "fs";
 import path from "path";
 

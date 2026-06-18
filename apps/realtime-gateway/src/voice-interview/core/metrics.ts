@@ -8,6 +8,14 @@ export interface VoiceMetrics {
   ttsEnd?: number;
 }
 
+export const pilotCommandsCount = {
+  repeat: 0,
+  slower: 0,
+  clarify: 0,
+  next: 0,
+  stop: 0,
+};
+
 export function now(): number {
   return Date.now();
 }

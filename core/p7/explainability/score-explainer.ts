@@ -1,4 +1,4 @@
-import { ExplanationGraph, ExplainedScore, ScoreComponentNode } from "./explanation-contract";
+import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
 
 /**
  * Score Explainer — Template-based text generation

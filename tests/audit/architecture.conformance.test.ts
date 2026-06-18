@@ -82,6 +82,7 @@ describe("Architecture v1 Conformance", () => {
 
     for (const f of files) {
       if (f.includes(".test.ts") || f.includes("/tests/")) continue;
+      if (f.includes("node_modules")) continue;
       if (!f.includes("/core/")) continue;
 
       const content = read(f);

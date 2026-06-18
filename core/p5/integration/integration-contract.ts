@@ -1,4 +1,4 @@
-import { MindState } from "../execution-contract";
+import { MindState } from "../execution-contract.js";
 
 /**
  * A decision coming from the runtime layer (Governor, Voice Runtime, etc.).

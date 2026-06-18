@@ -1,4 +1,4 @@
-import { P5Event } from "../execution-contract";
+import { P5Event } from "../execution-contract.js";
 
 /**
  * A logical clock tick. Strictly monotonic, no gaps, starts at 1.

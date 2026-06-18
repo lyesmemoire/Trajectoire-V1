@@ -1,6 +1,6 @@
-import { CandidateEvaluation, CompetencyName } from "../../p7/evaluation-contract";
-import { ExplanationGraph, ExplanationNode, ExplanationEdge } from "../../p7/explainability/explanation-contract";
-import { GlobalRankingEntry } from "../../p7/ranking/ranking-contract";
+import { CandidateEvaluation } from "../../p7/evaluation-contract.js";
+import { ExplanationGraph, ExplanationNode, ExplanationEdge } from "../../p7/explainability/explanation-contract.js";
+import { GlobalRankingEntry } from "../../p7/ranking/ranking-contract.js";
 
 // ─── Core Models ──────────────────────────────────────────────────
 

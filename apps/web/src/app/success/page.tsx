@@ -24,7 +24,7 @@ export default function SuccessPage() {
           Tu as maintenant accès aux rapports IA détaillés et à 20 entretiens
           par mois.
         </p>
-        <a href="/dashboard" className="btn-primary" style={{ display: "inline-block", width: "auto", padding: "0.75rem 2rem" }}>
+        <a href="/dashboard" className="btn-primary btn-inline">
           Aller au Dashboard →
         </a>
       </div>

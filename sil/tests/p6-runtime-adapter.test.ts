@@ -3,7 +3,6 @@ import { RealP6RuntimeClient } from "../services/p6-runtime-client";
 import { ExecutionFacade } from "../../core/p5/integration/execution-facade";
 import { MindState } from "../../core/p5/execution-contract";
 import { RuntimeDecision } from "../../core/p5/integration/integration-contract";
-import { Journal } from "../../core/p4/journal-contract";
 
 // Mock ExecutionFacade to test the adapter
 class MockExecutionFacade extends ExecutionFacade {

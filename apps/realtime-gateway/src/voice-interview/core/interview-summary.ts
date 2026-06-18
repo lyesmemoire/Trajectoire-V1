@@ -5,7 +5,7 @@
  * en un bilan exploitable. Aucune dépendance LLM/DB.
  */
 
-import type { VoiceTurnRecord } from "../sessions/session-manager";
+import type { VoiceTurnRecord } from "../sessions/session-manager.js";
 
 export interface InterviewSummary {
   overallScore: number; // 0–100, moyenne des tours évalués

@@ -8,7 +8,7 @@
  *
  * Le pont ne décide rien : il sérialise les events runtime vers le protocole WS.
  */
-import type { VoiceSink, VoiceTransportEvent } from "./transport-binding";
+import type { VoiceSink, OutboundVoiceSignal } from "./transport-binding.js";
 
 /** Callbacks minimaux fournis par le WS V2 (déjà existants). */
 export interface WsSendBridge {
@@ -17,7 +17,7 @@ export interface WsSendBridge {
 }
 
 /** Mappe un event runtime vers un message WS (protocole sim_*). */
-function toWsMessage(e: VoiceTransportEvent): { type: string; [k: string]: unknown } {
+function toWsMessage(e: OutboundVoiceSignal): { type: string; [k: string]: unknown } {
   switch (e.type) {
     case "thinking":
       return { type: "sim_thinking", ms: e.ms };
@@ -31,10 +31,12 @@ function toWsMessage(e: VoiceTransportEvent): { type: string; [k: string]: unkno
         estimatedMs: e.estimatedMs,
         speechRate: e.speechRate,
       };
+    case "speaking_stop":
+      return { type: "sim_speaking_stop" };
     case "turn_done":
       return { type: "sim_turn_done", latencyMs: e.latencyMs };
     default: {
-      const _never: never = e;
+      const _never: never = e as never;
       void _never;
       return { type: "sim_unknown" };
     }
@@ -44,12 +46,12 @@ function toWsMessage(e: VoiceTransportEvent): { type: string; [k: string]: unkno
 /** Construit un VoiceSink branché sur le WS V2 existant. */
 export function createWsVoiceSink(bridge: WsSendBridge): VoiceSink {
   return {
-    sendAudio(buffer, meta) {
+    sendAudio(buffer: ArrayBuffer, meta: { speechRate: number }) {
       bridge.sendJson({ type: "sim_audio_meta", speechRate: meta.speechRate });
       bridge.sendAudio(buffer);
     },
-    sendEvent(event) {
-      bridge.sendJson(toWsMessage(event));
+    sendSignal(signal: OutboundVoiceSignal) {
+      bridge.sendJson(toWsMessage(signal));
     },
   };
 }

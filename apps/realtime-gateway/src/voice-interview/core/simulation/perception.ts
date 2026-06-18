@@ -13,31 +13,31 @@
 export {
   extractSignals,
   type AnswerSignals,
-} from "../v2/answer-signals";
+} from "../v2/answer-signals.js";
 
 export {
   detectBluff,
   buildCredibilityScore,
   type BluffSignals,
   type CredibilityScore,
-} from "../v2/bluff-detector";
+} from "../v2/bluff-detector.js";
 
 export {
   extractCandidateFacts,
   detectContradiction,
   type CandidateFacts,
   type Contradiction,
-} from "../v2/candidate-facts";
+} from "../v2/candidate-facts.js";
 
-import { extractSignals } from "../v2/answer-signals";
-import { detectBluff } from "../v2/bluff-detector";
+import { extractSignals } from "../v2/answer-signals.js";
+import { detectBluff } from "../v2/bluff-detector.js";
 import {
   detectContradiction,
   type CandidateFacts,
   type Contradiction,
-} from "../v2/candidate-facts";
-import type { AnswerSignals } from "../v2/answer-signals";
-import type { BluffSignals } from "../v2/bluff-detector";
+} from "../v2/candidate-facts.js";
+import type { AnswerSignals } from "../v2/answer-signals.js";
+import type { BluffSignals } from "../v2/bluff-detector.js";
 
 /** Résultat consolidé de la perception d'un tour. */
 export interface Perception {

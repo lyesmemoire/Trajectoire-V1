@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { reduceMind } from "../reduceMind";
-import { MindState } from "../execution-contract";
+import { reduceMind } from "../reduceMind.js";
+import { MindState } from "../execution-contract.js";
 
 describe("reduceMind - Immutability", () => {
   it("should return a new object when state changes", () => {

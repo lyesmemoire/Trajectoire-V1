@@ -1,5 +1,5 @@
 import { FraudKernel } from "./fraud-kernel"
-import { FraudAssessment, FraudSignal } from "@/domain/fraud-kernel.contract"
+import { FraudSignal } from "@/domain/fraud-kernel.contract"
 import { EvaluationContext, AgentOpinion } from "@/domain/orchestration.contract"
 
 export class FraudKernelEngine {

@@ -10,25 +10,25 @@
  * Le moteur V2 (interview-engine-v2) DÉLÈGUE à ces couches. API publique inchangée.
  * FAÇADE iso-comportement : aucune logique métier modifiée.
  */
-export * from "./perception";
-export * from "./interviewer-brain";
-export * from "./adaptive";
-export * from "./evaluation-layer";
+export * from "./perception.js";
+export * from "./interviewer-brain.js";
+export * from "./adaptive.js";
+export * from "./evaluation-layer.js";
 // P3.8 — Interview Simulation Engine (comportement temps réel)
-export * from "./pressure";
-export * from "./memory";
-export * from "./cross-session";
-export * from "./hidden-eval";
-export * from "./persona-reactivity";
-export * from "./simulation-state";
-export * from "./integration";
+export * from "./pressure.js";
+export * from "./memory.js";
+export * from "./cross-session.js";
+export * from "./hidden-eval.js";
+export * from "./persona-reactivity.js";
+export * from "./simulation-state.js";
+export * from "./integration.js";
 // P3.10 — pipeline d'orchestration explicite (V2 pur → simulation externe).
-export * from "./pipeline";
+export * from "./pipeline.js";
 // P3.11 — Recruiter Mind Model (état mental unifié, dérivé).
-export * from "./recruiter-mind";
+export * from "./recruiter-mind.js";
 // Step B (pré-P4) — invariants de stabilité comportementale.
-export * from "./stability";
+export * from "./stability.js";
 // P4 — Perceptual Engine : projection UX (mise en scène, pas de logique).
-export * from "./perception-ux";
+export * from "./perception-ux.js";
 // P4.1 — Emotional UX Control System (gouvernance : contraintes globales).
-export * from "./governor/index";
+export * from "./governor/index.js";

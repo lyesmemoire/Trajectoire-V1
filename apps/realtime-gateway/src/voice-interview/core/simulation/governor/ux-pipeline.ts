@@ -9,27 +9,27 @@
  * Aucun impact V2 / simulation core / pipeline décisionnel.
  */
 
-import type { PerceptionUX } from "../perception-ux";
-import type { ReactiveMode } from "../persona-reactivity";
+import type { PerceptionUX } from "../perception-ux.js";
+import type { ReactiveMode } from "../persona-reactivity.js";
 import {
   type EmotionalBudget,
   createEmotionalBudget,
   costOf,
   spendBudget,
-} from "./emotional-budget";
-import { applyCompositionRules } from "./composition-rules";
+} from "./emotional-budget.js";
+import { applyCompositionRules } from "./composition-rules.js";
 import {
   type GuardrailState,
   type GlobalUXGuardrails,
   DEFAULT_GUARDRAILS,
   createGuardrailState,
   applyGuardrails,
-} from "./guardrails";
+} from "./guardrails.js";
 import {
   type AntiDriftState,
   createAntiDriftState,
   applyAntiDrift,
-} from "./anti-drift";
+} from "./anti-drift.js";
 
 /** État persistant du governor (par session). */
 export interface GovernorState {

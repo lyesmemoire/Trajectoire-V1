@@ -6,10 +6,7 @@ import {
   PremiumATSScore,
 } from "./scoring/premium-engine";
 import { detectRecruiterSignals } from "./recruiter-signals/detector";
-import {
-  generateRecruiterDoubts,
-  RecruiterDoubt,
-} from "./recruiter-signals/doubt-engine";
+import { generateRecruiterDoubts } from "./recruiter-signals/doubt-engine";
 import {
   analyzeTechnicalLeadership,
   detectInconsistencies,
@@ -17,18 +14,21 @@ import {
 } from "./behavioral-logic/recruiter-grade";
 import { mistralModel, mistralSmallModel } from "@/lib/mistral";
 import { generateText } from "ai";
+import { MunitionPack } from "./contracts/munitions";
 
 export interface PremiumATSAnalysis {
+  candidateId: string;
+  jobTitle: string;
+  analyzedAt: string;
+
   score: PremiumATSScore;
   recruiterSignals: string[];
-  recruiterDoubts: RecruiterDoubt[];
   strengths: string[];
   missingSkills: string[];
   rewriteSuggestions: Array<{ original: string; improved: string }>;
-  interviewRisks: string[];
-  technicalLeadership: string[];
-  inconsistencies: string[];
   confidence: number;
+  
+  munitionPack: MunitionPack;
 }
 
 /**
@@ -60,7 +60,7 @@ export async function processPremiumATSAnalysis(
     simulateRecruiterFeedback(cvProfile, jobData, skillMatch.score),
   ]);
 
-  // 5. Multi-dimensional Scoring (Invisible to user)
+  // 5. Multi-dimensional Scoring
   const premiumScore = calculatePremiumATSScore(
     {
       skillMatchScore: skillMatch.score,
@@ -73,17 +73,30 @@ export async function processPremiumATSAnalysis(
     },
   );
 
+  const inconsistencies = detectInconsistencies(cvProfile, jobData);
+  const interviewRisks = predictInterviewRisks(doubts);
+
+  const munitionPack: MunitionPack = {
+    generatedAt: new Date().toISOString(),
+    munitions: [...doubts, ...techLeadership, ...inconsistencies, ...interviewRisks],
+    context: {
+      overallATS: premiumScore.overall,
+      riskLevel: premiumScore.overall < 60 ? "high" : premiumScore.overall < 80 ? "medium" : "low",
+      coachingFocus: skillMatch.missing,
+    }
+  };
+
   return {
+    candidateId: "anonymous", // Pour l'instant
+    jobTitle: jobData.title || "Poste non spécifié",
+    analyzedAt: munitionPack.generatedAt,
     score: premiumScore,
     recruiterSignals: detectRecruiterSignals(jobDescription),
-    recruiterDoubts: doubts,
     strengths: simulation.strengths,
     missingSkills: skillMatch.missing,
     rewriteSuggestions: simulation.rewrites,
-    interviewRisks: predictInterviewRisks(doubts.map((d) => d.subject)),
-    technicalLeadership: techLeadership,
-    inconsistencies: detectInconsistencies(cvProfile, jobData),
     confidence: extraction.confidence,
+    munitionPack,
   };
 }
 
@@ -91,7 +104,7 @@ async function analyzeJobOfferIntelligence(text: string) {
   const { text: response } = await generateText({
     model: mistralSmallModel,
     system:
-      'Analyze job offer. JSON format: { "hard_skills": [], "seniority": "", "min_years": 0 }',
+      'Analyze job offer. JSON format: { "title": "", "hard_skills": [], "seniority": "", "min_years": 0 }',
     prompt: text,
   });
   return JSON.parse(
@@ -130,9 +143,4 @@ async function simulateRecruiterFeedback(cv: any, job: any, score: number) {
       .replace(/^```json/, "")
       .replace(/```$/, ""),
   );
-}
-
-function calculateSeniorityMatch(cvYrs: number, jobLevel: string): number {
-  // Simple logic: mapping junior/mid/senior to year ranges
-  return 85; // Placeholder
 }

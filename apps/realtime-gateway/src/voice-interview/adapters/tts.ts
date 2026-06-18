@@ -14,5 +14,5 @@ export {
   MockTTSProvider,
   ElevenLabsTTSProvider,
   OpenAITTSProvider,
-} from "./tts/index";
-export type { TTSAdapter, TTSProvider } from "./tts/types";
+} from "./tts/index.js";
+export type { TTSAdapter, TTSProvider } from "./tts/types.js";

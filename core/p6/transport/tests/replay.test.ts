@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { TransportCommand } from "../transport-contract";
-import { serializeCommands, deserializeCommands } from "../transport-replay";
+import { TransportCommand } from "../transport-contract.js";
+import { serializeCommands, deserializeCommands } from "../transport-replay.js";
 
 describe("P6.3 - T3 Replay", () => {
   it("should perfectly serialize and deserialize transport commands", () => {

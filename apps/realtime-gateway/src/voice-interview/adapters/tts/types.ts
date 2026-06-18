@@ -6,7 +6,7 @@ export interface TTSAdapter {
   /** True si une synthèse réelle est possible (sinon fallback silencieux). */
   isConfigured(): boolean;
   /** Texte -> audio. Ne rejette jamais (fallback interne). */
-  synthesize(text: string): Promise<ArrayBuffer>;
+  synthesize(text: string, options?: { signal?: AbortSignal }): Promise<ArrayBuffer>;
 }
 
 export interface TTSProvider {
@@ -15,5 +15,5 @@ export interface TTSProvider {
   /** True si configuré (clé API présente, etc.). */
   isConfigured(): boolean;
   /** Synthèse réelle. Peut rejeter : le chaînage gère le fallback. */
-  synthesize(text: string): Promise<ArrayBuffer>;
+  synthesize(text: string, options?: { signal?: AbortSignal }): Promise<ArrayBuffer>;
 }

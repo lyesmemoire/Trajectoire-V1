@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { VoiceExecutionPlan } from "../voice-contract";
-import { serializePlan, deserializePlan } from "../plan-replay";
+import { VoiceExecutionPlan } from "../voice-contract.js";
+import { serializePlan, deserializePlan } from "../plan-replay.js";
 
 describe("P6.2 - V4 Replay", () => {
   it("should perfectly replay a sequence of voice execution plans", () => {

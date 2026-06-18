@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { SessionRuntimeAdapter } from "../SessionRuntimeAdapter";
-import { SessionGovernor, CandidateMessage } from "../types";
-import { ExecutionFacade } from "../../p5/integration/execution-facade";
-import { MindState } from "../../p5/execution-contract";
-import { RuntimeDecision } from "../../p5/integration/integration-contract";
+import { SessionRuntimeAdapter } from "../SessionRuntimeAdapter.js";
+import { SessionGovernor, CandidateMessage } from "../types.js";
+import { ExecutionFacade } from "../../p5/integration/execution-facade.js";
+import { MindState } from "../../p5/execution-contract.js";
+import { RuntimeDecision } from "../../p5/integration/integration-contract.js";
 
 class MockGovernor implements SessionGovernor {
   constructor(private readonly fixedDecision: RuntimeDecision) {}

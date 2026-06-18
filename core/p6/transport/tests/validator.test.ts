@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { validateTransportCommands } from "../command-validator";
-import { TransportCommand } from "../transport-contract";
+import { validateTransportCommands } from "../command-validator.js";
+import { TransportCommand } from "../transport-contract.js";
 
 describe("P6.3 - T4 Validity", () => {
   it("should accept valid commands", () => {

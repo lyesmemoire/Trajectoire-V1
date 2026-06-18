@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
-import { RuntimeBootstrap } from "../runtime-bootstrap";
+import { RuntimeBootstrap } from "../runtime-bootstrap.js";
 
 describe("P6.6 - W4 STT Adapter Isolation", () => {
   it("should catch STT errors without failing the core runtime", async () => {
     const bootstrap = new RuntimeBootstrap();
-    bootstrap.registry.register("s1");
+    bootstrap.registry.add("s1");
     
     // Simulate STT failing
     vi.spyOn(bootstrap.sttAdapter, "recognize").mockRejectedValue(new Error("Audio parse error"));

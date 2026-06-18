@@ -2,7 +2,7 @@
  * core/v2/interview-report.ts — Score multidimensionnel + reco finale (P3.6, Bloc 10+11). PURE.
  */
 
-import type { AnswerSignals } from "./answer-signals";
+import type { AnswerSignals } from "./answer-signals.js";
 
 export interface InterviewReport {
   communication: number;

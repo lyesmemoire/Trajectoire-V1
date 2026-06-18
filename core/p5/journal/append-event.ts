@@ -1,5 +1,5 @@
-import { P5Event } from "../execution-contract";
-import { EventJournal } from "./journal-contract";
+import { P5Event } from "../execution-contract.js";
+import { EventJournal } from "./journal-contract.js";
 
 /**
  * Appends an event to a journal, returning a new journal.

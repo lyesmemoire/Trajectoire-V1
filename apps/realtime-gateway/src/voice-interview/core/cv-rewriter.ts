@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { callLlmStrict, getEngineMetadata, type EngineMetadata } from "./llm-strict";
-import type { FinalCabinetCvReport } from "./cv-diagnostic";
+import { callLlmStrict, getEngineMetadata, type EngineMetadata } from "./llm-strict.js";
+import type { FinalCabinetCvReport } from "./cv-diagnostic.js";
 
 // ─── Zod Schema (Phase 2 — Executive Rewrite Engine) ───────────
 

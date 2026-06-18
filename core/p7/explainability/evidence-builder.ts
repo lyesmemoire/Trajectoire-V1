@@ -1,6 +1,6 @@
-import { Signal } from "../scoring-engine/scoring-contract";
-import { RuntimeTrace, TurnTrace } from "../trace-contract";
-import { EvidenceNode, Traceability } from "./explanation-contract";
+import { Signal } from "../scoring-engine/scoring-contract.js";
+import { RuntimeTrace } from "../trace-contract.js";
+import { EvidenceNode } from "./explanation-contract.js";
 
 /**
  * Evidence Builder — Pattern Detection Engine

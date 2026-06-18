@@ -10,16 +10,18 @@
  */
 
 import type { FastifyInstance } from "fastify";
-import { SessionManager } from "../voice-interview/sessions/session-manager";
+import { SessionManager } from "../voice-interview/sessions/session-manager.js";
 import {
   handleVoiceConnectionV2,
   type VoiceWsLike,
-} from "../voice-interview/adapters/voice-websocket";
-import { ChainTTSAdapter } from "../voice-interview/adapters/tts/index";
-import { handleVoiceConnectionV2Engine } from "../voice-interview/adapters/voice-websocket-v2";
-import type { PersonaName } from "../voice-interview/core/v2/personas";
-import { verifyVoiceToken } from "./auth";
-import { checkAndConsumeInterview } from "../voice-interview/billing/usage-service";
+} from "../voice-interview/adapters/voice-websocket.js";
+import { ChainTTSAdapter } from "../voice-interview/adapters/tts/index.js";
+import { handleVoiceConnectionV2Engine } from "../voice-interview/adapters/voice-websocket-v2.js";
+import type { PersonaName } from "../voice-interview/core/v2/personas.js";
+import { verifyVoiceToken } from "./auth.js";
+import { checkAndConsumeInterview } from "../voice-interview/billing/usage-service.js";
+import { interviewRepository } from "../voice-interview/persistence/singleton.js";
+import { handleVoiceConnectionV3 } from "../voice-interview/adapters/voice-websocket-v3.js";
 
 /** Session manager partagé (in-memory + TTL), unique par process. */
 const sessions = new SessionManager();
@@ -157,7 +159,6 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       // Par défaut -> moteur V1 (P3.2→P3.5), zéro régression.
       if (query.engine === "v3" && query.sessionId) {
         // Fetch context from DB
-        const { interviewRepository } = await import("../voice-interview/persistence/singleton");
         const record = await interviewRepository.get(query.sessionId as string);
         if (!record || !record.interview_context) {
           ws.close();
@@ -171,7 +172,6 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         if (input.userId) v3Input.userId = input.userId;
         if (record.targetRole || input.targetRole) v3Input.targetRole = record.targetRole ?? input.targetRole;
 
-        const { handleVoiceConnectionV3 } = await import("../voice-interview/adapters/voice-websocket-v3");
         await handleVoiceConnectionV3(ws, v3Input, { sessions, log, tts });
       } else if (query.engine === "v2") {
         const v2Input: {

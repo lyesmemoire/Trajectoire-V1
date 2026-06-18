@@ -1,5 +1,5 @@
-import { SessionGovernor, CandidateMessage, SessionResult } from "./types";
-import { ExecutionFacade } from "../p5/integration/execution-facade";
+import { SessionGovernor, CandidateMessage, SessionResult } from "./types.js";
+import { ExecutionFacade } from "../p5/integration/execution-facade.js";
 
 export class SessionRuntimeAdapter {
   constructor(

@@ -7,8 +7,8 @@ import {
   getEngineMetadata,
   type EngineMetadata,
   type ScoreTier,
-} from "./llm-strict";
-import type { StructuredCV } from "./cv-structurer";
+} from "./llm-strict.js";
+import type { StructuredCV } from "./cv-structurer.js";
 
 // ─── Zod Schema (Level 2 — Strategic Diagnostic) ──────────────
 

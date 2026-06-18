@@ -16,21 +16,34 @@ import type { VoiceTurnRecord } from "@/apps/realtime-gateway/src/voice-intervie
 
 describe("detectIntent", () => {
   it("repeat / clarify / next / stop / slower", () => {
-    expect(detectIntent("Peux-tu répéter ?")).toBe("repeat");
-    expect(detectIntent("Je n'ai pas compris")).toBe("clarify");
-    expect(detectIntent("question suivante")).toBe("next");
-    expect(detectIntent("on arrête là")).toBe("stop");
-    expect(detectIntent("plus lentement s'il te plaît")).toBe("slower");
+    expect(detectIntent("Peux-tu répéter ?")).toEqual({ kind: "command", action: "repeat" });
+    expect(detectIntent("Je n'ai pas compris")).toEqual({ kind: "command", action: "clarify" });
+    expect(detectIntent("question suivante")).toEqual({ kind: "command", action: "next" });
+    expect(detectIntent("on arrête là")).toEqual({ kind: "command", action: "stop" });
+    expect(detectIntent("plus lentement s'il te plaît")).toEqual({ kind: "command", action: "slower" });
   });
   it("none pour une vraie réponse d'entretien", () => {
     expect(
       detectIntent(
         "Dans mon dernier projet j'ai mis en place une architecture et le résultat a été une réduction de 30% des délais.",
       ),
-    ).toBe("none");
+    ).toEqual({
+      kind: "answer",
+      text: "Dans mon dernier projet j'ai mis en place une architecture et le résultat a été une réduction de 30% des délais.",
+    });
   });
-  it("vide -> none", () => {
-    expect(detectIntent("")).toBe("none");
+  it("vide -> silence", () => {
+    expect(detectIntent("")).toEqual({ kind: "silence" });
+  });
+  it("retourne un objet typé UserIntent", () => {
+    const result = detectIntent("peux-tu répéter ?");
+    expect(result).toHaveProperty("kind");
+    expect(["command", "answer", "silence"]).toContain(result.kind);
+    if (result.kind === "command") {
+      expect(result).toHaveProperty("action");
+    } else if (result.kind === "answer") {
+      expect(result).toHaveProperty("text");
+    }
   });
 });
 
@@ -66,7 +79,7 @@ describe("processVoiceTurn — intentions (pas de pénalité)", () => {
     const state = createInitialState({ jobGap: "node" });
     state.askedQuestions.push("Une question initiale ?");
     const r = await processVoiceTurn(state, "peux-tu répéter ?");
-    expect(r.intent).toBe("repeat");
+    expect(r.intent).toEqual({ kind: "command", action: "repeat" });
     expect(r.score).toBe(0);
     expect(r.finished).toBe(false);
     expect(r.nextQuestion.toLowerCase()).toContain("simplement");
@@ -76,7 +89,7 @@ describe("processVoiceTurn — intentions (pas de pénalité)", () => {
     const state = createInitialState({ jobGap: "node" });
     const phaseBefore = state.phase;
     const r = await processVoiceTurn(state, "je n'ai pas compris");
-    expect(r.intent).toBe("clarify");
+    expect(r.intent).toEqual({ kind: "command", action: "clarify" });
     expect(r.state.phase).toBe(phaseBefore);
     expect(r.score).toBe(0);
   });
@@ -84,7 +97,7 @@ describe("processVoiceTurn — intentions (pas de pénalité)", () => {
   it("next : enchaîne sans évaluer", async () => {
     const state = createInitialState({ jobGap: "node" });
     const r = await processVoiceTurn(state, "question suivante");
-    expect(r.intent).toBe("next");
+    expect(r.intent).toEqual({ kind: "command", action: "next" });
     expect(r.nextQuestion.length).toBeGreaterThan(0);
   });
 
@@ -95,7 +108,7 @@ describe("processVoiceTurn — intentions (pas de pénalité)", () => {
       { turn: 2, transcript: "y", score: 60, question: "q2" },
     ];
     const r = await processVoiceTurn(state, "on arrête là", undefined, history);
-    expect(r.intent).toBe("stop");
+    expect(r.intent).toEqual({ kind: "command", action: "stop" });
     expect(r.finished).toBe(true);
     expect(r.summary).toBeDefined();
     expect(r.summary?.overallScore).toBe(70);
@@ -106,7 +119,7 @@ describe("processVoiceTurn — intentions (pas de pénalité)", () => {
     const strong =
       "Dans le cadre d'un projet, ma mission était X. J'ai mis en place une architecture. Résultat : -30% en 3 mois.";
     const r = await processVoiceTurn(state, strong);
-    expect(r.intent).toBe("none");
+    expect(r.intent).toEqual({ kind: "answer", text: "Dans le cadre d'un projet, ma mission était X. J'ai mis en place une architecture. Résultat : -30% en 3 mois." });
     expect(r.score).toBeGreaterThanOrEqual(80);
   });
 });

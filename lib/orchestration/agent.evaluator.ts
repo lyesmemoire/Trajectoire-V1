@@ -1,4 +1,4 @@
-import { EvaluationContext, SystemDecision } from "@/domain/orchestration.contract";
+import { EvaluationContext } from "@/domain/orchestration.contract";
 import { TraceContext } from "./trace.context";
 import { FraudKernelEngine } from "@/lib/fraud/fraud-kernel.engine";
 import { FraudKernel } from "@/lib/fraud/fraud-kernel";

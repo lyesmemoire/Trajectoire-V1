@@ -5,7 +5,7 @@
  * (déduit de l'évaluation invisible).
  */
 
-import type { HiddenEval } from "./hidden-eval";
+import type { HiddenEval } from "./hidden-eval.js";
 
 export type ReactiveMode = "RH" | "TECH" | "CTO" | "AGGRESSIVE" | "MENTOR";
 

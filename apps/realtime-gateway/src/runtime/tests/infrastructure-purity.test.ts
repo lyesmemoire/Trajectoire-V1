@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { createRuntime } from "../runtime-container";
+import { createRuntime } from "../runtime-container.js";
 
 describe("P6.6 - W5 Infrastructure Purity", () => {
   it("should not inject any network logic into the core", () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { RuntimeStateStore } from "../runtime-state-store";
-import { createSession } from "../execution-session";
-import { MindState } from "../../execution-contract";
+import { RuntimeStateStore } from "../runtime-state-store.js";
+import { createSession } from "../execution-session.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("runtime-state-store — R2: Session isolation", () => {
   const getState = (trust = 0.5): MindState => ({

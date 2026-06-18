@@ -1,4 +1,4 @@
-import { VoiceExecutionPlan } from "./voice-contract";
+import { VoiceExecutionPlan } from "./voice-contract.js";
 
 const BOUNDS = {
   delayMs: { min: 0, max: 10000 },

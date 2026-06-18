@@ -1,11 +1,11 @@
-import { createHttpServer } from "./server/http";
-import { registerSignaling } from "./server/signaling";
-import { registerVoiceWs } from "./server/ws.voice";
-import { registerInterviewRoutes } from "./server/routes/interviews";
-import { registerBillingRoutes } from "./server/routes/billing";
-import { registerEngineRoutes } from "./server/routes/engine";
-import { logger } from "./telemetry/logger";
-import "./ai/orchestrator";
+import { createHttpServer } from "./server/http.js";
+import { registerSignaling } from "./server/signaling.js";
+import { registerVoiceWs } from "./server/ws.voice.js";
+import { registerInterviewRoutes } from "./server/routes/interviews.js";
+import { registerBillingRoutes } from "./server/routes/billing.js";
+import { registerEngineRoutes } from "./server/routes/engine.js";
+import { logger } from "./telemetry/logger.js";
+import "./ai/orchestrator.js";
 
 async function bootstrap() {
   const app = await createHttpServer();

@@ -1,5 +1,5 @@
 export const COMPARISON_DATA = {
-  title: "IA Classiques vs StudioEntretien",
+  title: "IA Classiques vs Trajectoire",
   subtitle:
     "Découvrez pourquoi notre solution dépasse les outils traditionnels",
   traditional: [
@@ -21,7 +21,7 @@ export const HOME_STRATEGY = {
     headline:
       "La plupart des candidats échouent sous pression sans comprendre pourquoi.",
     subheadline:
-      "StudioEntretien analyse vos signaux comportementaux en temps réel pour révéquer comment vous communiquez, réagissez et survivez sous haute tension.",
+      "Trajectoire analyse vos signaux comportementaux en temps réel pour révéquer comment vous communiquez, réagissez et survivez sous haute tension.",
     primaryCTA: "Révéler mon Career DNA",
     secondaryCTA: "Lancer le Test d'Exposition",
     proof: "12 482 analyses comportementales complétées ce mois-ci",

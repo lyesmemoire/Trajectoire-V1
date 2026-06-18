@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { buildVoicePlan } from "../build-plan";
-import { VoiceInput } from "../voice-contract";
+import { buildVoicePlan } from "../build-plan.js";
+import { VoiceInput } from "../voice-contract.js";
 
 describe("P6.2 - V1 Determinism", () => {
   it("should produce exactly the same plan for the same input", () => {

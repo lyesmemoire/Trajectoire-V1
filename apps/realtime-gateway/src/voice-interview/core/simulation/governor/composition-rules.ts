@@ -6,8 +6,8 @@
  * de comportement : on corrige une UX, on n'en invente pas.
  */
 
-import type { PerceptionUX } from "../perception-ux";
-import type { ReactiveMode } from "../persona-reactivity";
+import type { PerceptionUX } from "../perception-ux.js";
+import type { ReactiveMode } from "../persona-reactivity.js";
 
 export interface CompositionContext {
   ux: PerceptionUX;
@@ -30,6 +30,10 @@ export const COMPOSITION_RULES: UXRule[] = [
   {
     name: "calm_no_aggression",
     priority: 10,
+    /** 
+     * En état "calm" ou "impressed", le recruteur n'interrompt pas brutalement :
+     * on respecte l'élan de la conversation.
+     */
     apply: ({ ux }) => {
       if (ux.emotion === "calm" || ux.emotion === "impressed") {
         return {
@@ -44,6 +48,10 @@ export const COMPOSITION_RULES: UXRule[] = [
   {
     name: "rh_persona_gentle",
     priority: 20,
+    /**
+     * Les personas RH ou MENTOR sont structurellement plus doux :
+     * ils interrompent peu et ont un ton moins cassant.
+     */
     apply: ({ ux, personaMode }) => {
       if (personaMode === "RH" || personaMode === "MENTOR") {
         return {
@@ -58,6 +66,10 @@ export const COMPOSITION_RULES: UXRule[] = [
   {
     name: "no_interrupt_and_long_silence",
     priority: 30,
+    /**
+     * Empêche une contradiction d'UX : on ne peut pas à la fois beaucoup
+     * interrompre ET laisser de longs silences. Garde le signal dominant.
+     */
     apply: ({ ux }) => {
       // Contradiction : on ne peut pas à la fois beaucoup interrompre ET
       // beaucoup laisser de silence. On garde le signal dominant.

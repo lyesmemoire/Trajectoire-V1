@@ -1,5 +1,5 @@
-import { TransportCommand } from "./transport-contract";
-import { validateTransportCommands } from "./command-validator";
+import { TransportCommand } from "./transport-contract.js";
+import { validateTransportCommands } from "./command-validator.js";
 
 export function serializeCommands(commands: readonly TransportCommand[]): string {
   return JSON.stringify(commands);

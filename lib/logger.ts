@@ -45,3 +45,10 @@ export function logError(
     })
   );
 }
+
+export const logger = {
+  info: logInfo,
+  warn: logWarn,
+  error: logError,
+  child: (context?: any) => logger,
+};

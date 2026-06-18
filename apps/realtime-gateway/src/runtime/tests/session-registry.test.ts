@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RuntimeBootstrap } from "../runtime-bootstrap";
+import { RuntimeBootstrap } from "../runtime-bootstrap.js";
 
 describe("P6.6 - W2 Session Registry Rejection", () => {
   it("should reject WS messages if session is unknown", async () => {

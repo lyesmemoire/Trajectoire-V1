@@ -5,7 +5,7 @@
  * (fort / faible / bluff / contradictoire / instable). Déterministe : (archétype,
  * seed, numéro de tour) -> transcript reproductible. Aucune dépendance au runtime.
  */
-import { SeededRng } from "../runtime/rng";
+import { SeededRng } from "../runtime/rng.js";
 
 export type Archetype =
   | "strong"

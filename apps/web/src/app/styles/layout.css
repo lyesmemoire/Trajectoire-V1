@@ -1,0 +1,208 @@
+/* ============================================================
+LAYOUT — Dashboard, navigation, structure de page
+============================================================ */
+
+/* ── Dashboard shell ─────────────────────────────────────────────────────── */
+
+.dashboard-layout {
+min-height: 100vh;
+background: var(--bg-primary);
+display: flex;
+flex-direction: column;
+}
+
+.dashboard-header {
+position: sticky;
+top: 0;
+z-index: 50;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1rem 2rem;
+background: rgba(10, 10, 15, 0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-brand {
+font-family: var(--font-serif);
+font-size: 1.25rem;
+font-weight: 700;
+background: var(--pro-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-decoration: none;
+}
+
+.dashboard-nav {
+display: flex;
+align-items: center;
+gap: var(--space-md);
+}
+
+.dashboard-main {
+flex: 1;
+padding: var(--space-xl) var(--space-xl) var(--space-3xl);
+max-width: 1200px;
+width: 100%;
+margin: 0 auto;
+}
+
+/* ── Page containers ─────────────────────────────────────────────────────── */
+
+.page-container {
+max-width: 1100px;
+margin: 0 auto;
+padding: var(--space-xl) var(--space-lg);
+}
+
+.page-container-narrow {
+max-width: 640px;
+margin: 0 auto;
+padding: var(--space-xl) var(--space-lg);
+}
+
+/* ── Section headers ─────────────────────────────────────────────────────── */
+
+.section-header {
+margin-bottom: var(--space-xl);
+}
+
+.section-title {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--text-primary);
+margin-bottom: var(--space-xs);
+}
+
+.section-subtitle {
+font-size: 0.9rem;
+color: var(--text-secondary);
+line-height: 1.6;
+}
+
+/* ── Grilles réutilisables ───────────────────────────────────────────────── */
+
+.grid-2 {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: var(--space-lg);
+}
+
+.grid-3 {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: var(--space-lg);
+}
+
+/* ── États vides ─────────────────────────────────────────────────────────── */
+
+.empty-state {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: var(--space-3xl) var(--space-xl);
+gap: var(--space-md);
+text-align: center;
+background: var(--bg-card);
+border: 1px dashed var(--border-color);
+border-radius: var(--radius-lg);
+}
+
+.empty-state-icon {
+font-size: 2.5rem;
+opacity: 0.6;
+}
+
+.empty-state-title {
+font-size: 1rem;
+font-weight: 600;
+color: var(--text-primary);
+margin: 0;
+}
+
+.empty-state-desc {
+font-size: 0.875rem;
+color: var(--text-secondary);
+max-width: 340px;
+margin: 0;
+}
+
+/* ── Page 404 ────────────────────────────────────────────────────────────── */
+
+.not-found-page {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: var(--space-lg);
+padding: var(--space-xl);
+text-align: center;
+background: var(--bg-primary);
+}
+
+.not-found-code {
+font-family: var(--font-serif);
+font-size: clamp(6rem, 20vw, 10rem);
+font-weight: 700;
+line-height: 1;
+background: var(--pro-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+user-select: none;
+}
+
+.not-found-title {
+font-size: 1.5rem;
+font-weight: 600;
+color: var(--text-primary);
+margin: 0;
+}
+
+.not-found-description {
+font-size: 1rem;
+color: var(--text-secondary);
+max-width: 380px;
+margin: 0;
+line-height: 1.6;
+}
+
+.not-found-actions {
+display: flex;
+gap: var(--space-md);
+flex-wrap: wrap;
+justify-content: center;
+margin-top: var(--space-sm);
+}
+
+.not-found-link-primary {
+padding: 0.75rem 2rem;
+background: var(--pro-gradient);
+color: #fff;
+border-radius: var(--radius-md);
+font-weight: 600;
+text-decoration: none;
+transition: opacity var(--transition-normal);
+}
+.not-found-link-primary:hover { opacity: 0.85; }
+
+.not-found-link-secondary {
+padding: 0.75rem 2rem;
+background: transparent;
+color: var(--text-secondary);
+border: 1px solid var(--border-color);
+border-radius: var(--radius-md);
+font-weight: 500;
+text-decoration: none;
+transition:
+border-color var(--transition-normal),
+color var(--transition-normal);
+}
+.not-found-link-secondary:hover {
+border-color: var(--accent-primary);
+color: var(--text-primary);
+}

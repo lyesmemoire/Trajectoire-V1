@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { replay } from "../replay";
-import { createJournal } from "../journal";
-import { appendEvent } from "../append-event";
-import { createSnapshot } from "../../snapshot/create-snapshot";
-import { applyEvents } from "../../execution-engine";
-import { MindState, P5Event } from "../../execution-contract";
+import { replay } from "../replay.js";
+import { createJournal } from "../journal.js";
+import { appendEvent } from "../append-event.js";
+import { createSnapshot } from "../../snapshot/create-snapshot.js";
+import { applyEvents } from "../../execution-engine.js";
+import { MindState, P5Event } from "../../execution-contract.js";
 
 describe("replay — J3: Replay exact", () => {
   const getState = (): MindState => ({

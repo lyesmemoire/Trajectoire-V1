@@ -11,36 +11,36 @@
  */
 
 // Core (pur, testable)
-export * from "./core/state";
-export * from "./core/evaluation";
-export * from "./core/question-generator";
-export * from "./core/interview-engine";
-export * from "./core/feedback-text";
-export * from "./core/intent-detector";
-export * from "./core/interview-summary";
-export * from "./core/voice-orchestrator";
+export * from "./core/state.js";
+export * from "./core/evaluation.js";
+export * from "./core/question-generator.js";
+export * from "./core/interview-engine.js";
+export * from "./core/feedback-text.js";
+export * from "./core/intent-detector.js";
+export * from "./core/interview-summary.js";
+export * from "./core/voice-orchestrator.js";
 
 // Interview Engine V2 (P3.6) — entretien réaliste, déterministe, isolé.
-export * as V2 from "./core/v2/index";
+export * as V2 from "./core/v2/index.js";
 // Couche de simulation comportementale (refactor P3.7) : perception /
 // interviewer-brain / adaptive / evaluation. Le moteur V2 y délègue.
-export * as Simulation from "./core/simulation/index";
+export * as Simulation from "./core/simulation/index.js";
 
 // Sessions (runtime)
-export { SessionManager } from "./sessions/session-manager";
+export { SessionManager } from "./sessions/session-manager.js";
 export type {
   VoiceSession,
   VoiceTurnRecord,
   CreateSessionInput,
   SessionManagerOptions,
-} from "./sessions/session-manager";
+} from "./sessions/session-manager.js";
 
 // Adapters (I/O)
-export { DeepgramAdapter, extractTranscript } from "./adapters/deepgram";
+export { DeepgramAdapter, extractTranscript } from "./adapters/deepgram.js";
 export type {
   DeepgramAdapterCallbacks,
   DeepgramAdapterOptions,
-} from "./adapters/deepgram";
+} from "./adapters/deepgram.js";
 export {
   DefaultTTSAdapter,
   ChainTTSAdapter,
@@ -49,25 +49,25 @@ export {
   MockTTSProvider,
   ElevenLabsTTSProvider,
   OpenAITTSProvider,
-} from "./adapters/tts/index";
-export type { TTSAdapter, TTSProvider } from "./adapters/tts/types";
+} from "./adapters/tts/index.js";
+export type { TTSAdapter, TTSProvider } from "./adapters/tts/types.js";
 export {
   handleVoiceConnection,
-} from "./adapters/websocket";
+} from "./adapters/websocket.js";
 export type {
   WsLike,
   ServerMessage,
   VoiceWebSocketDeps,
-} from "./adapters/websocket";
-export { handleVoiceConnectionV2 } from "./adapters/voice-websocket";
+} from "./adapters/websocket.js";
+export { handleVoiceConnectionV2 } from "./adapters/voice-websocket.js";
 export type {
   VoiceWsLike,
   VoiceServerMessage,
   VoiceConnectionDeps,
-} from "./adapters/voice-websocket";
-export { handleVoiceConnectionV2Engine } from "./adapters/voice-websocket-v2";
+} from "./adapters/voice-websocket.js";
+export { handleVoiceConnectionV2Engine } from "./adapters/voice-websocket-v2.js";
 export type {
   VoiceV2Deps,
   VoiceV2Input,
   V2ServerMessage,
-} from "./adapters/voice-websocket-v2";
+} from "./adapters/voice-websocket-v2.js";

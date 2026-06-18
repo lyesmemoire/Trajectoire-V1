@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import request from "supertest";
 import * as crypto from "crypto";
 import { createGatewayApp, GatewayDependencies } from "../app";

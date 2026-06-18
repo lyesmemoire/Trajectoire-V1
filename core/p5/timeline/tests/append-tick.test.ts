@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { createTimeline } from "../timeline";
-import { appendTick } from "../append-tick";
-import { P5Event } from "../../execution-contract";
+import { createTimeline } from "../timeline.js";
+import { appendTick } from "../append-tick.js";
+import { P5Event } from "../../execution-contract.js";
 
 describe("append-tick — T1: Monotonicity & T2: No gaps", () => {
   it("should produce strictly monotonic ticks", () => {

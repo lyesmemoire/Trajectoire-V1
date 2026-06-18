@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { TTSAdapter } from "../tts-adapter";
+import { TTSAdapter } from "../tts-adapter.js";
 
 describe("P6.6 - W3 TTS Adapter Isolation", () => {
   it("should isolate TTS logic so errors don't crash the orchestrator", async () => {

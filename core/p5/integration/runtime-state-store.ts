@@ -1,4 +1,4 @@
-import { ExecutionSession } from "./execution-session";
+import { ExecutionSession } from "./execution-session.js";
 
 /**
  * Minimal in-memory session store.

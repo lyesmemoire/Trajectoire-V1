@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import * as buildPlanModule from "../build-plan";
-import * as clampPlanModule from "../clamp-plan";
-import * as validatorModule from "../plan-validator";
-import * as replayModule from "../plan-replay";
+import * as buildPlanModule from "../build-plan.js";
+import * as clampPlanModule from "../clamp-plan.js";
+import * as validatorModule from "../plan-validator.js";
+import * as replayModule from "../plan-replay.js";
 import { readFileSync } from "fs";
 import { join } from "path";
 

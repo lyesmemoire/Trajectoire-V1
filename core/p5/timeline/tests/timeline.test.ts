@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { createTimeline } from "../timeline";
-import { appendTick } from "../append-tick";
+import { createTimeline } from "../timeline.js";
+import { appendTick } from "../append-tick.js";
 
 describe("timeline — creation & append", () => {
   it("should create an empty timeline", () => {

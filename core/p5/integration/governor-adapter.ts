@@ -1,8 +1,8 @@
-import { P5Event } from "../execution-contract";
-import { normalizeDecision } from "../bridge/normalize-decision";
-import { validateDecision } from "../bridge/validation";
-import { GovernorDecision } from "../bridge/normalization-contract";
-import { RuntimeDecision } from "./integration-contract";
+import { P5Event } from "../execution-contract.js";
+import { normalizeDecision } from "../bridge/normalize-decision.js";
+import { validateDecision } from "../bridge/validation.js";
+import { GovernorDecision } from "../bridge/normalization-contract.js";
+import { RuntimeDecision } from "./integration-contract.js";
 
 /**
  * Result of adapting a RuntimeDecision into P5Events.

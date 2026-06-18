@@ -9,8 +9,8 @@
  * Iso-comportement : n'altère aucun module existant. Couche additive.
  */
 
-import type { SimulationState } from "./simulation-state";
-import type { ReactiveMode } from "./persona-reactivity";
+import type { SimulationState } from "./simulation-state.js";
+import type { ReactiveMode } from "./persona-reactivity.js";
 
 export type RecruiterEmotion =
   | "calm"

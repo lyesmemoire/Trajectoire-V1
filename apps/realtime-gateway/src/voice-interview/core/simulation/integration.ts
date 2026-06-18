@@ -16,10 +16,10 @@
 import {
   type SimulationState,
   type SimulationSignal,
-} from "./simulation-state";
-import { mayInterrupt, type PressureState } from "./pressure";
-import { buildMemoryHook } from "./cross-session";
-import type { ReactivePersona } from "./persona-reactivity";
+} from "./simulation-state.js";
+import { mayInterrupt, type PressureState } from "./pressure.js";
+import { buildMemoryHook } from "./cross-session.js";
+import type { ReactivePersona } from "./persona-reactivity.js";
 
 /** Contexte exploité pour façonner la prochaine sortie (pas la décision). */
 export interface SimulationContext {

@@ -10,20 +10,20 @@
  * État V2 conservé dans un store in-memory + TTL local (pas de DB).
  */
 
-import { DeepgramAdapter } from "./deepgram";
-import type { TTSAdapter } from "./tts";
-import { DefaultTTSAdapter } from "./tts";
-import type { VoiceWsLike, VoiceMetricsLogger } from "./voice-websocket";
+import { DeepgramAdapter } from "./deepgram.js";
+import type { TTSAdapter } from "./tts/index.js";
+import { DefaultTTSAdapter } from "./tts/index.js";
+import type { VoiceWsLike, VoiceMetricsLogger } from "./voice-websocket.js";
 import {
   buildCandidateProfile,
   type BuildProfileInput,
-} from "../core/v2/candidate-profile";
+} from "../core/v2/candidate-profile.js";
 import {
   initInterviewV2,
   nextV2Step,
   type InterviewStateV2,
-} from "../core/v2/interview-engine-v2";
-import type { PersonaName } from "../core/v2/personas";
+} from "../core/v2/interview-engine-v2.js";
+import type { PersonaName } from "../core/v2/personas.js";
 
 /** Store minimal d'états V2 (in-memory + TTL). */
 class V2SessionStore {

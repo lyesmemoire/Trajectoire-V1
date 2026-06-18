@@ -1,5 +1,5 @@
-import { MindState, P5Event } from "./execution-contract";
-import { reduceMind } from "./reduceMind";
+import { MindState, P5Event } from "./execution-contract.js";
+import { reduceMind } from "./reduceMind.js";
 
 export function applyEvents(
   state: MindState,

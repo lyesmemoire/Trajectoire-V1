@@ -58,7 +58,7 @@ export class SILRuntimeLoop implements WakeupNotifier {
 
   private async processEvents(tenantId: string, sessionId: string) {
     let state = this.states.get(sessionId);
-    let pointer = state ? state.pointer : 0;
+    const pointer = state ? state.pointer : 0;
 
     let pendingEvents = await this.store.readAfter(tenantId, sessionId, pointer - 1);
 

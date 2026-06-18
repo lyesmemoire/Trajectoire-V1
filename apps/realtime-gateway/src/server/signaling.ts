@@ -1,9 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import type WebSocket from "ws";
 
-import { SessionManager } from "../sessions/manager";
-import { logger } from "../telemetry/logger";
-import { bus } from "../events/bus";
+import { SessionManager } from "../sessions/manager.js";
+import { logger } from "../telemetry/logger.js";
+import { bus } from "../events/bus.js";
 
 function rawToString(raw: any): string {
   if (typeof raw === "string") return raw;

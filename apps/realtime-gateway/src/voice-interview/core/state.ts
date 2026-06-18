@@ -5,6 +5,8 @@
  * cachée). Tout est déterministe et testable. C'est le cœur du "Voice Interview Brain".
  */
 
+import type { PressureMunition } from "../../../../lib/ats/contracts/munitions.js";
+
 export type InterviewPhase = "intro" | "deep" | "pressure" | "wrap";
 
 /** Style de l'interviewer (P3.5) : influe sur questions + feedback, pas le moteur. */
@@ -23,12 +25,24 @@ export interface InterviewState {
   phase: InterviewPhase;
   /** Style du recruteur simulé (P3.5). */
   interviewerStyle: InterviewerStyle;
+  /** ATS munition tracking */
+  munitions: PressureMunition[];
+  munitionsUsage: Record<string, MunitionUsage>;
+  /** ID de la munition actuellement explorée (si applicable) */
+  currentMunitionId?: string;
+}
+
+export interface MunitionUsage {
+  firstUsedAtTurn: number;
+  attempts: number;
+  lastResponse: "engaged" | "deflected" | "silence" | null;
 }
 
 export interface CreateStateInput {
   jobGap?: string;
   initialTopic?: string;
   interviewerStyle?: InterviewerStyle;
+  munitions?: PressureMunition[];
 }
 
 /** Crée un état initial valide et déterministe. */
@@ -41,6 +55,8 @@ export function createInitialState(input: CreateStateInput = {}): InterviewState
     scoreSignals: [],
     phase: "intro",
     interviewerStyle: input.interviewerStyle ?? "neutral",
+    munitions: input.munitions ?? [],
+    munitionsUsage: {},
   };
 }
 
@@ -73,7 +89,9 @@ export function applyPatch(
     ...state,
     ...patch,
     askedQuestions: patch.askedQuestions ?? [...state.askedQuestions],
-    scoreSignals: patch.scoreSignals ?? [...state.scoreSignals],
+    scoreSignals: patch.scoreSignals ?? [...(state.scoreSignals || [])],
+    munitions: patch.munitions ?? [...(state.munitions || [])],
+    munitionsUsage: patch.munitionsUsage ?? { ...(state.munitionsUsage || {}) },
   };
 }
 

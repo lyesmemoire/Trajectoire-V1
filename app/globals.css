@@ -67,8 +67,3 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Global Transition Override for everything to be sober */
-* {
-  transition-duration: 150ms !important;
-  transition-timing-function: linear !important;
-}

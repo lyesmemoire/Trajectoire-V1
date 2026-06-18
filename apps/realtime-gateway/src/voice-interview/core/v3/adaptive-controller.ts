@@ -1,4 +1,4 @@
-import { callLlmStrict } from "../llm-strict";
+import { callLlmStrict } from "../llm-strict.js";
 import { z } from "zod";
 
 export interface AdaptiveControllerInput {

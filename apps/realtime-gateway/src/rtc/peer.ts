@@ -4,7 +4,7 @@ import {
   RTCIceCandidate,
 } from "werift";
 import WebSocket from "ws";
-import { logger } from "../telemetry/logger";
+import { logger } from "../telemetry/logger.js";
 
 export class RtcPeer {
   private readonly ws: WebSocket;

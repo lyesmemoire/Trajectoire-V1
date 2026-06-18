@@ -64,7 +64,7 @@ export function Pricing() {
             <span className="text-blue-500">mutation.</span>
           </h2>
           <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto">
-            Un entretien raté coûte des mois de salaire. StudioEntretien est
+            Un entretien raté coûte des mois de salaire. Trajectoire est
             rentable dès votre premier oui.
           </p>
         </div>

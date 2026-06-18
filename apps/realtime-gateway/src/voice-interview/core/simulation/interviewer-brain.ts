@@ -8,6 +8,9 @@
  *  - plan d'entretien (phases)
  *
  * FAÇADE iso-comportement : réexporte la logique existante, sans la modifier.
+ *
+ * ⚠️ FAÇADE UNIQUEMENT — Ne jamais importer depuis ce fichier
+ *    dans les modules sous-jacents (risque d'import circulaire).
  */
 
 export {
@@ -16,7 +19,7 @@ export {
   PERSONAS,
   type InterviewerPersona,
   type PersonaName,
-} from "../v2/personas";
+} from "../v2/personas.js";
 
 export {
   QUESTION_BANK,
@@ -26,7 +29,7 @@ export {
   type Question,
   type QuestionCategory,
   type Difficulty,
-} from "../v2/question-bank";
+} from "../v2/question-bank.js";
 
 export {
   ROLE_TRACKS,
@@ -34,7 +37,7 @@ export {
   getRoleTrack,
   type RoleTrack,
   type RoleTrackName,
-} from "../v2/role-tracks";
+} from "../v2/role-tracks.js";
 
 export {
   buildInterviewPlan,
@@ -43,9 +46,9 @@ export {
   PHASE_CATEGORIES,
   type InterviewPlan,
   type V2Phase,
-} from "../v2/interview-plan-builder";
+} from "../v2/interview-plan-builder.js";
 
 export {
   pickTrapQuestion,
   trapSkills,
-} from "../v2/trap-question-engine";
+} from "../v2/trap-question-engine.js";

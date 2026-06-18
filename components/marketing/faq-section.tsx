@@ -5,7 +5,7 @@ import { Plus, Minus } from "lucide-react";
 
 const FAQS = [
   {
-    q: "En quoi StudioEntretien est différent d'un coach IA classique ?",
+    q: "En quoi Trajectoire est différent d'un coach IA classique ?",
     a: "Contrairement aux outils qui se contentent de noter vos réponses, nous simulons la pression psychologique. Notre IA vous interrompt, manifeste du scepticisme et analyse votre capacité à rebondir.",
   },
   {

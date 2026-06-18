@@ -5,20 +5,20 @@ import { loginHref, signupHref } from "./landing-config";
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+    <nav className="sticky top-0 z-50 bg-[#050816]/70 backdrop-blur-md border-b border-white/5 transition-all duration-300">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 transition-transform group-hover:scale-105 duration-200">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
-          <span className="font-black text-slate-800 text-lg tracking-tight font-display">
-            StudioEntretien.fr
+          <span className="font-black text-white text-lg tracking-tight font-display">
+            Trajectoire
           </span>
         </Link>
 
         {/* Nav Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-600">
+        <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-400">
           <a href="#features" className="hover:text-blue-600 transition-colors">
             Fonctionnalités
           </a>
@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href={loginHref}
-            className="text-sm font-bold text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors hidden md:block"
+            className="text-sm font-bold text-slate-400 hover:text-white px-4 py-2 transition-colors hidden md:block"
           >
             Connexion
           </Link>

@@ -1,11 +1,11 @@
-import { OrchestratorResult, RuntimeContext, VoiceUXCalculator } from "./orchestrator-contract";
-import { CandidateMessage, SessionGovernor } from "../types";
-import { SessionLifecycleState } from "../lifecycle/lifecycle-contract";
-import { reduceLifecycle } from "../lifecycle/lifecycle-reducer";
-import { ExecutionFacade } from "../../p5/integration/execution-facade";
-import { buildVoicePlan } from "../voice/build-plan";
-import { buildTransportCommands } from "../transport/command-builder";
-import { MindState } from "../../p5/execution-contract";
+import { OrchestratorResult, RuntimeContext, VoiceUXCalculator } from "./orchestrator-contract.js";
+import { CandidateMessage, SessionGovernor } from "../types.js";
+import { SessionLifecycleState } from "../lifecycle/lifecycle-contract.js";
+import { reduceLifecycle } from "../lifecycle/lifecycle-reducer.js";
+import { ExecutionFacade } from "../../p5/integration/execution-facade.js";
+import { buildVoicePlan } from "../voice/build-plan.js";
+import { buildTransportCommands } from "../transport/command-builder.js";
+import { MindState } from "../../p5/execution-contract.js";
 
 export class RuntimeOrchestrator {
   private lifecycles = new Map<string, SessionLifecycleState>();
@@ -74,7 +74,7 @@ export class RuntimeOrchestrator {
   }
 
   // Lifecycle management
-  public dispatchLifecycleEvent(sessionId: string, event: import("../lifecycle/lifecycle-contract").LifecycleEvent): boolean {
+  public dispatchLifecycleEvent(sessionId: string, event: import("../lifecycle/lifecycle-contract.js").LifecycleEvent): boolean {
     const current = this.lifecycles.get(sessionId);
     if (!current) return false;
     try {

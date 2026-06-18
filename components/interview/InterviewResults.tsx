@@ -7,7 +7,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CommitteeDecisionReveal, CommitteeDecision } from "./CommitteeDecisionReveal";
+import { CommitteeDecisionReveal } from "./CommitteeDecisionReveal";
 
 /**
  * Replay Allégé - Structure Stricte:

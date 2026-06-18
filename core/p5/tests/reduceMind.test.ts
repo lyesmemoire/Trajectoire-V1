@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { reduceMind } from "../reduceMind";
-import { MindState, P5Event } from "../execution-contract";
+import { reduceMind } from "../reduceMind.js";
+import { MindState, P5Event } from "../execution-contract.js";
 
 describe("reduceMind - Core logic", () => {
   const getInitialState = (): MindState => ({

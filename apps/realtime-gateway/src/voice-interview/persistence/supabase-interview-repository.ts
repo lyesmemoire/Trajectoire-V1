@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type { InterviewRecord, InterviewRepository } from "./interview-repository";
+import type { InterviewRecord, InterviewRepository } from "./interview-repository.js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,

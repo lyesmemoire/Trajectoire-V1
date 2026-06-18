@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { reduceLifecycle, InvalidLifecycleTransitionError } from "../lifecycle-reducer";
-import { SessionLifecycleState, LifecycleEvent } from "../lifecycle-contract";
+import { reduceLifecycle, InvalidLifecycleTransitionError } from "../lifecycle-reducer.js";
+import { SessionLifecycleState, LifecycleEvent } from "../lifecycle-contract.js";
 
 describe("P6.4 - Lifecycle Engine", () => {
   it("L1: should allow valid transitions", () => {

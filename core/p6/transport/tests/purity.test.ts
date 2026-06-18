@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import * as commandBuilderModule from "../command-builder";
-import * as validatorModule from "../command-validator";
-import * as replayModule from "../transport-replay";
-import * as batchModule from "../command-batch";
+import * as commandBuilderModule from "../command-builder.js";
+import * as validatorModule from "../command-validator.js";
+import * as replayModule from "../transport-replay.js";
+import * as batchModule from "../command-batch.js";
 import { readFileSync } from "fs";
 import { join } from "path";
 

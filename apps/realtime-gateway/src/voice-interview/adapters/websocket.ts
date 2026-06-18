@@ -8,9 +8,9 @@
  * (compatible `ws` et `@fastify/websocket`). Ne dépend PAS de /product.
  */
 
-import { SessionManager } from "../sessions/session-manager";
-import { DeepgramAdapter } from "./deepgram";
-import { nextStep, openingStep } from "../core/interview-engine";
+import { SessionManager } from "../sessions/session-manager.js";
+import { DeepgramAdapter } from "./deepgram.js";
+import { nextStep, openingStep } from "../core/interview-engine.js";
 
 /** Interface minimale d'un socket (évite de coupler à une lib WS précise). */
 export interface WsLike {

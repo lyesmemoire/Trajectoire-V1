@@ -3,7 +3,7 @@
  * Toujours "configuré", ne dépend de rien. Garantit le fallback ultime.
  */
 
-import type { TTSProvider } from "./types";
+import type { TTSProvider } from "./types.js";
 
 /** Buffer WAV PCM 16-bit mono silencieux déterministe. */
 export function createSilentWav(durationMs = 200, sampleRate = 16000): ArrayBuffer {

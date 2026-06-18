@@ -5,7 +5,7 @@
  * variation par tour (anti-saut) + pas de deux extrêmes consécutifs.
  */
 
-import type { PerceptionUX } from "../perception-ux";
+import type { PerceptionUX } from "../perception-ux.js";
 
 export interface GlobalUXGuardrails {
   maxSilence: number;

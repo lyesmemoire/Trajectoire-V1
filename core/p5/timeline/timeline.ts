@@ -1,4 +1,4 @@
-import { Timeline } from "./timeline-contract";
+import { Timeline } from "./timeline-contract.js";
 
 /**
  * Creates a new, empty Timeline.

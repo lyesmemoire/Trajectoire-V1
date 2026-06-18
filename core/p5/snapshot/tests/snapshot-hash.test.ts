@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { createSnapshot } from "../create-snapshot";
-import { snapshotHash } from "../snapshot-hash";
-import { MindState } from "../../execution-contract";
+import { createSnapshot } from "../create-snapshot.js";
+import { snapshotHash } from "../snapshot-hash.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("snapshot — S3: Hash stable", () => {
   it("should produce the same hash for identical states", () => {

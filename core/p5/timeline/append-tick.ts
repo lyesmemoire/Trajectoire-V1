@@ -1,5 +1,5 @@
-import { P5Event } from "../execution-contract";
-import { Timeline } from "./timeline-contract";
+import { P5Event } from "../execution-contract.js";
+import { Timeline } from "./timeline-contract.js";
 
 /**
  * Appends an event to a timeline, returning a new timeline.

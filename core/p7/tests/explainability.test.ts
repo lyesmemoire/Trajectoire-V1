@@ -1,9 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { RuntimeTrace, TurnTrace } from "../trace-contract";
-import { ScoringEngine } from "../scoring-engine/scoring-engine";
-import { mapTraceToExplanation, explainFromTrace } from "../explainability/trace-mapper";
-import { validateDAG } from "../explainability/dag-builder";
-import { explainScore } from "../explainability/score-explainer";
+import { RuntimeTrace } from "../trace-contract.js";
+import { ScoringEngine } from "../scoring-engine/scoring-engine.js";
+import { mapTraceToExplanation, explainFromTrace } from "../explainability/trace-mapper.js";
+import { validateDAG } from "../explainability/dag-builder.js";
 
 // ─── Shared fixture ─────────────────────────────────────────────────
 

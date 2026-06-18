@@ -9,7 +9,6 @@ import { MemoryEventStore } from "../services/memory-event-store";
 import { SILIngestor } from "../services/ingestor";
 import { KafkaBridge } from "../services/kafka-bridge";
 import { EventVerifier, VerificationResult } from "../contracts/event-verifier";
-import { SILEvent } from "../contracts/sil-events";
 import { MemorySessionRegistry } from "../services/memory-session-registry";
 
 class MockVerifier implements EventVerifier {

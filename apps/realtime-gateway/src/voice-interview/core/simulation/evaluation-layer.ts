@@ -8,7 +8,7 @@
  * FAÇADE iso-comportement : réexporte la logique existante, sans la modifier.
  */
 
-export { evaluateTranscript, type AnswerEvaluation } from "../evaluation";
+export { evaluateTranscript, type AnswerEvaluation } from "../evaluation.js";
 
 export {
   buildInterviewReport,
@@ -17,12 +17,12 @@ export {
   type HiringRecommendation,
   type HiringDecision,
   type AnsweredTurn,
-} from "../v2/interview-report";
+} from "../v2/interview-report.js";
 
 export {
   buildRecruiterReport,
   type RecruiterReport,
   type BuildRecruiterReportInput,
-} from "../v2/recruiter-report";
+} from "../v2/recruiter-report.js";
 
-export { buildCredibilityScore, type CredibilityScore } from "../v2/bluff-detector";
+export { buildCredibilityScore, type CredibilityScore } from "../v2/bluff-detector.js";

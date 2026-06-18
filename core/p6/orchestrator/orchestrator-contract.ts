@@ -1,9 +1,9 @@
-import { SessionLifecycleState } from "../lifecycle/lifecycle-contract";
-import { MindState } from "../../p5/execution-contract";
-import { RuntimeDecision } from "../../p5/integration/integration-contract";
-import { VoiceExecutionPlan, VoiceInput } from "../voice/voice-contract";
-import { TransportCommand } from "../transport/transport-contract";
-import { CandidateMessage } from "../types";
+import { SessionLifecycleState } from "../lifecycle/lifecycle-contract.js";
+import { MindState } from "../../p5/execution-contract.js";
+import { RuntimeDecision } from "../../p5/integration/integration-contract.js";
+import { VoiceExecutionPlan, VoiceInput } from "../voice/voice-contract.js";
+import { TransportCommand } from "../transport/transport-contract.js";
+import { CandidateMessage } from "../types.js";
 
 export interface RuntimeContext {
   sessionId: string;

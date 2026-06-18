@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { batchDecisions } from "../event-batch";
-import { reduceMind } from "../../reduceMind";
-import { MindState } from "../../execution-contract";
+import { batchDecisions } from "../event-batch.js";
+import { reduceMind } from "../../reduceMind.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("event-batch", () => {
   // B1 — Déterminisme

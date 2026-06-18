@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { createJournal } from "../journal";
-import { appendEvent } from "../append-event";
-import { P5Event } from "../../execution-contract";
+import { createJournal } from "../journal.js";
+import { appendEvent } from "../append-event.js";
+import { P5Event } from "../../execution-contract.js";
 
 describe("journal — J1: Immutability & J2: Continuous sequence", () => {
   it("should create an empty journal", () => {

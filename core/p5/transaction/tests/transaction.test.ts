@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { beginTransaction } from "../begin-transaction";
-import { applyTransaction } from "../apply-transaction";
-import { commitTransaction } from "../commit-transaction";
-import { applyEvents } from "../../execution-engine";
-import { MindState, P5Event } from "../../execution-contract";
+import { beginTransaction } from "../begin-transaction.js";
+import { applyTransaction } from "../apply-transaction.js";
+import { commitTransaction } from "../commit-transaction.js";
+import { applyEvents } from "../../execution-engine.js";
+import { MindState, P5Event } from "../../execution-contract.js";
 
 describe("transaction — X1: Atomicity & X3: Determinism", () => {
   const getState = (): MindState => ({

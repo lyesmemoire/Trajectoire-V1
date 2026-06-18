@@ -5,7 +5,7 @@
  * (le chaînage passe au provider suivant). N'impose aucune dépendance au build.
  */
 
-import type { TTSProvider } from "./types";
+import type { TTSProvider } from "./types.js";
 
 export interface ElevenLabsOptions {
   apiKey?: string;
@@ -30,7 +30,7 @@ export class ElevenLabsTTSProvider implements TTSProvider {
     return this.apiKey.length > 0;
   }
 
-  async synthesize(text: string): Promise<ArrayBuffer> {
+  async synthesize(text: string, options?: { signal?: AbortSignal }): Promise<ArrayBuffer> {
     if (!this.isConfigured()) throw new Error("ElevenLabs non configuré");
 
     // Appel REST direct (pas de dépendance SDK obligatoire au build).
@@ -50,6 +50,7 @@ export class ElevenLabsTTSProvider implements TTSProvider {
           model_id: this.modelId,
           voice_settings: { stability: 0.5, similarity_boost: 0.75 },
         }),
+        signal: options?.signal ?? null,
       },
     );
 

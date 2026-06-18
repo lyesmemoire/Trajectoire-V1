@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { ExecutionFacade } from "../execution-facade";
-import { MindState } from "../../execution-contract";
-import { replay } from "../../journal/replay";
+import { ExecutionFacade } from "../execution-facade.js";
+import { MindState } from "../../execution-contract.js";
+import { replay } from "../../journal/replay.js";
 
 describe("execution-facade — end-to-end integration", () => {
   const getState = (): MindState => ({

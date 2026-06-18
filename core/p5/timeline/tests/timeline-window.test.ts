@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { createTimeline } from "../timeline";
-import { appendTick } from "../append-tick";
-import { timelineWindow } from "../timeline-window";
-import { P5Event } from "../../execution-contract";
+import { createTimeline } from "../timeline.js";
+import { appendTick } from "../append-tick.js";
+import { timelineWindow } from "../timeline-window.js";
+import { P5Event } from "../../execution-contract.js";
 
 describe("timeline-window — T4: Window integrity", () => {
   const buildTimeline = () => {

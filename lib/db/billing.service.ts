@@ -5,7 +5,7 @@ import {
   CreditOperationResult, 
   assertValidCreditOperation 
 } from "@/domain/billing.contract";
-import { validateCreditUsage, validateCreditTransaction } from "@/lib/db/validators/billing.validator";
+import { validateCreditUsage } from "@/lib/db/validators/billing.validator";
 
 function assertBillingBoundary(stack: string = new Error().stack || "") {
   // If we really wanted to inspect stack, we could.

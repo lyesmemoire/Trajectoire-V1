@@ -12,7 +12,6 @@ import {
   runVoiceTurn,
   bindAndPlay,
   type VoiceSink,
-  type VoiceTransportEvent,
 } from "@/apps/realtime-gateway/src/voice-interview/runtime/index";
 import type { TTSAdapter } from "@/apps/realtime-gateway/src/voice-interview/adapters/tts/types";
 
@@ -111,13 +110,13 @@ describe("P4.2 — runtime + Clock virtuelle", () => {
 
 describe("P4.2 — transport bête (bindAndPlay)", () => {
   it("traduit instructions → events + audio sans rien décider", async () => {
-    const events: VoiceTransportEvent[] = [];
+    const signals: Array<{ type: string; [k: string]: unknown }> = [];
     let audioCount = 0;
     const sink: VoiceSink = {
       sendAudio: () => {
         audioCount++;
       },
-      sendEvent: (e) => events.push(e),
+      sendSignal: (s) => signals.push(s),
     };
     const clock = new FakeClock(0);
     const rng = new SeededRng(3);
@@ -128,8 +127,8 @@ describe("P4.2 — transport bête (bindAndPlay)", () => {
     );
     await bindAndPlay(instructions, mockTTS, sink);
     expect(audioCount).toBe(1);
-    expect(events.some((e) => e.type === "speaking_start")).toBe(true);
-    expect(events.some((e) => e.type === "turn_done")).toBe(true);
+    expect(signals.some((s) => s.type === "speaking_start")).toBe(true);
+    expect(signals.some((s) => s.type === "turn_done")).toBe(true);
   });
 });
 

@@ -1,4 +1,4 @@
-import { MindState } from "../execution-contract";
+import { MindState } from "../execution-contract.js";
 
 /**
  * Result of comparing an original state against a replayed state.

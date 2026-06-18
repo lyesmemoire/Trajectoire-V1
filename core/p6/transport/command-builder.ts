@@ -1,5 +1,5 @@
-import { VoiceExecutionPlan } from "../voice/voice-contract";
-import { TransportCommand } from "./transport-contract";
+import { VoiceExecutionPlan } from "../voice/voice-contract.js";
+import { TransportCommand } from "./transport-contract.js";
 
 export function buildTransportCommands(plan: VoiceExecutionPlan): readonly TransportCommand[] {
   const commands: TransportCommand[] = [];

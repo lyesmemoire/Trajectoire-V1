@@ -1,12 +1,10 @@
-import { callLlmStrict } from "../llm-strict";
-import { z } from "zod";
-import { evaluateBluff } from "./bluff-detector";
-import { evaluateConsistencyGap } from "./integrity-detector";
-import { evaluateHRNarrative } from "./hr-narrative-evaluator";
-import { evaluateTechDirector } from "./tech-director-evaluator";
-import { evaluatePressure } from "./pressure-evaluator";
-import { evaluateLeadership } from "./leadership-evaluator";
-import { determineAdaptiveNextMove, AdaptiveControllerInput } from "./adaptive-controller";
+import { evaluateBluff } from "./bluff-detector.js";
+import { evaluateConsistencyGap } from "./integrity-detector.js";
+import { evaluateHRNarrative } from "./hr-narrative-evaluator.js";
+import { evaluateTechDirector } from "./tech-director-evaluator.js";
+import { evaluatePressure } from "./pressure-evaluator.js";
+import { evaluateLeadership } from "./leadership-evaluator.js";
+import { determineAdaptiveNextMove, AdaptiveControllerInput } from "./adaptive-controller.js";
 
 export interface ClaimFocus {
   claimId: string;
@@ -141,7 +139,30 @@ function addToAverage(avg: number, count: number, val: number) {
   return ((avg * count) + val) / (count + 1);
 }
 
+import { detectIntent } from "../intent-detector.js";
+import { handlePilotCommand, extractPilotAction } from "../strategies/pilot-commands.js";
+
 export async function nextV3Step(state: InterviewStateV3, transcript: string) {
+  // 0) Détection d'intention (interception des commandes de pilotage)
+  const intent = detectIntent(transcript);
+  const pilotAction = extractPilotAction(intent);
+
+  if (pilotAction) {
+    const result = handlePilotCommand(pilotAction, state.lastQuestion);
+    
+    console.info("[interview-engine-v3] pilot_command_handled", {
+      phase: state.phase,
+      command: pilotAction
+    });
+
+    return {
+      question: result.speakText ?? "",
+      updatedState: state, // Pas de mutation pour ne pas fausser l'historique
+      evaluationScore: 100 - (state.integrityRiskIndex * 100), // Score neutre (maintien)
+      finished: !!result.finished,
+    };
+  }
+
   state.history.push({ role: "user", content: transcript });
   state.turnCount += 1;
 

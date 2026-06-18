@@ -39,9 +39,9 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="auth-container">
-        <div className="auth-card" style={{ textAlign: "center" }}>
+        <div className="auth-card text-center">
           <h1>Vérifie ton email</h1>
-          <p className="subtitle" style={{ marginBottom: "1.5rem" }}>
+          <p className="subtitle mb-md">
             Un lien de confirmation a été envoyé à <strong>{email}</strong>.
           </p>
           <a href="/login">Retour au login</a>

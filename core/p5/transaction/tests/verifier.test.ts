@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { beginTransaction } from "../begin-transaction";
-import { applyTransaction } from "../apply-transaction";
-import { commitTransaction } from "../commit-transaction";
-import { verifyTransaction } from "../transaction-verifier";
-import { MindState, P5Event } from "../../execution-contract";
+import { beginTransaction } from "../begin-transaction.js";
+import { applyTransaction } from "../apply-transaction.js";
+import { commitTransaction } from "../commit-transaction.js";
+import { verifyTransaction } from "../transaction-verifier.js";
+import { MindState } from "../../execution-contract.js";
 
 describe("transaction-verifier — X5: Replay compatible", () => {
   const getState = (): MindState => ({

@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { verifyVoiceToken } from "../auth";
-import { interviewRepository } from "../../voice-interview/persistence/singleton";
+import { verifyVoiceToken } from "../auth.js";
+import { interviewRepository } from "../../voice-interview/persistence/singleton.js";
 
 interface Params {
   sessionId: string;
@@ -78,7 +78,7 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
     async (request: FastifyRequest<{ Body: { job_offer_text: string, target_role: string } }>, reply) => {
       // ── Rate Limiting (3 tiers: 2/min, 5/h, 10/day) ──
       const ip = request.ip || request.headers["x-forwarded-for"] as string || "unknown";
-      const { checkRateLimit } = await import("../rate-limiter");
+      const { checkRateLimit } = await import("../rate-limiter.js");
       const rl = await checkRateLimit(ip);
       if (!rl.allowed) {
         return reply.status(429).send({
@@ -121,7 +121,7 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
       }
 
       // Import LLM strict to generate context
-      const { callLlmStrict } = await import("../../voice-interview/core/llm-strict");
+      const { callLlmStrict } = await import("../../voice-interview/core/llm-strict.js");
       const { z } = await import("zod");
 
       const ContextSchema = z.object({

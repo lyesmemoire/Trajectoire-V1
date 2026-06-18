@@ -53,7 +53,7 @@ export function ComparisonSection() {
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
                 <CheckCircle2 className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-black text-white">StudioEntretien</h3>
+              <h3 className="text-xl font-black text-white">Trajectoire</h3>
             </div>
             <ul className="space-y-4">
               {COMPARISON_DATA.studio.map((item, i) => (

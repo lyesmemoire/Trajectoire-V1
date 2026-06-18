@@ -1,5 +1,5 @@
-import type { StructuredScore } from "../core/scoring";
-import type { PremiumReport } from "../core/premium-report";
+import type { StructuredScore } from "../core/scoring.js";
+import type { PremiumReport } from "../core/premium-report.js";
 
 export interface InterviewRecord {
   sessionId: string;

@@ -1,4 +1,4 @@
-import { CandidateMessage } from "../../../../core/p6/types";
+import { CandidateMessage } from "../../../../core/p6/types.js";
 
 export class STTAdapter {
   public async recognize(audio: Uint8Array): Promise<CandidateMessage> {

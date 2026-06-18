@@ -1,0 +1,92 @@
+/* ============================================================
+UTILITIES — Classes utilitaires atomiques
+Remplacent les styles inline présents dans les composants.
+============================================================ */
+
+/* --- Texte --- */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-capitalize { text-transform: capitalize; }
+.text-uppercase { text-transform: uppercase; }
+.text-small { font-size: 0.8rem; }
+.text-xs { font-size: 0.75rem; }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.text-gradient {
+background: var(--pro-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+/* --- Espacement --- */
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-lg); }
+.mb-lg { margin-bottom: var(--space-xl); }
+.mb-xl { margin-bottom: var(--space-2xl); }
+.mt-md { margin-top: var(--space-lg); }
+.mt-lg { margin-top: var(--space-xl); }
+
+/* --- Affichage --- */
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.d-block { display: block; }
+.d-inline-block { display: inline-block; }
+.d-none { display: none; }
+
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between{ justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+
+/* --- Largeur / Hauteur --- */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+/* --- Positionnement --- */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+/* --- Overflow --- */
+.overflow-hidden { overflow: hidden; }
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+from { opacity: 0; transform: translateY(24px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+from { opacity: 0; transform: scale(0.94); }
+to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.5; }
+}
+
+/* --- Accessibilité --- */
+.sr-only {
+position: absolute;
+width: 1px;
+height: 1px;
+padding: 0;
+margin: -1px;
+overflow: hidden;
+clip: rect(0, 0, 0, 0);
+white-space: nowrap;
+border-width: 0;
+}

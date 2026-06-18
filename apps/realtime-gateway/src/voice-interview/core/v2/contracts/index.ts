@@ -19,7 +19,7 @@ export {
   PERSONAS,
   type InterviewerPersona,
   type PersonaName,
-} from "../personas";
+} from "../personas.js";
 export {
   buildInterviewPlan,
   nextV2Phase,
@@ -27,7 +27,7 @@ export {
   PHASE_CATEGORIES,
   type InterviewPlan,
   type V2Phase,
-} from "../interview-plan-builder";
+} from "../interview-plan-builder.js";
 export {
   QUESTION_BANK,
   QUESTION_BANK_VERSION,
@@ -36,24 +36,24 @@ export {
   type Question,
   type QuestionCategory,
   type Difficulty,
-} from "../question-bank";
-export { pickTrapQuestion, trapSkills } from "../trap-question-engine";
+} from "../question-bank.js";
+export { pickTrapQuestion, trapSkills } from "../trap-question-engine.js";
 
 // ── Perception (signaux / contradictions / bluff) ──────────────────────
-export { extractSignals, type AnswerSignals } from "../answer-signals";
+export { extractSignals, type AnswerSignals } from "../answer-signals.js";
 export {
   extractCandidateFacts,
   detectContradiction,
   type CandidateFacts,
   type Contradiction,
-} from "../candidate-facts";
-export { detectBluff, type BluffSignals } from "../bluff-detector";
+} from "../candidate-facts.js";
+export { detectBluff, type BluffSignals } from "../bluff-detector.js";
 
 // ── Adaptatif (difficulté) ─────────────────────────────────────────────
-export { adaptDifficulty } from "../difficulty-adapter";
+export { adaptDifficulty } from "../difficulty-adapter.js";
 
 // ── Évaluation (STAR partagée V1 + rapports V2) ────────────────────────
-export { evaluateTranscript, type AnswerEvaluation } from "../../evaluation";
+export { evaluateTranscript, type AnswerEvaluation } from "../../evaluation.js";
 export {
   buildInterviewReport,
   buildHiringRecommendation,
@@ -61,9 +61,9 @@ export {
   type HiringRecommendation,
   type HiringDecision,
   type AnsweredTurn,
-} from "../interview-report";
+} from "../interview-report.js";
 export {
   buildRecruiterReport,
   type RecruiterReport,
   type BuildRecruiterReportInput,
-} from "../recruiter-report";
+} from "../recruiter-report.js";

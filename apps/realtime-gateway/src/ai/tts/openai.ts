@@ -1,4 +1,4 @@
-import { TTSProvider } from "./provider";
+import { TTSProvider } from "./provider.js";
 
 /**
  * OpenAI TTS streaming implementation.

@@ -24,23 +24,24 @@ export default function DashboardPage() {
 
   const load = useCallback(async () => {
     try {
-      const data = await fetchInterviews();
+      const [data, { data: authData }] = await Promise.all([
+        fetchInterviews(),
+        supabase.auth.getUser()
+      ]);
+      
       setInterviews(data);
+      const userPlan = authData?.user?.user_metadata?.plan;
+      if (userPlan) setPlan(userPlan);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur de chargement");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [supabase.auth]);
 
   useEffect(() => {
-    // Fetch user plan from Supabase metadata
-    supabase.auth.getUser().then(({ data }) => {
-      const userPlan = data?.user?.user_metadata?.plan;
-      if (userPlan) setPlan(userPlan);
-    });
     load();
-  }, [load, supabase.auth]);
+  }, [load]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -114,7 +115,7 @@ export default function DashboardPage() {
               ✨ Upgrade Pro
             </button>
           ) : (
-            <button className="btn-upgrade" onClick={handleManageSubscription} style={{ background: "rgba(255, 255, 255, 0.1)", color: "white", border: "1px solid rgba(255, 255, 255, 0.2)" }}>
+            <button className="btn-manage-sub" onClick={handleManageSubscription}>
               ⚙️ Gérer l'abonnement
             </button>
           )}
@@ -140,7 +141,7 @@ export default function DashboardPage() {
         </div>
         <div className="stat-card">
           <div className="stat-label">Plan actif</div>
-          <div className="stat-value" style={{ textTransform: "capitalize" }}>
+          <div className="stat-value text-capitalize">
             {plan}
           </div>
         </div>
@@ -151,7 +152,7 @@ export default function DashboardPage() {
       {interviews.length === 0 ? (
         <div className="empty-state">
           <p>Aucun entretien pour le moment.</p>
-          <p style={{ fontSize: "0.8rem" }}>
+          <p className="text-small">
             Lance ton premier entretien vocal pour voir tes résultats ici.
           </p>
         </div>

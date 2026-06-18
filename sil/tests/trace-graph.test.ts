@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { MemoryEventStore } from "../services/memory-event-store";
 import { DefaultEventQueryService } from "../services/query/event-query-service";
 import { TraceGraphBuilder } from "../services/observability/trace-graph-builder";
-import * as crypto from "crypto";
 import { SILEvent } from "../contracts/sil-events";
 
 describe("Phase 2-I: Trace Graph Builder", () => {

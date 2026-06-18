@@ -1,4 +1,4 @@
-import { Tick, Timeline } from "./timeline-contract";
+import { Tick, Timeline } from "./timeline-contract.js";
 
 /**
  * Extracts a window of timeline entries between fromTick and toTick (inclusive).

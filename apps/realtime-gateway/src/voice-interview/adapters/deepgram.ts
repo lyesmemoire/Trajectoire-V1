@@ -101,10 +101,13 @@ export class DeepgramAdapter {
     }
   }
 
-  /** Ferme proprement la connexion. */
+  /** Ferme proprement la connexion et retire tous les listeners. */
   stop(): void {
     try {
-      this.connection?.finish?.();
+      if (this.connection) {
+        this.connection.removeAllListeners();
+        this.connection.finish?.();
+      }
     } catch {
       /* ignore */
     }
