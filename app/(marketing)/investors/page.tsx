@@ -9,9 +9,9 @@ import CompetitionTable from "@/components/marketing/pitch/CompetitionTable";
 import RoadmapTimeline from "@/components/marketing/pitch/RoadmapTimeline";
 
 export const metadata: Metadata = {
-  title: "Investisseurs | AI Career Copilot",
+  title: "Investisseurs | Trajectoire",
   description:
-    "Infrastructure d'aide à la décision carrière alimentée par l'IA. Découvrez notre traction, modèle économique et roadmap.",
+    "Infrastructure d'aide à la décision carrière alimentée par l'accompagnement. Découvrez notre traction, modèle économique et roadmap.",
   robots: { index: false, follow: false },
 };
 
@@ -91,7 +91,7 @@ export default async function InvestorsPage() {
       <header className="border-b border-red-900/30 bg-black/80 backdrop-blur">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <Link href="/" className="text-xl font-bold text-white">
-            AI Career Copilot
+            Trajectoire
           </Link>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 rounded-full bg-red-900/30 px-3 py-1 text-xs font-semibold text-red-400 ring-1 ring-red-800/40">
@@ -121,7 +121,7 @@ export default async function InvestorsPage() {
             </span>
           </h1>
           <p className="mx-auto mb-10 max-w-3xl text-xl leading-relaxed text-gray-300">
-            AI Career Copilot démocratise l&apos;accès à une préparation de haut
+            Trajectoire démocratise l&apos;accès à une préparation de haut
             niveau grâce à l&apos;IA générative — sur un marché de{" "}
             <strong className="text-white">€50 milliards</strong> encore dominé
             par des coaches humains à €100/h.

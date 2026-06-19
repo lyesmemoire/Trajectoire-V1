@@ -27,13 +27,13 @@ export default async function SimplifiedDashboard() {
   if (!profile) return redirect("/onboarding");
 
   return (
-    <div className="max-w-3xl mx-auto space-y-16 pb-20 font-sans antialiased">
+    <div className="max-w-3xl mx-auto space-y-20 pb-20 font-sans antialiased">
       {/* 1. PROGRESSION */}
       <section className="text-center py-10 space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-100">
           <TrendingUp className="w-3 h-3" /> Vos efforts portent leurs fruits
         </div>
-        <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-none">
+        <h1 className="text-5xl lg:text-7xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] tracking-tighter leading-none">
           Vous progressez.
         </h1>
       </section>
@@ -44,10 +44,10 @@ export default async function SimplifiedDashboard() {
           💡
         </div>
         <div className="flex-1 text-center md:text-left space-y-2">
-          <h3 className="text-xl font-black text-slate-900 tracking-tight">
+          <h3 className="text-xl font-semibold text-[var(--text-primary)] tracking-tight">
             Point à travailler
           </h3>
-          <p className="text-lg text-slate-600 font-medium leading-relaxed">
+          <p className="text-[17px] text-[var(--text-secondary)] leading-relaxed">
             "Travaillez votre concision. Vos meilleures idées sont diluées par
             des détails secondaires."
           </p>
@@ -55,7 +55,7 @@ export default async function SimplifiedDashboard() {
       </section>
 
       {/* 3. BOUTON UNIQUE */}
-      <section className="bg-slate-900 rounded-[3rem] p-12 lg:p-16 text-white shadow-2xl relative overflow-hidden">
+      <section className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[var(--radius-card)] p-12 lg:p-16 text-[var(--text-primary)] shadow-[var(--shadow-card)] relative overflow-hidden">
         <div className="absolute top-0 right-0 p-16 opacity-5 pointer-events-none">
           <Sparkles className="w-64 h-64" />
         </div>
@@ -67,15 +67,15 @@ export default async function SimplifiedDashboard() {
             <Button
               asChild
               size="lg"
-              className="h-20 px-16 rounded-[2rem] bg-white text-slate-950 hover:bg-slate-200 font-black text-2xl shadow-2xl transition-transform active:scale-95"
+              className="h-20 px-16 rounded-[2rem] bg-[var(--primary)] text-white hover:bg-[#5C6BE8] font-black text-2xl shadow-2xl transition-transform active:scale-95"
             >
               <Link href="/dashboard/interview/session">
                 Commencer l’entraînement
               </Link>
             </Button>
           </div>
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
-            Durée estimée : 6 minutes
+          <p className="text-sm text-[var(--text-secondary)]">
+            Environ 6 minutes
           </p>
         </div>
       </section>

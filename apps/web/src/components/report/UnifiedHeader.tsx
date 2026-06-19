@@ -23,7 +23,7 @@ export default function UnifiedHeader({
       <div className="report-header-body">
         <h1 className="report-title">Rapport d'Évaluation Exécutif</h1>
         <p className="report-subtitle">
-          Analyse comportementale et cognitive par la Méthode Trajectoire
+          Analyse comportementale et cognitive par intelligence artificielle
         </p>
       </div>
 

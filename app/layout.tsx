@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Trajectoire",
   },
   description:
-    "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel, détection d'incohérence CV/oral, et Career DNA.",
+    "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel, détection d'incohérence CV/oral, et Career DNA.",
   keywords: [
     "ATS",
     "CV",
@@ -51,12 +51,12 @@ export const metadata: Metadata = {
     siteName: "Trajectoire",
     title: "Trajectoire — Révélez votre potentiel avant l'entretien.",
     description:
-      "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel.",
+      "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Trajectoire",
-    description: "Simulez des entretiens sous pression avec l'IA. Analyse comportementale en temps réel.",
+    description: "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel.",
   },
   robots: {
     index: true,

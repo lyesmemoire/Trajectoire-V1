@@ -27,22 +27,22 @@ const navItems = [
   },
   {
     label: "Analyse ATS",
-    href: "/app/audit",
+    href: "/dashboard/ats",
     icon: <Target className="w-5 h-5" />,
   },
   {
     label: "Entretien Lab",
-    href: "/app/session",
+    href: "/dashboard/interview/session",
     icon: <Mic2 className="w-5 h-5" />,
   },
   {
     label: "Ma Progression",
-    href: "/app/progress",
+    href: "/dashboard/progress",
     icon: <TrendingUp className="w-5 h-5" />,
   },
   {
     label: "Identité DNA",
-    href: "/app/identity",
+    href: "/dashboard/career-dna",
     icon: <Sparkles className="w-5 h-5" />,
   },
   {
@@ -67,16 +67,16 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex min-h-screen bg-[var(--bg-base)]">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 hidden h-full w-72 flex-col border-r border-slate-200 bg-white lg:flex z-50">
+      <aside className="fixed left-0 top-0 hidden h-full w-72 flex-col border-r border-[var(--border)]  bg-[var(--bg-card)] lg:flex z-50">
         <div className="p-8">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br bg-[var(--primary)] flex items-center justify-center text-white shadow-lg shadow-[var(--primary)]/10">
               <Sparkles className="w-6 h-6" />
             </div>
-            <span className="font-black text-xl text-slate-900 tracking-tight">
-              StudioEntretien
+            <span className="font-black text-xl text-[var(--text-primary)] tracking-tight">
+              Trajectoire
             </span>
           </Link>
         </div>
@@ -86,7 +86,7 @@ export default async function DashboardLayout({
             <Link
               key={item.href}
               href={item.href}
-              className="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-slate-500 transition-all hover:bg-slate-50 hover:text-blue-600"
+              className="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition-all hover:bg-slate-50 hover:text-[var(--primary)]"
             >
               <span className="text-slate-400 group-hover:text-blue-500 transition-colors">
                 {item.icon}
@@ -99,7 +99,7 @@ export default async function DashboardLayout({
         <div className="border-t border-slate-100 p-6 space-y-1">
           <Link
             href="/dashboard/settings"
-            className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+            className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] hover:bg-slate-50 hover:text-[var(--primary)]"
           >
             <Settings className="w-5 h-5" />
             Paramètres
@@ -107,7 +107,7 @@ export default async function DashboardLayout({
           <form action="/auth/signout" method="post">
             <button
               type="submit"
-              className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+              className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] hover:bg-red-50 hover:text-red-600 transition-colors"
             >
               <LogOut className="w-5 h-5" />
               Déconnexion
@@ -117,12 +117,12 @@ export default async function DashboardLayout({
       </aside>
 
       <main className="flex-1 lg:ml-72">
-        <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-slate-200 bg-white/80 px-8 backdrop-blur-md lg:hidden">
+        <header className="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-[var(--border)]  bg-[var(--bg-card)]/80 px-8 backdrop-blur-md lg:hidden">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
               <Sparkles className="w-5 h-5" />
             </div>
-            <span className="font-black text-slate-900">StudioEntretien</span>
+            <span className="font-black text-[var(--text-primary)]">Trajectoire</span>
           </Link>
         </header>
 

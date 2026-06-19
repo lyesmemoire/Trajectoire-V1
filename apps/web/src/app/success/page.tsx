@@ -21,7 +21,7 @@ export default function SuccessPage() {
         <p>
           Ton compte a été mis à jour vers le plan <strong>Pro</strong>.
           <br />
-          Tu as maintenant accès au retour détaillé et à 20 entretiens
+          Tu as maintenant accès aux rapports IA détaillés et à 20 entretiens
           par mois.
         </p>
         <a href="/dashboard" className="btn-primary btn-inline">

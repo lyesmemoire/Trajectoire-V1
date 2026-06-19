@@ -179,7 +179,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -187,28 +187,25 @@ function LoginForm() {
         className="w-full max-w-[460px]"
       >
         {/* ── Logo ── */}
-        <div className="text-center mb-6">
-          <Link href="/" className="inline-flex items-center gap-1.5">
-            <span className="text-blue-500 text-2xl">✦</span>
-            <span className="text-[22px] font-bold tracking-tight text-blue-600">
-              AI Career
-            </span>
-            <span className="text-[22px] font-bold tracking-tight text-gray-900">
-              Copilot.
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2">
+            <span className="text-[var(--primary)] text-[26px]">✦</span>
+            <span className="text-[23px] font-semibold tracking-[-0.02em] text-[var(--text-primary)]">
+              <span className="text-[23px] font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Trajectoire</span>
             </span>
           </Link>
         </div>
 
         {/* ── Card ── */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-8">
+        <div className="card px-9 py-9">
           {/* ── Tab Switcher ── */}
           <div className="bg-gray-100 rounded-full p-1 flex mb-7">
-            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-blue-600 bg-white shadow-sm cursor-default">
+            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-[var(--primary)] bg-white shadow-sm cursor-default">
               Se connecter
             </div>
             <Link
               href="/auth/signup"
-              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-gray-700 transition-colors"
             >
               S&apos;inscrire
             </Link>
@@ -220,7 +217,7 @@ function LoginForm() {
               type="button"
               onClick={() => handleOAuth("apple")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <AppleIcon />
               Continuer avec Apple
@@ -230,7 +227,7 @@ function LoginForm() {
               type="button"
               onClick={() => handleOAuth("facebook")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <FacebookIcon />
               Continuer avec Facebook
@@ -240,7 +237,7 @@ function LoginForm() {
               type="button"
               onClick={() => handleOAuth("google")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <GoogleIcon />
               Continuer avec Google
@@ -250,10 +247,10 @@ function LoginForm() {
           {/* ── Divider ── */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-[var(--border)]" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-gray-400 font-medium">
+              <span className="bg-white px-4 text-[var(--text-secondary)] font-medium">
                 Ou
               </span>
             </div>
@@ -264,12 +261,12 @@ function LoginForm() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-green-50 border border-green-100 rounded-xl flex items-start gap-2.5"
+              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex items-start gap-2.5"
             >
-              <span className="text-green-500 text-sm leading-none mt-0.5">
+              <span className="text-[var(--primary)] text-sm leading-none mt-0.5">
                 ✓
               </span>
-              <p className="text-green-700 text-xs font-medium flex-1 leading-relaxed">
+              <p className="text-[var(--text-primary)] text-xs font-medium flex-1 leading-relaxed">
                 Un nouvel email de confirmation a été envoyé à{" "}
                 <strong>{email}</strong>. Vérifiez votre boîte de réception et
                 vos spams.
@@ -282,13 +279,13 @@ function LoginForm() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-red-50 border border-red-100 rounded-xl flex flex-col gap-2.5"
+              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex flex-col gap-2.5"
             >
               <div className="flex items-start gap-2.5">
-                <span className="text-red-500 text-sm leading-none mt-0.5">
+                <span className="text-[var(--text-secondary)] text-sm leading-none mt-0.5">
                   ⚠
                 </span>
-                <p className="text-red-700 text-xs font-medium flex-1 leading-relaxed">
+                <p className="text-[var(--text-primary)] text-sm flex-1 leading-relaxed">
                   {error}
                 </p>
                 <button
@@ -309,8 +306,8 @@ function LoginForm() {
                   className="w-full text-center py-2 px-3 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold transition-all disabled:opacity-50"
                 >
                   {resendLoading ? (
-                    <span className="flex items-center justify-center gap-1.5">
-                      <span className="w-3 h-3 border-2 border-red-300 border-t-red-600 rounded-full animate-spin" />
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="w-3 h-3 border-2 border-red-300 border-t-red-600 rounded-full transition-all" />
                       Envoi en cours...
                     </span>
                   ) : (
@@ -322,14 +319,14 @@ function LoginForm() {
           )}
 
           {/* ── Form ── */}
-          <form onSubmit={handleEmailLogin} className="space-y-4">
+          <form onSubmit={handleEmailLogin} className="space-y-5">
             {/* Email */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label
                 htmlFor="login-email"
-                className="block text-[13px] font-semibold text-gray-800"
+                className="block text-[13px] font-semibold text-[var(--text-primary)]"
               >
-                Adresse email <span className="text-red-500">*</span>
+                Adresse email <span className="text-[var(--text-secondary)]">*</span>
               </label>
               <input
                 id="login-email"
@@ -339,22 +336,22 @@ function LoginForm() {
                 required
                 autoComplete="email"
                 placeholder="Adresse email"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
               />
             </div>
 
             {/* Password */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="login-password"
-                  className="block text-[13px] font-semibold text-gray-800"
+                  className="block text-[13px] font-semibold text-[var(--text-primary)]"
                 >
-                  Mot de passe <span className="text-red-500">*</span>
+                  Mot de passe <span className="text-[var(--text-secondary)]">*</span>
                 </label>
                 <Link
                   href="/auth/forgot-password"
-                  className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                  className="text-xs text-[var(--primary)] hover:text-blue-700 font-medium"
                 >
                   Mot de passe oublié ?
                 </Link>
@@ -368,12 +365,12 @@ function LoginForm() {
                   required
                   autoComplete="current-password"
                   placeholder="Mot de passe"
-                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 pr-11 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+                  className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 pr-11 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-secondary)] transition-colors"
                   aria-label={
                     showPassword
                       ? "Masquer le mot de passe"
@@ -389,11 +386,11 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading || !email || !password}
-              className="w-full mt-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
+              className="w-full mt-2 bg-[var(--primary)] hover:bg-[#5C6BE8] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-[var(--primary)] rounded-full transition-all" />
                   Connexion...
                 </span>
               ) : (
@@ -413,8 +410,8 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin" />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full transition-all" />
         </div>
       }
     >

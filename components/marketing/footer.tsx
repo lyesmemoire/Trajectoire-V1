@@ -22,7 +22,7 @@ export default function Footer() {
               transformer chaque candidature en opportunité mesurable.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:gap-x-10 gap-6">
             {footerLinks.map((group, gIdx) => (
               <div key={gIdx} className="space-y-3">
                 <strong className="text-white text-sm font-bold block">

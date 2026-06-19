@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export function FinalCTA() {
   return (
-    <section className="py-48 px-6 bg-[#050816] relative overflow-hidden">
+    <section className="section px-6 bg-[#050816] relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#7C3AED]/10 rounded-full blur-[160px] -z-10" />
 
       <div className="max-w-5xl mx-auto text-center space-y-16">

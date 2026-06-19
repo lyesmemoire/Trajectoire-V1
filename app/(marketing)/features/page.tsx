@@ -100,7 +100,7 @@ export default function FeaturesPage() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-6">
@@ -315,14 +315,14 @@ export default function FeaturesPage() {
               Comparé aux méthodes traditionnelles
             </h2>
             <p className="text-lg text-slate-400">
-              Pourquoi AI Career Copilot change la donne
+              Pourquoi Trajectoire change la donne
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 reveal">
             <div className="p-8 rounded-2xl bg-white/5 border border-white/10">
               <h3 className="text-xl font-bold mb-6 text-red-400">
-                ❌ Sans AI Career Copilot
+                ❌ Sans Trajectoire
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -354,7 +354,7 @@ export default function FeaturesPage() {
 
             <div className="p-8 rounded-2xl bg-gradient-to-br from-blue-600/20 to-violet-600/20 border border-blue-500/30">
               <h3 className="text-xl font-bold mb-6 text-green-400">
-                ✓ Avec AI Career Copilot
+                ✓ Avec Trajectoire
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -443,7 +443,7 @@ function Footer() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-8 text-sm font-semibold text-slate-600">
@@ -452,7 +452,7 @@ function Footer() {
             <Link href="/privacy">Confidentialité</Link>
             <Link href="/terms">Conditions</Link>
           </div>
-          <div className="text-sm text-slate-400">© 2026 AI Career Copilot</div>
+          <div className="text-sm text-slate-400">© 2026 Trajectoire</div>
         </div>
       </div>
     </footer>
