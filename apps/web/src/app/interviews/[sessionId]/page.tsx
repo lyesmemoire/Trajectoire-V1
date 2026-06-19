@@ -221,7 +221,7 @@ export default function InterviewReportPage() {
       {/* Premium Report — Gated or Unlocked */}
       <div className="report-section">
         <div className="report-section-title">
-          💎 Analyse Premium IA
+          💎 Analyse Premium
         </div>
 
         {hasPremium ? (
@@ -306,7 +306,7 @@ export default function InterviewReportPage() {
                 d&apos;embauche avec le plan Pro.
               </p>
               <button className="btn-unlock" onClick={handleUpgrade}>
-                ✨ Unlock Full AI Report
+                ✨ Débloquer le Retour Détaillé
               </button>
             </div>
           </div>

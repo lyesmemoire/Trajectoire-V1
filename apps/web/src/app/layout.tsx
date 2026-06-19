@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Trajectoire — Préparez vos entretiens sereinement",
-  description: "Entraînez-vous à l'oral avec une IA bienveillante et obtenez un feedback détaillé.",
+  description: "Entraînez-vous à l'oral grâce à nos simulations réalistes et obtenez un retour détaillé.",
 };
 
 export default function RootLayout({
