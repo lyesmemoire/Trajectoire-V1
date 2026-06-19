@@ -21,7 +21,7 @@ function getCTSLabel(score: number): string {
 
 // Composant Sparkline simpliste pour la trajectoire
 function CTSSparkline({ data }: { data: number[] }) {
-  if (!data || data.length < 2) return <div className="h-12 flex items-end"><div className="w-full h-1 bg-slate-200 rounded-full" /></div>;
+  if (!data || data.length < 2) return <div className="h-12 flex items-end"><div className="w-full h-1 bg-[var(--border)] rounded-full" /></div>;
   const max = Math.max(...data, 100);
   const min = Math.max(0, Math.min(...data) - 10);
   const range = max - min;
@@ -31,8 +31,8 @@ function CTSSparkline({ data }: { data: number[] }) {
       {data.map((score, i) => {
         const heightPct = range === 0 ? 50 : ((score - min) / range) * 100;
         return (
-          <div key={i} className="flex-1 bg-blue-100 rounded-t-sm relative group hover:bg-blue-200 transition-colors" style={{ height: `${Math.max(10, heightPct)}%` }}>
-            <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap transition-opacity">
+          <div key={i} className="flex-1 bg-[var(--primary)]/10 rounded-t-sm relative group hover:bg-[var(--primary)]/20 transition-colors" style={{ height: `${Math.max(10, heightPct)}%` }}>
+            <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-[var(--text-primary)] text-[var(--bg-card)] text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap transition-opacity">
               {score}
             </div>
           </div>
@@ -64,7 +64,7 @@ export default async function ProgressPage() {
 
   if (!profile && ctsHistory.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto py-20 text-center space-y-8">
+      <div className="max-w-4xl mx-auto py-20 text-center space-y-10">
         <div className="w-24 h-24 bg-slate-100 rounded-[2.5rem] flex items-center justify-center text-5xl mx-auto mb-6">
           📊
         </div>
@@ -78,7 +78,7 @@ export default async function ProgressPage() {
         <div className="pt-6">
           <Link
             href="/dashboard/interview/session"
-            className="px-10 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-500/20 inline-flex items-center gap-3"
+            className="px-10 py-5 bg-blue-600 text-[var(--bg-card)] font-black rounded-2xl hover:bg-blue-700 transition-all shadow-[var(--shadow-card)] shadow-blue-500/20 inline-flex items-center gap-4"
           >
             Lancer ma première session
           </Link>
@@ -107,7 +107,7 @@ export default async function ProgressPage() {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
+          <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center gap-4">
             <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600">
               <Zap className="w-6 h-6 fill-current" />
             </div>
@@ -121,14 +121,14 @@ export default async function ProgressPage() {
             </div>
           </div>
           <Button variant="outline" className="h-14 rounded-2xl font-black">
-            <Share2 className="w-5 h-5 mr-2" /> Partager mon DNA
+            <Share2 className="w-4 h-4 mr-2" /> Partager mon DNA
           </Button>
         </div>
       </div>
 
       {/* HERO BANNER: CAREER TRAJECTORY SCORE */}
       {currentCTS !== null && (
-        <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-[var(--bg-card)] shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="absolute top-0 right-0 p-8 opacity-5">
             <BarChart3 className="w-64 h-64" />
           </div>
@@ -158,14 +158,14 @@ export default async function ProgressPage() {
       )}
 
       <div className="grid lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-4 space-y-8">
+        <div className="lg:col-span-4 space-y-10">
           {profile && (
             <CareerScoreCard
               score={profile.employabilityScore}
             />
           )}
 
-          <div className="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl space-y-6 relative overflow-hidden">
+          <div className="bg-slate-900 rounded-[var(--radius-card)] p-10 text-[var(--bg-card)] shadow-2xl space-y-8 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <BarChart3 className="w-32 h-32" />
             </div>
@@ -177,7 +177,7 @@ export default async function ProgressPage() {
                 <span className="text-sm font-bold text-slate-400">
                   Communication
                 </span>
-                <span className="text-2xl font-black text-white">Top 15%</span>
+                <span className="text-2xl font-black text-[var(--bg-card)]">Top 15%</span>
               </div>
               <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                 <div className="h-full bg-blue-500" style={{ width: "85%" }} />

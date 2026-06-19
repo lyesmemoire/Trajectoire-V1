@@ -29,7 +29,7 @@ export default function HomePage() {
       <section className="landing-hero">
         <div className="landing-hero-badge">
           <span>✦</span>
-          <span>Évaluation professionnelle Trajectoire · Résultats en 20 min</span>
+          <span>Évaluation professionnelle par IA · Résultats en 20 min</span>
         </div>
 
         <h1 className="landing-hero-title">
@@ -42,7 +42,7 @@ export default function HomePage() {
 
         <p className="landing-hero-subtitle">
           Trajectoire analyse vos compétences comportementales et cognitives
-          à travers des simulations réalistes. Obtenez un rapport
+          à travers un entretien vocal piloté par IA. Obtenez un rapport
           exécutif détaillé — comme les candidats des cabinets de recrutement
           haut de gamme.
         </p>
@@ -68,16 +68,16 @@ export default function HomePage() {
           Un assessment complet en une seule session
         </h2>
         <p className="landing-section-subtitle">
-          La Méthode Trajectoire reproduit les méthodes d&apos;évaluation des cabinets
+          Notre IA reproduit les méthodes d&apos;évaluation des cabinets
           spécialisés, accessibles à tous, à tout moment.
         </p>
 
         <div className="landing-features-grid">
           <div className="landing-feature-card">
             <div className="landing-feature-icon">🎙️</div>
-            <h3 className="landing-feature-title">Entraînement interactif</h3>
+            <h3 className="landing-feature-title">Entretien vocal piloté par IA</h3>
             <p className="landing-feature-desc">
-              Un entretien structuré de 20 minutes, guidé par notre Coach d'entretien,
+              Un entretien structuré de 20 minutes, guidé par notre IA,
               pour évaluer vos compétences comportementales avec précision.
             </p>
           </div>
@@ -151,8 +151,8 @@ export default function HomePage() {
               <div className="landing-step-number">2</div>
               <h3 className="landing-step-title">Passez l&apos;entretien</h3>
               <p className="landing-step-desc">
-                Votre accompagnement personnalisé vous pose des questions structurées et effectue une analyse
-                vocale en temps réel. Durée : 15 à 25 minutes.
+                Notre IA vous pose des questions structurées et analyse
+                vos réponses vocales en temps réel. Durée : 15 à 25 minutes.
               </p>
             </div>
 
@@ -234,7 +234,7 @@ export default function HomePage() {
               </li>
               <li className="landing-pricing-feature">
                 <span className="landing-pricing-check">✓</span>
-                Retour détaillé de votre performance
+                Analyse narrative IA approfondie
               </li>
               <li className="landing-pricing-feature">
                 <span className="landing-pricing-check">✓</span>

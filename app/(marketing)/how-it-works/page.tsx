@@ -83,7 +83,7 @@ export default function HowItWorksPage() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-6">
@@ -122,7 +122,7 @@ export default function HowItWorksPage() {
 
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             De l'upload de votre vieux CV jusqu'à la signature de votre contrat.
-            Découvrez comment notre IA vous accompagne à chaque étape décisive.
+            Découvrez comment l'accompagnement vous accompagne à chaque étape décisive.
           </p>
         </div>
       </section>
@@ -273,7 +273,7 @@ function Footer() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-8 text-sm font-semibold text-slate-600">
@@ -282,7 +282,7 @@ function Footer() {
             <Link href="/privacy">Confidentialité</Link>
             <Link href="/terms">Conditions</Link>
           </div>
-          <div className="text-sm text-slate-400">© 2026 AI Career Copilot</div>
+          <div className="text-sm text-slate-400">© 2026 Trajectoire</div>
         </div>
       </div>
     </footer>

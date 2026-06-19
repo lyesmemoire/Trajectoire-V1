@@ -117,7 +117,7 @@ export default function TestimonialsPage() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-6">
@@ -159,7 +159,7 @@ export default function TestimonialsPage() {
           </h1>
 
           <p className="text-xl text-slate-600 max-w-xl mx-auto">
-            Découvrez comment AI Career Copilot a aidé des centaines de
+            Découvrez comment Trajectoire a aidé des centaines de
             candidats à passer les filtres ATS et décrocher les entretiens
             qu'ils méritent.
           </p>
@@ -388,7 +388,7 @@ function Footer() {
               ✦
             </div>
             <span className="font-black text-xl tracking-tight">
-              AI Career Copilot
+              Trajectoire
             </span>
           </Link>
           <div className="flex items-center gap-8 text-sm font-semibold text-slate-600">
@@ -397,7 +397,7 @@ function Footer() {
             <Link href="/privacy">Confidentialité</Link>
             <Link href="/terms">Conditions</Link>
           </div>
-          <div className="text-sm text-slate-400">© 2026 AI Career Copilot</div>
+          <div className="text-sm text-slate-400">© 2026 Trajectoire</div>
         </div>
       </div>
     </footer>
