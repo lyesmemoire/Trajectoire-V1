@@ -1,26 +1,9 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
-/**
- * Page racine — Landing page marketing.
- *
- * - Utilisateur connecté  → redirect /dashboard
- * - Visiteur non connecté → landing page complète
- */
-export default async function HomePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (user) {
-    redirect("/dashboard");
-  }
-
+export default function HomePage() {
   return (
     <div className="landing-page">
-      {/* ── Navigation ── */}
+      {/* ─── Navigation ─── */}
       <nav className="landing-nav">
         <span className="landing-nav-brand">Trajectoire</span>
         <div className="landing-nav-links">
@@ -42,7 +25,7 @@ export default async function HomePage() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
+      {/* ─── Hero ─── */}
       <section className="landing-hero">
         <div className="landing-hero-badge">
           <span>✦</span>
@@ -78,7 +61,7 @@ export default async function HomePage() {
         </p>
       </section>
 
-      {/* ── Fonctionnalités ── */}
+      {/* ─── Features ─── */}
       <section id="features" className="landing-section">
         <p className="landing-section-label">Fonctionnalités</p>
         <h2 className="landing-section-title">
@@ -146,7 +129,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Comment ça marche ── */}
+      {/* ─── How it works ─── */}
       <div id="how-it-works" className="landing-steps-container">
         <div className="landing-steps-inner">
           <p className="landing-section-label">Processus</p>
@@ -185,7 +168,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* ── Pricing ── */}
+      {/* ─── Pricing ─── */}
       <section id="pricing" className="landing-section">
         <p className="landing-section-label">Tarifs</p>
         <h2 className="landing-section-title">
@@ -273,7 +256,7 @@ export default async function HomePage() {
         </p>
       </section>
 
-      {/* ── Footer ── */}
+      {/* ─── Footer ─── */}
       <footer>
         <div className="landing-footer">
           <span className="landing-footer-brand">Trajectoire</span>

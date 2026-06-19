@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: "swap"
+});
 
 export const metadata: Metadata = {
-  title: "Trajectoire — AI Interview Coach",
-  description:
-    "Practice job interviews with AI, get scored, and receive actionable feedback to land your dream role.",
+  title: "Trajectoire — Préparez vos entretiens sereinement",
+  description: "Entraînez-vous à l'oral avec une IA bienveillante et obtenez un feedback détaillé.",
 };
 
 export default function RootLayout({
@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
-      <body className="font-sans text-primary bg-base antialiased">
+    <html lang="fr">
+      <body className="bg-bg-primary text-text-primary font-sans antialiased">
         {children}
       </body>
     </html>
