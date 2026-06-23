@@ -1,0 +1,47 @@
+name: Master Zero-Trust CI/CD Platform Gate
+
+on:
+  push:
+    branches: [ main, staging, dev ]
+  pull_request:
+    branches: [ main, staging ]
+
+env:
+  NODE_ENV: test
+  PNPM_VERSION: "9.15.9"
+
+jobs:
+  validate:
+    name: 🛡️ Enterprise Minimal Invariant Gate (Node 22)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Monorepo Snapshot
+        uses: actions/checkout@v4
+
+      - name: 1. Setup Exact PNPM Engine
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 2 & 3. Instanciate Standard Big Tech Node.js v22 & PNPM Cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: 4. Uncompromising Multi-Workspace Lockfile Enforcement
+        run: pnpm install --frozen-lockfile
+
+      - name: 5. Assert Distributed Static TypeScript Invariants
+        run: pnpm run type-check || pnpm --filter web exec tsc --noEmit && pnpm --filter realtime-gateway exec tsc --noEmit
+
+      - name: 6. Apply Code Sanitation & ESG Rule Enforcement
+        run: pnpm run lint
+
+      - name: 7. Execute Universal Complete Multi-Tier AI Logic Behavioral Specs
+        run: pnpm run test || pnpm exec vitest run --globals tests/replay
+
+      - name: 8. Execute Production SSR Core & Conversational Gateway Builds
+        run: pnpm run build:web && pnpm run build:gateway

@@ -1,6 +1,13 @@
+/**
+ * @deprecated Utilisée par session/page.tsx et les tests E2E (06-interview-module.spec.ts).
+ * À migrer vers POST /api/interviews/init du Realtime Gateway V3.
+ * Ne pas supprimer avant migration complète des consommateurs.
+ * Stack officielle : apps/realtime-gateway/src/server/routes/interviews.ts
+ */
 // app/api/interview/start/route.ts
 // Démarre une nouvelle session d'entretien simulé
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { requireAuth } from "@/lib/auth";
@@ -11,6 +18,12 @@ import { interviewStartLimiter } from "@/lib/security/rate-limit";
 import { logEvent } from "@/lib/security/audit-log";
 
 export const dynamic = "force-dynamic";
+
+const RequestSchema = z.object({
+  job_title: z.string().min(1).max(200),
+  job_description: z.string().max(8000).optional().nullable(),
+  cv_id: z.string().uuid().optional().nullable(),
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,7 +44,14 @@ export async function POST(req: NextRequest) {
     }
     const supabase = await createSupabaseServerClient();
 
-    const { job_title, job_description, cv_id } = await req.json();
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+    const { job_title, job_description, cv_id } = parsed.data;
 
     if (!job_title?.trim()) {
       return NextResponse.json(
@@ -154,7 +174,11 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-forwarded-for") ?? "",
       req.headers.get("user-agent") ?? "",
     );
-    return NextResponse.json(data);
+    return NextResponse.json({
+      ...data,
+      _deprecated: true,
+      _replacement: "POST /api/interviews/init via Realtime Gateway V3",
+    });
   } catch (err: any) {
     if (err.message === "Unauthorized") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

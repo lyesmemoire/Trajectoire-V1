@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Cette page a été supprimée dans le cadre de l'unification du flux interview.
  *
  * Point d'entrée unique : /interview  (InterviewInitializer → InterviewRoom)

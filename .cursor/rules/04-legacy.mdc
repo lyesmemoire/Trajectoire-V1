@@ -1,0 +1,52 @@
+---
+description: Règles de migration — root app/ legacy
+globs: app/**
+alwaysApply: false
+---
+# Legacy — Règles de Migration `app/` Racine
+
+## Statut
+Le dossier `app/` à la racine est en **migration**.
+Aucune nouvelle route ne doit être créée ici.
+Toute nouvelle feature → `apps/web/src/app/api/`
+
+## Quand tu touches un fichier legacy, tu dois :
+1. **Ajouter la validation Zod sur l'input** si absente
+2. **Remplacer `JSON.parse` sur LLM output** par `generateObject`
+3. **Remplacer `process.env.X`** par l'import depuis `lib/env.server.ts`
+4. **Ajouter la vérification auth** en tête de handler si absente
+
+Tu ne refactores **pas** en entier — tu patches les violations critiques
+dans les lignes que tu modifies. La règle du boy scout s'applique.
+
+## Violations Prioritaires par Fichier
+| Fichier | Violation | Action |
+|---------|-----------|--------|
+| `app/api/interview/premium/report/route.ts` | `JSON.parse` LLM | → `generateObject` |
+| `app/api/interview/premium/continue/route.ts` | `JSON.parse` LLM | → `generateObject` |
+| `app/api/ats/route.ts` | `JSON.parse` LLM | → `generateObject` |
+| `app/api/interview/feedback/route.ts` | LLM score numérique | → signaux + calcul TS |
+| `apps/web/src/app/api/interviews/[id]/report/route.ts` | Service role user-facing | → cookie client |
+
+## Pattern de Migration LLM Output
+```typescript
+// AVANT (legacy — interdit)
+const completion = await openai.chat.completions.create({
+  model: "gpt-4o",
+  messages: [...],
+  response_format: { type: "json_object" },
+});
+const data = JSON.parse(completion.choices[0].message.content);
+
+// APRÈS (canonique)
+import { generateObject } from "ai";
+import { mistralModel } from "@/lib/mistral"; // ou openai depuis @ai-sdk/openai
+const { object: data } = await generateObject({
+  model: mistralModel,
+  schema: YourZodSchema,
+  temperature: 0.1,
+  system: systemPrompt,
+  prompt: userPrompt,
+});
+// data est déjà typé et validé — pas de try/catch JSON nécessaire
+```

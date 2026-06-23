@@ -1,3 +1,10 @@
+
+const GatewayEnvSchema = z.object({
+  NEXT_PUBLIC_SUPABASE_URL:  z.string().url(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+});
+const gatewayEnv = GatewayEnvSchema.parse(process.env);
+import { z } from "zod";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { verifyVoiceToken } from "../auth.js";
 import { interviewRepository } from "../../voice-interview/persistence/singleton.js";
@@ -73,40 +80,40 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
     return reply.send(summary);
   });
 
-  app.post(
-    "/api/interviews/init",
-    async (request: FastifyRequest<{ Body: { job_offer_text: string, target_role: string } }>, reply) => {
-      // ── Rate Limiting (3 tiers: 2/min, 5/h, 10/day) ──
-      const ip = request.ip || request.headers["x-forwarded-for"] as string || "unknown";
-      const { checkRateLimit } = await import("../rate-limiter.js");
-      const rl = await checkRateLimit(ip);
-      if (!rl.allowed) {
-        return reply.status(429).send({
-          error: "Too many requests. Please try again later.",
-          retryAfter: rl.retryAfter
-        });
-      }
-
-      const authHeader = request.headers.authorization;
-      if (!authHeader?.startsWith("Bearer ")) {
-        return reply.status(401).send({ error: "Unauthorized" });
-      }
-
-      const token = authHeader.replace("Bearer ", "");
-      const user = await verifyVoiceToken(token);
-      if (!user) {
-        return reply.status(401).send({ error: "Unauthorized" });
-      }
-
-      const { job_offer_text, target_role } = request.body;
-      if (!job_offer_text || !target_role) {
-        return reply.status(400).send({ error: "Missing job_offer_text or target_role" });
-      }
+    app.post(
+      "/api/interviews/init",
+      async (request: FastifyRequest<{ Body: { job_offer_text: string, target_role: string, atsReportId?: string } }>, reply) => {
+        // ── Rate Limiting (3 tiers: 2/min, 5/h, 10/day) ──
+        const ip = request.ip || request.headers["x-forwarded-for"] as string || "unknown";
+        const { checkRateLimit } = await import("../rate-limiter.js");
+        const rl = await checkRateLimit(ip);
+        if (!rl.allowed) {
+          return reply.status(429).send({
+            error: "Too many requests. Please try again later.",
+            retryAfter: rl.retryAfter
+          });
+        }
+  
+        const authHeader = request.headers.authorization;
+        if (!authHeader?.startsWith("Bearer ")) {
+          return reply.status(401).send({ error: "Unauthorized" });
+        }
+  
+        const token = authHeader.replace("Bearer ", "");
+        const user = await verifyVoiceToken(token);
+        if (!user) {
+          return reply.status(401).send({ error: "Unauthorized" });
+        }
+  
+        const { job_offer_text, target_role, atsReportId } = request.body;
+        if (!job_offer_text || !target_role) {
+          return reply.status(400).send({ error: "Missing job_offer_text or target_role" });
+        }
 
       const { createClient } = await import("@supabase/supabase-js");
       const supabase = createClient(
         process.env.SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
+        gatewayEnv.SUPABASE_SERVICE_ROLE_KEY
       );
 
       // Fetch CV
@@ -118,6 +125,25 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
 
       if (!profile?.cv_text) {
         return reply.status(400).send({ error: "No CV found in profile. Upload CV first." });
+      }
+
+      // Fetch ATS Munitions
+      let munitionContext = "";
+      if (atsReportId) {
+        const { data: atsReport } = await supabase
+          .from("premium_ats_reports")
+          .select("munition_pack, overall_score")
+          .eq("id", atsReportId)
+          .eq("user_id", user.userId)
+          .single();
+
+        if (atsReport?.munition_pack) {
+          const { buildMunitionContext } = await import("../../voice-interview/context/munition-context.js");
+          munitionContext = buildMunitionContext(
+            atsReport.munition_pack as Parameters<typeof buildMunitionContext>[0],
+            atsReport.overall_score ?? 0
+          );
+        }
       }
 
       // Import LLM strict to generate context
@@ -148,6 +174,8 @@ ${job_offer_text}
 CANDIDATE CV:
 ${profile.cv_text}
 
+${munitionContext}
+
 Generate the Interview Context to drive the upcoming technical and behavioral deep dive.`;
 
       const contextData = await callLlmStrict(
@@ -157,20 +185,26 @@ Generate the Interview Context to drive the upcoming technical and behavioral de
         `{ "job_summary": string, "key_requirements": string[], "cv_strengths": string[], "cv_weaknesses": string[], "risk_flags": string[], "focus_zones": string[], "leadership_expectations": string[] }`
       );
 
-      // Create interview session ID
-      const sessionId = `s_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 6)}`;
-
       // Store in DB using the correct schema
-      await supabase
-        .from("interviews")
+      const { data: sessionData, error: sessionError } = await supabase
+        .from("interview_sessions")
         .insert({
-          session_id: sessionId,
           user_id: user.userId,
           target_role,
           job_offer_summary: contextData.job_summary,
           interview_context: contextData,
-          started_at: new Date().toISOString()
-        });
+          status: "in_progress",
+          ats_report_id: atsReportId ?? null
+          // No id provided, Postgres generates an UUID. created_at is automatically handled.
+        })
+        .select("id")
+        .single();
+
+      if (sessionError || !sessionData) {
+        throw new Error(`[Gateway] Création session échouée: ${sessionError?.message}`);
+      }
+
+      const sessionId = sessionData.id;
 
       return reply.send({
         sessionId,

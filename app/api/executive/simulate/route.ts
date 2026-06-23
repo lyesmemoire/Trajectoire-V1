@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ExecutiveResultEngine } from "@/lib/executive/executive-result-engine";
@@ -29,9 +30,17 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Input Validation ──────────────────────────────────────────
-    let body: Record<string, unknown>;
+    const RequestSchema = z.object({
+      strategicThinking:    z.number().min(0).max(100).optional().default(0),
+      stakeholderInfluence: z.number().min(0).max(100).optional().default(0),
+      decisionClarity:      z.number().min(0).max(100).optional().default(0),
+      authorityProjection:  z.number().min(0).max(100).optional().default(0),
+      pressureStability:    z.number().min(0).max(100).optional().default(0),
+    });
+
+    let rawBody;
     try {
-      body = await req.json();
+      rawBody = await req.json();
     } catch {
       return NextResponse.json(
         { error: "Invalid JSON body" },
@@ -39,12 +48,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const parsed = RequestSchema.safeParse(rawBody);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+
     const rawScores = {
-      strategicThinking: clamp(Number(body.strategicThinking) || 0),
-      stakeholderInfluence: clamp(Number(body.stakeholderInfluence) || 0),
-      decisionClarity: clamp(Number(body.decisionClarity) || 0),
-      authorityProjection: clamp(Number(body.authorityProjection) || 0),
-      pressureStability: clamp(Number(body.pressureStability) || 0),
+      strategicThinking: clamp(parsed.data.strategicThinking),
+      stakeholderInfluence: clamp(parsed.data.stakeholderInfluence),
+      decisionClarity: clamp(parsed.data.decisionClarity),
+      authorityProjection: clamp(parsed.data.authorityProjection),
+      pressureStability: clamp(parsed.data.pressureStability),
     };
 
     // ── Compute ───────────────────────────────────────────────────

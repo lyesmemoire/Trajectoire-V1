@@ -11,13 +11,14 @@
 
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { runProductFlow } from "@/lib/runtime/run-product-flow";
 
 export async function POST(req: NextRequest) {
-  let body: unknown;
+  let rawBody;
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json(
       { error: "Corps de requête JSON invalide." },
@@ -25,24 +26,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { cvText, jobText } = (body ?? {}) as {
-    cvText?: unknown;
-    jobText?: unknown;
-  };
+  const RequestSchema = z.object({
+    cvText:  z.string().min(10, "CV trop court.").max(15000),
+    jobText: z.string().min(10, "Description trop courte.").max(8000),
+  });
 
-  if (typeof cvText !== "string" || typeof jobText !== "string") {
+  const parsed = RequestSchema.safeParse(rawBody);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "cvText et jobText (string) sont requis." },
-      { status: 400 },
+      { error: "Paramètres invalides.", details: parsed.error.flatten() },
+      { status: 400 }
     );
   }
 
-  if (!cvText.trim() || !jobText.trim()) {
-    return NextResponse.json(
-      { error: "cvText et jobText ne peuvent pas être vides." },
-      { status: 400 },
-    );
-  }
+  const { cvText, jobText } = parsed.data;
 
   try {
     const result = await runProductFlow({ cvText, jobText });

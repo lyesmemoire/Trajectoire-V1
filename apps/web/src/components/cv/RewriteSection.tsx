@@ -1,4 +1,4 @@
-export default function RewriteSection({ rewrite, isPro }: any) {
+﻿export default function RewriteSection({ rewrite, isPro }: any) {
   return (
     <section className="cabinet-section">
       <h2>Executive Optimized Version</h2>

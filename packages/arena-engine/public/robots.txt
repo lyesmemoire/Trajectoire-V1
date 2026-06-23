@@ -1,0 +1,33 @@
+User-agent: *
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /replay/
+Disallow: /career-dna/
+Disallow: /interview/
+Disallow: /export/
+Disallow: /onboarding/
+
+Crawl-delay: 10
+
+# Block specific scrapers
+User-agent: HTTrack
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: aiohttp
+Disallow: /
+
+User-agent: axios
+Disallow: /

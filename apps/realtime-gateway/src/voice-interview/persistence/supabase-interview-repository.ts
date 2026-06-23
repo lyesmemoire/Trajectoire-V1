@@ -10,20 +10,26 @@ const supabase = createClient(
 
 export class SupabaseInterviewRepository implements InterviewRepository {
   async create(record: InterviewRecord): Promise<void> {
-    const { error } = await supabase.from("interviews").insert({
-      session_id: record.sessionId,
+    // Note: session_id is no longer inserted here, Postgres generates an UUID.
+    // However, if the repository is called directly to create a record and needs
+    // to respect an existing sessionId, we'd need to adapt.
+    // In our case, session creation happens in routes/interviews.ts and the
+    // repository `create` method is currently unused. We keep it updated for completeness.
+    const { error } = await supabase.from("interview_sessions").insert({
+      id: record.sessionId, // Provided by caller if necessary, or omitted if relying on DB
       user_id: record.userId,
       target_role: record.targetRole ?? null,
-      started_at: record.startedAt,
-      ended_at: record.endedAt ?? null,
       transcript: record.transcript,
       metrics: record.metrics ?? null,
-      score: record.score ?? null,
+      voice_report: record.score ?? null,
+      voice_score: typeof record.score === 'object' && record.score !== null && 'overall' in record.score 
+        ? (record.score as any).overall 
+        : null,
       premium_report: record.premiumReport ?? null,
     });
     if (error) {
       const err = new Error("Database write failed");
-      captureError(err, { component: 'supabase', table: 'interviews', operation: 'create', details: error.message });
+      captureError(err, { component: 'supabase', table: 'interview_sessions', operation: 'create', details: error.message });
       console.error(error);
       throw err;
     }
@@ -31,19 +37,22 @@ export class SupabaseInterviewRepository implements InterviewRepository {
 
   async update(sessionId: string, partial: Partial<InterviewRecord>): Promise<void> {
     const { error } = await supabase
-      .from("interviews")
+      .from("interview_sessions")
       .update({
-        ended_at: partial.endedAt,
+        completed_at: partial.endedAt ? new Date(partial.endedAt).toISOString() : null,
         transcript: partial.transcript,
         metrics: partial.metrics,
-        score: partial.score,
+        voice_report: partial.score,
+        voice_score: partial.score && typeof partial.score === 'object' && 'overall' in partial.score 
+          ? (partial.score as any).overall 
+          : undefined,
         premium_report: partial.premiumReport,
       })
-      .eq("session_id", sessionId);
+      .eq("id", sessionId);
 
     if (error) {
       const err = new Error("Database write failed");
-      captureError(err, { component: 'supabase', table: 'interviews', operation: 'update', sessionId, details: error.message });
+      captureError(err, { component: 'supabase', table: 'interview_sessions', operation: 'update', sessionId, details: error.message });
       console.error(error);
       throw err;
     }
@@ -51,14 +60,14 @@ export class SupabaseInterviewRepository implements InterviewRepository {
 
   async get(sessionId: string): Promise<InterviewRecord | null> {
     const { data, error } = await supabase
-      .from("interviews")
+      .from("interview_sessions")
       .select("*")
-      .eq("session_id", sessionId)
+      .eq("id", sessionId)
       .single();
 
     if (error && error.code !== 'PGRST116') { // PGRST116 is 'row not found', acceptable for get
       const err = new Error("Database read failed");
-      captureError(err, { component: 'supabase', table: 'interviews', operation: 'get', sessionId, details: error.message });
+      captureError(err, { component: 'supabase', table: 'interview_sessions', operation: 'get', sessionId, details: error.message });
       console.error(error);
       throw err;
     }
@@ -66,14 +75,14 @@ export class SupabaseInterviewRepository implements InterviewRepository {
     if (!data) return null;
 
     return {
-      sessionId: data.session_id,
+      sessionId: data.id,
       userId: data.user_id,
       targetRole: data.target_role,
-      startedAt: data.started_at,
-      endedAt: data.ended_at,
+      startedAt: new Date(data.created_at).getTime(),
+      endedAt: data.completed_at ? new Date(data.completed_at).getTime() : undefined,
       transcript: data.transcript,
       metrics: data.metrics,
-      score: data.score,
+      score: data.voice_report,
       premiumReport: data.premium_report,
       interview_context: data.interview_context,
     };
@@ -81,7 +90,7 @@ export class SupabaseInterviewRepository implements InterviewRepository {
 
   async listByUser(userId: string): Promise<InterviewRecord[]> {
     const { data } = await supabase
-      .from("interviews")
+      .from("interview_sessions")
       .select("*")
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
@@ -89,14 +98,14 @@ export class SupabaseInterviewRepository implements InterviewRepository {
     if (!data) return [];
 
     return data.map((row) => ({
-      sessionId: row.session_id,
+      sessionId: row.id,
       userId: row.user_id,
       targetRole: row.target_role,
-      startedAt: row.started_at,
-      endedAt: row.ended_at,
+      startedAt: new Date(row.created_at).getTime(),
+      endedAt: row.completed_at ? new Date(row.completed_at).getTime() : undefined,
       transcript: row.transcript,
       metrics: row.metrics,
-      score: row.score,
+      score: row.voice_report,
       premiumReport: row.premium_report,
     }));
   }

@@ -1,0 +1,34 @@
+---
+description: Stack et architecture monorepo Trajectoire
+alwaysApply: true
+---
+# Stack Trajectoire — Versions Réelles
+
+## Versions
+- Next.js : **16.2.9** (non-standard — React 19, App Router)
+- React : 19
+- TypeScript : strict mode
+- Gestionnaire de paquets : pnpm (monorepo)
+
+## Structure Monorepo
+| Surface | Chemin | Statut |
+|---------|--------|--------|
+| Nouveau code | `apps/web/src/` | ✅ Canonique — tout nouveau développement ici |
+| Engine partagé | `packages/arena-engine/` | ✅ Canonique — logique domaine |
+| Legacy | `app/` + `lib/` (racine) | ⚠️ Migration — aucune nouvelle route ici |
+
+## Règle de navigation
+- Nouveau code → `apps/web/src/app/api/[module]/[action]/route.ts`
+- Logique métier réutilisable → `packages/arena-engine/lib/`
+- Hooks → `apps/web/src/hooks/use[Name].ts`
+- Types partagés → `packages/arena-engine/types/`
+
+## Clients Supabase
+- Server components / routes API : `createClient()` depuis `apps/web/src/lib/supabase/server.ts`
+- Client components : `createClient()` depuis `apps/web/src/lib/supabase/client.ts`
+- Service role (webhooks/cron uniquement) : `createAdminClient()` — jamais dans les routes user-facing
+
+## Variables d'environnement
+- Serveur : importer depuis `lib/env.server.ts` — jamais `process.env.*` directement
+- Client : importer depuis `lib/env.client.ts`
+- Ajouter toute nouvelle variable dans les deux fichiers avec validation Zod

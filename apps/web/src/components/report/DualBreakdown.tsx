@@ -1,4 +1,4 @@
-export default function DualBreakdown({
+﻿export default function DualBreakdown({
   cvScore,
   interviewScore,
   technicalDepthScore,

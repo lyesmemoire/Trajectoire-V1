@@ -1,0 +1,64 @@
+---
+description: Monétisation Stripe — droits et vérifications
+globs: apps/web/**
+alwaysApply: false
+---
+# Monétisation — Architecture Billing
+
+## Source de Vérité
+Stripe est la **seule** source de vérité pour les droits utilisateur.
+`user_usage.subscription_status` est un cache — il est synced exclusivement
+via les webhooks Stripe. Ne jamais le modifier directement.
+
+## Fonction Canonique
+```typescript
+// apps/web/src/lib/billing/get-user-subscription.ts
+// C'est ici et nulle part ailleurs que les droits sont vérifiés.
+import { getUserSubscription } from "@/lib/billing/get-user-subscription";
+// Retourne :
+// { plan: "FREE" | "PRO" | "EXPERT", credits: number, isActive: boolean }
+```
+
+## Plans et Gates
+| Feature | FREE | PRO (19€) | EXPERT (49€) |
+|---------|------|-----------|--------------|
+| Analyse CV | 1 | Illimité | Illimité |
+| Simulation entretien | ❌ | 5/mois | Illimité |
+| Rapport final | ❌ | ✅ | ✅ |
+| Relance adaptative | ❌ | ❌ | ✅ |
+
+## Règle de Gate — Pattern Obligatoire
+```typescript
+// ✅ Vérification server-side dans chaque route protégée
+export async function POST(req: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+
+  const subscription = await getUserSubscription(user.id, supabase);
+  if (!subscription.isActive || subscription.plan === "FREE") {
+    return NextResponse.json(
+      { error: "UPGRADE_REQUIRED", requiredPlan: "PRO" },
+      { status: 403 }
+    );
+  }
+  // ...suite du handler
+}
+// ✅ Côté client — afficher l'upgrade, jamais cacher silencieusement
+// Le code 403 avec { error: "UPGRADE_REQUIRED" } déclenche <UpgradeGate />
+```
+
+## Webhooks Stripe — Événements Gérés
+```typescript
+// app/api/stripe/webhook/route.ts
+// Événements obligatoires :
+// - checkout.session.completed       → upsert subscription active
+// - customer.subscription.updated    → update plan + status
+// - customer.subscription.deleted    → downgrade FREE
+// - invoice.payment_failed           → marquer past_due
+```
+
+## Ce qui est interdit
+- Vérifier les droits côté client seul
+- Lire `user_usage` sans passer par `getUserSubscription()`
+- Modifier `subscription_status` en dehors du webhook Stripe

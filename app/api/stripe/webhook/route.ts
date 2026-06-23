@@ -1,118 +1,167 @@
-export const dynamic = "force-dynamic";
+// app/api/stripe/webhook/route.ts
+// Ajouter les événements manquants + mise à jour user_usage
 
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { createSupabaseServiceClient } from "@/lib/supabase-server";
-import Stripe from "stripe";
-import { logInfo } from "@/lib/logger";
+import { stripe }                    from "@/lib/stripe";
+import { createAdminClient }         from "@/lib/supabase/service";
+import { envServer }                 from "@/lib/env.server";
+import Stripe                        from "stripe";
+import { z }                         from "zod";
 
-/**
- * Endpoint des webhooks Stripe.
- * Séquence : Facturation -> Synchronisation Supabase -> Mise à jour UI.
- */
+// Validation du payload Stripe avant traitement
+const StripeMetadataSchema = z.object({
+  user_id:        z.string().uuid(),
+  resolved_price: z.string().optional(),
+  credits:        z.string().optional().transform(Number),
+  pack_name:      z.string().optional(),
+});
+
 export async function POST(req: NextRequest) {
   const body = await req.text();
-  const signature = req.headers.get("stripe-signature")!;
+  const sig  = req.headers.get("stripe-signature");
+
+  if (!sig) {
+    return NextResponse.json({ error: "Signature manquante." }, { status: 400 });
+  }
 
   let event: Stripe.Event;
-
   try {
     event = stripe.webhooks.constructEvent(
       body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      sig,
+      envServer.STRIPE_WEBHOOK_SECRET
     );
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: "Webhook signature failed" },
-      { status: 400 },
-    );
+  } catch {
+    return NextResponse.json({ error: "Signature invalide." }, { status: 400 });
   }
 
-  const supabaseAdmin = createSupabaseServiceClient();
+  const supabase = createAdminClient();
 
-  try {
-    switch (event.type) {
-      case "checkout.session.completed":
-        const session = event.data.object as Stripe.Checkout.Session;
-        const userId = session.metadata?.user_id;
-        const credits = parseInt(session.metadata?.credits || "0", 10);
-        const packName = session.metadata?.pack_name || "unknown";
-        const resolvedPrice = session.metadata?.resolved_price || "";
-        const amountCents = session.amount_total || 0;
+  switch (event.type) {
 
-        if (userId) {
-          // ── Early Access Logic ──
-          const STRIPE_PRICE_EARLY = process.env.STRIPE_PRICE_EARLY || "price_pro_early_access";
-          if (resolvedPrice === STRIPE_PRICE_EARLY) {
-            await supabaseAdmin.from("early_access_tracking").insert({ user_id: userId });
-            console.log(`[Stripe Webhook] Recorded Early Access for User ${userId}`);
-          }
+    // ── Paiement one-shot ou démarrage abonnement ──────────────────────
+    case "checkout.session.completed": {
+      const session  = event.data.object as Stripe.Checkout.Session;
+      const metadata = StripeMetadataSchema.safeParse(session.metadata);
+      if (!metadata.success) break;
 
-          // In case credits are missing for a Pro subscription, we still want to log the payment.
-          // Adjusting logic to support both credit packs and subscriptions.
-          if (credits > 0 || session.mode === "payment" || session.mode === "subscription") {
-          const { data, error } = await supabaseAdmin.rpc(
-            "process_stripe_payment",
-            {
-              p_event_id: event.id,
-              p_user_id: userId,
-              p_credits: credits,
-              p_amount_cents: amountCents,
-              p_pack_name: packName,
-            },
-          );
+      const { user_id, resolved_price, credits, pack_name } = metadata.data;
 
-          if (error) {
-            console.error(
-              "[STRIPE_ERROR] Error calling process_stripe_payment:",
-              error,
-            );
-            return NextResponse.json(
-              { error: "Failed to process payment" },
-              { status: 500 },
-            );
-          }
+      // Early access
+      if (resolved_price === envServer.STRIPE_PRICE_EARLY) {
+        await supabase.from("early_access_tracking").upsert({
+          user_id,
+          stripe_session_id: session.id,
+          activated_at:      new Date().toISOString(),
+        });
+      }
 
-          if (data && !data.success && data.reason === "already_processed") {
-            console.log(
-              `[Stripe Webhook] Event ${event.id} already processed. Ignored.`,
-            );
-            } else {
-              console.log(
-                `[Stripe] User ${userId} purchased ${credits} credits (${packName})`,
-              );
-              logInfo("[PAYMENT_SUCCESS]", "Payment unlocked", {
-                route: "api/stripe/webhook",
-                userId: userId
-              });
-            }
-          }
-        } else {
-          console.error(
-            "[Stripe Webhook] Missing userId in metadata",
-          );
-        }
-        break;
+      // Crédits one-shot (comportement existant préservé)
+      if (credits && credits > 0) {
+        await supabase.rpc("process_stripe_payment", {
+          p_event_id:    event.id,
+          p_user_id:     user_id,
+          p_credits:     credits,
+          p_amount_cents: session.amount_total ?? 0,
+          p_pack_name:   pack_name ?? "unknown",
+        });
+      }
 
-      case "customer.subscription.deleted":
-        // Pour l'instant nous vendons des crédits one-off, donc pas de subscription downgrade.
-        // Si besoin, appeler une RPC downgrade_subscription.
-        break;
+      // Abonnement → mettre à jour user_usage
+      if (session.mode === "subscription" && session.subscription) {
+        const subscription = await stripe.subscriptions.retrieve(
+          session.subscription as string
+        );
+        await upsertUserUsage(supabase, user_id, subscription);
+      }
+      break;
     }
 
-    return NextResponse.json({ received: true });
-  } catch (error) {
-    console.error("[STRIPE_ERROR]", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    // ── Mise à jour d'abonnement ───────────────────────────────────────
+    case "customer.subscription.updated": {
+      const subscription = event.data.object as Stripe.Subscription;
+      const user_id      = subscription.metadata?.user_id;
+      if (!user_id) {
+        console.error("[Webhook] subscription.updated sans user_id dans metadata");
+        break;
+      }
+      await upsertUserUsage(supabase, user_id, subscription);
+      break;
+    }
+
+    // ── Fin d'abonnement ───────────────────────────────────────────────
+    case "customer.subscription.deleted": {
+      const subscription = event.data.object as Stripe.Subscription;
+      const user_id      = subscription.metadata?.user_id;
+      if (!user_id) break;
+
+      await supabase
+        .from("user_usage")
+        .update({
+          plan:                "free",
+          subscription_status: "canceled",
+          current_period_end:  null,
+          stripe_subscription_id: null,
+        })
+        .eq("user_id", user_id);
+      break;
+    }
+
+    // ── Paiement échoué ────────────────────────────────────────────────
+    case "invoice.payment_failed": {
+      const invoice  = event.data.object as Stripe.Invoice;
+      const customer = invoice.customer as string;
+
+      // Retrouver user_id depuis stripe_customer_id
+      const { data: usage } = await supabase
+        .from("user_usage")
+        .select("user_id")
+        .eq("stripe_customer_id", customer)
+        .single();
+
+      if (usage?.user_id) {
+        await supabase
+          .from("user_usage")
+          .update({ subscription_status: "past_due" })
+          .eq("user_id", usage.user_id);
+      }
+      break;
+    }
+
+    default:
+      // Événement non géré — ignoré silencieusement
+      break;
   }
+
+  return NextResponse.json({ received: true });
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// ── Helper : upsert user_usage depuis un objet Subscription Stripe ─────────
+async function upsertUserUsage(
+  supabase: ReturnType<typeof createAdminClient>,
+  user_id:  string,
+  sub:      Stripe.Subscription
+): Promise<void> {
+  const plan = resolvePlanFromSubscription(sub);
+
+  await supabase
+    .from("user_usage")
+    .upsert({
+      user_id,
+      plan,
+      subscription_status:    sub.status,
+      stripe_subscription_id: sub.id,
+      stripe_customer_id:     sub.customer as string,
+      current_period_end:     new Date(sub.current_period_end * 1000).toISOString(),
+    }, { onConflict: "user_id" });
+}
+
+// ── Helper : résoudre le plan depuis les price IDs de l'abonnement ──────────
+function resolvePlanFromSubscription(sub: Stripe.Subscription): string {
+  const priceId = sub.items.data[0]?.price.id ?? "";
+
+  if (priceId === envServer.STRIPE_EXPERT_PRICE_ID) return "EXPERT";
+  if (priceId === envServer.STRIPE_PRO_PRICE_ID)    return "PRO";
+  if (priceId === envServer.STRIPE_PRICE_EARLY)     return "PRO"; // Early = PRO
+  return "free";
+}

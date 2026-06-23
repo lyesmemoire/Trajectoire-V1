@@ -1,4 +1,4 @@
-export default function ScoreBoard({
+﻿export default function ScoreBoard({
   score,
   percentile,
   risk,

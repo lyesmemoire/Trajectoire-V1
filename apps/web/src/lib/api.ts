@@ -1,4 +1,4 @@
-/**
+﻿/**
  * api.ts — Client HTTP vers le backend NestJS / realtime-gateway
  * Corrections appliquées :
  * B1B — fetchReport typé avec RawReportResponse (plus de any).

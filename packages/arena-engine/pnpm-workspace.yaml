@@ -1,0 +1,7 @@
+# Workspace pnpm — StudioEntretien
+# La racine est le package "web" (app Next.js).
+# Les sous-applications backend du moteur vocal vivent dans apps/*.
+packages:
+  - "apps/*"
+allowBuilds:
+  esbuild: set this to true or false

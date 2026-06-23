@@ -1,16 +1,25 @@
+import { envServer } from "@/lib/env.server";
+import { z } from "zod";
 import { NextResponse } from "next/server";
 import { getOpenAIClient } from "@/lib/openai";
 
 export async function POST(req: Request) {
   try {
-    const { textChunk } = await req.json();
+    const RequestSchema = z.object({
+      textChunk: z.string().min(1).max(2000),
+    });
 
-    if (!textChunk) {
-      return NextResponse.json({ error: "Text chunk is required" }, { status: 400 });
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
     }
+    const { textChunk } = parsed.data;
 
-    const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-    const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID;
+    const ELEVENLABS_API_KEY = envServer.ELEVENLABS_API_KEY;
+    const ELEVENLABS_VOICE_ID = envServer.ELEVENLABS_VOICE_ID;
 
     try {
       // 1. Attempt ElevenLabs TTS

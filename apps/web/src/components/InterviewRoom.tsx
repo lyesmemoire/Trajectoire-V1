@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * InterviewRoom.tsx — Salle d'entretien vocal en temps réel.

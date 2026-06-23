@@ -1,5 +1,7 @@
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
+import { envServer } from "@/lib/env.server";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createSupabaseServiceClient } from "@/lib/supabase-server";
@@ -19,12 +21,14 @@ function getStripe(): Stripe {
 }
 
 // Source de vérité des prix — jamais depuis le client
-const VALID_PRICE_IDS = new Set([
+const VALID_PRICE_IDS = [
+  envServer.STRIPE_PRICE_EARLY,
+  envServer.STRIPE_PRO_PRICE_ID,
+  envServer.STRIPE_EXPERT_PRICE_ID,
   "price_starter_5credits",
-  "price_pro_15credits",
   "price_executive_analysis",
-  "price_premium_access" // Logical price ID sent by frontend
-]);
+  "price_premium_access" // Logical ID used below
+].filter((id): id is string => typeof id === "string" && id.startsWith("price_"));
 
 // Actual Stripe Price IDs (to be configured in Stripe)
 const STRIPE_PRICE_EARLY = process.env.STRIPE_PRICE_EARLY || "price_pro_early_access";
@@ -47,12 +51,29 @@ export async function POST(request: NextRequest) {
   const userId = user.id;
   const userEmail = user.email || "";
 
-  const { priceId } = await request.json();
-
-  // Valider que le priceId est connu et autorisé
-  if (!priceId || !VALID_PRICE_IDS.has(priceId)) {
-    return NextResponse.json({ error: "Invalid price ID" }, { status: 400 });
+  if (VALID_PRICE_IDS.length === 0) {
+    console.error("[Checkout] Aucun price ID configuré dans envServer");
+    return NextResponse.json(
+      { error: "Configuration paiement invalide." },
+      { status: 503 }
+    );
   }
+
+  const RequestSchema = z.object({
+    priceId: z.string().refine(
+      (id) => VALID_PRICE_IDS.includes(id),
+      { message: "Plan invalide." }
+    ),
+  });
+
+  const parsed = RequestSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Paramètres invalides.", details: parsed.error.flatten() },
+      { status: 400 }
+    );
+  }
+  const { priceId } = parsed.data;
 
   const supabase = createSupabaseServiceClient();
 

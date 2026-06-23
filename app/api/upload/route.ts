@@ -31,11 +31,26 @@ export async function POST(req: NextRequest) {
     }
 
     const formData = await req.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("file");
 
-    if (!file) {
-      return NextResponse.json({ error: "Fichier manquant" }, { status: 400 });
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    const ALLOWED_MIME  = ["application/pdf"];
+
+    if (!file || !(file instanceof Blob)) {
+      return NextResponse.json({ error: "Fichier manquant." }, { status: 400 });
     }
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ error: "Fichier trop volumineux. Max 10MB." }, { status: 413 });
+    }
+    if (!ALLOWED_MIME.includes(file.type)) {
+      return NextResponse.json({ error: "Format non supporté. PDF uniquement." }, { status: 415 });
+    }
+
+    const rawName  = (file as File).name ?? "upload.pdf";
+    const safeName = rawName
+      .replace(/\.\./g, "")
+      .replace(/[^a-zA-Z0-9.\-_]/g, "_")
+      .slice(0, 100);
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -64,7 +79,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ✅ Upload storage (using admin client to bypass Storage RLS constraints on newly created bucket)
-    const filePath = `${user.id}/${Date.now()}-${file.name}`;
+    const filePath = `${user.id}/${Date.now()}-${safeName}`;
 
     const { error: uploadError } = await supabaseAdmin.storage
       .from("cvs")
@@ -79,7 +94,7 @@ export async function POST(req: NextRequest) {
       .from("cvs")
       .insert({
         user_id: user.id,
-        file_name: file.name,
+        file_name: safeName,
         storage_path: filePath,
         extracted_text: safeText,
       })

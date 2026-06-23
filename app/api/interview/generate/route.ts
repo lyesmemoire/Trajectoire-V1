@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -17,6 +18,13 @@ const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(10, "1 m"),
   prefix: "interview_generate",
+});
+
+const RequestSchema = z.object({
+  messages: z.array(z.any()),
+  personaId: z.string().min(1),
+  jobContext: z.any().optional(),
+  sessionId: z.string().uuid(),
 });
 
 export async function POST(req: NextRequest) {
@@ -49,8 +57,14 @@ export async function POST(req: NextRequest) {
     }
 
     // ✅ 3. Validation
-    const body = await req.json();
-    const { messages, personaId, jobContext, sessionId } = body;
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+    const { messages, personaId, jobContext, sessionId } = parsed.data;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(

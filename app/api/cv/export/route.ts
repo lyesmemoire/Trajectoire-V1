@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { createElement } from "react";
@@ -28,18 +29,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
-    const { cvData, options } = body as {
-      cvData: CVData;
-      options: ExportOptions;
-    };
+    const RequestSchema = z.object({
+      cvData: z.object({
+        personalInfo: z.object({
+          name: z.string().min(1, "Le nom est requis"),
+        }).passthrough(),
+      }).passthrough(),
+      options: z.object({
+        template: z.string().default("modern"),
+      }).passthrough().optional(),
+    });
 
-    if (!cvData?.personalInfo?.name) {
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "Données CV invalides" },
-        { status: 400 },
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
       );
     }
+    const { cvData, options } = parsed.data as any as { cvData: CVData; options: ExportOptions };
 
     const TemplateComponent =
       TEMPLATES[options.template as keyof typeof TEMPLATES] || ModernTemplate;

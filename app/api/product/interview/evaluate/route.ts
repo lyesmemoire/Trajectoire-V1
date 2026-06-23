@@ -10,13 +10,14 @@
 
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { evaluateAnswer } from "@/lib/runtime/interview/evaluate-answer";
 
 export async function POST(req: NextRequest) {
-  let body: unknown;
+  let rawBody;
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json(
       { error: "Corps de requête JSON invalide." },
@@ -24,14 +25,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { answer, gap } = (body ?? {}) as { answer?: unknown; gap?: unknown };
+  const RequestSchema = z.object({
+    answer: z.string().min(1, "La réponse est requise.").max(10000),
+    gap:    z.string().max(5000).optional(),
+  });
 
-  if (typeof answer !== "string") {
+  const parsed = RequestSchema.safeParse(rawBody);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "Le champ « answer » (string) est requis." },
-      { status: 400 },
+      { error: "Paramètres invalides.", details: parsed.error.flatten() },
+      { status: 400 }
     );
   }
+
+  const { answer, gap } = parsed.data;
 
   const result = evaluateAnswer({
     answer,

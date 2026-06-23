@@ -1,8 +1,15 @@
+
+const GatewayEnvSchema = z.object({
+  NEXT_PUBLIC_SUPABASE_URL:  z.string().url(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+});
+const gatewayEnv = GatewayEnvSchema.parse(process.env);
+import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  gatewayEnv.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 const PLAN_LIMITS: Record<string, number> = {

@@ -13,7 +13,9 @@ import {
   predictInterviewRisks,
 } from "./behavioral-logic/recruiter-grade";
 import { mistralModel, mistralSmallModel } from "@/lib/mistral";
-import { generateText } from "ai";
+import { generateObject } from "ai";
+import { JobIntelligenceSchema, AdvancedCVSchema, RecruiterFeedbackSchema } from "./schemas/orchestrator-schemas";
+
 import { MunitionPack } from "./contracts/munitions";
 
 export interface PremiumATSAnalysis {
@@ -101,46 +103,37 @@ export async function processPremiumATSAnalysis(
 }
 
 async function analyzeJobOfferIntelligence(text: string) {
-  const { text: response } = await generateText({
+  const { object } = await generateObject({
     model: mistralSmallModel,
+    schema: JobIntelligenceSchema,
+    temperature: 0.1,
     system:
       'Analyze job offer. JSON format: { "title": "", "hard_skills": [], "seniority": "", "min_years": 0 }',
     prompt: text,
   });
-  return JSON.parse(
-    response
-      .trim()
-      .replace(/^```json/, "")
-      .replace(/```$/, ""),
-  );
+  return object;
 }
 
 async function extractAdvancedCVProfile(text: string) {
-  const { text: response } = await generateText({
+  const { object } = await generateObject({
     model: mistralSmallModel,
+    schema: AdvancedCVSchema,
+    temperature: 0.1,
     system:
       'Analyze CV. JSON format: { "hard_skills": [], "seniority": 0, "leadership_score": 0, "impact_metrics_score": 0, "years_experience": 0 }',
     prompt: text,
   });
-  return JSON.parse(
-    response
-      .trim()
-      .replace(/^```json/, "")
-      .replace(/```$/, ""),
-  );
+  return object;
 }
 
 async function simulateRecruiterFeedback(cv: any, job: any, score: number) {
-  const { text: response } = await generateText({
+  const { object } = await generateObject({
     model: mistralModel,
+    schema: RecruiterFeedbackSchema,
+    temperature: 0.1,
     system:
       'Act as a picky recruiter. JSON: { "concerns": [], "strengths": [], "rewrites": [{ "original": "", "improved": "" }] }',
     prompt: `Score: ${score}`,
   });
-  return JSON.parse(
-    response
-      .trim()
-      .replace(/^```json/, "")
-      .replace(/```$/, ""),
-  );
+  return object;
 }

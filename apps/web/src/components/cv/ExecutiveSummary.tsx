@@ -1,4 +1,4 @@
-export default function ExecutiveSummary({ summary, score }: any) {
+﻿export default function ExecutiveSummary({ summary, score }: any) {
   const truthMessage = score >= 8.0 
     ? "This profile demonstrates high market competitiveness and is positioned to clear top-tier screening filters."
     : score >= 6.5

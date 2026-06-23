@@ -5,7 +5,7 @@ const app = Fastify();
 // Mock Supabase inside the imported route by hijacking it if needed,
 // but since the route uses createClient which reads process.env, let's set process.env
 process.env.SUPABASE_URL = "http://localhost:54321";
-process.env.SUPABASE_SERVICE_ROLE_KEY = "mock_key";
+envServer.SUPABASE_SERVICE_ROLE_KEY = "mock_key";
 
 async function run() {
   // We can't actually start the real route without a DB because supabase.from().select() will fail with 500

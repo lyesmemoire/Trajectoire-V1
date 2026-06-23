@@ -23,7 +23,7 @@ export async function GET(
   const interviewId = resolvedParams.id
 
   // 2. Fetch interview (ownership enforced implicitly by RLS, but we verify anyway)
-  const { data: interview, error } = await supabase
+  const { data: interview, error } = await (supabase as any)
     .from("interviews")
     .select(`
       id,
@@ -52,7 +52,7 @@ export async function GET(
   }
 
   // 4. Check plan
-  const { data: usage } = await supabase
+  const { data: usage } = await (supabase as any)
     .from("user_usage")
     .select("plan, subscription_status")
     .eq("user_id", user.id)

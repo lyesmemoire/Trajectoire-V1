@@ -3,7 +3,9 @@ import { normalizeSkills } from "./normalization/normalize-skills";
 import { calculateSkillScore, aggregateFinalScore } from "./scoring/engine";
 import { generateATSFeedback } from "./enrichment/generate-feedback";
 import { mistralSmallModel } from "@/lib/mistral";
-import { generateText } from "ai";
+import { generateObject } from "ai";
+import { JobOfferSchema, CVSkillsSchema } from "./schemas/orchestrator-schemas";
+
 
 export interface ATSAnalysis {
   score: number;
@@ -61,30 +63,24 @@ export async function processATSAnalysis(
 }
 
 async function parseJobOffer(text: string) {
-  const { text: response } = await generateText({
+  const { object } = await generateObject({
     model: mistralSmallModel,
+    schema: JobOfferSchema,
+    temperature: 0.1,
     system:
       'Extrait les compétences techniques requises. JSON format: { "required": [] }',
     prompt: text,
   });
-  return JSON.parse(
-    response
-      .trim()
-      .replace(/^```json/, "")
-      .replace(/```$/, ""),
-  );
+  return object;
 }
 
 async function parseCVSkills(text: string) {
-  const { text: response } = await generateText({
+  const { object } = await generateObject({
     model: mistralSmallModel,
+    schema: CVSkillsSchema,
+    temperature: 0.1,
     system: "Extrait toutes les compétences techniques du CV. JSON format: []",
     prompt: text,
   });
-  return JSON.parse(
-    response
-      .trim()
-      .replace(/^```json/, "")
-      .replace(/```$/, ""),
-  );
+  return object;
 }

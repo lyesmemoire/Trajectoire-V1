@@ -3,3 +3,4 @@
 # Les sous-applications backend du moteur vocal vivent dans apps/*.
 packages:
   - "apps/*"
+  - "packages/*"

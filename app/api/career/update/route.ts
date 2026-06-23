@@ -1,3 +1,5 @@
+import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { z } from "zod";
 import { NextResponse } from "next/server";
 import { updateCareerProfile } from "@/lib/ai/career-memory";
 import { generateCareerInsights } from "@/lib/ai/generate-insights";
@@ -8,16 +10,46 @@ import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const supabase = await createSupabaseServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+    }
+    const userId = user.id;
+
+    const RequestSchema = z.object({
+      sessionId:         z.string().uuid().optional(),
+      interviewAnalysis: z.object({
+        communicationScore: z.number().min(0).max(100).optional(),
+        confidenceScore:    z.number().min(0).max(100).optional(),
+        technicalScore:     z.number().min(0).max(100).optional(),
+        leadershipScore:    z.number().min(0).max(100).optional(),
+        verbosity:          z.number().min(0).optional(),
+        interruptionCount:  z.number().int().min(0).optional(),
+        recoveryCount:      z.number().int().min(0).optional(),
+        freezeCount:        z.number().int().min(0).optional(),
+        completionRate:     z.number().min(0).max(100).optional(),
+      }).optional(),
+      uxFingerprint:   z.record(z.string(), z.unknown()).optional(),
+      securitySignals: z.record(z.string(), z.unknown()).optional(),
+    });
+
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+
     const {
-      userId,
       sessionId,
       interviewAnalysis,
       uxFingerprint,
       securitySignals,
-    } = body;
+    } = parsed.data;
 
-    if (!userId || !interviewAnalysis) {
+    if (!interviewAnalysis) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },

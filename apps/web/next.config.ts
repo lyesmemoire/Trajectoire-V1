@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   // Rewrites vers la realtime-gateway et l'API NestJS en développement.
   // En production ces URLs sont remplacées par les variables d'environnement.
   async rewrites() {

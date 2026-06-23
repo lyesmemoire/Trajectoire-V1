@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
@@ -68,20 +69,31 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const body = await req.json();
-    console.log("FETCH BODY:", { ...body, password: "***" });
-    const { email, password, fingerprint, company, fullName } = body;
+    const RequestSchema = z.object({
+      email:       z.string().email("Email invalide"),
+      password:    z.string().min(8, "Mot de passe trop court").max(128, "Mot de passe trop long"),
+      fingerprint: z.string().max(500).optional(),
+      company:     z.string().optional(),
+      fullName:    z.string().max(100).optional(),
+    });
+
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const { email, password, fingerprint, company, fullName } = parsed.data;
+    console.log("FETCH BODY:", { email, fingerprint, company, fullName, password: "***" });
 
     // ✅ HONEYPOT (Anti-Bot)
     if (company) {
       console.warn(`[BOT DETECTED] Honeypot filled by IP: ${ip}`);
-      return NextResponse.json({ error: "Bot detected" }, { status: 400 });
-    }
-
-    if (!email || !password) {
       return NextResponse.json(
-        { error: "Email et mot de passe requis" },
-        { status: 400 },
+        { message: "Si cette adresse est valide, un email de confirmation a été envoyé." },
+        { status: 200 }
       );
     }
 

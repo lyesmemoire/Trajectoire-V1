@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUser } from "@/lib/auth";
 import {
@@ -16,14 +17,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const body = (await req.json()) as RecoveryEmailInput;
+    const RequestSchema = z.object({
+      userId: z.string().uuid("userId doit être un UUID valide"),
+      email:  z.string().email("Email invalide"),
+    });
 
-    if (!body.userId || !body.email) {
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "userId et email requis" },
-        { status: 400 },
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
       );
     }
+    const body = parsed.data as unknown as RecoveryEmailInput;
 
     const result = await sendRecoveryEmail(body);
 

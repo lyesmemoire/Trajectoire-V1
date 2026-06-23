@@ -1,238 +1,181 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServiceClient } from "@/lib/supabase-server";
-import { requireAuth } from "@/lib/auth";
-import { getOpenAIClient } from "@/lib/openai";
-import { buildPremiumPrompt } from "@/lib/interview/premium-prompt";
-import { isOpenAIBroken, registerFailure } from "@/lib/openai-breaker";
-import { z } from "zod";
-import { premiumContinueLimiter } from "@/lib/security/rate-limit";
-import { logEvent } from "@/lib/security/audit-log";
-
 export const dynamic = "force-dynamic";
-const MAX_TURNS = 20;
+
+import { NextRequest, NextResponse } from "next/server";
+import { generateObject } from "ai";
+import { z } from "zod";
+import { mistralModel } from "@/lib/mistral";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { requireAuth } from "@/lib/auth";
+import { premiumContinueLimiter } from "@/lib/security/rate-limit";
+import { ContinueSessionSchema } from "@/lib/interview/schemas/continue-session.schema";
+
+const RequestSchema = z.object({
+  sessionId: z.string().uuid(),
+  transcription: z.string().min(10).max(5000),
+  questionIndex: z.number().int().min(0).max(9),
+});
+
+const InterviewResponseRowSchema = z.object({
+  question_index: z.number().int(),
+  question_text: z.string(),
+  transcription: z.string(),
+});
+
+type InterviewResponseRow = z.infer<typeof InterviewResponseRowSchema>;
+
+const QuestionsSchema = z.array(z.string());
+
+function parseSessionContext(interviewContext: unknown, jobDescription: string | null) {
+  let parsedCv: Record<string, unknown> = {};
+  let jobTarget: Record<string, unknown> = {};
+
+  if (typeof interviewContext === "string") {
+    try {
+      const parsed = JSON.parse(interviewContext) as { cvContext?: Record<string, unknown> };
+      parsedCv = parsed.cvContext ?? {};
+    } catch {
+      parsedCv = {};
+    }
+  } else if (interviewContext && typeof interviewContext === "object") {
+    const ctx = interviewContext as { cvContext?: Record<string, unknown> };
+    parsedCv = ctx.cvContext ?? (interviewContext as Record<string, unknown>);
+  }
+
+  if (jobDescription) {
+    try {
+      jobTarget = JSON.parse(jobDescription) as Record<string, unknown>;
+    } catch {
+      jobTarget = { raw: jobDescription };
+    }
+  }
+
+  return { parsedCv, jobTarget };
+}
 
 export async function POST(req: NextRequest) {
   try {
-    if (isOpenAIBroken()) {
-      return NextResponse.json(
-        { error: "AI temporarily unavailable" },
-        { status: 503 },
-      );
-    }
-
-    // Authenticate user via cookies
     const user = await requireAuth();
 
-    // Rate limit check
-    const { success } = await premiumContinueLimiter.limit(
+    const { success: rateLimitOk } = await premiumContinueLimiter.limit(
       `premium-continue:${user.id}`,
     );
-    if (!success) {
+    if (!rateLimitOk) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    // Validate payload using Zod
-    const payloadSchema = z.object({
-      sessionId: z.string(),
-      answer: z.string(),
-    });
-    const rawBody = await req.json();
-    const parseResult = payloadSchema.safeParse(rawBody);
-    if (!parseResult.success) {
-      console.error("[INVALID_PAYLOAD]", parseResult.error);
+    const body = RequestSchema.safeParse(await req.json());
+    if (!body.success) {
       return NextResponse.json(
-        { error: "Invalid request payload" },
+        { error: "Paramètres invalides.", details: body.error.flatten() },
         { status: 400 },
       );
     }
-    const { sessionId, answer } = parseResult.data;
 
-    // Use Service Role exclusively for system DB operations to bypass RLS
-    const adminSupabase = createSupabaseServiceClient();
+    const { sessionId, transcription, questionIndex } = body.data;
+    const supabase = await createSupabaseServerClient();
 
-    const { data: session, error: fetchError } = await (adminSupabase as any)
-      .from("premium_interview_sessions")
-      .select("*")
+    const { data: session, error } = await supabase
+      .from("interview_sessions")
+      .select(
+        `
+        interview_context,
+        job_description,
+        questions,
+        interview_responses (
+          question_index,
+          question_text,
+          transcription
+        )
+      `,
+      )
       .eq("id", sessionId)
       .eq("user_id", user.id)
       .single();
 
-    if (fetchError || !session) {
-      console.error(
-        "[INTERVIEW_STREAM_ERROR] Session fetch failed:",
-        fetchError,
-      );
-      return NextResponse.json({ error: "Session not found" }, { status: 404 });
+    if (error || !session) {
+      return NextResponse.json({ error: "Session introuvable." }, { status: 404 });
     }
 
-    // Guard against malformed transcript
-    if (
-      !Array.isArray(session?.transcript) ||
-      (session.transcript?.length ?? 0) > MAX_TURNS * 2
-    ) {
-      return NextResponse.json(
-        { error: "Session limit reached" },
-        { status: 403 },
-      );
+    const questionsResult = QuestionsSchema.safeParse(session.questions ?? []);
+    if (!questionsResult.success) {
+      return NextResponse.json({ error: "Questions invalides." }, { status: 500 });
     }
 
-    if (session.is_processing) {
-      return NextResponse.json(
-        { error: "Already processing" },
-        { status: 409 },
-      );
+    const questions = questionsResult.data;
+    const currentQuestion = questions[questionIndex];
+
+    if (!currentQuestion) {
+      return NextResponse.json({ error: "Question introuvable." }, { status: 404 });
     }
 
-    // Lock session
-    await (adminSupabase as any)
-      .from("premium_interview_sessions")
-      .update({ is_processing: true })
-      .eq("id", sessionId);
+    const isLastQuestion = questionIndex >= questions.length - 1;
 
-    const transcript = [
-      ...session.transcript,
-      { role: "candidate", content: answer },
-    ];
+    const rawResponses = (session.interview_responses ?? []) as unknown[];
+    const previousResponses: InterviewResponseRow[] = [];
 
-    const openai = getOpenAIClient();
-
-    let stream;
-    try {
-      const isTechnical = session.phase === "technical_case";
-      stream = await openai.chat.completions.create({
-        model: "gpt-4o", // Immersive conversation strategy
-        stream: true,
-        max_tokens: 300,
-        temperature: isTechnical ? 0.3 : 0.7,
-        messages: buildPremiumPrompt(session, transcript) as any,
-      });
-    } catch (apiErr) {
-      registerFailure();
-      // Unlock session on fail
-      await (adminSupabase as any)
-        .from("premium_interview_sessions")
-        .update({ is_processing: false })
-        .eq("id", sessionId);
-      console.error("[INTERVIEW_STREAM_ERROR] OpenAI API failed:", apiErr);
-      return NextResponse.json({ error: "AI API Error" }, { status: 502 });
+    for (const row of rawResponses) {
+      const parsed = InterviewResponseRowSchema.safeParse(row);
+      if (parsed.success && parsed.data.question_index < questionIndex) {
+        previousResponses.push(parsed.data);
+      }
     }
 
-    const encoder = new TextEncoder();
+    previousResponses.sort((a, b) => a.question_index - b.question_index);
 
-    const readable = new ReadableStream({
-      async start(controller) {
-        let fullText = "";
-
-        try {
-          for await (const chunk of stream) {
-            const delta = chunk.choices[0]?.delta?.content || "";
-            fullText += delta;
-
-            controller.enqueue(encoder.encode(`data: ${delta}\n\n`));
-          }
-
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-          controller.close();
-
-          const updatedTranscript = [
-            ...transcript,
-            { role: "interviewer", content: fullText },
-          ];
-
-          // Update compressed memory in background (Only every 3 turns to save tokens)
-          let newMemory = session.memory || {};
-          if (updatedTranscript.length % 6 === 0) {
-            try {
-              const summaryObj = await updateMemory(updatedTranscript);
-              newMemory = summaryObj;
-            } catch (memErr) {
-              console.error("Failed to summarize/compress memory:", memErr);
-            }
-          }
-
-          // Final save & unlock
-          await (adminSupabase as any)
-            .from("premium_interview_sessions")
-            .update({
-              transcript: updatedTranscript,
-              memory: newMemory,
-              is_processing: false,
-              updated_at: new Date().toISOString(),
-            })
-            .eq("id", sessionId);
-
-          // Fire‑and‑forget audit log
-          logEvent(
-            user.id,
-            "INTERVIEW_CONTINUE",
-            { sessionId },
-            req.headers.get("x-forwarded-for") ?? "",
-            req.headers.get("user-agent") ?? "",
-          );
-        } catch (err) {
-          console.error(
-            "[INTERVIEW_STREAM_ERROR] Streaming generation error:",
-            err,
-          );
-          await (adminSupabase as any)
-            .from("premium_interview_sessions")
-            .update({ is_processing: false })
-            .eq("id", sessionId);
-          controller.error(err);
-        }
-      },
-    });
-
-    return new Response(readable, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
-      },
-    });
-  } catch (err: any) {
-    console.error("[INTERVIEW_STREAM_ERROR] General POST error:", err);
-    return NextResponse.json(
-      { error: err.message || "Internal Server Error" },
-      { status: 500 },
+    const { parsedCv, jobTarget } = parseSessionContext(
+      session.interview_context,
+      session.job_description,
     );
+
+    const { object: continuation } = await generateObject({
+      model: mistralModel,
+      schema: ContinueSessionSchema,
+      temperature: 0.2,
+      system: `Tu es un interviewer expérimenté qui conduit un entretien structuré.
+
+RÈGLES :
+- ai_response : réaction directe à ce que le candidat vient de dire (1-2 phrases max).
+- follow_up.type : choisis DEEP_DIVE si la réponse est incomplète, CHALLENGE si un
+  chiffre ne colle pas avec le CV, NEXT_QUESTION si la réponse est suffisante,
+  CLOSING si c'était la dernière question.
+- instant_feedback.one_line : observation factuelle — pas "super réponse", mais
+  "Vous n'avez pas mentionné le budget alloué que vous citez dans votre CV."
+- session_complete : true uniquement si questionIndex est la dernière question
+  ET la réponse est suffisante.`,
+
+      prompt: `CV : ${JSON.stringify(parsedCv)}
+
+OFFRE : ${JSON.stringify(jobTarget)}
+
+QUESTION EN COURS (${questionIndex + 1}/${questions.length}) :
+"${currentQuestion}"
+
+RÉPONSE DU CANDIDAT :
+"${transcription}"
+
+CONTEXTE DES ÉCHANGES PRÉCÉDENTS :
+${
+  previousResponses.length > 0
+    ? previousResponses
+        .map(
+          (r) =>
+            `Q${r.question_index + 1}: "${r.question_text}" → "${r.transcription.slice(0, 200)}..."`,
+        )
+        .join("\n")
+    : "Premier échange."
+}
+
+DERNIÈRE QUESTION : ${isLastQuestion}
+
+Génère la continuation selon le schéma.`,
+    });
+
+    return NextResponse.json(continuation);
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+    }
+    console.error("[Continue] Error:", error);
+    return NextResponse.json({ error: "Erreur de continuation." }, { status: 500 });
   }
-}
-
-async function updateMemory(transcript: any[]) {
-  const openai = getOpenAIClient();
-
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.2,
-    max_tokens: 300,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: `
-Summarize this interview so far in JSON format.
-Limit output to 150 words total.
-{
-  "structuredSummary": "...",
-  "keyStrengths": [],
-  "keyWeaknesses": []
-}
-`,
-      },
-      {
-        role: "user",
-        content: JSON.stringify(transcript.slice(-4)),
-      },
-    ],
-  });
-
-  const parsed = JSON.parse(completion.choices[0]?.message.content || "{}");
-
-  // Isolate memory structure and limit arrays
-  return {
-    structuredSummary: parsed.structuredSummary || "",
-    keyStrengths: (parsed.keyStrengths || []).slice(0, 5),
-    keyWeaknesses: (parsed.keyWeaknesses || []).slice(0, 5),
-  };
 }

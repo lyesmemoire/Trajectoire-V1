@@ -1,0 +1,68 @@
+---
+description: Conventions UX — états, mobile, transitions
+globs: apps/web/src/components/**
+alwaysApply: false
+---
+# Conventions UX Trajectoire
+
+## États Async Obligatoires
+Tout composant qui fetch des données expose ces 4 états :
+```typescript
+type AsyncState<T> =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: T }
+  | { status: "error"; message: string };
+```
+
+## Hiérarchie Server / Client
+```
+Page (Server Component)         → fetch initial data, auth guard, redirect
+  └── [Name]Client.tsx (Client) → état local, interactions, events
+        └── [Name]Panel.tsx     → sous-composants purs si possible
+```
+
+`"use client"` uniquement si :
+- Hooks navigateur (MediaRecorder, Speech API)
+- État local interactif (useState, useReducer)
+- Event handlers DOM directs
+
+## Mobile First — Breakpoints
+Ordre d'écriture Tailwind : base (375px) → `sm:` → `md:` → `lg:`
+```tsx
+// ✅
+<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
+// ❌
+<div className="flex flex-row gap-6">  // Casse sur mobile
+```
+
+## Transitions
+```typescript
+// Durée max : 200ms
+// ✅
+className="transition-all duration-200"
+// ❌
+className="transition-all duration-500"  // Trop lent, perçu comme laggy
+```
+
+## Couleurs Sémantiques Trajectoire
+| Signal | Classe Tailwind |
+|--------|----------------|
+| Score ≥ 75 | `text-green-400` / `bg-green-500` |
+| Score 50-74 | `text-yellow-400` / `bg-yellow-500` |
+| Score < 50 | `text-red-400` / `bg-red-500` |
+| Alerte critique | `border-red-700 bg-red-950` |
+| Action principale | `bg-blue-600 hover:bg-blue-500` |
+| Surface principale | `bg-gray-900 border-gray-700` |
+| Background global | `bg-gray-950` |
+
+## Chaque Bouton d'Action a un État Disabled
+```tsx
+<button
+  onClick={handleSubmit}
+  disabled={isLoading || !isValid}
+  className="... disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {isLoading ? <Loader2 className="animate-spin" /> : "Analyser"}
+</button>
+```

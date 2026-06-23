@@ -1,0 +1,427 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["public", "auth"]
+}
+
+model User {
+  id                     String                   @id @default(cuid())
+  email                  String                   @unique
+  name                   String?
+  image                  String?
+  emailVerified          DateTime?
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime @updatedAt
+  role                   UserRole                 @default(USER)
+  plan                   Plan                     @default(FREE)
+  stripeCustomerId       String?                  @unique
+  referralCode           String                   @unique
+  referredBy             String?
+  referralCount          Int                      @default(0)
+  AIUsageLog             AIUsageLog[]
+  Account                Account[]
+  AdminAuditLog          AdminAuditLog[]
+  BehaviorEvent          BehaviorEvent[]
+  BehavioralPattern      BehavioralPattern[]
+  CVAnalysis             CVAnalysis[]
+  careerProfile          CareerProfile?
+  interviewSessions      InterviewSession[]
+  PublicChallengeEntry   PublicChallengeEntry[]
+  RecoveryEmailLog       RecoveryEmailLog[]
+  Session                Session[]
+  Subscription           Subscription?
+  UserAnalytics          UserAnalytics?
+  UserBehaviorProfile    UserBehaviorProfile?
+  UserPredictionSnapshot UserPredictionSnapshot[]
+  WaitlistEntry          WaitlistEntry?
+
+  @@index([email])
+  @@index([stripeCustomerId])
+  @@schema("public")
+}
+
+model CareerProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  employabilityScore Float    @default(0)
+  clarityTrend       Float?
+  confidenceTrend    Float?
+  ownershipTrend     Float?
+  stressResistance   Float?
+  leadershipScore    Float?
+  communicationScore Float?
+  careerDNA          Json?
+  unlockedPersonas   String[]
+  updatedAt          DateTime @updatedAt
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model InterviewSession {
+  id                   String                @id @default(dbgenerated("gen_random_uuid()"))
+  userId               String
+  persona              String
+  currentState         String
+  clarityScore         Float?
+  confidenceScore      Float?
+  ownershipScore       Float?
+  specificityScore     Float?
+  pressureLevel        Int                   @default(0)
+  authenticityScore    Float                 @default(1.0)
+  jobTitle             String?
+  company              String?
+  score                Int?
+  status               String                @default("active")
+  questions            Json?
+  answers              Json?
+  analysis             Json?
+  startedAt            DateTime              @default(now())
+  completedAt          DateTime?
+  createdAt            DateTime              @default(now())
+  careerTrajectoryScore Float?          @map("career_trajectory_score")
+  challengeEntryId     String?
+  BehaviorEvent        BehaviorEvent[]
+  InterviewEvent       InterviewEvent[]
+  PublicChallengeEntry PublicChallengeEntry? @relation(fields: [challengeEntryId], references: [id])
+  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([userId, createdAt(sort: Desc)])
+  @@schema("public")
+}
+
+model AIUsageLog {
+  id              String   @id @default(cuid())
+  userId          String?
+  sessionId       String?
+  provider        String
+  model           String
+  feature         String
+  tokensInput     Int
+  tokensOutput    Int
+  latencyMs       Int
+  costUsd         Float
+  cacheHit        Boolean  @default(false)
+  confidenceScore Float?
+  failureType     String?
+  createdAt       DateTime @default(now())
+  User            User?    @relation(fields: [userId], references: [id])
+
+  @@index([createdAt])
+  @@index([userId])
+  @@schema("public")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@schema("public")
+}
+
+model AdminAuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  targetId  String?
+  metadata  Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [adminId], references: [id])
+
+  @@index([action])
+  @@index([adminId])
+  @@schema("public")
+}
+
+model BehaviorEvent {
+  id String @id @default(cuid())
+  userId           String
+  sessionId        String
+  type             String
+  subtype          String?
+  timestamp        DateTime         @default(now())
+  payload          Json
+  latencyMs        Int?
+  intensityScore   Float?
+  entropyScore     Float?
+  previousEventId  String?
+  nextEventId      String?
+  InterviewSession InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  User             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([userId, type])
+  @@schema("public")
+}
+
+model BehavioralPattern {
+  id String @id @default(cuid())
+  userId      String
+  pattern     String
+  frequency   Int      @default(1)
+  severity    Float
+  firstSeenAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model CVAnalysis {
+  id String @id @default(cuid())
+  userId         String
+  fileName       String
+  originalText   String
+  optimizedText  String
+  cvData         Json
+  atsScoreBefore Int?
+  atsScoreAfter  Int?
+  improvements   Json?
+  keywords       Json?
+  createdAt      DateTime @default(now())
+  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@schema("public")
+}
+
+model InterviewEvent {
+  id               String           @id @default(cuid())
+  sessionId        String
+  type             String
+  impactScore      Float?
+  createdAt        DateTime         @default(now())
+  InterviewSession InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model ProcessedWebhook {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  @@schema("public")
+}
+
+model PromptVersion {
+  id        String   @id @default(cuid())
+  type      String
+  version   String
+  content   String
+  active    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@schema("public")
+}
+
+model PublicChallenge {
+  id                   String                 @id @default(cuid())
+  slug                 String                 @unique
+  name                 String
+  description          String
+  type                 String
+  startDate            DateTime
+  endDate              DateTime
+  isActive             Boolean                @default(true)
+  config               Json
+  rewardCredits        Int                    @default(0)
+  rewardBadgeId        String?
+  PublicChallengeEntry PublicChallengeEntry[]
+
+  @@schema("public")
+}
+
+model PublicChallengeEntry {
+  id               String             @id @default(cuid())
+  challengeId      String
+  userId           String
+  bestScore        Int                @default(0)
+  maxPressure      Int                @default(0)
+  interruptions    Int                @default(0)
+  completedAt      DateTime?
+  createdAt        DateTime           @default(now())
+  InterviewSession InterviewSession[]
+  PublicChallenge  PublicChallenge    @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  User             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([challengeId, userId])
+  @@schema("public")
+}
+
+model RecoveryEmailLog {
+  id        String   @id @default(cuid())
+  userId    String
+  riskLevel String
+  cause     String
+  sentAt    DateTime @default(now())
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sentAt])
+  @@schema("public")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@schema("public")
+}
+
+model Subscription {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  stripeCustomerId String
+  stripeSubId      String   @unique
+  status           String
+  currentPeriodEnd DateTime
+  plan             Plan     @default(FREE)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime
+  User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model UserAnalytics {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  activationScore Int       @default(0)
+  churnRisk       Float     @default(0)
+  viralityScore   Float     @default(0)
+  engagementScore Float     @default(0)
+  lastActiveAt    DateTime?
+  updatedAt       DateTime
+  User            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model UserBehaviorProfile {
+  id                  String    @id @default(cuid())
+  userId              String    @unique
+  pressureType        String?
+  weaknessPattern     String?
+  targetArchetype     String?
+  returnProbability   Float?
+  returnSegment       String?
+  lastPredictionDate  DateTime?
+  onboardingCompleted Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  User                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model UserPredictionSnapshot {
+  id                String   @id @default(cuid())
+  userId            String
+  sessionId         String
+  returnProbability Float
+  returnSegment     String
+  primaryDriver     String
+  stressScore       Float?
+  recoveryScore     Float?
+  engagementScore   Float?
+  createdAt         DateTime @default(now())
+  User              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([returnSegment])
+  @@index([userId])
+  @@schema("public")
+}
+
+model WaitlistEntry {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  userId           String?  @unique
+  source           String?
+  createdAt        DateTime @default(now())
+  converted        Boolean  @default(false)
+  pressureType     String?
+  weakness         String?
+  intentReason     String?
+  isWillingToRetry Boolean  @default(false)
+  status           String   @default("PENDING")
+  User             User?    @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+enum UserRole {
+  USER
+  ADMIN_SUPPORT
+  ADMIN_PRODUCT
+  ADMIN_FOUNDER
+
+  @@schema("public")
+}
+
+enum Plan {
+  FREE
+  PRO
+  EXPERT
+
+  @@schema("public")
+}
+
+model PremiumInterviewSession {
+  id             String   @id @default(uuid())
+  userId         String?
+  analysisId     String?
+  interviewType  String   @default("standard")
+  status         String   @default("active")
+  score          Int      @default(0)
+
+  questions      Json?
+  answers        Json?
+  feedback       Json?
+
+  startedAt      DateTime @default(now())
+  completedAt    DateTime?
+  createdAt      DateTime @default(now())
+  careerTrajectoryScore Float?
+
+  @@map("premium_interview_sessions")
+  @@schema("public")
+}
+
+model SimulationSession {
+  id         String   @id @default(cuid())
+  userId     String?
+  createdAt  DateTime @default(now())
+  overall    Int
+  percentile Int
+  scores     Json
+  level      String
+
+  @@schema("public")
+}

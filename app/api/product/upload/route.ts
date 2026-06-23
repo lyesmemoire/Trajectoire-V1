@@ -32,29 +32,30 @@ export async function POST(req: NextRequest) {
   }
 
   const file = form.get("file");
-  if (!file || !(file instanceof File)) {
-    return NextResponse.json(
-      { error: "Aucun fichier fourni (champ « file » requis)." },
-      { status: 400 },
-    );
-  }
 
-  // Sécurité : type & taille.
-  const isPdf =
-    file.type === "application/pdf" ||
-    file.name.toLowerCase().endsWith(".pdf");
-  if (!isPdf) {
-    return NextResponse.json(
-      { error: "Format non supporté : merci d'envoyer un PDF." },
-      { status: 415 },
-    );
+  const ALLOWED_MIME  = ["application/pdf"];
+
+  if (!file || !(file instanceof Blob)) {
+    return NextResponse.json({ error: "Fichier manquant." }, { status: 400 });
   }
   if (file.size > MAX_BYTES) {
     return NextResponse.json(
-      { error: "Fichier trop volumineux (max 8 Mo)." },
-      { status: 413 },
+      { error: "Fichier trop volumineux. Max 8MB." },
+      { status: 413 }
     );
   }
+  if (!ALLOWED_MIME.includes(file.type)) {
+    return NextResponse.json(
+      { error: "Format non supporté. PDF uniquement." },
+      { status: 415 }
+    );
+  }
+  
+  const rawName  = (file as File).name ?? "document.pdf";
+  const safeName = rawName
+    .replace(/\.\./g, "")
+    .replace(/[^a-zA-Z0-9.\-_]/g, "_")
+    .slice(0, 100);
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());

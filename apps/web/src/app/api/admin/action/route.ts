@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+﻿export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
     }
 
     // 2. Check role = 'admin'
-    const { data: profile } = await supabase
+    const { data: profile } = (await supabase
       .from("profiles")
-      .select("role")
-      .eq("user_id", user.id)
-      .single();
+      .select("*")
+      .eq("id", user.id)
+      .single()) as unknown as { data: { role?: string | null } | null };
 
     if (!profile || profile.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     const uaHash = hashValue(userAgent);
 
     // 5. Log the action FIRST — never execute without audit trail
-    const { error: logError } = await supabase
+    const { error: logError } = await (supabase as any)
       .from("admin_actions_log")
       .insert({
         admin_user_id: user.id,
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
 
     if (action === "ENGINE_DISABLE" || action === "ENGINE_ENABLE") {
       const enabled = action === "ENGINE_ENABLE";
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("engine_settings")
         .update({ engine_enabled: enabled })
         .eq("id", "default");

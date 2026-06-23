@@ -1,4 +1,4 @@
-export default function CabinetHeader({ meta }: any) {
+﻿export default function CabinetHeader({ meta }: any) {
   return (
     <div className="cabinet-header">
       <div className="cabinet-meta">

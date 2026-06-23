@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -12,7 +13,7 @@ import {
   createSupabaseServiceClient,
 } from "@/lib/supabase-server";
 import { mistralModel } from "@/lib/mistral";
-import { generateText } from "ai";
+import { generateObject } from "ai";
 import { parseCVToStructure } from "@/lib/pdf/cv-parser";
 
 const redis = new Redis({
@@ -47,10 +48,19 @@ export async function POST(req: NextRequest) {
         );
     } catch (e) {}
 
-    const body = await req.json();
-    const { cvId, jobDescription } = body;
-    if (!cvId)
-      return NextResponse.json({ error: "cvId requis" }, { status: 400 });
+    const RequestSchema = z.object({
+      cvId: z.string().uuid("cvId doit être un UUID valide"),
+      jobDescription: z.string().min(10).max(8000).optional().nullable(),
+    });
+
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+    const { cvId, jobDescription } = parsed.data;
 
     const { data: cv } = await supabase
       .from("cvs")
@@ -99,19 +109,25 @@ export async function POST(req: NextRequest) {
       parsed = cached.response;
     } else {
       try {
-        const { text } = await generateText({
+        const OptimizeSchema = z.object({
+          improvedSummary: z.string().max(3000),
+          improvedBullets: z.array(z.object({
+            original: z.string().max(500),
+            improved: z.string().max(800),
+          })).max(15),
+          keywordsAdded: z.array(z.string().max(100)).max(30),
+          generalAdvice: z.string().max(3000),
+        });
+
+        const { object } = await generateObject({
           model: mistralModel,
+          schema: OptimizeSchema,
           temperature: 0.2,
           system: "Expert CV. Réponds UNIQUEMENT en JSON valide.",
           prompt: `Analyse et optimise ce CV pour cette offre.\n\nCV:\n${cvTextForAI}\n\nOffre:\n${safeJobDesc}\n\nRetourne ce format JSON :\n{ "improvedSummary": "string", "improvedBullets": [{ "original": "string", "improved": "string" }], "keywordsAdded": ["string"], "generalAdvice": "string" }`,
         });
 
-        parsed = JSON.parse(
-          text
-            .trim()
-            .replace(/^```json/, "")
-            .replace(/```$/, ""),
-        );
+        parsed = object;
         await supabaseAdmin
           .from("ai_cache")
           .insert({

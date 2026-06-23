@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/service";
 import { logger } from "@/lib/logger";
 
 const CLEANUP_THRESHOLD_MINUTES = 10;
@@ -23,10 +23,7 @@ export async function GET(request: Request) {
   log.info("cleanup_started");
 
   try {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+    const supabase = createAdminClient();
 
     // 2. Récupérer les transactions expirées
     const { data: expiredTxs, error: fetchError } = await supabase

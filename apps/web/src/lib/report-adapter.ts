@@ -1,4 +1,4 @@
-/**
+﻿/**
  * report-adapter.ts
  * Couche de transformation entre la réponse API brute (snake_case Prisma)
  * et le ViewModel consommé par les composants React du rapport.

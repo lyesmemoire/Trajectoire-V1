@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ExportButton } from "@/components/cv/ExportButton";
+import { UpgradeGate } from "@/components/billing/UpgradeGate";
 import { CVEditor } from "./CVEditor";
 import type { CVData } from "@/lib/pdf/types";
 
@@ -131,28 +132,45 @@ export function CVAnalyzer({ userId }: { userId: string }) {
 
             {activeView === "improvements" ? (
               <div className="space-y-4">
-                {result.improvements.map((imp, i) => (
-                  <div
-                    key={i}
-                    className={`p-6 rounded-[2rem] border flex gap-4 ${imp.type === "strength" ? "bg-emerald-50 border-emerald-100" : "bg-blue-50 border-blue-100"}`}
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                      {imp.type === "strength" ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                      ) : (
-                        <Sparkles className="w-5 h-5 text-blue-500" />
-                      )}
+                {result.improvements.map((imp, i) => {
+                  const content = (
+                    <div
+                      className={`p-6 rounded-[2rem] border flex gap-4 ${imp.type === "strength" ? "bg-emerald-50 border-emerald-100" : "bg-blue-50 border-blue-100"}`}
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                        {imp.type === "strength" ? (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                        ) : (
+                          <Sparkles className="w-5 h-5 text-blue-500" />
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-black uppercase text-slate-400">
+                          {imp.section}
+                        </span>
+                        <p className="text-slate-900 font-bold mt-1">
+                          {imp.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[10px] font-black uppercase text-slate-400">
-                        {imp.section}
-                      </span>
-                      <p className="text-slate-900 font-bold mt-1">
-                        {imp.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+
+                  if (imp.type === "locked") {
+                    return (
+                      <UpgradeGate 
+                        key={i}
+                        isAllowed={false} 
+                        mode="blur"
+                        customTitle="Conseil Premium verrouillé"
+                        customMessage="Tu es à 15 minutes d'un entretien parfait. Ne laisse pas une réponse hésitante gâcher des mois de recherche."
+                      >
+                        {content}
+                      </UpgradeGate>
+                    );
+                  }
+
+                  return <div key={i}>{content}</div>;
+                })}
               </div>
             ) : (
               <CVEditor

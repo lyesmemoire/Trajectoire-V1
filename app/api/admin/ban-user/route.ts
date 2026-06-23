@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/service";
 import { getStrictUser } from "@/lib/auth/session-logic";
 import { z } from "zod";
 
@@ -22,10 +22,7 @@ export async function POST(req: NextRequest) {
   }
   const { user_id } = bodyResult.data;
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  );
+  const supabase = createAdminClient();
 
   const { error } = await supabase
     .from("profiles")

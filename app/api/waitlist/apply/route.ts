@@ -1,14 +1,25 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { email, pressureType, weakness, intentReason, isWillingToRetry } =
-      body;
+    const RequestSchema = z.object({
+      email:            z.string().email("Email invalide"),
+      pressureType:     z.string().max(200).optional(),
+      weakness:         z.string().max(500).optional(),
+      intentReason:     z.string().max(500).optional(),
+      isWillingToRetry: z.boolean().optional(),
+    });
 
-    if (!email)
-      return NextResponse.json({ error: "Email requis" }, { status: 400 });
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+    const { email, pressureType, weakness, intentReason, isWillingToRetry } = parsed.data;
 
     const entry = await prisma.waitlistEntry.upsert({
       where: { email },

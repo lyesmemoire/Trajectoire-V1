@@ -1,4 +1,4 @@
-export default function RiskSection({ gaps }: { gaps: string[] }) {
+﻿export default function RiskSection({ gaps }: { gaps: string[] }) {
   if (!gaps || gaps.length === 0) return null;
 
   return (

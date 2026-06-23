@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
@@ -9,17 +10,18 @@ export async function POST(req: NextRequest) {
   try {
     const user = await requireAuth();
 
-    const body = await req.json();
-    const parsed = ParsedCVSchema.safeParse(body.cv);
+    const RequestSchema = z.object({
+      cv: ParsedCVSchema,
+    });
 
+    const parsed = RequestSchema.safeParse(await req.json());
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Invalid CV data", details: parsed.error },
-        { status: 400 },
+        { error: "Données CV invalides.", details: parsed.error.flatten() },
+        { status: 400 }
       );
     }
-
-    const cv: ParsedCV = parsed.data;
+    const { cv } = parsed.data;
 
     // Build the DOCX document (ATS-friendly, simple, clean)
     const doc = new Document({

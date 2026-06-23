@@ -1,4 +1,4 @@
-export default function UnifiedHeader({
+﻿export default function UnifiedHeader({
   targetRole,
   date,
   candidateName, // added as optional if not provided

@@ -1,13 +1,22 @@
+import { z } from "zod";
 import { NextResponse } from "next/server";
 import { getOpenAIClient } from "@/lib/openai";
 
 export async function POST(req: Request) {
   try {
-    const { transcript, context } = await req.json();
+    const RequestSchema = z.object({
+      transcript: z.string().min(1).max(10000),
+      context:    z.string().max(200).optional(),
+    });
 
-    if (!transcript) {
-      return NextResponse.json({ error: "Transcript is required" }, { status: 400 });
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Paramètres invalides.", details: parsed.error.flatten() },
+        { status: 400 }
+      );
     }
+    const { transcript, context } = parsed.data;
 
     const openai = getOpenAIClient();
 

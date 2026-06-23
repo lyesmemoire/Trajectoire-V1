@@ -1,0 +1,96 @@
+---
+description: Règles absolues — Zod, scoring, sécurité
+alwaysApply: true
+---
+# Règles Absolues — Non Négociables
+
+## 1. Zod sur chaque entrée API
+```typescript
+// ✅ CORRECT
+const RequestSchema = z.object({ sessionId: z.string().uuid() });
+const parsed = RequestSchema.safeParse(await req.json());
+if (!parsed.success) {
+  return NextResponse.json({ error: "Paramètres invalides." }, { status: 400 });
+}
+// ❌ INTERDIT
+const { sessionId } = await req.json();
+```
+
+## 2. Zod sur chaque sortie LLM — generateObject uniquement
+```typescript
+// ✅ CORRECT — generateObject + schema Zod
+const { object } = await generateObject({
+  model: mistralModel,
+  schema: ResponseScoreSchema,   // Zod schema passé directement
+  temperature: 0.1,
+  prompt: userPrompt,
+});
+// ❌ INTERDIT — JSON.parse nu
+const raw = await openai.chat.completions.create({...});
+const data = JSON.parse(raw.choices[0].message.content); // JAMAIS
+```
+
+**Routes legacy à migrer (par ordre de priorité) :**
+- `app/api/interview/premium/report/route.ts`
+- `app/api/interview/premium/continue/route.ts`
+- `app/api/ats/route.ts`
+
+## 3. Zéro `any` — Zéro `as unknown as X`
+```typescript
+// ❌ INTERDIT
+const data = response as any;
+const model = client as unknown as LanguageModel;
+// ✅ CORRECT — typer explicitement ou créer un type guard
+function isLanguageModel(x: unknown): x is LanguageModel {
+  return typeof x === "object" && x !== null && "generate" in x;
+}
+```
+
+Exception documentée : Prisma singleton (`globalThis`) — commentaire obligatoire.
+
+## 4. Architecture de Scoring — LLM extrait, TypeScript calcule
+```typescript
+// ✅ CORRECT
+// Étape 1 : LLM extrait des signaux bruts (Zod validé)
+const { object: signals } = await generateObject({
+  schema: z.object({
+    coherence_signals: z.array(z.string()),
+    depth_signals: z.array(z.string()),
+    factual_alerts: z.array(FactualAlertSchema),
+  }),
+  ...
+});
+// Étape 2 : TypeScript calcule le score — référence AnalyticsEngine
+const score = AnalyticsEngine.computeScoreWithModel(signals, weights);
+// ❌ INTERDIT — LLM qui retourne directement un score numérique
+const { object } = await generateObject({
+  schema: z.object({ overall_score: z.number() }), // Non
+  ...
+});
+```
+
+**Référence canonique :** `packages/arena-engine/lib/analytics/interview.engine.ts`
+
+## 5. RLS — Service Role réservé aux jobs de confiance
+```typescript
+// ✅ Webhooks Stripe, cron jobs, admin routes
+const adminClient = createAdminClient(); // service role key
+// ❌ Routes user-facing — RLS contourné silencieusement
+const supabase = createClient(serviceRoleKey); // JAMAIS dans /app/api/
+```
+
+## 6. Gestion d'erreur explicite
+Chaque composant async expose exactement 3 états :
+- `loading` → skeleton ou spinner
+- `success` → données affichées
+- `error` → message actionnable + bouton retry
+
+```typescript
+// ❌ État implicite interdit
+if (!data) return null;
+// ✅ État explicite obligatoire
+if (isLoading) return <Skeleton />;
+if (error) return <ErrorState message={error} onRetry={refetch} />;
+if (!data) return <EmptyState />;
+return <DataView data={data} />;
+```

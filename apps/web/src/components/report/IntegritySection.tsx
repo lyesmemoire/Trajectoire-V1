@@ -1,4 +1,4 @@
-export default function IntegritySection({
+﻿export default function IntegritySection({
   consistencyGap,
 }: {
   consistencyGap: number;

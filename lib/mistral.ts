@@ -2,7 +2,7 @@ import { createMistral } from "@ai-sdk/mistral";
 import type { LanguageModel } from "ai";
 
 const mistral = createMistral({
-  apiKey: process.env.MISTRAL_API_KEY || "",
+  apiKey: envServer.MISTRAL_API_KEY || "",
 });
 
 /**

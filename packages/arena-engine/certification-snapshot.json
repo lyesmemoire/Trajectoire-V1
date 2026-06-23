@@ -1,0 +1,50 @@
+{
+  "runId": "d0ead29c-fd8b-49d3-8547-ecf55e6453ee",
+  "timestamp": 1780324588300,
+  "modes": {
+    "normal": {
+      "mode": "normal",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    },
+    "guard": {
+      "mode": "guard",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    },
+    "replay": {
+      "mode": "replay",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    },
+    "stress": {
+      "mode": "stress",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    },
+    "circuit": {
+      "mode": "circuit",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    },
+    "pressure": {
+      "mode": "pressure",
+      "events": 0,
+      "durationMs": 0,
+      "exitCode": "ENOENT"
+    }
+  },
+  "metrics": {
+    "rawPrometheus": "",
+    "parsed": {}
+  },
+  "memory": {
+    "leakSeries": [],
+    "maxGrowthPct": 0
+  }
+}
