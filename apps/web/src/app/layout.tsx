@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { defaultMetadata } from "@/lib/seo";
 import { generateAllSchemas } from "@/lib/schema";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
 
 export const metadata: Metadata = defaultMetadata;
@@ -38,7 +39,9 @@ export default function RootLayout({
         >
           Aller au contenu principal
         </a>
-        <main id="main-content">{children}</main>
+        <PostHogProvider>
+          <main id="main-content">{children}</main>
+        </PostHogProvider>
         {schemas.map((schema, index) => (
           <script
             key={index}

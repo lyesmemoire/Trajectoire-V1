@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -10,6 +10,8 @@ import { useAuth }     from "@/hooks/useAuth";
 import { useUser }     from "@/hooks/useUser";
 import { useSupabase } from "@/hooks/useSupabase";
 import type { ObjectiveType } from "@/types/database";
+import { trackEvent } from "@/lib/analytics/trackEvent";
+import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
 /* ─────────────────────────────────────────────────────────
    Types
@@ -996,6 +998,10 @@ export default function ProfilePage() {
   const { toasts, push }          = useToast();
   const { profile, loading }      = useProfile();
   const { signOut }               = useAuth();
+
+  useEffect(() => {
+    trackEvent(ANALYTICS_EVENTS.PROFILE_VIEWED);
+  }, []);
 
   const initials = profile
     ? `${profile.first_name?.[0] ?? ""}${profile.last_name?.[0] ?? ""}`.toUpperCase()

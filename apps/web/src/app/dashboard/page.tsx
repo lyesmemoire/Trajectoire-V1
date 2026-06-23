@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -21,6 +21,8 @@ import { useDashboard } from "@/hooks/useDashboard";
 import { useProfile }   from "@/hooks/useProfile";
 import { useAuth }      from "@/hooks/useAuth";
 import type { NotifType } from "@/types/database";
+import { trackEvent } from "@/lib/analytics/trackEvent";
+import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
 /* ─────────────────────────────────────────────────────────
    Shared
@@ -714,6 +716,10 @@ export default function DashboardPage() {
   const { notifications, readNotif } = useDashboard();
   const { profile } = useProfile();
   const { signOut } = useAuth();
+
+  useEffect(() => {
+    trackEvent(ANALYTICS_EVENTS.DASHBOARD_VIEWED);
+  }, []);
 
   const unread = notifications.filter((n) => !n.read).length;
 

@@ -1,12 +1,14 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/motion";
 import { SITE_NAME } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import type { ObjectiveType, PlanType } from "@/types/database";
+import { trackEvent } from "@/lib/analytics/trackEvent";
+import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
 /* ── Types ── */
 type Step = 1 | 2 | 3;
@@ -559,12 +561,22 @@ export default function RegisterPage() {
     acceptTerms: false,
   });
 
+  useEffect(() => {
+    trackEvent(ANALYTICS_EVENTS.REGISTER_STARTED);
+  }, []);
+
   const update = (key: keyof FormData, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
+  const handleNextStep = (nextStep: Step) => {
+    trackEvent(ANALYTICS_EVENTS.REGISTER_STEP_COMPLETED, { step });
+    setStep(nextStep);
+  };
+
   const handleSubmit = async () => {
     if (!form.objective) return;
+    trackEvent(ANALYTICS_EVENTS.REGISTER_COMPLETED, { plan: form.plan, objective: form.objective });
     await signUp({
       email:     form.email,
       password:  form.password,
@@ -639,7 +651,7 @@ export default function RegisterPage() {
                   key="s1"
                   data={form}
                   onChange={update}
-                  onNext={() => setStep(2)}
+                  onNext={() => handleNextStep(2)}
                 />
               )}
               {step === 2 && (
@@ -647,7 +659,7 @@ export default function RegisterPage() {
                   key="s2"
                   data={form}
                   onChange={update}
-                  onNext={() => setStep(3)}
+                  onNext={() => handleNextStep(3)}
                   onBack={() => setStep(1)}
                 />
               )}

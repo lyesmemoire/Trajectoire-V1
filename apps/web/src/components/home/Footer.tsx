@@ -2,14 +2,11 @@
 
 import Link from "next/link";
 import { Linkedin, Twitter, Mail } from "lucide-react";
-import posthog from "posthog-js";
 import { Container } from "@/components/ui";
+import { trackEvent } from "@/lib/analytics/trackEvent";
+import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
-// ── Constantes ────────────────────────────────────────────────────
-const ANALYTICS_EVENTS = {
-  FOOTER_CTA_CLICKED: "footer_cta_clicked",
-  SOCIAL_CLICKED: "social_clicked",
-} as const;
+
 
 const FOOTER_LINKS = {
   Produit: [
@@ -93,7 +90,7 @@ export default function Footer() {
                   target={external ? "_blank" : undefined}
                   rel={external ? "noopener noreferrer" : undefined}
                   onClick={() => {
-                    posthog.capture(ANALYTICS_EVENTS.SOCIAL_CLICKED, {
+                    trackEvent(ANALYTICS_EVENTS.SOCIAL_CLICKED, {
                       platform: label,
                     });
                   }}
@@ -122,7 +119,7 @@ export default function Footer() {
                         href={link.href}
                         className="text-body-sm text-white/60 hover:text-white transition-colors duration-200"
                         onClick={() => {
-                          posthog.capture(ANALYTICS_EVENTS.FOOTER_CTA_CLICKED, {
+                          trackEvent(ANALYTICS_EVENTS.FOOTER_CTA_CLICKED, {
                             label: link.label,
                             category,
                           });

@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Minus, Mail } from "lucide-react";
-import posthog from "posthog-js";
 import { Container, SectionHeader, Card, LinkButton, Badge } from "@/components/ui";
+import { Plus, Minus, Mail } from "lucide-react";
+import { trackEvent } from "@/lib/analytics/trackEvent";
+import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
-// ── Constantes d'analytics ────────────────────────────────────────
-// Centralise les events PostHog pour : (1) éviter les fautes de frappe,
-// (2) faciliter la recherche/remplacement, (3) permettre un typage strict.
-const ANALYTICS_EVENTS = {
-  FAQ_OPENED: "faq_opened",
-} as const;
+
 
 const FAQ_ITEMS = [
   {
@@ -107,7 +103,7 @@ export default function FAQ() {
                     const willOpen = !isOpen;
                     setOpenIndex(willOpen ? i : null);
                     if (willOpen) {
-                      posthog.capture(ANALYTICS_EVENTS.FAQ_OPENED, {
+                      trackEvent(ANALYTICS_EVENTS.FAQ_OPENED, {
                         question: item.question,
                         category: item.category,
                       });

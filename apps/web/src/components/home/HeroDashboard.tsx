@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -214,9 +214,8 @@ function SparkLine() {
 export default function HeroDashboard() {
   return (
     <div
-      className="relative bg-white rounded-2xl p-6 shadow-hero border"
+      className="relative bg-white rounded-2xl p-6 shadow-hero border border-border"
       style={{
-        borderColor: "rgba(229,221,210,0.4)",
         transform: "perspective(1000px) rotateY(-2deg) rotateX(1deg)",
         transition: "transform 0.4s ease",
       }}
@@ -242,11 +241,7 @@ export default function HeroDashboard() {
           </p>
         </div>
         <motion.div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-          style={{
-            backgroundColor: "rgba(26,127,75,0.1)",
-            color: "var(--success)",
-          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-success/10 text-success"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.8, duration: 0.4 }}
@@ -285,7 +280,7 @@ export default function HeroDashboard() {
       </div>
 
       {/* Stress bars */}
-      <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: "rgba(248,245,240,0.8)" }}>
+      <div className="mb-6 p-4 rounded-xl bg-surface-muted/80">
         <p className="text-xs font-semibold mb-3 uppercase tracking-wide" style={{ color: "var(--muted)" }}>
           Gestion de la pression
         </p>
@@ -297,7 +292,7 @@ export default function HeroDashboard() {
       </div>
 
       {/* Sparkline */}
-      <div className="p-4 rounded-xl" style={{ backgroundColor: "rgba(248,245,240,0.8)" }}>
+      <div className="p-4 rounded-xl bg-surface-muted/80">
         <div className="flex items-center justify-between mb-2">
           <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: "var(--muted)" }}>
             Progression (8 semaines)

@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Play } from "lucide-react";
 
 export type VisualType =
   | "radar"
@@ -226,9 +227,7 @@ function PlayMini() {
         style={{ backgroundColor: "var(--primary)" }}
         aria-hidden="true"
       >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M4 2.5L11 7L4 11.5V2.5Z" fill="white" />
-        </svg>
+        <Play size={14} fill="currentColor" />
       </div>
       <div>
         <p className="text-xs font-semibold" style={{ color: "var(--text)" }}>
