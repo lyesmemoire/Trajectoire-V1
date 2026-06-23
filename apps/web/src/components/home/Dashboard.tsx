@@ -1,284 +1,306 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
-  RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer,
+  RadarChart, PolarGrid, PolarAngleAxis, Radar,
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
   BarChart, Bar,
 } from "recharts";
-import { staggerContainer, fadeInUp, scaleIn, VIEWPORT_CONFIG } from "@/lib/motion";
 import { RADAR_DATA, PROGRESSION_DATA, STRESS_DATA } from "@/lib/constants";
+import { Container, SectionHeader, Card, ChartContainer, Badge } from "@/components/ui";
+
+// Recharts tooltip styles — déplacé vers un objet sérialisable compatible SSR
+// (les variables CSS restent résolues côté client, pas d'hydratation mismatch)
+const tooltipStyle = {
+  backgroundColor: "var(--color-surface-elevated)",
+  border: "1px solid var(--color-border-subtle)",
+  borderRadius: "12px",
+  fontSize: "12px",
+  boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+  color: "var(--color-ink)",
+};
 
 const TABS = [
   { id: "overview",        label: "Vue d'ensemble",  locked: false },
-  { id: "skills",          label: "Compétences",      locked: true  },
-  { id: "progression",     label: "Progression",      locked: true  },
-  { id: "recommendations", label: "Recommandations",  locked: true  },
+  { id: "skills",          label: "Compétences",     locked: true  },
+  { id: "progression",     label: "Progression",     locked: true  },
+  { id: "recommendations", label: "Recommandations", locked: true  },
+];
+
+// 3 points colorés de la barre de titre — palette neutralisée (design system)
+const TRAFFIC_DOTS = [
+  { bg: "bg-[var(--color-danger)]",    label: "Fermer" },
+  { bg: "bg-[var(--color-warning)]",   label: "Réduire" },
+  { bg: "bg-[var(--color-success)]",   label: "Agrandir" },
 ];
 
 function ScoreCard({
-  label, value, unit, color, detail,
+  label, value, unit, detail, isAccent = false,
 }: {
-  label: string; value: number; unit: string; color: string; detail: string;
+  label: string; value: number; unit: string; detail: string; isAccent?: boolean;
 }) {
   return (
-    <motion.div
-      variants={scaleIn}
-      className="p-5 rounded-xl border"
-      style={{ borderColor: "var(--border)", backgroundColor: "rgba(248,245,240,0.5)" }}
-      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-    >
-      <p className="text-xs font-medium uppercase tracking-wide mb-2" style={{ color: "var(--muted)" }}>
+    <Card variant="default" padding="md" hover>
+      <p className="text-xs font-semibold uppercase tracking-wide mb-2 text-ink-muted">
         {label}
       </p>
-      <div className="flex items-end gap-1">
-        <span className="text-3xl font-bold" style={{ color }}>{value}</span>
-        <span className="text-sm mb-1" style={{ color: "var(--muted)" }}>{unit}</span>
+      <div className="flex items-end gap-1 mb-1">
+        <span
+          className={`text-3xl font-bold tracking-tight ${
+            isAccent ? "text-brand-accent" : "text-brand-primary"
+          }`}
+        >
+          {value}
+        </span>
+        <span className="text-sm text-ink-muted mb-1">{unit}</span>
       </div>
-      <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>{detail}</p>
-    </motion.div>
+      <p className="text-xs text-ink-subtle">{detail}</p>
+    </Card>
   );
 }
 
-const tooltipStyle = {
-  backgroundColor: "white",
-  border: "1px solid var(--border)",
-  borderRadius: "8px",
-  fontSize: "12px",
-};
-
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <section
-      className="section-padding"
-      aria-labelledby="dashboard-heading"
-      style={{ backgroundColor: "var(--text)" }}
-    >
-      <div className="section-container">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT_CONFIG}
-        >
-          {/* Header */}
-          <motion.div variants={fadeInUp} className="text-center mb-12">
-            <span
-              className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium tracking-widest uppercase mb-4"
-              style={{
-                backgroundColor: "rgba(26,60,52,0.2)",
-                color: "var(--primary-light)",
-                border: "1px solid rgba(26,60,52,0.3)",
-              }}
-            >
-              Tableau de bord
-            </span>
-            <h2
-              id="dashboard-heading"
-              className="heading-2 text-balance"
-              style={{ color: "white" }}
-            >
-              Votre tableau de bord personnel.{" "}
-              <span style={{ color: "var(--accent)" }}>
-                Tout ce que vous devez savoir, en un regard.
-              </span>
-            </h2>
-            <p className="mt-4 text-lg max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Chaque dimension de votre profil, analysée et présentée avec clarté.
-            </p>
-          </motion.div>
+    <section className="py-24 lg:py-32 bg-surface-muted">
+      <Container>
+        <SectionHeader
+          badge="Tableau de bord"
+          badgeVariant="primary"
+          title={<>Votre profil. <span className="text-brand-accent">Objectivé.</span></>}
+          description="Chaque dimension de votre comportement analysée et présentée avec clarté."
+          className="mb-16"
+        />
 
-          {/* Chrome window */}
-          <motion.div
-            variants={scaleIn}
-            className="bg-white rounded-2xl overflow-hidden"
-            style={{
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 0 80px rgba(26,60,52,0.18)",
-            }}
-          >
+        <div className="max-w-5xl mx-auto">
+          <Card variant="default" padding="none" className="overflow-hidden shadow-elevated">
             {/* Title bar */}
-            <div
-              className="flex items-center justify-between px-6 py-4 border-b"
-              style={{ borderColor: "var(--border)" }}
-            >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-surface-muted/30">
               <div className="flex items-center gap-3">
                 <div className="flex gap-1.5" aria-hidden="true">
-                  {["#FF5F56", "#FFBD2E", "#27C93F"].map((c) => (
-                    <div key={c} className="w-3 h-3 rounded-full" style={{ backgroundColor: c }} />
+                  {TRAFFIC_DOTS.map((dot) => (
+                    <div key={dot.label} className={`w-3 h-3 rounded-full ${dot.bg}`} />
                   ))}
                 </div>
-                <span className="text-sm font-medium" style={{ color: "var(--muted)" }}>
+                <span className="text-sm font-medium text-ink-muted hidden sm:block">
                   trajectoire.app/dashboard
                 </span>
               </div>
-              <div
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-                style={{ backgroundColor: "rgba(26,127,75,0.12)", color: "var(--success)" }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" aria-hidden="true" />
-                Analyse complète
-              </div>
+              <Badge variant="success">Analyse complétée</Badge>
             </div>
 
             {/* Tabs */}
             <div
-              className="flex gap-1 px-6 py-3 border-b overflow-x-auto"
-              style={{ borderColor: "var(--border)" }}
+              className="flex gap-2 px-6 py-3 border-b border-border overflow-x-auto hide-scrollbar bg-surface-muted/10"
               role="tablist"
               aria-label="Sections du tableau de bord"
             >
-              {TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  role="tab"
-                  aria-selected={activeTab === tab.id}
-                  aria-controls={`panel-${tab.id}`}
-                  id={`tab-${tab.id}`}
-                  onClick={() => { if (!tab.locked) setActiveTab(tab.id); }}
-                  disabled={tab.locked}
-                  title={tab.locked ? "Disponible après inscription" : undefined}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap"
-                  style={{
-                    backgroundColor: activeTab === tab.id ? "var(--primary)" : "transparent",
-                    color: activeTab === tab.id
-                      ? "white"
-                      : tab.locked ? "rgba(98,98,98,0.35)" : "var(--muted)",
-                    cursor: tab.locked ? "not-allowed" : "pointer",
-                  }}
-                >
-                  {tab.label}
-                  {tab.locked && (
-                    <span className="ml-1.5 text-xs" aria-label="Disponible après inscription">
-                      🔒
-                    </span>
-                  )}
-                </button>
-              ))}
+              {TABS.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-disabled={tab.locked}
+                    onClick={() => { if (!tab.locked) setActiveTab(tab.id); }}
+                    disabled={tab.locked}
+                    className={[
+                      "px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200",
+                      "whitespace-nowrap flex items-center gap-1.5",
+                      isActive
+                        ? "bg-brand-primary text-[var(--color-on-brand)] shadow-soft"
+                        : tab.locked
+                        ? "text-ink-subtle opacity-60 cursor-not-allowed"
+                        : "text-ink-muted hover:text-ink hover:bg-border-subtle",
+                    ].join(" ")}
+                  >
+                    {tab.label}
+                    {tab.locked && (
+                      <span aria-label="Verrouillé" className="text-xs">🔒</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Panel */}
-            <div
-              id="panel-overview"
-              role="tabpanel"
-              aria-labelledby="tab-overview"
-              className="p-6 lg:p-8"
-            >
+            {/* Panel Content */}
+            <div className="p-6 lg:p-8 bg-white">
               {/* Score cards */}
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={VIEWPORT_CONFIG}
-                className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
-              >
-                <ScoreCard label="Confiance"   value={78} unit="/100" color="var(--primary)" detail="↑ +12 pts ce mois" />
-                <ScoreCard label="Stress"      value={32} unit="%"    color="var(--accent)"  detail="↓ Niveau maîtrisé" />
-                <ScoreCard label="Préparation" value={85} unit="/100" color="var(--success)" detail="↑ Excellent niveau" />
-                <ScoreCard label="Décision"    value={91} unit="/100" color="var(--warning)" detail="★ Point fort majeur" />
-              </motion.div>
-
-              {/* Radar + Area */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <motion.div variants={fadeInUp} className="p-5 rounded-xl border" style={{ borderColor: "var(--border)" }}>
-                  <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>
-                    Analyse comportementale — 8 dimensions
-                  </h3>
-                  <div style={{ height: 240 }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart data={RADAR_DATA}>
-                        <PolarGrid stroke="var(--border)" />
-                        <PolarAngleAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--muted)" }} />
-                        <Radar
-                          name="Profil" dataKey="value"
-                          stroke="var(--primary)" fill="var(--primary)"
-                          fillOpacity={0.15} strokeWidth={2}
-                        />
-                      </RadarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </motion.div>
-
-                <motion.div variants={fadeInUp} className="p-5 rounded-xl border" style={{ borderColor: "var(--border)" }}>
-                  <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>
-                    Progression sur 8 semaines
-                  </h3>
-                  <div style={{ height: 240 }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={PROGRESSION_DATA}>
-                        <defs>
-                          <linearGradient id="gConf" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%"  stopColor="var(--primary)" stopOpacity={0.2} />
-                            <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
-                          </linearGradient>
-                          <linearGradient id="gPrep" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%"  stopColor="var(--success)" stopOpacity={0.2} />
-                            <stop offset="95%" stopColor="var(--success)" stopOpacity={0} />
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(229,221,210,0.5)" />
-                        <XAxis dataKey="week" tick={{ fontSize: 11, fill: "var(--muted)" }} />
-                        <YAxis domain={[40, 100]} tick={{ fontSize: 11, fill: "var(--muted)" }} />
-                        <Tooltip contentStyle={tooltipStyle} />
-                        <Area type="monotone" dataKey="confidence"   name="Confiance"   stroke="var(--primary)" strokeWidth={2} fill="url(#gConf)" />
-                        <Area type="monotone" dataKey="preparedness" name="Préparation" stroke="var(--success)" strokeWidth={2} fill="url(#gPrep)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
-                </motion.div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <ScoreCard label="Confiance"   value={78} unit="/100" detail="↑ +12 pts ce mois" />
+                <ScoreCard label="Stress"      value={32} unit="%"    detail="↓ Niveau maîtrisé" isAccent />
+                <ScoreCard label="Préparation" value={85} unit="/100" detail="↑ Excellent niveau" />
+                <ScoreCard label="Décision"    value={91} unit="/100" detail="★ Point fort majeur" />
               </div>
 
-              {/* Bar */}
-              <motion.div variants={fadeInUp} className="p-5 rounded-xl border" style={{ borderColor: "var(--border)" }}>
-                <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>
-                  Gestion de la pression par contexte
-                </h3>
-                <div style={{ height: 180 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={STRESS_DATA} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(229,221,210,0.5)" />
-                      <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11, fill: "var(--muted)" }} />
-                      <YAxis type="category" dataKey="category" tick={{ fontSize: 11, fill: "var(--muted)" }} width={128} />
-                      <Tooltip contentStyle={tooltipStyle} />
-                      <Bar dataKey="value" name="Score" fill="var(--primary)" radius={[0, 4, 4, 0]} fillOpacity={0.85} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+              {/* Charts Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 
-          {/* Sub-CTA */}
-          <motion.div variants={fadeInUp} className="text-center mt-8">
-            <a
-              href="/register"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all duration-200"
-              style={{ backgroundColor: "white", color: "var(--primary)" }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.boxShadow = "0 8px 32px rgba(255,255,255,0.18)";
-                el.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.boxShadow = "none";
-                el.style.transform = "translateY(0)";
-              }}
-            >
-              Obtenir mon tableau de bord
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-            <p className="text-sm mt-3" style={{ color: "rgba(255,255,255,0.35)" }}>
-              Gratuit · Sans engagement · Résultats immédiats
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
+                {/* Radar Chart */}
+                <Card variant="default" padding="md" className="border-border">
+                  <h3 className="text-sm font-bold text-ink mb-6">Analyse comportementale</h3>
+                  {mounted ? (
+                    <ChartContainer height={280}>
+                      <RadarChart
+                        data={RADAR_DATA}
+                        role="img"
+                        aria-label="Diagramme radar montrant le profil comportemental sur 5 dimensions"
+                      >
+                        <title>Analyse comportementale</title>
+                        <PolarGrid stroke="var(--color-border)" />
+                        <PolarAngleAxis
+                          dataKey="subject"
+                          tick={{ fontSize: 11, fill: "var(--color-ink-muted)" }}
+                        />
+                        <Radar
+                          name="Profil"
+                          dataKey="value"
+                          stroke="var(--color-brand-primary)"
+                          fill="var(--color-brand-primary)"
+                          fillOpacity={0.15}
+                          strokeWidth={2}
+                        />
+                      </RadarChart>
+                    </ChartContainer>
+                  ) : (
+                    /* Skeleton à hauteur fixe pour éviter le warning Recharts au mount */
+                    <div
+                      className="w-full rounded-lg bg-surface-muted/40 animate-pulse"
+                      style={{ height: 280, minHeight: 280 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </Card>
+
+                {/* Area Chart */}
+                <Card variant="default" padding="md" className="border-border">
+                  <h3 className="text-sm font-bold text-ink mb-6">Progression</h3>
+                  {mounted ? (
+                    <ChartContainer height={280}>
+                      <AreaChart
+                        data={PROGRESSION_DATA}
+                        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                        role="img"
+                        aria-label="Courbe de progression de la confiance et de la préparation sur plusieurs semaines"
+                      >
+                        <title>Progression</title>
+                        <defs>
+                          <linearGradient id="gConf" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor="var(--color-brand-primary)" stopOpacity={0.2} />
+                            <stop offset="95%" stopColor="var(--color-brand-primary)" stopOpacity={0} />
+                          </linearGradient>
+                          <linearGradient id="gPrep" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor="var(--color-success)" stopOpacity={0.2} />
+                            <stop offset="95%" stopColor="var(--color-success)" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" />
+                        <XAxis
+                          dataKey="week"
+                          tick={{ fontSize: 11, fill: "var(--color-ink-muted)" }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis
+                          domain={[40, 100]}
+                          tick={{ fontSize: 11, fill: "var(--color-ink-muted)" }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <Tooltip
+                          contentStyle={tooltipStyle}
+                          cursor={{ stroke: "var(--color-border)", strokeWidth: 1 }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="confidence"
+                          name="Confiance"
+                          stroke="var(--color-brand-primary)"
+                          strokeWidth={2}
+                          fill="url(#gConf)"
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="preparedness"
+                          name="Préparation"
+                          stroke="var(--color-success)"
+                          strokeWidth={2}
+                          fill="url(#gPrep)"
+                        />
+                      </AreaChart>
+                    </ChartContainer>
+                  ) : (
+                    <div
+                      className="w-full rounded-lg bg-surface-muted/40 animate-pulse"
+                      style={{ height: 280, minHeight: 280 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </Card>
+
+              </div>
+
+              {/* Bar Chart */}
+              <Card variant="default" padding="md" className="border-border">
+                <h3 className="text-sm font-bold text-ink mb-6">Gestion de la pression par contexte</h3>
+                {mounted ? (
+                  <ChartContainer height={200}>
+                    <BarChart
+                      data={STRESS_DATA}
+                      layout="vertical"
+                      margin={{ top: 0, right: 20, left: 0, bottom: 0 }}
+                      role="img"
+                      aria-label="Diagramme en barres horizontales montrant le score de gestion de la pression par contexte"
+                    >
+                      <title>Gestion de la pression par contexte</title>
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--color-border)" />
+                      <XAxis
+                        type="number"
+                        domain={[0, 100]}
+                        tick={{ fontSize: 11, fill: "var(--color-ink-muted)" }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        type="category"
+                        dataKey="category"
+                        tick={{ fontSize: 11, fill: "var(--color-ink-muted)", fontWeight: 500 }}
+                        width={120}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <Tooltip
+                        contentStyle={tooltipStyle}
+                        cursor={{ fill: "var(--color-surface-muted)", opacity: 0.5 }}
+                      />
+                      <Bar
+                        dataKey="value"
+                        name="Score"
+                        fill="var(--color-brand-primary)"
+                        radius={[0, 4, 4, 0]}
+                        barSize={24}
+                      />
+                    </BarChart>
+                  </ChartContainer>
+                ) : (
+                  <div
+                    className="w-full rounded-lg bg-surface-muted/40 animate-pulse"
+                    style={{ height: 200, minHeight: 200 }}
+                    aria-hidden="true"
+                  />
+                )}
+              </Card>
+            </div>
+          </Card>
+        </div>
+      </Container>
     </section>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Microscope, Crosshair, Drama, ClipboardCheck } from "lucide-react";
+import { useState, useRef, KeyboardEvent } from "react";
+import { Microscope, Crosshair, Drama, ClipboardCheck, Check, ArrowRight } from "lucide-react";
+import { Container, SectionHeader, Card, LinkButton } from "@/components/ui";
 
 const STEPS = [
   {
@@ -60,111 +61,121 @@ const STEPS = [
 
 export default function Method() {
   const [activeStep, setActiveStep] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const step = STEPS[activeStep];
   const Icon = step.icon;
+  const tabPanelId = `method-tabpanel-${activeStep}`;
+
+  // Navigation clavier conforme ARIA (flèches gauche/droite + Home/End)
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number | null = null;
+
+    switch (e.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        e.preventDefault();
+        nextIndex = (index + 1) % STEPS.length;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        e.preventDefault();
+        nextIndex = (index - 1 + STEPS.length) % STEPS.length;
+        break;
+      case "Home":
+        e.preventDefault();
+        nextIndex = 0;
+        break;
+      case "End":
+        e.preventDefault();
+        nextIndex = STEPS.length - 1;
+        break;
+    }
+
+    if (nextIndex !== null) {
+      setActiveStep(nextIndex);
+      tabRefs.current[nextIndex]?.focus();
+    }
+  };
 
   return (
-    <section
-      id="method"
-      className="relative py-24 lg:py-32"
-      style={{ backgroundColor: "#FFFFFF" }}
-    >
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
+    <section id="method" className="py-24 lg:py-32 bg-white">
+      <Container>
+        <SectionHeader
+          badge="La méthode Trajectoire"
+          badgeVariant="neutral"
+          title={
+            <>
+              4 étapes pour transformer{" "}
+              <span className="text-brand-accent italic">l&apos;intuition</span> en{" "}
+              <span className="text-brand-primary">certitude</span>.
+            </>
+          }
+          description="Une méthode séquentielle, validée par la recherche, conçue pour les professionnels qui jouent leur carrière sur des moments précis."
+          className="mb-16 lg:mb-20"
+        />
 
-        {/* Header */}
-        <div className="flex flex-col items-center text-center gap-5 mb-16 lg:mb-20">
-          <span
-            className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase"
-            style={{
-              background: "rgba(26,60,52,0.06)",
-              color: "#1A3C34",
-              border: "1px solid rgba(26,60,52,0.12)",
-            }}
-          >
-            La méthode Trajectoire
-          </span>
-          <h2
-            className="font-bold text-balance max-w-4xl"
-            style={{
-              fontSize: "clamp(32px, 4.5vw, 56px)",
-              lineHeight: "1.05",
-              letterSpacing: "-0.035em",
-              color: "#0A0A0A",
-            }}
-          >
-            4 étapes pour transformer{" "}
-            <span style={{ color: "#E8501A", fontStyle: "italic" }}>
-              l&apos;intuition
-            </span>{" "}
-            en{" "}
-            <span style={{ color: "#1A3C34" }}>certitude</span>.
-          </h2>
-          <p
-            className="max-w-2xl"
-            style={{
-              fontSize: "18px",
-              lineHeight: "1.65",
-              color: "#4A4A4A",
-            }}
-          >
-            Une méthode séquentielle, validée par la recherche, conçue pour
-            les professionnels qui jouent leur carrière sur des moments précis.
-          </p>
-        </div>
-
-        {/* Layout : Steps à gauche, Détail à droite — STRETCH */}
+        {/* Layout : Steps à gauche, Détail à droite */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-          {/* ── Colonne gauche — Liste des étapes ── */}
-          <div className="lg:col-span-5 flex flex-col gap-3">
+          {/* ── Colonne gauche — Tablist ARIA conforme ── */}
+          <div
+            className="lg:col-span-5 flex flex-col gap-3"
+            role="tablist"
+            aria-label="Les 4 étapes de la méthode Trajectoire"
+            aria-orientation="vertical"
+          >
             {STEPS.map((s, i) => {
               const isActive = i === activeStep;
               const StepIcon = s.icon;
+              const tabId = `method-tab-${i}`;
               return (
                 <button
                   key={s.number}
+                  ref={(el) => { tabRefs.current[i] = el; }}
+                  id={tabId}
+                  role="tab"
+                  type="button"
+                  aria-selected={isActive}
+                  aria-controls={tabPanelId}
+                  tabIndex={isActive ? 0 : -1}
                   onClick={() => setActiveStep(i)}
-                  className="text-left p-5 lg:p-6 rounded-2xl transition-all duration-300 flex-1"
-                  style={{
-                    backgroundColor: isActive ? "#1A3C34" : "#F7F8F9",
-                    border: `1px solid ${isActive ? "#1A3C34" : "#E2E8E4"}`,
-                    minHeight: "100px",
-                  }}
+                  onKeyDown={(e) => handleKeyDown(e, i)}
+                  className={[
+                    "text-left p-5 lg:p-6 rounded-2xl transition-all duration-300",
+                    "flex-1 border min-h-[100px] outline-none",
+                    "focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2",
+                    isActive
+                      ? "bg-brand-primary border-brand-primary"
+                      : "bg-surface-muted border-border hover:bg-surface-muted/80",
+                  ].join(" ")}
                 >
                   <div className="flex items-center gap-4 h-full">
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300"
-                      style={{
-                        backgroundColor: isActive
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(26,60,52,0.08)",
-                      }}
+                      className={[
+                        "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+                        "transition-all duration-300",
+                        isActive
+                          ? "bg-white/15 text-[var(--color-on-brand)]"
+                          : "bg-brand-primary/10 text-brand-primary",
+                      ].join(" ")}
                     >
-                      <StepIcon
-                        size={22}
-                        style={{ color: isActive ? "#FFFFFF" : "#1A3C34" }}
-                      />
+                      <StepIcon size={22} />
                     </div>
 
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div
-                        className="font-bold text-xs tracking-widest uppercase mb-1"
-                        style={{
-                          color: isActive
-                            ? "rgba(255,255,255,0.6)"
-                            : "#4A4A4A",
-                        }}
+                        className={[
+                          "font-bold text-xs tracking-widest uppercase mb-1",
+                          isActive ? "text-white/60" : "text-ink-muted",
+                        ].join(" ")}
                       >
                         Étape {s.number}
                       </div>
                       <div
-                        className="font-bold"
-                        style={{
-                          fontSize: "17px",
-                          color: isActive ? "#FFFFFF" : "#0A0A0A",
-                          letterSpacing: "-0.02em",
-                          lineHeight: 1.25,
-                        }}
+                        className={[
+                          "text-body font-bold leading-tight tracking-tight",
+                          isActive ? "text-[var(--color-on-brand)]" : "text-ink",
+                        ].join(" ")}
                       >
                         {s.title}
                       </div>
@@ -175,117 +186,90 @@ export default function Method() {
             })}
           </div>
 
-          {/* ── Colonne droite — Détail de l'étape active ── */}
+          {/* ── Colonne droite — Tabpanel de l'étape active ── */}
           <div className="lg:col-span-7">
-            <div
-              className="rounded-3xl p-8 lg:p-10 transition-all duration-500 h-full flex flex-col"
-              style={{
-                backgroundColor: "#F7F8F9",
-                border: "1px solid #E2E8E4",
-              }}
+            <Card
+              variant="default"
+              padding="xl"
+              className="h-full flex flex-col bg-surface-muted border-border"
             >
-              {/* Header de l'étape */}
-              <div className="flex items-start gap-5 mb-7">
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "#1A3C34" }}
-                >
-                  <Icon size={28} style={{ color: "#FFFFFF" }} />
-                </div>
-                <div>
-                  <div
-                    className="font-bold text-xs tracking-widest uppercase mb-2"
-                    style={{ color: "#E8501A" }}
-                  >
-                    Étape {step.number} sur 04
-                  </div>
-                  <h3
-                    className="font-bold mb-1"
-                    style={{
-                      fontSize: "clamp(22px, 2.4vw, 32px)",
-                      lineHeight: "1.15",
-                      letterSpacing: "-0.025em",
-                      color: "#0A0A0A",
-                    }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p
-                    className="font-medium"
-                    style={{
-                      fontSize: "15px",
-                      color: "#1A3C34",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    {step.subtitle}
-                  </p>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p
-                className="mb-7"
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.65",
-                  color: "#4A4A4A",
-                }}
+              <div
+                id={tabPanelId}
+                role="tabpanel"
+                aria-labelledby={`method-tab-${activeStep}`}
+                tabIndex={0}
+                className="outline-none flex flex-col flex-1"
               >
-                {step.description}
-              </p>
-
-              {/* Livrables */}
-              <div className="mt-auto">
-                <div
-                  className="font-bold text-xs tracking-widest uppercase mb-3"
-                  style={{ color: "#4A4A4A" }}
-                >
-                  Ce que vous obtenez
+                {/* Header de l'étape */}
+                <div className="flex items-start gap-5 mb-7">
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-brand-primary text-[var(--color-on-brand)]">
+                    <Icon size={28} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-bold text-xs tracking-widest uppercase mb-2 text-brand-accent">
+                      Étape {step.number} sur 04
+                    </div>
+                    <h3 className="text-heading-3 text-ink mb-1">
+                      {step.title}
+                    </h3>
+                    <p className="text-body font-medium text-brand-primary italic">
+                      {step.subtitle}
+                    </p>
+                  </div>
                 </div>
-                <ul className="flex flex-col gap-2.5">
-                  {step.deliverables.map((deliverable) => (
-                    <li
-                      key={deliverable}
-                      className="flex items-center gap-3 p-3.5 rounded-xl"
-                      style={{ backgroundColor: "#FFFFFF" }}
-                    >
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: "rgba(26,127,75,0.12)" }}
+
+                {/* Description */}
+                <p className="mb-7 text-body leading-relaxed text-ink-muted">
+                  {step.description}
+                </p>
+
+                {/* Livrables */}
+                <div className="mt-auto">
+                  <div className="font-bold text-xs tracking-widest uppercase mb-3 text-ink-muted">
+                    Ce que vous obtenez
+                  </div>
+                  <ul className="flex flex-col gap-2.5">
+                    {step.deliverables.map((deliverable) => (
+                      <li
+                        key={deliverable}
+                        className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-border/50"
                       >
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                        >
-                          <path
-                            d="M3 7L6 10L11 4"
-                            stroke="#1A7F4B"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                      <span
-                        className="font-medium"
-                        style={{
-                          fontSize: "15px",
-                          color: "#0A0A0A",
-                        }}
-                      >
-                        {deliverable}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                        <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-success/10 text-success">
+                          <Check size={14} strokeWidth={2.5} />
+                        </div>
+                        <span className="text-body-sm font-medium text-ink">
+                          {deliverable}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
+
+              {/* CTA — Pont vers la conversion, n'apparaît qu'à la dernière étape */}
+              {activeStep === STEPS.length - 1 && (
+                <div className="mt-8 pt-6 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <p className="text-body-sm text-ink-muted">
+                    Prêt à transformer votre prochaine étape de carrière&nbsp;?
+                  </p>
+                  <LinkButton
+                    variant="primary"
+                    size="md"
+                    href="#pricing"
+                    className="group"
+                  >
+                    Voir les formules
+                    <ArrowRight
+                      size={16}
+                      className="ml-2 transition-transform group-hover:translate-x-1"
+                    />
+                  </LinkButton>
+                </div>
+              )}
+            </Card>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

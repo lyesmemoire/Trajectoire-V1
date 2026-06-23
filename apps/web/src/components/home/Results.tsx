@@ -1,6 +1,7 @@
 "use client";
 
 import { TrendingUp, Users, Award, Clock } from "lucide-react";
+import { Container, SectionHeader, Card } from "@/components/ui";
 
 const HEADLINE_STATS = [
   {
@@ -58,248 +59,116 @@ const DETAILED_RESULTS = [
 
 export default function Results() {
   return (
-    <section
-      id="results"
-      className="relative py-24 lg:py-32 overflow-hidden"
-      style={{ backgroundColor: "#1A3C34", color: "#FFFFFF" }}
-    >
-      {/* Backgrounds décoratifs */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 80% 20%, rgba(232,80,26,0.12) 0%, transparent 60%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,80,26,0.06) 0%, transparent 60%)",
-        }}
-      />
+    <section id="results" className="py-24 lg:py-32 bg-surface-muted pt-0 lg:pt-0">
+      <Container>
+        <SectionHeader
+          badge="Les résultats parlent"
+          badgeVariant="primary"
+          title={<>Ce que vivent les cadres qui utilisent <span className="text-brand-accent italic">Trajectoire</span>.</>}
+          description="Chiffres mesurés sur les 2 400+ parcours suivis depuis le lancement. Mise à jour mensuelle."
+          className="mb-16"
+        />
 
-      <div className="relative max-w-[1400px] mx-auto px-8 lg:px-12">
-
-        {/* Header */}
-        <div className="flex flex-col items-center text-center gap-5 mb-20">
-          <span
-            className="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase"
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              color: "#FFFFFF",
-              border: "1px solid rgba(255,255,255,0.15)",
-            }}
-          >
-            Les résultats parlent
-          </span>
-          <h2
-            className="font-bold text-balance max-w-4xl"
-            style={{
-              fontSize: "clamp(32px, 4.5vw, 56px)",
-              lineHeight: "1.05",
-              letterSpacing: "-0.035em",
-              color: "#FFFFFF",
-            }}
-          >
-            Ce que vivent les cadres qui utilisent{" "}
-            <span style={{ color: "#E8501A", fontStyle: "italic" }}>
-              Trajectoire
-            </span>
-            .
-          </h2>
-          <p
-            className="max-w-2xl"
-            style={{
-              fontSize: "18px",
-              lineHeight: "1.65",
-              color: "rgba(255,255,255,0.75)",
-            }}
-          >
-            Chiffres mesurés sur les 2 400+ parcours suivis depuis le lancement.
-            Mise à jour mensuelle.
-          </p>
-        </div>
-
-        {/* Headline Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
-          {HEADLINE_STATS.map(({ value, label, sublabel, icon: Icon }) => (
-            <div
-              key={label}
-              className="p-7 rounded-2xl transition-all duration-300"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255,255,255,0.08)";
-                e.currentTarget.style.transform = "translateY(-4px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255,255,255,0.04)";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                style={{ backgroundColor: "rgba(232,80,26,0.15)" }}
-              >
-                <Icon size={20} style={{ color: "#E8501A" }} />
-              </div>
-
-              <div
-                className="font-bold mb-2"
-                style={{
-                  fontSize: "clamp(36px, 4vw, 52px)",
-                  lineHeight: 1,
-                  letterSpacing: "-0.03em",
-                  color: "#FFFFFF",
-                }}
-              >
-                {value}
-              </div>
-
-              <div
-                className="font-semibold mb-1"
-                style={{
-                  fontSize: "16px",
-                  color: "#FFFFFF",
-                }}
-              >
-                {label}
-              </div>
-
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.6)",
-                  lineHeight: 1.5,
-                }}
-              >
-                {sublabel}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Detailed Results — Avant / Après */}
-        <div
-          className="rounded-3xl p-8 lg:p-12"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            paddingLeft: "clamp(24px, 4vw, 56px)",
-            paddingRight: "clamp(24px, 4vw, 56px)",
-          }}
-        >
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
-            <div>
-              <div
-                className="font-bold text-xs tracking-widest uppercase mb-3"
-                style={{ color: "#E8501A" }}
-              >
-                Avant → Après
-              </div>
-              <h3
-                className="font-bold"
-                style={{
-                  fontSize: "clamp(24px, 2.8vw, 36px)",
-                  lineHeight: "1.15",
-                  letterSpacing: "-0.025em",
-                  color: "#FFFFFF",
-                }}
-              >
-                Progression moyenne sur 8 semaines de programme.
-              </h3>
-            </div>
-            <div
-              className="flex items-center gap-6 text-xs font-semibold tracking-wider uppercase"
-              style={{ color: "rgba(255,255,255,0.6)" }}
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "rgba(255,255,255,0.25)" }}
-                />
-                Avant
-              </div>
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#E8501A" }}
-                />
-                Après
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-8">
-            {DETAILED_RESULTS.map(({ metric, before, after, unit }) => {
-              const gain = after - before;
-              return (
-                <div key={metric}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span
-                      className="font-semibold"
-                      style={{
-                        fontSize: "16px",
-                        color: "#FFFFFF",
-                      }}
-                    >
-                      {metric}
-                    </span>
-                    <span
-                      className="font-bold"
-                      style={{ fontSize: "14px", color: "#E8501A" }}
-                    >
-                      +{gain}{unit}
-                    </span>
-                  </div>
-
-                  {/* Barre de progression */}
-                  <div
-                    className="relative h-3 rounded-full overflow-hidden"
-                    style={{
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                      marginLeft: "0",
-                      marginRight: "0",
-                    }}
-                  >
-                    {/* Avant */}
-                    <div
-                      className="absolute top-0 left-0 h-full rounded-full"
-                      style={{
-                        width: `${before}%`,
-                        backgroundColor: "rgba(255,255,255,0.3)",
-                      }}
-                    />
-                    {/* Après */}
-                    <div
-                      className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000"
-                      style={{
-                        width: `${after}%`,
-                        backgroundColor: "#E8501A",
-                      }}
-                    />
-                  </div>
-
-                  <div
-                    className="flex items-center justify-between mt-2 text-xs"
-                    style={{ color: "rgba(255,255,255,0.5)" }}
-                  >
-                    <span>{before}{unit}</span>
-                    <span style={{ color: "#FFFFFF", fontWeight: 600 }}>
-                      {after}{unit}
-                    </span>
-                  </div>
+        <div className="max-w-5xl mx-auto flex flex-col gap-8">
+          {/* Headline Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {HEADLINE_STATS.map(({ value, label, sublabel, icon: Icon }) => (
+              <Card key={label} variant="default" padding="lg" hover className="flex flex-col border-border">
+                <div className="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center mb-5 text-brand-accent">
+                  <Icon size={20} />
                 </div>
-              );
-            })}
+                {/* Hiérarchie typographique alignée sur le design system */}
+                <div className="text-display-2 font-bold leading-none tracking-tight text-ink mb-2">
+                  {value}
+                </div>
+                <div className="font-bold text-sm text-ink mb-1">
+                  {label}
+                </div>
+                <div className="text-xs text-ink-subtle">
+                  {sublabel}
+                </div>
+              </Card>
+            ))}
           </div>
+
+          {/* Detailed Results — Avant / Après */}
+          <Card variant="default" padding="xl" className="border-border">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 border-b border-border pb-6">
+              <div>
+                <div className="font-bold text-xs tracking-widest uppercase mb-3 text-brand-accent">
+                  Avant → Après
+                </div>
+                <h3 className="text-heading-3 text-ink">
+                  Progression moyenne sur 8 semaines de programme.
+                </h3>
+              </div>
+              <div className="flex items-center gap-6 text-xs font-bold tracking-wider uppercase text-ink-subtle">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-surface-muted border border-border" />
+                  Avant
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-brand-accent" />
+                  Après
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8">
+              {DETAILED_RESULTS.map(({ metric, before, after, unit }) => {
+                const gain = after - before;
+                return (
+                  <div key={metric}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-bold text-sm text-ink">
+                        {metric}
+                      </span>
+                      <span className="font-bold text-sm text-brand-accent">
+                        +{gain}{unit}
+                      </span>
+                    </div>
+
+                    {/* Barre de progression — largeurs dynamiques (style inline nécessaire) */}
+                    <div
+                      className="relative h-3 rounded-full bg-surface-muted overflow-hidden"
+                      role="progressbar"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={after}
+                      aria-label={`${metric} : ${before}${unit} avant, ${after}${unit} après`}
+                    >
+                      {/* Avant */}
+                      <div
+                        className="absolute top-0 left-0 h-full rounded-full bg-border-subtle"
+                        style={{ width: `${before}%` }}
+                        aria-hidden="true"
+                      />
+                      {/* Après */}
+                      <div
+                        className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 bg-brand-accent"
+                        style={{ width: `${after}%` }}
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between mt-2 text-xs font-medium text-ink-muted">
+                      <span>{before}{unit}</span>
+                      <span className="text-ink font-bold">{after}{unit}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Note de transparence — honnêteté des chiffres */}
+            <p className="text-xs text-ink-subtle mt-8 pt-6 border-t border-border-subtle">
+              <span className="font-semibold text-ink-muted">Méthodologie :</span> autoévaluations
+              déclaratives recueillies en début et fin de programme sur les parcours clôturés
+              (n = 2 412). Les pourcentages d&apos;atteinte d&apos;objectif sont mesurés à 90 jours post-programme.
+            </p>
+          </Card>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
