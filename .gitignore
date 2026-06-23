@@ -1,50 +1,81 @@
-# .gitignore — StudioEntretien
-
-# ─── Dépendances ─────────────────────────────────────────────
+# ============================================
+# DEPENDENCIES
+# ============================================
 node_modules/
 .pnpm-store/
+.pnp
+.pnp.js
 
-# ─── Environnement — NE JAMAIS commiter ──────────────────────
+# ============================================
+# ENVIRONNEMENT (NE JAMAIS COMMIT)
+# ============================================
 .env
 .env.local
-.env.*.local
-.env.production
+.env.development.local
+.env.test.local
+.env.production.local
 .env.*
 
-# ─── Next.js ─────────────────────────────────────────────────
+# ============================================
+# NEXT.JS
+# ============================================
 .next/
 out/
 build/
 dist/
 
-# ─── Logs ────────────────────────────────────────────────────
+# ============================================
+# LOGS
+# ============================================
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+errors-tests.log
+errors.json
+errors-deadcode.log
+errors-eslint.log
+errors-tsc.log
+errors-ts.txt
+ts_errors.txt
 logs/
 
-# ─── Vercel ──────────────────────────────────────────────────
+# ============================================
+# VERCEL
+# ============================================
 .vercel
 
-# ─── TypeScript ──────────────────────────────────────────────
+# ============================================
+# TYPESCRIPT
+# ============================================
 *.tsbuildinfo
 node_modules/.cache/tsbuildinfo/
 next-env.d.ts
+tsconfig.tsbuildinfo
 
-# ─── Caches & outils ─────────────────────────────────────────
+# ============================================
+# CACHES & OUTILS
+# ============================================
 .cache/
 .eslintcache
 .turbo/
+.parcel-cache/
+.next/cache/
 
-# ─── Tests / couverture ──────────────────────────────────────
+# ============================================
+# TESTS & COVERAGE
+# ============================================
 coverage/
 .nyc_output/
 test-results/
 tests/playwright-report/
 playwright-report/
 
-# ─── Artefacts générés (traces, rapports lint, benchmarks) ───
+# ============================================
+# ARTEFACTS GENERES (traces, rapports lint, benchmarks)
+# ============================================
 artifacts/
 *.bundle
 eslint-report.json
@@ -55,23 +86,44 @@ lint-final.txt
 errors.json
 runtime-benchmark.json
 runtime-normal-summary.json
+trace*.json
+depth.txt
 
-# ─── Outils jetables / scratch ───────────────────────────────
+# ============================================
+# OUTILS JETABLES / SCRATCH
+# ============================================
 scratch/
 audit_tools/
 eslint_tools/
+beta-notes/
 
-# ─── OS ──────────────────────────────────────────────────────
+# ============================================
+# OS
+# ============================================
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# ─── IDE ─────────────────────────────────────────────────────
+# ============================================
+# IDE
+# ============================================
 .vscode/settings.json
 .idea/
 *.swp
 *.swo
 
-# ─── Uploads temporaires (sécurité) ──────────────────────────
+# ============================================
+# UPLOADS TEMPORAIRES (SECURITE)
+# ============================================
 /tmp/
 /uploads/
 **/dist/
+
+# ============================================
+# FICHIERS DE MIGRATION TEMPORAIRES
+# ============================================
+migrate_*.cjs
+fix_*.cjs
+replace_*.cjs
+apply-premium-upgrade.ps1
+test-route.ts

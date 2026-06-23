@@ -1,5 +1,0 @@
-
-> studioentretien@1.0.0 typecheck
-> tsc -b
-
-core/p7/explainability/evidence-builder.ts(65,22): error TS2532: Object is possibly 'undefined'.
