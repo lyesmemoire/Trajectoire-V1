@@ -11,9 +11,6 @@ importers:
       '@ai-sdk/mistral':
         specifier: ^1.1.1
         version: 1.2.8(zod@3.25.76)
-      '@deepgram/sdk':
-        specifier: ^3.13.0
-        version: 3.13.0
       '@fingerprintjs/fingerprintjs':
         specifier: ^5.2.0
         version: 5.2.0

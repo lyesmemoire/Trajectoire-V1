@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "@ai-sdk/mistral": "^1.1.1",
-    "@deepgram/sdk": "^3.13.0",
     "@fingerprintjs/fingerprintjs": "^5.2.0",
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^4.1.3",
