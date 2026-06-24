@@ -17,5 +17,7 @@ export function trackEvent(
 ) {
   if (typeof window !== "undefined" && posthog.__loaded) {
     posthog.capture(eventName, properties);
+  } else if (process.env.NODE_ENV === "development") {
+    console.debug(`[Analytics] Event bloqué ou SSR : ${eventName}`, properties);
   }
 }
