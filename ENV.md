@@ -7,6 +7,10 @@ Ce document recense toutes les variables d'environnement utilisées par **Trajec
 - **`NEXT_PUBLIC_SUPABASE_ANON_KEY`** / **`SUPABASE_ANON_KEY`** : Clé publique pour l'accès client (navigateur). Peut être exposée.
 - **`SUPABASE_SERVICE_ROLE_KEY`** : Clé privée administrateur. **NE DOIT JAMAIS ÊTRE EXPOSÉE CÔTÉ CLIENT**. Utilisée par le backend pour contourner les RLS.
 
+## 1.5. Base de données (Prisma)
+- **`DATABASE_URL`** : URL de connexion via le Pooler de connexions Supabase (généralement port 6543, avec `?pgbouncer=true` conseillé pour Prisma).
+- **`DIRECT_URL`** : URL de connexion directe à la DB (port 5432). Obligatoire pour exécuter les migrations (`prisma migrate`).
+
 ## 2. Redis (Cache & Rate Limiting)
 - **`UPSTASH_REDIS_REST_URL`** : L'URL de l'API REST de votre base Redis (Upstash).
 - **`UPSTASH_REDIS_REST_TOKEN`** : Le token d'accès REST.
