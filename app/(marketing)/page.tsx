@@ -10,10 +10,14 @@ import Footer from "@/components/marketing/footer";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#050816] text-white selection:bg-[#7C3AED]/30 selection:text-white">
+    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
       <Navbar />
       <main>
         <HeroSection />
+        
+        {/* Subtle visual transition for emotional rhythm */}
+        <div className="h-px w-full bg-[var(--border)]" />
+        
         <ComparisonSection />
         <BehavioralEngineSection />
         <TestimonialsSection />

@@ -76,7 +76,7 @@ function PasswordInput({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="block text-[13px] font-semibold text-gray-800"
+        className="block text-[13px] font-semibold text-[var(--text-primary)]"
       >
         {label} <span className="text-red-500">*</span>
       </label>
@@ -89,12 +89,12 @@ function PasswordInput({
           required
           autoComplete={autoComplete}
           placeholder={placeholder}
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 pr-11 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+          className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 pr-11 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
         />
         <button
           type="button"
           onClick={() => setVisible(!visible)}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-secondary)] transition-colors"
           aria-label={
             visible ? "Masquer le mot de passe" : "Afficher le mot de passe"
           }
@@ -233,14 +233,14 @@ function SignupForm() {
   /* ── Success state ── */
   if (success) {
     return (
-      <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="w-full max-w-[460px]"
         >
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-5">
+          <div className="card p-8 text-center space-y-5">
             <div className="mx-auto w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 text-3xl">
               📧
             </div>
@@ -248,14 +248,14 @@ function SignupForm() {
               Vérifiez votre email
             </h2>
             <p className="text-gray-500 text-sm leading-relaxed">
-              Un lien de confirmation a été envoyé à{" "}
-              <strong className="text-gray-800">{email}</strong>.
+              Un email de confirmation a été envoyé à{" "}
+              <strong className="text-[var(--text-primary)]">{email}</strong>.
               <br />
-              Cliquez sur le lien pour activer votre compte.
+              Nous sommes avec vous. Cliquez sur le lien lorsque vous êtes prêt.
             </p>
             <Link
               href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
-              className="inline-block text-blue-600 font-semibold text-sm hover:underline"
+              className="inline-block text-[var(--primary)] font-semibold text-sm hover:underline"
             >
               ← Retour à la connexion
             </Link>
@@ -267,7 +267,7 @@ function SignupForm() {
 
   /* ── Main form ── */
   return (
-    <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -275,29 +275,26 @@ function SignupForm() {
         className="w-full max-w-[460px]"
       >
         {/* ── Logo ── */}
-        <div className="text-center mb-6">
-          <Link href="/" className="inline-flex items-center gap-1.5">
-            <span className="text-blue-500 text-2xl">✦</span>
-            <span className="text-[22px] font-bold tracking-tight text-blue-600">
-              AI Career
-            </span>
-            <span className="text-[22px] font-bold tracking-tight text-gray-900">
-              Copilot.
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2">
+            <span className="text-blue-500 text-[26px]">✦</span>
+            <span className="text-[23px] font-bold tracking-tight text-[var(--primary)]">
+              <span className="text-[23px] font-semibold tracking-tight text-[var(--text-primary)]">Trajectoire</span>
             </span>
           </Link>
         </div>
 
         {/* ── Card ── */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-8">
+        <div className="card px-9 py-9">
           {/* ── Tab Switcher ── */}
           <div className="bg-gray-100 rounded-full p-1 flex mb-7">
             <Link
               href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
-              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-gray-700 transition-colors"
             >
               Se connecter
             </Link>
-            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-blue-600 bg-white shadow-sm cursor-default">
+            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-[var(--primary)] bg-white shadow-sm cursor-default">
               S&apos;inscrire
             </div>
           </div>
@@ -308,7 +305,7 @@ function SignupForm() {
               type="button"
               onClick={() => handleOAuth("apple")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <AppleIcon />
               Continuer avec Apple
@@ -318,7 +315,7 @@ function SignupForm() {
               type="button"
               onClick={() => handleOAuth("facebook")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <FacebookIcon />
               Continuer avec Facebook
@@ -328,7 +325,7 @@ function SignupForm() {
               type="button"
               onClick={() => handleOAuth("google")}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
+              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
             >
               <GoogleIcon />
               Continuer avec Google
@@ -338,10 +335,10 @@ function SignupForm() {
           {/* ── Divider ── */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-[var(--border)]" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-gray-400 font-medium">
+              <span className="bg-white px-4 text-[var(--text-secondary)] font-medium">
                 Ou
               </span>
             </div>
@@ -352,12 +349,12 @@ function SignupForm() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-red-50 border border-red-100 rounded-xl flex items-start gap-2.5"
+              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex items-start gap-2.5"
             >
               <span className="text-red-500 text-sm leading-none mt-0.5">
                 ⚠
               </span>
-              <p className="text-red-700 text-xs font-medium flex-1 leading-relaxed">
+              <p className="text-[var(--text-primary)] text-sm flex-1 leading-relaxed">
                 {error}
               </p>
               <button
@@ -370,7 +367,7 @@ function SignupForm() {
           )}
 
           {/* ── Form ── */}
-          <form onSubmit={handleSignup} className="space-y-4">
+          <form onSubmit={handleSignup} className="space-y-5">
             {/* ── HONEYPOT (Anti-Bot) ── */}
             <input
               type="text"
@@ -386,7 +383,7 @@ function SignupForm() {
             <div className="space-y-1.5">
               <label
                 htmlFor="signup-fullname"
-                className="block text-[13px] font-semibold text-gray-800"
+                className="block text-[13px] font-semibold text-[var(--text-primary)]"
               >
                 Nom complet <span className="text-red-500">*</span>
               </label>
@@ -398,7 +395,7 @@ function SignupForm() {
                 required
                 autoComplete="name"
                 placeholder="Nom complet"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
               />
             </div>
 
@@ -406,7 +403,7 @@ function SignupForm() {
             <div className="space-y-1.5">
               <label
                 htmlFor="signup-email"
-                className="block text-[13px] font-semibold text-gray-800"
+                className="block text-[13px] font-semibold text-[var(--text-primary)]"
               >
                 Adresse email <span className="text-red-500">*</span>
               </label>
@@ -418,7 +415,7 @@ function SignupForm() {
                 required
                 autoComplete="email"
                 placeholder="Adresse email"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
               />
             </div>
 
@@ -449,20 +446,20 @@ function SignupForm() {
                   type="checkbox"
                   checked={acceptTerms}
                   onChange={(e) => setAcceptTerms(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 shrink-0 cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-blue-500 shrink-0 cursor-pointer"
                 />
-                <span className="text-xs text-gray-600 leading-relaxed">
+                <span className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   J&apos;accepte les{" "}
                   <Link
                     href="/terms"
-                    className="text-blue-600 underline hover:text-blue-700"
+                    className="text-[var(--primary)] underline hover:text-blue-700"
                   >
                     termes et conditions
                   </Link>{" "}
                   ainsi que la{" "}
                   <Link
                     href="/privacy"
-                    className="text-blue-600 underline hover:text-blue-700"
+                    className="text-[var(--primary)] underline hover:text-blue-700"
                   >
                     politique de confidentialité
                   </Link>{" "}
@@ -475,9 +472,9 @@ function SignupForm() {
                   type="checkbox"
                   checked={acceptMarketing}
                   onChange={(e) => setAcceptMarketing(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 shrink-0 cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-blue-500 shrink-0 cursor-pointer"
                 />
-                <span className="text-xs text-gray-600 leading-relaxed">
+                <span className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   J&apos;accepte de recevoir des e-mails marketing.
                 </span>
               </label>
@@ -489,11 +486,11 @@ function SignupForm() {
               disabled={
                 loading || !fullName || !email || !password || !confirmPassword
               }
-              className="w-full mt-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
+              className="w-full mt-2 bg-[var(--primary)] hover:bg-[#5C6BE8] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-[var(--primary)] rounded-full transition-all" />
                   Création en cours...
                 </span>
               ) : (
@@ -513,8 +510,8 @@ export default function SignupPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin" />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full transition-all" />
         </div>
       }
     >
