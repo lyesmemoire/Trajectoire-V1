@@ -51,45 +51,33 @@ cp .env.example .env.local
 
 ## 🔑 Variables d'environnement
 
-Les variables suivantes sont requises (sans valeurs par défaut) :
+Les variables sont classées par priorité d'installation :
 
-```env
-# Base de données
-DATABASE_URL=
-DIRECT_URL=
-
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-
-# Authentification
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=
-
-# IA / LLM
-OPENAI_API_KEY=
-MISTRAL_API_KEY=
-GOOGLE_GENERATIVE_AI_API_KEY=
-
-# Voix
-ELEVENLABS_API_KEY=
-DEEPGRAM_API_KEY=
-
-# Paiements
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-
-# Redis / Cache
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
-
-# Analytics
-NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=
-SENTRY_DSN=
-```
+| Priorité | Variable | Pourquoi en premier |
+|----------|----------|---------------------|
+| 🔴 1 | NEXT_PUBLIC_API_URL | Critique : l'app ne sait pas où taper sans ça |
+| 🔴 2 | NEXT_PUBLIC_SUPABASE_URL | Critique : auth ne marche pas sans |
+| 🔴 3 | NEXT_PUBLIC_SUPABASE_ANON_KEY | Critique : idem |
+| 🔴 4 | SUPABASE_SERVICE_ROLE_KEY | Critique : accès admin à la base |
+| 🔴 5 | DATABASE_URL | Critique : connexion à la base de données |
+| 🔴 6 | DIRECT_URL | Critique : connexion directe Prisma |
+| 🔴 7 | NEXTAUTH_SECRET | Critique : chiffrement des sessions |
+| 🔴 8 | NEXTAUTH_URL | Critique : callback URL auth |
+| 🟠 9 | NEXT_PUBLIC_GATEWAY_URL | Important : pour le WebSocket |
+| 🟠 10 | NEXT_PUBLIC_WS_URL | Important : pour les interviews |
+| 🟡 11 | NEXT_PUBLIC_POSTHOG_KEY | Optionnel : tracking, peut attendre |
+| 🟡 12 | NEXT_PUBLIC_POSTHOG_HOST | Optionnel : idem |
+| 🟡 13 | OPENAI_API_KEY | Optionnel : IA LLM |
+| 🟡 14 | MISTRAL_API_KEY | Optionnel : IA LLM alternatif |
+| 🟡 15 | GOOGLE_GENERATIVE_AI_API_KEY | Optionnel : IA LLM alternatif |
+| 🟡 16 | ELEVENLABS_API_KEY | Optionnel : synthèse vocale |
+| 🟡 17 | DEEPGRAM_API_KEY | Optionnel : transcription vocale |
+| 🟡 18 | STRIPE_SECRET_KEY | Optionnel : paiements |
+| 🟡 19 | STRIPE_WEBHOOK_SECRET | Optionnel : webhooks Stripe |
+| 🟡 20 | NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY | Optionnel : paiements frontend |
+| 🟡 21 | UPSTASH_REDIS_REST_URL | Optionnel : cache/rate-limit |
+| 🟡 22 | UPSTASH_REDIS_REST_TOKEN | Optionnel : cache/rate-limit |
+| 🟡 23 | SENTRY_DSN | Optionnel : monitoring erreurs |
 
 ## 🏃 Lancement
 
