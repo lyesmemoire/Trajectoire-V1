@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/service";
 
 // Vercel Cron routes can run up to 5 minutes
 export const maxDuration = 300;

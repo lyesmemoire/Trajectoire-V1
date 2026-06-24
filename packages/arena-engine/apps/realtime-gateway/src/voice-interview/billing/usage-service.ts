@@ -1,6 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 import { buildSubscriptionFromDB } from "../../../../../lib/billing/build-subscription.js";
-import { hasPremiumAccess } from "../../../../../lib/billing/subscription-types.js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,

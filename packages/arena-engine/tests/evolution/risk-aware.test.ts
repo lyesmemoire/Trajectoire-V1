@@ -103,14 +103,14 @@ function createExtendedCausalWorld(
 
 function extractFitness(world: SimulatedWorld) {
   const s = world.engine.state;
-  let survivalScore = s.survivalTicks;
-  let throughputScore = s.messagesProcessed;
-  let cascadeCost = (s.crashed ? 100 : 0) + (s.cascadeFailures * 10);
+  const survivalScore = s.survivalTicks;
+  const throughputScore = s.messagesProcessed;
+  const cascadeCost = (s.crashed ? 100 : 0) + (s.cascadeFailures * 10);
   const defensiveRatio = s.survivalTicks > 0 ? s.defensiveActivations / Math.max(s.messagesProcessed + s.messagesIgnored, 1) : 0;
-  let paranoiaCost = (defensiveRatio * 50) + (s.messagesIgnored * 2) + (s.falsePositives * 5);
+  const paranoiaCost = (defensiveRatio * 50) + (s.messagesIgnored * 2) + (s.falsePositives * 5);
   const totalDecisions = s.messagesProcessed + s.messagesIgnored + s.defensiveActivations;
-  let efficiencyScore = totalDecisions > 0 ? (s.messagesProcessed / totalDecisions) * 100 : 0;
-  let stabilityCost = s.gapVariance * 0.1;
+  const efficiencyScore = totalDecisions > 0 ? (s.messagesProcessed / totalDecisions) * 100 : 0;
+  const stabilityCost = s.gapVariance * 0.1;
 
   const total =
     DEFAULT_WEIGHTS.survival * survivalScore +

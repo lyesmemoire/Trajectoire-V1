@@ -60,8 +60,8 @@ class MinHeap {
     const element = this.data[index];
 
     while (true) {
-      let leftChildIdx = 2 * index + 1;
-      let rightChildIdx = 2 * index + 2;
+      const leftChildIdx = 2 * index + 1;
+      const rightChildIdx = 2 * index + 2;
       let leftChild, rightChild;
       let swap = null;
 
@@ -307,7 +307,7 @@ export class NetworkRouter {
 
   // Simple hash for asymmetric properties based on route
   private getRouteHash(from: number, to: number): number {
-    let h = ((from * 31337) ^ to) % 1000;
+    const h = ((from * 31337) ^ to) % 1000;
     return Math.abs(h) / 1000; // 0.0 to 1.0
   }
 

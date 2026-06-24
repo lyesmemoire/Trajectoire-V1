@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it } from "vitest";
 import { PolicyEvolutionEngine } from "../../src/evolution/PolicyEvolutionEngine";
 import { MultiWorldSimulator, SimulatedWorld } from "../helpers/MultiWorldSimulator";
 import { FakeInfra, FakeRandom } from "../../src/testing/FakeInfra";

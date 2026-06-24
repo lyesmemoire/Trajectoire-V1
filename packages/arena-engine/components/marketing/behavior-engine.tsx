@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { Terminal, Cpu, Database } from "lucide-react";
+import { Cpu, Database } from "lucide-react";
 import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy";
 
 export function BehavioralEngineSection() {

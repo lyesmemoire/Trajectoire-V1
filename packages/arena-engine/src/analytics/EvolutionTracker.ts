@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import * as path from "path";
-import { PolicyGenome, ChaosGenome } from "../evolution/types";
 
 export interface GenerationMetrics {
   generation: number;

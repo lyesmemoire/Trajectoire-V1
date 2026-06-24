@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { MultiWorldSimulator, SimulatedWorld, NetworkChaosConfig } from "../helpers/MultiWorldSimulator";
-import { FakeInfra, FakeRandom } from "../../src/testing/FakeInfra";
+import { FakeInfra } from "../../src/testing/FakeInfra";
 import { LamportClock } from "../../src/distributed/causality/LamportClock";
 import { CausalThresholdPolicy } from "../../src/control-plane/policy/CausalThresholdPolicy";
 import { InterWorldMessage } from "../../src/distributed/network/types";

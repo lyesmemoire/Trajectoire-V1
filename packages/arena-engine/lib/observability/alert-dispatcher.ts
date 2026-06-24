@@ -9,7 +9,7 @@
  */
 
 import * as Sentry from "@sentry/nextjs";
-import { logger, createChildLogger } from "../logger.js";
+import { createChildLogger } from "../logger.js";
 import { envServer } from "../env.server.js";
 
 export type AlertSeverity = "Critical" | "High" | "Medium" | "Low";

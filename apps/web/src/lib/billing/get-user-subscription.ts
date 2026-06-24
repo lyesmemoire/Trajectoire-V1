@@ -2,7 +2,6 @@
 // Le fichier existe — on le remplace par une version robuste
 
 import { createClient }   from "@/lib/supabase/server";
-import { createClient as createBrowserClient } from "@/lib/supabase/client";
 import { z }              from "zod";
 
 // ── Schéma de sortie ──────────────────────────────────────────────────────────

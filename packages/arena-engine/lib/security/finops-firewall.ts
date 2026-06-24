@@ -15,7 +15,7 @@ import { Counter, Gauge } from "prom-client";
 import * as Sentry from "@sentry/nextjs";
 import { createClient } from "@supabase/supabase-js";
 import { envServer } from "../env.server.js";
-import { logger, createChildLogger } from "../logger.js";
+import { logger } from "../logger.js";
 
 // ── OpenTelemetry Setup ───────────────────────────────────────
 const tracer = trace.getTracer("trajectoire-finops-firewall");

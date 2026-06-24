@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, MessageSquare } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VoiceResponsePanel } from "@/components/interview/VoiceResponsePanel";
 import { ResponseScore } from "@/lib/interview/scoring";

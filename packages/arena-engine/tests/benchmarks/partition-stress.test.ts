@@ -4,7 +4,6 @@ import { FakeInfra } from "../../src/testing/FakeInfra";
 import { LamportClock } from "../../src/distributed/causality/LamportClock";
 import { PolicyGenome } from "../../src/evolution/types";
 import { CausalThresholdPolicy } from "../../src/control-plane/policy/CausalThresholdPolicy";
-import { DecisionAction } from "../../src/control-plane/policy/DecisionPolicy";
 
 const MODERATE_CHAOS = {
   dropRate: 0.05,

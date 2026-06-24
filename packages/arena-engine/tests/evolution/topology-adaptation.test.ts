@@ -143,7 +143,7 @@ describe("Phase 8C: Topology Adaptation", () => {
         sim.runUntil(config.simulationDurationMs);
 
         let totalScore = 0;
-        let queueSizes: number[] = [];
+        const queueSizes: number[] = [];
         let totalNacks = 0;
         let totalRejects = 0;
         
@@ -204,7 +204,7 @@ describe("Phase 8C: Topology Adaptation", () => {
     sim.runUntil(3000);
 
     let totalScore = 0;
-    let queueSizes: number[] = [];
+    const queueSizes: number[] = [];
     let totalNacks = 0;
     let totalRejects = 0;
     

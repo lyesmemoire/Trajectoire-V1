@@ -1,4 +1,3 @@
-import { ControlPlaneState } from "../ControlPlaneTypes";
 
 export type DecisionAction =
   | { type: "CRITICAL_STOP" }

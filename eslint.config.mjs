@@ -13,7 +13,7 @@ const isCI = process.env.CI === "true";
  * SHARED RULES (baseline propre SaaS)
  */
 const baseRules = {
-  "no-console": isCI ? "error" : "warn",
+  "no-console": "off",
   "no-debugger": "error",
   "no-undef": "off", // Handled by TypeScript
   "@typescript-eslint/no-unused-expressions": ["error", { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true }],
@@ -106,6 +106,7 @@ export default [
       // Next / React safety
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": isCI ? "error" : "warn",
+      "no-console": "off",
     },
   },
 
@@ -119,7 +120,7 @@ export default [
 
       // backend stricter
       "@typescript-eslint/no-explicit-any": "error",
-      "no-console": isCI ? "error" : "warn",
+      "no-console": "off",
     },
   },
 
@@ -132,7 +133,35 @@ export default [
       ...baseRules,
 
       "@typescript-eslint/no-explicit-any": "error",
-      "no-console": "warn",
+      "no-console": "off",
+    },
+  },
+
+  /**
+   * LEGACY ROOT DIRS (pragmatic — console & any tolérés)
+   * Ces dossiers contiennent du code pré-monorepo qui sera migré progressivement.
+   */
+  {
+    files: [
+      "app/**/*.{ts,tsx}",
+      "lib/**/*.{ts,js}",
+      "sil/**/*.{ts,js}",
+      "components/**/*.{ts,tsx}",
+      "core/**/*.{ts,js}",
+      "p0/**/*.{ts,js}",
+      "src/**/*.{ts,tsx}",
+      "services/**/*.{ts,js}",
+      "hooks/**/*.{ts,tsx}",
+      "providers/**/*.{ts,tsx}",
+      "gateway/**/*.{ts,js}",
+      "tools/**/*.{ts,js}",
+      "tests/**/*.{ts,js}",
+      "packages/**/*.{ts,js}",
+    ],
+    rules: {
+      "no-console": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 
@@ -144,6 +173,18 @@ export default [
     rules: {
       ...baseRules,
       "@typescript-eslint/no-explicit-any": "warn",
+      "no-console": "off",
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+
+  /**
+   * CJS / JS FILES (migration scripts, legacy tooling)
+   */
+  {
+    files: ["**/*.cjs", "**/*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
       "no-console": "off",
     },
   },

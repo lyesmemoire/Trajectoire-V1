@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeInUp, scaleIn } from "@/lib/motion";
-import { SITE_NAME } from "@/lib/constants";
 import { useDashboard } from "@/hooks/useDashboard";
 import type { ActionItem, PlanMilestone } from "@/types/database";
 

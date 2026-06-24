@@ -70,7 +70,7 @@ describe("Phase 9: Generating Stability Phase Space Data", () => {
         sim.runUntil(simDuration);
 
         let totalScore = 0;
-        let queueSizes: number[] = [];
+        const queueSizes: number[] = [];
         
         for(let i=0; i<numNodes; i++) {
           const w = sim.worlds.find(world => world.id === i)!;

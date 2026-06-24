@@ -3,7 +3,6 @@ import { generateObject }                  from "ai";
 import { z }                              from "zod";
 import { mistralModel }                   from "@/lib/mistral";
 import { createClient }                   from "@/lib/supabase/server";
-import { envServer }                      from "@/lib/env.server";
 import {
   PremiumReportSchema,
   computeReadinessLevel,

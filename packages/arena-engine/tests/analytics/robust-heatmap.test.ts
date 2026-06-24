@@ -48,7 +48,7 @@ describe("Phase 9: Robust Phase Space Analysis", () => {
       for (const expRate of explorationSteps) {
         for (const damping of dampingSteps) {
           
-          let stabilityScores: number[] = [];
+          const stabilityScores: number[] = [];
           let crashes = 0;
           let sumVq = 0;
           let sumAosc = 0;
@@ -67,7 +67,7 @@ describe("Phase 9: Robust Phase Space Analysis", () => {
             const numHotspots = (seed < 2) ? 5 : 3;
 
             // Create worlds
-            let timeSeriesQ: number[] = [];
+            const timeSeriesQ: number[] = [];
             for (let i = 0; i < numNodes; i++) {
               sim.addWorld(createAdaptiveWorld(i, new FakeInfra(seed + i), genome, sim, numNodes, numHotspots));
             }
@@ -83,7 +83,7 @@ describe("Phase 9: Robust Phase Space Analysis", () => {
 
             // --- 1. S = SurvivalRatio ---
             let aliveNodes = 0;
-            let nodeQs: number[] = [];
+            const nodeQs: number[] = [];
             for (let i = 0; i < numNodes; i++) {
               const state = sim.worlds[i].engine.state;
               if (!state.crashed) aliveNodes++;

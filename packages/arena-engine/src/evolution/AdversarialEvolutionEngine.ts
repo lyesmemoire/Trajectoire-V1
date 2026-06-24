@@ -237,12 +237,12 @@ export class AdversarialEvolutionEngine {
       const parentA = this.tournamentSelectionChaos(population, 3, random).genome;
       const parentB = this.tournamentSelectionChaos(population, 3, random).genome;
       
-      let childParams: any = {};
+      const childParams: any = {};
       for (const key of Object.keys(parentA.parameters)) {
         childParams[key] = random.next() > 0.5 ? (parentA.parameters as any)[key] : (parentB.parameters as any)[key];
       }
       
-      let mutatedParams: any = {};
+      const mutatedParams: any = {};
       for (const [key, value] of Object.entries(childParams)) {
         if (random.next() < mutationRate) {
           const range = bounds[key].max - bounds[key].min;

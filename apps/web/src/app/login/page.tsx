@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { fadeInUp } from "@/lib/motion";
 import { useAuth } from "@/hooks/useAuth";
 import { trackEvent } from "@/lib/analytics/trackEvent";
 import { ANALYTICS_EVENTS } from "@/lib/analytics/events";

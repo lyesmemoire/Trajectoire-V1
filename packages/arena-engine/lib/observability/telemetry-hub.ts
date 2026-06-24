@@ -12,8 +12,7 @@
 import { trace, SpanStatusCode, type Tracer } from "@opentelemetry/api";
 import { Counter, Gauge, Histogram } from "prom-client";
 import * as Sentry from "@sentry/nextjs";
-import { logger, createChildLogger } from "../logger.js";
-import { envServer } from "../env.server.js";
+import { createChildLogger } from "../logger.js";
 
 // ── Master OpenTelemetry Tracer Setup ─────────────────────────
 export const telemetryTracer: Tracer = trace.getTracer("trajectoire-enterprise-observability-hub");

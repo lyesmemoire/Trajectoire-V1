@@ -55,7 +55,7 @@ if (fs.existsSync(constantsPath)) {
 // 3. Update Hero.tsx
 const heroPath = path.join(__dirname, 'src', 'components', 'home', 'Hero.tsx');
 if (fs.existsSync(heroPath)) {
-  let heroContent = fs.readFileSync(heroPath, 'utf8');
+  const heroContent = fs.readFileSync(heroPath, 'utf8');
   // In Hero.tsx, we need to replace the style of the Link CTA
   // The user said: "Le btn-primary utilise désormais var(--accent) = corail vif. Aucun changement de code nécessaire, le CSS fait le travail"
   // Wait, the user said in the prompt:

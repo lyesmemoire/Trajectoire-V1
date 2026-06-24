@@ -147,7 +147,7 @@ export function useVoiceInterview(wsUrl: string, token: string) {
         audioContextRef.current?.close()
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [wsUrl, token]) // playAudioBuffer et startMicrophone retirés pour éviter reconnexion infinie
 
   return {

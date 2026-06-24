@@ -1,11 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { PolicyEvolutionEngine, WorldFactory } from "../../src/evolution/PolicyEvolutionEngine";
+import { PolicyEvolutionEngine } from "../../src/evolution/PolicyEvolutionEngine";
 import { RobustEvolutionEngine, EnvironmentSetup } from "../../src/evolution/RobustEvolutionEngine";
 import { MultiWorldSimulator, SimulatedWorld } from "../helpers/MultiWorldSimulator";
 import { FakeInfra, FakeRandom } from "../../src/testing/FakeInfra";
 import { PolicyGenome } from "../../src/evolution/types";
 import { CausalThresholdPolicy } from "../../src/control-plane/policy/CausalThresholdPolicy";
-import { DecisionAction } from "../../src/control-plane/policy/DecisionPolicy";
 import { LamportClock } from "../../src/distributed/causality/LamportClock";
 
 function createObservableCausalWorld(

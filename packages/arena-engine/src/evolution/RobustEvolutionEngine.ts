@@ -1,5 +1,5 @@
 import { PolicyGenome, EvolutionConfig, FitnessResult, RiskStrategyType } from "./types";
-import { MultiWorldSimulator, SimulatedWorld } from "../../tests/helpers/MultiWorldSimulator";
+import { MultiWorldSimulator } from "../../tests/helpers/MultiWorldSimulator";
 import { FakeRandom } from "../testing/FakeInfra";
 import { IRandomProvider } from "../ports/IInfra";
 import { PolicyEvolutionEngine, WorldFactory, FitnessExtractor } from "./PolicyEvolutionEngine";

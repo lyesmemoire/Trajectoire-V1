@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { MultiWorldSimulator, SimulatedWorld, NetworkRouter } from "../helpers/MultiWorldSimulator";
+import { MultiWorldSimulator, SimulatedWorld } from "../helpers/MultiWorldSimulator";
 import { FakeInfra } from "../../src/testing/FakeInfra";
 import { InterWorldMessage } from "../../src/distributed/network/types";
 

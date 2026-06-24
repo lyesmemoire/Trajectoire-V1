@@ -15,7 +15,7 @@ import { trace, SpanStatusCode } from "@opentelemetry/api";
 import { Gauge, Counter, Histogram } from "prom-client";
 import * as Sentry from "@sentry/nextjs";
 import { envServer } from "../env.server.js";
-import { logger, createChildLogger } from "../logger.js";
+import { createChildLogger } from "../logger.js";
 
 // ── OpenTelemetry Setup ───────────────────────────────────────
 const tracer = trace.getTracer("trajectoire-db-pool-optimizer");

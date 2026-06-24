@@ -181,7 +181,7 @@ export default function InterviewRoom({
     };
     // status intentionnellement absent des deps pour ne pas recréer la socket
     // à chaque changement de statut
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [gatewayUrl, token, sessionId]);
 
   // ── Lecture audio TTS ───────────────────────────────────────────────────

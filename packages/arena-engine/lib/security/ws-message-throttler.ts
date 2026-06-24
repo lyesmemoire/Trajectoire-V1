@@ -14,7 +14,7 @@
 import { trace, SpanStatusCode } from "@opentelemetry/api";
 import { Counter } from "prom-client";
 import * as Sentry from "@sentry/nextjs";
-import { logger, createChildLogger } from "../logger.js";
+import { createChildLogger } from "../logger.js";
 
 // ── OpenTelemetry Setup ───────────────────────────────────────
 const tracer = trace.getTracer("trajectoire-ws-message-throttler");

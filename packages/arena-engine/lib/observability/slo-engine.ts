@@ -10,7 +10,7 @@
 
 import { Gauge, Counter } from "prom-client";
 import * as Sentry from "@sentry/nextjs";
-import { logger, createChildLogger } from "../logger.js";
+import { createChildLogger } from "../logger.js";
 import { envServer } from "../env.server.js";
 
 // ── Production Prometheus Metrics Setup ───────────────────────

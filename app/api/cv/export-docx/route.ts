@@ -2,7 +2,7 @@ import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
-import { ParsedCVSchema, ParsedCV } from "@/types/cv";
+import { ParsedCVSchema } from "@/types/cv";
 
 export const dynamic = "force-dynamic";
 

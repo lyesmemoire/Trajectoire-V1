@@ -23,7 +23,7 @@ async function shutdown(signal: string) {
   console.log(`[SYSTEM] Received ${signal}. Initiating graceful shutdown...`);
   // If a stop method exists on bootstrap, invoke it here.
   // For now we just exit after a short delay to allow in‑flight tasks to finish.
-  // eslint-disable-next-line no-restricted-globals
+   
   setTimeout(() => {
     console.log("[SYSTEM] Shutdown complete. Exiting.");
     process.exit(0);

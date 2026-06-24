@@ -1,11 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { PolicyEvolutionEngine, WorldFactory, FitnessExtractor } from "../../src/evolution/PolicyEvolutionEngine";
-import { MultiWorldSimulator, SimulatedWorld, NetworkRouter } from "../helpers/MultiWorldSimulator";
+import { MultiWorldSimulator, SimulatedWorld } from "../helpers/MultiWorldSimulator";
 import { EvolutionConfig, PolicyGenome } from "../../src/evolution/types";
 import { FakeInfra, FakeRandom } from "../../src/testing/FakeInfra";
 import { LamportClock } from "../../src/distributed/causality/LamportClock";
 import { CausalThresholdPolicy } from "../../src/control-plane/policy/CausalThresholdPolicy";
-import { DefaultThresholdPolicy } from "../../src/control-plane/policy/DefaultThresholdPolicy";
 import { InterWorldMessage } from "../../src/distributed/network/types";
 
 /**
