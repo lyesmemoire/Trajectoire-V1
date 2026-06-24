@@ -18,13 +18,14 @@ export function ChartContainer({
 }: ChartContainerProps) {
   const heightValue = typeof height === 'number' ? `${height}px` : height;
   const minHeightValue = typeof minHeight === 'number' ? `${minHeight}px` : minHeight;
+  const heightNumber = typeof height === 'number' ? height : parseInt(height, 10);
 
   return (
     <div 
       className={`w-full ${className}`} 
       style={{ height: heightValue, minHeight: minHeightValue }}
     >
-      <ResponsiveContainer width="100%" height="100%" minHeight={1} minWidth={1}>
+      <ResponsiveContainer width="100%" height={heightNumber} aspect={undefined}>
         {children}
       </ResponsiveContainer>
     </div>
