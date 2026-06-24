@@ -98,7 +98,7 @@ export default function Hero() {
             <div className="flex flex-col items-start gap-4">
               <div className="flex flex-wrap items-center gap-5">
                 <LinkButton
-                  href="/signup"
+                  href="/register"
                   variant="accent"
                   size="xl"
                   rightIcon={<ArrowRight size={20} />}

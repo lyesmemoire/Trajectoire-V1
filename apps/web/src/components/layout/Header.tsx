@@ -115,7 +115,7 @@ export default function Header() {
             >
               Se connecter
             </Link>
-            <LinkButton href="/signup" variant="primary" size="sm">
+            <LinkButton href="/register" variant="primary" size="sm">
               Essai gratuit
             </LinkButton>
           </div>
@@ -151,7 +151,7 @@ export default function Header() {
                 >
                   Se connecter
                 </Link>
-                <LinkButton href="/signup" variant="primary" fullWidth>
+                <LinkButton href="/register" variant="primary" fullWidth>
                   Essai gratuit
                 </LinkButton>
               </div>

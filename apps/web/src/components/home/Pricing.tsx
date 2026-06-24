@@ -173,7 +173,7 @@ export default function Pricing() {
 
                 <div className="flex flex-col gap-3">
                   <LinkButton
-                    href="/signup"
+                    href="/register"
                     variant={isHighlight ? "accent" : "dark"}
                     fullWidth
                     rightIcon={<ArrowRight size={16} />}
