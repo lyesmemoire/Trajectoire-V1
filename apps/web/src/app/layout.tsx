@@ -15,7 +15,7 @@ export default function RootLayout({
   const schemas = generateAllSchemas();
 
   return (
-    <html lang="fr" className={GeistSans.variable}>
+    <html lang="fr" className={GeistSans.variable} data-scroll-behavior="smooth">
       <head>
         <meta name="theme-color" content="#FFFFFF" />
         <meta name="color-scheme" content="light" />
