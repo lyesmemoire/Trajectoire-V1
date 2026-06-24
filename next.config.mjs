@@ -1,7 +1,7 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  typescript: { ignoreBuildErrors: true },
+  typescript: { ignoreBuildErrors: false },
   productionBrowserSourceMaps: false,
   images: { formats: ["image/avif", "image/webp"] },
 };
