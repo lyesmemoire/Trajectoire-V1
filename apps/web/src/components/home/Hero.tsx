@@ -44,7 +44,7 @@ export default function Hero() {
   const maxValue = Math.max(...PROGRESSION_DATA.map((d) => d.value));
 
   return (
-    <section className="relative min-h-[calc(100vh-80px)] flex items-center overflow-hidden pt-32 pb-16 bg-white">
+    <section className="relative min-h-[calc(100vh-80px)] flex items-center overflow-hidden pt-32 pb-16 bg-surface-muted">
 
       {/* Backgrounds décoratifs */}
       <div
@@ -78,11 +78,11 @@ export default function Hero() {
             </div>
 
             {/* Titre */}
-            <h1 className="text-display-1 text-balance text-ink">
+            <h1 className="text-display-1 text-balance text-ink max-w-2xl">
               Préparez vos{" "}
               <span className="text-brand-primary">décisions de carrière</span>{" "}
-              avec une{" "}
-              <span className="text-brand-accent italic">confiance absolue</span>.
+              avec{" "}
+              <span className="text-brand-accent italic">confiance</span>.
             </h1>
 
             {/* Sous-titre */}
@@ -218,14 +218,14 @@ export default function Hero() {
                         className="flex-1 flex flex-col items-center gap-2 h-full justify-end"
                       >
                         <div
-                          className="w-full rounded-t-lg transition-all duration-500"
+                          className={`w-full rounded-t-lg transition-all duration-500 ${
+                            i === PROGRESSION_DATA.length - 1
+                              ? "bg-brand-accent"
+                              : "bg-brand-primary"
+                          }`}
                           style={{
                             height: `${(d.value / maxValue) * 100}%`,
                             minHeight: "20px",
-                            backgroundColor:
-                              i === PROGRESSION_DATA.length - 1
-                                ? "#E8501A"
-                                : "#1A3C34",
                             opacity:
                               i === PROGRESSION_DATA.length - 1
                                 ? 1

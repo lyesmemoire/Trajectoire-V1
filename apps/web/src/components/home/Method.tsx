@@ -115,7 +115,7 @@ export default function Method() {
         />
 
         {/* Layout : Steps à gauche, Détail à droite */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
 
           {/* ── Colonne gauche — Tablist ARIA conforme ── */}
           <div

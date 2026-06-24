@@ -71,13 +71,13 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 lg:py-32 bg-surface-muted">
+    <section id="faq" className="py-16 lg:py-20 bg-surface-muted">
       <Container>
         <SectionHeader
           badge="Questions fréquentes"
           badgeVariant="neutral"
           title={<>Tout ce que vous voulez savoir <span className="text-brand-primary">avant de vous lancer</span>.</>}
-          className="mb-16"
+          className="mb-12"
         />
 
         {/* Accordion */}

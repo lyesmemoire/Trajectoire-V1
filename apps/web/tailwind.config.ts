@@ -22,9 +22,9 @@ const config: Config = {
           primary: "#1A3C34",
           "primary-hover": "#142E28",
           "primary-light": "#2D5F50",
-          accent: "#E8501A",
-          "accent-hover": "#D04415",
-          "accent-light": "#F87850",
+          accent: "#C5350A",
+          "accent-hover": "#A52A08",
+          "accent-light": "#E8501A",
         },
 
         // Sémantique
