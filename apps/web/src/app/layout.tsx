@@ -40,7 +40,11 @@ export default function RootLayout({
           Aller au contenu principal
         </a>
         <PostHogProvider>
-          <main id="main-content">{children}</main>
+          <div className="min-h-screen flex flex-col">
+            <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {children}
+            </main>
+          </div>
         </PostHogProvider>
         {schemas.map((schema, index) => (
           <script
