@@ -264,7 +264,7 @@ export default function RapportPage() {
               {/* Radar + Bar */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 <Section id="radar" title="Profil comportemental">
-                  <div style={{ height: 280 }}>
+                  <div style={{ height: "280px" }}>
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart data={radarData}>
                         <PolarGrid stroke="var(--border)" />
@@ -286,7 +286,7 @@ export default function RapportPage() {
                 </Section>
 
                 <Section id="comparison" title="Évolution par dimension">
-                  <div style={{ height: 280 }}>
+                  <div style={{ height: "280px" }}>
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={barData} barGap={4}>
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(229,221,210,0.6)" />

@@ -164,7 +164,7 @@ export default function InterviewReportPage() {
       {competencies && (
         <div className="report-section">
           <div className="report-section-title">Compétences évaluées</div>
-          <div className="radar-container">
+          <div className="radar-container" style={{ height: "320px" }}>
             <ResponsiveContainer width="100%" height={320}>
               <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
                 <PolarGrid stroke="rgba(255,255,255,0.08)" />

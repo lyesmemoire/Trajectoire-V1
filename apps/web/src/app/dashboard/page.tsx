@@ -220,7 +220,7 @@ function OverviewPanel() {
 
         <motion.div variants={fadeInUp} className="bg-white rounded-2xl border p-6" style={{ borderColor: "var(--border)" }}>
           <h3 className="text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>Profil comportemental</h3>
-          <div style={{ height: 200 }}>
+          <div style={{ height: "200px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData}>
                 <PolarGrid stroke="var(--border)" />
@@ -248,7 +248,7 @@ function OverviewPanel() {
               </span>
             </div>
           </div>
-          <div style={{ height: 200 }}>
+          <div style={{ height: "200px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={progressionChart}>
                 <defs>
@@ -431,7 +431,7 @@ function CompetencesPanel() {
         <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>
           Scores par compétence — comparaison période précédente
         </h3>
-        <div style={{ height: 260 }}>
+        <div style={{ height: "260px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} barGap={4}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(229,221,210,0.6)" />
@@ -490,7 +490,7 @@ function CompetencesPanel() {
       {/* Stress bar chart */}
       <motion.div variants={fadeInUp} className="bg-white rounded-2xl border p-6" style={{ borderColor: "var(--border)" }}>
         <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>Gestion de la pression par contexte</h3>
-        <div style={{ height: 200 }}>
+        <div style={{ height: "200px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={stressData} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(229,221,210,0.6)" />
@@ -538,7 +538,7 @@ function ProgressionPanel() {
     <motion.div key="progression" variants={staggerContainer} initial="hidden" animate="visible" exit={{ opacity: 0 }} className="space-y-6">
       <motion.div variants={fadeInUp} className="bg-white rounded-2xl border p-6" style={{ borderColor: "var(--border)" }}>
         <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text)" }}>Évolution de vos scores — 8 semaines</h3>
-        <div style={{ height: 300 }}>
+        <div style={{ height: "300px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={progressionChart}>
               <defs>
