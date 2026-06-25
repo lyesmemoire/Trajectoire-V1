@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { createLogger } from "@/lib/logger";
 import type {
   DashboardSummary,
   CompetencyScore,
@@ -24,6 +25,8 @@ import {
   markAllNotificationsRead,
 } from "@/lib/supabase/queries";
 
+const logger = createLogger({ component: "useDashboard" });
+
 /* ── Fetch simulations (not in queries.ts yet) ── */
 async function getSimulations(
   supabase: ReturnType<typeof useSupabase>,
@@ -37,7 +40,7 @@ async function getSimulations(
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) { console.error("getSimulations:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getSimulations failed"); return []; }
   return data ?? [];
 }
 

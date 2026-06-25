@@ -22,9 +22,9 @@ const tooltipStyle = {
 
 const TABS = [
   { id: "overview",        label: "Vue d'ensemble",  locked: false },
-  { id: "skills",          label: "Compétences",     locked: true  },
-  { id: "progression",     label: "Progression",     locked: true  },
-  { id: "recommendations", label: "Recommandations", locked: true  },
+  { id: "skills",          label: "Compétences",     locked: false  },
+  { id: "progression",     label: "Progression",     locked: false  },
+  { id: "recommendations", label: "Recommandations", locked: false  },
 ];
 
 // 3 points colorés de la barre de titre — palette neutralisée (design system)

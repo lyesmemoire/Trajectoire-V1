@@ -18,6 +18,9 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger({ component: "InterviewRoom" });
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -202,7 +205,7 @@ export default function InterviewRoom({
       });
     } catch {
       // Lecture audio non critique — on logue silencieusement
-      console.warn("[InterviewRoom] Erreur lecture audio TTS");
+      logger.warn("Erreur lecture audio TTS");
     }
   }
 

@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { createLogger } from "@/lib/logger";
 
 type State = "Listening" | "Evaluating" | "Responding";
+
+const logger = createLogger({ component: "InterviewRoom" });
 
 export default function InterviewRoom({
   sessionId,
@@ -11,6 +14,7 @@ export default function InterviewRoom({
   sessionId: string;
 }) {
   const router = useRouter();
+  const interviewLogger = createLogger({ component: "InterviewRoom", sessionId });
 
   const wsRef = useRef<WebSocket | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -56,7 +60,7 @@ export default function InterviewRoom({
 
         ws.onopen = async () => {
           if (disposed) return;
-          console.log("WebSocket connected.");
+          interviewLogger.info({ sessionId }, "WebSocket connected");
 
           // 3. Create AudioContext at 16kHz to match Deepgram's expected sample rate
           const audioCtx = new AudioContext({ sampleRate: 16000 });
@@ -150,7 +154,7 @@ export default function InterviewRoom({
         };
 
         ws.onclose = () => {
-          console.log("WebSocket closed.");
+          interviewLogger.info({ sessionId }, "WebSocket closed");
         };
       } catch (err: any) {
         if (!disposed) setError(err.message || "Microphone access denied.");

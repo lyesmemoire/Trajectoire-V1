@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createLogger } from "@/lib/logger";
 import {
   getUserSubscription,
   hasPremiumAccess,
 } from "@/lib/billing/get-user-subscription";
+
+const logger = createLogger({ component: "api-interviews-report" });
 
 type InterviewScore = {
   finalExecutiveScore?: number;
@@ -97,7 +100,7 @@ export async function GET(
 
     return NextResponse.json(report);
   } catch (error) {
-    console.error("Error generating report:", error);
+    logger.error({ error, interviewId: resolvedParams.id }, "Error generating report");
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

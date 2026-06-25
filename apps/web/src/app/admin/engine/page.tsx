@@ -1,6 +1,9 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger({ component: "admin-engine" });
 
 export default function AdminEnginePage() {
   const [data, setData] = useState<any>(null);
@@ -9,7 +12,7 @@ export default function AdminEnginePage() {
     fetch("/api/engine/metrics")
       .then(res => res.json())
       .then(json => setData(json))
-      .catch(console.error);
+      .catch((err) => logger.error({ error: err }, "Failed to fetch engine metrics"));
   }, []);
 
   if (!data) return <div>Loading Engine Metrics...</div>;

@@ -8,30 +8,32 @@ import { Container, SectionHeader, Card, LinkButton } from "@/components/ui";
 
 const PLANS = [
   {
-    name: "Essentiel",
-    tagline: "Pour clarifier votre prochaine décision",
-    priceMonthly: 29,
-    priceYearly: 290,
-    description: "L'évaluation comportementale complète + plan d'action personnalisé.",
+    name: "Trial",
+    tagline: "Découvrez Trajectoire gratuitement",
+    priceMonthly: 0,
+    priceYearly: 0,
+    description: "7 jours d'accès complet pour tester la plateforme. Sans carte bancaire.",
     features: [
       "Évaluation Career DNA complète",
       "Profil comportemental détaillé",
-      "Cartographie de vos forces",
-      "Plan d'action sur 4 semaines",
-      "Accès au coaching IA (50 questions/mois)",
-      "Support email sous 24h",
+      "Plan d'action sur 1 semaine",
+      "Accès au coaching IA (10 questions)",
+      "Support email",
     ],
-    cta: "Démarrer l'évaluation",
+    cta: "Commencer l'essai gratuit",
     highlight: false,
+    badge: "7 jours gratuit",
   },
   {
     name: "Cadre",
     tagline: "Pour préparer un moment à fort enjeu",
     priceMonthly: 79,
     priceYearly: 790,
-    description: "Tout l'Essentiel + simulations vidéo illimitées + coaching IA contextuel.",
+    description: "Simulations vidéo illimitées + coaching IA contextuel pour vos décisions critiques.",
     features: [
-      "Tout ce qui est inclus dans Essentiel",
+      "Évaluation Career DNA complète",
+      "Profil comportemental détaillé",
+      "Cartographie de vos forces",
       "Simulations vidéo illimitées",
       "Analyse comportementale en direct",
       "Coaching IA contextuel illimité (24/7)",
@@ -42,24 +44,6 @@ const PLANS = [
     cta: "Choisir Cadre",
     highlight: true,
     badge: "Le plus choisi",
-  },
-  {
-    name: "Direction",
-    tagline: "Pour les enjeux exécutifs et dirigeants",
-    priceMonthly: 249,
-    priceYearly: 2490,
-    description: "Tout Cadre + accompagnement humain par un coach exécutif certifié.",
-    features: [
-      "Tout ce qui est inclus dans Cadre",
-      "2 sessions / mois avec un coach exécutif",
-      "Préparation board & comité de direction",
-      "Analyse stratégique 360° de votre positionnement",
-      "Hotline coach prioritaire",
-      "Suivi confidentiel multi-trimestres",
-      "Onboarding personnalisé",
-    ],
-    cta: "Demander un entretien",
-    highlight: false,
   },
 ];
 
@@ -105,17 +89,21 @@ export default function Pricing() {
             >
               Annuel
               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-success-light text-success">
-                −2 mois
+                −17%
               </span>
             </button>
           </div>
+          <p className="ml-4 text-sm text-ink-muted">
+            Économisez 2 mois par an
+          </p>
         </div>
 
         {/* Grille des plans */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch lg:items-start max-w-4xl mx-auto">
           {PLANS.map((plan) => {
             const price = billing === "monthly" ? plan.priceMonthly : Math.round(plan.priceYearly / 12);
             const isHighlight = plan.highlight;
+            const isFree = price === 0;
             return (
               <Card
                 key={plan.name}
@@ -141,18 +129,22 @@ export default function Pricing() {
 
                 <div className="flex items-baseline gap-2 mb-2">
                   <span className="font-bold text-[52px] leading-none tracking-tight">
-                    {price}€
+                    {isFree ? "Gratuit" : `${price}€`}
                   </span>
-                  <span className={`text-[15px] ${isHighlight ? "text-white/60" : "text-ink-muted"}`}>
-                    / mois
-                  </span>
+                  {!isFree && (
+                    <span className={`text-[15px] ${isHighlight ? "text-white/60" : "text-ink-muted"}`}>
+                      / mois
+                    </span>
+                  )}
                 </div>
 
-                <div className={`text-xs mb-6 ${isHighlight ? "text-white/60" : "text-ink-muted"}`}>
-                  {billing === "yearly"
-                    ? `Soit ${plan.priceYearly}€ facturés annuellement`
-                    : "Facturation mensuelle, sans engagement"}
-                </div>
+                {!isFree && (
+                  <div className={`text-xs mb-6 ${isHighlight ? "text-white/60" : "text-ink-muted"}`}>
+                    {billing === "yearly"
+                      ? `Soit ${plan.priceYearly}€ facturés annuellement`
+                      : "Facturation mensuelle, sans engagement"}
+                  </div>
+                )}
 
                 <p className={`text-sm leading-relaxed mb-8 pb-8 border-b ${isHighlight ? "text-white/90 border-white/20" : "text-ink border-border"}`}>
                   {plan.description}
@@ -181,9 +173,11 @@ export default function Pricing() {
                   >
                     {plan.cta}
                   </LinkButton>
-                  <p className={`text-xs text-center font-medium ${isHighlight ? "text-white/70" : "text-ink-subtle"}`}>
-                    Aucune carte bancaire requise
-                  </p>
+                  {!isFree && (
+                    <p className={`text-xs text-center font-medium ${isHighlight ? "text-white/70" : "text-ink-subtle"}`}>
+                      Aucune carte bancaire requise
+                    </p>
+                  )}
                 </div>
               </Card>
             );

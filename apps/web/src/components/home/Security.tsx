@@ -28,7 +28,7 @@ const SECURITY_ITEMS = [
 
 export default function Security() {
   return (
-    <section className="py-16 bg-brand-primary text-white">
+    <section className="py-20 bg-brand-primary text-white">
       <Container>
         <SectionHeader
           badge="Confidentialité absolue"

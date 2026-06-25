@@ -8,7 +8,10 @@ import { staggerContainer, fadeInUp } from "@/lib/motion";
 import { SITE_NAME } from "@/lib/constants";
 import { useSupabase } from "@/hooks/useSupabase";
 import { useUser } from "@/hooks/useUser";
+import { createLogger } from "@/lib/logger";
 import type { SimulationType } from "@/types/database";
+
+const logger = createLogger({ component: "dashboard-simulation" });
 
 /* ─────────────────────────────────────────────────────────
    Types
@@ -1191,7 +1194,7 @@ export default function SimulationPage() {
           throw error;
         }
       } catch (err) {
-        console.error("Erreur sauvegarde simulation:", err);
+        logger.error({ error: err }, "Erreur sauvegarde simulation");
         setSaveError("Vos résultats ont été calculés mais n'ont pas pu être sauvegardés.");
       }
     }

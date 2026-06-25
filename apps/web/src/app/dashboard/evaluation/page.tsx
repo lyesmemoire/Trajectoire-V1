@@ -8,11 +8,14 @@ import { staggerContainer, fadeInUp } from "@/lib/motion";
 import { SITE_NAME } from "@/lib/constants";
 import { useSupabase } from "@/hooks/useSupabase";
 import { useUser } from "@/hooks/useUser";
+import { createLogger } from "@/lib/logger";
 import {
   createEvaluation,
   completeEvaluation,
   upsertCompetencyScores,
 } from "@/lib/supabase/queries";
+
+const logger = createLogger({ component: "dashboard-evaluation" });
 
 /* ─────────────────────────────────────────────────────────
    Types
@@ -968,7 +971,7 @@ export default function EvaluationPage() {
           );
         }
       } catch (err) {
-        console.error("Erreur sauvegarde évaluation:", err);
+        logger.error({ error: err }, "Erreur sauvegarde évaluation");
         setSaveError("Vos résultats ont été calculés mais n'ont pas pu être sauvegardés.");
       }
     }

@@ -12,23 +12,26 @@ export interface AuthCardProps {
 export function AuthCard({ title, subtitle, icon, children, className }: AuthCardProps) {
   return (
     <div
-      className={cn("bg-white rounded-2xl border border-border p-8 lg:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.06)]", className)}
+      className={cn(
+        "bg-white rounded-3xl border border-border p-8 lg:p-10 shadow-elevated",
+        className
+      )}
     >
       {/* Heading */}
       <div className="mb-8">
         {icon && (
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-brand-primary/10 text-brand-primary"
+            className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 bg-brand-primary text-white shadow-glow-primary"
             aria-hidden="true"
           >
             {icon}
           </div>
         )}
-        <h1 className="text-2xl font-bold mb-1 text-ink">
+        <h1 className="text-3xl font-bold mb-3 text-ink leading-tight">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-base text-ink-muted">
+          <p className="text-lg text-ink-muted leading-relaxed">
             {subtitle}
           </p>
         )}

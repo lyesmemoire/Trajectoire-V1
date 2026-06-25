@@ -111,7 +111,7 @@ export function RegisterStepProfile({
               id="role"
               value={data.role}
               onChange={(e) => onChange("role", e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl text-base outline-none transition-all duration-200 appearance-none bg-background border border-border focus-visible:border-brand-primary focus-visible:ring-4 focus-visible:ring-brand-primary/10 ${
+              className={`w-full px-4 py-3 rounded-xl text-base outline-none transition-all duration-200 appearance-none bg-white border border-border focus-visible:border-brand-primary focus-visible:ring-4 focus-visible:ring-brand-primary/10 ${
                 data.role ? "text-ink" : "text-ink-muted"
               }`}
             >

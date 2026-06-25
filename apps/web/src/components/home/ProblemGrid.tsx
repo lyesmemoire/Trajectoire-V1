@@ -32,7 +32,7 @@ const PROBLEMS = [
 
 export default function ProblemGrid() {
   return (
-    <section className="py-16 bg-surface-muted border-b border-border">
+    <section className="py-20 bg-surface-muted border-b border-border">
       <Container>
         <SectionHeader
           badge="Le constat"

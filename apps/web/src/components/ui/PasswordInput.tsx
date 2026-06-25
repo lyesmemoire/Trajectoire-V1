@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, useState } from "react";
 import { Input, type InputProps } from "./Input";
 import { Eye, EyeOff } from "lucide-react";

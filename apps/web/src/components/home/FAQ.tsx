@@ -71,7 +71,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-16 lg:py-20 bg-surface-muted">
+    <section id="faq" className="py-20 bg-surface-muted">
       <Container>
         <SectionHeader
           badge="Questions fréquentes"

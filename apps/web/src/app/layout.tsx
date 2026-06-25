@@ -1,58 +1,34 @@
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { defaultMetadata } from "@/lib/seo";
-import { generateAllSchemas } from "@/lib/schema";
-import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 
-export const metadata: Metadata = defaultMetadata;
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const schemas = generateAllSchemas();
+export const metadata: Metadata = {
+  metadataBase: new URL("https://trajectoire.app"),
+  title: {
+    default: "Trajectoire – Reprenez le contrôle.",
+    template: "%s | Trajectoire",
+  },
+  description: "Trajectoire aide les cadres et dirigeants à prendre les bonnes décisions avec clarté et confiance.",
+  openGraph: {
+    title: "Trajectoire – Reprenez le contrôle.",
+    description: "Passez de l'intuition à la certitude.",
+    type: "website",
+    locale: "fr_FR",
+    siteName: "Trajectoire",
+    url: "https://trajectoire.app",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Trajectoire" }],
+  },
+};
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={GeistSans.variable} data-scroll-behavior="smooth">
-      <head>
-        <meta name="theme-color" content="#FFFFFF" />
-        <meta name="color-scheme" content="light" />
-      </head>
-      <body className="antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only"
-          style={{
-            position: "absolute",
-            top: "1rem",
-            left: "1rem",
-            zIndex: 50,
-            padding: "0.5rem 1rem",
-            backgroundColor: "white",
-            color: "var(--primary)",
-            borderRadius: "0.5rem",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
-            fontWeight: 600,
-          }}
-        >
-          Aller au contenu principal
-        </a>
-        <PostHogProvider>
-          <div className="min-h-screen flex flex-col">
-            <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              {children}
-            </main>
-          </div>
-        </PostHogProvider>
-        {schemas.map((schema, index) => (
-          <script
-            key={index}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-          />
-        ))}
+    <html lang="fr" className={`${inter.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-white text-ink antialiased">
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-primary text-white px-4 py-2 rounded-lg z-50">Aller au contenu principal</a>
+        <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>
   );

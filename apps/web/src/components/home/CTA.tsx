@@ -38,7 +38,7 @@ export default function CTA() {
           <div className="flex flex-col items-center gap-4 relative z-10">
             <LinkButton
               href="/register"
-              variant="accent"
+              variant="primary"
               size="xl"
               rightIcon={<ArrowRight size={20} />}
             >

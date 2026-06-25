@@ -1,6 +1,9 @@
 ﻿"use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
+import { createLogger } from "@/lib/logger"
+
+const logger = createLogger({ component: "useVoiceInterview" });
 
 export type InterviewState =
   | "connecting"
@@ -68,7 +71,7 @@ export function useVoiceInterview(wsUrl: string, token: string) {
         setState("user_speaking")
       }
     } catch (e) {
-      console.error("Erreur lecture audio", e)
+      logger.error({ error: e }, "Erreur lecture audio");
     }
   }, [])
 
@@ -120,7 +123,7 @@ export function useVoiceInterview(wsUrl: string, token: string) {
         workletNodeRef.current = workletNode;
         return true;
       } catch (workletErr) {
-        console.warn("[VoiceInterview] AudioWorklet échoué, fallback ScriptProcessor:", workletErr);
+        logger.warn({ error: workletErr }, "AudioWorklet échoué, fallback ScriptProcessor");
       }
     }
 
@@ -137,7 +140,7 @@ export function useVoiceInterview(wsUrl: string, token: string) {
       scriptProcessor.connect(audioCtx.destination);
       return true;
     } catch (fallbackErr) {
-      console.error("[VoiceInterview] ScriptProcessor aussi échoué:", fallbackErr);
+      logger.error({ error: fallbackErr }, "ScriptProcessor aussi échoué");
       setError("WORKLET_UNSUPPORTED");
       setState("error");
       return false;

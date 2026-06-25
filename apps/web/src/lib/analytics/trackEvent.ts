@@ -1,5 +1,8 @@
 import posthog from "posthog-js";
 import type { AnalyticsEventName } from "./events";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger({ component: "analytics" });
 
 /**
  * Envoie un événement à PostHog.
@@ -18,6 +21,6 @@ export function trackEvent(
   if (typeof window !== "undefined" && posthog.__loaded) {
     posthog.capture(eventName, properties);
   } else if (process.env.NODE_ENV === "development") {
-    console.debug(`[Analytics] Event bloqué ou SSR : ${eventName}`, properties);
+    logger.debug({ eventName, properties }, "Analytics event blocked or SSR");
   }
 }

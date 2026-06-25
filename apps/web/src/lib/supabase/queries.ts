@@ -1,4 +1,5 @@
 ﻿import type { Database } from "@/types/database";
+import { createLogger } from "@/lib/logger";
 import type {
   Profile,
   DashboardSummary,
@@ -12,6 +13,8 @@ import type {
 
 type Client = any; // SupabaseClient<Database>;
 
+const logger = createLogger({ component: "supabase-queries" });
+
 /* ── Profile ── */
 export async function getProfile(
   supabase: Client,
@@ -23,7 +26,7 @@ export async function getProfile(
     .eq("id", userId)
     .single();
 
-  if (error) { console.error("getProfile:", error.message); return null; }
+  if (error) { logger.error({ userId, error: error.message }, "getProfile failed"); return null; }
   return data;
 }
 
@@ -39,7 +42,7 @@ export async function updateProfile(
     .select()
     .single();
 
-  if (error) { console.error("updateProfile:", error.message); return null; }
+  if (error) { logger.error({ userId, error: error.message }, "updateProfile failed"); return null; }
   return data;
 }
 
@@ -54,7 +57,7 @@ export async function getDashboardSummary(
     .eq("user_id", userId)
     .single();
 
-  if (error) { console.error("getDashboardSummary:", error.message); return null; }
+  if (error) { logger.error({ userId, error: error.message }, "getDashboardSummary failed"); return null; }
   return data;
 }
 
@@ -72,7 +75,7 @@ export async function getLatestEvaluation(
     .limit(1)
     .single();
 
-  if (error) { console.error("getLatestEvaluation:", error.message); return null; }
+  if (error) { logger.error({ userId, error: error.message }, "getLatestEvaluation failed"); return null; }
   return data;
 }
 
@@ -86,7 +89,7 @@ export async function createEvaluation(
     .select()
     .single();
 
-  if (error) { console.error("createEvaluation:", error.message); return null; }
+  if (error) { logger.error({ userId, error: error.message }, "createEvaluation failed"); return null; }
   return data;
 }
 
@@ -108,7 +111,7 @@ export async function completeEvaluation(
     .select()
     .single();
 
-  if (error) { console.error("completeEvaluation:", error.message); return null; }
+  if (error) { logger.error({ evaluationId, error: error.message }, "completeEvaluation failed"); return null; }
   return data;
 }
 
@@ -126,7 +129,7 @@ export async function getLatestCompetencyScores(
     .eq("evaluation_id", latest.id)
     .order("name");
 
-  if (error) { console.error("getLatestCompetencyScores:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getLatestCompetencyScores failed"); return []; }
   return data ?? [];
 }
 
@@ -145,7 +148,7 @@ export async function upsertCompetencyScores(
   }));
 
   const { error } = await supabase.from("competency_scores").insert(payload);
-  if (error) console.error("upsertCompetencyScores:", error.message);
+  if (error) logger.error({ userId, evaluationId, error: error.message }, "upsertCompetencyScores failed");
 }
 
 /* ── Action items ── */
@@ -159,7 +162,7 @@ export async function getActionItems(
     .eq("user_id", userId)
     .order("created_at", { ascending: true });
 
-  if (error) { console.error("getActionItems:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getActionItems failed"); return []; }
   return data ?? [];
 }
 
@@ -175,7 +178,7 @@ export async function toggleActionItem(
     .select()
     .single();
 
-  if (error) { console.error("toggleActionItem:", error.message); return null; }
+  if (error) { logger.error({ itemId, error: error.message }, "toggleActionItem failed"); return null; }
   return data;
 }
 
@@ -190,7 +193,7 @@ export async function getPlanMilestones(
     .eq("user_id", userId)
     .order("position", { ascending: true });
 
-  if (error) { console.error("getPlanMilestones:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getPlanMilestones failed"); return []; }
   return data ?? [];
 }
 
@@ -207,7 +210,7 @@ export async function getNotifications(
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) { console.error("getNotifications:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getNotifications failed"); return []; }
   return data ?? [];
 }
 
@@ -219,8 +222,7 @@ export async function markNotificationRead(
     .from("notifications")
     .update({ read: true })
     .eq("id", notifId);
-
-  if (error) console.error("markNotificationRead:", error.message);
+  if (error) logger.error({ notifId, error: error.message }, "markNotificationRead failed");
 }
 
 export async function markAllNotificationsRead(
@@ -232,8 +234,7 @@ export async function markAllNotificationsRead(
     .update({ read: true })
     .eq("user_id", userId)
     .eq("read", false);
-
-  if (error) console.error("markAllNotificationsRead:", error.message);
+  if (error) logger.error({ userId, error: error.message }, "markAllNotificationsRead failed");
 }
 
 /* ── Progression snapshots ── */
@@ -249,6 +250,6 @@ export async function getProgressionSnapshots(
     .order("recorded_at", { ascending: true })
     .limit(limit);
 
-  if (error) { console.error("getProgressionSnapshots:", error.message); return []; }
+  if (error) { logger.error({ userId, error: error.message }, "getProgressionSnapshots failed"); return []; }
   return data ?? [];
 }

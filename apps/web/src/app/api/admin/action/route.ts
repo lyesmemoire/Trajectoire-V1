@@ -3,7 +3,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { createLogger } from "@/lib/logger";
 import crypto from "crypto";
+
+const logger = createLogger({ component: "api-admin-action" });
 
 const AdminActionSchema = z.object({
   action: z.enum([
@@ -68,7 +71,7 @@ export async function POST(request: NextRequest) {
       });
 
     if (logError) {
-      console.error("[ADMIN_AUDIT_ERROR] Failed to log action", logError);
+      logger.error({ error: logError, adminUserId: user.id, action }, "Failed to log admin action");
       return NextResponse.json({ error: "Audit trail failed. Action aborted." }, { status: 500 });
     }
 
@@ -96,7 +99,7 @@ export async function POST(request: NextRequest) {
     // 7. Return success
     return NextResponse.json({ success: true, result });
   } catch (error: unknown) {
-    console.error("[ADMIN_ACTION_ERROR]", error);
+    logger.error({ error }, "Admin action error");
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

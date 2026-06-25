@@ -19,7 +19,7 @@ const PILLARS = [
 
 export default function ScienceLegitimacy() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <Container>
         <SectionHeader
           badge="Rigueur Scientifique"

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useRef, KeyboardEvent } from "react";
 import { Microscope, Crosshair, Drama, ClipboardCheck, Check, ArrowRight } from "lucide-react";
 import { Container, SectionHeader, Card, LinkButton } from "@/components/ui";
 
@@ -60,43 +59,6 @@ const STEPS = [
 ];
 
 export default function Method() {
-  const [activeStep, setActiveStep] = useState(0);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const step = STEPS[activeStep];
-  const Icon = step.icon;
-  const tabPanelId = `method-tabpanel-${activeStep}`;
-
-  // Navigation clavier conforme ARIA (flèches gauche/droite + Home/End)
-  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    let nextIndex: number | null = null;
-
-    switch (e.key) {
-      case "ArrowRight":
-      case "ArrowDown":
-        e.preventDefault();
-        nextIndex = (index + 1) % STEPS.length;
-        break;
-      case "ArrowLeft":
-      case "ArrowUp":
-        e.preventDefault();
-        nextIndex = (index - 1 + STEPS.length) % STEPS.length;
-        break;
-      case "Home":
-        e.preventDefault();
-        nextIndex = 0;
-        break;
-      case "End":
-        e.preventDefault();
-        nextIndex = STEPS.length - 1;
-        break;
-    }
-
-    if (nextIndex !== null) {
-      setActiveStep(nextIndex);
-      tabRefs.current[nextIndex]?.focus();
-    }
-  };
-
   return (
     <section id="method" className="py-24 lg:py-32 bg-white">
       <Container>
@@ -114,116 +76,33 @@ export default function Method() {
           className="mb-16 lg:mb-20"
         />
 
-        {/* Layout : Steps à gauche, Détail à droite */}
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-
-          {/* ── Colonne gauche — Tablist ARIA conforme ── */}
-          <div
-            className="lg:col-span-5 flex flex-col gap-3"
-            role="tablist"
-            aria-label="Les 4 étapes de la méthode Trajectoire"
-            aria-orientation="vertical"
-          >
-            {STEPS.map((s, i) => {
-              const isActive = i === activeStep;
-              const StepIcon = s.icon;
-              const tabId = `method-tab-${i}`;
-              return (
-                <button
-                  key={s.number}
-                  ref={(el) => { tabRefs.current[i] = el; }}
-                  id={tabId}
-                  role="tab"
-                  type="button"
-                  aria-selected={isActive}
-                  aria-controls={tabPanelId}
-                  tabIndex={isActive ? 0 : -1}
-                  onClick={() => setActiveStep(i)}
-                  onKeyDown={(e) => handleKeyDown(e, i)}
-                  className={[
-                    "text-left p-5 lg:p-6 rounded-2xl transition-all duration-300",
-                    "flex-1 border min-h-[100px] outline-none",
-                    "focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2",
-                    isActive
-                      ? "bg-brand-primary border-brand-primary"
-                      : "bg-surface-muted border-border hover:bg-surface-muted/80",
-                  ].join(" ")}
-                >
-                  <div className="flex items-center gap-4 h-full">
-                    <div
-                      className={[
-                        "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
-                        "transition-all duration-300",
-                        isActive
-                          ? "bg-white/15 text-[var(--color-on-brand)]"
-                          : "bg-brand-primary/10 text-brand-primary",
-                      ].join(" ")}
-                    >
-                      <StepIcon size={22} />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div
-                        className={[
-                          "font-bold text-xs tracking-widest uppercase mb-1",
-                          isActive ? "text-white/60" : "text-ink-muted",
-                        ].join(" ")}
-                      >
-                        Étape {s.number}
-                      </div>
-                      <div
-                        className={[
-                          "text-body font-bold leading-tight tracking-tight",
-                          isActive ? "text-[var(--color-on-brand)]" : "text-ink",
-                        ].join(" ")}
-                      >
-                        {s.title}
-                      </div>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* ── Colonne droite — Tabpanel de l'étape active ── */}
-          <div className="lg:col-span-7">
-            <Card
-              variant="default"
-              padding="xl"
-              className="h-full flex flex-col bg-surface-muted border-border"
-            >
-              <div
-                id={tabPanelId}
-                role="tabpanel"
-                aria-labelledby={`method-tab-${activeStep}`}
-                tabIndex={0}
-                className="outline-none flex flex-col flex-1"
-              >
-                {/* Header de l'étape */}
-                <div className="flex items-start gap-5 mb-7">
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-brand-primary text-[var(--color-on-brand)]">
+        {/* Grille des étapes */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {STEPS.map((step) => {
+            const Icon = step.icon;
+            return (
+              <Card key={step.number} variant="default" padding="xl" className="bg-surface-muted border-border hover:shadow-elevated transition-shadow">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-brand-primary text-white">
                     <Icon size={28} />
                   </div>
                   <div className="min-w-0">
                     <div className="font-bold text-xs tracking-widest uppercase mb-2 text-brand-accent">
                       Étape {step.number} sur 04
                     </div>
-                    <h3 className="text-heading-3 text-ink mb-1">
+                    <h3 className="text-xl font-bold text-ink mb-1">
                       {step.title}
                     </h3>
-                    <p className="text-body font-medium text-brand-primary italic">
+                    <p className="text-sm font-medium text-brand-primary italic">
                       {step.subtitle}
                     </p>
                   </div>
                 </div>
 
-                {/* Description */}
-                <p className="mb-7 text-body leading-relaxed text-ink-muted">
+                <p className="text-sm leading-relaxed text-ink-muted mb-6">
                   {step.description}
                 </p>
 
-                {/* Livrables */}
                 <div className="mt-auto">
                   <div className="font-bold text-xs tracking-widest uppercase mb-3 text-ink-muted">
                     Ce que vous obtenez
@@ -237,37 +116,35 @@ export default function Method() {
                         <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-success/10 text-success">
                           <Check size={14} strokeWidth={2.5} />
                         </div>
-                        <span className="text-body-sm font-medium text-ink">
+                        <span className="text-sm font-medium text-ink">
                           {deliverable}
                         </span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </div>
+              </Card>
+            );
+          })}
+        </div>
 
-              {/* CTA — Pont vers la conversion, n'apparaît qu'à la dernière étape */}
-              {activeStep === STEPS.length - 1 && (
-                <div className="mt-8 pt-6 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <p className="text-body-sm text-ink-muted">
-                    Prêt à transformer votre prochaine étape de carrière&nbsp;?
-                  </p>
-                  <LinkButton
-                    variant="primary"
-                    size="md"
-                    href="#pricing"
-                    className="group"
-                  >
-                    Voir les formules
-                    <ArrowRight
-                      size={16}
-                      className="ml-2 transition-transform group-hover:translate-x-1"
-                    />
-                  </LinkButton>
-                </div>
-              )}
-            </Card>
-          </div>
+        {/* CTA final */}
+        <div className="mt-12 pt-8 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p className="text-sm text-ink-muted">
+            Prêt à transformer votre prochaine étape de carrière&nbsp;?
+          </p>
+          <LinkButton
+            variant="primary"
+            size="md"
+            href="#pricing"
+            className="group"
+          >
+            Voir les formules
+            <ArrowRight
+              size={16}
+              className="ml-2 transition-transform group-hover:translate-x-1"
+            />
+          </LinkButton>
         </div>
       </Container>
     </section>

@@ -28,7 +28,7 @@ const COMPARISON_DATA = [
 
 export default function WhyTrajectoire() {
   return (
-    <section id="why" className="py-16 bg-white">
+    <section id="why" className="py-20 bg-white">
       <Container>
         <SectionHeader
           badge="Le problème"

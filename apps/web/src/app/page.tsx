@@ -1,59 +1,56 @@
-"use client";
-
-import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/home/Footer";
 import Hero from "@/components/home/Hero";
-import CredibilityBar from "@/components/home/CredibilityBar";
-import TrustBar from "@/components/home/TrustBar";
 import ProblemGrid from "@/components/home/ProblemGrid";
-import WhyTrajectoire from "@/components/home/WhyTrajectoire";
-import Method from "@/components/home/Method";
-import TimelineMethod from "@/components/home/TimelineMethod";
 import ScienceLegitimacy from "@/components/home/ScienceLegitimacy";
-import Security from "@/components/home/Security";
-import Results from "@/components/home/Results";
-import FAQ from "@/components/home/FAQ";
+import TrustBar from "@/components/home/TrustBar";
+import Method from "@/components/home/Method";
 import Pricing from "@/components/home/Pricing";
 import CTA from "@/components/home/CTA";
-import Footer from "@/components/home/Footer";
-import { useScrollTracking } from "@/hooks/useScrollTracking";
+import WhyTrajectoire from "@/components/home/WhyTrajectoire";
+import TimelineMethod from "@/components/home/TimelineMethod";
+import Security from "@/components/home/Security";
+import FAQ from "@/components/home/FAQ";
+import ValuePreview from "@/components/home/ValuePreview";
+import { Container } from "@/components/ui";
 
-// We keep Dashboard and Testimonials dynamic if they contain heavy libraries like recharts/framer
-const Dashboard = dynamic(() => import("@/components/home/Dashboard"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[600px] bg-surface-muted animate-pulse rounded-2xl" />
-  ),
-});
+import dynamic from "next/dynamic";
 
-const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-96 bg-surface-muted animate-pulse rounded-2xl" />
-  ),
-});
+const Dashboard = dynamic(() => import("@/components/home/Dashboard"));
+const Results = dynamic(() => import("@/components/home/Results"));
+const Testimonials = dynamic(() => import("@/components/home/Testimonials"));
+
+export const metadata: Metadata = {
+  title: "Trajectoire – Reprenez le contrôle. Passez de l'intuition à la certitude.",
+  description: "Trajectoire aide les cadres et dirigeants à prendre les bonnes décisions avec clarté et confiance.",
+};
 
 export default function HomePage() {
-  useScrollTracking();
-
   return (
     <>
       <Header />
-      <Hero />
-      <CredibilityBar />
-      <TrustBar />
-      <ProblemGrid />
-      <WhyTrajectoire />
-      <Dashboard />
-      <Results />
-      <Testimonials />
-      <Method />
-      <TimelineMethod />
-      <ScienceLegitimacy />
-      <Security />
-      <Pricing />
-      <FAQ />
-      <CTA />
+      <main className="flex flex-col overflow-hidden">
+        <Hero />
+        <div className="py-20 bg-surface-muted">
+          <Container>
+            <ValuePreview />
+          </Container>
+        </div>
+        <TrustBar />
+        <ProblemGrid />
+        <WhyTrajectoire />
+        <Dashboard />
+        <Results />
+        <Testimonials />
+        <Method />
+        <TimelineMethod />
+        <ScienceLegitimacy />
+        <Security />
+        <Pricing />
+        <FAQ />
+        <CTA />
+      </main>
       <Footer />
     </>
   );

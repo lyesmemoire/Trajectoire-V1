@@ -18,21 +18,40 @@ export function AuthLayout({
   headerLinkHref = "/register",
 }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen grain-overlay flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-surface-muted relative overflow-hidden">
+      {/* Background décoratif */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(26,60,52,0.08) 0%, transparent 60%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 40% 30% at 100% 100%, rgba(232,80,26,0.05) 0%, transparent 60%)",
+        }}
+      />
+
       {/* Header */}
-      <header className="px-6 py-5 flex items-center justify-between max-w-7xl mx-auto w-full">
+      <header className="relative px-6 py-6 flex items-center justify-between max-w-7xl mx-auto w-full">
         <Link
           href="/"
-          className="text-xl font-bold text-ink transition-opacity hover:opacity-75"
+          className="flex items-center gap-2.5 group"
           aria-label={`${SITE_NAME} — Retour à l'accueil`}
         >
-          {SITE_NAME}
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white bg-brand-primary text-[17px] transition-transform duration-300 group-hover:scale-105">
+            T
+          </div>
+          <span className="font-bold text-lg tracking-tight text-ink">
+            {SITE_NAME}
+          </span>
         </Link>
         <p className="text-sm text-ink-muted">
           {headerText}{" "}
           <Link
             href={headerLinkHref}
-            className="font-semibold text-brand-primary underline underline-offset-4 transition-colors"
+            className="font-semibold text-brand-primary hover:text-brand-primary-hover transition-colors"
           >
             {headerLinkText}
           </Link>
@@ -40,7 +59,7 @@ export function AuthLayout({
       </header>
 
       {/* Main */}
-      <main className="flex-1 flex items-start justify-center px-6 py-8 lg:py-12">
+      <main className="relative flex-1 flex items-center justify-center px-6 py-8 lg:py-12">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -52,10 +71,10 @@ export function AuthLayout({
           {/* Trust strip */}
           <motion.p
             variants={fadeInUp}
-            className="text-center text-xs mt-4 leading-relaxed text-ink-muted"
+            className="text-center text-xs mt-6 leading-relaxed text-ink-muted"
           >
             Vos données sont protégées et conformes RGPD.{" "}
-            <Link href="/privacy" className="underline underline-offset-4 text-ink-muted hover:text-ink">
+            <Link href="/privacy" className="text-ink-muted hover:text-ink underline underline-offset-4">
               Politique de confidentialité
             </Link>
           </motion.p>

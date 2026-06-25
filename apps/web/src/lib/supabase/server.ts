@@ -1,6 +1,9 @@
 ﻿import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger({ component: "supabase-server" });
 
 function getEnvVar(name: string): string {
   const value = process.env[name];
@@ -14,11 +17,8 @@ function getEnvVar(name: string): string {
       );
     }
     
-    // En développement : log un warning et retourne un placeholder
-    console.warn(
-      `[Trajectoire] Variable d'environnement manquante : ${name}\n` +
-      `Fonctionnalité limitée. Ajoutez cette variable dans .env.local pour activer toutes les features.`
-    );
+    // En développement : log un warning grâce au logger
+    logger.warn({ envVar: name }, "Variable d'environnement manquante");
     
     // Placeholder pour permettre l'initialisation du client en dev
     if (name === "NEXT_PUBLIC_SUPABASE_URL") return "https://placeholder.supabase.co";
