@@ -1,44 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { GetCurrentUserQuery } from "@/lib/auth/application/queries/get-current-user.query";
+import { AuthPresenter } from "@/lib/auth/presentation/AuthPresenter";
+import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
 
-/**
- * GDPR Data Portability: Allows users to download their progress and data.
- */
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
-    if (!user)
+    const user = await getStrictUser(req);
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    const fullData = await prisma.user.findUnique({
-      where: { id: user.id },
-      include: {
-        careerProfile: true,
-        BehavioralPattern: true,
-        interviewSessions: {
-          select: {
-            jobTitle: true,
-            score: true,
-            createdAt: true,
-            analysis: true,
-          },
-        },
-      },
-    });
+    return RequestContext.run(
+      { userId: user.id, correlationId: crypto.randomUUID(), requestId: crypto.randomUUID() },
+      async () => {
+        const getCurrentUserQuery = appContainer.resolve<GetCurrentUserQuery>("GetCurrentUserQuery");
+        const result = await getCurrentUserQuery.execute({ userId: user.id });
 
-    return NextResponse.json({
-      exported_at: new Date().toISOString(),
-      user_profile: {
-        name: fullData?.name,
-        email: fullData?.email,
-        role: fullData?.role,
-      },
-      career_data: fullData?.careerProfile,
-      patterns: fullData?.BehavioralPattern,
-      sessions: fullData?.interviewSessions,
-    });
+        if (result.isFailure()) {
+          const error = result.unwrapError();
+          const httpResponse = ErrorHttpMapper.toHttpResponse(error);
+          return NextResponse.json(
+            { error: httpResponse.body.error, code: httpResponse.body.code },
+            { status: httpResponse.status }
+          );
+        }
+
+        const presenter = new AuthPresenter();
+        const response = presenter.present(result.unwrap());
+        return NextResponse.json(response);
+      }
+    );
   } catch (error: any) {
-    return NextResponse.json({ error: "Export failed" }, { status: 500 });
+    console.error("[API/User/ExportData] Error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

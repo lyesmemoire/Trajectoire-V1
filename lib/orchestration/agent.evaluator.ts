@@ -4,7 +4,6 @@ import { FraudKernelEngine } from "@/lib/fraud/fraud-kernel.engine";
 import { FraudKernel } from "@/lib/fraud/fraud-kernel";
 import { evaluateBilling } from "@/lib/agents/billing.agent";
 import { evaluateInterview } from "@/lib/agents/interview.agent";
-import { evaluateCV } from "@/lib/agents/cv.agent";
 import { evaluateBehavior } from "@/lib/agents/behavior.agent";
 import { resolveConsensus } from "./consensus.engine";
 
@@ -35,7 +34,6 @@ export function evaluateSystemContext(ctx: EvaluationContext, trace: TraceContex
     { name: "fraud", fn: fraudKernelEngine.evaluate.bind(fraudKernelEngine) },
     { name: "billing", fn: evaluateBilling },
     { name: "interview", fn: evaluateInterview },
-    { name: "cv", fn: evaluateCV },
     { name: "behavior", fn: evaluateBehavior },
   ];
 

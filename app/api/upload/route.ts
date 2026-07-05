@@ -4,31 +4,33 @@ import { NextRequest, NextResponse } from "next/server";
 import pdf from "pdf-parse";
 import OpenAI from "openai";
 import { chunkText } from "@/lib/ai/chunker";
-import {
-  createSupabaseServerClient,
-  createSupabaseServiceClient,
-} from "@/lib/supabase-server";
+import { createServerClient } from "@/lib/supabase/server";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { uploadLimiter } from "@/lib/security/rate-limit";
+import { envServer } from "@/lib/env.server";
 
 let openai: OpenAI;
 function getOpenAI() {
   if (!openai) {
-    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy" });
+    openai = new OpenAI({ apiKey: envServer.OPENAI_API_KEY || "dummy" });
   }
   return openai;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = await createSupabaseServerClient();
-
-    // ✅ Auth (protégé par RLS)
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const user = await getStrictUser(req);
     if (!user) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
+
+    const { success } = await uploadLimiter.limit(`upload:${user.id}`);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    const supabase = await createServerClient();
 
     const formData = await req.formData();
     const file = formData.get("file");
@@ -64,7 +66,7 @@ export async function POST(req: NextRequest) {
     const safeText = extractedText.slice(0, MAX_CHARS);
 
     // Ensure the "cvs" bucket exists and perform actions using the admin client for maximum robustness
-    const supabaseAdmin = createSupabaseServiceClient();
+    const supabaseAdmin = createAdminClientSupabase();
 
     try {
       const { data: buckets } = await supabaseAdmin.storage.listBuckets();
@@ -157,7 +159,7 @@ export async function POST(req: NextRequest) {
       }));
 
       // 4. Save to DB (using service_role since policy on insert with join can be tricky)
-      const supabaseAdmin = createSupabaseServiceClient();
+      const supabaseAdmin = createAdminClientSupabase();
 
       const { error: embedError } = await supabaseAdmin
         .from("cv_embeddings")

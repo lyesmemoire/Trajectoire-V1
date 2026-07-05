@@ -2,10 +2,12 @@ export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { envServer } from "@/lib/env.server";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: envServer.UPSTASH_REDIS_REST_URL!,
+  token: envServer.UPSTASH_REDIS_REST_TOKEN!,
 });
 
 /**
@@ -15,7 +17,7 @@ const redis = new Redis({
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
 
-  console.error(
+  LoggerProvider.getLogger().error(
     `[HONEYPOT HIT] IP: ${ip} | UA: ${req.headers.get("user-agent")}`,
   );
 

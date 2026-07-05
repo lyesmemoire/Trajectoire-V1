@@ -1,5 +1,6 @@
 /**
  * Surveille l'état de l'AudioContext pour détecter les suspensions système (Safari iOS).
+ * Client-side file - console.log is appropriate for browser debugging
  */
 export function createAudioContextWatcher(
   context: AudioContext,

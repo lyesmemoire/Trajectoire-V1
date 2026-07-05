@@ -1,86 +1,76 @@
 import { z } from "zod";
-import { NextRequest, NextResponse } from "next/server";
-import { renderToBuffer } from "@react-pdf/renderer";
-import { createElement } from "react";
-import { ModernTemplate } from "@/lib/pdf/templates/modern";
-import { CVData, ExportOptions } from "@/lib/pdf/types";
-import { requireAuth } from "@/lib/auth";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { ExportCvPdfUseCase } from "@/lib/cv/application/use-cases/export/export-cv-pdf.use-case";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
+import { NextRequest, NextResponse } from "next/server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { logger } from "@/lib/core/logger";
 
-const TEMPLATES = {
-  modern: ModernTemplate,
-};
+export const dynamic = "force-dynamic";
+
+const RequestSchema = z.object({
+  cvId: z.string().optional(),
+  cvData: z.object({
+    personalInfo: z.object({
+      name: z.string().min(1, "Le nom est requis"),
+    }).passthrough(),
+  }).passthrough(),
+  options: z.object({
+    template: z.string().default("modern"),
+  }).passthrough().optional(),
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await requireAuth();
+    const user = await getStrictUser(req);
     if (!user) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { blocked } = await checkRateLimit(user.id, "optimize");
-    if (blocked) {
-      return NextResponse.json(
-        {
-          error: "Limite atteinte",
-          message: "Trop d'exports. Réessayez plus tard.",
-        },
-        { status: 429 },
-      );
-    }
+    return RequestContext.run(
+      { userId: user.id, correlationId: crypto.randomUUID(), requestId: crypto.randomUUID() },
+      async () => {
+        const { blocked } = await checkRateLimit(user.id, "optimize");
+        if (blocked) {
+          return NextResponse.json({ error: "Limite atteinte" }, { status: 429 });
+        }
 
-    const RequestSchema = z.object({
-      cvData: z.object({
-        personalInfo: z.object({
-          name: z.string().min(1, "Le nom est requis"),
-        }).passthrough(),
-      }).passthrough(),
-      options: z.object({
-        template: z.string().default("modern"),
-      }).passthrough().optional(),
-    });
+        const body = await req.json();
+        const parsed = RequestSchema.safeParse(body);
+        if (!parsed.success) {
+          return NextResponse.json({ error: "Validation failed" }, { status: 400 });
+        }
+        const input = parsed.data;
 
-    const parsed = RequestSchema.safeParse(await req.json());
-    if (!parsed.success) {
-      return NextResponse.json(
-        { error: "Paramètres invalides.", details: parsed.error.flatten() },
-        { status: 400 }
-      );
-    }
-    const { cvData, options } = parsed.data as any as { cvData: CVData; options: ExportOptions };
+        const useCase = appContainer.resolve<ExportCvPdfUseCase>("ExportCvPdfUseCase");
+        
+        const result = await useCase.execute({
+          cvId: input.cvId,
+          cvData: input.cvData as any,
+          options: input.options as any,
+        });
 
-    const TemplateComponent =
-      TEMPLATES[options.template as keyof typeof TEMPLATES] || ModernTemplate;
+        if (result.isFailure()) {
+          return NextResponse.json({ error: result.unwrapError().message }, { status: 400 });
+        }
 
-    // Use createElement to avoid JSX in .ts file
-    const element = createElement(TemplateComponent as any, {
-      data: cvData,
-      options,
-    });
+        const pdfBuffer = result.unwrap();
+        const safeName = (input.cvData as any).personalInfo.name.replace(/[^a-zA-ZÀ-ÿ\s]/g, "").trim().replace(/\s+/g, "_");
+        const filename = `CV_${safeName}_${new Date().getFullYear()}.pdf`;
 
-    const pdfBuffer = await renderToBuffer(element as any);
-
-    const safeName = cvData.personalInfo.name
-      .replace(/[^a-zA-ZÀ-ÿ\s]/g, "")
-      .trim()
-      .replace(/\s+/g, "_");
-
-    const filename = `CV_${safeName}_${new Date().getFullYear()}.pdf`;
-
-    return new NextResponse(pdfBuffer as any, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${filename}"`,
-        "Content-Length": pdfBuffer.length.toString(),
-      },
-    });
-  } catch (error: any) {
-    console.error("[PDF Export Error]:", error);
-    const status = error.message === "Unauthorized" ? 401 : 500;
-    return NextResponse.json(
-      { error: error.message || "Erreur lors de la génération du PDF" },
-      { status },
+        return new NextResponse(pdfBuffer as any, {
+          status: 200,
+          headers: {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": `attachment; filename="${filename}"`,
+            "Content-Length": pdfBuffer.length.toString(),
+          },
+        });
+      }
     );
+  } catch (error: any) {
+    logger.error("PDF Export error", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

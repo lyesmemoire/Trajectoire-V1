@@ -4,6 +4,7 @@ import { EventStore } from "../contracts/event-store";
 import { SessionRegistry } from "../contracts/session-registry";
 import { WakeupNotifier } from "../contracts/wakeup-notifier";
 import { SecurityAuditStore } from "../contracts/security-audit-store";
+import { StructuredLogger } from "../contracts/structured-logger";
 import { canonicalize } from "../utils/canonicalize";
 import * as crypto from "crypto";
 
@@ -34,7 +35,8 @@ export class SILIngestor {
     private store: EventStore,
     private registry: SessionRegistry,
     private wakeup: WakeupNotifier,
-    private auditStore?: SecurityAuditStore
+    private auditStore?: SecurityAuditStore,
+    private logger?: StructuredLogger
   ) {}
 
   private async audit(event: IncomingSILEvent, reason: string) {
@@ -45,7 +47,14 @@ export class SILIngestor {
         eventId: event.eventId,
         reason,
         timestamp: Date.now()
-      }).catch(err => console.error("[Ingestor] Failed to audit rejection", err));
+      }).catch(err => this.logger?.error({ 
+        traceId: crypto.randomUUID(),
+        tenantId: event.tenantId,
+        sessionId: event.sessionId,
+        stage: "audit_rejection",
+        error: err,
+        message: "Failed to audit rejection"
+      }));
     }
   }
 
@@ -53,7 +62,14 @@ export class SILIngestor {
     // ── Step 1: Signature Verification ──────────────────────────
     const sigResult = await this.verifier.verifySignature(incomingEvent);
     if (!sigResult.isValid) {
-      console.error(`[Ingestor] Signature invalid for event ${incomingEvent.eventId}: ${sigResult.reason}`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: incomingEvent.tenantId,
+        sessionId: incomingEvent.sessionId,
+        stage: "signature_verification",
+        error: sigResult.reason,
+        message: `Signature invalid for event ${incomingEvent.eventId}`
+      });
       await this.audit(incomingEvent, `Signature invalid: ${sigResult.reason}`);
       return;
     }
@@ -61,7 +77,14 @@ export class SILIngestor {
     // ── Step 2: Tenant Identity Verification (via Verifier) ─────
     const tenantResult = await this.verifier.verifyTenant(incomingEvent);
     if (!tenantResult.isValid) {
-      console.error(`[Ingestor] Tenant identity invalid for event ${incomingEvent.eventId}: ${tenantResult.reason}`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: incomingEvent.tenantId,
+        sessionId: incomingEvent.sessionId,
+        stage: "tenant_verification",
+        error: tenantResult.reason,
+        message: `Tenant identity invalid for event ${incomingEvent.eventId}`
+      });
       await this.audit(incomingEvent, `Tenant invalid: ${tenantResult.reason}`);
       return;
     }
@@ -69,7 +92,14 @@ export class SILIngestor {
     // ── Step 3: Timestamp Window Verification ───────────────────
     const timeResult = await this.verifier.verifyTimestamp(incomingEvent);
     if (!timeResult.isValid) {
-      console.error(`[Ingestor] Timestamp invalid for event ${incomingEvent.eventId}: ${timeResult.reason}`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: incomingEvent.tenantId,
+        sessionId: incomingEvent.sessionId,
+        stage: "timestamp_verification",
+        error: timeResult.reason,
+        message: `Timestamp invalid for event ${incomingEvent.eventId}`
+      });
       await this.audit(incomingEvent, `Timestamp invalid: ${timeResult.reason}`);
       return;
     }
@@ -82,7 +112,13 @@ export class SILIngestor {
         const existingTenant = this.registry.getTenantId(incomingEvent.sessionId);
         if (existingTenant !== incomingEvent.tenantId) {
           const reason = `TENANT_ISOLATION_VIOLATION: SESSION_CREATED for session ${incomingEvent.sessionId} with tenant ${incomingEvent.tenantId}, but session already registered to tenant ${existingTenant}`;
-          console.error(`[Ingestor] ${reason}`);
+          this.logger?.error({
+            traceId: crypto.randomUUID(),
+            tenantId: incomingEvent.tenantId,
+            sessionId: incomingEvent.sessionId,
+            stage: "tenant_isolation",
+            message: reason
+          });
           await this.audit(incomingEvent, reason);
           return;
         }
@@ -93,7 +129,13 @@ export class SILIngestor {
       const registeredTenant = this.registry.getTenantId(incomingEvent.sessionId);
       if (registeredTenant !== undefined && registeredTenant !== incomingEvent.tenantId) {
         const reason = `TENANT_ISOLATION_VIOLATION for session ${incomingEvent.sessionId}: expected tenant ${registeredTenant}, got ${incomingEvent.tenantId}`;
-        console.error(`[Ingestor] ${reason}`);
+        this.logger?.error({
+          traceId: crypto.randomUUID(),
+          tenantId: incomingEvent.tenantId,
+          sessionId: incomingEvent.sessionId,
+          stage: "tenant_isolation",
+          message: reason
+        });
         await this.audit(incomingEvent, reason);
         return;
       }
@@ -104,7 +146,13 @@ export class SILIngestor {
     // ── Step 5: Idempotence Check ───────────────────────────────
     const alreadySeen = await this.store.hasEvent(incomingEvent.tenantId, incomingEvent.sessionId, incomingEvent.eventId);
     if (alreadySeen) {
-      console.log(`[Ingestor] Idempotency hit: Event ${incomingEvent.eventId} already processed. Skipping.`);
+      this.logger?.info({
+        traceId: crypto.randomUUID(),
+        tenantId: incomingEvent.tenantId,
+        sessionId: incomingEvent.sessionId,
+        stage: "idempotence_check",
+        message: `Event ${incomingEvent.eventId} already processed. Skipping.`
+      });
       return;
     }
 
@@ -113,7 +161,14 @@ export class SILIngestor {
       try {
         this.registry.register(incomingEvent.sessionId, incomingEvent.tenantId);
       } catch (err: any) {
-        console.error(`[Ingestor] TENANT_ISOLATION_VIOLATION during concurrent registration: ${err.message}`);
+        this.logger?.error({
+          traceId: crypto.randomUUID(),
+          tenantId: incomingEvent.tenantId,
+          sessionId: incomingEvent.sessionId,
+          stage: "session_registration",
+          error: err,
+          message: "TENANT_ISOLATION_VIOLATION during concurrent registration"
+        });
         return;
       }
     }

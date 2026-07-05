@@ -1,6 +1,7 @@
 // lib/openai.ts
 // Lazy-loaded OpenAI client — jamais instancié au build time.
 import OpenAI from "openai";
+import { envServer } from "@/lib/env.server";
 
 let openaiClient: OpenAI | null = null;
 

@@ -1,29 +1,25 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/service";
-import { logger } from "@/lib/logger";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
+import { LoggerProvider } from "@/lib/core/observability/logger";
+import { envServer } from "@/lib/env.server";
 
 const CLEANUP_THRESHOLD_MINUTES = 10;
 
 export async function GET(request: Request) {
   const startTime = Date.now();
-  const log = logger.child({
-    job: "cleanup-transactions",
-    correlationId: crypto.randomUUID(),
-  });
+  const log = LoggerProvider.getLogger();
 
   // 1. Vérification du secret
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    log.warn("cleanup_unauthorized_attempt", {
-      ip: request.headers.get("x-forwarded-for"),
-    });
+  if (authHeader !== `Bearer ${envServer.CRON_SECRET}`) {
+    log.warn("cleanup_unauthorized_attempt", { ip: request.headers.get("x-forwarded-for") });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   log.info("cleanup_started");
 
   try {
-    const supabase = createAdminClient();
+    const supabase = createAdminClientSupabase();
 
     // 2. Récupérer les transactions expirées
     const { data: expiredTxs, error: fetchError } = await supabase
@@ -62,10 +58,7 @@ export async function GET(request: Request) {
         });
 
         if (error) {
-          log.error("cleanup_rollback_failed", {
-            txId: tx.id,
-            error: error.message,
-          });
+          log.error("cleanup_rollback_failed", { txId: tx.id, error: error.message });
           throw error;
         }
 
@@ -92,7 +85,7 @@ export async function GET(request: Request) {
 
     // 4. Alert si taux d'échec > 10%
     if (failed > count * 0.1) {
-      log.alert("cleanup_high_failure_rate", {
+      log.error("cleanup_high_failure_rate", {
         failureRate: (failed / count) * 100,
         failed,
         total: count,

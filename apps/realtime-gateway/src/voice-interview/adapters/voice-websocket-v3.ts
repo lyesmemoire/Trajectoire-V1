@@ -18,7 +18,7 @@ const redisCircuit = new CircuitBreaker({ failureThreshold: 3, resetTimeoutMs: 3
 const intentRateLimiter = new SessionRateLimiter(500, 1);
 
 const supabase = createClient(
-  envServer.SUPABASE_URL,
+  envServer.SUPABASE_URL || envServer.NEXT_PUBLIC_SUPABASE_URL,
   envServer.SUPABASE_SERVICE_ROLE_KEY,
 );
 
@@ -99,15 +99,16 @@ export async function handleVoiceConnectionV3(
   const { state: initialState, question: initialQuestion } = initInterviewV3(initOptions);
 
   // 1. DB Kill Switch (with timeout + fail-open)
-  let settings: any = null;
+  let settings: any = { engine_enabled: true };
   try {
-    const res = await withTimeout(
-      supabase.from("engine_settings").select("engine_enabled").eq("id", "default").single(),
-      3000,
-      { data: { engine_enabled: true }, error: null, count: null, status: 200, statusText: "OK" }
-    );
-    if (res.error) throw res.error;
-    settings = res.data;
+    const query = supabase.from("engine_settings").select("engine_enabled").eq("id", "default").single();
+    const res = await Promise.race([
+      Promise.resolve(query),
+      new Promise<any>((resolve) => setTimeout(() => resolve({ data: { engine_enabled: true }, error: null }), 3000))
+    ]);
+    if (res && !res.error) {
+      settings = res.data;
+    }
   } catch (err) {
     log.warn({ event: 'db_kill_switch_failed_or_timeout', fallback: 'engine_enabled=true', err });
     settings = { engine_enabled: true };

@@ -1,4 +1,3 @@
-
 const GatewayEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL:  z.string().url(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
@@ -8,7 +7,7 @@ import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
+  gatewayEnv.NEXT_PUBLIC_SUPABASE_URL,
   gatewayEnv.SUPABASE_SERVICE_ROLE_KEY,
 );
 
@@ -43,6 +42,62 @@ export async function getUserPlan(userId: string): Promise<string> {
   return data.plan;
 }
 
+/**
+ * Reserve a credit for a session (2-phase commit: reserve → commit/rollback)
+ * Does NOT decrement the actual count yet - just creates a reservation
+ */
+export async function reserveCredit(userId: string, sessionId: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc("reserve_credit", {
+    p_user_id: userId,
+    p_session_id: sessionId,
+  });
+
+  if (error) {
+    console.error("[Credit] Reserve failed:", error);
+    return false;
+  }
+
+  return data === true;
+}
+
+/**
+ * Commit a reserved credit (actually decrement the count)
+ * Should be called when session completes successfully (finished === true)
+ */
+export async function commitCredit(sessionId: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc("commit_credit", {
+    p_session_id: sessionId,
+  });
+
+  if (error) {
+    console.error("[Credit] Commit failed:", error);
+    return false;
+  }
+
+  return data === true;
+}
+
+/**
+ * Cancel a reserved credit (no credit consumed)
+ * Should be called on error, crash, timeout, or early disconnect
+ */
+export async function cancelCredit(sessionId: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc("cancel_credit", {
+    p_session_id: sessionId,
+  });
+
+  if (error) {
+    console.error("[Credit] Cancel failed:", error);
+    return false;
+  }
+
+  return data === true;
+}
+
+/**
+ * Legacy function - DEPRECATED in favor of reserve/commit/cancel pattern
+ * Kept for backward compatibility but should not be used in new code
+ */
 export async function checkAndConsumeInterview(userId: string): Promise<boolean> {
   const monthKey = getMonthKey();
 

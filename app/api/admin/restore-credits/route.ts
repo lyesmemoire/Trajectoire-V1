@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/service";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 import crypto from "crypto";
 import { getStrictUser } from "@/lib/auth/session-logic";
 import { z } from "zod";
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   }
   const { user_id, amount } = bodyResult.data;
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClientSupabase();
 
   const { error } = await supabase.rpc("apply_credit_transaction", {
     user_id_input: user_id,

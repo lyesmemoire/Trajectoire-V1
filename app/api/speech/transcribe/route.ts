@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOpenAIClient } from "@/lib/openai";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { speechLimiter } from "@/lib/security/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
-    if (!user)
+    const user = await getStrictUser(req);
+    if (!user) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const { success } = await speechLimiter.limit(`speech:${user.id}`);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
 
     const formData = await req.formData();
     const audio = formData.get("audio") as File | null;

@@ -4,9 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import OpenAI from "openai";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
 import { computeAndSaveCTS } from "@/lib/scoring/career-trajectory";
 import { z } from "zod";
+import { envServer } from "@/lib/env.server";
 
 const feedbackSchema = z.object({
   overallScore: z.number().min(0).max(100),
@@ -28,14 +30,14 @@ const feedbackSchema = z.object({
 let openai: OpenAI;
 function getOpenAI() {
   if (!openai) {
-    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy" });
+    openai = new OpenAI({ apiKey: envServer.OPENAI_API_KEY || "dummy" });
   }
   return openai;
 }
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: envServer.UPSTASH_REDIS_REST_URL!,
+  token: envServer.UPSTASH_REDIS_REST_TOKEN!,
 });
 
 const ratelimit = new Ratelimit({
@@ -72,16 +74,13 @@ FORMAT JSON ATTENDU:
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = await createSupabaseServerClient();
-
     // ✅ 1. Auth
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const user = await getStrictUser(req);
     if (!user) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
+
+    const supabase = await createServerClient();
 
     // ✅ 2. Rate Limiting
     // Rate limiting (fail-open)

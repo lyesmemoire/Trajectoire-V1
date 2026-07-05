@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { orchestrateInterviewStep } from "@/lib/interview/orchestration/interview-orchestrator";
-import { getStrictUser } from "@/lib/auth/session-logic";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { interviewLimiter } from "@/lib/security/rate-limit";
 import { RequestHardening } from "@/lib/security/request-hardening";
 import { z } from "zod";
+import crypto from "crypto";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
+import { Pipeline } from "@/lib/core/runtime/pipeline/Pipeline";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { OrchestrateInterviewStepUseCase } from "@/lib/interview/application/use-cases/orchestrate-step/orchestrate-interview-step.use-case";
+import { InterviewPresenter } from "@/lib/interview/presentation/interview.presenter";
 
 const OrchestrateSchema = z.object({
   sessionId: z.string().uuid(),
@@ -15,91 +20,56 @@ const OrchestrateSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  try {
-    const { user } = await getStrictUser();
-    if (!user)
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // 1. Validation & Auth & RateLimit
+  const user = await getStrictUser(req);
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-    const bodyResult = OrchestrateSchema.safeParse(await req.json());
-    if (!bodyResult.success) {
-      return NextResponse.json(
-        { error: "Invalid request data", details: bodyResult.error.format() },
-        { status: 400 },
-      );
-    }
-    const {
-      sessionId,
-      userAnswer,
-      currentQuestion,
-      signature,
-      nonce,
-      metrics,
-    } = bodyResult.data;
+  const { success } = await interviewLimiter.limit(`interview:${user.id}`);
+  if (!success) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
 
-    // 🛡️ API HARDENING: Signature & Nonce Verification (Always Enforced)
-    const isValid = await RequestHardening.verifyRequest(
-      user.id,
-      signature,
-      JSON.stringify({ sessionId, userAnswer, currentQuestion }),
-      nonce,
-    );
-    if (!isValid)
-      return NextResponse.json(
-        { error: "Invalid request signature" },
-        { status: 403 },
-      );
-
-    // 🛡️ OWNERSHIP CHECK (Must happen BEFORE AI call)
-    const supabase = await createSupabaseServerClient();
-    const { data: session } = await supabase
-      .from("interview_sessions")
-      .select("answers")
-      .eq("id", sessionId)
-      .eq("user_id", user.id)
-      .single();
-
-    if (!session)
-      return NextResponse.json(
-        { error: "Session not found or unauthorized" },
-        { status: 404 },
-      );
-
-    // 🧠 AI CALL (After validation)
-    const result = await orchestrateInterviewStep(
-      sessionId,
-      userAnswer,
-      currentQuestion,
-      metrics,
-    );
-
-    const currentAnswers = Array.isArray(session.answers)
-      ? session.answers
-      : [];
-    const updatedAnswers = [
-      ...currentAnswers,
-      {
-        question: currentQuestion,
-        answer: userAnswer,
-        strategy: result.strategyUsed,
-        timestamp: new Date().toISOString(),
-      },
-    ];
-
-    await supabase
-      .from("interview_sessions")
-      .update({
-        answers: updatedAnswers,
-        current_state: result.currentState,
-        pressure_level: result.pressureLevel,
-      })
-      .eq("id", sessionId);
-
-    return NextResponse.json(result);
-  } catch (error: any) {
-    console.error("[Orchestrate API Error]:", error);
+  const bodyResult = OrchestrateSchema.safeParse(await req.json());
+  if (!bodyResult.success) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: "Invalid request data", details: bodyResult.error.format() },
+      { status: 400 },
     );
   }
+
+  const { sessionId, userAnswer, currentQuestion, signature, nonce, metrics } = bodyResult.data;
+
+  // 🛡️ API HARDENING: Signature & Nonce Verification (Always Enforced)
+  const isValid = await RequestHardening.verifyRequest(
+    user.id,
+    signature,
+    JSON.stringify({ sessionId, userAnswer, currentQuestion }),
+    nonce,
+  );
+  if (!isValid) {
+    return NextResponse.json({ error: "Invalid request signature" }, { status: 403 });
+  }
+
+  // 2. RequestContext.run()
+  const requestId = crypto.randomUUID();
+  return RequestContext.run({ userId: user.id, requestId, correlationId: requestId }, async () => {
+    // 3. Pipeline.execute()
+    const pipeline = new Pipeline<any, any>();
+    const useCase = appContainer.resolve<OrchestrateInterviewStepUseCase>("OrchestrateInterviewStepUseCase");
+    const presenter = appContainer.resolve<InterviewPresenter>("InterviewPresenter");
+
+    const result = await pipeline.execute({
+      sessionId,
+      userId: user.id,
+      userAnswer,
+      currentQuestion,
+      metrics,
+    }, (input) => useCase.execute(input));
+
+    // 4 & 5. Presenter & ErrorHttpMapper
+    const response = presenter.presentOrchestrate(result);
+    return NextResponse.json(response.body, { status: response.status });
+  });
 }

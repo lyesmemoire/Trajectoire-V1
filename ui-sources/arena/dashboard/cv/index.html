@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon CV | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --card: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --blue-primary: #1E40AF;
+            --blue-hover: #2563EB;
+            --blue-light: rgba(30, 64, 175, 0.08);
+            --gold-accent: #D4AF37;
+            --border: #E5E7EB;
+            --success: #16A34A;
+            --error: #DC2626;
+            --warning: #F59E0B;
+            --radius: 12px;
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ═══════════════════ SIDEBAR ═══════════════════ */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 24px 24px 32px;
+            display: block;
+            letter-spacing: -0.02em;
+        }
+
+        .sidebar-logo-dot {
+            display: inline-block;
+            width: 5px; height: 5px;
+            background: var(--gold-accent);
+            border-radius: 50%;
+            margin-left: 2px;
+            vertical-align: super;
+        }
+
+        .sidebar-nav { flex: 1; padding: 0 12px; overflow-y: auto; }
+
+        .sidebar-section { margin-bottom: 24px; }
+
+        .sidebar-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            margin-bottom: 2px;
+        }
+
+        .sidebar-link:hover { background: var(--bg); color: var(--text-primary); }
+
+        .sidebar-link.active {
+            background: var(--blue-light);
+            color: var(--blue-primary);
+            font-weight: 600;
+        }
+
+        .sidebar-link svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar-user:hover { background: var(--bg); }
+
+        .sidebar-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--blue-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user-info { flex: 1; min-width: 0; }
+        .sidebar-user-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-role { font-size: 12px; color: var(--text-secondary); }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+
+        .logout-link:hover { background: rgba(220, 38, 38, 0.06); color: var(--error); }
+        .logout-link svg { width: 18px; height: 18px; }
+
+        /* ═══════════════════ MAIN CONTENT ═══════════════════ */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            padding: 14px 32px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover { color: var(--text-primary); }
+        .breadcrumb-separator { color: var(--border); }
+        .breadcrumb-current { font-weight: 600; color: var(--text-primary); }
+
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notification-btn {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .notification-btn:hover { background: var(--bg); }
+        .notification-btn svg { width: 18px; height: 18px; color: var(--text-secondary); }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px; right: 8px;
+            width: 7px; height: 7px;
+            background: var(--blue-primary);
+            border-radius: 50%;
+            border: 2px solid var(--card);
+        }
+
+        .top-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--blue-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .top-avatar:hover { opacity: 0.9; }
+
+        /* PAGE CONTENT */
+        .page-content {
+            padding: 40px 32px 80px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* PAGE HEADER */
+        .page-header { margin-bottom: 40px; }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+
+        .page-header p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ═══════════════════ STEP INDICATOR ═══════════════════ */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 48px;
+            padding: 28px 32px;
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-card);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+
+        .step:last-child::after { display: none; }
+        .step:last-child { flex: 0; }
+
+        .step-number {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            flex-shrink: 0;
+            background: var(--card);
+        }
+
+        .step.active .step-number {
+            background: var(--blue-primary);
+            border-color: var(--blue-primary);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step.completed::after {
+            background: var(--success);
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .step.active .step-label { color: var(--blue-primary); }
+        .step.completed .step-label { color: var(--success); }
+
+        /* ═══════════════════ UPLOAD CARD ═══════════════════ */
+        .section-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+
+        .section-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-icon {
+            width: 48px; height: 48px;
+            border-radius: var(--radius);
+            background: var(--blue-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .section-icon svg { width: 24px; height: 24px; color: var(--blue-primary); }
+
+        .section-title { font-size: 22px; margin-bottom: 4px; }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .section-subtitle span {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 0 2px;
+        }
+
+        /* UPLOAD AREA */
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 48px 32px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: var(--blue-primary);
+            background: rgba(30, 64, 175, 0.02);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--blue-primary);
+            background: rgba(30, 64, 175, 0.04);
+            transform: scale(1.01);
+        }
+
+        .upload-area.uploaded {
+            border-color: var(--success);
+            border-style: solid;
+            background: rgba(22, 163, 74, 0.03);
+        }
+
+        .upload-icon {
+            width: 56px; height: 56px;
+            margin: 0 auto 20px;
+            background: var(--blue-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-icon svg { width: 28px; height: 28px; color: var(--blue-primary); }
+
+        .upload-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--blue-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text-primary);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-secondary);
+            background: var(--bg);
+        }
+
+        .btn-lg {
+            padding: 15px 32px;
+            font-size: 15px;
+        }
+
+        /* FILE UPLOADED STATE */
+        .file-info {
+            display: none;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .file-info.visible { display: flex; }
+
+        .file-icon {
+            width: 44px; height: 44px;
+            background: rgba(22, 163, 74, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .file-icon svg { width: 22px; height: 22px; color: var(--success); }
+
+        .file-details { flex: 1; }
+        .file-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .file-size { font-size: 13px; color: var(--text-secondary); }
+
+        .file-check {
+            width: 28px; height: 28px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-check svg { width: 16px; height: 16px; color: white; }
+
+        /* ═══════════════════ JOB OFFER ═══════════════════ */
+        .textarea-wrapper { position: relative; margin-bottom: 20px; }
+
+        .job-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        .job-textarea::placeholder { color: #9CA3AF; }
+
+        .job-textarea:focus {
+            border-color: var(--blue-primary);
+            background: var(--card);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .job-textarea.has-content {
+            border-color: var(--success);
+            background: var(--card);
+        }
+
+        .textarea-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .char-counter {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .char-counter.active { color: var(--success); }
+
+        .analyze-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* ═══════════════════ LOADING SCREEN ═══════════════════ */
+        .loading-screen {
+            display: none;
+            padding: 64px 32px;
+            text-align: center;
+        }
+
+        .loading-screen.visible { display: block; }
+
+        .loading-title {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .loading-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        .loading-timeline {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .loading-step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .loading-step.active {
+            opacity: 1;
+        }
+
+        .loading-step.completed {
+            opacity: 1;
+        }
+
+        .loading-step-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.5s ease;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .loading-step.active .loading-step-dot {
+            background: var(--blue-primary);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.15);
+        }
+
+        .loading-step.completed .loading-step-dot {
+            background: var(--success);
+        }
+
+        .loading-step-dot::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 16px;
+            width: 2px;
+            height: 28px;
+            background: var(--border);
+            transform: translateX(-50%);
+        }
+
+        .loading-step:last-child .loading-step-dot::after { display: none; }
+
+        .loading-step.completed .loading-step-dot::after {
+            background: var(--success);
+        }
+
+        .loading-step-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .loading-step.active .loading-step-label { color: var(--text-primary); font-weight: 600; }
+        .loading-step.completed .loading-step-label { color: var(--success); }
+
+        .loading-step-icon {
+            margin-left: auto;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .loading-step.completed .loading-step-icon {
+            opacity: 1;
+        }
+
+        .loading-step-icon svg { width: 18px; height: 18px; color: var(--success); }
+
+        /* ═══════════════════ RESULTS ═══════════════════ */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.visible { display: block; }
+
+        /* SCORE CIRCLE */
+        .score-hero {
+            text-align: center;
+            padding: 48px 32px;
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-card);
+            margin-bottom: 24px;
+        }
+
+        .score-circle-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 24px;
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 8;
+        }
+
+        .score-circle-fill {
+            fill: none;
+            stroke: var(--blue-primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--blue-primary);
+            line-height: 1;
+        }
+
+        .score-unit {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .score-verdict {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .score-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ATS GAUGE */
+        .ats-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .ats-gauge-wrapper {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .ats-gauge-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 8;
+        }
+
+        .ats-gauge-fill {
+            fill: none;
+            stroke: var(--blue-primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+        }
+
+        .ats-gauge-value {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--blue-primary);
+        }
+
+        .ats-content h3 { font-size: 22px; margin-bottom: 8px; }
+        .ats-content p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* MATCH BREAKDOWN */
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .breakdown-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .breakdown-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .breakdown-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--blue-primary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--blue-primary);
+            border-radius: 3px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0;
+        }
+
+        /* MISSING KEYWORDS */
+        .keywords-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .keywords-card h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .keywords-card > p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .chip:hover {
+            border-color: var(--blue-primary);
+            background: var(--blue-light);
+        }
+
+        .chip-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--warning);
+        }
+
+        /* RECOMMENDATIONS */
+        .recommendations-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .recommendations-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .rec-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rec-item:last-child { border-bottom: none; }
+
+        .rec-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .rec-icon svg { width: 18px; height: 18px; }
+
+        .rec-icon.high { background: rgba(220, 38, 38, 0.08); }
+        .rec-icon.high svg { color: var(--error); }
+        .rec-icon.medium { background: rgba(245, 158, 11, 0.08); }
+        .rec-icon.medium svg { color: var(--warning); }
+        .rec-icon.low { background: var(--blue-light); }
+        .rec-icon.low svg { color: var(--blue-primary); }
+
+        .rec-content { flex: 1; }
+        .rec-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .rec-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+        .rec-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .rec-badge.high { background: rgba(220, 38, 38, 0.08); color: var(--error); }
+        .rec-badge.medium { background: rgba(245, 158, 11, 0.08); color: var(--warning); }
+        .rec-badge.low { background: var(--blue-light); color: var(--blue-primary); }
+
+        /* ═══════════════════ FINAL CTA ═══════════════════ */
+        .final-cta {
+            text-align: center;
+            padding: 56px 32px;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.04) 0%, rgba(30, 64, 175, 0.01) 100%);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-top: 32px;
+        }
+
+        .final-cta h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .final-cta p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .fade-in-d1 { animation-delay: 0.1s; }
+        .fade-in-d2 { animation-delay: 0.2s; }
+        .fade-in-d3 { animation-delay: 0.3s; }
+        .fade-in-d4 { animation-delay: 0.4s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .breakdown-grid { grid-template-columns: 1fr; }
+            .ats-card { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .page-content { padding: 24px 16px 60px; }
+            .step-indicator { flex-direction: column; gap: 16px; padding: 20px; }
+            .step::after { display: none; }
+            .step { width: 100%; }
+            .final-cta-buttons { flex-direction: column; }
+            .section-card { padding: 24px; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+<div class="app-layout">
+    <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+    <aside class="sidebar">
+        <a href="../index.html" class="sidebar-logo">Trajectoire<span class="sidebar-logo-dot"></span></a>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Préparation</div>
+                <a href="../index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Tableau de bord
+                </a>
+                <a href="../dashboard/cv/index.html" class="sidebar-link active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Mon CV
+                </a>
+                <a href="../../simulations/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Simulations
+                </a>
+                <a href="../../debrief/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    Débriefs
+                </a>
+                <a href="../../carriere/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    Carrière
+                </a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Compte</div>
+                <a href="../../abonnement/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    Abonnement
+                </a>
+                <a href="../../profil/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Profil
+                </a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../../connexion/index.html" class="logout-link">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Se déconnecter
+            </a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════ MAIN ═══════════════════ -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="breadcrumb">
+                <a href="../index.html">Accueil</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Mon CV</span>
+            </div>
+            <div class="top-bar-actions">
+                <button class="notification-btn" aria-label="Notifications">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                    <span class="notification-dot"></span>
+                </button>
+                <div class="top-avatar">ML</div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+
+            <!-- HEADER -->
+            <div class="page-header fade-in">
+                <h1>Préparez votre entretien.</h1>
+                <p>Importez votre CV et ajoutez l'offre d'emploi afin d'obtenir une analyse complète.</p>
+            </div>
+
+            <!-- STEP INDICATOR -->
+            <div class="step-indicator fade-in fade-in-d1" id="stepIndicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <span class="step-label">Importer le CV</span>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <span class="step-label">Ajouter l'offre</span>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <span class="step-label">Découvrir votre analyse</span>
+                </div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <span class="step-label">Simulation</span>
+                </div>
+            </div>
+
+            <!-- ═══════════════ INPUT PHASE ═══════════════ -->
+            <div id="inputPhase">
+                <!-- SECTION 1: UPLOAD CV -->
+                <div class="section-card fade-in fade-in-d2">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Importez votre CV</h2>
+                            <p class="section-subtitle">Formats acceptés : <span>PDF</span> <span>DOCX</span> — Maximum 10 Mo</p>
+                        </div>
+                    </div>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".pdf,.docx" style="display:none;">
+                        <div id="uploadPlaceholder">
+                            <div class="upload-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            </div>
+                            <p class="upload-title">Glissez votre document ici</p>
+                            <p class="upload-subtitle">ou</p>
+                            <button type="button" class="btn btn-primary" id="chooseFileBtn">Choisir un fichier</button>
+                        </div>
+                        <div class="file-info" id="fileInfo">
+                            <div class="file-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name" id="fileName">CV_Marie_Laurent_2026.pdf</div>
+                                <div class="file-size" id="fileSize">2,4 Mo</div>
+                            </div>
+                            <div class="file-check">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button type="button" class="btn btn-secondary" id="replaceBtn" style="display:none; font-size: 13px; padding: 8px 16px;">Remplacer le document</button>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: JOB OFFER -->
+                <div class="section-card fade-in fade-in-d3">
+                    <div class="section-header">
+                        <div class="section-icon" style="background: rgba(212,175,55,0.1);">
+                            <svg fill="none" stroke="var(--gold-accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Collez l'offre d'emploi</h2>
+                            <p class="section-subtitle">Copiez l'intégralité de la description du poste visé.</p>
+                        </div>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea class="job-textarea" id="jobTextarea" placeholder="Collez ici l'intégralité de l'offre d'emploi.&#10;&#10;Incluez le titre du poste, la description de l'entreprise, les responsabilités, les compétences requises et tout autre détail pertinent."></textarea>
+                    </div>
+                    <div class="textarea-footer">
+                        <span class="char-counter" id="charCounter">0 caractères</span>
+                        <div class="analyze-row">
+                            <button type="button" class="btn btn-primary btn-lg" id="analyzeBtn" disabled>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                Analyser mon profil
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════ LOADING PHASE ═══════════════ -->
+            <div class="loading-screen" id="loadingScreen">
+                <h2 class="loading-title">Analyse en cours</h2>
+                <p class="loading-subtitle">Nous comparons votre profil avec les exigences du poste.</p>
+                <div class="loading-timeline">
+                    <div class="loading-step" id="loadStep1">
+                        <div class="loading-step-dot"></div>
+                        <span class="loading-step-label">Lecture du CV</span>
+                        <span class="loading-step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>
+                    </div>
+                    <div class="loading-step" id="loadStep2">
+                        <div class="loading-step-dot"></div>
+                        <span class="loading-step-label">Analyse du poste</span>
+                        <span class="loading-step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>
+                    </div>
+                    <div class="loading-step" id="loadStep3">
+                        <div class="loading-step-dot"></div>
+                        <span class="loading-step-label">Comparaison des compétences</span>
+                        <span class="loading-step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>
+                    </div>
+                    <div class="loading-step" id="loadStep4">
+                        <div class="loading-step-dot"></div>
+                        <span class="loading-step-label">Évaluation globale</span>
+                        <span class="loading-step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>
+                    </div>
+                    <div class="loading-step" id="loadStep5">
+                        <div class="loading-step-dot"></div>
+                        <span class="loading-step-label">Préparation du rapport</span>
+                        <span class="loading-step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════ RESULTS PHASE ═══════════════ -->
+            <div class="results-section" id="resultsSection">
+
+                <!-- SCORE HERO -->
+                <div class="score-hero fade-in">
+                    <div class="score-circle-wrapper">
+                        <svg width="180" height="180" viewBox="0 0 180 180">
+                            <circle class="score-circle-bg" cx="90" cy="90" r="78"/>
+                            <circle class="score-circle-fill" id="scoreCircle" cx="90" cy="90" r="78"
+                                stroke-dasharray="490" stroke-dashoffset="490"/>
+                        </svg>
+                        <div class="score-value">
+                            <div class="score-number" id="scoreNumber">0</div>
+                            <div class="score-label">Correspondance</div>
+                        </div>
+                    </div>
+                    <div class="score-verdict">Excellent potentiel.</div>
+                    <p class="score-description">Quelques optimisations permettront d'améliorer votre candidature et de maximiser vos chances lors de l'entretien.</p>
+                </div>
+
+                <!-- ATS SCORE -->
+                <div class="ats-card fade-in fade-in-d1">
+                    <div class="ats-gauge-wrapper">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="ats-gauge-bg" cx="60" cy="60" r="50"/>
+                            <circle class="ats-gauge-fill" id="atsCircle" cx="60" cy="60" r="50"
+                                stroke-dasharray="314" stroke-dashoffset="314"/>
+                        </svg>
+                        <div class="ats-gauge-value" id="atsValue">0%</div>
+                    </div>
+                    <div class="ats-content">
+                        <h3>Compatibilité ATS</h3>
+                        <p>Votre CV est bien optimisé pour les systèmes de suivi des candidatures. Les mots-clés principaux sont présents et la structure est lisible par les outils de recrutement.</p>
+                    </div>
+                </div>
+
+                <!-- MATCH BREAKDOWN -->
+                <div class="breakdown-grid fade-in fade-in-d2">
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Compétences</span><span class="breakdown-value">88%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="88"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Expérience</span><span class="breakdown-value">82%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="82"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Leadership</span><span class="breakdown-value">90%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="90"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Management</span><span class="breakdown-value">85%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Communication</span><span class="breakdown-value">78%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="78"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Formation</span><span class="breakdown-value">95%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Langues</span><span class="breakdown-value">72%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="72"></div></div>
+                    </div>
+                    <div class="breakdown-card">
+                        <div class="breakdown-header"><span class="breakdown-label">Mots-clés</span><span class="breakdown-value">76%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" data-width="76"></div></div>
+                    </div>
+                </div>
+
+                <!-- MISSING KEYWORDS -->
+                <div class="keywords-card fade-in fade-in-d3">
+                    <h3>Mots-clés à intégrer</h3>
+                    <p>Ces termes apparaissent dans l'offre mais sont absents ou peu présents dans votre CV.</p>
+                    <div class="chips">
+                        <span class="chip"><span class="chip-dot"></span>Transformation</span>
+                        <span class="chip"><span class="chip-dot"></span>Budget</span>
+                        <span class="chip"><span class="chip-dot"></span>KPI</span>
+                        <span class="chip"><span class="chip-dot"></span>Lean</span>
+                        <span class="chip"><span class="chip-dot"></span>P&amp;L</span>
+                        <span class="chip"><span class="chip-dot"></span>International</span>
+                        <span class="chip"><span class="chip-dot"></span>Stakeholders</span>
+                        <span class="chip"><span class="chip-dot"></span>Agile</span>
+                    </div>
+                </div>
+
+                <!-- RECOMMENDATIONS -->
+                <div class="recommendations-card fade-in fade-in-d3">
+                    <h3>Recommandations personnalisées</h3>
+                    <div class="rec-item">
+                        <div class="rec-icon high"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                        <div class="rec-content">
+                            <div class="rec-title">Renforcer votre impact managérial</div>
+                            <div class="rec-desc">Ajoutez des exemples précis de transformations d'équipe et de résultats mesurables obtenus sous votre direction.</div>
+                        </div>
+                        <span class="rec-badge high">Prioritaire</span>
+                    </div>
+                    <div class="rec-item">
+                        <div class="rec-icon high"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+                        <div class="rec-content">
+                            <div class="rec-title">Ajouter davantage de résultats chiffrés</div>
+                            <div class="rec-desc">Quantifiez vos réalisations : croissance du CA, taille des budgets gérés, nombre de personnes managées, KPI améliorés.</div>
+                        </div>
+                        <span class="rec-badge high">Prioritaire</span>
+                    </div>
+                    <div class="rec-item">
+                        <div class="rec-icon medium"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+                        <div class="rec-content">
+                            <div class="rec-title">Valoriser vos responsabilités</div>
+                            <div class="rec-desc">Restructurez vos expériences pour mettre en avant la portée stratégique de chaque poste occupé.</div>
+                        </div>
+                        <span class="rec-badge medium">Important</span>
+                    </div>
+                    <div class="rec-item">
+                        <div class="rec-icon low"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg></div>
+                        <div class="rec-content">
+                            <div class="rec-title">Optimiser certains mots-clés</div>
+                            <div class="rec-desc">Intégrez les termes spécifiques de l'offre pour améliorer la correspondance avec les critères de sélection.</div>
+                        </div>
+                        <span class="rec-badge low">Conseil</span>
+                    </div>
+                </div>
+
+                <!-- FINAL CTA -->
+                <div class="final-cta fade-in fade-in-d4">
+                    <h2>Vous êtes prêt pour la prochaine étape.</h2>
+                    <p>Passez maintenant à une simulation d'entretien basée sur cette offre.</p>
+                    <div class="final-cta-buttons">
+                        <a href="../../simulations/index.html" class="btn btn-primary btn-lg">Commencer la simulation</a>
+                        <button type="button" class="btn btn-secondary btn-lg" id="editCvBtn">Modifier mon CV</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // ═══════════════════ STATE ═══════════════════
+    let cvUploaded = false;
+    let jobTextLength = 0;
+
+    // ═══════════════════ UPLOAD ═══════════════════
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const chooseFileBtn = document.getElementById('chooseFileBtn');
+    const replaceBtn = document.getElementById('replaceBtn');
+    const fileInfo = document.getElementById('fileInfo');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+
+    chooseFileBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+    uploadArea.addEventListener('click', () => { if (!cvUploaded) fileInput.click(); });
+
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+    uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('dragover'); });
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function handleFile(file) {
+        document.getElementById('fileName').textContent = file.name;
+        document.getElementById('fileSize').textContent = (file.size / (1024 * 1024)).toFixed(1) + ' Mo';
+        uploadPlaceholder.style.display = 'none';
+        fileInfo.classList.add('visible');
+        uploadArea.classList.add('uploaded');
+        replaceBtn.style.display = 'inline-flex';
+        cvUploaded = true;
+        updateStep1();
+        checkAnalyzeBtn();
+    }
+
+    replaceBtn.addEventListener('click', () => {
+        uploadPlaceholder.style.display = 'block';
+        fileInfo.classList.remove('visible');
+        uploadArea.classList.remove('uploaded');
+        replaceBtn.style.display = 'none';
+        cvUploaded = false;
+        fileInput.value = '';
+        checkAnalyzeBtn();
+    });
+
+    // ═══════════════════ TEXTAREA ═══════════════════
+    const jobTextarea = document.getElementById('jobTextarea');
+    const charCounter = document.getElementById('charCounter');
+
+    jobTextarea.addEventListener('input', () => {
+        jobTextLength = jobTextarea.value.length;
+        charCounter.textContent = jobTextLength.toLocaleString('fr-FR') + ' caractères';
+        charCounter.classList.toggle('active', jobTextLength > 100);
+        jobTextarea.classList.toggle('has-content', jobTextLength > 100);
+        if (jobTextLength > 100) updateStep2();
+        checkAnalyzeBtn();
+    });
+
+    // ═══════════════════ STEPS ═══════════════════
+    function updateStep1() {
+        const s1 = document.getElementById('step1');
+        const s2 = document.getElementById('step2');
+        if (cvUploaded) {
+            s1.classList.remove('active'); s1.classList.add('completed');
+            s1.querySelector('.step-number').innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+            if (!jobTextLength) { s2.classList.add('active'); }
+        }
+    }
+
+    function updateStep2() {
+        const s2 = document.getElementById('step2');
+        if (jobTextLength > 100) {
+            s2.classList.add('completed');
+            s2.querySelector('.step-number').innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+        }
+    }
+
+    function checkAnalyzeBtn() {
+        document.getElementById('analyzeBtn').disabled = !(cvUploaded && jobTextLength > 100);
+    }
+
+    // ═══════════════════ ANALYZE ═══════════════════
+    document.getElementById('analyzeBtn').addEventListener('click', startAnalysis);
+
+    function startAnalysis() {
+        // Update steps
+        const s3 = document.getElementById('step3');
+        s3.classList.add('active');
+
+        // Hide input, show loading
+        document.getElementById('inputPhase').style.display = 'none';
+        const loadingScreen = document.getElementById('loadingScreen');
+        loadingScreen.classList.add('visible');
+
+        // Animate timeline steps
+        const steps = ['loadStep1', 'loadStep2', 'loadStep3', 'loadStep4', 'loadStep5'];
+        let i = 0;
+
+        function nextStep() {
+            if (i > 0) {
+                document.getElementById(steps[i - 1]).classList.remove('active');
+                document.getElementById(steps[i - 1]).classList.add('completed');
+            }
+            if (i < steps.length) {
+                document.getElementById(steps[i]).classList.add('active');
+                i++;
+                setTimeout(nextStep, 800);
+            } else {
+                // Done — show results
+                setTimeout(showResults, 400);
+            }
+        }
+        nextStep();
+    }
+
+    function showResults() {
+        document.getElementById('loadingScreen').classList.remove('visible');
+        document.getElementById('loadingScreen').style.display = 'none';
+
+        // Mark step 3 completed, step 4 active
+        const s3 = document.getElementById('step3');
+        s3.classList.remove('active'); s3.classList.add('completed');
+        s3.querySelector('.step-number').innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+        document.getElementById('step4').classList.add('active');
+
+        // Show results
+        const results = document.getElementById('resultsSection');
+        results.classList.add('visible');
+
+        // Animate score circle
+        const scoreTarget = 82;
+        const circumference = 2 * Math.PI * 78; // ~490
+        const offset = circumference - (scoreTarget / 100) * circumference;
+        setTimeout(() => {
+            document.getElementById('scoreCircle').style.strokeDashoffset = offset;
+        }, 200);
+
+        // Animate score number
+        animateNumber('scoreNumber', 0, scoreTarget, 1500, '%');
+
+        // Animate ATS
+        const atsTarget = 91;
+        const atsCircumference = 2 * Math.PI * 50; // ~314
+        const atsOffset = atsCircumference - (atsTarget / 100) * atsCircumference;
+        setTimeout(() => {
+            document.getElementById('atsCircle').style.strokeDashoffset = atsOffset;
+        }, 500);
+        setTimeout(() => {
+            document.getElementById('atsValue').textContent = atsTarget + '%';
+        }, 800);
+
+        // Animate progress bars
+        setTimeout(() => {
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                bar.style.width = bar.dataset.width + '%';
+            });
+        }, 600);
+
+        // Scroll to results
+        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function animateNumber(elementId, start, end, duration, suffix) {
+        const el = document.getElementById(elementId);
+        const startTime = performance.now();
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(start + (end - start) * eased);
+            el.textContent = current + (suffix || '');
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    // ═══════════════════ EDIT CV ═══════════════════
+    document.getElementById('editCvBtn').addEventListener('click', () => {
+        document.getElementById('resultsSection').classList.remove('visible');
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('inputPhase').style.display = 'block';
+
+        // Reset steps
+        ['step1','step2','step3','step4'].forEach((id, i) => {
+            const el = document.getElementById(id);
+            el.classList.remove('active','completed');
+            el.querySelector('.step-number').textContent = (i + 1);
+        });
+
+        if (cvUploaded) updateStep1();
+        if (jobTextLength > 100) updateStep2();
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>

@@ -1,20 +1,21 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getStrictUser } from "@/lib/auth/get-user";
 import { Redis } from "@upstash/redis";
+import { envServer } from "@/lib/env.server";
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: envServer.UPSTASH_REDIS_REST_URL!,
+  token: envServer.UPSTASH_REDIS_REST_TOKEN!,
 });
 
 /**
  * Dashboard Admin : Intelligence contre le Scraping.
  */
 export async function GET(req: NextRequest) {
-  const user = await getAuthenticatedUser();
-  if (!user || user.role !== "ADMIN") {
+  const user = await getStrictUser(req);
+  if (!user || (user as any).role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

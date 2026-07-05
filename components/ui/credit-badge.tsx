@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 
 interface CreditBadgeProps {
   userId: string;
@@ -13,15 +13,13 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient();
-
     // Lecture initiale
     supabase
       .from("profiles")
       .select("credits")
       .eq("id", userId)
       .single()
-      .then(({ data }) => {
+      .then(({ data }: any) => {
         const profile = data as any;
         setCredits(profile?.credits ?? 0);
         setLoading(false);
@@ -38,7 +36,7 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
           table: "profiles",
           filter: `id=eq.${userId}`,
         },
-        (payload) => {
+        (payload: any) => {
           const newCredits = (payload.new as { credits: number }).credits;
           setCredits(newCredits);
         },

@@ -1,6 +1,8 @@
-import { createSupabaseServiceClient } from "@/lib/supabase-server";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
+import { envServer } from "@/lib/env.server";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = envServer.NODE_ENV === "production";
 
 export async function evaluateFraud({
   userId,
@@ -13,20 +15,20 @@ export async function evaluateFraud({
 }) {
   let risk = 0;
   const flags: string[] = [];
-  const supabaseAdmin = createSupabaseServiceClient();
+  const supabaseAdmin = createAdminClientSupabase();
 
   /* -----------------------------
      ✅ 1. IP Risk Check (IPQS)
   ----------------------------- */
 
-  if (isProduction && !process.env.IPQS_KEY) {
+  if (isProduction && !envServer.IPQS_KEY) {
     throw new Error("IPQS_KEY manquante en production");
   }
 
-  if (process.env.IPQS_KEY) {
+  if (envServer.IPQS_KEY) {
     try {
       const response = await fetch(
-        `https://ipqualityscore.com/api/json/ip/${process.env.IPQS_KEY}/${ip}`,
+        `https://ipqualityscore.com/api/json/ip/${envServer.IPQS_KEY}/${ip}`,
       );
       const data = await response.json();
 
@@ -40,7 +42,7 @@ export async function evaluateFraud({
         flags.push("high_ip_fraud_score");
       }
     } catch (e) {
-      console.error("IPQS Error", e);
+      LoggerProvider.getLogger().error("IPQS Error", e);
     }
   }
 

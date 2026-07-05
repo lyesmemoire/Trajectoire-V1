@@ -24,6 +24,8 @@ import { openingTurn, processVoiceTurn } from "../core/voice-orchestrator.js";
 import { now, logMetrics, type VoiceMetrics } from "../core/metrics.js";
 import { interviewRepository as repository } from "../persistence/singleton.js";
 import { finalizeInterview } from "../core/post-interview-processor.js";
+import { metricsStore } from "../../monitoring/metrics-store.js";
+import { commitCredit, cancelCredit } from "../billing/usage-service.js";
 
 /** Socket minimal supportant l'envoi binaire (audio). */
 export interface VoiceWsLike {
@@ -188,11 +190,13 @@ export async function handleVoiceConnectionV2(
         console.error("Error in onFinalTranscript:", e);
       }
     },
-    onError: (e) =>
+    onError: (e) => {
+      metricsStore.errorCount++;
       sendJson({
         type: "error",
         message: e instanceof Error ? e.message : "Erreur STT",
-      }),
+      });
+    },
   });
   stt.start();
 
@@ -200,6 +204,7 @@ export async function handleVoiceConnectionV2(
   const handleEndSpeech = async () => {
     const current = deps.sessions.getSession(sessionId);
     if (!current) {
+      metricsStore.errorCount++;
       sendJson({ type: "error", message: "Session expirée." });
       return;
     }
@@ -261,6 +266,14 @@ export async function handleVoiceConnectionV2(
     });
     
     logMetrics(turnMetrics);
+    
+    // Commit credit when session finishes successfully
+    if (turn.finished) {
+      commitCredit(sessionId).catch((err) => {
+        console.error("[Credit] Failed to commit credit:", err);
+      });
+    }
+    
     turnMetrics = { sessionId };
 
     lastFinalTranscript = "";
@@ -286,7 +299,7 @@ export async function handleVoiceConnectionV2(
       return;
     }
     if (typeof data === "string") {
-      let msg: { type?: string } = {};
+      let msg: { type?: string; text?: string; isFinal?: boolean } = {};
       try {
         msg = JSON.parse(data);
       } catch {
@@ -294,6 +307,16 @@ export async function handleVoiceConnectionV2(
       }
       if (msg.type === "end_speech") void handleEndSpeech();
       else if (msg.type === "interrupt") handleInterrupt();
+      // DEV bypass: allow manual transcript for testing without STT
+      else if (msg.type === "transcript" && process.env.NODE_ENV === "development") {
+        if (msg.text) {
+          if (!turnMetrics.sttStart) turnMetrics.sttStart = now();
+          lastFinalTranscript = msg.text;
+          turnMetrics.sttEnd = now();
+          sendJson({ type: "transcript", text: msg.text, final: msg.isFinal ?? true });
+          void handleEndSpeech();
+        }
+      }
     }
   });
 
@@ -301,6 +324,11 @@ export async function handleVoiceConnectionV2(
     stt.stop();
     log("session_close", { sessionId });
     repository.update(sessionId, { endedAt: Date.now() }).catch(console.error);
+
+    // Cancel credit reservation if session closed before finishing
+    cancelCredit(sessionId).catch((err) => {
+      console.error("[Credit] Failed to cancel credit:", err);
+    });
 
     // Scoring async post-session (fire and forget)
     finalizeInterview(sessionId, log).catch(console.error);

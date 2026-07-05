@@ -1,10 +1,11 @@
 // lib/posthog.ts
 // Configuration centralisée PostHog
 import posthog from "posthog-js";
+import { envClient } from "@/lib/env.client";
 
-export const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? "";
+export const POSTHOG_KEY = envClient.NEXT_PUBLIC_POSTHOG_KEY ?? "";
 export const POSTHOG_HOST =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.posthog.com";
+  envClient.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.posthog.com";
 
 // Événements trackés — liste exhaustive et intentionnellement limitée
 // Règle : ne tracker QUE les événements business critiques

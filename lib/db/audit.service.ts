@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getServerDb } from "@/lib/db/client";
+import { LoggerProvider } from "@/lib/core/observability/logger";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Anti-Chaos Layer: Audit Domain
@@ -9,7 +11,7 @@ import { getServerDb } from "@/lib/db/client";
  * - Writes: Supabase ONLY (prevent divergence)
  */
 
-const USE_PRISMA_READS = process.env.USE_PRISMA_AUDIT === "true";
+const USE_PRISMA_READS = envServer.USE_PRISMA_AUDIT === true;
 
 export const AuditService = {
   /**
@@ -17,7 +19,7 @@ export const AuditService = {
    */
   async getLogs(options?: { adminId?: string; limit?: number }) {
     if (USE_PRISMA_READS) {
-      console.log("[AuditService] READ via Prisma");
+      LoggerProvider.getLogger().debug("[AuditService] READ via Prisma");
       return prisma.adminAuditLog.findMany({
         where: options?.adminId ? { adminId: options.adminId } : undefined,
         take: options?.limit || 50,
@@ -25,7 +27,7 @@ export const AuditService = {
       });
     }
 
-    console.log("[AuditService] READ via Supabase SDK");
+    LoggerProvider.getLogger().debug("[AuditService] READ via Supabase SDK");
     const supabase = await getServerDb();
     
     let query = supabase.from("audit_logs").select("*").order("created_at", { ascending: false });
@@ -40,7 +42,7 @@ export const AuditService = {
     const { data, error } = await query;
     if (error) throw error;
     
-    return (data || []).map(log => ({
+    return (data || []).map((log: any) => ({
       id: log.id,
       adminId: log.user_id || "", // Mapping user_id to adminId
       action: log.action,
@@ -63,7 +65,7 @@ export const AuditService = {
     ipAddress?: string | null;
     userAgent?: string | null;
   }) {
-    console.log("[AuditService] WRITE via Supabase SDK (Phase 1 Lock)");
+    LoggerProvider.getLogger().debug("[AuditService] WRITE via Supabase SDK (Phase 1 Lock)");
     const supabase = await getServerDb();
     const { data, error } = await supabase
       .from("audit_logs")

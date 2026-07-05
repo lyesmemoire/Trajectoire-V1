@@ -13,6 +13,8 @@ import type { TTSAdapter, TTSProvider } from "./types.js";
 import { MockTTSProvider, createSilentWav } from "./mock.js";
 import { ElevenLabsTTSProvider } from "./elevenlabs.js";
 import { OpenAITTSProvider } from "./openai.js";
+import { metricsStore } from "../../../monitoring/metrics-store.js";
+import pLimit from "p-limit";
 
 export type { TTSAdapter, TTSProvider } from "./types.js";
 export { createSilentWav } from "./mock.js";
@@ -29,10 +31,12 @@ export interface ChainTTSOptions {
  * Adapter TTS à fallback en chaîne.
  * - synthesize() tente chaque provider configuré dans l'ordre ;
  * - si tous échouent -> mock (silent WAV). Ne rejette jamais.
+ * - Limite concurrence TTS à 10 appels simultanés max.
  */
 export class ChainTTSAdapter implements TTSAdapter {
   private readonly providers: TTSProvider[];
   private readonly mock = new MockTTSProvider();
+  private readonly ttsLimit = pLimit(10); // max 10 TTS simultanés
 
   constructor(options: ChainTTSOptions = {}) {
     this.providers =
@@ -48,17 +52,41 @@ export class ChainTTSAdapter implements TTSAdapter {
   }
 
   async synthesize(text: string): Promise<ArrayBuffer> {
-    for (const provider of this.providers) {
-      if (!provider.isConfigured()) continue;
-      try {
-        const audio = await provider.synthesize(text);
-        if (audio && audio.byteLength > 0) return audio;
-      } catch {
-        // provider en échec -> on tente le suivant
+    return this.ttsLimit(async () => {
+      const TTS_TIMEOUT_MS = 5000;
+      
+      for (const provider of this.providers) {
+        if (!provider.isConfigured()) continue;
+        
+        const startTime = Date.now();
+        
+        try {
+          const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => reject(new Error("TTS timeout")), TTS_TIMEOUT_MS);
+          });
+          
+          const audio = await Promise.race([
+            provider.synthesize(text),
+            timeoutPromise
+          ]);
+          
+          if (audio && audio.byteLength > 0) {
+            const ttsMs = Date.now() - startTime;
+            if (ttsMs > 2000) {
+              metricsStore.slowTtsCount++;
+            }
+            return audio;
+          }
+        } catch (err) {
+          // provider en échec -> on tente le suivant
+          if (err instanceof Error && err.message === "TTS timeout") {
+            metricsStore.slowTtsCount++;
+          }
+        }
       }
-    }
-    // Dernier recours : silence déterministe.
-    return this.mock.synthesize(text);
+      // Dernier recours : silence déterministe.
+      return this.mock.synthesize(text);
+    });
   }
 }
 

@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getServerDb } from "@/lib/db/client";
+import { LoggerProvider } from "@/lib/core/observability/logger";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Anti-Chaos Layer: Prompts Domain
@@ -9,7 +11,7 @@ import { getServerDb } from "@/lib/db/client";
  * - Writes: Supabase ONLY (prevent divergence)
  */
 
-const USE_PRISMA_READS = process.env.USE_PRISMA_PROMPTS === "true";
+const USE_PRISMA_READS = envServer.USE_PRISMA_PROMPTS === true;
 
 export const PromptService = {
   /**
@@ -17,14 +19,14 @@ export const PromptService = {
    */
   async getActivePrompts() {
     if (USE_PRISMA_READS) {
-      console.log("[PromptService] READ via Prisma");
+      LoggerProvider.getLogger().debug("[PromptService] READ via Prisma");
       return prisma.promptVersion.findMany({
         where: { active: true },
       });
     }
 
     // Fallback Legacy Supabase Read
-    console.log("[PromptService] READ via Supabase SDK");
+    LoggerProvider.getLogger().debug("[PromptService] READ via Supabase SDK");
     const supabase = await getServerDb();
     const { data, error } = await supabase
       .from("prompt_versions")
@@ -34,7 +36,7 @@ export const PromptService = {
     if (error) throw error;
     
     // Map snake_case to camelCase for consistent contract
-    return (data || []).map(p => ({
+    return (data || []).map((p: any) => ({
       ...p,
       createdAt: p.created_at ? new Date(p.created_at) : new Date(),
     }));
@@ -45,13 +47,13 @@ export const PromptService = {
    */
   async getPrompt(type: string, version: string) {
     if (USE_PRISMA_READS) {
-      console.log("[PromptService] READ via Prisma");
+      LoggerProvider.getLogger().debug("[PromptService] READ via Prisma");
       return prisma.promptVersion.findFirst({
         where: { type, version },
       });
     }
 
-    console.log("[PromptService] READ via Supabase SDK");
+    LoggerProvider.getLogger().debug("[PromptService] READ via Supabase SDK");
     const supabase = await getServerDb();
     const { data, error } = await supabase
       .from("prompt_versions")
@@ -77,7 +79,7 @@ export const PromptService = {
     content: string;
     active?: boolean;
   }) {
-    console.log("[PromptService] WRITE via Supabase SDK (Phase 1 Lock)");
+    LoggerProvider.getLogger().debug("[PromptService] WRITE via Supabase SDK (Phase 1 Lock)");
     const supabase = await getServerDb();
     const { data, error } = await supabase
       .from("prompt_versions")
@@ -102,7 +104,7 @@ export const PromptService = {
    * WRITE: Deactivate all prompts for a given type
    */
   async deactivatePromptsByType(type: string) {
-    console.log("[PromptService] WRITE via Supabase SDK (Deactivate Prompts)");
+    LoggerProvider.getLogger().debug("[PromptService] WRITE via Supabase SDK (Deactivate Prompts)");
     const supabase = await getServerDb();
     const { error } = await supabase
       .from("prompt_versions")

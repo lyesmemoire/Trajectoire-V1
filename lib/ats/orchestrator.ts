@@ -1,4 +1,3 @@
-import { extractCVText } from "./extraction/extract-pdf-text";
 import { normalizeSkills } from "./normalization/normalize-skills";
 import { calculateSkillScore, aggregateFinalScore } from "./scoring/engine";
 import { generateATSFeedback } from "./enrichment/generate-feedback";
@@ -16,16 +15,15 @@ export interface ATSAnalysis {
 }
 
 export async function processATSAnalysis(
-  cvBuffer: Buffer,
+  cvText: string,
   jobDescription: string,
 ): Promise<ATSAnalysis> {
-  // 1. Extraction
-  const extraction = await extractCVText(cvBuffer);
+  // 1. (Extraction skipped as text is already provided)
 
   // 2. Parsing IA de l'offre et du CV (En parallèle)
   const [jobData, cvSkills] = await Promise.all([
     parseJobOffer(jobDescription),
-    parseCVSkills(extraction.text),
+    parseCVSkills(cvText),
   ]);
 
   // 3. Normalisation
@@ -43,7 +41,7 @@ export async function processATSAnalysis(
     skills: skillResult.score,
     experience: 70,
     seniority: 80,
-    readability: extraction.confidence * 100,
+    readability: 100, // mocké
   });
 
   // 5. Enrichment IA
@@ -58,7 +56,7 @@ export async function processATSAnalysis(
     matchedSkills: skillResult.matched,
     missingSkills: skillResult.missing,
     feedback,
-    confidence: extraction.confidence,
+    confidence: 1.0, // mocké
   };
 }
 

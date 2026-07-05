@@ -1,24 +1,26 @@
-// app/api/user-cvs/route.ts
+import { createApiHandler } from "@/lib/core/api/handler";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { ListUserCvsQueryHandler } from "@/lib/cv/application/queries/list-user-cvs.query";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
 
-import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+export const dynamic = "force-dynamic";
 
-export async function GET() {
-  const supabase = await createSupabaseServerClient();
+export const GET = createApiHandler({
+  requireAuth: true,
+  handler: async ({ user }) => {
+    return RequestContext.run(
+      { userId: user!.id, correlationId: crypto.randomUUID(), requestId: crypto.randomUUID() },
+      async () => {
+        const handler = appContainer.resolve<ListUserCvsQueryHandler>("ListUserCvsQueryHandler");
+        
+        const result = await handler.execute({ type: "ListUserCvsQuery" });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+        if (result.isFailure()) {
+          throw result.unwrapError();
+        }
 
-  if (!user) {
-    return NextResponse.json([], { status: 401 });
+        return result.unwrap();
+      }
+    );
   }
-
-  const { data } = await supabase
-    .from("cvs")
-    .select("id, file_name, created_at")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
-
-  return NextResponse.json(data || []);
-}
+});

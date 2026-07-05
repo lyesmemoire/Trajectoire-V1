@@ -10,7 +10,7 @@ import { createClient } from "@supabase/supabase-js";
 import { verifyVoiceToken } from "../auth.js";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
+  gatewayEnv.NEXT_PUBLIC_SUPABASE_URL,
   gatewayEnv.SUPABASE_SERVICE_ROLE_KEY,
 );
 

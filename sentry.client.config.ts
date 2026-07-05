@@ -1,9 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
+import { envClient } from "@/lib/env.client";
 
 Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  dsn: envClient.NEXT_PUBLIC_SENTRY_DSN,
   tracesSampleRate: 0, // Désactivé pour économiser le quota gratuit — activer à 0.1 plus tard
-  environment: process.env.NEXT_PUBLIC_SENTRY_ENV || process.env.NODE_ENV,
+  environment: envClient.NEXT_PUBLIC_SENTRY_ENV || envClient.NODE_ENV,
   beforeSend(event) {
     // Ignorer les erreurs Redis/Timeout (déjà gérées par Circuit Breaker)
     const exType = event.exception?.values?.[0]?.type;

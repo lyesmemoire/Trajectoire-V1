@@ -7,7 +7,7 @@ import type { Clock } from "./clock.js";
 import type { PerceptionUX } from "../core/simulation/perception-ux.js";
 import type { Rng } from "./rng.js";
 import { buildTurnPlan, type TurnPlan } from "./turn-timing.js";
-import { createChildLogger } from "../../../../../lib/logger";
+import { createChildLogger } from "../../../../../lib/logger.js";
 
 export type VoiceInstruction =
   | { type: "wait"; ms: number }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/service";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 import { getStrictUser } from "@/lib/auth/session-logic";
 
 export async function GET(req: NextRequest) {
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const supabase = createAdminClient();
+  const supabase = createAdminClientSupabase();
 
   const { data, error } = await supabase
     .from("user_risk_scores")

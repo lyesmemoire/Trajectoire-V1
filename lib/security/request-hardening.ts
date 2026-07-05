@@ -1,5 +1,7 @@
 import { createHmac, randomBytes } from "crypto";
 import { getRedisClient } from "@/lib/redis";
+import { envServer } from "@/lib/env.server";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 /**
  * Hardened Request Signer with Nonce support.
@@ -26,11 +28,11 @@ export const RequestHardening = {
     payload: string,
     nonce: string,
   ): Promise<boolean> => {
-    const isProduction = process.env.NODE_ENV === "production";
-    const secret = process.env.API_SIGNING_SECRET;
+    const isProduction = envServer.NODE_ENV === "production";
+    const secret = envServer.API_SIGNING_SECRET;
 
     if (isProduction && !secret) {
-      console.error("CRITICAL: API_SIGNING_SECRET is not set in production");
+      LoggerProvider.getLogger().error("CRITICAL: API_SIGNING_SECRET is not set in production");
       return false; // Fail securely
     }
 

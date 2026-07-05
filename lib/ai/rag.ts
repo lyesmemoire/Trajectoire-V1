@@ -1,9 +1,10 @@
 import OpenAI from "openai";
+import { envServer } from "@/lib/env.server";
 
 let openai: OpenAI;
 function getOpenAI() {
   if (!openai) {
-    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy" });
+    openai = new OpenAI({ apiKey: envServer.OPENAI_API_KEY || "dummy" });
   }
   return openai;
 }

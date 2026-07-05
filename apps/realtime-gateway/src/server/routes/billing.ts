@@ -10,7 +10,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
   });
 
   const supabase = createClient(
-    envServer.SUPABASE_URL,
+    envServer.SUPABASE_URL || envServer.NEXT_PUBLIC_SUPABASE_URL,
     envServer.SUPABASE_SERVICE_ROLE_KEY,
   );
 
@@ -106,7 +106,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
           event = stripe.webhooks.constructEvent(
             request.body as Buffer,
             sig,
-            envServer.STRIPE_WEBHOOK_SECRET,
+            envServer.STRIPE_WEBHOOK_SECRET || "dummy",
           );
         } catch (err: any) {
           return reply.status(400).send(`Webhook Error: ${err.message}`);

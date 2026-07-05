@@ -1,6 +1,8 @@
 // lib/monitoring.ts
 // Logging structuré minimal pour production
 
+import { envServer } from "@/lib/env.server";
+
 type LogLevel = "info" | "warn" | "error";
 
 interface LogEntry {
@@ -21,11 +23,11 @@ function log(
     message,
     context,
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV ?? "development",
+    environment: envServer.NODE_ENV ?? "development",
   };
 
   // En production, utiliser JSON structuré (lisible par Vercel Log Drains)
-  if (process.env.NODE_ENV === "production") {
+  if (envServer.NODE_ENV === "production") {
     console[level](JSON.stringify(entry));
   } else {
     // En développement, format lisible

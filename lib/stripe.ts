@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { envServer } from "./env.server";
 
 export const stripe = new Stripe(
   envServer.STRIPE_SECRET_KEY || "dummy_key_to_avoid_build_crash",
@@ -8,10 +9,10 @@ export const stripe = new Stripe(
 );
 
 export const PRICE_IDS = {
-  pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID!,
-  pro_yearly: process.env.STRIPE_PRO_YEARLY_PRICE_ID!,
-  expert_monthly: process.env.STRIPE_EXPERT_MONTHLY_PRICE_ID!,
-  expert_yearly: process.env.STRIPE_EXPERT_YEARLY_PRICE_ID!,
+  pro_monthly: envServer.STRIPE_PRO_MONTHLY_PRICE_ID!,
+  pro_yearly: envServer.STRIPE_PRO_YEARLY_PRICE_ID!,
+  expert_monthly: envServer.STRIPE_EXPERT_MONTHLY_PRICE_ID!,
+  expert_yearly: envServer.STRIPE_EXPERT_YEARLY_PRICE_ID!,
 };
 
 export async function createCheckoutSession(params: {

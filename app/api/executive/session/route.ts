@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   }
   const { id } = parsed.data;
 
-  const session = await prisma.simulationSession.findUnique({
+  const session = await prisma.interviewSession.findUnique({
     where: { id },
   });
 
@@ -31,12 +31,13 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const analysis = session.analysis as any;
   return NextResponse.json({
     id: session.id,
-    overall: session.overall,
-    percentile: session.percentile,
-    level: session.level,
-    scores: session.scores,
+    overall: session.score,
+    percentile: analysis?.percentile,
+    level: analysis?.level,
+    scores: analysis?.scores,
     createdAt: session.createdAt,
   });
 }

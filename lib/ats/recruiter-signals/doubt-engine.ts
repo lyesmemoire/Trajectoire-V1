@@ -2,7 +2,7 @@ import { mistralModel } from "@/lib/mistral";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { PressureMunition, PressureMunitionSchema } from "../contracts/munitions";
-import { createChildLogger } from "../../logger";
+import { createChildLogger } from "@/lib/core";
 import { captureError } from "../../sentry-context";
 
 /**

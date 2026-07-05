@@ -1,5 +1,5 @@
 import "server-only";
-import { createSupabaseServiceClient } from "@/lib/supabase/service-client";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 
 export type AuditAction =
   | "CV_UPLOAD"
@@ -30,7 +30,7 @@ export async function logEvent(
   requestId?: string,
 ): Promise<void> {
   try {
-    const supabase = createSupabaseServiceClient();
+    const supabase = createAdminClientSupabase();
     await supabase.from("audit_logs").insert({
       user_id: userId,
       action,

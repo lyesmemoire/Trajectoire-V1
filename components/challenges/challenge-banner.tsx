@@ -59,7 +59,10 @@ export function ChallengeBanner({ challenge }: Props) {
             className="h-16 px-10 rounded-2xl bg-white text-blue-600 hover:bg-slate-50 font-black text-lg shadow-xl"
           >
             <Link href={`/dashboard/interview/challenges/${challenge.id}`}>
-              Rejoindre le Défi <ArrowRight className="ml-2 w-5 h-5" />
+              <span className="flex items-center gap-2">
+                Rejoindre le Défi
+                <ArrowRight className="w-5 h-5" />
+              </span>
             </Link>
           </Button>
           <p className="text-center text-[10px] font-black text-slate-500 uppercase tracking-widest">

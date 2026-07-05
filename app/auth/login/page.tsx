@@ -3,9 +3,11 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button, Input, Card, CardContent } from "@/components/design-system";
+import { AuthLayout } from "@/components/layouts/foundation";
 
 /* ─── Icons ─────────────────────────────────────────────── */
 
@@ -82,7 +84,6 @@ function LoginForm() {
   // Rediriger si déjà connecté
   useEffect(() => {
     const checkSession = async () => {
-      const supabase = createClient();
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -95,8 +96,6 @@ function LoginForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
-    const supabase = createClient();
 
     const { error: authError } = await supabase.auth.signInWithPassword({
       email: email.trim().toLowerCase(),
@@ -137,8 +136,6 @@ function LoginForm() {
     setError(null);
     setLoading(true);
 
-    const supabase = createClient();
-
     const { error: authError } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -160,7 +157,6 @@ function LoginForm() {
     setResendLoading(true);
     setResendSuccess(false);
 
-    const supabase = createClient();
     const { error: resendError } = await supabase.auth.resend({
       type: "signup",
       email: email.trim().toLowerCase(),
@@ -179,228 +175,211 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
+    <AuthLayout
+      title="Connexion"
+      subtitle="Connectez-vous à votre compte Trajectoire"
+    >
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-[460px]"
+        className="w-full max-w-md"
       >
-        {/* ── Logo ── */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <span className="text-[var(--primary)] text-[26px]">✦</span>
-            <span className="text-[23px] font-semibold tracking-[-0.02em] text-[var(--text-primary)]">
-              <span className="text-[23px] font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Trajectoire</span>
-            </span>
-          </Link>
-        </div>
-
-        {/* ── Card ── */}
-        <div className="card px-9 py-9">
-          {/* ── Tab Switcher ── */}
-          <div className="bg-gray-100 rounded-full p-1 flex mb-7">
-            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-[var(--primary)] bg-white shadow-sm cursor-default">
-              Se connecter
-            </div>
-            <Link
-              href="/auth/signup"
-              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-gray-700 transition-colors"
-            >
-              S&apos;inscrire
-            </Link>
-          </div>
-
-          {/* ── Social Buttons ── */}
-          <div className="space-y-3 mb-6">
-            <button
-              type="button"
-              onClick={() => handleOAuth("apple")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <AppleIcon />
-              Continuer avec Apple
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleOAuth("facebook")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <FacebookIcon />
-              Continuer avec Facebook
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleOAuth("google")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <GoogleIcon />
-              Continuer avec Google
-            </button>
-          </div>
-
-          {/* ── Divider ── */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[var(--border)]" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-[var(--text-secondary)] font-medium">
-                Ou
-              </span>
-            </div>
-          </div>
-
-          {/* ── Resend Success ── */}
-          {resendSuccess && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex items-start gap-2.5"
-            >
-              <span className="text-[var(--primary)] text-sm leading-none mt-0.5">
-                ✓
-              </span>
-              <p className="text-[var(--text-primary)] text-xs font-medium flex-1 leading-relaxed">
-                Un nouvel email de confirmation a été envoyé à{" "}
-                <strong>{email}</strong>. Vérifiez votre boîte de réception et
-                vos spams.
-              </p>
-            </motion.div>
-          )}
-
-          {/* ── Error ── */}
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex flex-col gap-2.5"
-            >
-              <div className="flex items-start gap-2.5">
-                <span className="text-[var(--text-secondary)] text-sm leading-none mt-0.5">
-                  ⚠
-                </span>
-                <p className="text-[var(--text-primary)] text-sm flex-1 leading-relaxed">
-                  {error}
-                </p>
-                <button
-                  onClick={() => {
-                    setError(null);
-                    setShowResend(false);
-                  }}
-                  className="text-red-400 hover:text-red-600 text-sm font-bold leading-none shrink-0"
-                >
-                  ✕
-                </button>
+        <Card>
+          <CardContent className="p-8">
+            {/* Tab Switcher */}
+            <div className="bg-gray-100 rounded-full p-1 flex mb-7">
+              <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-blue-700 bg-white shadow-sm cursor-default">
+                Se connecter
               </div>
-              {showResend && (
-                <button
-                  type="button"
-                  onClick={handleResendConfirmation}
-                  disabled={resendLoading}
-                  className="w-full text-center py-2 px-3 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold transition-all disabled:opacity-50"
-                >
-                  {resendLoading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <span className="w-3 h-3 border-2 border-red-300 border-t-red-600 rounded-full transition-all" />
-                      Envoi en cours...
-                    </span>
-                  ) : (
-                    "📧 Renvoyer l'email de confirmation"
-                  )}
-                </button>
-              )}
-            </motion.div>
-          )}
-
-          {/* ── Form ── */}
-          <form onSubmit={handleEmailLogin} className="space-y-5">
-            {/* Email */}
-            <div className="space-y-2">
-              <label
-                htmlFor="login-email"
-                className="block text-[13px] font-semibold text-[var(--text-primary)]"
+              <Link
+                href={`/auth/signup${redirectTo ? `?redirect=${redirectTo}` : ""}`}
+                className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               >
-                Adresse email <span className="text-[var(--text-secondary)]">*</span>
-              </label>
-              <input
-                id="login-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                placeholder="Adresse email"
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-              />
+                S&apos;inscrire
+              </Link>
             </div>
 
-            {/* Password */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="login-password"
-                  className="block text-[13px] font-semibold text-[var(--text-primary)]"
-                >
-                  Mot de passe <span className="text-[var(--text-secondary)]">*</span>
-                </label>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-xs text-[var(--primary)] hover:text-blue-700 font-medium"
-                >
-                  Mot de passe oublié ?
-                </Link>
-              </div>
-              <div className="relative">
-                <input
-                  id="login-password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  autoComplete="current-password"
-                  placeholder="Mot de passe"
-                  className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 pr-11 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-secondary)] transition-colors"
-                  aria-label={
-                    showPassword
-                      ? "Masquer le mot de passe"
-                      : "Afficher le mot de passe"
-                  }
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+            {/* Social Buttons */}
+            <div className="space-y-3 mb-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("apple")}
+                disabled={loading}
+                className="w-full"
+              >
+                <AppleIcon />
+                Continuer avec Apple
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("facebook")}
+                disabled={loading}
+                className="w-full"
+              >
+                <FacebookIcon />
+                Continuer avec Facebook
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("google")}
+                disabled={loading}
+                className="w-full"
+              >
+                <GoogleIcon />
+                Continuer avec Google
+              </Button>
             </div>
 
-            {/* ── CTA Button ── */}
-            <button
-              type="submit"
-              disabled={loading || !email || !password}
-              className="w-full mt-2 bg-[var(--primary)] hover:bg-[#5C6BE8] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-[var(--primary)] rounded-full transition-all" />
-                  Connexion...
+            {/* Divider */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-4 text-gray-600 font-medium">
+                  Ou
                 </span>
-              ) : (
-                "Se connecter"
-              )}
-            </button>
-          </form>
-        </div>
+              </div>
+            </div>
+
+            {/* Resend Success */}
+            {resendSuccess && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mb-5 p-3.5 bg-green-50 border border-green-200 rounded-xl flex items-start gap-2.5"
+              >
+                <span className="text-green-600 text-sm leading-none mt-0.5">
+                  ✓
+                </span>
+                <p className="text-gray-900 text-xs font-medium flex-1 leading-relaxed">
+                  Un nouvel email de confirmation a été envoyé à{" "}
+                  <strong>{email}</strong>. Vérifiez votre boîte de réception et
+                  vos spams.
+                </p>
+              </motion.div>
+            )}
+
+            {/* Error */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mb-5 p-3.5 bg-red-50 border border-red-200 rounded-xl flex flex-col gap-2.5"
+              >
+                <div className="flex items-start gap-2.5">
+                  <span className="text-red-600 text-sm leading-none mt-0.5">
+                    ⚠
+                  </span>
+                  <p className="text-gray-900 text-sm flex-1 leading-relaxed">
+                    {error}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setError(null);
+                      setShowResend(false);
+                    }}
+                    className="text-red-400 hover:text-red-600 text-sm font-bold leading-none shrink-0"
+                  >
+                    ✕
+                  </button>
+                </div>
+                {showResend && (
+                  <Button
+                    type="button"
+                    onClick={handleResendConfirmation}
+                    disabled={resendLoading}
+                    variant="outline"
+                    className="w-full text-red-700 border-red-200 hover:bg-red-100"
+                  >
+                    {resendLoading ? "Envoi en cours..." : "📧 Renvoyer l'email de confirmation"}
+                  </Button>
+                )}
+              </motion.div>
+            )}
+
+            {/* Form */}
+            <form onSubmit={handleEmailLogin} className="space-y-5">
+              {/* Email */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="login-email"
+                  className="block text-sm font-semibold text-gray-900"
+                >
+                  Adresse email <span className="text-gray-500">*</span>
+                </label>
+                <Input
+                  id="login-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                  placeholder="Adresse email"
+                />
+              </div>
+
+              {/* Password */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="login-password"
+                    className="block text-sm font-semibold text-gray-900"
+                  >
+                    Mot de passe <span className="text-gray-500">*</span>
+                  </label>
+                  <Link
+                    href="/auth/forgot-password"
+                    className="text-xs text-blue-700 hover:text-blue-600 font-medium"
+                  >
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <Input
+                    id="login-password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    autoComplete="current-password"
+                    placeholder="Mot de passe"
+                    className="pr-11"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    aria-label={
+                      showPassword
+                        ? "Masquer le mot de passe"
+                        : "Afficher le mot de passe"
+                    }
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Button
+                type="submit"
+                disabled={loading || !email || !password}
+                className="w-full"
+              >
+                {loading ? "Connexion..." : "Se connecter"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </motion.div>
-    </div>
+    </AuthLayout>
   );
 }
 
@@ -410,9 +389,11 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full transition-all" />
-        </div>
+        <AuthLayout title="Connexion" subtitle="Chargement...">
+          <div className="flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+          </div>
+        </AuthLayout>
       }
     >
       <LoginForm />

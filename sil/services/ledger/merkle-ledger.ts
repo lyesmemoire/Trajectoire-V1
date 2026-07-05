@@ -90,6 +90,5 @@ export class InMemoryMerkleLedgerWriter implements MerkleLedgerWriter {
   private async persistLedger(batch: LedgerBatch) {
     // intentionally isolated side-effect
     // In production, this would persist to the ledger_batches Postgres table
-    // console.log("[LEDGER]", batch);
   }
 }

@@ -36,10 +36,10 @@ model User {
   RecoveryEmailLog       RecoveryEmailLog[]
   Session                Session[]
   Subscription           Subscription?
-  UserAnalytics          UserAnalytics?
   UserBehaviorProfile    UserBehaviorProfile?
   UserPredictionSnapshot UserPredictionSnapshot[]
   WaitlistEntry          WaitlistEntry?
+  StorageFile            StorageFile[]
 
   @@index([email])
   @@index([stripeCustomerId])
@@ -66,7 +66,7 @@ model CareerProfile {
 
 model InterviewSession {
   id                   String                @id @default(dbgenerated("gen_random_uuid()"))
-  userId               String
+  userId               String?
   persona              String
   currentState         String
   clarityScore         Float?
@@ -87,10 +87,12 @@ model InterviewSession {
   createdAt            DateTime              @default(now())
   careerTrajectoryScore Float?          @map("career_trajectory_score")
   challengeEntryId     String?
+  isPremium            Boolean               @default(false)
+  sessionType          String                @default("interview")
   BehaviorEvent        BehaviorEvent[]
   InterviewEvent       InterviewEvent[]
   PublicChallengeEntry PublicChallengeEntry? @relation(fields: [challengeEntryId], references: [id])
-  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([createdAt])
@@ -219,13 +221,6 @@ model InterviewEvent {
   @@schema("public")
 }
 
-model ProcessedWebhook {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-
-  @@schema("public")
-}
-
 model PromptVersion {
   id        String   @id @default(cuid())
   type      String
@@ -310,20 +305,6 @@ model Subscription {
   @@schema("public")
 }
 
-model UserAnalytics {
-  id              String    @id @default(cuid())
-  userId          String    @unique
-  activationScore Int       @default(0)
-  churnRisk       Float     @default(0)
-  viralityScore   Float     @default(0)
-  engagementScore Float     @default(0)
-  lastActiveAt    DateTime?
-  updatedAt       DateTime
-  User            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@schema("public")
-}
-
 model UserBehaviorProfile {
   id                  String    @id @default(cuid())
   userId              String    @unique
@@ -393,35 +374,44 @@ enum Plan {
   @@schema("public")
 }
 
-model PremiumInterviewSession {
-  id             String   @id @default(uuid())
-  userId         String?
-  analysisId     String?
-  interviewType  String   @default("standard")
-  status         String   @default("active")
-  score          Int      @default(0)
+model OutboxEvent {
+  id            String   @id @default(cuid())
+  eventId       String   @unique
+  eventType     String
+  correlationId String
+  aggregateId   String?
+  causationId   String?
+  aggregateType String?
+  payload       Json
+  metadata      Json?
+  occurredAt    DateTime
+  availableAt   DateTime
+  processedAt   DateTime?
+  attempts      Int      @default(0)
+  lastError     String?
+  createdAt     DateTime @default(now())
 
-  questions      Json?
-  answers        Json?
-  feedback       Json?
-
-  startedAt      DateTime @default(now())
-  completedAt    DateTime?
-  createdAt      DateTime @default(now())
-  careerTrajectoryScore Float?
-
-  @@map("premium_interview_sessions")
+  @@index([processedAt])
+  @@index([availableAt])
   @@schema("public")
 }
 
-model SimulationSession {
-  id         String   @id @default(cuid())
-  userId     String?
-  createdAt  DateTime @default(now())
-  overall    Int
-  percentile Int
-  scores     Json
-  level      String
+model StorageFile {
+  id        String   @id @default(cuid())
+  userId    String?
+  bucket    String
+  path      String
+  fileName  String
+  mimeType  String?
+  size      BigInt
+  createdAt DateTime @default(now())
+  uploadedAt DateTime?
+  metadata  Json?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([bucket, path])
+  @@index([userId])
+  @@index([bucket])
+  @@index([path])
   @@schema("public")
 }

@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { createServerClient } from "@/lib/supabase/server";
 
 export interface CTSResult {
   score: number;
@@ -27,7 +27,7 @@ export async function computeAndSaveCTS(
     // Clamp and calculate current session score
     const currentSessionScore = Math.max(0, Math.min(100, (0.4 * overall) + (0.3 * credibility) + (0.3 * shortlist)));
 
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createServerClient();
 
     // Fetch last completed sessions to compute WMA
     // We get 4 to include the current one in the 5 max limit.
@@ -47,7 +47,7 @@ export async function computeAndSaveCTS(
     const sessionScores = [currentSessionScore];
     
     if (history) {
-      history.forEach(s => {
+      history.forEach((s: any) => {
         const sOverall = s.feedback_json?.overallScore || 0;
         const sCred = s.feedback_json?.committeeDecision?.strategicCredibility || 0;
         const sShort = s.feedback_json?.committeeDecision?.shortlistProbability || 0;
@@ -58,14 +58,14 @@ export async function computeAndSaveCTS(
 
     // WMA formula with descending weights [5, 4, 3, 2, 1]
     const weights = [5, 4, 3, 2, 1].slice(0, sessionScores.length);
-    const weightedSum = sessionScores.reduce((acc, score, i) => acc + (score * weights[i]), 0);
+    const weightedSum = sessionScores.reduce((acc, score, i) => acc + (score * weights[i]!), 0);
     const weightTotal = weights.reduce((a, b) => a + b, 0);
     
     const cts = weightTotal > 0 ? weightedSum / weightTotal : currentSessionScore;
     const finalCts = Math.round(cts * 10) / 10;
 
     // Delta calculation
-    const previousCts = history && history.length > 0 ? history[0].career_trajectory_score : null;
+    const previousCts = history && history.length > 0 ? history[0]!.career_trajectory_score : null;
     let delta = 0;
     if (previousCts !== null && previousCts !== undefined) {
       delta = Math.round((finalCts - previousCts) * 10) / 10;

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Route de test Sentry — DEV ONLY.
@@ -6,7 +7,7 @@ import { NextResponse } from "next/server";
  * GET /api/test-sentry
  */
 export async function GET() {
-  if (process.env.NODE_ENV === "production") {
+  if (envServer.NODE_ENV === "production") {
     return NextResponse.json({ error: "Not available in production" }, { status: 403 });
   }
 

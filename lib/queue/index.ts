@@ -1,5 +1,12 @@
 // lib/queue/index.ts
-// Queue infrastructure placeholder for future background jobs (e.g., Upstash, BullMQ)
-export const queue = {
-  // Initialize your queue client here (e.g., new Queue('jobs'))
-};
+// Queue infrastructure for background jobs using Upstash QStash
+
+export * from "./job-types";
+export * from "./queue-client";
+export * from "./job-processor";
+export * from "./worker";
+
+export { getQueueClient } from "./queue-client";
+export { getJobProcessor } from "./job-processor";
+export { getWorker } from "./worker";
+

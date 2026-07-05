@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation d'entretien | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0F172A;
+            --bg-card: #1E293B;
+            --bg-elevated: #334155;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --blue-primary: #1E40AF;
+            --blue-hover: #2563EB;
+            --blue-light: rgba(30, 64, 175, 0.15);
+            --gold-accent: #D4AF37;
+            --border: #334155;
+            --success: #16A34A;
+            --error: #DC2626;
+            --warning: #F59E0B;
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ PRE-INTERVIEW STATE ═══════════════════ */
+        .pre-interview {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+        }
+
+        .pre-interview.hidden { display: none; }
+
+        .interview-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .interview-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .interview-meta {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--blue-primary);
+        }
+
+        .meta-label {
+            font-weight: 500;
+        }
+
+        .meta-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* MICROPHONE */
+        .microphone-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 48px;
+        }
+
+        .microphone-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--blue-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .microphone-ring:nth-child(2) {
+            width: 240px;
+            height: 240px;
+            animation-delay: 0.5s;
+            opacity: 0.2;
+        }
+
+        .microphone-ring:nth-child(3) {
+            width: 280px;
+            height: 280px;
+            animation-delay: 1s;
+            opacity: 0.1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.1; }
+        }
+
+        .microphone-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: var(--blue-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.4);
+        }
+
+        .microphone-icon svg {
+            width: 56px;
+            height: 56px;
+            color: white;
+        }
+
+        .pre-message {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .pre-message p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--blue-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-elevated);
+            border-color: var(--text-muted);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════ ACTIVE INTERVIEW STATE ═══════════════════ */
+        .active-interview {
+            display: none;
+            min-height: 100vh;
+            padding: 32px;
+        }
+
+        .active-interview.visible { display: block; }
+
+        .interview-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER BAR */
+        .interview-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar-left h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .topbar-left p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .chronometer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .chrono-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--blue-primary);
+        }
+
+        .chrono-time {
+            font-size: 20px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
+        }
+
+        /* MAIN CONTENT */
+        .interview-main {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* MICROPHONE ACTIVE */
+        .mic-active-container {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 48px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mic-active {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 32px;
+        }
+
+        .mic-active-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: var(--blue-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
+        }
+
+        .mic-active-icon svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+        }
+
+        /* WAVEFORM */
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 60px;
+            margin-bottom: 24px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            background: var(--blue-primary);
+            border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 40px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 55px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 45px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 30px; animation-delay: 0.6s; }
+        .wave-bar:nth-child(8) { height: 50px; animation-delay: 0.7s; }
+        .wave-bar:nth-child(9) { height: 35px; animation-delay: 0.8s; }
+        .wave-bar:nth-child(10) { height: 25px; animation-delay: 0.9s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+
+        .mic-status {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* QUESTION CARD */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 48px;
+            border: 1px solid var(--border);
+        }
+
+        .question-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--blue-primary);
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 28px;
+            line-height: 1.4;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 12px 24px;
+            font-size: 14px;
+        }
+
+        /* TRANSCRIPT */
+        .transcript-section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 32px;
+            border: 1px solid var(--border);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transcript-header {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .transcript-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transcript-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .transcript-question {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .transcript-answer {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .transcript-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* RIGHT PANEL */
+        .interview-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* STRESS INDICATOR */
+        .stress-indicator {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stress-level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .stress-dot.focused { background: var(--blue-primary); }
+        .stress-dot.confident { background: var(--gold-accent); }
+
+        .stress-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* NEXT QUESTION NOTIFICATION */
+        .next-notification {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .next-notification.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ═══════════════════ END STATE ═══════════════════ */
+        .end-interview {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+        }
+
+        .end-interview.visible {
+            display: flex;
+        }
+
+        .end-content {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .end-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 32px;
+            background: rgba(22, 163, 74, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .end-icon svg {
+            width: 64px;
+            height: 64px;
+            color: var(--success);
+        }
+
+        .end-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .end-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .interview-layout {
+                grid-template-columns: 1fr;
+            }
+            .interview-sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pre-interview { padding: 32px 20px; }
+            .interview-title { font-size: 32px; }
+            .interview-meta { gap: 20px; }
+            .active-interview { padding: 20px; }
+            .question-text { font-size: 22px; }
+            .end-title { font-size: 36px; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <!-- ═══════════════════ PRE-INTERVIEW ═══════════════════ -->
+    <div class="pre-interview" id="preInterview">
+        <div class="interview-header">
+            <h1 class="interview-title">Simulation d'entretien</h1>
+            <div class="interview-meta">
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span class="meta-label">Type</span>
+                    <span class="meta-value">Manager</span>
+                </div>
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="meta-label">Durée</span>
+                    <span class="meta-value">45 min</span>
+                </div>
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span class="meta-label">Pression</span>
+                    <span class="meta-value">Progressive</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="microphone-container">
+            <div class="microphone-ring"></div>
+            <div class="microphone-ring"></div>
+            <div class="microphone-ring"></div>
+            <div class="microphone-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+            </div>
+        </div>
+
+        <div class="pre-message">
+            <p>Votre interlocuteur est prêt.</p>
+        </div>
+
+        <button class="btn btn-primary" id="startBtn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            Commencer l'entretien
+        </button>
+    </div>
+
+    <!-- ═══════════════════ ACTIVE INTERVIEW ═══════════════════ -->
+    <div class="active-interview" id="activeInterview">
+        <div class="interview-layout">
+            <!-- MAIN CONTENT -->
+            <div>
+                <!-- TOP BAR -->
+                <div class="interview-topbar">
+                    <div class="topbar-left">
+                        <h2>Entretien en cours</h2>
+                        <p>Poste : Directeur Marketing — L'Oréal</p>
+                    </div>
+                    <div class="chronometer">
+                        <svg class="chrono-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="chrono-time" id="chronoTime">00:00</span>
+                    </div>
+                </div>
+
+                <div class="interview-main">
+                    <!-- MICROPHONE ACTIVE -->
+                    <div class="mic-active-container">
+                        <div class="mic-active">
+                            <div class="mic-active-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                            </div>
+                        </div>
+                        <div class="waveform" id="waveform">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <p class="mic-status">Enregistrement en cours</p>
+                    </div>
+
+                    <!-- QUESTION CARD -->
+                    <div class="question-card">
+                        <div class="question-label">Question <span id="questionNumber">1</span></div>
+                        <h3 class="question-text" id="questionText">Parlez-moi d'une décision difficile que vous avez prise en tant que manager.</h3>
+                        <div class="question-actions">
+                            <button class="btn btn-primary btn-sm" id="answerBtn">Répondre</button>
+                            <button class="btn btn-secondary btn-sm" id="skipBtn">Passer</button>
+                            <button class="btn btn-ghost btn-sm" id="endBtn">Terminer</button>
+                        </div>
+                    </div>
+
+                    <!-- TRANSCRIPT -->
+                    <div class="transcript-section">
+                        <div class="transcript-header">Transcription en direct</div>
+                        <div id="transcriptContent">
+                            <div class="transcript-empty">Vos réponses apparaîtront ici au fur et à mesure de l'entretien.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="interview-sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Progression</div>
+                    <div class="progress-item">
+                        <span class="progress-label">Question</span>
+                        <span class="progress-value"><span id="currentQ">1</span> / 12</span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-label">Temps écoulé</span>
+                        <span class="progress-value" id="elapsedTime">00:00</span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-label">Réponses</span>
+                        <span class="progress-value" id="answerCount">0</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Indicateur de stress</div>
+                    <div class="stress-indicator">
+                        <div class="stress-level">
+                            <div class="stress-dot"></div>
+                            <span class="stress-label" id="stressLabel">Calme</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Conseils</div>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+                        Prenez votre temps pour répondre. Structurez vos exemples avec la méthode STAR (Situation, Tâche, Action, Résultat).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION -->
+    <div class="next-notification" id="nextNotification">
+        Question suivante...
+    </div>
+
+    <!-- ═══════════════════ END STATE ═══════════════════ -->
+    <div class="end-interview" id="endInterview">
+        <div class="end-content">
+            <div class="end-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h1 class="end-title">Excellent travail.</h1>
+            <p class="end-subtitle">Votre entretien est terminé. Découvrez maintenant votre débrief personnalisé avec des recommandations concrètes.</p>
+            <a href="../debrief/index.html" class="btn btn-primary">
+                Découvrir mon débrief
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════ STATE ═══════════════════
+        let currentQuestion = 0;
+        let answers = [];
+        let chronoInterval = null;
+        let startTime = null;
+
+        const questions = [
+            "Parlez-moi d'une décision difficile que vous avez prise en tant que manager.",
+            "Comment gérez-vous les conflits au sein de votre équipe ?",
+            "Décrivez une situation où vous avez dû convaincre votre direction.",
+            "Quel est votre style de leadership ?",
+            "Racontez-moi un échec professionnel et ce que vous en avez appris.",
+            "Comment mesurez-vous la performance de votre équipe ?",
+            "Quelle est votre vision pour ce poste dans les 12 prochains mois ?",
+            "Comment priorisez-vous quand tout semble urgent ?",
+            "Parlez-moi d'une transformation que vous avez pilotée.",
+            "Comment développez-vous les talents dans votre équipe ?",
+            "Quelle est votre approche de la négociation salariale ?",
+            "Pourquoi devrions-nous vous choisir plutôt qu'un autre candidat ?"
+        ];
+
+        const sampleAnswers = [
+            "Dans mon rôle actuel chez LVMH, j'ai dû restructurer l'équipe digitale suite à une réorganisation stratégique. C'était difficile car cela impliquait des changements de périmètre pour plusieurs collaborateurs seniors. J'ai d'abord mené des entretiens individuels pour comprendre leurs aspirations, puis j'ai proposé un plan de transition sur 6 mois avec des formations et du mentoring. Le résultat : 90% de rétention et une augmentation de 25% de la productivité.",
+            "Je privilégie toujours l'écoute active et la médiation. Récemment, deux membres de mon équipe étaient en désaccord sur la stratégie de contenu. J'ai organisé une session de travail où chacun a pu présenter ses arguments avec des données. Nous avons ensuite co-construit une solution hybride qui intégrait les meilleurs éléments des deux approches.",
+            "Lors du lancement d'un nouveau produit, j'ai convaincu le COMEX d'augmenter le budget marketing de 40% en présentant une analyse détaillée du ROI potentiel basée sur des benchmarks sectoriels et des tests marché. Le produit a généré 15M€ de CA la première année, dépassant nos objectifs de 30%.",
+            "Mon style est collaboratif et orienté résultats. Je fixe des objectifs clairs, je donne l'autonomie nécessaire, et je fais des points réguliers pour ajuster. Je crois beaucoup au feedback continu et à la reconnaissance des réussites.",
+            "J'ai lancé une campagne qui n'a pas atteint ses objectifs de conversion. J'ai analysé les données, identifié que le message ne résonnait pas avec notre cible, et j'ai pivoté rapidement. Cela m'a appris l'importance des tests A/B et de l'itération rapide.",
+            "J'utilise un tableau de bord avec des KPI qualitatifs et quantitatifs : atteinte des objectifs, satisfaction client, développement des compétences, et engagement. Je fais des revues mensuelles individuelles et trimestrielles en équipe.",
+            "Ma vision s'articule autour de trois axes : renforcer notre positionnement premium, accélérer la transformation digitale, et développer une culture data-driven. Je vois ce rôle comme un catalyseur de croissance durable.",
+            "J'utilise la matrice d'Eisenhower combinée à une évaluation de l'impact business. Je communique clairement les priorités à mon équipe et je n'hésite pas à dire non ou à déléguer quand nécessaire.",
+            "J'ai piloté la migration vers une nouvelle plateforme CRM pour 200 utilisateurs. J'ai structuré le projet en phases, formé des ambassadeurs dans chaque équipe, et communiqué transparentement sur les bénéfices. Adoption de 95% en 3 mois.",
+            "Je consacre 20% de mon temps au développement des talents : entretiens de carrière trimestriels, plan de formation personnalisé, et opportunités de projets transverses. Deux de mes collaborateurs ont été promus directors en 2 ans.",
+            "Je prépare toujours une fourchette basée sur le marché, mes réalisations, et la valeur que j'apporte. Je mets en avant les résultats concrets et je reste ouvert à la négociation sur l'ensemble du package.",
+            "Parce que je combine une vision stratégique solide, une capacité d'exécution éprouvée, et une passion pour le développement des équipes. Mes résultats parlent d'eux-mêmes : croissance de 35% du CA, équipe engagée à 92%, et innovations reconnues dans le secteur."
+        ];
+
+        // ═══════════════════ START INTERVIEW ═══════════════════
+        document.getElementById('startBtn').addEventListener('click', () => {
+            document.getElementById('preInterview').classList.add('hidden');
+            document.getElementById('activeInterview').classList.add('visible');
+            startChronometer();
+            showQuestion();
+        });
+
+        // ═══════════════════ CHRONOMETER ═══════════════════
+        function startChronometer() {
+            startTime = Date.now();
+            chronoInterval = setInterval(updateChrono, 1000);
+        }
+
+        function updateChrono() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const secs = (elapsed % 60).toString().padStart(2, '0');
+            const timeStr = `${mins}:${secs}`;
+            document.getElementById('chronoTime').textContent = timeStr;
+            document.getElementById('elapsedTime').textContent = timeStr;
+        }
+
+        // ═══════════════════ QUESTIONS ═══════════════════
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                endInterview();
+                return;
+            }
+
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('questionText').textContent = questions[currentQuestion];
+            
+            // Update stress indicator
+            updateStressIndicator();
+        }
+
+        function updateStressIndicator() {
+            const stressLabel = document.getElementById('stressLabel');
+            const stressDot = document.querySelector('.stress-dot');
+            
+            if (currentQuestion < 4) {
+                stressLabel.textContent = 'Calme';
+                stressDot.className = 'stress-dot';
+            } else if (currentQuestion < 8) {
+                stressLabel.textContent = 'Focused';
+                stressDot.className = 'stress-dot focused';
+            } else {
+                stressLabel.textContent = 'Confiant';
+                stressDot.className = 'stress-dot confident';
+            }
+        }
+
+        // ═══════════════════ ANSWER ═══════════════════
+        document.getElementById('answerBtn').addEventListener('click', () => {
+            const answer = sampleAnswers[currentQuestion] || "Réponse simulée pour cette question.";
+            answers.push({ question: questions[currentQuestion], answer: answer });
+            
+            updateTranscript();
+            document.getElementById('answerCount').textContent = answers.length;
+            
+            showNextNotification();
+            
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1500);
+        });
+
+        document.getElementById('skipBtn').addEventListener('click', () => {
+            showNextNotification();
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1500);
+        });
+
+        function updateTranscript() {
+            const container = document.getElementById('transcriptContent');
+            const last = answers[answers.length - 1];
+            
+            if (answers.length === 1) {
+                container.innerHTML = '';
+            }
+            
+            const item = document.createElement('div');
+            item.className = 'transcript-item';
+            item.innerHTML = `
+                <div class="transcript-question">Question ${answers.length} : ${last.question}</div>
+                <div class="transcript-answer">${last.answer}</div>
+            `;
+            container.appendChild(item);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showNextNotification() {
+            const notification = document.getElementById('nextNotification');
+            notification.classList.add('visible');
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 2000);
+        }
+
+        // ═══════════════════ END INTERVIEW ═══════════════════
+        document.getElementById('endBtn').addEventListener('click', endInterview);
+
+        function endInterview() {
+            clearInterval(chronoInterval);
+            document.getElementById('activeInterview').classList.remove('visible');
+            document.getElementById('endInterview').classList.add('visible');
+        }
+    </script>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>

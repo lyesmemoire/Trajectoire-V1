@@ -24,6 +24,7 @@ export function track(event: string, properties?: any) {
     timestamp: new Date().toISOString(),
   };
 
+  // Client-side file - console.log is appropriate for browser debugging
   console.log(`[Privacy-Safe Analytics] ${event}`, enrichedProps);
 
   if ((window as any).posthog) {

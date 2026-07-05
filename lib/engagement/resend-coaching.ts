@@ -3,10 +3,11 @@ import prisma from "@/lib/prisma";
 import { checkEmailFrequency } from "./email-frequency-guard";
 import { generateRecoveryEmailHtml } from "./email-templates";
 import { RiskLevel, ProbableCause } from "../emotional-safety/risk-score";
+import { envServer } from "@/lib/env.server";
 
 let resend: Resend;
 function getResend() {
-  if (!resend) resend = new Resend(process.env.RESEND_API_KEY || "dummy");
+  if (!resend) resend = new Resend(envServer.RESEND_API_KEY || "dummy");
   return resend;
 }
 

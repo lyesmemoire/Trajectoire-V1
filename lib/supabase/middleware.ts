@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Middleware de sécurité pour l'authentification et la continuité cognitive.
@@ -11,8 +12,8 @@ export async function updateSession(request: NextRequest) {
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy",
+    envServer.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co",
+    envServer.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy",
     {
       cookies: {
         getAll() {

@@ -16,6 +16,7 @@ const EnvClientSchema = z.object({
   NEXT_PUBLIC_POSTHOG_KEY: z
     .string()
     .startsWith("phc_")
+    .or(z.literal(""))
     .optional(),
 
   NEXT_PUBLIC_POSTHOG_HOST: z
@@ -38,6 +39,25 @@ const EnvClientSchema = z.object({
     .string()
     .url()
     .optional(),
+
+  NEXT_PUBLIC_VOICE_WS_URL: z
+    .string()
+    .url()
+    .optional(),
+
+  NEXT_PUBLIC_VOICE_DEBUG: z
+    .string()
+    .optional()
+    .transform((v) => v === "true"),
+
+  NEXT_PUBLIC_SENTRY_DSN: z
+    .string()
+    .url()
+    .optional(),
+
+  NEXT_PUBLIC_SENTRY_ENV: z
+    .string()
+    .optional(),
 });
 
 function validateClientEnv() {
@@ -50,6 +70,10 @@ function validateClientEnv() {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_GATEWAY_URL:            process.env.NEXT_PUBLIC_GATEWAY_URL,
     NEXT_PUBLIC_API_URL:                process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_VOICE_WS_URL:           process.env.NEXT_PUBLIC_VOICE_WS_URL,
+    NEXT_PUBLIC_VOICE_DEBUG:            process.env.NEXT_PUBLIC_VOICE_DEBUG,
+    NEXT_PUBLIC_SENTRY_DSN:             process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_SENTRY_ENV:             process.env.NEXT_PUBLIC_SENTRY_ENV,
   });
 
   if (!result.success && process.env.NODE_ENV === "development") {

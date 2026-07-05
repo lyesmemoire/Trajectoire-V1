@@ -416,7 +416,14 @@ export class SILRuntimeLoop implements WakeupNotifier {
           break;
       }
     } catch (e: any) {
-      console.error(`[SIL] Critical Execution Error: ${e.message}`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: event.tenantId,
+        sessionId: state ? state.sessionId : event.sessionId,
+        stage: "critical_execution_error",
+        error: e,
+        message: `[SIL] Critical Execution Error: ${e.message}`
+      });
       this.router.emit({
         type: "FAILURE_DETECTED",
         sessionId: state ? state.sessionId : event.sessionId,

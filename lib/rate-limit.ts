@@ -1,22 +1,23 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import type { NextRequest } from "next/server";
+import { envServer } from "@/lib/env.server";
 
 let redis: Redis | null = null;
 let limiter: Ratelimit | null = null;
 
 function getRedis(): Redis | null {
   if (
-    !process.env.UPSTASH_REDIS_REST_URL ||
-    !process.env.UPSTASH_REDIS_REST_TOKEN
+    !envServer.UPSTASH_REDIS_REST_URL ||
+    !envServer.UPSTASH_REDIS_REST_TOKEN
   ) {
     return null;
   }
 
   if (!redis) {
     redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      url: envServer.UPSTASH_REDIS_REST_URL,
+      token: envServer.UPSTASH_REDIS_REST_TOKEN,
     });
   }
 
@@ -60,7 +61,7 @@ export async function checkRateLimit(
   action: string,
 ): Promise<RateLimitResult> {
   const r = getRedis();
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = envServer.NODE_ENV === "production";
   if (!r) return { blocked: isProduction, headers: {} };
 
   const config = ACTION_LIMITS[action] ?? { requests: 10, window: "1 h" };
@@ -99,7 +100,7 @@ export async function enforceRateLimit(
     "127.0.0.1";
 
   const limiterInstance = getLimiter();
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = envServer.NODE_ENV === "production";
 
   if (!limiterInstance) {
     return { blocked: isProduction, headers: {} };

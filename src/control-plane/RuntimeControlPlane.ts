@@ -5,7 +5,8 @@ import { EventStreamBus } from "../distributed/stream/EventStreamBus";
 import { GlobalStateStore } from "../observability/GlobalStateStore";
 import { LoopGovernor } from "../governor/LoopGovernor";
 import { AutonomousLoopEngine } from "../distributed/loop/AutonomousLoopEngine";
-import { HealingEngine } from "../../apps/realtime-gateway/src/voice-interview/runtime/fsm/distributed/healing/HealingEngine";
+// TODO: Fix circular dependency - control-plane should not import from apps
+// import { HealingEngine } from "../../apps/realtime-gateway/src/voice-interview/runtime/fsm/distributed/healing/HealingEngine";
 import { CoordinatorNode } from "../distributed/core/CoordinatorNode";
 
 /**
@@ -22,7 +23,7 @@ export class RuntimeControlPlane {
   constructor(
     private engine: AutonomousLoopEngine,
     private governor: LoopGovernor,
-    private healing: HealingEngine,
+    private healing: any, // TODO: Type properly after fixing circular dependency
     private coordinator: CoordinatorNode,
     private tickMs: number = 1000 // default tick period
   ) {

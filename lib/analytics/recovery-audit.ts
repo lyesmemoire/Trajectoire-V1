@@ -27,7 +27,7 @@ export async function computeRecoveryAudit(): Promise<RecoveryMetrics> {
     select: { userId: true },
   });
 
-  const uniqueUserIds = [...new Set(userIds.map((u) => u.userId))];
+  const uniqueUserIds = [...new Set(userIds.map((u) => u.userId).filter((id): id is string => id !== null))];
 
   // 2. See how many of these specific users came back for another session
   const returnedUsers = await prisma.user.count({

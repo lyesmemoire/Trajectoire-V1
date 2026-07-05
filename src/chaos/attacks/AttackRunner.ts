@@ -1,9 +1,10 @@
-import { RuntimeOrchestrator } from "../../../apps/realtime-gateway/src/voice-interview/runtime/fsm/orchestrator/RuntimeOrchestrator";
+// TODO: Fix circular dependency - chaos module should not import from apps
+// import { RuntimeOrchestrator } from "../../../apps/realtime-gateway/src/voice-interview/runtime/fsm/orchestrator/RuntimeOrchestrator";
 import { AttackSuite, AttackType } from "./AttackSuite";
 import { FaultTelemetry } from "../../observability/FaultTelemetry";
 
 export class AttackRunner {
-  constructor(private orchestrator: RuntimeOrchestrator) {}
+  constructor(private orchestrator: any) {} // TODO: Type properly after fixing circular dependency
 
   async run(type: AttackType, eventCount: number, intensity = 0.2) {
     const attack = new AttackSuite({

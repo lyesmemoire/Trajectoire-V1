@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { createServerClient } from "@/lib/supabase/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
+    const user = await getStrictUser(req);
     if (!user)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createServerClient();
     const { data: logs } = await supabase
       .from("ai_usage_logs")
       .select("*")
@@ -16,12 +16,12 @@ export async function GET(req: NextRequest) {
       .limit(100);
 
     const metrics = {
-      totalCost: logs?.reduce((acc, l) => acc + l.costUsd, 0) || 0,
+      totalCost: logs?.reduce((acc: number, l: any) => acc + l.costUsd, 0) || 0,
       avgLatency: logs?.length
-        ? logs.reduce((acc, l) => acc + l.latencyMs, 0) / logs.length
+        ? logs.reduce((acc: number, l: any) => acc + l.latencyMs, 0) / logs.length
         : 0,
       cacheHitRate: logs?.length
-        ? (logs.filter((l) => l.cacheHit).length / logs.length) * 100
+        ? (logs.filter((l: any) => l.cacheHit).length / logs.length) * 100
         : 0,
     };
 

@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
 import prisma from "@/lib/prisma";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 export interface PromptMetadata {
   version: string;
@@ -32,8 +33,9 @@ export const PromptIntegrity = {
       JSON.stringify(metadata),
     );
 
-    console.log(
+    LoggerProvider.getLogger().debug(
       `[Prompt Audit] ${metadata.engine} | Version: ${metadata.version} | Hash: ${fingerprint}`,
+      { userId, sessionId }
     );
 
     // Persist to DB for drift analysis

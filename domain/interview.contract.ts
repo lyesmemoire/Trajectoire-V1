@@ -94,3 +94,47 @@ export function mergeInterviewViews(
     createdAt: new Date().toISOString(), // Mocking for now, normally taken from db
   };
 }
+
+// ── Row types used by validators ──────────────────────────────────────────────
+// These are structural aliases — they mirror the Supabase DB schema shape.
+export type StandardSessionRow = {
+  id: string;
+  user_id: string;
+  job_title?: string;
+  job_description?: string | null;
+  candidate_summary?: string | null;
+  questions: string[];
+  answers: string[];
+  status: "active" | "completed";
+  score?: number | null;
+  final_score?: number | null;
+  level?: string | null;
+  feedback_json?: Record<string, unknown> | null;
+  created_at: string;
+  completed_at?: string | null;
+  updated_at?: string | null;
+};
+
+export type PremiumSessionRow = {
+  id: string;
+  user_id: string;
+  job_title?: string;
+  company?: string | null;
+  persona: "big_tech_senior" | "startup_founder" | "corporate_hr" | "technical_lead" | "aggressive_recruiter";
+  difficulty: "normal" | "hard" | "elite";
+  phase: "intro" | "cv_deep_dive" | "technical_case" | "behavioral" | "pressure_test" | "closing";
+  transcript: Array<{ role: "interviewer" | "candidate"; content: string }>;
+  memory?: { structuredSummary?: string; keyStrengths?: string[]; keyWeaknesses?: string[] } | null;
+  is_processing: boolean;
+  status: "active" | "completed";
+  score: number;
+  technical_score?: number | null;
+  communication_score?: number | null;
+  confidence_score?: number | null;
+  stress_score?: number | null;
+  tags: string[];
+  started_at: string;
+  completed_at?: string | null;
+  created_at: string;
+  updated_at?: string | null;
+};

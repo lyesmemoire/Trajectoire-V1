@@ -1,6 +1,7 @@
 import { coreEvents, INTERVIEW_EVENTS } from "../orchestration/core/event-bus";
 import { track } from "../analytics";
 import prisma from "@/lib/prisma";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 /**
  * Centralized Event Tracker for Behavioral Monitoring.
@@ -8,14 +9,15 @@ import prisma from "@/lib/prisma";
 export function initializeEventTracking() {
   // 1. Track Answer Submissions
   coreEvents.on(INTERVIEW_EVENTS.ANSWER_SUBMITTED, async (data) => {
-    console.log(`[Event] Answer Submitted by ${data.userId}`);
+    LoggerProvider.getLogger().debug(`[Event] Answer Submitted by ${data.userId}`, { userId: data.userId });
     track(INTERVIEW_EVENTS.ANSWER_SUBMITTED, data);
   });
 
   // 2. Track Interruptions (CRITICAL FOR BETA)
   coreEvents.on(INTERVIEW_EVENTS.INTERRUPTION_TRIGGERED, async (data) => {
-    console.log(
+    LoggerProvider.getLogger().debug(
       `[Event] Interruption Triggered: ${data.type} for ${data.userId}`,
+      { userId: data.userId, sessionId: data.sessionId }
     );
     track(INTERVIEW_EVENTS.INTERRUPTION_TRIGGERED, {
       userId: data.userId,

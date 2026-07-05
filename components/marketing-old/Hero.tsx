@@ -48,9 +48,11 @@ export default function Hero() {
                 className="bg-red-600 text-lg hover:bg-red-700 shadow-xl shadow-red-900/50"
               >
                 <Link href="/dashboard">
-                  <Upload className="mr-2 h-5 w-5" />
-                  Analysez votre CV gratuitement
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <span className="flex items-center gap-2">
+                    <Upload className="h-5 w-5" />
+                    Analysez votre CV gratuitement
+                    <ArrowRight className="h-5 w-5" />
+                  </span>
                 </Link>
               </Button>
 

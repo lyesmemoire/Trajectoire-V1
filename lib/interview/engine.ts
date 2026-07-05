@@ -63,7 +63,10 @@ export class InterviewEngine {
 
     const currentIndex = order.indexOf(this.state.currentPhase);
     if (currentIndex < order.length - 1) {
-      this.state.currentPhase = order[currentIndex + 1];
+      const nextPhase = order[currentIndex + 1];
+      if (nextPhase) {
+        this.state.currentPhase = nextPhase;
+      }
       this.state.stressLevel = Math.min(
         1,
         this.state.stressLevel + 0.2

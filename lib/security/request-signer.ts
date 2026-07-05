@@ -1,10 +1,11 @@
 import { createHmac } from "crypto";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Génère un jeton de session éphémère pour les routes sensibles.
  */
 export function signRoute(pathname: string, sessionId: string): string {
-  const secret = process.env.ROUTE_SIGNING_SECRET || "fallback-secret";
+  const secret = envServer.ROUTE_SIGNING_SECRET || "fallback-secret";
   const timestamp = Math.floor(Date.now() / 1000 / 600); // 10 min window
 
   return createHmac("sha256", secret)

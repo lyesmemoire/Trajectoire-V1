@@ -1,0 +1,6 @@
+import { DomainEvent, IntegrationEvent, InternalEvent, NotificationEvent, PlatformEvent } from "./base.event";
+
+export interface EventBus {
+  publish(event: PlatformEvent): Promise<void>;
+  subscribe(eventType: string, handler: (event: PlatformEvent) => Promise<void>): void;
+}

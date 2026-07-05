@@ -1,11 +1,11 @@
-import { createSupabaseServerClient } from "../supabase-server";
+import { createServerClient } from "@/lib/supabase/server";
 
 /**
  * Source de vérité absolue pour l'identité utilisateur côté serveur.
  * Ignore la session locale et valide directement avec Supabase Auth.
  */
 export async function getStrictUser() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = await createServerClient();
 
   // ✅ Jamais getSession(), toujours getUser() pour les données sensibles
   const {
@@ -45,7 +45,7 @@ export async function validateReplayAccess(sessionId: string) {
   const { user } = await getStrictUser();
   if (!user) return false;
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = await createServerClient();
 
   const { data, error } = await supabase
     .from("interview_sessions")

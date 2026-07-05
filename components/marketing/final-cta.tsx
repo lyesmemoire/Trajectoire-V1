@@ -34,8 +34,10 @@ export function FinalCTA() {
             className="h-24 px-16 rounded-[2.5rem] bg-[#7C3AED] text-white hover:bg-[#6D28D9] font-black text-2xl shadow-[0_0_50px_rgba(124,58,237,0.3)] transition-all hover:scale-105 active:scale-95 group"
           >
             <Link href="/auth/signup">
-              Révéler mon Career DNA{" "}
-              <ChevronRight className="ml-3 w-8 h-8 group-hover:translate-x-2 transition-transform" />
+              <span className="flex items-center gap-3">
+                Révéler mon Career DNA
+                <ChevronRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
+              </span>
             </Link>
           </Button>
         </div>

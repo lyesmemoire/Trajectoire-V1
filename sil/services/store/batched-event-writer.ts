@@ -1,5 +1,7 @@
 import { PostgresEventStore } from "./postgres-event-store";
 import { SILEvent } from "../../contracts/sil-events";
+import { StructuredLogger } from "../../contracts/structured-logger";
+import * as crypto from "crypto";
 
 export class BatchedEventWriter {
   private buffer: SILEvent[] = [];
@@ -8,7 +10,8 @@ export class BatchedEventWriter {
   constructor(
     private store: PostgresEventStore,
     private flushSize = 100,
-    private flushMs = 50
+    private flushMs = 50,
+    private logger?: StructuredLogger
   ) {}
 
   write(event: SILEvent) {
@@ -37,7 +40,12 @@ export class BatchedEventWriter {
     try {
       await this.store.bulkInsert(batch);
     } catch (err) {
-      console.error("[BatchedEventWriter] Flush failed", err);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        stage: "batched_event_writer_flush",
+        error: err,
+        message: "[BatchedEventWriter] Flush failed"
+      });
       // In a production system, implement a DLQ or retry mechanism here
     }
   }

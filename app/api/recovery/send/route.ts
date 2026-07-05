@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getStrictUser } from "@/lib/auth/get-user";
 import {
   sendRecoveryEmail,
   RecoveryEmailInput,
@@ -10,7 +10,7 @@ import {
 
 export async function POST(req: NextRequest) {
   try {
-    const admin = await getAuthenticatedUser();
+    const admin = await getStrictUser(req);
 
     // Auth admin check
     if (!admin || admin.role !== "ADMIN") {

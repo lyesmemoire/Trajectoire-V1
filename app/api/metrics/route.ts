@@ -1,22 +1,22 @@
 import { NextResponse } from "next/server";
 import { getMetrics } from "@/lib/metrics/cache";
-import { logger } from "@/lib/logger";
+import { createChildLogger } from "@/lib/core";
 
 export const runtime = "edge"; // Optimisation : exécution sur Edge Runtime
 export const revalidate = 300; // ISR : cache Next.js de 5 min
 
 export async function GET(request: Request) {
   const startTime = Date.now();
-  const log = logger.child({ endpoint: "/api/metrics" });
+  const log = createChildLogger({ endpoint: "/api/metrics" });
 
   try {
     log.info("metrics_request_received");
 
     const metrics = await getMetrics();
 
-    log.info("metrics_request_completed", {
+    log.info({
       durationMs: Date.now() - startTime,
-    });
+    }, "metrics_request_completed");
 
     return NextResponse.json(metrics, {
       headers: {
@@ -25,10 +25,10 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    log.error("metrics_request_failed", {
+    log.error({
       error: error instanceof Error ? error.message : "Unknown",
       durationMs: Date.now() - startTime,
-    });
+    }, "metrics_request_failed");
 
     // Retourner des métriques fallback même en cas d'erreur
     return NextResponse.json(

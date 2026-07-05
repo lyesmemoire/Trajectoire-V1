@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getServerDb } from "@/lib/db/client";
+import { envServer } from "@/lib/env.server";
 
 /**
  * Anti-Chaos Layer: AI Usage Domain
@@ -10,7 +11,7 @@ import { getServerDb } from "@/lib/db/client";
  * - Writes: Supabase ONLY (prevent divergence)
  */
 
-const USE_PRISMA_READS = process.env.USE_PRISMA_AI_USAGE === "true";
+const USE_PRISMA_READS = envServer.USE_PRISMA_AI_USAGE === true;
 
 import { Prisma } from "@prisma/client";
 

@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 export interface AIQualityMetric {
   sessionId: string;
@@ -15,8 +16,9 @@ export interface AIQualityMetric {
  */
 export const AIQualityMonitor = {
   logMetric: async (metric: AIQualityMetric) => {
-    console.log(
+    LoggerProvider.getLogger().debug(
       `[AI Quality] Feature: ${metric.feature} | Drift: ${metric.driftDetected} | Conf: ${metric.confidenceScore}`,
+      { userId: metric.userId, sessionId: metric.sessionId }
     );
 
     // We update the existing AIUsageLog to include quality metrics

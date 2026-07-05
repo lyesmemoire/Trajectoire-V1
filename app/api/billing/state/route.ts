@@ -1,31 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BillingService } from "@/lib/db/billing.service";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { GetWalletQuery } from "@/lib/billing/application/queries/get-wallet.query";
+import { BillingPresenter } from "@/lib/billing/presentation/BillingPresenter";
+import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
+import { envServer } from "@/lib/env.server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
-  try {
-    const supabase = await createSupabaseServerClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
+  // Check if Supabase is configured
+  if (!envServer.NEXT_PUBLIC_SUPABASE_URL || !envServer.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json(
+      { error: "Service unavailable - configuration missing" },
+      { status: 503 }
+    );
+  }
 
-    if (authError || !user) {
+  try {
+    const user = await getStrictUser(req);
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const balance = await BillingService.getBalance(user.id);
-    
-    // We could fetch the plan from UserService as well if needed. For now, default to "free"
-    // or fetch it if there's a plan column in profiles.
-    return NextResponse.json({ balance, plan: "free" });
-  } catch (error) {
-    console.error("[API/Billing/Balance] Error fetching balance:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
+    return RequestContext.run(
+      { userId: user.id, correlationId: crypto.randomUUID(), requestId: crypto.randomUUID() },
+      async () => {
+        const getWalletQuery = appContainer.resolve<GetWalletQuery>("GetWalletQuery");
+        const result = await getWalletQuery.execute({ userId: user.id });
+
+        if (result.isFailure()) {
+          const error = result.unwrapError();
+          const httpResponse = ErrorHttpMapper.toHttpResponse(error);
+          return NextResponse.json(
+            { error: httpResponse.body.error, code: httpResponse.body.code },
+            { status: httpResponse.status }
+          );
+        }
+
+        const presenter = new BillingPresenter();
+        const response = presenter.present(result.unwrap());
+        return NextResponse.json(response);
+      }
     );
+  } catch (error: any) {
+    console.error("[API/Billing/State] Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

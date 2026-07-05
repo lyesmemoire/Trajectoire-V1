@@ -1,10 +1,23 @@
 import { envServer } from "@/lib/env.server";
 import { z } from "zod";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getOpenAIClient } from "@/lib/openai";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { aiTtsLimiter } from "@/lib/security/rate-limit";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const user = await getStrictUser(req);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { success } = await aiTtsLimiter.limit(`ai-tts:${user.id}`);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+    const supabase = await createServerClient();
     const RequestSchema = z.object({
       textChunk: z.string().min(1).max(2000),
     });

@@ -1,17 +1,32 @@
 import { SILState } from "../contracts/session-state";
 import { FailureType } from "../contracts/sil-events";
 import { EventRouter } from "../services/event-router";
+import { StructuredLogger } from "../contracts/structured-logger";
+import * as crypto from "crypto";
 
 export class FailureController {
-  constructor(private router: EventRouter) {}
+  constructor(private router: EventRouter, private logger?: StructuredLogger) {}
 
   handle(state: SILState, error: FailureType, details?: any) {
-    console.warn(`[SIL Failure Detected] Session: ${state.sessionId} | Error: ${error}`, details);
+    this.logger?.warn({
+      traceId: crypto.randomUUID(),
+      tenantId: state.tenantId,
+      sessionId: state.sessionId,
+      stage: "failure_detected",
+      error: { type: error, details },
+      message: `[SIL Failure Detected] Session: ${state.sessionId} | Error: ${error}`
+    });
 
     const isRecoverable = this.isRecoverable(error);
 
     if (isRecoverable) {
-      console.log(`[SIL Recovery] Rewinding state to last checkpoint for session: ${state.sessionId}`);
+      this.logger?.info({
+        traceId: crypto.randomUUID(),
+        tenantId: state.tenantId,
+        sessionId: state.sessionId,
+        stage: "recovery_trigger",
+        message: `[SIL Recovery] Rewinding state to last checkpoint for session: ${state.sessionId}`
+      });
       this.rewindToLastCheckpoint(state);
       this.router.emit({ 
         eventId: crypto.randomUUID(),
@@ -22,7 +37,14 @@ export class FailureController {
         timestamp: Date.now() 
       });
     } else {
-      console.error(`[SIL Critical Failure] Session ${state.sessionId} marked as FAILED.`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: state.tenantId,
+        sessionId: state.sessionId,
+        stage: "critical_failure",
+        error: { type: error, details },
+        message: `[SIL Critical Failure] Session ${state.sessionId} marked as FAILED.`
+      });
       // In a real system, we'd trigger a forensic freeze and alert here.
     }
   }
@@ -43,11 +65,14 @@ export class FailureController {
     tenantId: string,
     details: { expectedTenant: string; receivedTenant: string; eventId: string }
   ): void {
-    console.error(
-      `[SIL INTERNAL_CORRUPTION] Session ${sessionId} | ` +
-      `Expected tenant: ${details.expectedTenant}, received: ${details.receivedTenant} | ` +
-      `Event: ${details.eventId}`
-    );
+    this.logger?.error({
+      traceId: crypto.randomUUID(),
+      tenantId,
+      sessionId,
+      stage: "internal_corruption",
+      error: details,
+      message: `[SIL INTERNAL_CORRUPTION] Session ${sessionId} | Expected tenant: ${details.expectedTenant}, received: ${details.receivedTenant} | Event: ${details.eventId}`
+    });
 
     // In production, this would:
     // 1. Write to a dedicated audit/corruption log (not the event store)

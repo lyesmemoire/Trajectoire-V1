@@ -25,6 +25,11 @@ const EnvServerSchema = z.object({
     .string()
     .min(1, "SUPABASE_SERVICE_ROLE_KEY manquante"),
 
+  NEXT_PUBLIC_APP_URL: z
+    .string()
+    .url("NEXT_PUBLIC_APP_URL doit être une URL valide")
+    .optional(),
+
   // ── LLM ───────────────────────────────────────────────────────────────────
   OPENAI_API_KEY: z
     .string()
@@ -38,6 +43,16 @@ const EnvServerSchema = z.object({
   MISTRAL_API_KEY: z
     .string()
     .min(1, "MISTRAL_API_KEY manquante"),
+
+  ANTHROPIC_API_KEY: z
+    .string()
+    .startsWith("sk-ant-")
+    .optional(),
+
+  GROQ_API_KEY: z
+    .string()
+    .startsWith("gsk_")
+    .optional(),
 
   // ── Voice (ElevenLabs) ────────────────────────────────────────────────────
   ELEVENLABS_API_KEY: z
@@ -65,6 +80,7 @@ const EnvServerSchema = z.object({
     .startsWith("whsec_", "STRIPE_WEBHOOK_SECRET doit commencer par whsec_")
     .optional(),
 
+  // Legacy price IDs (kept for webhook backward compat)
   STRIPE_PRICE_EARLY: z
     .string()
     .startsWith("price_")
@@ -79,6 +95,23 @@ const EnvServerSchema = z.object({
     .string()
     .startsWith("price_")
     .optional(),
+
+  // New subscription price IDs
+  STRIPE_PRICE_ESSENTIEL: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_PRICE_PERFORMANCE: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_PRICE_STRATEGIQUE: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
 
   // ── Cache Redis / Upstash ─────────────────────────────────────────────────
   UPSTASH_REDIS_REST_URL: z
@@ -118,6 +151,16 @@ const EnvServerSchema = z.object({
     .string()
     .min(1)
     .optional(), // Abstract API — email validation ou autre
+
+  ROUTE_SIGNING_SECRET: z
+    .string()
+    .min(1)
+    .optional(), // Secret for signing sensitive routes
+
+  API_SIGNING_SECRET: z
+    .string()
+    .min(1)
+    .optional(), // Secret for API request signing
 
   // ── WebRTC ────────────────────────────────────────────────────────────────
   TURN_URL: z
@@ -164,9 +207,123 @@ const EnvServerSchema = z.object({
     .optional()
     .transform((v) => v === "true" || v === "1"),
 
+  LOG_LEVEL: z
+    .string()
+    .optional()
+    .default("info"),
+
+  // ── OpenTelemetry ─────────────────────────────────────────────────────────
+  OTEL_EXPORTER_OTLP_ENDPOINT: z
+    .string()
+    .url()
+    .optional(),
+
+  OTEL_EXPORTER_OTLP_HEADERS: z
+    .string()
+    .optional(),
+
+  // ── Feature Flags ─────────────────────────────────────────────────────────
+  USE_PRISMA_PROMPTS: z
+    .string()
+    .optional()
+    .transform((v) => v === "true"),
+
+  USE_PRISMA_AUDIT: z
+    .string()
+    .optional()
+    .transform((v) => v === "true"),
+
+  USE_PRISMA_AI_USAGE: z
+    .string()
+    .optional()
+    .transform((v) => v === "true"),
+
+  // ── Sentry ─────────────────────────────────────────────────────────────────
+  SENTRY_DSN: z
+    .string()
+    .url()
+    .optional(),
+
+  // ── Queue (Upstash QStash) ───────────────────────────────────────────────
+  QSTASH_URL: z
+    .string()
+    .url()
+    .optional(),
+
+  QSTASH_TOKEN: z
+    .string()
+    .min(1)
+    .optional(),
+
   // ── Flags expérimentaux (à documenter) ────────────────────────────────────
   // STORE : usage inconnu — à investiguer avant de typer
   STORE: z
+    .string()
+    .optional(),
+
+  // ── Gateway / Frontend ──────────────────────────────────────────────────────
+  FRONTEND_URL: z
+    .string()
+    .url()
+    .optional(),
+
+  // ── Alerts ─────────────────────────────────────────────────────────────────
+  SLACK_ALERT_WEBHOOK_URL: z
+    .string()
+    .url()
+    .optional(),
+
+  ALERT_EMAIL_TO: z
+    .string()
+    .email()
+    .optional(),
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  RENDER_INSTANCE_ID: z
+    .string()
+    .optional(),
+
+  // ── Stripe Pricing ─────────────────────────────────────────────────────────
+  STRIPE_PRICE_PRO_ID: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_PRO_MONTHLY_PRICE_ID: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_PRO_YEARLY_PRICE_ID: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_EXPERT_MONTHLY_PRICE_ID: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  STRIPE_EXPERT_YEARLY_PRICE_ID: z
+    .string()
+    .startsWith("price_")
+    .optional(),
+
+  // ── Gateway / Server ────────────────────────────────────────────────────────
+  HOST: z
+    .string()
+    .optional(),
+
+  STRESS_TEST_BYPASS: z
+    .string()
+    .optional(),
+
+  // ── LLM Models ─────────────────────────────────────────────────────────────
+  OPENAI_MODEL: z
+    .string()
+    .optional(),
+
+  MISTRAL_MODEL: z
     .string()
     .optional(),
 
@@ -184,6 +341,12 @@ function validateEnv() {
       // Une variable optionnelle qui échoue = warning, pas crash
       return field && !field.isOptional();
     });
+
+    // Skip validation during build time
+    if (process.env.NEXT_PHASE === "phase-production-build" || process.env.NEXT_PHASE === "phase-development-build") {
+      console.warn("Skipping env validation during build");
+      return {} as z.infer<typeof EnvServerSchema>;
+    }
 
     if (errors.length > 0) {
       const missing = errors

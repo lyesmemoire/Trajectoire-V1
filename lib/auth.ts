@@ -1,11 +1,11 @@
 // lib/auth.ts
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { createServerClient } from "@/lib/supabase/server";
 
 /**
  * Retourne l'utilisateur authentifié ou null.
  */
 export async function getAuthenticatedUser() {
-  const supabase = await createSupabaseServerClient();
+  const supabase = await createServerClient();
   const {
     data: { user },
     error,

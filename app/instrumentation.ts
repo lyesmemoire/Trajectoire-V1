@@ -7,6 +7,7 @@ import { registerInstrumentations } from "@opentelemetry/instrumentation";
 import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
 import { Resource } from "@opentelemetry/resources";
 import { diag, DiagConsoleLogger, DiagLogLevel } from "@opentelemetry/api";
+import { envServer } from "@/lib/env.server";
 
 // Setup diagnostics (silently ignore in prod)
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
@@ -24,16 +25,16 @@ function parseHeaders(headerString?: string): Record<string, string> {
 }
 
 const exporter = new OTLPTraceExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-  headers: parseHeaders(process.env.OTEL_EXPORTER_OTLP_HEADERS),
+  url: envServer.OTEL_EXPORTER_OTLP_ENDPOINT,
+  headers: parseHeaders(envServer.OTEL_EXPORTER_OTLP_HEADERS),
 });
 
 const provider = new NodeTracerProvider({
   resource: new Resource({
     "service.name": "studioentretien",
-  }),
+  }) as any,
 });
-provider.addSpanProcessor(new BatchSpanProcessor(exporter));
+(provider as any).addSpanProcessor(new BatchSpanProcessor(exporter as any));
 provider.register();
 
 registerInstrumentations({

@@ -3,7 +3,7 @@ import { DecisionGraph } from "@/domain/decision-graph.contract";
 
 export class DecisionGraphRepository {
   async save(graph: DecisionGraph) {
-    return prisma.decisionGraph.create({
+    return (prisma as any).decisionGraph.create({
       data: {
         traceId: graph.traceId,
         userId: graph.userId,
@@ -16,7 +16,7 @@ export class DecisionGraphRepository {
   }
 
   async get(traceId: string): Promise<DecisionGraph | null> {
-    const row = await prisma.decisionGraph.findUnique({
+    const row = await (prisma as any).decisionGraph.findUnique({
       where: { traceId },
     });
 

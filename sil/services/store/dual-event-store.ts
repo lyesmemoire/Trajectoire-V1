@@ -2,12 +2,15 @@ import { EventStore } from "../../contracts/event-store";
 import { SILEvent } from "../../contracts/sil-events";
 import { SILCheckpoint } from "../../contracts/session-state";
 import { MerkleLedgerWriter } from "../ledger/merkle-ledger";
+import { StructuredLogger } from "../../contracts/structured-logger";
+import * as crypto from "crypto";
 
 export class DualEventStore implements EventStore {
   constructor(
     private primary: EventStore,   // MemoryEventStore
     private shadow: EventStore,    // PostgresEventStore
-    private ledger?: MerkleLedgerWriter
+    private ledger?: MerkleLedgerWriter,
+    private logger?: StructuredLogger
   ) {}
 
   async append(event: SILEvent): Promise<void> {
@@ -16,7 +19,14 @@ export class DualEventStore implements EventStore {
 
     // 2. SHADOW (non-blocking)
     this.shadow.append(event).catch((err) => {
-      console.error("[ShadowStore] append failed", err);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: event.tenantId,
+        sessionId: event.sessionId,
+        stage: "shadow_store_append",
+        error: err,
+        message: "[ShadowStore] append failed"
+      });
     });
 
     // 3. LEDGER (non-blocking)
@@ -62,7 +72,14 @@ export class DualEventStore implements EventStore {
     await this.primary.saveCheckpoint(tenantId, checkpoint);
     // Shadow checkpoint save could be done here if needed, but the focus is events.
     this.shadow.saveCheckpoint(tenantId, checkpoint).catch((err) => {
-       console.error("[ShadowStore] saveCheckpoint failed", err);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId,
+        sessionId: checkpoint.sessionId,
+        stage: "shadow_store_checkpoint",
+        error: err,
+        message: "[ShadowStore] saveCheckpoint failed"
+      });
     });
   }
 }

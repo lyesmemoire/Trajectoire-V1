@@ -4,12 +4,18 @@ import { envServer } from "../../../../../lib/env.server.js";
 import { captureError } from "../../../../../lib/sentry-context.js";
 
 const supabase = createClient(
-  envServer.SUPABASE_URL,
+  envServer.SUPABASE_URL || envServer.NEXT_PUBLIC_SUPABASE_URL,
   envServer.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 export class SupabaseInterviewRepository implements InterviewRepository {
   async create(record: InterviewRecord): Promise<void> {
+    // DEV bypass for local testing without Supabase
+    if (process.env.NODE_ENV === "development") {
+      console.log("[DEV] Skipping DB create for session:", record.sessionId);
+      return;
+    }
+
     // Note: session_id is no longer inserted here, Postgres generates an UUID.
     // However, if the repository is called directly to create a record and needs
     // to respect an existing sessionId, we'd need to adapt.
@@ -36,6 +42,12 @@ export class SupabaseInterviewRepository implements InterviewRepository {
   }
 
   async update(sessionId: string, partial: Partial<InterviewRecord>): Promise<void> {
+    // DEV bypass for local testing without Supabase
+    if (process.env.NODE_ENV === "development") {
+      console.log("[DEV] Skipping DB update for session:", sessionId);
+      return;
+    }
+
     const { error } = await supabase
       .from("interview_sessions")
       .update({
@@ -59,6 +71,12 @@ export class SupabaseInterviewRepository implements InterviewRepository {
   }
 
   async get(sessionId: string): Promise<InterviewRecord | null> {
+    // DEV bypass for local testing without Supabase
+    if (process.env.NODE_ENV === "development") {
+      console.log("[DEV] Skipping DB get for session:", sessionId);
+      return null;
+    }
+
     const { data, error } = await supabase
       .from("interview_sessions")
       .select("*")
@@ -89,6 +107,12 @@ export class SupabaseInterviewRepository implements InterviewRepository {
   }
 
   async listByUser(userId: string): Promise<InterviewRecord[]> {
+    // DEV bypass for local testing without Supabase
+    if (process.env.NODE_ENV === "development") {
+      console.log("[DEV] Skipping DB listByUser for user:", userId);
+      return [];
+    }
+
     const { data } = await supabase
       .from("interview_sessions")
       .select("*")

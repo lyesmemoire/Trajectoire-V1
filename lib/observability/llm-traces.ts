@@ -1,4 +1,6 @@
 
+import { LoggerProvider } from "@/lib/core/observability/logger";
+
 export interface LLMTrace {
   sessionId?: string;
   userId: string;
@@ -16,8 +18,9 @@ export interface LLMTrace {
  */
 export async function logLLMTrace(trace: LLMTrace) {
   // We can store this in a dedicated monitoring table or simple audit log
-  console.log(
+  LoggerProvider.getLogger().debug(
     `[LLM Trace] ${trace.endpoint} | ${trace.model} | ${trace.latencyMs}ms | ${trace.status}`,
+    { userId: trace.userId, sessionId: trace.sessionId }
   );
 
   // Example storage logic (if table exists)

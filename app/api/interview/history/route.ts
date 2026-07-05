@@ -1,16 +1,19 @@
 // app/api/interview/history/route.ts
 // Récupère l'historique des sessions d'entretien de l'utilisateur
 
-import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { requireAuth } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const user = await requireAuth();
-    const supabase = await createSupabaseServerClient();
+    const user = await getStrictUser(req);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const supabase = await createServerClient();
 
     // Récupérer les sessions (dernières 20)
     const { data: sessions, error } = await (supabase as any)

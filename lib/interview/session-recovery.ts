@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 
 /**
  * Session Recovery Service
@@ -16,7 +16,7 @@ export interface SessionSnapshot {
   previousAnswers?: Array<{ question: string; answer: string }>;
 }
 
-const supabase = createClient();
+const supabase = createAdminClientSupabase();
 
 export const SessionRecovery = {
   async saveSnapshot(snapshot: SessionSnapshot) {

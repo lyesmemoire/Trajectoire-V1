@@ -1,5 +1,5 @@
-import { CandidateMessage } from "../../../../core/p6/types.js";
-import { TransportCommand } from "../../../../core/p6/transport/transport-contract.js";
+import { CandidateMessage } from "@trajectoire/voice-core/p6";
+import { TransportCommand } from "@trajectoire/voice-core/p6";
 
 export interface WebSocketMessage {
   event: string;

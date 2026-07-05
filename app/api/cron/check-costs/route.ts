@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
+import { envServer } from "@/lib/env.server";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 // Vercel Cron routes can run up to 5 minutes
 export const maxDuration = 300;
@@ -8,14 +11,11 @@ export async function GET(req: NextRequest) {
   try {
     // ✅ 1. Authorization: Only Vercel Cron or local secret
     const authHeader = req.headers.get("authorization");
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    if (authHeader !== `Bearer ${envServer.CRON_SECRET}`) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const supabaseAdmin = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+    const supabaseAdmin = createAdminClientSupabase();
 
     // ✅ 2. Fetch all alert rules
     const { data: rules, error: rulesError } = await supabaseAdmin
@@ -68,12 +68,12 @@ export async function GET(req: NextRequest) {
     // ✅ 4. Send to Slack if needed
     if (
       alertTriggered &&
-      process.env.SLACK_WEBHOOK_URL &&
+      envServer.SLACK_WEBHOOK_URL &&
       alertMessages.length > 0
     ) {
       const slackMessage = alertMessages.join("\n\n");
 
-      await fetch(process.env.SLACK_WEBHOOK_URL, {
+      await fetch(envServer.SLACK_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: slackMessage }),
@@ -82,7 +82,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ success: true, alerted: alertTriggered });
   } catch (error) {
-    console.error("[CRON] Cost Check Error:", error);
+    LoggerProvider.getLogger().error("[CRON] Cost Check Error", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

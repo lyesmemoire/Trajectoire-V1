@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { createClient } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 import {
   Sparkles,
   ArrowRight,
@@ -19,7 +19,8 @@ import {
   Mic2,
   Loader2,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
+import { Card, CardContent } from "@/components/design-system";
 import { ExportButton } from "@/components/cv/ExportButton";
 import { CVData } from "@/lib/pdf/types";
 
@@ -53,8 +54,6 @@ function OptimizeDashboardContent() {
         setIsLoadingCv(false);
         return;
       }
-
-      const supabase = createClient();
 
       const { data: cv } = await supabase
         .from("cvs")
@@ -115,34 +114,38 @@ function OptimizeDashboardContent() {
 
   if (!cvId) {
     return (
-      <div className="max-w-xl mx-auto text-center py-20 px-6">
-        <div className="w-24 h-24 mx-auto bg-red-50 rounded-[2.5rem] flex items-center justify-center text-5xl mb-8">
-          ⚠️
-        </div>
-        <h2 className="text-3xl font-black text-slate-900 mb-4">
-          Action requise
-        </h2>
-        <p className="text-slate-500 font-medium mb-10 leading-relaxed">
-          Vous devez d'abord sélectionner un CV dans votre espace profil pour
-          lancer l'optimisation IA.
-        </p>
-        <Button asChild size="lg" variant="primary">
-          <Link href="/dashboard/ats">
-            Retour à l'Analyseur ATS <ArrowRight className="ml-2 w-5 h-5" />
-          </Link>
-        </Button>
-      </div>
+      <Card variant="elevated">
+        <CardContent className="max-w-xl mx-auto text-center py-20 px-6">
+          <div className="w-24 h-24 mx-auto bg-error/10 rounded-[2.5rem] flex items-center justify-center text-5xl mb-8">
+            ⚠️
+          </div>
+          <h2 className="text-3xl font-semibold text-text mb-4">
+            Action requise
+          </h2>
+          <p className="text-text-secondary mb-10 leading-relaxed">
+            Vous devez d'abord sélectionner un CV dans votre espace profil pour
+            lancer l'optimisation.
+          </p>
+          <Button asChild size="lg">
+            <Link href="/dashboard/ats">
+              Retour à l'Analyseur ATS <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   if (isLoadingCv) {
     return (
-      <div className="flex flex-col items-center justify-center py-32 space-y-4">
-        <Loader2 className="w-12 h-12 text-violet-600 animate-spin" />
-        <p className="text-slate-500 font-black uppercase tracking-widest text-xs">
-          Préparation de l'éditeur
-        </p>
-      </div>
+      <Card variant="elevated">
+        <CardContent className="flex flex-col items-center justify-center py-32 space-y-4">
+          <Loader2 className="w-12 h-12 text-primary animate-spin" />
+          <p className="text-text-muted font-medium uppercase tracking-wider text-xs">
+            Préparation de l'éditeur
+          </p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -151,109 +154,111 @@ function OptimizeDashboardContent() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-black tracking-tight text-slate-900">
-            Éditeur <span className="text-violet-600">IA Premium</span>
+          <h1 className="text-4xl font-semibold tracking-tight text-text">
+            Éditeur <span className="text-primary">Premium</span>
           </h1>
-          <p className="text-slate-500 font-medium">
+          <p className="text-text-secondary mt-2">
             Réécriture stratégique de vos expériences pour maximiser l'impact.
           </p>
         </div>
-        <div className="inline-flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl shadow-sm">
-          <Sparkles className="w-4 h-4 text-violet-500 fill-violet-500" />
-          <span className="text-xs font-black text-slate-600 uppercase tracking-wider">
-            Moteur Mistral Large
+        <div className="inline-flex items-center gap-2 bg-surface border border-gray-200 px-4 py-2 rounded-xl shadow-sm">
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+            Moteur Premium
           </span>
         </div>
       </div>
 
       {!result ? (
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-[3rem] border border-slate-100 p-10 md:p-16 shadow-xl text-center relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600" />
+          <Card variant="elevated">
+            <CardContent className="p-10 md:p-16 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
-            <div className="w-24 h-24 mx-auto bg-violet-50 rounded-[2rem] flex items-center justify-center text-5xl mb-8 shadow-inner">
-              ✨
-            </div>
-            <h2 className="text-3xl font-black text-slate-900 mb-6">
-              Prêt à transformer votre candidature ?
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6 text-left mb-12">
-              <div className="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 space-y-4">
-                <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  <FileText className="w-3.5 h-3.5" /> Document Source
-                </div>
-                <div className="font-black text-slate-900 truncate">
-                  {cvData?.file_name}
-                </div>
+              <div className="w-24 h-24 mx-auto bg-primary/10 rounded-[2rem] flex items-center justify-center text-5xl mb-8">
+                ✨
               </div>
-              <div className="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 space-y-4">
-                <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  <Target className="w-3.5 h-3.5" /> Score Actuel
-                </div>
-                <div className="font-black text-slate-900 flex items-center gap-2 text-2xl">
-                  {lastReport?.score ?? "—"}%
-                  {lastReport && lastReport.score < 65 && (
-                    <span className="text-[10px] font-black bg-red-100 text-red-600 px-2 py-1 rounded-lg uppercase tracking-wider animate-pulse">
-                      Action Requise
-                    </span>
-                  )}
-                </div>
+              <h2 className="text-3xl font-semibold text-text mb-6">
+                Prêt à transformer votre candidature ?
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6 text-left mb-12">
+                <Card variant="default">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-text-muted uppercase tracking-wider">
+                      <FileText className="w-3.5 h-3.5" /> Document Source
+                    </div>
+                    <div className="font-semibold text-text truncate">
+                      {cvData?.file_name}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card variant="default">
+                  <CardContent className="p-6 space-y-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-text-muted uppercase tracking-wider">
+                      <Target className="w-3.5 h-3.5" /> Score Actuel
+                    </div>
+                    <div className="font-semibold text-text flex items-center gap-2 text-2xl">
+                      {lastReport?.score ?? "—"}%
+                      {lastReport && lastReport.score < 65 && (
+                        <span className="text-xs font-medium bg-error/10 text-error px-2 py-1 rounded-lg uppercase tracking-wider">
+                          Action Requise
+                        </span>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </div>
 
-            <AnimatePresence>
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mb-8 p-6 bg-red-50 text-red-700 rounded-[1.5rem] border border-red-100 font-bold flex flex-col items-center gap-2"
-                >
-                  <div className="flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5" />
-                    <span>{error}</span>
-                  </div>
-                  {error.includes("credit") && (
-                    <Link
-                      href="/dashboard/credits"
-                      className="text-sm underline underline-offset-4"
-                    >
-                      Acheter des crédits pour continuer
-                    </Link>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="space-y-6">
-              <Button
-                onClick={handleOptimize}
-                disabled={isOptimizing}
-                size="lg"
-                className="px-12 h-16 rounded-[1.5rem] bg-slate-900 text-white hover:bg-slate-800 shadow-2xl shadow-slate-900/20 text-lg group"
-              >
-                {isOptimizing ? (
-                  <>
-                    <RefreshCw className="w-5 h-5 animate-spin mr-3" />
-                    Réécriture par l'IA...
-                  </>
-                ) : (
-                  <>
-                    Générer mon CV Optimisé{" "}
-                    <Sparkles className="ml-3 w-5 h-5 text-violet-400 fill-violet-400 group-hover:scale-125 transition-transform" />
-                  </>
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mb-8 p-6 bg-error/5 text-error rounded-xl border border-error/20 font-medium flex flex-col items-center gap-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5" />
+                      <span>{error}</span>
+                    </div>
+                    {error.includes("credit") && (
+                      <Link
+                        href="/dashboard/credits"
+                        className="text-sm underline underline-offset-4"
+                      >
+                        Acheter des crédits pour continuer
+                      </Link>
+                    )}
+                  </motion.div>
                 )}
-              </Button>
-              <div className="flex items-center justify-center gap-2 text-slate-400 font-black uppercase tracking-widest text-[10px]">
-                <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />{" "}
-                Coût : 1 crédit
+              </AnimatePresence>
+
+              <div className="space-y-6">
+                <Button
+                  onClick={handleOptimize}
+                  disabled={isOptimizing}
+                  size="lg"
+                  className="px-12 h-16 text-lg"
+                >
+                  {isOptimizing ? (
+                    <>
+                      <RefreshCw className="w-5 h-5 animate-spin mr-3" />
+                      Réécriture en cours...
+                    </>
+                  ) : (
+                    <>
+                      Générer mon CV Optimisé{" "}
+                      <Sparkles className="ml-3 w-5 h-5 group-hover:scale-125 transition-transform" />
+                    </>
+                  )}
+                </Button>
+                <div className="flex items-center justify-center gap-2 text-text-muted font-medium uppercase tracking-wider text-xs">
+                  <Zap className="w-3.5 h-3.5 text-warning" />{" "}
+                  Coût : 1 crédit
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </CardContent>
+          </Card>
         </div>
       ) : (
         <div className="grid xl:grid-cols-12 gap-8">
@@ -262,23 +267,26 @@ function OptimizeDashboardContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-10 shadow-sm"
             >
-              <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
-                  <Layout className="w-5 h-5" />
-                </div>
-                Accroche Professionnelle
-              </h3>
-              <div className="p-8 bg-violet-50/50 rounded-[2rem] border border-violet-100 text-slate-700 font-medium leading-relaxed italic text-lg relative">
-                <span className="absolute top-4 left-4 text-4xl text-violet-200 font-serif">
-                  “
-                </span>
-                {result.improvedSummary}
-                <span className="absolute bottom-2 right-4 text-4xl text-violet-200 font-serif rotate-180">
-                  “
-                </span>
-              </div>
+              <Card variant="elevated">
+                <CardContent className="p-8 md:p-10">
+                  <h3 className="text-xl font-semibold text-text mb-6 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                      <Layout className="w-5 h-5" />
+                    </div>
+                    Accroche Professionnelle
+                  </h3>
+                  <div className="p-8 bg-primary/5 rounded-2xl border border-primary/10 text-text font-medium leading-relaxed italic text-lg relative">
+                    <span className="absolute top-4 left-4 text-4xl text-primary/20 font-serif">
+                      "
+                    </span>
+                    {result.improvedSummary}
+                    <span className="absolute bottom-2 right-4 text-4xl text-primary/20 font-serif rotate-180">
+                      "
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
 
             {/* Expériences */}
@@ -286,36 +294,43 @@ function OptimizeDashboardContent() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-10 shadow-sm"
             >
-              <h3 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <Target className="w-5 h-5" />
-                </div>
-                Réécriture Stratégique (Before/After)
-              </h3>
-              <div className="space-y-10">
-                {result.improvedBullets.map((bullet, idx) => (
-                  <div key={idx} className="group grid gap-4">
-                    <div className="relative p-6 bg-slate-50 rounded-[1.5rem] border border-slate-100 opacity-60">
-                      <div className="absolute -top-3 left-6 bg-slate-200 text-slate-600 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
-                        Original
-                      </div>
-                      <p className="text-sm font-medium text-slate-500 line-through decoration-slate-300 decoration-1">
-                        {bullet.original}
-                      </p>
+              <Card variant="elevated">
+                <CardContent className="p-8 md:p-10">
+                  <h3 className="text-xl font-semibold text-text mb-8 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-success/10 text-success flex items-center justify-center">
+                      <Target className="w-5 h-5" />
                     </div>
-                    <div className="relative p-6 bg-white rounded-[1.5rem] border-2 border-emerald-100 shadow-lg shadow-emerald-500/5 group-hover:border-emerald-500 transition-colors">
-                      <div className="absolute -top-3 left-6 bg-emerald-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" /> Optimisé ATS
+                    Réécriture Stratégique (Before/After)
+                  </h3>
+                  <div className="space-y-10">
+                    {result.improvedBullets.map((bullet, idx) => (
+                      <div key={idx} className="group grid gap-4">
+                        <Card variant="default">
+                          <CardContent className="relative p-6 opacity-60">
+                            <div className="absolute -top-3 left-6 bg-gray-200 text-text-muted text-xs font-medium px-3 py-1 rounded-full uppercase tracking-wider">
+                              Original
+                            </div>
+                            <p className="text-sm font-medium text-text-muted line-through decoration-gray-300 decoration-1">
+                              {bullet.original}
+                            </p>
+                          </CardContent>
+                        </Card>
+                        <Card variant="elevated" className="border-2 border-success/20 group-hover:border-success transition-colors">
+                          <CardContent className="relative p-6">
+                            <div className="absolute -top-3 left-6 bg-success text-white text-xs font-medium px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                              <CheckCircle2 className="w-3 h-3" /> Optimisé
+                            </div>
+                            <p className="text-base font-semibold text-text leading-relaxed">
+                              {bullet.improved}
+                            </p>
+                          </CardContent>
+                        </Card>
                       </div>
-                      <p className="text-base font-black text-slate-900 leading-relaxed">
-                        {bullet.improved}
-                      </p>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
 
@@ -324,47 +339,50 @@ function OptimizeDashboardContent() {
             <ExportButton cvData={result.cvData} />
 
             {/* Mots-clés */}
-            <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-6">
-                Mots-clés stratégiques injectés
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {result.keywordsAdded.map((kw, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-2 bg-blue-50 text-blue-700 text-[11px] font-black rounded-xl border border-blue-100"
-                  >
-                    +{kw}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <Card variant="elevated">
+              <CardContent className="p-8">
+                <h3 className="text-sm font-medium text-text uppercase tracking-wider mb-6">
+                  Mots-clés stratégiques injectés
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {result.keywordsAdded.map((kw, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-2 bg-primary/10 text-primary text-xs font-medium rounded-xl border border-primary/20"
+                    >
+                      +{kw}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Raccordement Interview */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white shadow-xl relative group">
-              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="w-12 h-12 rounded-[1rem] bg-white/10 flex items-center justify-center mb-6">
-                <Mic2 className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-black mb-3">Passez à l'action !</h3>
-              <p className="text-sm font-medium text-blue-100 mb-8 leading-relaxed">
-                Votre CV est prêt. La prochaine étape cruciale est de vous
-                entraîner à l'oral pour ce poste.
-              </p>
-              <Button
-                asChild
-                variant="secondary"
-                className="w-full bg-white text-blue-600 hover:bg-slate-100 border-none font-black h-14 rounded-2xl"
-              >
-                <Link href={`/dashboard/interview/session?cvId=${cvId}`}>
-                  Lancer la simulation <ChevronRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-            </div>
+            <Card variant="elevated" className="bg-gradient-to-br from-primary to-primary/80 text-white">
+              <CardContent className="p-10 relative group">
+                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                  <Mic2 className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-semibold mb-3">Passez à l'action !</h3>
+                <p className="text-sm font-medium text-white/80 mb-8 leading-relaxed">
+                  Votre CV est prêt. La prochaine étape cruciale est de vous
+                  entraîner à l'oral pour ce poste.
+                </p>
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="w-full bg-white text-primary hover:bg-gray-100 border-none font-medium h-14 rounded-xl"
+                >
+                  <Link href={`/dashboard/interview/session?cvId=${cvId}`}>
+                    Lancer la simulation <ChevronRight className="ml-2 w-5 h-5" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
 
             <button
               onClick={() => setResult(null)}
-              className="w-full py-4 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors"
+              className="w-full py-4 text-xs font-medium text-text-muted uppercase tracking-wider hover:text-text transition-colors"
             >
               Générer une nouvelle version
             </button>

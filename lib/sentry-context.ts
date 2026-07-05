@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from '@sentry/node';
 
 export const setSentryContext = (context: {
   sessionId?: string;

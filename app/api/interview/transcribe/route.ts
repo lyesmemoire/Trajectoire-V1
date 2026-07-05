@@ -6,13 +6,14 @@
  * Migration : connecter les composants au Gateway WebSocket au lieu de cette route HTTP.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getStrictUser } from "@/lib/auth/get-user";
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
-    if (!user)
+    const user = await getStrictUser(req);
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const formData = await req.formData();
     const audio = formData.get("file") as File | null;

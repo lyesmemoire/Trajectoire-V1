@@ -4,23 +4,15 @@ import prisma from "@/lib/prisma";
  * Referral Engine - Growth Loop Logic
  */
 export async function processReferral(newUserId: string, referralCode: string) {
-  const referrer = await prisma.user.findUnique({
-    where: { referralCode },
-  });
+  const referrer = await prisma.user.findUnique({ where: { referralCode } });
 
   if (!referrer) return null;
 
   // 1. Link new user to referrer
-  await prisma.user.update({
-    where: { id: newUserId },
-    data: { referredBy: referrer.id },
-  });
+  await prisma.user.update({ where: { id: newUserId }, data: { referredBy: referrer.id } });
 
   // 2. Increment referral count
-  await prisma.user.update({
-    where: { id: referrer.id },
-    data: { referralCount: { increment: 1 } },
-  });
+  await prisma.user.update({ where: { id: referrer.id }, data: { referralCount: { increment: 1 } } });
 
   // 3. Apply Reward (e.g., Unlock a special Persona or give credits)
   await applyReferralReward(referrer.id);
@@ -36,10 +28,7 @@ async function applyReferralReward(userId: string) {
   if (!profile) return;
 
   // Example: Every 3 referrals unlock an "Elite" Persona
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { referralCount: true },
-  });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (user && user.referralCount % 3 === 0) {
     const newPersonas = [...(profile.unlockedPersonas || []), "cto_hardcore"];
@@ -51,11 +40,10 @@ async function applyReferralReward(userId: string) {
 }
 
 export async function getReferralStats(userId: string) {
-  return await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      referralCode: true,
-      referralCount: true,
-    },
-  });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) return null;
+  return {
+    referralCode: user.referralCode,
+    referralCount: user.referralCount,
+  };
 }

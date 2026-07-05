@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { interviewLimiter } from "@/lib/security/rate-limit";
 import { mistralModel } from "@/lib/mistral";
 import { generateObject } from "ai";
 
@@ -32,11 +33,17 @@ const RequestSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
-    if (!user)
+    const user = await getStrictUser(req);
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    const supabase = await createSupabaseServerClient();
+    const { success } = await interviewLimiter.limit(`interview:${user.id}`);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    const supabase = await createServerClient();
     const parsed = RequestSchema.safeParse(await req.json());
     if (!parsed.success) {
       return NextResponse.json(

@@ -1,111 +1,45 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false,
+    "noEmit": true,
     "esModuleInterop": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@core/*": [
-        "apps/api/src/core/*",
-        "apps/realtime-gateway/src/interview/runtime/core/*"
-      ],
-      "@voice/*": [
-        "apps/api/src/voice/*"
-      ],
-      "@interview/*": [
-        "apps/api/src/interview/*"
-      ],
-      "@scoring/*": [
-        "apps/api/src/scoring/*"
-      ],
-      "@analytics/*": [
-        "apps/api/src/analytics/*"
-      ],
-      "@llm/*": [
-        "apps/api/src/llm/*"
-      ],
-      "@auth/*": [
-        "apps/api/src/auth/*"
-      ],
-      "@users/*": [
-        "apps/api/src/users/*"
-      ],
-      "@common/*": [
-        "src/common/*"
-      ],
-      "@config/*": [
-        "apps/api/src/config/*"
-      ],
-      "@chaos/*": [
-        "src/chaos/*"
-      ],
-      "@runtime/*": [
-        "src/runtime/*"
-      ],
-      "@tests/*": [
-        "src/tests/*"
-      ],
-      "@verifier/*": [
-        "src/verifier/*"
-      ]
-    },
-    "noEmit": true
+      "@/*": ["./*"]
+    }
   },
   "include": [
-    "src/bootstrap/**/*.ts",
-    "src/observability/**/*.ts",
-    "src/replay/ReplayPipeline.ts",
-    "src/replay/ReplayTrace.ts",
-    "src/replay/buildDiffContext.ts",
-    "src/replay/clusterDiffs.ts",
-    "src/replay/contracts.ts",
-    "src/replay/diffTrace.ts",
-    "src/replay/driftVector.ts",
-    "src/replay/fingerprint.ts",
-    "src/replay/goldenCompare.ts",
-    "src/replay/goldenDefaults.ts",
-    "src/replay/goldenLoader.ts",
-    "src/replay/goldenScoring.ts",
-    "src/replay/types.ts",
-    "src/watchdog/**/*.ts",
-    "src/watchdog/**/*.tsx",
-    "tests/replay/**/*.ts",
-    ".next/types/**/*.ts",
-    "src/chaos/**/*.ts",
-    "src/control-plane/**/*.ts"
+    "next-env.d.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "hooks/**/*.ts",
+    "types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "apps/realtime-gateway/tests",
-    "apps/realtime-gateway/**"
-  ],
-  "references": [
-    { "path": "./apps/api" },
-    { "path": "./apps/realtime-gateway" }
+    "apps/**",
+    "packages/**",
+    "src/**",
+    "tests/**",
+    ".next"
   ]
 }

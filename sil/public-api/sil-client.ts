@@ -9,19 +9,29 @@ import { KafkaBridge } from "../services/kafka-bridge";
 import { SILRuntimeLoop } from "../core/runtime-loop";
 import { ReportRepository } from "../contracts/storage";
 import { IncomingSILEvent } from "../contracts/sil-events";
+import { StructuredLogger } from "../contracts/structured-logger";
+import * as crypto from "crypto";
 
 export class SILClient implements SILPublicAPI {
   constructor(
     private kafkaPublisher: KafkaBridge,
     private runtimeLoop: SILRuntimeLoop,
-    private reportRepo: ReportRepository
+    private reportRepo: ReportRepository,
+    private logger?: StructuredLogger
   ) {}
 
   async publish(event: IncomingSILEvent): Promise<void> {
     try {
       await this.kafkaPublisher.simulateConsume(event);
     } catch (e) {
-      console.error(`[SILClient] Failed to publish event: ${e}`);
+      this.logger?.error({
+        traceId: crypto.randomUUID(),
+        tenantId: event.tenantId,
+        sessionId: event.sessionId,
+        stage: "kafka_publish",
+        error: e,
+        message: "[SILClient] Failed to publish event"
+      });
       throw e;
     }
   }

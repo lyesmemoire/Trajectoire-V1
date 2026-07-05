@@ -23,8 +23,8 @@ export class FraudTracker {
     if (arr.length < 2) return 0
 
     const delta =
-      arr[arr.length - 1].riskScore -
-      arr[0].riskScore
+      arr[arr.length - 1]!.riskScore -
+      arr[0]!.riskScore
 
     return delta
   }

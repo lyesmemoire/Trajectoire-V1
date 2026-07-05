@@ -107,8 +107,10 @@ export function InstantInterviewDemo() {
                     className="h-16 px-10 rounded-2xl bg-white text-slate-950 hover:bg-slate-200 font-black"
                   >
                     <Link href="/onboarding">
-                      Démarrer le Test Complet{" "}
-                      <ArrowRight className="ml-2 w-5" />
+                      <span className="flex items-center gap-2">
+                        Démarrer le Test Complet
+                        <ArrowRight className="w-5" />
+                      </span>
                     </Link>
                   </Button>
                 </div>

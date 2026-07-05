@@ -4,8 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { mistralModel } from "@/lib/mistral";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { requireAuth } from "@/lib/auth";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { interviewLimiter } from "@/lib/security/rate-limit";
 import {
   PremiumReportSchema,
   computeOverallScore,
@@ -55,8 +56,17 @@ function parseSessionContext(interviewContext: unknown, jobDescription: string |
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await requireAuth();
-    const supabase = await createSupabaseServerClient();
+    const user = await getStrictUser(req);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { success } = await interviewLimiter.limit(`interview:${user.id}`);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    const supabase = await createServerClient();
 
     const body = RequestSchema.safeParse(await req.json());
     if (!body.success) {

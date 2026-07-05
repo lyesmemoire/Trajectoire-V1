@@ -62,6 +62,7 @@ export class RealtimeWebSocketClient {
       this.lastPingTimestamp = ts;
       this.ws.send(JSON.stringify({ type: "ping", payload: ts }));
     }
+    // No action needed if not connected
   }
 
   sendPCM(payload: number[]) {
@@ -75,6 +76,7 @@ export class RealtimeWebSocketClient {
         }),
       );
     }
+    // No action needed if not connected
   }
 
   disconnect() {
@@ -82,5 +84,6 @@ export class RealtimeWebSocketClient {
       this.ws.close();
       this.ws = null;
     }
+    // No action needed if already disconnected
   }
 }

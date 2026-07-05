@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServiceClient } from "@/lib/supabase-server";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 import { getStrictUser } from "@/lib/auth/session-logic";
 import { z } from "zod";
 
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const { target_user_id, organization_id } = bodyResult.data;
 
     // Use admin client to perform the update bypassing RLS if needed, or if the admin policy allows it
-    const supabaseAdmin = createSupabaseServiceClient();
+    const supabaseAdmin = createAdminClientSupabase();
 
     // Check if organization exists
     const { data: org, error: orgError } = await supabaseAdmin

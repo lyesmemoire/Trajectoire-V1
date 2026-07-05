@@ -1,9 +1,10 @@
 import { Resend } from "resend";
+import { envServer } from "@/lib/env.server";
 
 let resend: Resend;
 export function getResend() {
   if (!resend) {
-    resend = new Resend(process.env.RESEND_API_KEY || "dummy");
+    resend = new Resend(envServer.RESEND_API_KEY || "dummy");
   }
   return resend;
 }

@@ -14,11 +14,12 @@ export class PostgresEventStore implements EventStore {
         session_id,
         event_id,
         sequence,
+        type,
         payload,
         hash,
         previous_hash,
         created_at
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
       ON CONFLICT (tenant_id, session_id, event_id) DO NOTHING
       `,
       [
@@ -26,6 +27,7 @@ export class PostgresEventStore implements EventStore {
         event.sessionId,
         event.eventId,
         (event as any).sequence ?? 0, // Using index sequence if present
+        event.type,
         JSON.stringify(event.payload),
         event.hash,
         event.previousEventHash,
@@ -42,6 +44,7 @@ export class PostgresEventStore implements EventStore {
       e.sessionId,
       e.eventId,
       (e as any).sequence ?? 0,
+      e.type,
       JSON.stringify(e.payload),
       e.hash,
       e.previousEventHash
@@ -50,7 +53,7 @@ export class PostgresEventStore implements EventStore {
     await this.pool.query(
       `INSERT INTO events (
         tenant_id, session_id, event_id,
-        sequence, payload, hash, previous_hash, created_at
+        sequence, type, payload, hash, previous_hash, created_at
       ) SELECT * FROM UNNEST($1::text[][]) ON CONFLICT DO NOTHING`,
       [values]
     );
@@ -130,7 +133,7 @@ export class PostgresEventStore implements EventStore {
       tenantId: row.tenant_id,
       sessionId: row.session_id,
       eventId: row.event_id,
-      type: "UNKNOWN", // In an actual system we'd save type too
+      type: row.type,
       payload: typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload,
       hash: row.hash,
       previousEventHash: row.previous_hash,

@@ -2,10 +2,11 @@ export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
+import { envServer } from "@/lib/env.server";
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  url: envServer.UPSTASH_REDIS_REST_URL!,
+  token: envServer.UPSTASH_REDIS_REST_TOKEN!,
 });
 
 export async function GET(req: NextRequest) {

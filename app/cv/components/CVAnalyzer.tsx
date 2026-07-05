@@ -21,7 +21,7 @@ interface AnalysisResult {
   optimizedText: string;
   cvData: CVData;
   improvements: Array<{
-    type: "strength" | "addition" | "rewrite" | "warning";
+    type: "strength" | "addition" | "rewrite" | "warning" | "locked";
     section: string;
     description: string;
   }>;

@@ -3,41 +3,36 @@ export const dynamic = "force-dynamic";
 import { z } from "zod";
 import { envServer } from "@/lib/env.server";
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-import { createSupabaseServiceClient } from "@/lib/supabase-server";
 import { getStrictUser } from "@/lib/auth/session-logic";
-import { logInfo, logError } from "@/lib/logger";
+import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
+import { appContainer } from "@/lib/core/runtime/container/app-container";
+import { CreateCheckoutSessionUseCase } from "@/lib/billing/application/use-cases/create-checkout-session.use-case";
+import { BillingPresenter } from "@/lib/billing/presentation/BillingPresenter";
+import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
+import { logInfo, logError } from "@/lib/core";
 
-let stripeClient: Stripe | null = null;
+// ─── Plan → Price ID mapping ─────────────────────────────────────────────────
 
+type PlanSlug = "essentiel" | "performance" | "strategique";
 
-function getStripe(): Stripe {
-  if (!stripeClient) {
-    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY || "dummy", {
-      apiVersion: "2025-08-27.basil" as any,
-    });
-  }
-  return stripeClient;
+function getPriceId(plan: PlanSlug): string | undefined {
+  const map: Record<PlanSlug, string | undefined> = {
+    essentiel:    envServer.STRIPE_PRICE_ESSENTIEL,
+    performance:  envServer.STRIPE_PRICE_PERFORMANCE,
+    strategique:  envServer.STRIPE_PRICE_STRATEGIQUE,
+  };
+  return map[plan];
 }
 
-// Source de vérité des prix — jamais depuis le client
-const VALID_PRICE_IDS = [
-  envServer.STRIPE_PRICE_EARLY,
-  envServer.STRIPE_PRO_PRICE_ID,
-  envServer.STRIPE_EXPERT_PRICE_ID,
-  "price_starter_5credits",
-  "price_executive_analysis",
-  "price_premium_access" // Logical ID used below
-].filter((id): id is string => typeof id === "string" && id.startsWith("price_"));
+// ─── Route ───────────────────────────────────────────────────────────────────
 
-// Actual Stripe Price IDs (to be configured in Stripe)
-const STRIPE_PRICE_EARLY = process.env.STRIPE_PRICE_EARLY || "price_pro_early_access";
-const STRIPE_PRICE_STANDARD = process.env.STRIPE_PRICE_STANDARD || "price_pro_standard";
-
+const RequestSchema = z.object({
+  plan: z.enum(["essentiel", "performance", "strategique"]),
+});
 
 export async function POST(request: NextRequest) {
   // ── Stripe Configuration Guard ────────────────────────────────
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!envServer.STRIPE_SECRET_KEY) {
     return NextResponse.json(
       { error: "Stripe not configured." },
       { status: 500 }
@@ -48,111 +43,55 @@ export async function POST(request: NextRequest) {
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const userId = user.id;
-  const userEmail = user.email || "";
-
-  if (VALID_PRICE_IDS.length === 0) {
-    console.error("[Checkout] Aucun price ID configuré dans envServer");
-    return NextResponse.json(
-      { error: "Configuration paiement invalide." },
-      { status: 503 }
-    );
-  }
-
-  const RequestSchema = z.object({
-    priceId: z.string().refine(
-      (id) => VALID_PRICE_IDS.includes(id),
-      { message: "Plan invalide." }
-    ),
-  });
 
   const parsed = RequestSchema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Paramètres invalides.", details: parsed.error.flatten() },
+      { error: "Plan invalide.", details: parsed.error.flatten() },
       { status: 400 }
     );
   }
-  const { priceId } = parsed.data;
 
-  const supabase = createSupabaseServiceClient();
+  const { plan } = parsed.data;
+  const priceId = getPriceId(plan);
 
-  // Récupérer l'email depuis le profil si non disponible dans le header
-  const { data } = await supabase
-    .from("profiles")
-    .select("email, full_name, plan")
-    .eq("id", userId)
-    .single();
-
-  const profile = data as any;
-
-  // Empêcher le double abonnement si l'utilisateur a déjà un plan actif
-  // On autorise l'achat de crédits ou upgrades, mais pas le rachat du même abonnement
-  if (profile?.plan && profile.plan !== "STARTER") {
-    const isTryingToBuySubscription = priceId.includes("pro") || priceId === "price_premium_access";
-    if (isTryingToBuySubscription) {
-      return NextResponse.json(
-        { error: "Vous avez déjà un abonnement actif." },
-        { status: 400 }
-      );
-    }
-  }
-
-  let resolvedPriceId = priceId;
-
-  // ── Early Access Pricing Logic ──
-  if (priceId === "price_premium_access") {
-    const { count, error } = await supabase
-      .from("early_access_tracking")
-      .select("*", { count: "exact", head: true });
-      
-    if (!error && count !== null && count < 30) {
-      resolvedPriceId = STRIPE_PRICE_EARLY;
-    } else {
-      resolvedPriceId = STRIPE_PRICE_STANDARD;
-    }
-  }
-
-  const customerEmail = profile?.email ?? userEmail;
-
-  logInfo("[STRIPE_CHECKOUT]", "Creating checkout session", {
-    route: "api/stripe/checkout"
-  });
-
-  try {
-    const session = await getStripe().checkout.sessions.create({
-        mode: "payment",
-        payment_method_types: ["card"],
-        customer_email: customerEmail,
-        line_items: [
-          {
-            price: resolvedPriceId,
-            quantity: 1,
-          },
-        ],
-        // Métadonnées signées par Stripe — source de vérité pour le webhook
-        metadata: {
-          user_id: userId,
-          plan: priceId === "price_executive_analysis" ? "EXECUTIVE" : (priceId.includes("pro") || priceId === "price_premium_access" ? "PRO" : "STARTER"),
-          credits: priceId === "price_executive_analysis" ? "0" : (priceId.includes("15credits") ? "15" : "5"),
-          pack_name: priceId,
-          resolved_price: resolvedPriceId
-        },
-        success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/report?session_id={CHECKOUT_SESSION_ID}&unlocked=true`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/report`,
-        // Expiration de la session Stripe (30 min)
-        expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
-      });
-
-      return NextResponse.json({ url: session.url });
-    } catch (err) {
-    logError("[STRIPE_ERROR]", err, {
-      route: "api/stripe/checkout"
-    });
-    const message = err instanceof Error ? err.message : "Stripe error";
+  if (!priceId) {
     return NextResponse.json(
-      { error: `Failed to create checkout session: ${message}` },
-      { status: 500 },
+      { error: `Price ID non configuré pour le plan "${plan}".` },
+      { status: 503 }
     );
   }
+
+  logInfo("[STRIPE_CHECKOUT]", "Creating subscription checkout", {
+    route: "api/stripe/checkout",
+    plan,
+  });
+
+  return RequestContext.run(
+    { userId: user.id, correlationId: crypto.randomUUID(), requestId: crypto.randomUUID() },
+    async () => {
+      const useCase = appContainer.resolve<CreateCheckoutSessionUseCase>("CreateCheckoutSessionUseCase");
+      const result = await useCase.execute({
+        userId: user.id,
+        email: user.email || "",
+        priceId,
+        successUrl: `${envServer.NEXT_PUBLIC_APP_URL}/dashboard/cvs?upgraded=true`,
+        cancelUrl: `${envServer.NEXT_PUBLIC_APP_URL}/pricing`,
+        metadata: { plan },
+      });
+
+      if (result.isFailure()) {
+        const error = result.unwrapError();
+        const httpResponse = ErrorHttpMapper.toHttpResponse(error);
+        return NextResponse.json(
+          { error: httpResponse.body.error, code: httpResponse.body.code },
+          { status: httpResponse.status }
+        );
+      }
+
+      const presenter = new BillingPresenter();
+      const response = presenter.present(result.unwrap());
+      return NextResponse.json(response);
+    }
+  );
 }

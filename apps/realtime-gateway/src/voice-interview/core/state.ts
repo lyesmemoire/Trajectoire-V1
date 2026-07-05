@@ -5,7 +5,7 @@
  * cachée). Tout est déterministe et testable. C'est le cœur du "Voice Interview Brain".
  */
 
-import type { PressureMunition } from "../../../../lib/ats/contracts/munitions.js";
+import type { PressureMunition } from "../../../../../lib/ats/contracts/munitions.js";
 
 export type InterviewPhase = "intro" | "deep" | "pressure" | "wrap";
 

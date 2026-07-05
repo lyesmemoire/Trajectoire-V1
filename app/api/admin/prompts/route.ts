@@ -1,16 +1,16 @@
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { getStrictUser } from "@/lib/auth/get-user";
+import { createServerClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
+    const user = await getStrictUser(req);
     if (!user) {
       return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
     }
 
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createServerClient();
     const { data: profile } = await supabase
       .from("profiles")
       .select("role")
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     const RequestSchema = z.object({
-      type:    z.string().min(1).max(100),
+      type: z.string().min(1).max(100),
       content: z.string().min(1).max(20000),
       version: z.string().min(1).max(50),
     });

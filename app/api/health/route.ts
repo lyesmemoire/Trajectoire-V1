@@ -1,59 +1,31 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { Redis } from "@upstash/redis";
+import { getHealthChecker, setupReadinessChecks } from "@/lib/core/monitoring";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+const logger = LoggerProvider.getLogger();
+
+// Setup readiness checks on module load
+setupReadinessChecks();
 
 export async function GET(req: NextRequest) {
-  const health: any = {
-    status: "healthy",
-    timestamp: new Date().toISOString(),
-    services: {
-      database: "unknown",
-      redis: "unknown",
-      mistral: "unknown",
-      stripe: "unknown",
-    },
-    latency: {},
-  };
-
-  const start = Date.now();
-
   try {
-    // 1. Database Check
-    await prisma.$queryRaw`SELECT 1`;
-    health.services.database = "connected";
-  } catch (e) {
-    health.services.database = "error";
-    health.status = "degraded";
+    const healthChecker = getHealthChecker();
+    const result = await healthChecker.check();
+
+    const statusCode = result.status === "healthy" ? 200 : result.status === "degraded" ? 200 : 503;
+
+    return NextResponse.json(result, { status: statusCode });
+  } catch (error) {
+    logger.error("Health check failed", { error });
+    return NextResponse.json(
+      {
+        status: "unhealthy",
+        error: error instanceof Error ? error.message : "Unknown error",
+        timestamp: new Date(),
+      },
+      { status: 503 }
+    );
   }
-
-  try {
-    // 2. Redis Check
-    await redis.ping();
-    health.services.redis = "connected";
-  } catch (e) {
-    health.services.redis = "error";
-    health.status = "degraded";
-  }
-
-  // 3. AI Connectivity (Mistral)
-  // We check if the key is present as a basic check
-  health.services.mistral = process.env.MISTRAL_API_KEY
-    ? "connected"
-    : "missing_key";
-
-  // 4. Stripe Connectivity
-  health.services.stripe = process.env.STRIPE_SECRET_KEY
-    ? "connected"
-    : "missing_key";
-
-  health.latency.total_check_ms = Date.now() - start;
-
-  return NextResponse.json(health);
 }

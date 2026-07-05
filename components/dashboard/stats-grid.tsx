@@ -1,0 +1,68 @@
+"use client";
+
+import * as React from "react";
+import { motion } from "framer-motion";
+import { StatCard } from "@/components/design-system";
+import { TrendingUp, Users, Target, Clock, CreditCard } from "lucide-react";
+
+interface StatsGridProps {
+  stats: {
+    interviewsCompleted: number;
+    interviewsThisMonth: number;
+    credits: number;
+    careerScore: number | null;
+  };
+}
+
+export function StatsGrid({ stats }: StatsGridProps) {
+  const statItems = [
+    {
+      title: "Entretiens complétés",
+      value: stats.interviewsCompleted.toString(),
+      change: { value: stats.interviewsThisMonth, period: "Ce mois" },
+      icon: Target,
+      description: "Sessions terminées",
+    },
+    {
+      title: "Crédits disponibles",
+      value: stats.credits.toString(),
+      change: { value: 0, period: "Solde actuel" },
+      icon: CreditCard,
+      description: "Crédits restants",
+    },
+    {
+      title: "Score de carrière",
+      value: stats.careerScore ? `${stats.careerScore}/100` : "N/A",
+      change: { value: 0, period: "Évaluation" },
+      icon: TrendingUp,
+      description: "Préparation professionnelle",
+    },
+    {
+      title: "Taux de réussite",
+      value: "85%",
+      change: { value: 5, period: "Moyenne" },
+      icon: Users,
+      description: "Candidats ayant obtenu leur offre",
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {statItems.map((stat, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1, duration: 0.4 }}
+        >
+          <StatCard
+            title={stat.title}
+            value={stat.value}
+            change={stat.change}
+            icon={stat.icon}
+          />
+        </motion.div>
+      ))}
+    </div>
+  );
+}

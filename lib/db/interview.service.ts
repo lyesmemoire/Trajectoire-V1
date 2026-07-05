@@ -36,12 +36,13 @@ export const InterviewService = {
 
   async startPremiumSession(userId: string) {
     const supabase = await createServerClient();
-    const { data, error } = await supabase.from("premium_interview_sessions").insert({
+    const { data, error } = await supabase.from("interview_sessions").insert({
       user_id: userId,
       status: "created",
-      transcript: [],
-      memory: {},
-      phases: [],
+      questions: [],
+      answers: [],
+      is_premium: true,
+      session_type: "interview",
     }).select("*").single();
 
     if (error) throw new Error("Failed to start premium session: " + error.message);
@@ -150,24 +151,24 @@ export const InterviewService = {
       ? {
           userId: existingProfile.userId,
           trends: {
-            confidenceTrend: (existingProfile.confidenceTrend as number[]) || [],
-            clarityTrend: (existingProfile.clarityTrend as number[]) || [],
+            confidenceTrend: ((existingProfile as any).confidenceTrend as number[]) || [],
+            clarityTrend: ((existingProfile as any).clarityTrend as number[]) || [],
             improvementRate: 0,
           },
-          archetypeEvolution: (existingProfile.archetypeHistory as string[]) || [],
-          stabilityScore: existingProfile.stabilityScore ?? 1.0,
+          archetypeEvolution: ((existingProfile as any).archetypeHistory as string[]) || [],
+          stabilityScore: (existingProfile as any).stabilityScore ?? 1.0,
         }
       : null;
 
     const updatedMemory = updateUserBehaviorProfile(memoryInput, projection);
 
-    const previousProjections = await prisma.interviewAnalyticsProjection.findMany({
+    const previousProjections = await (prisma as any).interviewAnalyticsProjection.findMany({
       where: { userId: session.user_id, sessionId: { not: sessionId } },
       orderBy: { createdAt: "desc" },
       take: 5,
     });
 
-    const previousMapped: InterviewAnalyticsProjection[] = previousProjections.map((p) => ({
+    const previousMapped: InterviewAnalyticsProjection[] = previousProjections.map((p: any) => ({
       sessionId: p.sessionId,
       userId: p.userId,
       behavioralScores: p.behavioralScores as any,
@@ -251,7 +252,7 @@ export const InterviewService = {
     });
 
     // ── 8. Write InterviewAnalyticsProjection (SOURCE OF TRUTH) ──
-    await prisma.interviewAnalyticsProjection.upsert({
+    await (prisma as any).interviewAnalyticsProjection.upsert({
       where: { sessionId },
       create: {
         sessionId,
@@ -272,7 +273,7 @@ export const InterviewService = {
     });
 
     // ── 9. Write User Behavioral Memory (longitudinal update) ──
-    await prisma.userBehaviorProfile.upsert({
+    await (prisma as any).userBehaviorProfile.upsert({
       where: { userId: session.user_id },
       create: {
         userId: session.user_id,
@@ -313,7 +314,7 @@ export const InterviewService = {
   },
 
   async getAnalytics(sessionId: string) {
-    return prisma.interviewAnalyticsProjection.findUnique({
+    return (prisma as any).interviewAnalyticsProjection.findUnique({
       where: { sessionId },
     });
   },

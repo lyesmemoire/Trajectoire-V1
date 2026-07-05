@@ -1,3 +1,5 @@
+import { metricsStore } from "../../monitoring/metrics-store.js";
+
 export interface VoiceMetrics {
   sessionId: string;
   sttStart?: number;
@@ -38,4 +40,16 @@ export function logMetrics(m: VoiceMetrics) {
       totalMs,
     }),
   );
+  
+  // Log séparé pour faciliter l'agrégation
+  if (totalMs !== undefined) {
+    console.log(
+      JSON.stringify({
+        event: "voice_total_pipeline_ms",
+        sessionId: m.sessionId,
+        totalMs: Math.round(totalMs),
+      }),
+    );
+    metricsStore.addPipelineSample(totalMs);
+  }
 }

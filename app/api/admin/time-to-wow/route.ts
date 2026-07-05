@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getStrictUser } from "@/lib/auth/get-user";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
+    const user = await getStrictUser(req);
     // Admin check omitted for dev
 
     // In production, we'd query real PostHog or our internal analytics table

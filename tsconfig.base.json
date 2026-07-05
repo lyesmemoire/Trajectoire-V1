@@ -1,61 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "allowJs": false,
+    "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "skipDefaultLibCheck": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@core/*": [
-        "apps/api/src/core/*",
-        "apps/realtime-gateway/src/interview/runtime/core/*"
-      ],
-      "@voice/*": [
-        "apps/api/src/voice/*"
-      ],
-      "@interview/*": [
-        "apps/api/src/interview/*"
-      ],
-      "@scoring/*": [
-        "apps/api/src/scoring/*"
-      ],
-      "@analytics/*": [
-        "apps/api/src/analytics/*"
-      ],
-      "@llm/*": [
-        "apps/api/src/llm/*"
-      ],
-      "@auth/*": [
-        "apps/api/src/auth/*"
-      ],
-      "@users/*": [
-        "apps/api/src/users/*"
-      ],
-      "@common/*": [
-        "src/common/*",
-        "apps/api/src/common/*"
-      ],
-      "@config/*": [
-        "apps/api/src/config/*"
-      ],
-      "@chaos/*": [
-        "src/chaos/*"
-      ]
-    }
-  }
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  "exclude": ["node_modules"]
 }

@@ -13,8 +13,9 @@
 import { useRef, useState } from "react";
 import { VoiceClient, type VoiceClientState } from "@/lib/voice/client";
 import { card, colors, primaryBtn, ghostBtn } from "../../_components/styles";
+import { envClient } from "@/lib/env.client";
 
-const WS_URL = process.env.NEXT_PUBLIC_VOICE_WS_URL ?? "";
+const WS_URL = envClient.NEXT_PUBLIC_VOICE_WS_URL ?? "";
 
 const STATE_LABEL: Record<VoiceClientState, string> = {
   idle: "Prêt",

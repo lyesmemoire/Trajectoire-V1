@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { mistralModel } from "@/lib/mistral";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { requireAuth } from "@/lib/auth";
+import { createServerClient } from "@/lib/supabase/server";
+import { getStrictUser } from "@/lib/auth/get-user";
 import { premiumContinueLimiter } from "@/lib/security/rate-limit";
 import { ContinueSessionSchema } from "@/lib/interview/schemas/continue-session.schema";
 
@@ -54,7 +54,10 @@ function parseSessionContext(interviewContext: unknown, jobDescription: string |
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await requireAuth();
+    const user = await getStrictUser(req);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const { success: rateLimitOk } = await premiumContinueLimiter.limit(
       `premium-continue:${user.id}`,
@@ -72,7 +75,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { sessionId, transcription, questionIndex } = body.data;
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createServerClient();
 
     const { data: session, error } = await supabase
       .from("interview_sessions")

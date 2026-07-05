@@ -61,7 +61,9 @@ export class WatchdogEngine extends EventEmitter {
         if (fs.existsSync(this.lockFile)) {
           fs.unlinkSync(this.lockFile);
         }
-      } catch (_) {}
+      } catch (_) {
+        // Ignore cleanup errors
+      }
     };
     process.on("exit", cleanup);
     process.on("SIGINT", () => {

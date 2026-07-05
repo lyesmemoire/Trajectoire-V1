@@ -14,10 +14,10 @@ export const AnalyticsEngine = {
   ): InterviewAnalyticsProjection {
     
     // Calculate base behavioral scores using features and model weights
-    const clarity = Math.max(0, Math.min(1, features.linguistic.complexityScore * model.weights.clarity * 4));
-    const confidence = Math.max(0, Math.min(1, (1 - features.behavioral.hesitationIndex) * model.weights.confidence * 4));
-    const ownership = Math.max(0, Math.min(1, features.linguistic.vocabularyRichness * model.weights.ownership * 4));
-    const specificity = Math.max(0, Math.min(1, (1 - features.temporal.pauseRatio) * model.weights.specificity * 4));
+    const clarity    = Math.max(0, Math.min(1, features.linguistic.complexityScore  * (model.weights.clarity     ?? 1) * 4));
+    const confidence = Math.max(0, Math.min(1, (1 - features.behavioral.hesitationIndex) * (model.weights.confidence  ?? 1) * 4));
+    const ownership  = Math.max(0, Math.min(1, features.linguistic.vocabularyRichness * (model.weights.ownership   ?? 1) * 4));
+    const specificity = Math.max(0, Math.min(1, (1 - features.temporal.pauseRatio)    * (model.weights.specificity ?? 1) * 4));
     const authenticity = Math.max(0, Math.min(1, (1 - features.linguistic.repetitionRate)));
 
     let archetype = "builder";

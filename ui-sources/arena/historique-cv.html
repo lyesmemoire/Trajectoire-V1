@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des CV | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 48px 0 80px;
+        }
+
+        /* ═══════════════════ HERO ═══════════════════ */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ═══════════════════ STATISTICS ═══════════════════ */
+        .stats-section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .stat-icon.total {
+            background: var(--accent-light);
+        }
+
+        .stat-icon.total svg {
+            color: var(--accent);
+        }
+
+        .stat-icon.average {
+            background: var(--secondary-light);
+        }
+
+        .stat-icon.average svg {
+            color: var(--secondary);
+        }
+
+        .stat-icon.downloads {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .stat-icon.downloads svg {
+            color: #3B82F6;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .stat-value.accent {
+            color: var(--accent);
+        }
+
+        .stat-value.secondary {
+            color: var(--secondary);
+        }
+
+        .stat-value.blue {
+            color: #3B82F6;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(17, 24, 39, 0.7);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════ CV CARDS ═══════════════════ */
+        .cards-section {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 32px;
+        }
+
+        .cv-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cv-preview {
+            position: relative;
+            height: 320px;
+            background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cv-preview-content {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cv-card:hover .cv-preview-content {
+            transform: scale(1);
+        }
+
+        .cv-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .cv-preview-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .cv-preview-info {
+            flex: 1;
+        }
+
+        .cv-preview-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .cv-preview-title {
+            font-size: 11px;
+            color: rgba(17, 24, 39, 0.6);
+        }
+
+        .cv-preview-section {
+            margin-bottom: 12px;
+        }
+
+        .cv-preview-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .cv-preview-line {
+            height: 6px;
+            background: rgba(17, 24, 39, 0.08);
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+
+        .cv-preview-line.short {
+            width: 60%;
+        }
+
+        .cv-preview-line.medium {
+            width: 80%;
+        }
+
+        .cv-preview-line.long {
+            width: 100%;
+        }
+
+        .cv-preview-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cv-content {
+            padding: 24px;
+        }
+
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .cv-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .cv-version {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .cv-score {
+            text-align: center;
+        }
+
+        .cv-score-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .cv-score-value.excellent {
+            color: #10B981;
+        }
+
+        .cv-score-value.good {
+            color: var(--accent);
+        }
+
+        .cv-score-value.average {
+            color: var(--secondary);
+        }
+
+        .cv-score-value.poor {
+            color: #EF4444;
+        }
+
+        .cv-score-label {
+            font-size: 11px;
+            color: rgba(17, 24, 39, 0.6);
+            font-weight: 500;
+        }
+
+        .cv-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 12px;
+        }
+
+        .cv-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(17, 24, 39, 0.7);
+        }
+
+        .cv-meta-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent);
+        }
+
+        .cv-meta-label {
+            font-weight: 500;
+            color: rgba(17, 24, 39, 0.5);
+        }
+
+        .cv-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(17, 24, 39, 0.7);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg);
+            color: var(--accent);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: #EF4444;
+            border: 2px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: #EF4444;
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(32px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .cv-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .cv-preview {
+                height: 280px;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HERO -->
+            <section class="hero">
+                <h1>Historique des CV</h1>
+            </section>
+
+            <!-- STATISTICS -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon total">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value accent">6</div>
+                        <div class="stat-label">Total CV créés</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon average">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20V10"/>
+                                    <path d="M18 20V4"/>
+                                    <path d="M6 20v-4"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value secondary">87%</div>
+                        <div class="stat-label">Score ATS moyen</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon downloads">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value blue">24</div>
+                        <div class="stat-label">Téléchargements</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CV CARDS -->
+            <section class="cards-section">
+                <div class="cards-grid">
+                    <!-- CV Card 1 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v3.2</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Directrice Marketing</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Directeur Marketing</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 3.2
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value excellent">91%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 2 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Hier</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CV Card 2 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v2.1</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Chef de Projet Senior</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line long"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Chef de Projet</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 2.1
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value good">85%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 3 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Il y a 3 jours</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CV Card 3 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v1.8</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Manager Commercial</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Manager Commercial</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 1.8
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value excellent">92%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 4 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Il y a 1 semaine</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CV Card 4 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v4.0</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Consultant Senior</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line long"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Consultant Senior</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 4.0
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value average">78%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 5 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Il y a 2 semaines</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CV Card 5 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v2.5</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Directrice RH</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Directeur RH</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 2.5
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value excellent">89%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 6 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Il y a 3 semaines</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CV Card 6 -->
+                    <div class="cv-card">
+                        <div class="cv-preview">
+                            <div class="cv-preview-badge">v1.2</div>
+                            <div class="cv-preview-content">
+                                <div class="cv-preview-header">
+                                    <div class="cv-preview-avatar">ML</div>
+                                    <div class="cv-preview-info">
+                                        <div class="cv-preview-name">Marie Laurent</div>
+                                        <div class="cv-preview-title">Product Manager</div>
+                                    </div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Expérience</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Formation</div>
+                                    <div class="cv-preview-line medium"></div>
+                                    <div class="cv-preview-line short"></div>
+                                </div>
+                                <div class="cv-preview-section">
+                                    <div class="cv-preview-section-title">Compétences</div>
+                                    <div class="cv-preview-line long"></div>
+                                    <div class="cv-preview-line medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cv-content">
+                            <div class="cv-header">
+                                <div>
+                                    <h3 class="cv-title">CV Product Manager</h3>
+                                    <span class="cv-version">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        Version 1.2
+                                    </span>
+                                </div>
+                                <div class="cv-score">
+                                    <div class="cv-score-value poor">72%</div>
+                                    <div class="cv-score-label">Score ATS</div>
+                                </div>
+                            </div>
+                            <div class="cv-meta">
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span class="cv-meta-label">Créé :</span>
+                                    <span>Il y a 8 mois</span>
+                                </div>
+                                <div class="cv-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    <span class="cv-meta-label">Modifié :</span>
+                                    <span>Il y a 1 mois</span>
+                                </div>
+                            </div>
+                            <div class="cv-actions">
+                                <button class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Exporter PDF
+                                </button>
+                                <button class="btn btn-ghost">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Dupliquer
+                                </button>
+                                <button class="btn btn-danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { PostHogProviderWrapper } from "@/providers/posthog-provider";
+import { envServer } from "@/lib/env.server";
+import { generateMetadata } from "@/components/seo/metadata";
+import { WebSiteSchema, OrganizationSchema } from "@/components/seo/json-ld";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,55 +24,12 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.io",
-  ),
-  title: {
-    default: "Trajectoire — Révélez votre potentiel avant l'entretien.",
-    template: "%s | Trajectoire",
-  },
-  description:
-    "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel, détection d'incohérence CV/oral, et Career DNA.",
-  keywords: [
-    "ATS",
-    "CV",
-    "entretien",
-    "emploi",
-    "IA",
-    "optimisation CV",
-    "simulation entretien",
-    "carrière",
-    "recrutement",
-  ],
-  authors: [{ name: "Trajectoire" }],
-  creator: "Trajectoire",
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.io",
-    siteName: "Trajectoire",
-    title: "Trajectoire — Révélez votre potentiel avant l'entretien.",
-    description:
-      "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Trajectoire",
-    description: "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-};
+export const metadata = generateMetadata({
+  title: "Trajectoire — Révélez votre potentiel avant l'entretien.",
+  description: "Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel, détection d'incohérence CV/oral, et Career DNA.",
+  keywords: ["ATS", "CV", "entretien", "emploi", "IA", "optimisation CV", "simulation entretien", "carrière", "recrutement"],
+  canonical: envServer.NEXT_PUBLIC_APP_URL || "https://trajectoire.io",
+});
 
 export default async function RootLayout({
   children,
@@ -78,7 +38,17 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
-      <body className="font-sans antialiased bg-[#0b0f14] text-[#e5e7eb]">
+      <body className="font-sans antialiased bg-background text-text">
+        <WebSiteSchema />
+        <OrganizationSchema
+          name="Trajectoire"
+          description="Préparez vos entretiens avec précision et sérénité. Analyse comportementale en temps réel."
+          sameAs={[
+            "https://twitter.com/trajectoire",
+            "https://linkedin.com/company/trajectoire",
+            "https://facebook.com/trajectoire",
+          ]}
+        />
         <PostHogProviderWrapper>{children}</PostHogProviderWrapper>
       </body>
     </html>

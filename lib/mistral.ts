@@ -1,5 +1,6 @@
 import { createMistral } from "@ai-sdk/mistral";
 import type { LanguageModel } from "ai";
+import { envServer } from "@/lib/env.server";
 
 const mistral = createMistral({
   apiKey: envServer.MISTRAL_API_KEY || "",

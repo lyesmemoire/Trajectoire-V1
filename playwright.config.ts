@@ -1,4 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
+import { loadEnv } from "./tests/e2e/helpers/load-env";
+
+// Load test environment variables
+loadEnv(".env.test");
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -8,7 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 4,
   reporter: "html",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "on-first-retry",

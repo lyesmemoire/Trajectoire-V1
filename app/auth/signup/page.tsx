@@ -3,10 +3,12 @@
 import React, { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import fpPromise from "@fingerprintjs/fingerprintjs";
+import { Button, Input, Card, CardContent } from "@/components/design-system";
+import { AuthLayout } from "@/components/layouts/foundation";
 
 /* ─── Icons ─────────────────────────────────────────────── */
 
@@ -209,8 +211,6 @@ function SignupForm() {
   const handleOAuth = async (provider: "google" | "apple" | "facebook") => {
     setLoading(true);
     setError(null);
-    const supabase = createClient();
-
     // Note: Apple and Facebook require additional Supabase config
     const { error: authError } = await supabase.auth.signInWithOAuth({
       provider:
@@ -233,274 +233,261 @@ function SignupForm() {
   /* ── Success state ── */
   if (success) {
     return (
-      <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
+      <AuthLayout title="Inscription" subtitle="Vérifiez votre email">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full max-w-[460px]"
+          className="w-full max-w-md"
         >
-          <div className="card p-8 text-center space-y-5">
-            <div className="mx-auto w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 text-3xl">
-              📧
-            </div>
-            <h2 className="text-xl font-bold text-gray-900">
-              Vérifiez votre email
-            </h2>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              Un email de confirmation a été envoyé à{" "}
-              <strong className="text-[var(--text-primary)]">{email}</strong>.
-              <br />
-              Nous sommes avec vous. Cliquez sur le lien lorsque vous êtes prêt.
-            </p>
-            <Link
-              href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
-              className="inline-block text-[var(--primary)] font-semibold text-sm hover:underline"
-            >
-              ← Retour à la connexion
-            </Link>
-          </div>
+          <Card>
+            <CardContent className="p-8 text-center space-y-5">
+              <div className="mx-auto w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-3xl">
+                📧
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">
+                Vérifiez votre email
+              </h2>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Un email de confirmation a été envoyé à{" "}
+                <strong className="text-gray-900">{email}</strong>.
+                <br />
+                Nous sommes avec vous. Cliquez sur le lien lorsque vous êtes prêt.
+              </p>
+              <Link
+                href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
+                className="inline-block text-blue-700 font-semibold text-sm hover:underline"
+              >
+                ← Retour à la connexion
+              </Link>
+            </CardContent>
+          </Card>
         </motion.div>
-      </div>
+      </AuthLayout>
     );
   }
 
   /* ── Main form ── */
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-4">
+    <AuthLayout title="Inscription" subtitle="Créez votre compte Trajectoire">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-[460px]"
+        className="w-full max-w-md"
       >
-        {/* ── Logo ── */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <span className="text-blue-500 text-[26px]">✦</span>
-            <span className="text-[23px] font-bold tracking-tight text-[var(--primary)]">
-              <span className="text-[23px] font-semibold tracking-tight text-[var(--text-primary)]">Trajectoire</span>
-            </span>
-          </Link>
-        </div>
-
-        {/* ── Card ── */}
-        <div className="card px-9 py-9">
-          {/* ── Tab Switcher ── */}
-          <div className="bg-gray-100 rounded-full p-1 flex mb-7">
-            <Link
-              href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
-              className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-gray-700 transition-colors"
-            >
-              Se connecter
-            </Link>
-            <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-[var(--primary)] bg-white shadow-sm cursor-default">
-              S&apos;inscrire
-            </div>
-          </div>
-
-          {/* ── Social Buttons ── */}
-          <div className="space-y-3 mb-6">
-            <button
-              type="button"
-              onClick={() => handleOAuth("apple")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <AppleIcon />
-              Continuer avec Apple
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleOAuth("facebook")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <FacebookIcon />
-              Continuer avec Facebook
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleOAuth("google")}
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-[var(--border)] text-gray-700 font-medium py-[13px] px-5 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all disabled:opacity-50 text-sm"
-            >
-              <GoogleIcon />
-              Continuer avec Google
-            </button>
-          </div>
-
-          {/* ── Divider ── */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[var(--border)]" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-[var(--text-secondary)] font-medium">
-                Ou
-              </span>
-            </div>
-          </div>
-
-          {/* ── Error ── */}
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mb-5 p-3.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl flex items-start gap-2.5"
-            >
-              <span className="text-red-500 text-sm leading-none mt-0.5">
-                ⚠
-              </span>
-              <p className="text-[var(--text-primary)] text-sm flex-1 leading-relaxed">
-                {error}
-              </p>
-              <button
-                onClick={() => setError(null)}
-                className="text-red-400 hover:text-red-600 text-sm font-bold leading-none shrink-0"
+        <Card>
+          <CardContent className="p-8">
+            {/* Tab Switcher */}
+            <div className="bg-gray-100 rounded-full p-1 flex mb-7">
+              <Link
+                href={`/auth/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
+                className="flex-1 text-center py-2.5 rounded-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               >
-                ✕
-              </button>
-            </motion.div>
-          )}
+                Se connecter
+              </Link>
+              <div className="flex-1 text-center py-2.5 rounded-full text-sm font-semibold text-blue-700 bg-white shadow-sm cursor-default">
+                S&apos;inscrire
+              </div>
+            </div>
 
-          {/* ── Form ── */}
-          <form onSubmit={handleSignup} className="space-y-5">
-            {/* ── HONEYPOT (Anti-Bot) ── */}
-            <input
-              type="text"
-              name="company"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              style={{ display: "none" }}
-              autoComplete="off"
-              tabIndex={-1}
-            />
-
-            {/* Nom complet */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="signup-fullname"
-                className="block text-[13px] font-semibold text-[var(--text-primary)]"
+            {/* Social Buttons */}
+            <div className="space-y-3 mb-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("apple")}
+                disabled={loading}
+                className="w-full"
               >
-                Nom complet <span className="text-red-500">*</span>
-              </label>
+                <AppleIcon />
+                Continuer avec Apple
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("facebook")}
+                disabled={loading}
+                className="w-full"
+              >
+                <FacebookIcon />
+                Continuer avec Facebook
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuth("google")}
+                disabled={loading}
+                className="w-full"
+              >
+                <GoogleIcon />
+                Continuer avec Google
+              </Button>
+            </div>
+
+            {/* Divider */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-4 text-gray-600 font-medium">
+                  Ou
+                </span>
+              </div>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mb-5 p-3.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5"
+              >
+                <span className="text-red-600 text-sm leading-none mt-0.5">
+                  ⚠
+                </span>
+                <p className="text-gray-900 text-sm flex-1 leading-relaxed">
+                  {error}
+                </p>
+                <button
+                  onClick={() => setError(null)}
+                  className="text-red-400 hover:text-red-600 text-sm font-bold leading-none shrink-0"
+                >
+                  ✕
+                </button>
+              </motion.div>
+            )}
+
+            {/* Form */}
+            <form onSubmit={handleSignup} className="space-y-5">
+              {/* HONEYPOT (Anti-Bot) */}
               <input
-                id="signup-fullname"
                 type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                autoComplete="name"
-                placeholder="Nom complet"
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
+                name="company"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                style={{ display: "none" }}
+                autoComplete="off"
+                tabIndex={-1}
               />
-            </div>
 
-            {/* Email */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="signup-email"
-                className="block text-[13px] font-semibold text-[var(--text-primary)]"
+              {/* Nom complet */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="signup-fullname"
+                  className="block text-sm font-semibold text-gray-900"
+                >
+                  Nom complet <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  id="signup-fullname"
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                  autoComplete="name"
+                  placeholder="Nom complet"
+                />
+              </div>
+
+              {/* Email */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="signup-email"
+                  className="block text-sm font-semibold text-gray-900"
+                >
+                  Adresse email <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  id="signup-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                  placeholder="Adresse email"
+                />
+              </div>
+
+              {/* Password */}
+              <PasswordInput
+                id="signup-password"
+                label="Mot de passe"
+                value={password}
+                onChange={setPassword}
+                placeholder="Mot de passe"
+                autoComplete="new-password"
+              />
+
+              {/* Confirm Password */}
+              <PasswordInput
+                id="signup-confirm-password"
+                label="Confirmer le mot de passe"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                placeholder="Confirmer le mot de passe"
+                autoComplete="new-password"
+              />
+
+              {/* Checkboxes */}
+              <div className="space-y-3 pt-1">
+                <label className="flex items-start gap-2.5 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 shrink-0 cursor-pointer"
+                  />
+                  <span className="text-xs text-gray-600 leading-relaxed">
+                    J&apos;accepte les{" "}
+                    <Link
+                      href="/terms"
+                      className="text-blue-700 underline hover:text-blue-600"
+                    >
+                      termes et conditions
+                    </Link>{" "}
+                    ainsi que la{" "}
+                    <Link
+                      href="/privacy"
+                      className="text-blue-700 underline hover:text-blue-600"
+                    >
+                      politique de confidentialité
+                    </Link>{" "}
+                    du site.
+                  </span>
+                </label>
+
+                <label className="flex items-start gap-2.5 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={acceptMarketing}
+                    onChange={(e) => setAcceptMarketing(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 shrink-0 cursor-pointer"
+                  />
+                  <span className="text-xs text-gray-600 leading-relaxed">
+                    J&apos;accepte de recevoir des e-mails marketing.
+                  </span>
+                </label>
+              </div>
+
+              {/* CTA Button */}
+              <Button
+                type="submit"
+                disabled={
+                  loading || !fullName || !email || !password || !confirmPassword
+                }
+                className="w-full"
               >
-                Adresse email <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="signup-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                placeholder="Adresse email"
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-[var(--text-secondary)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-              />
-            </div>
-
-            {/* Password */}
-            <PasswordInput
-              id="signup-password"
-              label="Mot de passe"
-              value={password}
-              onChange={setPassword}
-              placeholder="Mot de passe"
-              autoComplete="new-password"
-            />
-
-            {/* Confirm Password */}
-            <PasswordInput
-              id="signup-confirm-password"
-              label="Confirmer le mot de passe"
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-              placeholder="Confirmer le mot de passe"
-              autoComplete="new-password"
-            />
-
-            {/* ── Checkboxes ── */}
-            <div className="space-y-3 pt-1">
-              <label className="flex items-start gap-2.5 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={acceptTerms}
-                  onChange={(e) => setAcceptTerms(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-blue-500 shrink-0 cursor-pointer"
-                />
-                <span className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  J&apos;accepte les{" "}
-                  <Link
-                    href="/terms"
-                    className="text-[var(--primary)] underline hover:text-blue-700"
-                  >
-                    termes et conditions
-                  </Link>{" "}
-                  ainsi que la{" "}
-                  <Link
-                    href="/privacy"
-                    className="text-[var(--primary)] underline hover:text-blue-700"
-                  >
-                    politique de confidentialité
-                  </Link>{" "}
-                  du site.
-                </span>
-              </label>
-
-              <label className="flex items-start gap-2.5 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={acceptMarketing}
-                  onChange={(e) => setAcceptMarketing(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-blue-500 shrink-0 cursor-pointer"
-                />
-                <span className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  J&apos;accepte de recevoir des e-mails marketing.
-                </span>
-              </label>
-            </div>
-
-            {/* ── CTA Button ── */}
-            <button
-              type="submit"
-              disabled={
-                loading || !fullName || !email || !password || !confirmPassword
-              }
-              className="w-full mt-2 bg-[var(--primary)] hover:bg-[#5C6BE8] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-full transition-all active:scale-[0.98] text-sm shadow-sm"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-[var(--primary)] rounded-full transition-all" />
-                  Création en cours...
-                </span>
-              ) : (
-                "Créer un compte"
-              )}
-            </button>
-          </form>
-        </div>
+                {loading ? "Création en cours..." : "Créer un compte"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </motion.div>
-    </div>
+    </AuthLayout>
   );
 }
 
@@ -510,9 +497,11 @@ export default function SignupPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full transition-all" />
-        </div>
+        <AuthLayout title="Inscription" subtitle="Chargement...">
+          <div className="flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+          </div>
+        </AuthLayout>
       }
     >
       <SignupForm />

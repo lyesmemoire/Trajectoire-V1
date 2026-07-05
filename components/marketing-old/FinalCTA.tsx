@@ -35,8 +35,10 @@ export default function FinalCTA() {
             className="bg-white text-lg text-red-600 hover:bg-gray-100 shadow-2xl"
           >
             <Link href="/dashboard">
-              Commencer maintenant
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <span className="flex items-center gap-2">
+                Commencer maintenant
+                <ArrowRight className="h-5 w-5" />
+              </span>
             </Link>
           </Button>
 

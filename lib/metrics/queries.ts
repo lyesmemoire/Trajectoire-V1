@@ -1,21 +1,16 @@
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/types/database";
+import { createAdminClientSupabase } from "@/lib/supabase/admin";
 import { Metrics } from "./types";
 
-let supabaseClient: ReturnType<typeof createClient<Database>> | null = null;
+/**
+ * Client admin via le wrapper canonical (`@/lib/supabase/admin`).
+ * Singleton géré par le wrapper — on instancie un client partagé au premier
+ * appel plutôt que de réimplémenter une factory locale.
+ */
+let supabaseClient: ReturnType<typeof createAdminClientSupabase> | null = null;
 
 function getSupabaseClient() {
   if (!supabaseClient) {
-    if (
-      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      !process.env.SUPABASE_SERVICE_ROLE_KEY
-    ) {
-      throw new Error("Supabase environment variables are missing.");
-    }
-    supabaseClient = createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-    );
+    supabaseClient = createAdminClientSupabase();
   }
   return supabaseClient;
 }

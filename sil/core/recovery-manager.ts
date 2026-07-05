@@ -1,6 +1,8 @@
 import { CheckpointRepository, SessionRepository, TraceRepository, ReportRepository, StorageAdapter } from "../contracts/storage";
 import { SessionRegistry } from "../contracts/session-registry";
 import { SILRuntimeLoop } from "./runtime-loop";
+import { StructuredLogger } from "../contracts/structured-logger";
+import * as crypto from "crypto";
 
 /**
  * RecoveryManager — Restores session state from checkpoints with strict tenant validation.
@@ -19,7 +21,8 @@ export class RecoveryManager {
     private sessionRepo: SessionRepository,
     private traceRepo: TraceRepository,
     private reportRepo: ReportRepository,
-    private registry: SessionRegistry
+    private registry: SessionRegistry,
+    private logger?: StructuredLogger
   ) {}
 
   async recover(tenantId: string, sessionId: string): Promise<boolean> {
@@ -64,7 +67,13 @@ export class RecoveryManager {
     }
 
     // Restore to its operational state before crash
-    console.log("RESTORE: originalStatus is", originalStatus);
+    this.logger?.info({
+      traceId: crypto.randomUUID(),
+      tenantId,
+      sessionId,
+      stage: "recovery_restore",
+      message: `RESTORE: originalStatus is ${originalStatus}`
+    });
     if (originalStatus === "STARTING" || originalStatus === "RECOVERING") {
       checkpoint.state.status = "RUNNING";
     } else {

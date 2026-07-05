@@ -153,8 +153,8 @@ export function nextV2Step(
       question: result.speakText ?? "",
       updatedState: state, // Pas de mutation d'état pour éviter de pénaliser
       evaluationScore: 0,
-      signals: { specificity: 0, quantifiedResults: 0, ownership: 0, technicalDepth: 0 },
-      bluff: { bluffProbability: 0, flags: [] },
+      signals: { confidence: 0, specificity: 0, quantifiedResults: 0, ownership: 0, technicalDepth: 0 },
+      bluff: { vagueness: 0, buzzwordDensity: 0, lackOfExamples: 0, inabilityToGoDeeper: 0, bluffProbability: 0 },
       finished: !!result.finished,
     };
   }

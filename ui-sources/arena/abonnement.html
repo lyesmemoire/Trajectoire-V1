@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abonnement | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --text-secondary: rgba(17, 24, 39, 0.6);
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+        }
+
+        /* ═══════════════════ HERO ═══════════════════ */
+        .hero {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ CURRENT PLAN ═══════════════════ */
+        .current-plan-section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .current-plan-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .current-plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .plan-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .plan-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .plan-renewal {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .plan-price {
+            text-align: right;
+        }
+
+        .plan-price-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .plan-price-period {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .plan-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+        }
+
+        .plan-feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .plan-feature-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--accent);
+        }
+
+        .plan-feature-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .plan-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: rgba(15, 118, 110, 0.9);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════ USAGE SECTION ═══════════════════ */
+        .usage-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .usage-header {
+            margin-bottom: 24px;
+        }
+
+        .usage-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .usage-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .usage-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .usage-stat {
+            padding: 20px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+        }
+
+        .usage-stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .usage-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .usage-stat-value.accent {
+            color: var(--accent);
+        }
+
+        .usage-stat-value.secondary {
+            color: var(--secondary);
+        }
+
+        .usage-stat-value.blue {
+            color: #3B82F6;
+        }
+
+        .usage-stat-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .usage-footer {
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ═══════════════════ PAYMENT HISTORY ═══════════════════ */
+        .history-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 48px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .history-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table thead {
+            background: var(--bg);
+        }
+
+        .history-table th {
+            padding: 16px 32px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
+        }
+
+        .history-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .history-table tbody tr:hover {
+            background: rgba(17, 24, 39, 0.02);
+        }
+
+        .history-table td {
+            padding: 20px 32px;
+            font-size: 14px;
+        }
+
+        .payment-date {
+            color: var(--text-secondary);
+        }
+
+        .payment-amount {
+            font-weight: 600;
+        }
+
+        .payment-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .payment-status.success {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10B981;
+        }
+
+        .payment-status.pending {
+            background: rgba(245, 158, 11, 0.08);
+            color: #F59E0B;
+        }
+
+        .payment-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .payment-status.success .payment-status-dot {
+            background: #10B981;
+        }
+
+        .payment-status.pending .payment-status-dot {
+            background: #F59E0B;
+        }
+
+        /* ═══════════════════ PRICING SECTION ═══════════════════ */
+        .pricing-section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .pricing-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .pricing-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--accent);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Populaire';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pricing-card-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .pricing-price {
+            margin-bottom: 24px;
+        }
+
+        .pricing-price-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .pricing-price-value.accent {
+            color: var(--accent);
+        }
+
+        .pricing-price-period {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-feature:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-feature-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pricing-feature-icon svg {
+            width: 12px;
+            height: 12px;
+            color: var(--accent);
+        }
+
+        .pricing-feature-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .plan-features {
+                grid-template-columns: 1fr;
+            }
+
+            .usage-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-header {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .plan-price {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .plan-header {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .plan-price {
+                text-align: left;
+            }
+
+            .plan-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .history-table th,
+            .history-table td {
+                padding: 16px;
+            }
+
+            .pricing-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HERO -->
+            <div class="hero">
+                <h1>Votre abonnement</h1>
+                <p>Gérez votre abonnement et découvrez nos offres premium</p>
+            </div>
+
+            <!-- CURRENT PLAN -->
+            <div class="current-plan-section">
+                <div class="current-plan-card">
+                    <div class="plan-header">
+                        <div class="plan-info">
+                            <div class="plan-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                                Premium
+                            </div>
+                            <h2>Plan Premium</h2>
+                            <div class="plan-renewal">Prochain renouvellement : 15 Janvier 2025</div>
+                        </div>
+                        <div class="plan-price">
+                            <div class="plan-price-value">49€</div>
+                            <div class="plan-price-period">par mois</div>
+                        </div>
+                    </div>
+
+                    <div class="plan-features">
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">Simulations illimitées</div>
+                        </div>
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">Analyses ATS illimitées</div>
+                        </div>
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">50 crédits/mois inclus</div>
+                        </div>
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">Support prioritaire</div>
+                        </div>
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">Historique complet</div>
+                        </div>
+                        <div class="plan-feature">
+                            <div class="plan-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="plan-feature-text">Rapports détaillés</div>
+                        </div>
+                    </div>
+
+                    <div class="plan-actions">
+                        <button class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                            Changer d'offre
+                        </button>
+                        <button class="btn btn-danger">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                            Annuler l'abonnement
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USAGE SECTION -->
+            <div class="usage-section">
+                <div class="usage-header">
+                    <h2 class="usage-title">Utilisation ce mois</h2>
+                    <p class="usage-subtitle">Suivez votre consommation et vos crédits restants</p>
+                </div>
+
+                <div class="usage-stats">
+                    <div class="usage-stat">
+                        <div class="usage-stat-label">Simulations utilisées</div>
+                        <div class="usage-stat-value accent">12</div>
+                        <div class="usage-stat-desc">sur illimitées</div>
+                    </div>
+                    <div class="usage-stat">
+                        <div class="usage-stat-label">Analyses ATS</div>
+                        <div class="usage-stat-value secondary">8</div>
+                        <div class="usage-stat-desc">sur illimitées</div>
+                    </div>
+                    <div class="usage-stat">
+                        <div class="usage-stat-label">Crédits utilisés</div>
+                        <div class="usage-stat-value blue">35</div>
+                        <div class="usage-stat-desc">sur 50 crédits</div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <div class="progress-label">Crédits restants</div>
+                        <div class="progress-value">15 / 50 crédits</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                </div>
+
+                <div class="usage-footer">
+                    <button class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Acheter plus de crédits
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAYMENT HISTORY -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h2 class="history-title">Historique des paiements</h2>
+                </div>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="payment-date">15 Déc 2024</span></td>
+                            <td>Abonnement Premium - Décembre</td>
+                            <td><span class="payment-amount">49,00€</span></td>
+                            <td>
+                                <span class="payment-status success">
+                                    <span class="payment-status-dot"></span>
+                                    Payé
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="payment-date">10 Déc 2024</span></td>
+                            <td>Crédits supplémentaires - Pack 20</td>
+                            <td><span class="payment-amount">29,00€</span></td>
+                            <td>
+                                <span class="payment-status success">
+                                    <span class="payment-status-dot"></span>
+                                    Payé
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="payment-date">15 Nov 2024</span></td>
+                            <td>Abonnement Premium - Novembre</td>
+                            <td><span class="payment-amount">49,00€</span></td>
+                            <td>
+                                <span class="payment-status success">
+                                    <span class="payment-status-dot"></span>
+                                    Payé
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="payment-date">05 Nov 2024</span></td>
+                            <td>Crédits supplémentaires - Pack 10</td>
+                            <td><span class="payment-amount">19,00€</span></td>
+                            <td>
+                                <span class="payment-status success">
+                                    <span class="payment-status-dot"></span>
+                                    Payé
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="payment-date">15 Oct 2024</span></td>
+                            <td>Abonnement Premium - Octobre</td>
+                            <td><span class="payment-amount">49,00€</span></td>
+                            <td>
+                                <span class="payment-status success">
+                                    <span class="payment-status-dot"></span>
+                                    Payé
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PRICING SECTION -->
+            <div class="pricing-section">
+                <div class="pricing-header">
+                    <h2 class="pricing-title">Comparez nos offres</h2>
+                    <p class="pricing-subtitle">Choisissez le plan qui correspond le mieux à vos besoins</p>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Essentiel -->
+                    <div class="pricing-card">
+                        <div class="pricing-card-name">Essentiel</div>
+                        <div class="pricing-card-desc">Pour débuter votre préparation</div>
+                        <div class="pricing-price">
+                            <div class="pricing-price-value">19€</div>
+                            <div class="pricing-price-period">par mois</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">5 simulations/mois</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">3 analyses ATS/mois</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">10 crédits/mois</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Support email</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Historique 30 jours</div>
+                            </li>
+                        </ul>
+                        <button class="btn btn-secondary">Rétrograder</button>
+                    </div>
+
+                    <!-- Premium (Featured) -->
+                    <div class="pricing-card featured">
+                        <div class="pricing-card-name">Premium</div>
+                        <div class="pricing-card-desc">Pour une préparation complète</div>
+                        <div class="pricing-price">
+                            <div class="pricing-price-value accent">49€</div>
+                            <div class="pricing-price-period">par mois</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Simulations illimitées</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Analyses ATS illimitées</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">50 crédits/mois</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Support prioritaire</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Historique complet</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Rapports détaillés</div>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary">Plan actuel</button>
+                    </div>
+
+                    <!-- Exécutif -->
+                    <div class="pricing-card">
+                        <div class="pricing-card-name">Exécutif</div>
+                        <div class="pricing-card-desc">Pour les professionnels exigeants</div>
+                        <div class="pricing-price">
+                            <div class="pricing-price-value">99€</div>
+                            <div class="pricing-price-period">par mois</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Tout du plan Premium</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">150 crédits/mois</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Coaching personnalisé</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Support dédié 24/7</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Analyses avancées</div>
+                            </li>
+                            <li class="pricing-feature">
+                                <div class="pricing-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pricing-feature-text">Sessions illimitées</div>
+                            </li>
+                        </ul>
+                        <button class="btn btn-secondary">Passer à l'Exécutif</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

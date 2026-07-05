@@ -78,8 +78,10 @@ export function HeroSection() {
               className="h-16 px-10 rounded-2xl bg-[#7C3AED] text-white hover:bg-[#6D28D9] font-black text-lg shadow-2xl shadow-[#7C3AED]/20 group"
             >
               <Link href="/onboarding" onClick={() => handleAction("primary")}>
-                {HOME_STRATEGY.hero.primaryCTA}{" "}
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="flex items-center gap-2">
+                  {HOME_STRATEGY.hero.primaryCTA}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
               </Link>
             </Button>
             <Button

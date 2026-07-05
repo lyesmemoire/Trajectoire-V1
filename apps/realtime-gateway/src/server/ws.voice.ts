@@ -19,12 +19,15 @@ import { ChainTTSAdapter } from "../voice-interview/adapters/tts/index.js";
 import { handleVoiceConnectionV2Engine } from "../voice-interview/adapters/voice-websocket-v2.js";
 import type { PersonaName } from "../voice-interview/core/v2/personas.js";
 import { verifyVoiceToken } from "./auth.js";
-import { checkAndConsumeInterview } from "../voice-interview/billing/usage-service.js";
+import { reserveCredit, commitCredit, cancelCredit } from "../voice-interview/billing/usage-service.js";
 import { interviewRepository } from "../voice-interview/persistence/singleton.js";
 import { handleVoiceConnectionV3 } from "../voice-interview/adapters/voice-websocket-v3.js";
+import { metricsStore } from "../monitoring/metrics-store.js";
 
 /** Session manager partagé (in-memory + TTL), unique par process. */
 const sessions = new SessionManager();
+
+const MAX_SESSIONS = parseInt(process.env.MAX_SESSIONS || "75", 10);
 
 /** Adapte un socket `ws` (Fastify/ws) vers l'interface VoiceWsLike. */
 function adaptSocket(raw: {
@@ -118,9 +121,23 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         return;
       }
 
-      const allowed = await checkAndConsumeInterview(auth.userId);
+      // Check session limit before creating session
+      if (sessions.size() >= MAX_SESSIONS) {
+        metricsStore.rejectedConnections++;
+        rawSocket.send(
+          JSON.stringify({ type: "error", message: "Server overloaded. Try again later." })
+        );
+        rawSocket.close();
+        return;
+      }
 
-      if (!allowed) {
+      // Generate sessionId for credit reservation
+      const sessionId = `vis_${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 9)}`;
+
+      // Reserve credit (2-phase commit: reserve → commit/rollback)
+      const reserved = await reserveCredit(auth.userId, sessionId);
+
+      if (!reserved) {
         rawSocket.send(
           JSON.stringify({
             type: "error",
@@ -139,6 +156,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         resumeSessionId?: string;
         userId?: string;
         targetRole?: string;
+        sessionId?: string;
       } = {};
       if (typeof query.gap === "string") input.jobGap = query.gap;
       if (typeof query.question === "string")
@@ -146,6 +164,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       if (typeof query.resume === "string") input.resumeSessionId = query.resume;
       if (typeof query.role === "string") input.targetRole = query.role;
       if (auth?.userId) input.userId = auth.userId;
+      input.sessionId = sessionId;
 
       // Logs structurés légers (observabilité, pas d'infra).
       const log = (event: string, fields: Record<string, unknown>) => {

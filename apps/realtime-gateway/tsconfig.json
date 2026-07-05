@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "composite": true,
+    "composite": false,
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -15,8 +15,12 @@
     "declarationMap": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": ["../../lib/*"]
+    }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "src/interview/**/*", "src/__tests__/**/*", "src/scripts/**/*"]
+  "include": ["src/index.ts", "src/server/**/*", "src/telemetry/**/*", "src/ai/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

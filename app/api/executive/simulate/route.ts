@@ -69,12 +69,19 @@ export async function POST(req: NextRequest) {
     const result = engine.evaluate(rawScores);
 
     // ── Persist ───────────────────────────────────────────────────
-    const session = await prisma.simulationSession.create({
+    const session = await prisma.interviewSession.create({
       data: {
-        overall: result.overallScore,
-        percentile: result.percentile,
-        level: result.level,
-        scores: rawScores as any,
+        persona: "simulation",
+        currentState: "completed",
+        sessionType: "simulation",
+        score: result.overallScore,
+        status: "completed",
+        analysis: {
+          overall: result.overallScore,
+          percentile: result.percentile,
+          level: result.level,
+          scores: rawScores,
+        },
       },
     });
 

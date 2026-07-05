@@ -3,6 +3,10 @@
  * Optimized for Ultra-Low Latency (< 1.5s perceived RTT).
  */
 
+// Client-side file - console.log is appropriate for browser debugging
+
+import { envClient } from "@/lib/env.client";
+
 export type VoiceClientState =
   | "idle"
   | "connecting"
@@ -32,7 +36,7 @@ export interface VoiceClientOptions {
 }
 
 const RECONNECT_DELAYS = [1000, 2000, 5000, 10000];
-const DEBUG = typeof process !== "undefined" && process.env.NEXT_PUBLIC_VOICE_DEBUG === "true";
+const DEBUG = typeof process !== "undefined" && envClient.NEXT_PUBLIC_VOICE_DEBUG === true;
 
 function dbg(...args: unknown[]) {
   if (DEBUG) console.debug("[voice]", ...args);
@@ -218,9 +222,13 @@ export class VoiceClient {
     this.monitorRAF = null;
     this.analyser = null;
     this.abortAudio();
-    try { this.recorder?.stop(); } catch {}
+    try { this.recorder?.stop(); } catch {
+      // Ignore stop errors
+    }
     this.media?.getTracks().forEach((t) => t.stop());
-    try { this.ws?.close(); } catch {}
+    try { this.ws?.close(); } catch {
+      // Ignore close errors
+    }
     this.recorder = null;
     this.media = null;
     this.ws = null;
@@ -321,7 +329,9 @@ export class VoiceClient {
 
   private abortAudio() {
     this.audioQueue = [];
-    try { this.currentSource?.stop(); } catch {}
+    try { this.currentSource?.stop(); } catch {
+      // Ignore stop errors
+    }
     this.currentSource = null;
     this.playing = false;
   }

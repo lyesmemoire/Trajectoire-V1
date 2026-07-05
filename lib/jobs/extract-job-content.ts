@@ -1,4 +1,5 @@
 import { JobSourceType } from "./detect-source";
+import { LoggerProvider } from "@/lib/core/observability/logger";
 
 /**
  * Prépare le contenu final pour le Doubt Engine.
@@ -15,7 +16,7 @@ export async function extractJobContent(
   if (type.startsWith("URL")) {
     // Simulation d'un appel à un service de scraping
     // En production: return await fetch('/api/jobs/scrape', { ... })
-    console.log(`[Job Extraction] Triggering scrape for ${type}: ${input}`);
+    LoggerProvider.getLogger().debug(`[Job Extraction] Triggering scrape for ${type}: ${input}`);
     return input; // On renvoie l'URL pour que l'IA puisse éventuellement la traiter ou simuler le contenu
   }
 
