@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Lock, Mail, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import PitchMetricCard from "@/components/marketing/pitch/PitchMetricCard";
 import MarketChart from "@/components/marketing/pitch/MarketChart";
 import GrowthChart from "@/components/marketing/pitch/GrowthChart";

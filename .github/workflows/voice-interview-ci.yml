@@ -1,0 +1,68 @@
+name: Voice Interview CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'core/voice-interview/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'core/voice-interview/**'
+  schedule:
+    - cron: '0 2 * * *' # Run nightly at 2 AM for mutation testing
+
+jobs:
+  validate:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Typecheck
+        run: pnpm tsc --noEmit -p core/voice-interview/tsconfig.json
+
+      - name: Lint
+        run: pnpm eslint core/voice-interview
+
+      - name: Architecture Tests
+        run: pnpm exec depcruise core/voice-interview --config .dependency-cruiser.js
+
+      - name: Unit & Integration Tests (Coverage)
+        run: pnpm exec vitest run core/voice-interview --coverage
+
+  mutation-testing:
+    name: Mutation Testing (Nightly)
+    if: github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'run-mutation-tests')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Stryker
+        run: pnpm exec stryker run

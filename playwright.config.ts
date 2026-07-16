@@ -17,6 +17,16 @@ export default defineConfig({
     screenshot: "only-on-failure",
     video: "on-first-retry",
   },
+  webServer: {
+    command: "npm run dev",
+    url: "http://localhost:3000",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+    env: {
+      OPENAI_API_KEY: "sk-dummy-test-key-for-playwright",
+      NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+    }
+  },
   projects: [
     {
       name: "chromium",

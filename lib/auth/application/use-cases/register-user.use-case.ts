@@ -9,6 +9,9 @@ import { UserAggregate } from "../../domain/aggregates/user.aggregate";
 import { IdGenerator } from "@/lib/core/id/IdGenerator";
 import { ConflictError } from "@/lib/core/result/errors";
 import { Clock } from "@/lib/core/clock/Clock";
+import type { UserRepositoryPort as PrismaUserRepositoryPort } from "@/lib/users/ports/user-repository.port";
+import type { UserEntity, UserProfileEntity } from "@/lib/users/domain/entities/user.entity";
+import { auditLogger } from "@/lib/core/security/audit-logger";
 
 export interface RegisterUserCommand {
   email: string;
@@ -24,7 +27,8 @@ export class RegisterUserUseCase extends UseCase<RegisterUserCommand, { userId: 
     private readonly authProvider: AuthenticationProviderPort,
     private readonly userRepo: UserRepositoryPort,
     private readonly idGenerator: IdGenerator,
-    private readonly clock: Clock
+    private readonly clock: Clock,
+    private readonly prismaUserRepo?: PrismaUserRepositoryPort
   ) {
     super();
   }
@@ -33,7 +37,7 @@ export class RegisterUserUseCase extends UseCase<RegisterUserCommand, { userId: 
     const email = Email.create(command.email);
     const displayName = DisplayName.create(command.displayName);
 
-    // Check if user already exists
+    // Check if user already exists in auth repository
     const existsResult = await this.userRepo.existsByEmail(email);
     if (existsResult.isFailure()) {
       return fail(existsResult.unwrapError());
@@ -43,7 +47,7 @@ export class RegisterUserUseCase extends UseCase<RegisterUserCommand, { userId: 
       return fail(new ConflictError("User already exists"));
     }
 
-    // Register with auth provider
+    // Register with auth provider (Supabase Auth)
     const registerResult = await this.authProvider.register({
       email,
       password: command.password,
@@ -55,17 +59,53 @@ export class RegisterUserUseCase extends UseCase<RegisterUserCommand, { userId: 
     }
 
     const registerData = registerResult.unwrap();
+    const userId = registerData.userId;
 
-    // Create user aggregate
-    const userId = UserId.create(registerData.userId);
-    const user = UserAggregate.create(userId, email, displayName, this.clock);
+    // Create user aggregate for auth domain
+    const userIdVO = UserId.create(userId);
+    const user = UserAggregate.create(userIdVO, email, displayName, this.clock);
 
-    // Save user
+    // Save user to auth repository (Supabase users table)
     const saveResult = await this.userRepo.save(user);
     if (saveResult.isFailure()) {
+      // Rollback: delete user from auth provider
+      await this.authProvider.logout(userId);
       return fail(saveResult.unwrapError());
     }
 
-    return ok({ userId: userId.value });
+    // Sync to Prisma User (public.User) if repository is provided
+    if (this.prismaUserRepo) {
+      const now = this.clock.now();
+      
+      const userEntity: UserEntity = {
+        id: userId,
+        email: email.value,
+        banned: false,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      const profileEntity: UserProfileEntity = {
+        userId,
+        fullName: displayName.value,
+        credits: 2, // Free tier: 2 credits
+        cvEditorCompleted: false,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      const prismaSaveResult = await this.prismaUserRepo.save(userEntity, profileEntity);
+      if (prismaSaveResult.isFailure()) {
+        // Rollback: delete from auth repository and auth provider
+        await this.userRepo.delete(userIdVO);
+        await this.authProvider.logout(userId);
+        return fail(prismaSaveResult.unwrapError());
+      }
+    }
+
+    // Log successful registration at UseCase level
+    auditLogger.logRegisterSuccess(userId, command.email);
+
+    return ok({ userId });
   }
 }

@@ -15,6 +15,9 @@ node_modules/
 .env.test.local
 .env.production.local
 .env.test
+.env.migrations
+.env.*
+!.env.example
 # Exceptions: fichiers d'exemple autorisés
 !.env.example
 !.env.test.example
@@ -135,3 +138,6 @@ test-route.ts
 # METRIQUES DE RESTRUCTURATION
 # ============================================
 metrics/
+
+*storybook.log
+storybook-static

@@ -1,7 +1,7 @@
 "use client";
 
 import { X, Download, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { CVData, ExportOptions } from "@/lib/pdf/types";
 import dynamic from "next/dynamic";
 

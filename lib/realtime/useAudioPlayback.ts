@@ -6,6 +6,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
+interface WindowWithAudioContext extends Window {
+  webkitAudioContext?: typeof AudioContext;
+}
+
 /** Minimum number of PCM16 chunks to buffer before starting playback.
  *  This helps avoid gaps when network jitter occurs.
  */
@@ -53,9 +57,8 @@ export function useAudioPlayback() {
   };
   // Ensure a single AudioContext throughout the component lifecycle.
   useEffect(() => {
-    audioCtxRef.current = new (
-      window.AudioContext || (window as any).webkitAudioContext
-    )({
+    const AudioContextCtor = window.AudioContext || (window as WindowWithAudioContext).webkitAudioContext;
+    audioCtxRef.current = new (AudioContextCtor as typeof AudioContext)({
       sampleRate: SAMPLE_RATE,
     });
     return () => {

@@ -1,4 +1,4 @@
-import { Result, ok, fail } from "@/lib/core/result";
+import { Result, fail } from "@/lib/core/result";
 import { InfrastructureError } from "@/lib/core/result/errors";
 import { StripeWebhookHandler } from "./StripeWebhookHandler";
 import { WebhookEventPayload } from "../../ports/gateways/WebhookGatewayPort";

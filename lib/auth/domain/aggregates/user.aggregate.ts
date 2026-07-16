@@ -5,7 +5,6 @@ import { UserRole } from "../value-objects/user-role.vo";
 import { AccountStatus } from "../value-objects/account-status.vo";
 import { DisplayName } from "../value-objects/display-name.vo";
 import { Clock } from "@/lib/core/clock/Clock";
-import { IdGenerator } from "@/lib/core/id/IdGenerator";
 
 // Domain Events
 import { UserCreated } from "../events/user-created.event";

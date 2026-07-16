@@ -4,7 +4,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./button";
 
 const Modal = DialogPrimitive.Root;
 
@@ -120,3 +120,56 @@ export {
   ModalTitle,
   ModalDescription,
 };
+
+interface ConfirmModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  variant?: "danger" | "warning" | "info";
+  isLoading?: boolean;
+}
+
+export function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = "Confirmer",
+  cancelText = "Annuler",
+  variant = "danger",
+  isLoading = false,
+}: ConfirmModalProps) {
+  const variantStyles = {
+    danger: "bg-danger hover:bg-danger-hover",
+    warning: "bg-warning hover:bg-warning-hover",
+    info: "bg-info hover:bg-info-hover",
+  };
+
+  return (
+    <Modal open={isOpen} onOpenChange={onClose}>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>{title}</ModalTitle>
+          <ModalDescription>{message}</ModalDescription>
+        </ModalHeader>
+        <ModalFooter>
+          <Button onClick={onClose} variant="outline" disabled={isLoading}>
+            {cancelText}
+          </Button>
+          <Button
+            onClick={onConfirm}
+            className={variantStyles[variant]}
+            disabled={isLoading}
+          >
+            {isLoading ? "Chargement..." : confirmText}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+}

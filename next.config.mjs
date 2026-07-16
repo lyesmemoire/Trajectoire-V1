@@ -1,6 +1,12 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // output: 'standalone',
   typescript: { ignoreBuildErrors: false },
   eslint: { ignoreDuringBuilds: true },
   productionBrowserSourceMaps: false,
@@ -70,4 +76,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

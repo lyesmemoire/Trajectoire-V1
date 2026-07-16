@@ -6,8 +6,8 @@ import { DomainEventPublisherPort } from "@/lib/core/runtime/event-publisher/Dom
  * Tracks published events for verification in tests.
  */
 export class FakeDomainEventPublisher implements DomainEventPublisherPort {
-  private publishedEvents: any[] = [];
-  private persistedEvents: any[] = [];
+  private publishedEvents: unknown[] = [];
+  private persistedEvents: unknown[] = [];
 
   async publishEventsFrom(aggregate: AggregateRoot): Promise<void> {
     const events = aggregate.pullEvents();
@@ -28,14 +28,14 @@ export class FakeDomainEventPublisher implements DomainEventPublisherPort {
   /**
    * Returns all events that were published in-process.
    */
-  getPublishedEvents(): any[] {
+  getPublishedEvents(): unknown[] {
     return this.publishedEvents;
   }
 
   /**
    * Returns all events that were persisted to outbox.
    */
-  getPersistedEvents(): any[] {
+  getPersistedEvents(): unknown[] {
     return this.persistedEvents;
   }
 

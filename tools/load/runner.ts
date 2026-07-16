@@ -13,13 +13,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 class StaticGovernor implements SessionGovernor {
-  decide(msg: CandidateMessage, state: MindState): RuntimeDecision {
+  decide(_msg: CandidateMessage, _state: MindState): RuntimeDecision {
     return { trustDelta: 0.01, emotion: "neutral" };
   }
 }
 
 class StaticUXCalculator implements VoiceUXCalculator {
-  calculateUX(state: MindState, decision: RuntimeDecision, message: CandidateMessage): VoiceInput {
+  calculateUX(_state: MindState, _decision: RuntimeDecision, _message: CandidateMessage): VoiceInput {
     return {
       text: "Load test response",
       delayMs: 100,

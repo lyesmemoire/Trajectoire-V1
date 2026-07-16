@@ -3,7 +3,6 @@ import { UploadCvUseCase, UploadCvInput } from "../../../lib/cv/application/use-
 import { ok, fail } from "../../../lib/core/result";
 import { RequestContext } from "../../../lib/core/runtime/context/RequestContext";
 import { UnauthorizedError } from "../../../lib/core/result/errors";
-import { DomainError } from "../../../lib/core/result/errors/DomainError";
 import { FakeClock } from "../../../tests/shared/fakes";
 
 // Mock dependencies

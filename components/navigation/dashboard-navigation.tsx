@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Sidebar, SidebarHeader, SidebarLogo, SidebarContent, SidebarSection, SidebarLink, SidebarFooter } from "@/components/design-system";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/design-system";
 import { BottomNavigation, type BottomNavigationItem } from "@/components/layouts/foundation";
-import { Home, FileText, BarChart3, Settings, CreditCard, Users, FileCheck, Download, LogOut } from "lucide-react";
+import { Home, FileText, BarChart3, Settings, CreditCard, FileCheck, Download, LogOut } from "lucide-react";
 
 export interface DashboardNavigationProps {
   user?: {

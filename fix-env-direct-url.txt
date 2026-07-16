@@ -1,0 +1,4 @@
+# Correction du DIRECT_URL pour utiliser la connexion directe Supabase
+# Remplacer la ligne DIRECT_URL dans .env par:
+
+DIRECT_URL="postgresql://postgres.wuepjnztvctagvquudop:Pp12031980%2F%2AP@db.wuepjnztvctagvquudop.supabase.co:5432/postgres?sslmode=require"

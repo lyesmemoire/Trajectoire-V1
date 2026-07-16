@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { Navbar, NavbarLogo, NavbarLink, NavbarActions } from "@/components/design-system";
+import { Navbar, NavbarLink, NavbarActions } from "@/components/design-system";
 import { Button } from "@/components/design-system";
 import { BottomNavigation, type BottomNavigationItem } from "@/components/layouts/foundation";
-import { Menu, Home, Sparkles, DollarSign, MessageSquare, LogIn } from "lucide-react";
+import { Home, Sparkles, DollarSign, MessageSquare } from "lucide-react";
 
 export interface MarketingNavigationProps {
   logo?: React.ReactNode;

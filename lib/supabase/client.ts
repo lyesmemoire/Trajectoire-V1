@@ -1,12 +1,12 @@
 import { createBrowserClient } from "@supabase/ssr"
-import type { Database } from "@/types/database"
-import { envClient } from "@/lib/env.client"
+import { envClient } from "../env.client"
+import type { SupabaseClient } from "@supabase/supabase-js"
 
 /**
  * Client Supabase côté navigateur. Clé anon publique (NEXT_PUBLIC_*),
  * sécurisée par RLS côté base.
  */
-export function createBrowserClientSupabase() {
+export function createBrowserClientSupabase(): SupabaseClient {
   // Check if Supabase is configured (for build time)
   if (!envClient.NEXT_PUBLIC_SUPABASE_URL || !envClient.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     // Return a mock client for build time
@@ -18,10 +18,10 @@ export function createBrowserClientSupabase() {
         getUser: async () => ({ data: { user: null }, error: null }),
         getSession: async () => ({ data: { session: null }, error: null }),
       },
-    } as any
+    } as unknown as SupabaseClient
   }
 
-  return createBrowserClient<any>(
+  return createBrowserClient(
     envClient.NEXT_PUBLIC_SUPABASE_URL!,
     envClient.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )

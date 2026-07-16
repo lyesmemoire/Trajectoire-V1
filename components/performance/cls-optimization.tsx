@@ -5,6 +5,19 @@ import { cn } from "@/lib/utils";
 
 // CLS (Cumulative Layout Shift) optimization utilities
 
+interface LayoutShiftEntry extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
+  sources: Array<{
+    node: Node;
+    rect: DOMRectReadOnly;
+  }>;
+}
+
+function isLayoutShiftEntry(entry: PerformanceEntry): entry is LayoutShiftEntry {
+  return entry.entryType === "layout-shift" && "value" in entry && "hadRecentInput" in entry;
+}
+
 // Reserve space for dynamic content to prevent CLS
 export function ReserveSpace({
   width,
@@ -268,11 +281,8 @@ export function useCLSMonitor() {
 
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (entry.entryType === "layout-shift" && !(entry as any).hadRecentInput) {
-          const value = (entry as any).value;
-          if (typeof value === "number") {
-            setCLSScore((prev) => prev + value);
-          }
+        if (isLayoutShiftEntry(entry) && !entry.hadRecentInput) {
+          setCLSScore((prev) => prev + entry.value);
         }
       }
     });

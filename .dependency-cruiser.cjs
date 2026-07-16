@@ -45,6 +45,29 @@ module.exports = {
         path: '^lib/([^/]+)/',
         pathNot: ['^lib/$1/', '^lib/core/', '^lib/[^/]+/index\\.ts$']
       }
+    },
+    {
+      name: 'ui-ai-isolation',
+      severity: 'error',
+      comment: 'UI components and hooks MUST NOT import AI engines, prompts, or providers directly.',
+      from: {
+        path: '^(components|hooks)/',
+        pathNot: ['career-copilot-chat\\.tsx$', 'useInterviewReport\\.ts$']
+      },
+      to: {
+        path: '^core/(intelligence|ai|prompts|providers)/'
+      }
+    },
+    {
+      name: 'ai-ui-independence',
+      severity: 'error',
+      comment: 'AI Engines and Providers MUST NOT depend on React or UI components.',
+      from: {
+        path: '^core/(intelligence|providers)/'
+      },
+      to: {
+        path: '^(components|hooks)/|react'
+      }
     }
   ],
   options: {

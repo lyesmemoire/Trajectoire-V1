@@ -73,7 +73,7 @@ const defaultSEO: SEOConfig = {
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
-    } as any,
+    },
   },
 };
 
@@ -130,10 +130,10 @@ export function generateMetadata(config: SEOConfig = {}): Metadata {
     verification: {
       google: verification?.google,
       other: {
-        bing: verification?.bing,
-        yandex: verification?.yandex,
+        ...(verification?.bing ? { bing: verification.bing } : {}),
+        ...(verification?.yandex ? { yandex: verification.yandex } : {}),
       },
-    } as any,
+    },
   };
 
   return metadata;

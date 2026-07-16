@@ -1,10 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Navbar, NavbarLogo, NavbarLink, NavbarActions } from "@/components/design-system";
-import { Button } from "@/components/design-system";
+import { Navbar, NavbarActions } from "@/components/design-system";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/design-system";
-import { Menu, X } from "lucide-react";
 
 export interface TopNavigationProps {
   logo?: React.ReactNode;

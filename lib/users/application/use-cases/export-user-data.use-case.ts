@@ -1,5 +1,4 @@
-import { UseCase, Result, fail, ok } from "@/lib/core";
-import { UserRepositoryPort } from "../../ports/user-repository.port";
+import { UseCase, Result } from "@/lib/core";
 import { UserExportPort } from "../../ports/user-export.port";
 
 export interface ExportUserDataInput {

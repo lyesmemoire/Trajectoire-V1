@@ -3,7 +3,7 @@
 import React from "react";
 import { Experience } from "@/types/cv";
 import { Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 
 export const ExperienceEditor = React.memo(function ExperienceEditor({
   experience,

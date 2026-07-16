@@ -1,6 +1,6 @@
 import { ok, fail, Result } from "@/lib/core/result";
 import { UseCase } from "@/lib/core/application/UseCase";
-import { UnauthorizedError, InfrastructureError, NotFoundError } from "@/lib/core/result/errors";
+import { UnauthorizedError } from "@/lib/core/result/errors";
 import { LLMRewriterGateway } from "../../../ports/gateways/llm-rewriter.gateway";
 import { CreditsGateway } from "../../../ports/gateways/credits.gateway";
 import { CvRepositoryPort } from "../../../ports/repositories/cv-repository.port";

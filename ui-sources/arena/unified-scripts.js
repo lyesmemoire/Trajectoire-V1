@@ -41,28 +41,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ═══════════════════ FORM VALIDATION ═══════════════════
-function validateForm(form) {
-    let isValid = true;
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
-    
-    inputs.forEach(input => {
-        const value = input.value.trim();
-        const errorEl = input.parentElement.querySelector('.form-error');
-        
-        if (!value) {
-            input.classList.add('error');
-            if (errorEl) errorEl.style.display = 'block';
-            isValid = false;
-        } else {
-            input.classList.remove('error');
-            if (errorEl) errorEl.style.display = 'none';
-        }
-    });
-    
-    return isValid;
-}
-
 // ═══════════════════ FAQ ACCORDION ═══════════════════
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.faq-question').forEach(button => {
@@ -91,34 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-// ═══════════════════ LOADING STATES ═══════════════════
-function showLoading(element) {
-    element.classList.add('loading');
-    element.disabled = true;
-}
-
-function hideLoading(element) {
-    element.classList.remove('loading');
-    element.disabled = false;
-}
-
-// ═══════════════════ TOAST NOTIFICATIONS ═══════════════════
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
 
 // ═══════════════════ KEYBOARD NAVIGATION ═══════════════════
 document.addEventListener('keydown', (e) => {

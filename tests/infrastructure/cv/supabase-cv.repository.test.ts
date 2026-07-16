@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Result, ok, fail } from "../../../lib/core/result";
 import { InfrastructureError } from "../../../lib/core/result/errors";
 import { CVAggregate } from "../../../lib/cv/domain/aggregates/cv.aggregate";
 import { FakeClock } from "../../shared/fakes";

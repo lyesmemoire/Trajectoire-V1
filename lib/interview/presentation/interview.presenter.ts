@@ -1,4 +1,3 @@
-import { Presenter } from "@/lib/core/presentation/Presenter";
 import { Result } from "@/lib/core/result";
 import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
 import { OrchestrateStepResult } from "../application/use-cases/orchestrate-step/orchestrate-interview-step.use-case";

@@ -15,8 +15,6 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
-  Search,
 } from "lucide-react";
 
 interface NavItem {
@@ -35,10 +33,26 @@ const navItems: NavItem[] = [
   { label: "Paramètres", href: "/dashboard/settings", icon: <Settings className="w-5 h-5" /> },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isCollapsed?: boolean;
+  onCollapse?: (collapsed: boolean) => void;
+}
+
+export function Sidebar({ isCollapsed: externalCollapsed, onCollapse }: SidebarProps) {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(externalCollapsed || false);
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (externalCollapsed !== undefined) {
+      setIsCollapsed(externalCollapsed);
+    }
+  }, [externalCollapsed]);
+
+  const handleCollapse = (collapsed: boolean) => {
+    setIsCollapsed(collapsed);
+    onCollapse?.(collapsed);
+  };
 
   return (
     <>
@@ -53,32 +67,34 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen bg-surface border-r border-gray-200 transition-all duration-300",
+          "fixed left-0 top-0 z-50 h-screen bg-white border-r border-gray-200/60 transition-all duration-300 ease-in-out shadow-sm",
           isCollapsed ? "w-20" : "w-72",
           "lg:static lg:translate-x-0",
           isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
+        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200/60">
           {!isCollapsed && (
-            <Link href="/dashboard" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-soft">
+            <Link href="/dashboard" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:shadow-md transition-shadow duration-200">
                 T
               </div>
-              <span className="font-semibold text-xl tracking-tight">
+              <span className="font-serif text-xl font-semibold text-gray-900 tracking-tight group-hover:opacity-80 transition-opacity duration-200">
                 Trajectoire
               </span>
             </Link>
           )}
           {isCollapsed && (
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-soft mx-auto">
-              T
-            </div>
+            <Link href="/dashboard" className="block">
+              <div className="w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center text-white font-bold text-lg shadow-sm mx-auto hover:shadow-md transition-shadow duration-200">
+                T
+              </div>
+            </Link>
           )}
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden text-text-secondary hover:text-text"
+            className="lg:hidden text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
             <X className="w-5 h-5" />
           </button>
@@ -93,15 +109,20 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
+                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group",
                   isActive
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-text-secondary hover:bg-gray-100 hover:text-text",
+                    ? "bg-gray-900 text-white shadow-sm"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
                   isCollapsed && "justify-center"
                 )}
               >
-                {item.icon}
-                {!isCollapsed && <span>{item.label}</span>}
+                <div className={cn(
+                  "transition-colors duration-200",
+                  isActive ? "text-white" : "text-gray-500 group-hover:text-gray-900"
+                )}>
+                  {item.icon}
+                </div>
+                {!isCollapsed && <span className="font-medium">{item.label}</span>}
               </Link>
             );
           })}
@@ -110,8 +131,8 @@ export function Sidebar() {
         {/* Bottom actions */}
         <div className="p-4 border-t border-gray-200 space-y-2">
           <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-gray-100 transition-colors lg:flex"
+            onClick={() => handleCollapse(!isCollapsed)}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors duration-200 lg:flex"
           >
             <Menu className="w-5 h-5" />
             {!isCollapsed && <span className="hidden lg:inline">Réduire</span>}
@@ -120,7 +141,7 @@ export function Sidebar() {
             <button
               type="submit"
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-gray-100 hover:text-error transition-colors",
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-red-600 transition-colors duration-200",
                 isCollapsed && "justify-center"
               )}
             >

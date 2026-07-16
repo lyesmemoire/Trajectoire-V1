@@ -1,5 +1,4 @@
 import { Result, ok, fail } from "@/lib/core/result";
-import { InfrastructureError } from "@/lib/core/result/errors";
 import { BillingQueryPort } from "../../ports/queries/BillingQueryPort";
 import { WalletAggregate } from "../../domain/aggregates/wallet.aggregate";
 import { SubscriptionAggregate } from "../../domain/aggregates/subscription.aggregate";

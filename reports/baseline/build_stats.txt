@@ -1,0 +1,152 @@
+﻿
+> studioentretien@1.0.0 build
+> next build
+
+   Ôû▓ Next.js 15.5.18
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ┬À optimizePackageImports
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully in 21.4s
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/81) ...
+   Generating static pages (20/81) 
+   Generating static pages (40/81) 
+   Generating static pages (60/81) 
+ Ô£ô Generating static pages (81/81)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                  Size  First Load JS
+Ôöî Ôùï /                                     4.82 kB         107 kB
+Ôö£ Ôùï /_not-found                             294 B         102 kB
+Ôö£ ãÆ /admin                                1.81 kB         346 kB
+Ôö£ ãÆ /admin/ai                               372 B         341 kB
+Ôö£ ãÆ /admin/ai-observability               1.67 kB         220 kB
+Ôö£ ãÆ /admin/behavior-evolution             1.63 kB         342 kB
+Ôö£ ãÆ /admin/behavioral-stability           1.47 kB         104 kB
+Ôö£ Ôùï /admin/beta-sentinel                  1.47 kB         104 kB
+Ôö£ Ôùï /admin/dashboard                      1.25 kB         103 kB
+Ôö£ Ôùï /admin/diagnostic                     1.32 kB         104 kB
+Ôö£ Ôùï /admin/fraud                           1.8 kB         104 kB
+Ôö£ Ôùï /admin/health                         6.94 kB         357 kB
+Ôö£ ãÆ /admin/interviews                     2.19 kB         104 kB
+Ôö£ ãÆ /admin/predictive-truth               3.46 kB         219 kB
+Ôö£ ãÆ /admin/product-truth                    372 B         341 kB
+Ôö£ ãÆ /admin/prompts                          372 B         341 kB
+Ôö£ ãÆ /admin/recovery-audit                 1.47 kB         104 kB
+Ôö£ Ôùï /admin/recovery-dashboard             2.62 kB         352 kB
+Ôö£ ãÆ /admin/replay-insights                1.47 kB         104 kB
+Ôö£ Ôùï /admin/runtime-inspector              1.65 kB         104 kB
+Ôö£ ãÆ /admin/security                       3.02 kB         105 kB
+Ôö£ Ôùï /admin/time-to-wow                    1.47 kB         104 kB
+Ôö£ ãÆ /admin/users                            372 B         341 kB
+Ôö£ ãÆ /api/admin-backup                       294 B         102 kB
+Ôö£ ãÆ /api/admin/ai-observability             294 B         102 kB
+Ôö£ ãÆ /api/admin/assign-org                   294 B         102 kB
+Ôö£ ãÆ /api/admin/ban-user                     294 B         102 kB
+Ôö£ ãÆ /api/admin/dashboard-metrics            294 B         102 kB
+Ôö£ ãÆ /api/admin/fraud-users                  294 B         102 kB
+Ôö£ ãÆ /api/admin/predictive-truth             294 B         102 kB
+Ôö£ ãÆ /api/admin/prompts                      294 B         102 kB
+Ôö£ ãÆ /api/admin/restore-credits              294 B         102 kB
+Ôö£ ãÆ /api/admin/threat-intel                 294 B         102 kB
+Ôö£ ãÆ /api/admin/time-to-wow                  294 B         102 kB
+Ôö£ ãÆ /api/admin/unflag-user                  294 B         102 kB
+Ôö£ ãÆ /api/ai/stream                          294 B         102 kB
+Ôö£ ãÆ /api/ai/tts                             294 B         102 kB
+Ôö£ ãÆ /api/billing/state                      294 B         102 kB
+Ôö£ ãÆ /api/career/update                      294 B         102 kB
+Ôö£ ãÆ /api/config.php                         294 B         102 kB
+Ôö£ ãÆ /api/cron/check-costs                   294 B         102 kB
+Ôö£ ãÆ /api/cron/cleanup-transactions          294 B         102 kB
+Ôö£ ãÆ /api/cv/export                          294 B         102 kB
+Ôö£ ãÆ /api/cv/export-docx                     294 B         102 kB
+Ôö£ ãÆ /api/cv/rewrite                         294 B         102 kB
+Ôö£ ãÆ /api/executive/session                  294 B         102 kB
+Ôö£ ãÆ /api/executive/simulate                 294 B         102 kB
+Ôö£ ãÆ /api/health                             294 B         102 kB
+Ôö£ ãÆ /api/health/liveness                    294 B         102 kB
+Ôö£ ãÆ /api/health/readiness                   294 B         102 kB
+Ôö£ ãÆ /api/interview/analyze                  294 B         102 kB
+Ôö£ ãÆ /api/interview/feedback                 294 B         102 kB
+Ôö£ ãÆ /api/interview/generate                 294 B         102 kB
+Ôö£ ãÆ /api/interview/history                  294 B         102 kB
+Ôö£ ãÆ /api/interview/orchestrate              294 B         102 kB
+Ôö£ ãÆ /api/interview/premium/continue         294 B         102 kB
+Ôö£ ãÆ /api/interview/premium/report           294 B         102 kB
+Ôö£ ãÆ /api/interview/start                    294 B         102 kB
+Ôö£ ãÆ /api/interview/transcribe               294 B         102 kB
+Ôö£ ãÆ /api/metrics                            294 B         102 kB
+Ôö£ ãÆ /api/product/analyze                    294 B         102 kB
+Ôö£ ãÆ /api/product/interview/evaluate         294 B         102 kB
+Ôö£ ãÆ /api/product/upload                     294 B         102 kB
+Ôö£ ãÆ /api/queue/enqueue                      294 B         102 kB
+Ôö£ ãÆ /api/recovery/send                      294 B         102 kB
+Ôö£ ãÆ /api/register                           294 B         102 kB
+Ôö£ ãÆ /api/sentry-test                        294 B         102 kB
+Ôö£ ãÆ /api/speech/transcribe                  294 B         102 kB
+Ôö£ ãÆ /api/stripe/checkout                    294 B         102 kB
+Ôö£ ãÆ /api/stripe/customer-portal             294 B         102 kB
+Ôö£ ãÆ /api/stripe/webhook                     294 B         102 kB
+Ôö£ ãÆ /api/test-sentry                        294 B         102 kB
+Ôö£ ãÆ /api/upload                             294 B         102 kB
+Ôö£ ãÆ /api/user-cvs                           294 B         102 kB
+Ôö£ ãÆ /api/user/export-data                   294 B         102 kB
+Ôö£ ãÆ /api/user/set-cv-editor-completed       294 B         102 kB
+Ôö£ ãÆ /api/waitlist/apply                     294 B         102 kB
+Ôö£ ãÆ /auth/callback                          294 B         102 kB
+Ôö£ Ôùï /auth/confirm                         3.15 kB         431 kB
+Ôö£ Ôùï /auth/forgot-password                 3.57 kB         431 kB
+Ôö£ Ôùï /auth/login                           5.13 kB         433 kB
+Ôö£ Ôùï /auth/reset-password                  3.98 kB         432 kB
+Ôö£ ãÆ /auth/signout                           294 B         102 kB
+Ôö£ Ôùï /auth/signup                          21.2 kB         449 kB
+Ôö£ ãÆ /cv                                   3.14 kB         348 kB
+Ôö£ ãÆ /cv-editor                            3.17 kB         353 kB
+Ôö£ Ôùï /cv-templates                           386 B         344 kB
+Ôö£ ãÆ /cv-templates/[slug]                    294 B         102 kB
+Ôö£ ãÆ /cv-templates/[slug]/opengraph-image    294 B         102 kB
+Ôö£ ãÆ /dashboard                            40.5 kB         389 kB
+Ôö£ ãÆ /dashboard/ats                        6.83 kB         429 kB
+Ôö£ ãÆ /dashboard/billing                    1.71 kB         352 kB
+Ôö£ ãÆ /dashboard/career-copilot              140 kB         577 kB
+Ôö£ ãÆ /dashboard/cvs                        10.7 kB         364 kB
+Ôö£ ãÆ /dashboard/export                       386 B         344 kB
+Ôö£ ãÆ /dashboard/history                      386 B         344 kB
+Ôö£ ãÆ /dashboard/interview-prep               386 B         344 kB
+Ôö£ ãÆ /dashboard/interview-result           2.66 kB         343 kB
+Ôö£ ãÆ /dashboard/interview-simulation       26.5 kB         478 kB
+Ôö£ ãÆ /dashboard/optimize                   4.94 kB         441 kB
+Ôö£ ãÆ /dashboard/profile                    3.02 kB         445 kB
+Ôö£ ãÆ /dashboard/progress-plan              2.54 kB         343 kB
+Ôö£ Ôùï /debug/realtime-test                  3.16 kB         105 kB
+Ôö£ Ôùï /features                             4.18 kB         110 kB
+Ôö£ Ôùï /how-it-works                         3.03 kB         109 kB
+Ôö£ Ôùï /investors                            2.22 kB         346 kB
+Ôö£ Ôùï /legal                                  294 B         102 kB
+Ôö£ Ôùï /manifeste                              165 B         106 kB
+Ôö£ ãÆ /metiers/[metier]                       294 B         102 kB
+Ôö£ ãÆ /onboarding                           5.38 kB         346 kB
+Ôö£ ãÆ /opengraph-image                        294 B         102 kB
+Ôö£ Ôùï /pricing                              6.32 kB         164 kB
+Ôö£ Ôùï /privacy                              1.55 kB         107 kB
+Ôö£ Ôùï /product                              3.93 kB         106 kB
+Ôö£ Ôùï /product/interview                    5.97 kB         122 kB
+Ôö£ Ôùï /robots.txt                             294 B         102 kB
+Ôö£ Ôùï /sitemap.xml                            294 B         102 kB
+Ôö£ Ôùï /terms                                1.47 kB         107 kB
+Ôö£ Ôùï /testimonials                         3.95 kB         110 kB
+Ôöö Ôùï /waitlist                             4.23 kB         354 kB
++ First Load JS shared by all              102 kB
+  Ôö£ chunks/4048037a-9fe1adf94bb6592f.js   54.2 kB
+  Ôö£ chunks/4637-54c6e12b934ab091.js       45.6 kB
+  Ôöö other shared chunks (total)           2.33 kB
+
+
+Ôùï  (Static)   prerendered as static content
+ãÆ  (Dynamic)  server-rendered on demand
+

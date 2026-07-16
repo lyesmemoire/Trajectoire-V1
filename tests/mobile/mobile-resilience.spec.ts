@@ -11,7 +11,6 @@ test.describe("📱 Mobile Audio & Resilience Audit", () => {
   });
 
   test("mobile interface should adapt on small screens", async ({ page }) => {
-    const mobileUI = page.locator("div.rounded-t-\\[2\\.5rem\\]"); // Look for the new interface
     await expect(page.locator("h1")).toBeVisible();
   });
 

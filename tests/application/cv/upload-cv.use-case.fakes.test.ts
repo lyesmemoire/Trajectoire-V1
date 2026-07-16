@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { UploadCvUseCase, UploadCvInput } from "../../../lib/cv/application/use-cases/upload/upload-cv.use-case";
-import { ok, fail } from "../../../lib/core/result";
-import { UnauthorizedError } from "../../../lib/core/result/errors";
+import { UploadCvUseCase } from "../../../lib/cv/application/use-cases/upload/upload-cv.use-case";
+import { ok } from "../../../lib/core/result";
 import {
   FakeRequestContextProvider,
   FakeDomainEventPublisher,

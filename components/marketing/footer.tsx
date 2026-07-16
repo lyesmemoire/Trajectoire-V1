@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <Link href="#" className="flex items-center gap-2 group">
+            <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 duration-200">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ParsedCV } from "@/types/cv";
 import { ExperienceEditor } from "./ExperienceEditor";
 import { Loader2, Save, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { toast } from "sonner";
 
 // Helper to proceed to interview lab only if cookie is present

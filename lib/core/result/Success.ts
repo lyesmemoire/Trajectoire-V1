@@ -1,6 +1,5 @@
 import { Result } from "./Result";
 import { DomainError } from "./errors/DomainError";
-import { Failure } from "./Failure";
 
 export class Success<T, E extends DomainError = DomainError> implements Result<T, E> {
   constructor(private readonly value: T) {}

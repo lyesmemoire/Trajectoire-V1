@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { Download, Loader2, Eye, FileText, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { CVData, ExportOptions } from "@/lib/pdf/types";
-import { PDFPreviewModal } from "./PDFPreviewModal";
+import nextDynamic from "next/dynamic";
+
+const PDFPreviewModal = nextDynamic(() => import("./PDFPreviewModal").then(m => m.PDFPreviewModal), { ssr: false });
 
 interface ExportButtonProps {
   cvData: CVData;

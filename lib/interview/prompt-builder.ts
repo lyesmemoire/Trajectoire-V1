@@ -1,5 +1,5 @@
 import { PersonaConfig } from "./persona-config";
-import { InterviewState } from "./interview-state-machine";
+import { InterviewState } from "./domain/aggregates/interview-state-machine";
 import { FollowUpStrategy } from "./followup-strategy";
 
 export function buildSystemPrompt(

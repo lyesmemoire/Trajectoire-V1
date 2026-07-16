@@ -314,6 +314,17 @@ export function PrefetchLinks({ links }: PrefetchLinksProps) {
 }
 
 // Connection-aware preloading
+interface NetworkConnection {
+  effectiveType?: string;
+  saveData?: boolean;
+  addEventListener?: (event: string, handler: () => void) => void;
+  removeEventListener?: (event: string, handler: () => void) => void;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NetworkConnection;
+}
+
 export function useConnectionAwarePreloading() {
   const [connectionInfo, setConnectionInfo] = React.useState({
     effectiveType: "4g",
@@ -321,8 +332,9 @@ export function useConnectionAwarePreloading() {
   });
 
   React.useEffect(() => {
-    if ("connection" in navigator) {
-      const connection = (navigator as any).connection;
+    const nav = navigator as NavigatorWithConnection;
+    if ("connection" in nav && nav.connection) {
+      const connection = nav.connection;
       setConnectionInfo({
         effectiveType: connection.effectiveType || "4g",
         saveData: connection.saveData || false,
@@ -335,9 +347,9 @@ export function useConnectionAwarePreloading() {
         });
       };
 
-      connection.addEventListener("change", updateConnection);
+      connection.addEventListener?.("change", updateConnection);
       return () => {
-        connection.removeEventListener("change", updateConnection);
+        connection.removeEventListener?.("change", updateConnection);
       };
     }
   }, []);

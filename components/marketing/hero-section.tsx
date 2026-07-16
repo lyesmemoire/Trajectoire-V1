@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy";
 import { PressureDemo } from "./pressure-demo";
 import { useEffect } from "react";

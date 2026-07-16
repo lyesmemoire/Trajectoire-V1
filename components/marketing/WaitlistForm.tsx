@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/design-system";
+import { Input } from "@/deprecated/components-ui/input";
 import { toast } from "sonner";
 
 type Step = "email" | "pressure" | "weakness" | "intent" | "done";
@@ -52,7 +52,7 @@ export function WaitlistForm() {
               type="email"
               placeholder="votre@email.fr"
               value={formData.email}
-              onChange={(e) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData({ ...formData, email: e.target.value })
               }
               className="h-16 rounded-2xl bg-white/[0.03] border-white/10 text-white text-center font-bold text-lg focus:ring-blue-500"

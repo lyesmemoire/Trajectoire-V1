@@ -157,7 +157,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 href={item.href}
                 onClick={() => setIsSidebarOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors",
+                  "flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors",
                   isActive(item.href, item.exact)
                     ? "bg-blue-50 text-blue-600"
                     : "text-slate-600 hover:bg-slate-100",
@@ -176,7 +176,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 href={item.href}
                 onClick={() => setIsSidebarOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors",
+                  "flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors",
                   isActive(item.href)
                     ? "bg-violet-50 text-violet-600"
                     : "text-slate-600 hover:bg-slate-100",
@@ -191,7 +191,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
             <Link
               href="/auth/login"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-100 transition-colors"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-slate-500 hover:bg-slate-100 transition-colors"
             >
               <span className="text-xl">🚪</span>
               Déconnexion

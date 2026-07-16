@@ -1,0 +1,13 @@
+{
+  "id": "scenario-hostile",
+  "description": "Un candidat qui interrompt souvent et change de sujet.",
+  "profile": {
+    "targetRole": "Senior Software Engineer",
+    "experienceLevel": "senior"
+  },
+  "expectedProperties": {
+    "interruptionsHandled": true,
+    "bargeInTriggered": true,
+    "completedPhases": ["opening", "exploration", "closing"]
+  }
+}

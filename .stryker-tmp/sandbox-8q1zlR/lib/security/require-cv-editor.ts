@@ -1,0 +1,22 @@
+// @ts-nocheck
+import { createServerClient } from "@/lib/supabase/server";
+
+export async function requireCVEditor(userId: string) {
+  const supabase = await createServerClient();
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("cv_editor_completed")
+    .eq("id", userId)
+    .single();
+
+  if (error || !data || data.cv_editor_completed !== true) {
+    return {
+      success: false,
+    };
+  }
+
+  return {
+    success: true,
+  };
+}

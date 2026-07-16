@@ -1,4 +1,4 @@
-import { DomainEvent, IntegrationEvent, InternalEvent, NotificationEvent, PlatformEvent } from "./base.event";
+import { PlatformEvent } from "./base.event";
 
 export interface EventBus {
   publish(event: PlatformEvent): Promise<void>;

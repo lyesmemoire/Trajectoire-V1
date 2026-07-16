@@ -1,0 +1,364 @@
+{
+  "version": "1.1.0",
+  "created": "2026-07-13",
+  "updated": "2026-07-13",
+  "basedOn": "Forecast Golden Reference",
+  "target": "Wave 1 (8 engines), Wave 2 (16 engines)",
+  "rules": {
+    "R001": {
+      "name": "Supprimer aiOrchestrator",
+      "description": "Supprimer l'import aiOrchestrator et ajouter intelligenceCoreModule et IntelligenceRequest",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "remove": [
+          "import { aiOrchestrator } from \"../../ai/AIOrchestrator\";"
+        ],
+        "add": [
+          "import { intelligenceCoreModule } from \"@/lib/intelligence-core\";",
+          "import { IntelligenceRequest } from \"@/lib/intelligence-core\";"
+        ]
+      }
+    },
+    "R002": {
+      "name": "Supprimer eventBus",
+      "description": "Supprimer l'import eventBus et les events, ajouter EventPublisher",
+      "applicability": {
+        "wave1": 2,
+        "total": 8,
+        "percentage": 25
+      },
+      "automatable": true,
+      "transformations": {
+        "remove": [
+          "import { eventBus } from \"../../ai/events/EventBus\";",
+          "import { ObservationCreatedEvent } from \"../../ai/events/BrainEvents\";",
+          "import { CareerUpdatedEvent } from \"../../ai/events/BrainEvents\";",
+          "import { ATSCompletedEvent } from \"../../ai/events/BrainEvents\";"
+        ],
+        "add": [
+          "import { EventPublisher } from \"@/lib/intelligence-runtime/application/EventPublisher\";"
+        ]
+      }
+    },
+    "R003": {
+      "name": "Ajouter RuntimeContext",
+      "description": "Ajouter RuntimeContext si le moteur utilise un pipeline complexe",
+      "applicability": {
+        "wave1": 0,
+        "total": 8,
+        "percentage": 0
+      },
+      "automatable": true,
+      "transformations": {
+        "add": [
+          "import { RuntimeContext } from \"@/lib/intelligence-runtime/domain/context/RuntimeContext\";"
+        ]
+      }
+    },
+    "R004": {
+      "name": "Ajouter ExecutionPipeline",
+      "description": "Ajouter ExecutionPipeline si le moteur utilise un pipeline complexe",
+      "applicability": {
+        "wave1": 0,
+        "total": 8,
+        "percentage": 0
+      },
+      "automatable": true,
+      "transformations": {
+        "add": [
+          "import { ExecutionPipeline } from \"@/lib/intelligence-runtime/application/ExecutionPipeline\";"
+        ]
+      }
+    },
+    "R005": {
+      "name": "Remplacer aiOrchestrator.execute()",
+      "description": "Remplacer l'appel aiOrchestrator.execute() par IntelligenceUseCase.execute()",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "before": "await aiOrchestrator.execute<OutputType>(promptTemplate, variables, config)",
+        "after": "await intelligenceUseCase.execute(request)",
+        "mapping": {
+          "promptId": "type",
+          "promptVersion": "non utilisé",
+          "temperature": "temperature",
+          "maxTokens": "maxTokens",
+          "provider": "provider",
+          "model": "model",
+          "timeout": "ajouté: 30000"
+        }
+      }
+    },
+    "R006": {
+      "name": "Remplacer result.data par result.output",
+      "description": "Remplacer result.data par result.output dans toutes les occurrences",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "replace": [
+          "result.data",
+          "result.output"
+        ]
+      }
+    },
+    "R007": {
+      "name": "Remplacer eventBus.publish()",
+      "description": "Remplacer eventBus.publish() par EventPublisher.publish()",
+      "applicability": {
+        "wave1": 2,
+        "total": 8,
+        "percentage": 25
+      },
+      "automatable": true,
+      "transformations": {
+        "before": "await eventBus.publish<EventType>({ id, timestamp, type, payload })",
+        "after": "eventPublisher.publish(eventType, { ...data, timestamp })",
+        "mapping": {
+          "id": "non utilisé (géré par EventPublisher)",
+          "timestamp": "timestamp (format ISO string)",
+          "type": "premier argument de publish()",
+          "payload": "objet passé à publish()"
+        }
+      }
+    },
+    "R008": {
+      "name": "Conserver candidateAIBrain",
+      "description": "Conserver candidateAIBrain car c'est une dépendance contextuelle nécessaire",
+      "applicability": {
+        "wave1": 3,
+        "total": 8,
+        "percentage": 38
+      },
+      "automatable": true,
+      "transformations": {
+        "preserve": [
+          "import { candidateAIBrain } from \"../../ai/brain/CandidateAIBrain\";"
+        ]
+      }
+    },
+    "R009": {
+      "name": "Conserver les prompts",
+      "description": "Conserver les prompts car ils sont nécessaires pour l'exécution IA",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "preserve": [
+          "import { promptV1 } from \"../../ai/Prompts/prompt-v1\";"
+        ]
+      }
+    },
+    "R010": {
+      "name": "Conserver les DTOs",
+      "description": "Conserver les DTOs Input/Output car ils définissent l'interface du moteur",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "preserve": [
+          "export interface EngineInput { ... }",
+          "export interface EngineOutput { ... }"
+        ]
+      }
+    },
+    "R011": {
+      "name": "Utiliser chemin relatif imports intelligence-core",
+      "description": "Utiliser un chemin relatif pour les imports intelligence-core car l'alias TypeScript n'est pas résolu correctement",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "replace": [
+          "@/lib/intelligence-core",
+          "../../../lib/intelligence-core"
+        ]
+      }
+    },
+    "R012": {
+      "name": "Ajouter assertion de type IntelligenceResponse.output",
+      "description": "Ajouter une assertion de type pour IntelligenceResponse.output car il est de type unknown",
+      "applicability": {
+        "wave1": 2,
+        "total": 8,
+        "percentage": 25
+      },
+      "automatable": true,
+      "transformations": {
+        "add": [
+          "as OutputType"
+        ]
+      }
+    },
+    "R013": {
+      "name": "Simplifier metrics candidateAIBrain.addHistoryEntry()",
+      "description": "Simplifier les metrics pour candidateAIBrain.addHistoryEntry() car IntelligenceMetadata n'a pas les champs attendus",
+      "applicability": {
+        "wave1": 2,
+        "total": 8,
+        "percentage": 25
+      },
+      "automatable": true,
+      "transformations": {
+        "replace": [
+          "latency: result.metadata?.latency || 0",
+          "latency: 0"
+        ]
+      }
+    },
+    "R014": {
+      "name": "Standardiser construction IntelligenceRequest",
+      "description": "Standardiser la construction de IntelligenceRequest car tous les moteurs utilisent la même structure",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "template": "const request: IntelligenceRequest<OutputType> = { id: `${engineType}-${Date.now()}`, type: engineType, input: {} as any, context: { candidateProfile: {}, historicalObservations: [], currentGoals: [], recentInsights: [], engineContext: { ...variables } }, options: { provider: \"openai\", model: \"gpt-4-turbo\", temperature: 0.7, maxTokens: 1500, timeout: 30000 } };"
+      }
+    },
+    "R015": {
+      "name": "Standardiser construction engineContext",
+      "description": "Standardiser la construction de engineContext car tous les moteurs utilisent le même pattern",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "template": "engineContext: { ...variables }"
+      }
+    },
+    "R016": {
+      "name": "Standardiser création IntelligenceUseCase",
+      "description": "Standardiser la création de IntelligenceUseCase car tous les moteurs utilisent le même pattern",
+      "applicability": {
+        "wave1": 8,
+        "total": 8,
+        "percentage": 100
+      },
+      "automatable": true,
+      "transformations": {
+        "template": "const promptTemplate = promptTemplate.system || promptTemplate.user; const intelligenceUseCase = intelligenceCoreModule.createUseCase<OutputType>(promptTemplate);"
+      }
+    }
+  },
+  "engines": {
+    "recruiterQuestionAIEngine": {
+      "file": "core/intelligence/engines/recruiterQuestionAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R005", "R006", "R008", "R009", "R010"],
+      "specificAdaptations": [
+        "Conserver la logique de récupération des données Brain (insights, observations, patterns)",
+        "Adapter la construction des variables pour IntelligenceRequest"
+      ],
+      "estimatedEffort": "2h",
+      "compatibility": 95
+    },
+    "recruiterNotesAIEngine": {
+      "file": "core/intelligence/engines/recruiterNotesAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R005", "R006", "R009", "R010"],
+      "specificAdaptations": [],
+      "estimatedEffort": "2h",
+      "compatibility": 95
+    },
+    "decisionEstimationAIEngine": {
+      "file": "core/intelligence/engines/decisionEstimationAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R005", "R006", "R009", "R010"],
+      "specificAdaptations": [],
+      "estimatedEffort": "2h",
+      "compatibility": 95
+    },
+    "executiveSummaryAIEngine": {
+      "file": "core/intelligence/engines/executiveSummaryAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R005", "R006", "R009", "R010"],
+      "specificAdaptations": [],
+      "estimatedEffort": "2h",
+      "compatibility": 95
+    },
+    "coachEngine": {
+      "file": "core/intelligence/engines/coachEngine.ts",
+      "class": "A",
+      "applicableRules": ["R009", "R010"],
+      "specificAdaptations": [
+        "Ce moteur n'utilise pas aiOrchestrator (pas de migration IA requise)",
+        "Conserver toute la logique métier existante"
+      ],
+      "estimatedEffort": "2h",
+      "compatibility": 100
+    },
+    "dailyCoachAIEngine": {
+      "file": "core/intelligence/engines/dailyCoachAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R005", "R006", "R008", "R009", "R010"],
+      "specificAdaptations": [
+        "Conserver la logique de cache Brain (findAnalysis)",
+        "Conserver la logique de stockage Brain (addHistoryEntry)",
+        "Adapter la construction des variables pour IntelligenceRequest"
+      ],
+      "estimatedEffort": "3h",
+      "compatibility": 90
+    },
+    "careerAnalysisAIEngine": {
+      "file": "core/intelligence/engines/careerAnalysisAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R002", "R005", "R006", "R007", "R008", "R009", "R010"],
+      "specificAdaptations": [
+        "Conserver la logique de cache Brain (findAnalysis)",
+        "Conserver la logique de stockage Brain (addHistoryEntry)",
+        "Adapter la publication d'évent (eventBus → EventPublisher)"
+      ],
+      "estimatedEffort": "3h",
+      "compatibility": 90
+    },
+    "atsAIEngine": {
+      "file": "core/intelligence/engines/atsAIEngine.ts",
+      "class": "A",
+      "applicableRules": ["R001", "R002", "R005", "R006", "R007", "R009", "R010"],
+      "specificAdaptations": [
+        "Adapter la publication d'évent (eventBus → EventPublisher)"
+      ],
+      "estimatedEffort": "3h",
+      "compatibility": 90
+    }
+  },
+  "summary": {
+    "totalRules": 16,
+    "applicableRulesWave1": 10,
+    "applicableRulesWave2": 13,
+    "automatableTransformations": 100,
+    "averageCompatibilityWave1": 93,
+    "averageCompatibilityWave2": 90,
+    "totalEstimatedEffortWave1": "19h",
+    "totalEstimatedEffortWave2": "45h",
+    "coverageWave1": "95% de la migration d'un moteur Wave 1 peut être réalisée en appliquant ces règles",
+    "coverageWave2": "90% de la migration d'un moteur Wave 2 peut être réalisée en appliquant ces règles"
+  }
+}

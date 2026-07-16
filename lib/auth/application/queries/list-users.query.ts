@@ -1,5 +1,5 @@
 import { QueryHandler } from "@/lib/core/application/base/QueryHandler";
-import { Result, ok, fail } from "@/lib/core/result";
+import { Result, ok } from "@/lib/core/result";
 import { UserRepositoryPort } from "../../ports/repositories/UserRepositoryPort";
 import { UserDTO } from "./get-current-user.query";
 

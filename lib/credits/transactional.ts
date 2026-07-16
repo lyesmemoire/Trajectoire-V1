@@ -21,7 +21,7 @@ export class CreditTransaction {
 
     log.info({ amount, idempotencyKey }, "credit_reserve_attempt");
 
-    const supabase = createAdminClientSupabase() as any;
+    const supabase = createAdminClientSupabase();
 
     const { data, error } = await supabase.rpc("reserve_credits_atomic", {
       p_user_id: userId,
@@ -51,7 +51,7 @@ export class CreditTransaction {
     const log = createChildLogger({ txId });
     log.info(metadata || {}, "credit_commit_attempt");
 
-    const supabase = createAdminClientSupabase() as any;
+    const supabase = createAdminClientSupabase();
     const tokensUsed = metadata?.tokensUsed ?? 0;
 
     const { error } = await supabase.rpc("commit_credits_atomic", {
@@ -74,7 +74,7 @@ export class CreditTransaction {
     const log = createChildLogger({ txId });
     log.warn({ reason }, "credit_rollback_attempt");
 
-    const supabase = createAdminClientSupabase() as any;
+    const supabase = createAdminClientSupabase();
     const { error } = await supabase.rpc("rollback_credits_atomic", {
       p_tx_id: txId,
       p_reason: reason,

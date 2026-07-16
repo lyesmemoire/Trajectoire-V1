@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { StatCard } from "@/components/design-system";
-import { TrendingUp, Users, Target, Clock, CreditCard } from "lucide-react";
+import { TrendingUp, Users, Target, CreditCard } from "lucide-react";
 
 interface StatsGridProps {
   stats: {
@@ -11,6 +11,7 @@ interface StatsGridProps {
     interviewsThisMonth: number;
     credits: number;
     careerScore: number | null;
+    successRate: number | null;
   };
 }
 
@@ -39,8 +40,8 @@ export function StatsGrid({ stats }: StatsGridProps) {
     },
     {
       title: "Taux de réussite",
-      value: "85%",
-      change: { value: 5, period: "Moyenne" },
+      value: stats.successRate ? `${stats.successRate}%` : "N/A",
+      change: { value: 0, period: "Moyenne" },
       icon: Users,
       description: "Candidats ayant obtenu leur offre",
     },
@@ -49,11 +50,11 @@ export function StatsGrid({ stats }: StatsGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {statItems.map((stat, index) => (
-        <motion.div
+        <m.div
           key={index}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1, duration: 0.4 }}
+          transition={{ delay: index * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           <StatCard
             title={stat.title}
@@ -61,7 +62,7 @@ export function StatsGrid({ stats }: StatsGridProps) {
             change={stat.change}
             icon={stat.icon}
           />
-        </motion.div>
+        </m.div>
       ))}
     </div>
   );

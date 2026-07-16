@@ -2,7 +2,6 @@ import { InterviewOrchestrationContext } from "../../../contexts/interview-orche
 import { InterviewRepositoryPort } from "../../../../ports/interview-repository.port";
 import { DomainEventPublisher } from "@/lib/core/runtime/event-publisher/DomainEventPublisher";
 import { Result, ok, fail } from "@/lib/core/result";
-import { InterviewStepOrchestrated } from "../../../../domain/events/interview-events";
 
 export class PersistSessionStep {
   constructor(

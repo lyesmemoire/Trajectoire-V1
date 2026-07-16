@@ -6,6 +6,7 @@ import { Clock } from "@/lib/core/clock/Clock";
 import { PrismaInterviewRepository } from "./infrastructure/repositories/prisma-interview.repository";
 import { OpenAiQuestionGeneratorAdapter } from "./infrastructure/adapters/openai-question-generator.adapter";
 import { OpenAiAnswerAnalyzerAdapter } from "./infrastructure/adapters/openai-answer-analyzer.adapter";
+import { MistralInterviewProvider } from "./infrastructure/providers/mistral-interview.provider";
 import { PressureEngine } from "./domain/services/pressure-engine.service";
 import { AnalyzeAnswerStep } from "./application/use-cases/orchestrate-step/steps/analyze-answer.step";
 import { EvaluatePressureStep } from "./application/use-cases/orchestrate-step/steps/evaluate-pressure.step";
@@ -21,8 +22,14 @@ export class InterviewModule extends DomainModule {
 
     // Infrastructure
     container.registerSingleton("InterviewRepositoryPort", () => new PrismaInterviewRepository(new PrismaClient(), clock));
-    container.registerSingleton("QuestionGeneratorPort", () => new OpenAiQuestionGeneratorAdapter());
-    container.registerSingleton("AnswerAnalyzerPort", () => new OpenAiAnswerAnalyzerAdapter());
+    container.registerSingleton("MistralInterviewProvider", () => new MistralInterviewProvider());
+    container.registerSingleton("QuestionGeneratorPort", () => new OpenAiQuestionGeneratorAdapter(
+      container.resolve("MistralInterviewProvider"),
+      clock
+    ));
+    container.registerSingleton("AnswerAnalyzerPort", () => new OpenAiAnswerAnalyzerAdapter(
+      container.resolve("MistralInterviewProvider")
+    ));
 
     // Domain Services
     container.registerSingleton("PressureEngine", () => new PressureEngine());

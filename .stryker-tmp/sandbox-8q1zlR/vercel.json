@@ -1,0 +1,62 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "corepack enable && pnpm run build",
+  "devCommand": "pnpm run dev",
+  "installCommand": "corepack enable && pnpm install",
+  "functions": {
+    "app/api/stripe/webhook/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/upload/route.ts": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "app/api/interview/generate/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/interview/feedback/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/optimize/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/cleanup-transactions",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}

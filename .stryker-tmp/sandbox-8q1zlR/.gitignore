@@ -1,0 +1,137 @@
+# ============================================
+# DEPENDENCIES
+# ============================================
+node_modules/
+.pnpm-store/
+.pnp
+.pnp.js
+
+# ============================================
+# ENVIRONNEMENT (NE JAMAIS COMMIT)
+# ============================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
+# Exceptions: fichiers d'exemple autorisés
+!.env.example
+!.env.test.example
+
+# ============================================
+# NEXT.JS
+# ============================================
+.next/
+out/
+build/
+dist/
+
+# ============================================
+# LOGS
+# ============================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+errors-tests.log
+errors.json
+errors-deadcode.log
+errors-eslint.log
+errors-tsc.log
+errors-ts.txt
+ts_errors.txt
+logs/
+
+# ============================================
+# VERCEL
+# ============================================
+.vercel
+
+# ============================================
+# TYPESCRIPT
+# ============================================
+*.tsbuildinfo
+node_modules/.cache/tsbuildinfo/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# ============================================
+# CACHES & OUTILS
+# ============================================
+.cache/
+.eslintcache
+.turbo/
+.parcel-cache/
+.next/cache/
+
+# ============================================
+# TESTS & COVERAGE
+# ============================================
+coverage/
+.nyc_output/
+test-results/
+tests/playwright-report/
+playwright-report/
+
+# ============================================
+# ARTEFACTS GENERES (traces, rapports lint, benchmarks)
+# ============================================
+artifacts/
+*.bundle
+eslint-report.json
+lint-results.json
+lint_output.json
+raw-lint.json
+lint-final.txt
+errors.json
+runtime-benchmark.json
+runtime-normal-summary.json
+trace*.json
+depth.txt
+
+# ============================================
+# OUTILS JETABLES / SCRATCH
+# ============================================
+scratch/
+audit_tools/
+eslint_tools/
+beta-notes/
+
+# ============================================
+# OS
+# ============================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================
+# IDE
+# ============================================
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ============================================
+# UPLOADS TEMPORAIRES (SECURITE)
+# ============================================
+/tmp/
+/uploads/
+**/dist/
+
+# ============================================
+# FICHIERS DE MIGRATION TEMPORAIRES
+# ============================================
+migrate_*.cjs
+fix_*.cjs
+replace_*.cjs
+apply-premium-upgrade.ps1
+test-route.ts
+
+# ============================================
+# METRIQUES DE RESTRUCTURATION
+# ============================================
+metrics/

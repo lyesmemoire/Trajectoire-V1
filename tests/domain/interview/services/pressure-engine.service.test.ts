@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { PressureEngine, PressureDecision } from "../../../../lib/interview/domain/services/pressure-engine.service";
+import { PressureEngine } from "../../../../lib/interview/domain/services/pressure-engine.service";
 import { PressureLevel } from "../../../../lib/interview/domain/value-objects/pressure-level.vo";
 import { AnswerAnalysis } from "../../../../lib/interview/domain/value-objects/answer-analysis.vo";
 import { InterviewAnswer } from "../../../../lib/interview/domain/value-objects/interview-answer.vo";

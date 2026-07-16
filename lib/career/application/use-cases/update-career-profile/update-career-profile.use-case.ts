@@ -1,6 +1,6 @@
 import { UseCase } from "@/lib/core/application/UseCase";
 import { Result, ok, fail } from "@/lib/core/result";
-import { UnauthorizedError, InfrastructureError } from "@/lib/core/result/errors";
+import { UnauthorizedError } from "@/lib/core/result/errors";
 import { CareerUpdateDTO } from "../../dto/career-update.dto";
 import { CareerPipelineContext, CareerPipelineStep } from "./career-pipeline";
 import { RequestContext } from "@/lib/core/runtime/context/RequestContext";

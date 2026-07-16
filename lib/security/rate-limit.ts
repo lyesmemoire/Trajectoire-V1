@@ -1,4 +1,4 @@
-import { Ratelimit } from "@upstash/ratelimit";
+import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { envServer } from "@/lib/env.server";
 import { LoggerProvider } from "@/lib/core/observability/logger";
@@ -17,7 +17,7 @@ if (!redis && envServer.NODE_ENV === "development") {
 /**
  * Generic rate limiter wrapper to prevent crashes when Redis is not configured.
  */
-export const createRateLimiter = (limit: number, period: string) => {
+export const createRateLimiter = (limit: number, period: Duration) => {
   if (!redis) {
     return {
       limit: async () => ({ success: true, limit: limit, reset: 0, remaining: limit })
@@ -26,7 +26,7 @@ export const createRateLimiter = (limit: number, period: string) => {
 
   return new Ratelimit({
     redis,
-    limiter: Ratelimit.slidingWindow(limit, period as any),
+    limiter: Ratelimit.slidingWindow(limit, period),
   });
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, Sparkles, Upload } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import Link from "next/link";
 
 export default function Hero() {

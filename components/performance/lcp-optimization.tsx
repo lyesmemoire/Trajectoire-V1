@@ -138,7 +138,7 @@ export function useLCPMonitor() {
       const entries = list.getEntries();
       const lastEntry = entries[entries.length - 1];
       if (lastEntry && lastEntry.entryType === "largest-contentful-paint") {
-        setLCPValue((lastEntry as any).startTime);
+        setLCPValue((lastEntry as PerformanceEntry).startTime);
       }
     });
 

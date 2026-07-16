@@ -97,11 +97,14 @@ export class PrismaUserRepository implements UserRepositoryPort {
         },
       });
       
+      const supabase = await getServerDb();
+      const { data: profileData } = await supabase.from("profiles").select("*").eq("id", userId).single();
+      
       const profile: UserProfileEntity = {
         userId: updated.id,
         fullName: updated.name,
-        credits: (updated as any).monthlyAiCredits || 0,
-        cvEditorCompleted: false,
+        credits: profileData?.credits || 0,
+        cvEditorCompleted: profileData?.cv_editor_completed || false,
         createdAt: updated.createdAt,
         updatedAt: updated.updatedAt,
       };

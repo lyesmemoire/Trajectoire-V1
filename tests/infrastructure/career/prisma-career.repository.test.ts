@@ -19,7 +19,7 @@ describe("PrismaCareerRepository", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    repository = new PrismaCareerRepository(mockPrismaClient as any);
+    repository = new PrismaCareerRepository(mockPrismaClient as unknown);
   });
 
   describe("getById", () => {

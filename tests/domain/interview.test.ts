@@ -72,8 +72,8 @@ describe("Interview Domain Hardening", () => {
         id: "p-1", userId: "u-1", transcript: [], memory: {}, persona: "tech", phases: [], status: "completed"
       };
 
-      expect((standard as any).transcript).toBeUndefined();
-      expect((premium as any).answers).toBeUndefined();
+      expect((standard as unknown).transcript).toBeUndefined();
+      expect((premium as unknown).answers).toBeUndefined();
     });
   });
 

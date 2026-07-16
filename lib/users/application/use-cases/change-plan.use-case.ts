@@ -1,4 +1,4 @@
-import { UseCase, Result, fail, ok } from "@/lib/core";
+import { UseCase, Result, ok } from "@/lib/core";
 import { EventBus } from "@/lib/core/events/event-bus";
 import { PlanChanged } from "../../domain/events/user-events";
 import { UserRepositoryPort } from "../../ports/user-repository.port";

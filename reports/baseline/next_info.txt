@@ -1,0 +1,20 @@
+﻿
+Operating System:
+  Platform: win32
+  Arch: x64
+  Version: Windows 11 Pro
+  Available memory (MB): 16113
+  Available CPU cores: 8
+Binaries:
+  Node: 24.13.0
+  npm: 11.6.2
+  Yarn: N/A
+  pnpm: 9.15.9
+Relevant Packages:
+  next: 15.5.18 // An outdated version detected (latest is 16.2.10), upgrade is highly recommended!
+  eslint-config-next: N/A
+  react: 19.2.7
+  react-dom: 19.2.7
+  typescript: 5.9.3
+Next.js Config:
+  output: N/A

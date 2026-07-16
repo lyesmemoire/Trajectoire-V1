@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ShieldCheck, ArrowRight, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 
 export function PrivacyConsent({ onAccept }: { onAccept: () => void }) {
   const [agreed, setAgreed] = useState(false);

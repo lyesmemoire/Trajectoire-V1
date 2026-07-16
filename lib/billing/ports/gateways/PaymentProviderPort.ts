@@ -1,6 +1,4 @@
 import { Result } from "@/lib/core/result";
-import { Money } from "../../domain/value-objects/money.vo";
-import { Plan } from "../../domain/value-objects/plan.vo";
 
 export interface CheckoutSessionParams {
   userId: string;

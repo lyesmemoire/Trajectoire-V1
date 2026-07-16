@@ -6,6 +6,7 @@ import { Clock } from "@/lib/core/clock/Clock";
 // Repositories
 import { SupabaseUserRepository } from "./infrastructure/repositories/supabase-user.repository";
 import { SupabaseUserProfileRepository } from "./infrastructure/repositories/supabase-user-profile.repository";
+import { PrismaUserRepository } from "@/lib/users/infrastructure/repositories/prisma-user.repository";
 
 // Gateways
 import { SupabaseAuthAdapter } from "./infrastructure/adapters/supabase-auth.adapter";
@@ -20,6 +21,9 @@ import { AssignRoleUseCase } from "./application/use-cases/assign-role.use-case"
 import { DeactivateAccountUseCase } from "./application/use-cases/deactivate-account.use-case";
 import { RefreshSessionUseCase } from "./application/use-cases/refresh-session.use-case";
 import { RegisterUserUseCase } from "./application/use-cases/register-user.use-case";
+import { LoginUserUseCase } from "./application/use-cases/login-user.use-case";
+import { LogoutUserUseCase } from "./application/use-cases/logout-user.use-case";
+import { ResendVerificationEmailUseCase } from "./application/use-cases/resend-verification-email.use-case";
 
 // Queries
 import { GetCurrentUserQuery } from "./application/queries/get-current-user.query";
@@ -34,6 +38,7 @@ export class AuthModule extends DomainModule {
     const clock = container.resolve("Clock") as Clock;
     container.registerSingleton("UserRepository", () => new SupabaseUserRepository(clock));
     container.registerSingleton("UserProfileRepository", new SupabaseUserProfileRepository());
+    container.registerSingleton("PrismaUserRepository", new PrismaUserRepository());
   }
 
   protected registerGateways(container: Container): void {
@@ -79,8 +84,25 @@ export class AuthModule extends DomainModule {
         container.resolve("AuthenticationProvider"),
         container.resolve("UserRepository"),
         new UuidGenerator(),
-        container.resolve("Clock") as Clock
+        container.resolve("Clock") as Clock,
+        container.resolve("PrismaUserRepository")
       )
+    );
+    container.registerTransient(
+      "LoginUserUseCase",
+      () => new LoginUserUseCase(
+        container.resolve("AuthenticationProvider")
+      )
+    );
+    container.registerTransient(
+      "LogoutUserUseCase",
+      () => new LogoutUserUseCase(
+        container.resolve("AuthenticationProvider")
+      )
+    );
+    container.registerTransient(
+      "ResendVerificationEmailUseCase",
+      () => new ResendVerificationEmailUseCase()
     );
   }
 

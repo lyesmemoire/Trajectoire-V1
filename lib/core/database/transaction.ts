@@ -25,6 +25,6 @@ export async function withTransaction<T>(
   return prisma.$transaction(fn, {
     maxWait: options?.maxWait ?? 5000,
     timeout: options?.timeout ?? 10000,
-    ...(options?.isolationLevel && { isolationLevel: options.isolationLevel as any }),
+    ...(options?.isolationLevel && { isolationLevel: options.isolationLevel as 'ReadUncommitted' | 'ReadCommitted' | 'RepeatableRead' | 'Serializable' }),
   });
 }

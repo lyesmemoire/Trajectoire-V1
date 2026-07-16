@@ -46,7 +46,14 @@ export function withDynamicImport<P extends object>(
   componentName: string
 ) {
   const Component = dynamic(
-    () => import(`@/components/${componentPath}`).then((mod) => (mod as any)[componentName]),
+    () => import(`@/components/${componentPath}`).then((mod) => {
+      const module = mod as Record<string, React.ComponentType<P>>;
+      const component = module[componentName];
+      if (!component) {
+        throw new Error(`Component ${componentName} not found in ${componentPath}`);
+      }
+      return component;
+    }),
     {
       loading: () => <Loader variant="dots" />,
       ssr: false,

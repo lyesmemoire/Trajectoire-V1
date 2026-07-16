@@ -36,7 +36,7 @@ export class FakeLogger implements Logger {
     this.level = level;
   }
 
-  withContext(context: LogContext): Logger {
+  withContext(_context: LogContext): Logger {
     return this;
   }
 

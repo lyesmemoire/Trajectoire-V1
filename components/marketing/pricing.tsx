@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/design-system";
+import { Badge } from "@/components/design-system";
 import { cn } from "@/lib/utils";
 
 const PLANS = [

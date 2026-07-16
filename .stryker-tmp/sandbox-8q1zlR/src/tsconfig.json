@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["./common/*"],
+      "@chaos/*": ["./chaos/*"],
+      "@runtime/*": ["./runtime/*"]
+    }
+  },
+  "include": [
+    "bootstrap/**/*.ts",
+    "observability/**/*.ts",
+    "replay/**/*.ts",
+    "watchdog/**/*.ts",
+    "chaos/**/*.ts",
+    "control-plane/**/*.ts",
+    "common/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

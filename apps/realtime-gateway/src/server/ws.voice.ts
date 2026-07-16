@@ -19,7 +19,7 @@ import { ChainTTSAdapter } from "../voice-interview/adapters/tts/index.js";
 import { handleVoiceConnectionV2Engine } from "../voice-interview/adapters/voice-websocket-v2.js";
 import type { PersonaName } from "../voice-interview/core/v2/personas.js";
 import { verifyVoiceToken } from "./auth.js";
-import { reserveCredit, commitCredit, cancelCredit } from "../voice-interview/billing/usage-service.js";
+import { reserveCredit } from "../voice-interview/billing/usage-service.js";
 import { interviewRepository } from "../voice-interview/persistence/singleton.js";
 import { handleVoiceConnectionV3 } from "../voice-interview/adapters/voice-websocket-v3.js";
 import { metricsStore } from "../monitoring/metrics-store.js";
@@ -84,7 +84,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         clearTimeout(inactivityTimer);
         inactivityTimer = setTimeout(() => {
           if (process.env.VOICE_DEBUG === "true") {
-            // eslint-disable-next-line no-console
+             
             console.log(
               JSON.stringify({
                 ts: Date.now(),
@@ -169,7 +169,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       // Logs structurés légers (observabilité, pas d'infra).
       const log = (event: string, fields: Record<string, unknown>) => {
         if (process.env.VOICE_DEBUG === "true") {
-          // eslint-disable-next-line no-console
+           
           console.log(JSON.stringify({ ts: Date.now(), event, ...fields }));
         }
       };

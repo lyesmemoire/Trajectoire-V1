@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader } from "./card";
 import { LucideIcon } from "lucide-react";
 
 interface DashboardCardProps {

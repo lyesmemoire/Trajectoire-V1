@@ -1,6 +1,6 @@
 import { analyzeAnswer, AnswerAnalysis } from "../behavior/answer-analysis";
 import { chooseStrategy, FollowUpIntent } from "./followup-strategy";
-import { InterviewState } from "./interview-state-machine";
+import { InterviewState, InterviewStateMachine } from "../domain/aggregates/interview-state-machine";
 import { getPersonaConfig } from "../personas/persona-config";
 import { evaluateConfidenceRecovery } from "../../emotional-safety/confidence-recovery";
 import { generateRecruiterPrompt } from "../prompts/prompt-builder";

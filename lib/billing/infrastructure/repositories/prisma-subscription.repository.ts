@@ -1,5 +1,5 @@
 import { Result, ok, fail } from "@/lib/core/result";
-import { InfrastructureError, NotFoundError } from "@/lib/core/result/errors";
+import { InfrastructureError } from "@/lib/core/result/errors";
 import { SubscriptionRepositoryPort } from "../../ports/repositories/SubscriptionRepositoryPort";
 import { SubscriptionAggregate } from "../../domain/aggregates/subscription.aggregate";
 import { Plan, SubscriptionStatus, BillingPeriod } from "../../domain";

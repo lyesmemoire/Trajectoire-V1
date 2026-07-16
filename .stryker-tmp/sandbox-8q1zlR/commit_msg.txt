@@ -1,0 +1,17 @@
+refactor(analytics): centralize PostHog events with strict typing
+
+- Create lib/analytics/events.ts as single source of truth for analytics
+  events, with AnalyticsEventName type (union of constants + template
+  literal for landing_scroll_${number} pattern)
+- Harden trackEvent.ts to accept only AnalyticsEventName (rejects magic
+  strings at compile time) and add console.debug fallback for blocked/SSR
+  events
+- Migrate 9 files from direct posthog.capture to trackEvent(ANALYTICS_EVENTS.X)
+  - Hero, Pricing, FAQ, Footer (landing page)
+  - useScrollTracking (with dynamic prefix)
+  - register, login, profile, dashboard (app pages)
+- PostHogProvider keeps direct posthog.capture for SDK init but uses
+  ANALYTICS_EVENTS.POSTHOG_PAGEVIEW constant
+- Fix latent bug: direct posthog.capture calls bypassed SSR and
+  posthog.__loaded guards, risking crashes with adblockers
+- Bonus: detect and fix missing lucide-react import in FAQ.tsx

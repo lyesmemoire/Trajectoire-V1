@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { cvTemplates } from "@/lib/seo/data/templates";
 import CVPreviewSVG from "@/lib/seo/components/CVPreviewSVG";
 

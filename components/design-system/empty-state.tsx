@@ -60,3 +60,32 @@ export function EmptyState({
     </div>
   );
 }
+
+interface ErrorStateProps {
+  title?: string;
+  message?: string;
+  onRetry?: () => void;
+  className?: string;
+}
+
+export function ErrorState({
+  title = "Une erreur est survenue",
+  message = "Veuillez réessayer ou contacter le support.",
+  onRetry,
+  className,
+}: ErrorStateProps) {
+  return (
+    <div className={cn("text-center py-12 px-6", className)}>
+      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-danger-light flex items-center justify-center">
+        <span className="text-3xl">⚠️</span>
+      </div>
+      <h3 className="text-xl font-bold text-text-primary mb-2">{title}</h3>
+      <p className="text-text-secondary mb-6">{message}</p>
+      {onRetry && (
+        <Button onClick={onRetry} variant="primary">
+          Réessayer
+        </Button>
+      )}
+    </div>
+  );
+}

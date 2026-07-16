@@ -2,8 +2,12 @@
 
 import { useState, useRef } from "react";
 import { CheckCircle2, Mic, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { motion } from "framer-motion";
+
+interface WindowWithAudioContext extends Window {
+  webkitAudioContext?: typeof AudioContext;
+}
 
 interface Props {
   onSuccess: (stream: MediaStream) => void;
@@ -23,9 +27,8 @@ export function MicrophoneCheck({ onSuccess }: Props) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
-      const audioContext = new (
-        window.AudioContext || (window as any).webkitAudioContext
-      )();
+      const AudioContextCtor = window.AudioContext || (window as WindowWithAudioContext).webkitAudioContext;
+      const audioContext = new (AudioContextCtor as typeof AudioContext)();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 256;
@@ -113,7 +116,7 @@ export function MicrophoneCheck({ onSuccess }: Props) {
         <Button
           onClick={testMicrophone}
           disabled={status === "testing"}
-          variant={status === "error" ? "destructive" : "primary"}
+          variant={status === "error" ? "error" : "primary"}
           className="w-full py-8 rounded-2xl text-lg"
         >
           {status === "error" ? "Réessayer le test" : "Tester mon micro"}

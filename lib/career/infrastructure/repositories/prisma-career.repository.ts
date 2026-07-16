@@ -3,7 +3,7 @@ import { PrismaRepository } from "@/lib/core/infrastructure/base/PrismaRepositor
 import { CareerRepositoryPort } from "../../ports/career-repository.port";
 import { CareerProfileAggregate } from "../../domain/aggregates/career-profile.aggregate";
 import { CareerProfileMapper } from "../mappers/career-profile.mapper";
-import { Result, ok, fail } from "@/lib/core/result";
+import { Result } from "@/lib/core/result";
 import { NotFoundError } from "@/lib/core/result/errors";
 import { Clock } from "@/lib/core/clock/Clock";
 

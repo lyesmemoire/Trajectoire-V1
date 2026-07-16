@@ -180,8 +180,8 @@ export interface Database {
           confidence_score: number;
           stress_score: number | null;
           tags: string[] | null;
-          transcript: any;
-          memory: any | null;
+          transcript: unknown;
+          memory: unknown | null;
           is_processing: boolean | null;
           created_at: string;
           updated_at: string;
@@ -212,8 +212,8 @@ export interface Database {
           confidence_score?: number;
           stress_score?: number | null;
           tags?: string[] | null;
-          transcript?: any;
-          memory?: any;
+          transcript?: unknown;
+          memory?: unknown;
           is_processing?: boolean;
           created_at?: string;
           updated_at?: string;
@@ -244,8 +244,8 @@ export interface Database {
           confidence_score?: number;
           stress_score?: number | null;
           tags?: string[] | null;
-          transcript?: any;
-          memory?: any;
+          transcript?: unknown;
+          memory?: unknown;
           is_processing?: boolean;
           created_at?: string;
           updated_at?: string;

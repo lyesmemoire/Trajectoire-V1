@@ -1,28 +1,29 @@
-import { defineConfig } from "vitest/config";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
+import { defineConfig } from 'vitest/config';
 
-const rootDir = path.dirname(fileURLToPath(import.meta.url));
+import path from 'path';
 
-/**
- * Config Vitest minimale.
- * Seul ajout : l'alias "@/*" -> racine, pour aligner les tests sur l'alias
- * utilisé par Next.js/TypeScript. N'altère pas les tests à chemins relatifs.
- */
 export default defineConfig({
   resolve: {
     alias: {
-      "@": rootDir,
-    },
+      '@': path.resolve(__dirname, './')
+    }
   },
   test: {
     globals: true,
-    environment: "node",
-    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/*.spec.ts"],
-    env: {
-      SUPABASE_URL: "http://127.0.0.1:54321",
-      SUPABASE_SERVICE_ROLE_KEY: "test-key-123",
-      OPENAI_API_KEY: "sk-test-12345678901234567890", // requires >20 chars
+    environment: 'node',
+    include: ['core/voice-interview/__tests__/**/*.test.ts', 'tests/unit/**/*.test.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['core/voice-interview/**/*.ts'],
+      exclude: ['core/voice-interview/__tests__/**', 'core/voice-interview/bootstrap/**', 'core/voice-interview/**/index.ts'],
+      all: true,
+      thresholds: {
+        lines: 90,
+        functions: 90,
+        branches: 90,
+        statements: 90
+      }
     }
-  },
+  }
 });

@@ -51,7 +51,7 @@ export function resolveInternalPath(
  * Returns the public-facing URL for an internal path.
  */
 export function getPublicUrl(internalPath: string, userId?: string): string {
-  const staticAlias = (INTERNAL_TO_VIRTUAL as any)[internalPath];
+  const staticAlias = INTERNAL_TO_VIRTUAL[internalPath as keyof typeof INTERNAL_TO_VIRTUAL];
   if (staticAlias) return staticAlias;
 
   if (internalPath.startsWith("/dashboard/interview/session") && userId) {

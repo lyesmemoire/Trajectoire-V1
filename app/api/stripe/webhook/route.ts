@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
 import { appContainer } from "@/lib/core/runtime/container/app-container";
 import { HandleWebhookUseCase } from "@/lib/billing/application/use-cases/handle-webhook.use-case";
-import { BillingPresenter } from "@/lib/billing/presentation/BillingPresenter";
 import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
 import { envServer } from "@/lib/env.server";
 import Stripe from "stripe";

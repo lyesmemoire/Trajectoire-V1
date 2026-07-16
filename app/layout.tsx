@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { PostHogProviderWrapper } from "@/providers/posthog-provider";
 import { envServer } from "@/lib/env.server";
 import { generateMetadata } from "@/components/seo/metadata";
 import { WebSiteSchema, OrganizationSchema } from "@/components/seo/json-ld";
+import { WebVitals } from "@/components/analytics/WebVitals";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,7 +50,9 @@ export default async function RootLayout({
           ]}
         />
         <PostHogProviderWrapper>{children}</PostHogProviderWrapper>
+        {process.env.NODE_ENV === "production" && <WebVitals />}
       </body>
     </html>
   );
 }
+

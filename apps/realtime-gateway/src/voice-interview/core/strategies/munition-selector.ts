@@ -1,6 +1,6 @@
 import type { PressureMunition } from "../../../../../../lib/ats/contracts/munitions.js";
 import type { InterviewState, InterviewPhase } from "../state.js";
-import { createChildLogger } from "../../../../../../lib/logger.js";
+import { LoggerProvider } from "../../../../../../lib/core/observability/logger/LoggerProvider.js";
 
 export interface MunitionSelectionContext {
   state: InterviewState;
@@ -29,8 +29,8 @@ export function selectNextMunition(
   scored.sort((a, b) => b.score - a.score);
   
   const best = scored[0];
-  
-  const log = createChildLogger({ component: 'munition-selector' });
+
+  const log = LoggerProvider.getLoggerWithContext({ component: 'munition-selector' });
   if (best && best.score > 0) {
     log.debug({ 
       event: 'munition_selected', 

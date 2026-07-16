@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Section } from "@/components/design-system";
-import { Check, Shield, Award, Users } from "lucide-react";
+import { Shield, Award, Users } from "lucide-react";
 import Image from "next/image";
 
 export function TrustSection() {

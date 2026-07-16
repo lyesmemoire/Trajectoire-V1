@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { CareerProfileAggregate } from "../../../lib/career/domain/aggregates/career-profile.aggregate";
 import { CareerScore } from "../../../lib/career/domain/value-objects/career-score.vo";
 import { EmployabilityScore } from "../../../lib/career/domain/value-objects/employability-score.vo";
@@ -8,7 +8,6 @@ import {
   PredictionSnapshotCreated,
   CareerInsightsGenerated
 } from "../../../lib/career/domain/events/career-events";
-import { AggregateRoot } from "../../../lib/core/domain/AggregateRoot";
 
 describe("CareerProfileAggregate", () => {
   describe("creation", () => {

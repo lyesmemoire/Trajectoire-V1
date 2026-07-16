@@ -7,6 +7,10 @@
 
 import { envClient } from "@/lib/env.client";
 
+interface WindowWithAudioContext extends Window {
+  webkitAudioContext?: typeof AudioContext;
+}
+
 export type VoiceClientState =
   | "idle"
   | "connecting"
@@ -274,8 +278,8 @@ export class VoiceClient {
 
   private ensureCtx(): AudioContext {
     if (!this.audioCtx) {
-      const Ctor = window.AudioContext || (window as any).webkitAudioContext;
-      this.audioCtx = new Ctor();
+      const AudioContextCtor = window.AudioContext || (window as WindowWithAudioContext).webkitAudioContext;
+      this.audioCtx = new (AudioContextCtor as typeof AudioContext)();
     }
     return this.audioCtx;
   }

@@ -18,9 +18,9 @@ export class FakeRepository<T extends { id: string }> implements Repository<T> {
 
     if (filters?.orderBy) {
       results = results.sort((a, b) => {
-        const aVal = (a as any)[filters.orderBy!.column];
-        const bVal = (b as any)[filters.orderBy!.column];
-        const comparison = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+        const aVal = (a as Record<string, unknown>)[filters.orderBy!.column];
+        const bVal = (b as Record<string, unknown>)[filters.orderBy!.column];
+        const comparison = (aVal as string | number) < (bVal as string | number) ? -1 : (aVal as string | number) > (bVal as string | number) ? 1 : 0;
         return filters.orderBy!.ascending !== false ? comparison : -comparison;
       });
     }

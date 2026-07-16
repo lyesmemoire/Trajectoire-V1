@@ -4,7 +4,6 @@ import { ok, fail } from "../../../lib/core/result";
 import { RequestContext } from "../../../lib/core/runtime/context/RequestContext";
 import { UnauthorizedError, InfrastructureError } from "../../../lib/core/result/errors";
 import { CVAggregate } from "../../../lib/cv/domain/aggregates/cv.aggregate";
-import { UserId } from "../../../lib/auth/domain/value-objects/user-id.vo";
 import { FakeClock } from "../../../tests/shared/fakes";
 
 describe("AnalyzeCvUseCase", () => {

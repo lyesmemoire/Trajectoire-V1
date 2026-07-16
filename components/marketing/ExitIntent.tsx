@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { X, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/design-system";
+import { Input } from "@/deprecated/components-ui/input";
 import { toast } from "sonner";
 
 export function ExitIntent() {
@@ -69,7 +69,7 @@ export function ExitIntent() {
                 type="email"
                 placeholder="votre@email.fr"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className="h-16 rounded-2xl bg-white/[0.03] border-white/10 text-white text-center font-bold text-lg focus:ring-[#7C3AED]"
                 required
               />

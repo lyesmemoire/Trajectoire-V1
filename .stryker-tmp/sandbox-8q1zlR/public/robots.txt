@@ -1,0 +1,68 @@
+# robots.txt for Trajectoire
+# https://trajectoire.fr
+
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /replay/
+Disallow: /career-dna/
+Disallow: /interview/
+Disallow: /export/
+Disallow: /onboarding/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /private/
+
+Crawl-delay: 10
+
+# Allow specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block specific scrapers
+User-agent: HTTrack
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: aiohttp
+Disallow: /
+
+User-agent: axios
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
+Sitemap: https://trajectoire.fr/sitemap.xml

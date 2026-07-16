@@ -1,0 +1,36 @@
+{
+  "name": "@trajectoire/voice-core",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./p5": {
+      "import": "./dist/p5/index.js",
+      "types": "./dist/p5/index.d.ts"
+    },
+    "./p6": {
+      "import": "./dist/p6/index.js",
+      "types": "./dist/p6/index.d.ts"
+    },
+    "./p7": {
+      "import": "./dist/p7/index.js",
+      "types": "./dist/p7/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}

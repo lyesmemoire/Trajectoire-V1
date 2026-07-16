@@ -1,4 +1,4 @@
-import { UseCase, Result, ok } from "@/lib/core";
+import { UseCase, Result } from "@/lib/core";
 import { IdentityProviderPort } from "../../ports/identity-provider.port";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

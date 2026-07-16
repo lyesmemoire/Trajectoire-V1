@@ -17,33 +17,37 @@ const config: Config = {
       colors: {
         // Official Trajectoire Design System Colors
         background: {
-          DEFAULT: "#F8F6F3",
+          DEFAULT: "#f8fafc", // slate-50
         },
         surface: {
-          DEFAULT: "#FFFFFF",
+          DEFAULT: "#f8fafc", // slate-50
+          secondary: "#ffffff",
+          elevated: "#ffffff",
         },
         primary: {
-          DEFAULT: "#0F766E",
-          hover: "#115E59",
-          light: "rgba(15, 118, 110, 0.08)",
-          lighter: "rgba(15, 118, 110, 0.04)",
+          DEFAULT: "#38bdf8", // sky-400
+          hover: "#0ea5e9", // sky-500
+          soft: "#f0f9ff", // sky-50
+          light: "rgba(56, 189, 248, 0.08)",
+          lighter: "rgba(56, 189, 248, 0.04)",
         },
         secondary: {
-          DEFAULT: "#C89B3C",
-          hover: "#B8860B",
-          light: "rgba(200, 155, 60, 0.08)",
-          lighter: "rgba(200, 155, 60, 0.04)",
+          DEFAULT: "#34d399", // emerald-400
+          hover: "#10b981", // emerald-500
+          light: "rgba(52, 211, 153, 0.08)",
+          lighter: "rgba(52, 211, 153, 0.04)",
         },
         text: {
-          primary: "#111827",
-          secondary: "#6B7280",
+          primary: "#1e293b", // slate-800
+          secondary: "#475569", // slate-600
+          muted: "#94a3b8", // slate-400
           tertiary: "rgba(17, 24, 39, 0.4)",
           inverse: "#FFFFFF",
         },
         border: {
-          DEFAULT: "#E5E7EB",
+          DEFAULT: "#e2e8f0", // slate-200
           hover: "rgba(17, 24, 39, 0.12)",
-          focus: "#0F766E",
+          focus: "#38bdf8", // sky-400
         },
         success: {
           DEFAULT: "#16A34A",
@@ -56,9 +60,9 @@ const config: Config = {
           lighter: "rgba(245, 158, 11, 0.04)",
         },
         danger: {
-          DEFAULT: "#DC2626",
-          light: "rgba(220, 38, 38, 0.08)",
-          lighter: "rgba(220, 38, 38, 0.04)",
+          DEFAULT: "#F59E0B", // Danger is now Amber as per Phase 4.2 specs
+          light: "rgba(245, 158, 11, 0.08)",
+          lighter: "rgba(245, 158, 11, 0.04)",
         },
         info: {
           DEFAULT: "#2563EB",
@@ -84,6 +88,9 @@ const config: Config = {
         xl: "20px",
         "2xl": "24px",
         "3xl": "32px",
+        card: "24px",
+        button: "16px",
+        dialog: "24px",
         full: "9999px",
       },
       boxShadow: {
@@ -97,17 +104,20 @@ const config: Config = {
         focusRing: "0 0 0 3px rgba(15, 118, 110, 0.1)",
         inner: "inset 0 2px 4px rgba(0, 0, 0, 0.04)",
         none: "none",
+        // Semantic shadows
+        soft: "0 4px 20px -2px rgba(0, 0, 0, 0.03)",
+        medium: "0 10px 30px -4px rgba(0, 0, 0, 0.05)",
+        floating: "0 20px 40px -8px rgba(0, 0, 0, 0.08)",
         // Colored shadows
-        "primary": "0 8px 24px rgba(15, 118, 110, 0.15)",
-        "primary-hover": "0 12px 32px rgba(15, 118, 110, 0.2)",
-        "secondary": "0 8px 24px rgba(200, 155, 60, 0.15)",
-        "secondary-hover": "0 12px 32px rgba(200, 155, 60, 0.2)",
-        "success": "0 8px 24px rgba(22, 163, 74, 0.15)",
+        "primary": "0 8px 24px rgba(56, 189, 248, 0.15)",
+        "primary-hover": "0 12px 32px rgba(56, 189, 248, 0.2)",
+        "secondary": "0 8px 24px rgba(52, 211, 153, 0.15)",
+        "secondary-hover": "0 12px 32px rgba(52, 211, 153, 0.2)",
+        "success": "0 8px 24px rgba(16, 185, 129, 0.15)",
         "warning": "0 8px 24px rgba(245, 158, 11, 0.15)",
-        "danger": "0 8px 24px rgba(220, 38, 38, 0.15)",
+        "danger": "0 8px 24px rgba(245, 158, 11, 0.15)",
         "info": "0 8px 24px rgba(37, 99, 235, 0.15)",
         // Legacy shadows (kept for backward compatibility)
-        soft: "0 2px 8px 0 rgba(17, 24, 39, 0.04)",
         card: "0 1px 3px 0 rgba(17, 24, 39, 0.08), 0 1px 2px -1px rgba(17, 24, 39, 0.04)",
         elevated: "0 4px 6px -1px rgba(17, 24, 39, 0.08), 0 2px 4px -2px rgba(17, 24, 39, 0.04)",
         premium: "0 8px 30px rgba(0, 0, 0, 0.04)",
@@ -238,6 +248,12 @@ const config: Config = {
           "0%": { transform: "translateY(-20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+      },
+      transitionDuration: {
+        fast: "200ms",
+        normal: "400ms",
+        slow: "700ms",
+        verySlow: "1200ms",
       },
       spacing: {
         "18": "4.5rem",

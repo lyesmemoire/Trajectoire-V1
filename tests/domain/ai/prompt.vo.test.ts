@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Prompt, PromptMessage, PromptRole } from "../../../lib/ai/domain/value-objects/prompt.vo";
+import { Prompt, PromptMessage } from "../../../lib/ai/domain/value-objects/prompt.vo";
 
 describe("Prompt Value Object", () => {
   describe("creation", () => {

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --text-secondary: rgba(17, 24, 39, 0.6);
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+        }
+
+        /* ═══════════════════ HEADER ═══════════════════ */
+        .page-header {
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ FILTERS ═══════════════════ */
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* ═══════════════════ NOTIFICATION GROUPS ═══════════════════ */
+        .notification-group {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .notification-group:nth-child(3) { animation-delay: 0.2s; }
+        .notification-group:nth-child(4) { animation-delay: 0.3s; }
+        .notification-group:nth-child(5) { animation-delay: 0.4s; }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .group-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .group-count {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ NOTIFICATIONS TIMELINE ═══════════════════ */
+        .notifications-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .notifications-timeline::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .notification-item {
+            position: relative;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .notification-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .notification-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .notification-item.unread {
+            border-left: 3px solid var(--accent);
+        }
+
+        .notification-dot {
+            position: absolute;
+            left: -32px;
+            top: 24px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .notification-item.unread .notification-dot {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .notification-dot-inner {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+        }
+
+        .notification-item.unread .notification-dot-inner {
+            opacity: 1;
+        }
+
+        .notification-content {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .notification-icon.simulation {
+            background: var(--accent-light);
+        }
+
+        .notification-icon.simulation svg {
+            color: var(--accent);
+        }
+
+        .notification-icon.ats {
+            background: var(--secondary-light);
+        }
+
+        .notification-icon.ats svg {
+            color: var(--secondary);
+        }
+
+        .notification-icon.feature {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .notification-icon.feature svg {
+            color: #3B82F6;
+        }
+
+        .notification-icon.payment {
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .notification-icon.payment svg {
+            color: #10B981;
+        }
+
+        .notification-icon.subscription {
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .notification-icon.subscription svg {
+            color: #A855F7;
+        }
+
+        .notification-icon.system {
+            background: rgba(107, 114, 128, 0.08);
+        }
+
+        .notification-icon.system svg {
+            color: #6B7280;
+        }
+
+        .notification-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .notification-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .notification-btn {
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .notification-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .notification-btn-primary {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .notification-btn-primary:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .notification-btn-secondary {
+            background: var(--bg);
+            color: var(--text-secondary);
+        }
+
+        .notification-btn-secondary:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .notification-btn-danger {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+        }
+
+        .notification-btn-danger:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        /* ═══════════════════ EMPTY STATE ═══════════════════ */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--accent);
+        }
+
+        .empty-state h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .filters {
+                flex-wrap: wrap;
+            }
+
+            .filter-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .notifications-timeline {
+                padding-left: 24px;
+            }
+
+            .notifications-timeline::before {
+                left: 7px;
+            }
+
+            .notification-dot {
+                left: -24px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .notification-dot-inner {
+                width: 6px;
+                height: 6px;
+            }
+
+            .notification-content {
+                flex-direction: column;
+            }
+
+            .notification-actions {
+                flex-wrap: wrap;
+            }
+
+            .notification-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HEADER -->
+            <div class="page-header">
+                <h1>Notifications</h1>
+                <p>Restez informé de toutes vos activités et mises à jour</p>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="filters">
+                <button class="filter-btn active">Toutes</button>
+                <button class="filter-btn">Non lues</button>
+                <button class="filter-btn">Simulations</button>
+                <button class="filter-btn">Système</button>
+            </div>
+
+            <!-- AUJOURD'HUI -->
+            <div class="notification-group">
+                <div class="group-header">
+                    <div class="group-title">Aujourd'hui</div>
+                    <div class="group-count">4 notifications</div>
+                </div>
+                <div class="notifications-timeline">
+                    <!-- Notification 1: Simulation terminée (unread) -->
+                    <div class="notification-item unread">
+                        <div class="notification-dot">
+                            <div class="notification-dot-inner"></div>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-icon simulation">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Simulation terminée avec succès</div>
+                                        <div class="notification-desc">Votre simulation "Directeur Marketing" est terminée. Score global : 82%. Consultez votre débrief détaillé.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 2h</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir le débrief
+                                    </button>
+                                    <button class="notification-btn notification-btn-secondary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Marquer comme lu
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 2: ATS terminé (unread) -->
+                    <div class="notification-item unread">
+                        <div class="notification-dot">
+                            <div class="notification-dot-inner"></div>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-icon ats">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Analyse ATS complétée</div>
+                                        <div class="notification-desc">Votre CV "Directeur Marketing v3.2" a obtenu un score ATS de 91%. Excellent résultat !</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 5h</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir l'analyse
+                                    </button>
+                                    <button class="notification-btn notification-btn-secondary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Marquer comme lu
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 3: Nouvelle fonctionnalité (unread) -->
+                    <div class="notification-item unread">
+                        <div class="notification-dot">
+                            <div class="notification-dot-inner"></div>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-icon feature">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Nouvelle fonctionnalité disponible</div>
+                                        <div class="notification-desc">Découvrez notre nouveau système de comparaison de simulations pour analyser votre progression.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 8h</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Découvrir
+                                    </button>
+                                    <button class="notification-btn notification-btn-secondary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Marquer comme lu
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 4: Paiement (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon payment">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Paiement confirmé</div>
+                                        <div class="notification-desc">Votre paiement de 49€ pour l'abonnement Premium a été confirmé. Merci !</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 12h</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir le reçu
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CETTE SEMAINE -->
+            <div class="notification-group">
+                <div class="group-header">
+                    <div class="group-title">Cette semaine</div>
+                    <div class="group-count">3 notifications</div>
+                </div>
+                <div class="notifications-timeline">
+                    <!-- Notification 5: Simulation (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon simulation">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Simulation terminée</div>
+                                        <div class="notification-desc">Votre simulation "Chef de Projet Senior" est terminée. Score global : 78%.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 3 jours</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir le débrief
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 6: Abonnement (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon subscription">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Abonnement renouvelé</div>
+                                        <div class="notification-desc">Votre abonnement Premium a été renouvelé avec succès pour un mois supplémentaire.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 5 jours</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Gérer l'abonnement
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 7: ATS (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon ats">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Analyse ATS complétée</div>
+                                        <div class="notification-desc">Votre CV "Chef de Projet v2.1" a obtenu un score ATS de 85%. Bon résultat !</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 6 jours</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir l'analyse
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANCIENNES -->
+            <div class="notification-group">
+                <div class="group-header">
+                    <div class="group-title">Anciennes</div>
+                    <div class="group-count">3 notifications</div>
+                </div>
+                <div class="notifications-timeline">
+                    <!-- Notification 8: System (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon system">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Mise à jour système</div>
+                                        <div class="notification-desc">Une mise à jour importante a été déployée pour améliorer les performances et la sécurité.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 2 semaines</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        En savoir plus
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 9: Simulation (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon simulation">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Simulation terminée</div>
+                                        <div class="notification-desc">Votre simulation "Manager Commercial" est terminée. Score global : 85%.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 3 semaines</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Voir le débrief
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification 10: Feature (read) -->
+                    <div class="notification-item">
+                        <div class="notification-dot"></div>
+                        <div class="notification-content">
+                            <div class="notification-icon feature">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
+                            <div class="notification-body">
+                                <div class="notification-header">
+                                    <div>
+                                        <div class="notification-title">Nouvelle fonctionnalité</div>
+                                        <div class="notification-desc">Nous avons ajouté un nouveau système de progression pour suivre votre évolution.</div>
+                                    </div>
+                                    <div class="notification-time">Il y a 1 mois</div>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="notification-btn notification-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Découvrir
+                                    </button>
+                                    <button class="notification-btn notification-btn-danger">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</body>
+</html>

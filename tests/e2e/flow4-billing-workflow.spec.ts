@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Flow 4: Billing Workflow", () => {
-  test("Stripe Checkout → Webhook → Wallet → History", async ({ page, request }) => {
+  test("Stripe Checkout → Webhook → Wallet → History", async ({ page }) => {
     // Login first
     await page.goto("/auth/login");
     await page.fill('#login-email', "test@example.com");

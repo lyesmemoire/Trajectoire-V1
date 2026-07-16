@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { InterviewSessionAggregate } from "../../../lib/interview/domain/aggregates/interview-session.aggregate";
 import { InterviewQuestion } from "../../../lib/interview/domain/value-objects/interview-question.vo";
 import { InterviewAnswer } from "../../../lib/interview/domain/value-objects/interview-answer.vo";
@@ -54,7 +54,7 @@ describe("InterviewSessionAggregate", () => {
         persona
       );
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(1);
       expect(events[0]).toBeInstanceOf(InterviewStarted);
       
@@ -221,7 +221,7 @@ describe("InterviewSessionAggregate", () => {
       expect(session.answers).toHaveLength(1);
       expect(session.answers[0].answer.content).toBe("I have 5 years of experience");
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2); // InterviewStarted + AnswerSubmitted
       expect(events[1]).toBeInstanceOf(AnswerSubmitted);
       
@@ -267,7 +267,7 @@ describe("InterviewSessionAggregate", () => {
       
       session.orchestrateStep(false);
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2); // InterviewStarted + InterviewStepOrchestrated
       expect(events[1]).toBeInstanceOf(InterviewStepOrchestrated);
       
@@ -285,7 +285,7 @@ describe("InterviewSessionAggregate", () => {
       
       session.orchestrateStep(true);
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2);
       expect(events[1]).toBeInstanceOf(InterviewStepOrchestrated);
       
@@ -308,7 +308,7 @@ describe("InterviewSessionAggregate", () => {
       
       expect(session.pressureLevel.value).toBe(40);
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2);
       expect(events[1]).toBeInstanceOf(InterviewPressureAdjusted);
       
@@ -331,7 +331,7 @@ describe("InterviewSessionAggregate", () => {
       
       expect(session.pressureLevel.value).toBe(40);
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(4); // InterviewStarted + 3 pressure adjustments
     });
   });
@@ -354,7 +354,7 @@ describe("InterviewSessionAggregate", () => {
       expect(session.currentState).toBe("RECOVERY");
       expect(session.pressureLevel.value).toBe(10);
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2); // InterviewStarted + RecoveryTriggered
       expect(events[1]).toBeInstanceOf(RecoveryTriggered);
       
@@ -381,7 +381,7 @@ describe("InterviewSessionAggregate", () => {
       expect(session.currentState).toBe("COMPLETED");
       expect(session.props.endTime).toBeDefined();
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2);
       expect(events[1]).toBeInstanceOf(InterviewCompleted);
       
@@ -458,7 +458,7 @@ describe("InterviewSessionAggregate", () => {
       }));
       session.adjustPressure(PressureLevel.create(30));
       
-      const events = (session as any).pullEvents();
+      const events = (session as unknown).pullEvents();
       expect(events).toHaveLength(2);
       expect(events[0]).toBeInstanceOf(InterviewStarted);
       expect(events[1]).toBeInstanceOf(InterviewPressureAdjusted);

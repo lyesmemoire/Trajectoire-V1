@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Result, ok, fail } from "../../../lib/core/result";
 import { InfrastructureError } from "../../../lib/core/result/errors";
 import { UserId } from "../../../lib/auth/domain/value-objects/user-id.vo";
 import { Email } from "../../../lib/auth/domain/value-objects/email.vo";
@@ -17,7 +16,7 @@ vi.mock("../../../lib/supabase/admin", () => ({
 
 import { SupabaseUserRepository } from "../../../lib/auth/infrastructure/repositories/supabase-user.repository";
 import { UserAggregate } from "../../../lib/auth/domain/aggregates/user.aggregate";
-import { UserMapper, UserPersistence } from "../../../lib/auth/infrastructure/mappers/user.mapper";
+import { UserPersistence } from "../../../lib/auth/infrastructure/mappers/user.mapper";
 
 describe("SupabaseUserRepository", () => {
   let repository: SupabaseUserRepository;

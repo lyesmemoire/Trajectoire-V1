@@ -1,7 +1,7 @@
 import { createServerClient as _createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
-import type { Database } from "@/types/database"
 import { envServer } from "@/lib/env.server"
+import type { SupabaseClient } from "@supabase/supabase-js"
 
 /**
  * Factory canonical du client Supabase côté serveur (Server Components,
@@ -12,7 +12,7 @@ import { envServer } from "@/lib/env.server"
  * est conservé pour rétro-compatibilité et sera retiré une fois les imports
  * migrés.
  */
-export async function createServerClient() {
+export async function createServerClient(): Promise<SupabaseClient> {
   const cookieStore = await cookies()
 
   // Return a mock client if Supabase is not configured (for build time)
@@ -23,10 +23,10 @@ export async function createServerClient() {
         getUser: async () => ({ data: { user: null }, error: null }),
         getSession: async () => ({ data: { session: null }, error: null }),
       },
-    } as any
+    } as unknown as SupabaseClient
   }
 
-  return _createServerClient<any>(
+  return _createServerClient(
     envServer.NEXT_PUBLIC_SUPABASE_URL!,
     envServer.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {

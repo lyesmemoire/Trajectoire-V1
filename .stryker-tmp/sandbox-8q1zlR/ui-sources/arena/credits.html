@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crédits | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --text-secondary: rgba(17, 24, 39, 0.6);
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+        }
+
+        /* ═══════════════════ HERO ═══════════════════ */
+        .hero {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ CREDITS COUNTER ═══════════════════ */
+        .credits-hero {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            border-radius: var(--radius);
+            padding: 48px;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .credits-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .credits-hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .credits-label {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .credits-counter {
+            font-family: 'Playfair Display', serif;
+            font-size: 96px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 16px;
+            animation: countUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .credits-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        .credits-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--accent);
+        }
+
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════ CARDS GRID ═══════════════════ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .card-icon.buy {
+            background: var(--accent-light);
+        }
+
+        .card-icon.buy svg {
+            color: var(--accent);
+        }
+
+        .card-icon.history {
+            background: var(--secondary-light);
+        }
+
+        .card-icon.history svg {
+            color: var(--secondary);
+        }
+
+        .card-icon.usage {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .card-icon.usage svg {
+            color: #3B82F6;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .card-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .card-value.accent {
+            color: var(--accent);
+        }
+
+        .card-value.secondary {
+            color: var(--secondary);
+        }
+
+        .card-value.blue {
+            color: #3B82F6;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ GRAPH SECTION ═══════════════════ */
+        .graph-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .graph-header {
+            margin-bottom: 32px;
+        }
+
+        .graph-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .graph-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .graph-container {
+            position: relative;
+            height: 320px;
+            padding: 20px 0;
+        }
+
+        .graph-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 100%;
+            gap: 24px;
+        }
+
+        .graph-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .graph-bars-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+            height: 100%;
+        }
+
+        .graph-bar {
+            width: 40px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .graph-bar.consumed {
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(15, 118, 110, 0.6) 100%);
+        }
+
+        .graph-bar.remaining {
+            background: linear-gradient(180deg, var(--secondary) 0%, rgba(200, 155, 60, 0.6) 100%);
+        }
+
+        .graph-bar:hover {
+            transform: translateY(-4px);
+        }
+
+        .graph-bar-value {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .graph-bar:hover .graph-bar-value {
+            opacity: 1;
+        }
+
+        .graph-bar-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .graph-legend {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.consumed {
+            background: var(--accent);
+        }
+
+        .legend-dot.remaining {
+            background: var(--secondary);
+        }
+
+        /* ═══════════════════ TIMELINE ═══════════════════ */
+        .timeline-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .timeline-header {
+            margin-bottom: 32px;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .timeline-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item:hover {
+            background: rgba(17, 24, 39, 0.04);
+            transform: translateX(4px);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 24px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .timeline-item.purchase .timeline-dot {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .timeline-item.refund .timeline-dot {
+            border-color: #10B981;
+            background: #10B981;
+        }
+
+        .timeline-item.simulation .timeline-dot {
+            border-color: var(--secondary);
+            background: var(--secondary);
+        }
+
+        .timeline-item.ats .timeline-dot {
+            border-color: #3B82F6;
+            background: #3B82F6;
+        }
+
+        .timeline-dot-inner {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .timeline-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .timeline-info {
+            flex: 1;
+        }
+
+        .timeline-title-text {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .timeline-amount {
+            text-align: right;
+        }
+
+        .timeline-amount-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .timeline-amount-value.positive {
+            color: #10B981;
+        }
+
+        .timeline-amount-value.negative {
+            color: var(--accent);
+        }
+
+        .timeline-amount-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .graph-bars {
+                gap: 16px;
+            }
+
+            .graph-bar {
+                width: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .credits-hero {
+                padding: 32px;
+            }
+
+            .credits-counter {
+                font-size: 64px;
+            }
+
+            .credits-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .graph-container {
+                height: 240px;
+            }
+
+            .graph-bars {
+                gap: 12px;
+            }
+
+            .graph-bar {
+                width: 20px;
+            }
+
+            .graph-bar-label {
+                font-size: 11px;
+            }
+
+            .graph-legend {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .timeline {
+                padding-left: 24px;
+            }
+
+            .timeline::before {
+                left: 7px;
+            }
+
+            .timeline-dot {
+                left: -24px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-dot-inner {
+                width: 6px;
+                height: 6px;
+            }
+
+            .timeline-content {
+                flex-direction: column;
+            }
+
+            .timeline-amount {
+                text-align: left;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HERO -->
+            <div class="hero">
+                <h1>Crédits</h1>
+                <p>Gérez vos crédits et suivez votre consommation</p>
+            </div>
+
+            <!-- CREDITS COUNTER -->
+            <div class="credits-hero">
+                <div class="credits-hero-content">
+                    <div class="credits-label">Crédits disponibles</div>
+                    <div class="credits-counter">15</div>
+                    <div class="credits-subtitle">sur 50 crédits ce mois</div>
+                    <div class="credits-actions">
+                        <button class="btn btn-white">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Acheter des crédits
+                        </button>
+                        <button class="btn btn-outline">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Voir l'historique
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARDS GRID -->
+            <div class="cards-grid">
+                <!-- Buy Credits -->
+                <div class="card">
+                    <div class="card-icon buy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="card-title">Acheter des crédits</div>
+                    <div class="card-desc">Rechargez votre compte en quelques clics</div>
+                    <button class="btn btn-white" style="width: 100%; justify-content: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Acheter maintenant
+                    </button>
+                </div>
+
+                <!-- History -->
+                <div class="card">
+                    <div class="card-icon history">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-title">Historique</div>
+                    <div class="card-desc">Consultez toutes vos transactions</div>
+                    <div class="card-value secondary">24</div>
+                    <div class="card-subtitle">transactions ce mois</div>
+                </div>
+
+                <!-- Usage -->
+                <div class="card">
+                    <div class="card-icon usage">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20V10"></path>
+                            <path d="M18 20V4"></path>
+                            <path d="M6 20v-4"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Utilisation</div>
+                    <div class="card-desc">Suivez votre consommation en temps réel</div>
+                    <div class="card-value blue">70%</div>
+                    <div class="card-subtitle">crédits utilisés</div>
+                </div>
+            </div>
+
+            <!-- GRAPH SECTION -->
+            <div class="graph-section">
+                <div class="graph-header">
+                    <div class="graph-title">Évolution des crédits</div>
+                    <div class="graph-subtitle">Crédits consommés et restants sur les 6 derniers mois</div>
+                </div>
+                <div class="graph-container">
+                    <div class="graph-bars">
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 60%;">
+                                    <div class="graph-bar-value">30 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 40%;">
+                                    <div class="graph-bar-value">20 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Juil</div>
+                        </div>
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 70%;">
+                                    <div class="graph-bar-value">35 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 30%;">
+                                    <div class="graph-bar-value">15 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Août</div>
+                        </div>
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 50%;">
+                                    <div class="graph-bar-value">25 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 50%;">
+                                    <div class="graph-bar-value">25 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Sep</div>
+                        </div>
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 80%;">
+                                    <div class="graph-bar-value">40 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 20%;">
+                                    <div class="graph-bar-value">10 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Oct</div>
+                        </div>
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 65%;">
+                                    <div class="graph-bar-value">32 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 35%;">
+                                    <div class="graph-bar-value">18 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Nov</div>
+                        </div>
+                        <div class="graph-bar-group">
+                            <div class="graph-bars-wrapper">
+                                <div class="graph-bar consumed" style="height: 70%;">
+                                    <div class="graph-bar-value">35 crédits</div>
+                                </div>
+                                <div class="graph-bar remaining" style="height: 30%;">
+                                    <div class="graph-bar-value">15 crédits</div>
+                                </div>
+                            </div>
+                            <div class="graph-bar-label">Déc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="graph-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot consumed"></div>
+                        <span>Crédits consommés</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot remaining"></div>
+                        <span>Crédits restants</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="timeline-section">
+                <div class="timeline-header">
+                    <div class="timeline-title">Historique des opérations</div>
+                    <div class="timeline-subtitle">Toutes vos transactions et utilisations de crédits</div>
+                </div>
+                <div class="timeline">
+                    <!-- Purchase -->
+                    <div class="timeline-item purchase">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Achat de crédits</div>
+                                <div class="timeline-desc">Pack 20 crédits</div>
+                                <div class="timeline-date">10 Déc 2024 à 14:32</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value positive">+20</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation -->
+                    <div class="timeline-item simulation">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Simulation d'entretien</div>
+                                <div class="timeline-desc">Directeur Marketing - L'Oréal</div>
+                                <div class="timeline-date">08 Déc 2024 à 10:15</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value negative">-5</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATS -->
+                    <div class="timeline-item ats">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Analyse ATS</div>
+                                <div class="timeline-desc">CV Directeur Marketing v3.2</div>
+                                <div class="timeline-date">05 Déc 2024 à 16:45</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value negative">-2</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Refund -->
+                    <div class="timeline-item refund">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Remboursement</div>
+                                <div class="timeline-desc">Simulation annulée - Chef de Projet</div>
+                                <div class="timeline-date">03 Déc 2024 à 09:20</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value positive">+5</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation -->
+                    <div class="timeline-item simulation">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Simulation d'entretien</div>
+                                <div class="timeline-desc">Chef de Projet Senior - BNP Paribas</div>
+                                <div class="timeline-date">01 Déc 2024 à 11:30</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value negative">-5</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Purchase -->
+                    <div class="timeline-item purchase">
+                        <div class="timeline-dot">
+                            <div class="timeline-dot-inner"></div>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-info">
+                                <div class="timeline-title-text">Achat de crédits</div>
+                                <div class="timeline-desc">Pack 10 crédits</div>
+                                <div class="timeline-date">28 Nov 2024 à 15:10</div>
+                            </div>
+                            <div class="timeline-amount">
+                                <div class="timeline-amount-value positive">+10</div>
+                                <div class="timeline-amount-label">crédits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>

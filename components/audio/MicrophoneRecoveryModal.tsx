@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mic, RefreshCw, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 
 
 interface Props {

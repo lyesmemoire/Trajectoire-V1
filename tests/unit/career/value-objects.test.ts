@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { CareerScore } from "../../../lib/career/domain/value-objects/career-score.vo";
-import { EmployabilityScore } from "../../../lib/career/domain/value-objects/employability-score.vo";
 import { ReturnProbability } from "../../../lib/career/domain/value-objects/return-probability.vo";
-import { AuthenticityScore } from "../../../lib/career/domain/value-objects/authenticity-score.vo";
 
 describe("Career Domain Value Objects", () => {
   describe("CareerScore", () => {

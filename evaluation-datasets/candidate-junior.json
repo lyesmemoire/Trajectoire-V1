@@ -1,0 +1,12 @@
+{
+  "id": "scenario-junior",
+  "description": "Un candidat junior qui donne des réponses basiques mais correctes.",
+  "profile": {
+    "targetRole": "Junior Software Engineer",
+    "experienceLevel": "junior"
+  },
+  "expectedProperties": {
+    "maxDurationMinutes": 15,
+    "completedPhases": ["opening", "exploration", "closing"]
+  }
+}

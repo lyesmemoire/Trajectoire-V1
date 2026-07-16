@@ -6,6 +6,18 @@ export interface StreakInfo {
   isActive: boolean;
 }
 
+type CareerDNA = {
+  lastActivityDate?: string;
+  currentStreak?: number;
+};
+
+function isCareerDNA(data: unknown): data is CareerDNA {
+  return (
+    typeof data === "object" &&
+    data !== null
+  );
+}
+
 /**
  * Updates and returns the user's training streak.
  */
@@ -14,7 +26,7 @@ export async function updateStreak(userId: string): Promise<StreakInfo> {
   if (!profile)
     return { currentStreak: 0, lastActivityDate: "", isActive: false };
 
-  const dna = (profile.careerDNA as any) || {};
+  const dna = isCareerDNA(profile.careerDNA) ? profile.careerDNA : {};
   const lastDate = dna.lastActivityDate ? new Date(dna.lastActivityDate) : null;
   const today = new Date();
 
@@ -41,7 +53,7 @@ export async function updateStreak(userId: string): Promise<StreakInfo> {
         ...dna,
         lastActivityDate: today.toISOString(),
         currentStreak: streak,
-      },
+      } as any,
     },
   });
 

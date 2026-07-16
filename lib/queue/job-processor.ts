@@ -7,7 +7,6 @@ import { LoggerProvider } from "@/lib/core/observability/logger";
 import { JobType, JobPayload, SendEmailJobPayload, SendRecoveryEmailJobPayload, CleanupExpiredTransactionsJobPayload, GenerateEmbeddingsJobPayload } from "./job-types";
 import { sendWelcomeEmail, sendInterviewResultsEmail } from "@/lib/email";
 import { sendRecoveryEmail } from "@/lib/engagement/resend-coaching";
-import { getRelevantCVSections } from "@/lib/ai/rag";
 
 const logger = LoggerProvider.getLogger();
 
@@ -96,17 +95,17 @@ export class JobProcessor {
 
   private async sendRecoveryEmail(payload: SendRecoveryEmailJobPayload): Promise<void> {
     logger.info("Sending recovery email", { userId: payload.userId, email: payload.email });
-    
+
     try {
       await sendRecoveryEmail({
         userId: payload.userId,
         email: payload.email,
         firstName: payload.firstName,
-        riskLevel: payload.riskLevel as any,
-        probableCause: payload.probableCause as any,
+        riskLevel: payload.riskLevel as "low" | "medium" | "high",
+        probableCause: payload.probableCause as "overwhelm" | "frustration" | "fatigue" | "rumination",
         recommendedAction: payload.recommendedAction,
       });
-      
+
       logger.info("Recovery email sent successfully", { userId: payload.userId });
     } catch (error) {
       logger.error("Failed to send recovery email", { userId: payload.userId, error });
@@ -137,8 +136,8 @@ export class JobProcessor {
       const count = expiredTxs?.length || 0;
       logger.info("Found expired transactions", { count });
 
-      let succeeded = new Set<string>();
-      let failed = new Set<string>();
+      const succeeded = new Set<string>();
+      const failed = new Set<string>();
 
       for (const tx of expiredTxs || []) {
         const { error: rollbackError } = await supabase

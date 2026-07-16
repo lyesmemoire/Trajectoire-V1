@@ -1,15 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/design-system";
 import { Button } from "@/components/design-system";
 import {
   FileText,
   Video,
-  MessageSquare,
-  Calendar,
   ArrowRight,
+  Upload,
+  Target,
+  Play,
+  TrendingUp,
 } from "lucide-react";
 
 interface QuickAction {
@@ -25,56 +27,72 @@ export function QuickActions() {
   const actions: QuickAction[] = [
     {
       id: "1",
-      title: "Nouveau CV",
-      description: "Créer un CV optimisé",
-      icon: <FileText className="w-5 h-5" />,
-      href: "/dashboard/cvs/new",
+      title: "Importer un CV",
+      description: "Analyser votre CV existant",
+      icon: <Upload className="w-5 h-5" />,
+      href: "/dashboard/cvs/import",
       variant: "primary",
     },
     {
       id: "2",
-      title: "Session coaching",
-      description: "Réserver un entraînement",
-      icon: <Video className="w-5 h-5" />,
-      href: "/dashboard/schedule",
+      title: "Créer un CV",
+      description: "CV optimisé ATS",
+      icon: <FileText className="w-5 h-5" />,
+      href: "/dashboard/cvs/new",
       variant: "secondary",
     },
     {
       id: "3",
-      title: "Contacter coach",
-      description: "Envoyer un message",
-      icon: <MessageSquare className="w-5 h-5" />,
-      href: "/dashboard/messages",
+      title: "Analyser une offre",
+      description: "Décrypter le poste",
+      icon: <Target className="w-5 h-5" />,
+      href: "/dashboard/ats",
       variant: "outline",
     },
     {
       id: "4",
-      title: "Voir calendrier",
-      description: "Gérer vos sessions",
-      icon: <Calendar className="w-5 h-5" />,
-      href: "/dashboard/calendar",
+      title: "Lancer une simulation",
+      description: "Entraînement IA",
+      icon: <Play className="w-5 h-5" />,
+      href: "/dashboard/interview-simulation",
+      variant: "outline",
+    },
+    {
+      id: "5",
+      title: "Continuer",
+      description: "Dernière simulation",
+      icon: <Video className="w-5 h-5" />,
+      href: "/dashboard/interview-result",
+      variant: "outline",
+    },
+    {
+      id: "6",
+      title: "Plan de progression",
+      description: "Voir votre parcours",
+      icon: <TrendingUp className="w-5 h-5" />,
+      href: "/dashboard/progress-plan",
       variant: "outline",
     },
   ];
 
   return (
-    <Card variant="elevated">
+    <Card className="bg-white border border-gray-200/60 shadow-sm">
       <CardHeader>
-        <CardTitle>Actions rapides</CardTitle>
+        <CardTitle className="text-gray-900">Actions rapides</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-3">
           {actions.map((action, index) => (
-            <motion.div
+            <m.div
               key={action.id}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1, duration: 0.3 }}
+              transition={{ delay: index * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               <Button
                 asChild
                 variant={action.variant}
-                className="w-full h-auto p-4 flex flex-col items-start gap-2"
+                className="w-full h-auto p-4 flex flex-col items-start gap-2 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200"
               >
                 <a href={action.href}>
                   <span className="flex flex-col gap-2 w-full">
@@ -87,7 +105,7 @@ export function QuickActions() {
                   </span>
                 </a>
               </Button>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </CardContent>

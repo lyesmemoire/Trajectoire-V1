@@ -9,7 +9,7 @@ import { appContainer } from "@/lib/core/runtime/container/app-container";
 import { CreateCheckoutSessionUseCase } from "@/lib/billing/application/use-cases/create-checkout-session.use-case";
 import { BillingPresenter } from "@/lib/billing/presentation/BillingPresenter";
 import { ErrorHttpMapper } from "@/lib/core/result/errors/ErrorHttpMapper";
-import { logInfo, logError } from "@/lib/core";
+import { logInfo } from "@/lib/core";
 
 // ─── Plan → Price ID mapping ─────────────────────────────────────────────────
 

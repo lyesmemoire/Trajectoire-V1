@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import Link from "next/link";
 
 export function PricingPreview() {

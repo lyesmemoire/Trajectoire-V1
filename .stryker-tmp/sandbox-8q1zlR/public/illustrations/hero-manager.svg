@@ -1,0 +1,113 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - Premium office environment -->
+  <rect width="800" height="600" fill="#F8F6F3"/>
+  
+  <!-- Window with natural light -->
+  <rect x="50" y="50" width="300" height="400" fill="#E8E4DF" stroke="#D4D0CB" stroke-width="2"/>
+  <rect x="60" y="60" width="280" height="380" fill="#F0EDE8"/>
+  <!-- Light rays from window -->
+  <path d="M50 50 L400 50 L500 600 L100 600 Z" fill="rgba(30, 64, 175, 0.05)"/>
+  
+  <!-- Modern desk -->
+  <rect x="100" y="350" width="600" height="20" fill="#8B7355" rx="2"/>
+  <rect x="120" y="370" width="20" height="150" fill="#6B5344"/>
+  <rect x="660" y="370" width="20" height="150" fill="#6B5344"/>
+  
+  <!-- Computer monitor -->
+  <rect x="250" y="200" width="300" height="180" fill="#1E293B" rx="8"/>
+  <rect x="260" y="210" width="280" height="160" fill="#0F172A"/>
+  <!-- Screen content -->
+  <rect x="270" y="220" width="260" height="140" fill="#1E40AF" opacity="0.3"/>
+  <rect x="280" y="230" width="100" height="8" fill="#3B82F6" rx="2"/>
+  <rect x="280" y="245" width="200" height="6" fill="#60A5FA" rx="2"/>
+  <rect x="280" y="258" width="150" height="6" fill="#60A5FA" rx="2"/>
+  <rect x="280" y="275" width="180" height="40" fill="#2563EB" rx="4"/>
+  <!-- Monitor stand -->
+  <rect x="380" y="380" width="40" height="30" fill="#475569"/>
+  <rect x="350" y="410" width="100" height="8" fill="#334155" rx="2"/>
+  
+  <!-- Keyboard -->
+  <rect x="280" y="420" width="200" height="15" fill="#E2E8F0" rx="2"/>
+  <rect x="285" y="423" width="190" height="9" fill="#CBD5E1" rx="1"/>
+  
+  <!-- Mouse -->
+  <rect x="500" y="420" width="25" height="40" fill="#E2E8F0" rx="4"/>
+  <rect x="505" y="425" width="15" height="20" fill="#CBD5E1" rx="2"/>
+  
+  <!-- Coffee cup -->
+  <rect x="620" y="400" width="30" height="35" fill="#FFFFFF" rx="4"/>
+  <rect x="625" y="405" width="20" height="25" fill="#8B4513" rx="2"/>
+  <ellipse cx="635" cy="415" rx="8" ry="3" fill="#A0522D"/>
+  <!-- Steam -->
+  <path d="M630 395 Q635 390 630 385" stroke="#D4D0CB" stroke-width="2" fill="none"/>
+  <path d="M640 392 Q645 387 640 382" stroke="#D4D0CB" stroke-width="2" fill="none"/>
+  
+  <!-- Manager figure - Elegant, 30-40 years, glasses -->
+  <!-- Head -->
+  <ellipse cx="400" cy="150" rx="45" ry="55" fill="#F5D0C5"/>
+  <!-- Hair - Professional style -->
+  <path d="M355 130 Q355 90 400 85 Q445 90 445 130 Q445 110 400 105 Q355 110 355 130" fill="#2C1810"/>
+  <!-- Glasses - Subtle, elegant -->
+  <rect x="365" y="140" width="30" height="20" fill="none" stroke="#1E293B" stroke-width="2" rx="4"/>
+  <rect x="405" y="140" width="30" height="20" fill="none" stroke="#1E293B" stroke-width="2" rx="4"/>
+  <line x1="395" y1="150" x2="405" y2="150" stroke="#1E293B" stroke-width="2"/>
+  <line x1="365" y1="145" x2="355" y2="140" stroke="#1E293B" stroke-width="2"/>
+  <line x1="435" y1="145" x2="445" y2="140" stroke="#1E293B" stroke-width="2"/>
+  <!-- Eyes - Concentrated expression -->
+  <ellipse cx="380" cy="150" rx="5" ry="4" fill="#1E293B"/>
+  <ellipse cx="420" cy="150" rx="5" ry="4" fill="#1E293B"/>
+  <!-- Eyebrows - Slightly furrowed for concentration -->
+  <path d="M370 142 Q380 138 390 142" stroke="#2C1810" stroke-width="2" fill="none"/>
+  <path d="M410 142 Q420 138 430 142" stroke="#2C1810" stroke-width="2" fill="none"/>
+  <!-- Nose -->
+  <path d="M400 155 L398 170 L405 172" stroke="#E8B4A8" stroke-width="2" fill="none"/>
+  <!-- Mouth - Neutral, focused -->
+  <path d="M385 185 Q400 190 415 185" stroke="#C97B6B" stroke-width="2" fill="none"/>
+  
+  <!-- Body - Professional attire -->
+  <!-- Shirt collar -->
+  <path d="M370 200 L400 220 L430 200" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <path d="M400 220 L400 250" stroke="#E5E7EB" stroke-width="1"/>
+  <!-- Suit jacket - Navy blue, premium -->
+  <path d="M340 200 L370 200 L400 220 L430 200 L460 200 L460 350 L340 350 Z" fill="#1E3A8A"/>
+  <!-- Lapel -->
+  <path d="M370 200 L385 250 L400 220" fill="#1E40AF"/>
+  <path d="M430 200 L415 250 L400 220" fill="#1E40AF"/>
+  <!-- Tie - Subtle pattern -->
+  <path d="M395 220 L400 280 L405 220" fill="#DC2626"/>
+  <path d="M395 220 L400 280 L405 220" stroke="#B91C1C" stroke-width="1"/>
+  
+  <!-- Arms - Working position -->
+  <path d="M340 220 L300 280 L320 320" stroke="#1E3A8A" stroke-width="25" fill="none" stroke-linecap="round"/>
+  <path d="M460 220 L500 280 L480 320" stroke="#1E3A8A" stroke-width="25" fill="none" stroke-linecap="round"/>
+  <!-- Hands on keyboard -->
+  <ellipse cx="310" cy="425" rx="20" ry="12" fill="#F5D0C5"/>
+  <ellipse cx="490" cy="425" rx="20" ry="12" fill="#F5D0C5"/>
+  
+  <!-- Chair - Premium ergonomic -->
+  <rect x="360" y="450" width="80" height="100" fill="#1E293B" rx="8"/>
+  <rect x="370" y="550" width="60" height="30" fill="#334155" rx="4"/>
+  <rect x="320" y="470" width="35" height="60" fill="#1E293B" rx="4"/>
+  <rect x="445" y="470" width="35" height="60" fill="#1E293B" rx="4"/>
+  
+  <!-- Decorative elements - Premium office -->
+  <!-- Plant -->
+  <rect x="700" y="350" width="30" height="40" fill="#8B7355" rx="2"/>
+  <ellipse cx="715" cy="340" rx="25" ry="30" fill="#10B981"/>
+  <ellipse cx="700" cy="320" rx="15" ry="20" fill="#059669"/>
+  <ellipse cx="730" cy="325" rx="18" ry="22" fill="#059669"/>
+  
+  <!-- Books on shelf -->
+  <rect x="50" y="280" width="20" height="80" fill="#DC2626" rx="2"/>
+  <rect x="75" y="290" width="18" height="70" fill="#1E40AF" rx="2"/>
+  <rect x="98" y="285" width="22" height="75" fill="#059669" rx="2"/>
+  
+  <!-- Picture frame -->
+  <rect x="550" y="80" width="80" height="100" fill="#8B7355" rx="2"/>
+  <rect x="560" y="90" width="60" height="80" fill="#E8E4DF"/>
+  <circle cx="590" cy="120" r="15" fill="#F5D0C5"/>
+  <rect x="570" y="140" width="40" height="25" fill="#1E3A8A" rx="2"/>
+  
+  <!-- Subtle shadow under desk -->
+  <ellipse cx="400" cy="580" rx="250" ry="15" fill="rgba(0,0,0,0.05)"/>
+</svg>

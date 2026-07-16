@@ -1,6 +1,5 @@
 // lib/posthog.ts
 // Configuration centralisée PostHog
-import posthog from "posthog-js";
 import { envClient } from "@/lib/env.client";
 
 export const POSTHOG_KEY = envClient.NEXT_PUBLIC_POSTHOG_KEY ?? "";
@@ -35,6 +34,16 @@ export const ANALYTICS_EVENTS = {
 export type AnalyticsEvent =
   (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
 
+interface PostHogClient {
+  capture: (event: string, properties?: Record<string, unknown>) => void;
+  identify: (userId: string, traits?: Record<string, unknown>) => void;
+  reset: () => void;
+}
+
+interface WindowWithPostHog extends Window {
+  posthog?: PostHogClient;
+}
+
 /**
  * Wrapper typé autour de posthog.capture
  * Utilisé uniquement côté client ('use client')
@@ -46,7 +55,10 @@ export function trackEvent(
   if (typeof window === "undefined") return;
   if (!POSTHOG_KEY) return;
 
-  posthog.capture(event, properties);
+  const win = window as WindowWithPostHog;
+  if (win.posthog) {
+    win.posthog.capture(event, properties);
+  }
 }
 
 /**
@@ -59,7 +71,10 @@ export function identifyUser(
   if (typeof window === "undefined") return;
   if (!POSTHOG_KEY) return;
 
-  posthog.identify(userId, traits);
+  const win = window as WindowWithPostHog;
+  if (win.posthog) {
+    win.posthog.identify(userId, traits);
+  }
 }
 
 /**
@@ -69,5 +84,8 @@ export function resetUser() {
   if (typeof window === "undefined") return;
   if (!POSTHOG_KEY) return;
 
-  posthog.reset();
+  const win = window as WindowWithPostHog;
+  if (win.posthog) {
+    win.posthog.reset();
+  }
 }

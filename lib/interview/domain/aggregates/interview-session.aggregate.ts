@@ -9,9 +9,7 @@ import { Persona } from "../value-objects/persona.vo";
 import {
   InterviewStarted,
   AnswerSubmitted,
-  AnalysisCompleted,
   RecoveryTriggered,
-  QuestionGenerated,
   InterviewPressureAdjusted,
   InterviewCompleted,
   InterviewStepOrchestrated

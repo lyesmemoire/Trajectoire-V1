@@ -7,7 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/design-system"
 import { BottomNavigation, type BottomNavigationItem } from "@/components/layouts/foundation";
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/design-system";
 import { Button } from "@/components/design-system";
-import { Menu, X, Home, FileText, BarChart3, User, Settings, LogOut } from "lucide-react";
+import { Menu, Home, FileText, BarChart3, User, Settings, LogOut } from "lucide-react";
 
 export interface MainNavigationProps {
   user?: {

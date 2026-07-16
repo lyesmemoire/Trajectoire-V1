@@ -124,13 +124,9 @@ export {
   TableCell,
   TableCaption,
 } from "./table";
-export {
-  LineChartComponent,
-  AreaChartComponent,
-  BarChartComponent,
-  PieChartComponent,
-  type ChartData,
-} from "./charts";
+// Charts are excluded from the barrel to avoid pulling recharts (~125 kB)
+// into the shared JS. Import directly from "@/components/design-system/charts"
+// when needed.
 export {
   PageTransition,
   PageTransitionWrapper,
@@ -138,6 +134,7 @@ export {
   Reveal,
   ViewportReveal,
 } from "./page-transition";
+export { FadeIn } from "./fade-in";
 export {
   ScrollAnimation,
   Parallax,

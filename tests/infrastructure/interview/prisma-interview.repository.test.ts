@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Result, ok, fail } from "../../../lib/core/result";
-import { InfrastructureError, NotFoundError } from "../../../lib/core/result/errors";
+import { InfrastructureError } from "../../../lib/core/result/errors";
 import { FakeClock } from "../../shared/fakes";
 import { PressureLevel } from "../../../lib/interview/domain/value-objects/pressure-level.vo";
 import { Persona } from "../../../lib/interview/domain/value-objects/persona.vo";
@@ -39,7 +38,7 @@ describe("PrismaInterviewRepository", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     fakeClock = new FakeClock();
-    repository = new PrismaInterviewRepository(prisma as any, fakeClock);
+    repository = new PrismaInterviewRepository(prisma as unknown, fakeClock);
   });
 
   describe("getById", () => {
@@ -58,7 +57,7 @@ describe("PrismaInterviewRepository", () => {
         completedAt: null,
       };
 
-      (prisma.interviewSession.findUnique as any).mockResolvedValue(mockData);
+      (prisma.interviewSession.findUnique as unknown).mockResolvedValue(mockData);
 
       const result = await repository.getById("session123");
 
@@ -69,7 +68,7 @@ describe("PrismaInterviewRepository", () => {
     });
 
     it("should return error when session not found", async () => {
-      (prisma.interviewSession.findUnique as any).mockResolvedValue(null);
+      (prisma.interviewSession.findUnique as unknown).mockResolvedValue(null);
 
       const result = await repository.getById("session123");
 
@@ -78,7 +77,7 @@ describe("PrismaInterviewRepository", () => {
     });
 
     it("should return error on exception", async () => {
-      (prisma.interviewSession.findUnique as any).mockRejectedValue(new Error("Database error"));
+      (prisma.interviewSession.findUnique as unknown).mockRejectedValue(new Error("Database error"));
 
       const result = await repository.getById("session123");
 
@@ -102,7 +101,7 @@ describe("PrismaInterviewRepository", () => {
         completedAt: null,
       };
 
-      (prisma.interviewSession.findFirst as any).mockResolvedValue(mockData);
+      (prisma.interviewSession.findFirst as unknown).mockResolvedValue(mockData);
 
       const result = await repository.findActiveByUserId("user123");
 
@@ -112,7 +111,7 @@ describe("PrismaInterviewRepository", () => {
     });
 
     it("should return null when no active session found", async () => {
-      (prisma.interviewSession.findFirst as any).mockResolvedValue(null);
+      (prisma.interviewSession.findFirst as unknown).mockResolvedValue(null);
 
       const result = await repository.findActiveByUserId("user123");
 
@@ -121,7 +120,7 @@ describe("PrismaInterviewRepository", () => {
     });
 
     it("should return error on exception", async () => {
-      (prisma.interviewSession.findFirst as any).mockRejectedValue(new Error("Database error"));
+      (prisma.interviewSession.findFirst as unknown).mockRejectedValue(new Error("Database error"));
 
       const result = await repository.findActiveByUserId("user123");
 
@@ -152,12 +151,12 @@ describe("PrismaInterviewRepository", () => {
         endTime: undefined,
       }, fakeClock);
 
-      (prisma.interviewSession.upsert as any).mockResolvedValue({});
+      (prisma.interviewSession.upsert as unknown).mockResolvedValue({});
 
       const result = await repository.save(session);
 
       expect(result.isSuccess()).toBe(true);
-      expect((prisma.interviewSession.upsert as any)).toHaveBeenCalled();
+      expect((prisma.interviewSession.upsert as unknown)).toHaveBeenCalled();
     });
 
     it("should return error on exception", async () => {
@@ -173,7 +172,7 @@ describe("PrismaInterviewRepository", () => {
         endTime: undefined,
       }, fakeClock);
 
-      (prisma.interviewSession.upsert as any).mockRejectedValue(new Error("Database error"));
+      (prisma.interviewSession.upsert as unknown).mockRejectedValue(new Error("Database error"));
 
       const result = await repository.save(session);
 
@@ -183,18 +182,18 @@ describe("PrismaInterviewRepository", () => {
 
   describe("delete", () => {
     it("should delete interview session successfully", async () => {
-      (prisma.interviewSession.delete as any).mockResolvedValue({});
+      (prisma.interviewSession.delete as unknown).mockResolvedValue({});
 
       const result = await repository.delete("session123");
 
       expect(result.isSuccess()).toBe(true);
-      expect((prisma.interviewSession.delete as any)).toHaveBeenCalledWith({
+      expect((prisma.interviewSession.delete as unknown)).toHaveBeenCalledWith({
         where: { id: "session123" },
       });
     });
 
     it("should return error on exception", async () => {
-      (prisma.interviewSession.delete as any).mockRejectedValue(new Error("Database error"));
+      (prisma.interviewSession.delete as unknown).mockRejectedValue(new Error("Database error"));
 
       const result = await repository.delete("session123");
 

@@ -1,6 +1,5 @@
 import { AggregateRoot } from "@/lib/core/domain/AggregateRoot";
 import { CreditAmount } from "../value-objects/credit-amount.vo";
-import { TransactionId } from "../value-objects/transaction-id.vo";
 import { TransactionType } from "../value-objects/transaction-type.vo";
 import { BaseDomainEvent } from "@/lib/core/events/domain/BaseDomainEvent";
 import { Clock } from "@/lib/core/clock/Clock";

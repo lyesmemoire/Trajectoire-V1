@@ -31,7 +31,6 @@ vi.mock("../../lib/core/result/errors/ErrorHttpMapper", () => ({
 }));
 
 import { appContainer } from "../../lib/core/runtime/container/app-container";
-import { RegisterUserUseCase } from "../../lib/auth/application/use-cases/register-user.use-case";
 import { ok } from "../../lib/core/result";
 
 describe("POST /api/register", () => {

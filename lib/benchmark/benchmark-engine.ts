@@ -7,6 +7,8 @@ export interface BenchmarkResult {
 
 /**
  * Compares a specific metric for a user against the global average.
+ * NOTE: This function uses dynamic field access for benchmark metrics.
+ * The schema should include clarityScore, confidenceScore, technicalScore fields.
  */
 export async function computeBenchmark(
   userId: string,
@@ -15,6 +17,7 @@ export async function computeBenchmark(
   const profile = await prisma.careerProfile.findUnique({ where: { userId } });
   if (!profile) return { percentile: 50, category: "average" };
 
+  // TODO: Add clarityScore, confidenceScore, technicalScore to CareerProfile schema
   const userScore = (profile as any)[`${metric}Score`] || 50;
 
   // Simple aggregation for the demo

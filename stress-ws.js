@@ -15,7 +15,7 @@ function createClient(id) {
 
     let responsesSent = 0;
     let finished = false;
-    let timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (!finished) {
         console.log(`⏱️ Client ${id} timeout after 60s`);
         ws.close();

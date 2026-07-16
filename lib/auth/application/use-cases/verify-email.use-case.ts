@@ -2,9 +2,6 @@ import { UseCase } from "@/lib/core/application/UseCase";
 import { Result, ok, fail } from "@/lib/core/result";
 import { AuthenticationProviderPort } from "../../ports/gateways/AuthenticationProviderPort";
 import { UserRepositoryPort } from "../../ports/repositories/UserRepositoryPort";
-import { UserId } from "../../domain/value-objects/user-id.vo";
-import { UserAggregate } from "../../domain/aggregates/user.aggregate";
-import { NotFoundError } from "@/lib/core/result/errors";
 
 export interface VerifyEmailCommand {
   token: string;

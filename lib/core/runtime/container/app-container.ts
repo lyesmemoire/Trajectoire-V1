@@ -15,6 +15,8 @@ function getContainer(): Container {
         const InterviewModule = require("@/lib/interview/interview.module").InterviewModule;
         const AiModule = require("@/lib/ai/ai.module").AiModule;
         const AuthModule = require("@/lib/auth/AuthModule").AuthModule;
+        const DashboardModule = require("@/modules/dashboard/DashboardModule").DashboardModule;
+        const CopilotModule = require("@/modules/copilot/CopilotModule").CopilotModule;
 
         // Register the CV Module
         new CvModule().register(_appContainer);
@@ -30,6 +32,12 @@ function getContainer(): Container {
 
         // Register the Auth Module
         new AuthModule().register(_appContainer);
+
+        // Register the Dashboard Module
+        new DashboardModule().register(_appContainer);
+
+        // Register the Copilot Module
+        new CopilotModule().register(_appContainer);
       } catch (e) {
         console.warn("Failed to register modules during build:", e);
       }

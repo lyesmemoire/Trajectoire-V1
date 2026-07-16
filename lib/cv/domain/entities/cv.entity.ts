@@ -22,3 +22,34 @@ export interface AtsAnalysisEntity {
   recommendations: string[];
   createdAt: Date;
 }
+
+export interface ProfileExtractionEntity {
+  id: string;
+  cvId: string;
+  userId: string;
+  skills: string[];
+  experiences: Array<{
+    title: string;
+    company: string;
+    duration: string;
+    description?: string;
+  }>;
+  languages: Array<{
+    language: string;
+    level: string;
+  }>;
+  certifications: string[];
+  summary: string;
+  detectedProfession: string;
+  createdAt: Date;
+}
+
+export interface OptimizedCvEntity {
+  id: string;
+  cvId: string;
+  userId: string;
+  version: number;
+  text: string;
+  atsContext?: string;
+  createdAt: Date;
+}

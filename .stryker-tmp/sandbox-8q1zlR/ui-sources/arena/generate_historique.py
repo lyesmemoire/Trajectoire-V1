@@ -1,0 +1,449 @@
+#!/usr/bin/env python3
+"""Generate Historique page"""
+
+html = '''<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Historique | Trajectoire</title>
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --card: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --blue-primary: #1E40AF;
+            --blue-hover: #2563EB;
+            --gold-accent: #D4AF37;
+            --border: #E5E7EB;
+            --success: #16A34A;
+            --error: #DC2626;
+            --warning: #F59E0B;
+            --radius: 12px;
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg); color: var(--text-primary);
+            line-height: 1.6; -webkit-font-smoothing: antialiased;
+        }
+        h1,h2,h3,h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; letter-spacing: -0.02em; }
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--card);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+        }
+        .sidebar-logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px; font-weight: 700; color: var(--text-primary);
+            text-decoration: none; padding: 24px 24px 32px;
+            display: block; letter-spacing: -0.02em;
+        }
+        .sidebar-logo-dot { display: inline-block; width: 5px; height: 5px; background: var(--gold-accent); border-radius: 50%; margin-left: 2px; vertical-align: super; }
+        .sidebar-nav { flex: 1; padding: 0 12px; overflow-y: auto; }
+        .sidebar-section { margin-bottom: 24px; }
+        .sidebar-section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); padding: 0 12px; margin-bottom: 8px; }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: 8px;
+            font-size: 14px; font-weight: 500;
+            color: var(--text-secondary); text-decoration: none;
+            transition: var(--transition); margin-bottom: 2px;
+        }
+        .sidebar-link:hover { background: var(--bg); color: var(--text-primary); }
+        .sidebar-link.active { background: rgba(30,64,175,0.08); color: var(--blue-primary); font-weight: 600; }
+        .sidebar-link svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid var(--border); }
+        .sidebar-user {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: 8px;
+            text-decoration: none; transition: var(--transition);
+        }
+        .sidebar-user:hover { background: var(--bg); }
+        .sidebar-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--blue-primary); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 600; flex-shrink: 0;
+        }
+        .sidebar-user-info { flex: 1; min-width: 0; }
+        .sidebar-user-name { font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-role { font-size: 12px; color: var(--text-secondary); }
+
+        /* MAIN */
+        .main-content { margin-left: var(--sidebar-width); flex: 1; min-height: 100vh; }
+        .top-bar {
+            padding: 16px 32px; background: var(--card);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .top-bar-title { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+        .top-bar-actions { display: flex; gap: 12px; align-items: center; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; text-decoration: none; transition: var(--transition); cursor: pointer; border: none; }
+        .btn-primary { background: var(--blue-primary); color: white; }
+        .btn-primary:hover { background: var(--blue-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--card); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--bg); }
+        .page-content { padding: 32px; max-width: 1400px; }
+        .page-header { margin-bottom: 32px; }
+        .page-header h1 { font-size: 32px; margin-bottom: 8px; }
+        .page-header p { font-size: 16px; color: var(--text-secondary); }
+
+        /* CARDS */
+        .card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 24px; transition: var(--transition); }
+        .card:hover { box-shadow: var(--shadow-sm); }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-title { font-size: 18px; font-weight: 600; }
+
+        /* FILTERS */
+        .filters { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .filter-btn { background: var(--card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .filter-btn:hover { background: var(--bg); }
+        .filter-btn.active { background: var(--blue-primary); color: white; border-color: var(--blue-primary); }
+        .search-input { flex: 1; min-width: 200px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; }
+        .search-input:focus { outline: none; border-color: var(--blue-primary); }
+
+        /* HISTORY ITEMS */
+        .history-item { display: flex; gap: 16px; padding: 20px; border-bottom: 1px solid var(--border); transition: var(--transition); }
+        .history-item:last-child { border-bottom: none; }
+        .history-item:hover { background: var(--bg); }
+        .history-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .history-icon svg { width: 24px; height: 24px; }
+        .history-content { flex: 1; }
+        .history-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .history-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+        .history-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-secondary); }
+        .history-meta span { display: flex; align-items: center; gap: 4px; }
+        .history-meta svg { width: 14px; height: 14px; }
+        .history-score { font-weight: 600; color: var(--blue-primary); }
+        .history-actions { display: flex; gap: 8px; align-items: center; }
+        .history-btn { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; text-decoration: none; transition: var(--transition); }
+        .history-btn-primary { background: var(--blue-primary); color: white; }
+        .history-btn-primary:hover { background: var(--blue-hover); }
+        .history-btn-secondary { background: var(--card); color: var(--text-primary); border: 1px solid var(--border); }
+        .history-btn-secondary:hover { background: var(--bg); }
+
+        /* STATS */
+        .stat-card { text-align: center; padding: 24px; }
+        .stat-value { font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--blue-primary); margin-bottom: 8px; }
+        .stat-label { font-size: 14px; color: var(--text-secondary); }
+
+        /* CHART */
+        .chart-container { height: 200px; position: relative; margin: 24px 0; }
+        .chart-line { fill: none; stroke: var(--blue-primary); stroke-width: 2; }
+        .chart-area { fill: rgba(30,64,175,0.1); }
+        .chart-dot { fill: var(--blue-primary); }
+        .chart-label { font-size: 11px; fill: var(--text-secondary); }
+
+        /* PAGINATION */
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 32px; }
+        .page-btn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .page-btn:hover { background: var(--bg); }
+        .page-btn.active { background: var(--blue-primary); color: white; border-color: var(--blue-primary); }
+
+        /* FADE */
+        .fade-in { opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s ease forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <a href="../dashboard/index.html" class="sidebar-logo">Trajectoire<span class="sidebar-logo-dot"></span></a>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Préparation</div>
+                <a href="../dashboard/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Tableau de bord
+                </a>
+                <a href="../dashboard/cv/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Mon CV
+                </a>
+                <a href="../simulations/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Simulations
+                </a>
+                <a href="../debrief/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    Débriefs
+                </a>
+                <a href="../progression/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    Progression
+                </a>
+                <a href="../historique/index.html" class="sidebar-link active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Historique
+                </a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Compte</div>
+                <a href="../abonnement/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    Abonnement
+                </a>
+                <a href="../profil/index.html" class="sidebar-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Profil
+                </a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../profil/index.html" class="sidebar-user">
+                <div class="sidebar-avatar">ML</div>
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name">Marie Laurent</div>
+                    <div class="sidebar-user-role">Directrice Marketing</div>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <span class="top-bar-title">Historique</span>
+            <div class="top-bar-actions">
+                <button class="btn btn-secondary" onclick="alert('Export PDF en cours...')">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 6px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Exporter PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="page-header fade-in">
+                <h1>Historique complet</h1>
+                <p>Retrouvez toutes vos activités et suivez votre évolution.</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid-3 fade-in">
+                <div class="card stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Simulations réalisées</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Score moyen</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-value">24h</div>
+                    <div class="stat-label">Temps de préparation</div>
+                </div>
+            </div>
+
+            <!-- Évolution des scores -->
+            <div class="card fade-in" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3 class="card-title">Évolution des scores</h3>
+                </div>
+                <div class="chart-container">
+                    <svg width="100%" height="200" viewBox="0 0 800 200" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:rgba(30,64,175,0.3)"/>
+                                <stop offset="100%" style="stop-color:rgba(30,64,175,0)"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Grid lines -->
+                        <line x1="0" y1="50" x2="800" y2="50" stroke="var(--border)" stroke-width="1"/>
+                        <line x1="0" y1="100" x2="800" y2="100" stroke="var(--border)" stroke-width="1"/>
+                        <line x1="0" y1="150" x2="800" y2="150" stroke="var(--border)" stroke-width="1"/>
+                        
+                        <!-- Area -->
+                        <path class="chart-area" d="M 0 150 L 100 130 L 200 120 L 300 100 L 400 90 L 500 80 L 600 70 L 700 60 L 800 50 L 800 200 L 0 200 Z" fill="url(#areaGradient)"/>
+                        
+                        <!-- Line -->
+                        <path class="chart-line" d="M 0 150 L 100 130 L 200 120 L 300 100 L 400 90 L 500 80 L 600 70 L 700 60 L 800 50"/>
+                        
+                        <!-- Dots -->
+                        <circle class="chart-dot" cx="0" cy="150" r="4"/>
+                        <circle class="chart-dot" cx="100" cy="130" r="4"/>
+                        <circle class="chart-dot" cx="200" cy="120" r="4"/>
+                        <circle class="chart-dot" cx="300" cy="100" r="4"/>
+                        <circle class="chart-dot" cx="400" cy="90" r="4"/>
+                        <circle class="chart-dot" cx="500" cy="80" r="4"/>
+                        <circle class="chart-dot" cx="600" cy="70" r="4"/>
+                        <circle class="chart-dot" cx="700" cy="60" r="4"/>
+                        <circle class="chart-dot" cx="800" cy="50" r="4"/>
+                        
+                        <!-- Labels -->
+                        <text class="chart-label" x="0" y="195">Jan</text>
+                        <text class="chart-label" x="100" y="195">Fév</text>
+                        <text class="chart-label" x="200" y="195">Mar</text>
+                        <text class="chart-label" x="300" y="195">Avr</text>
+                        <text class="chart-label" x="400" y="195">Mai</text>
+                        <text class="chart-label" x="500" y="195">Juin</text>
+                        <text class="chart-label" x="600" y="195">Juil</text>
+                        <text class="chart-label" x="700" y="195">Août</text>
+                        <text class="chart-label" x="800" y="195">Sep</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters fade-in">
+                <input type="text" class="search-input" placeholder="Rechercher dans l'historique...">
+                <button class="filter-btn active">Tout</button>
+                <button class="filter-btn">Simulations</button>
+                <button class="filter-btn">Analyses ATS</button>
+                <button class="filter-btn">CV</button>
+                <button class="filter-btn">Débriefs</button>
+            </div>
+
+            <!-- History List -->
+            <div class="card fade-in">
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(30,64,175,0.08);">
+                        <svg fill="none" stroke="var(--blue-primary)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">Simulation — Directeur Marketing</div>
+                        <div class="history-desc">Entretien complet avec questions comportementales et techniques</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>5 juillet 2026</span>
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>45 min</span>
+                            <span class="history-score">Score : 92%</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../debrief/index.html" class="history-btn history-btn-primary">Voir débrief</a>
+                        <a href="#" class="history-btn history-btn-secondary">Refaire</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(22,163,74,0.08);">
+                        <svg fill="none" stroke="var(--success)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">Analyse ATS — CV Directeur Marketing</div>
+                        <div class="history-desc">Score ATS de 91% avec recommandations d'optimisation</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>3 juillet 2026</span>
+                            <span class="history-score">Score : 91%</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../dashboard/cv/index.html" class="history-btn history-btn-primary">Voir analyse</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(212,175,55,0.1);">
+                        <svg fill="none" stroke="var(--gold-accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">CV importé — Directeur Marketing</div>
+                        <div class="history-desc">CV mis à jour avec nouvelles expériences</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>2 juillet 2026</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../dashboard/cv/index.html" class="history-btn history-btn-primary">Voir CV</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(30,64,175,0.08);">
+                        <svg fill="none" stroke="var(--blue-primary)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">Simulation — Chef de projet senior</div>
+                        <div class="history-desc">Entretien avec focus sur le leadership et la gestion d'équipe</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>28 juin 2026</span>
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>38 min</span>
+                            <span class="history-score">Score : 85%</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../debrief/index.html" class="history-btn history-btn-primary">Voir débrief</a>
+                        <a href="#" class="history-btn history-btn-secondary">Refaire</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(30,64,175,0.08);">
+                        <svg fill="none" stroke="var(--blue-primary)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">Simulation — Manager commercial</div>
+                        <div class="history-desc">Entretien axé sur la stratégie commerciale et le management</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>25 juin 2026</span>
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>42 min</span>
+                            <span class="history-score">Score : 88%</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../debrief/index.html" class="history-btn history-btn-primary">Voir débrief</a>
+                        <a href="#" class="history-btn history-btn-secondary">Refaire</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-icon" style="background: rgba(22,163,74,0.08);">
+                        <svg fill="none" stroke="var(--success)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="history-content">
+                        <div class="history-title">Analyse ATS — CV Manager commercial</div>
+                        <div class="history-desc">Score ATS de 85% avec suggestions d'amélioration</div>
+                        <div class="history-meta">
+                            <span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>20 juin 2026</span>
+                            <span class="history-score">Score : 85%</span>
+                        </div>
+                    </div>
+                    <div class="history-actions">
+                        <a href="../dashboard/cv/index.html" class="history-btn history-btn-primary">Voir analyse</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination fade-in">
+                <button class="page-btn">‹</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">›</button>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>'''
+
+with open('historique/index.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print("✓ Historique page generated")

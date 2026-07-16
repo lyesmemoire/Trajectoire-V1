@@ -17,14 +17,14 @@ describe("Pipeline", () => {
     const pipeline = new Pipeline<string, string>();
     const calls: string[] = [];
 
-    const middleware1 = async (input: string, next: (i: string) => Promise<any>) => {
+    const middleware1 = async (input: string, next: (i: string) => Promise<unknown>) => {
       calls.push("middleware1-before");
       const result = await next(input);
       calls.push("middleware1-after");
       return result;
     };
 
-    const middleware2 = async (input: string, next: (i: string) => Promise<any>) => {
+    const middleware2 = async (input: string, next: (i: string) => Promise<unknown>) => {
       calls.push("middleware2-before");
       const result = await next(input);
       calls.push("middleware2-after");
@@ -51,7 +51,7 @@ describe("Pipeline", () => {
   it("should allow middleware to transform input", async () => {
     const pipeline = new Pipeline<string, string>();
 
-    const transformMiddleware = async (input: string, next: (i: string) => Promise<any>) => {
+    const transformMiddleware = async (input: string, next: (i: string) => Promise<unknown>) => {
       return next(input.toUpperCase());
     };
 
@@ -67,14 +67,14 @@ describe("Pipeline", () => {
     const pipeline = new Pipeline<string, string>();
     const calls: string[] = [];
 
-    const shortCircuitMiddleware = async (input: string, next: (i: string) => Promise<any>) => {
+    const shortCircuitMiddleware = async (_input: string, _next: (i: string) => Promise<unknown>) => {
       calls.push("short-circuit");
-      return fail(new InfrastructureError("Short-circuited")) as any;
+      return fail(new InfrastructureError("Short-circuited")) as unknown;
     };
 
-    const neverCalledMiddleware = async (input: string, next: (i: string) => Promise<any>) => {
+    const neverCalledMiddleware = async (_input: string, _next: (i: string) => Promise<unknown>) => {
       calls.push("never-called");
-      return next(input);
+      return _next(_input);
     };
 
     const handler = async (input: string) => {
@@ -92,11 +92,11 @@ describe("Pipeline", () => {
   it("should catch errors and return InfrastructureError", async () => {
     const pipeline = new Pipeline<string, string>();
 
-    const errorMiddleware = async (input: string, next: (i: string) => Promise<any>) => {
+    const errorMiddleware = async (_input: string, _next: (i: string) => Promise<unknown>) => {
       throw new Error("Middleware error");
     };
 
-    const handler = async (input: string) => ok(input);
+    const handler = async (_input: string) => ok(_input);
 
     pipeline.use(errorMiddleware);
     const result = await pipeline.execute("test", handler);
@@ -109,7 +109,7 @@ describe("Pipeline", () => {
   it("should allow middleware to transform output", async () => {
     const pipeline = new Pipeline<string, string>();
 
-    const outputTransformMiddleware = async (input: string, next: (i: string) => Promise<any>) => {
+    const outputTransformMiddleware = async (input: string, next: (i: string) => Promise<unknown>) => {
       const result = await next(input);
       if (result.isSuccess()) {
         return ok(result.unwrap() + "!");
@@ -128,11 +128,11 @@ describe("Pipeline", () => {
   it("should support multiple middleware chaining", async () => {
     const pipeline = new Pipeline<number, number>();
 
-    const doubleMiddleware = async (input: number, next: (i: number) => Promise<any>) => {
+    const doubleMiddleware = async (input: number, next: (i: number) => Promise<unknown>) => {
       return next(input * 2);
     };
 
-    const addTenMiddleware = async (input: number, next: (i: number) => Promise<any>) => {
+    const addTenMiddleware = async (input: number, next: (i: number) => Promise<unknown>) => {
       return next(input + 10);
     };
 
@@ -147,7 +147,7 @@ describe("Pipeline", () => {
 
   it("should return pipeline instance for chaining", () => {
     const pipeline = new Pipeline<string, string>();
-    const middleware = async (input: string, next: (i: string) => Promise<any>) => next(input);
+    const middleware = async (input: string, next: (i: string) => Promise<unknown>) => next(input);
 
     const result = pipeline.use(middleware);
     expect(result).toBe(pipeline);

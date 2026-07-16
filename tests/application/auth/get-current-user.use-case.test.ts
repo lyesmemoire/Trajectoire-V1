@@ -7,7 +7,6 @@ import { UserAggregate } from "../../../lib/auth/domain/aggregates/user.aggregat
 import { Email } from "../../../lib/auth/domain/value-objects/email.vo";
 import { DisplayName } from "../../../lib/auth/domain/value-objects/display-name.vo";
 import { UserId } from "../../../lib/auth/domain/value-objects/user-id.vo";
-import { Clock } from "../../../lib/core/clock/Clock";
 import { FakeClock } from "../../../tests/shared/fakes";
 
 describe("GetCurrentUserUseCase", () => {

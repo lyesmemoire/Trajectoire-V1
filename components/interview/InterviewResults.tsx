@@ -6,7 +6,7 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/design-system";
 import { CommitteeDecisionReveal } from "./CommitteeDecisionReveal";
 
 /**

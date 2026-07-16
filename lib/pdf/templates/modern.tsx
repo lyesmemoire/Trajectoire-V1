@@ -653,7 +653,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                   <>
                     <Text style={styles.skillGroupLabel}>Savoir-être</Text>
                     <View style={styles.skillPillsRow}>
-                      {data.skills.soft.map((skill: any, i: number) => (
+                      {data.skills.soft.map((skill: string, i: number) => (
                         <View
                           key={i}
                           style={{

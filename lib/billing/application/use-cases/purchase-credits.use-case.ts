@@ -5,7 +5,6 @@ import { WalletRepositoryPort } from "../../ports/repositories/WalletRepositoryP
 import { WalletAggregate } from "../../domain/aggregates/wallet.aggregate";
 import { CreditAmount } from "../../domain/value-objects/credit-amount.vo";
 import { TransactionType } from "../../domain/value-objects/transaction-type.vo";
-import { NotFoundError } from "@/lib/core/result/errors";
 import { Clock } from "@/lib/core/clock/Clock";
 import { IdGenerator } from "@/lib/core/id/IdGenerator";
 

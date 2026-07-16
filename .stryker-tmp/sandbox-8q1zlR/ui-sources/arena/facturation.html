@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturation | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --text-secondary: rgba(17, 24, 39, 0.6);
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+        }
+
+        /* ═══════════════════ HEADER ═══════════════════ */
+        .page-header {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════════════ STATS CARDS ═══════════════════ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .stat-icon.spending {
+            background: var(--accent-light);
+        }
+
+        .stat-icon.spending svg {
+            color: var(--accent);
+        }
+
+        .stat-icon.credits {
+            background: var(--secondary-light);
+        }
+
+        .stat-icon.credits svg {
+            color: var(--secondary);
+        }
+
+        .stat-icon.invoices {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .stat-icon.invoices svg {
+            color: #3B82F6;
+        }
+
+        .stat-icon.payment {
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .stat-icon.payment svg {
+            color: #10B981;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .stat-value.accent {
+            color: var(--accent);
+        }
+
+        .stat-value.secondary {
+            color: var(--secondary);
+        }
+
+        .stat-value.blue {
+            color: #3B82F6;
+        }
+
+        .stat-value.green {
+            color: #10B981;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .stat-change.positive {
+            color: #10B981;
+        }
+
+        .stat-change.negative {
+            color: #EF4444;
+        }
+
+        .stat-change svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ═══════════════════ CHART SECTION ═══════════════════ */
+        .chart-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .chart-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .chart-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            padding: 20px 0;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 100%;
+            gap: 16px;
+            padding: 0 20px;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            max-width: 60px;
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(15, 118, 110, 0.6) 100%);
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            background: linear-gradient(180deg, var(--secondary) 0%, rgba(200, 155, 60, 0.6) 100%);
+            transform: translateY(-4px);
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .chart-bar:hover .chart-bar-value {
+            opacity: 1;
+        }
+
+        .chart-bar-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════ TABLE SECTION ═══════════════════ */
+        .table-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .table-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .table-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: rgba(15, 118, 110, 0.9);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg);
+        }
+
+        th {
+            padding: 16px 32px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(17, 24, 39, 0.02);
+        }
+
+        td {
+            padding: 20px 32px;
+            font-size: 14px;
+        }
+
+        .invoice-id {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .invoice-date {
+            color: var(--text-secondary);
+        }
+
+        .invoice-amount {
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.paid {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10B981;
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.08);
+            color: #F59E0B;
+        }
+
+        .status-badge.failed {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.paid .status-dot {
+            background: #10B981;
+        }
+
+        .status-badge.pending .status-dot {
+            background: #F59E0B;
+        }
+
+        .status-badge.failed .status-dot {
+            background: #EF4444;
+        }
+
+        .table-actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            padding: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-secondary);
+        }
+
+        .btn-icon:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+        }
+
+        .btn-icon:hover svg {
+            color: var(--accent);
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-bars {
+                gap: 12px;
+                padding: 0 10px;
+            }
+
+            .chart-bar {
+                max-width: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 240px;
+            }
+
+            .chart-bars {
+                gap: 8px;
+                padding: 0 5px;
+            }
+
+            .chart-bar {
+                max-width: 30px;
+            }
+
+            .chart-bar-label {
+                font-size: 11px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .table-actions {
+                width: 100%;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            th, td {
+                padding: 16px;
+            }
+
+            .table-actions-cell {
+                flex-direction: column;
+            }
+
+            .btn-icon {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HEADER -->
+            <div class="page-header">
+                <h1>Facturation</h1>
+                <p>Gérez vos paiements, crédits et historique de facturation</p>
+            </div>
+
+            <!-- STATS CARDS -->
+            <div class="stats-grid">
+                <!-- Current Spending -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon spending">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value accent">147€</div>
+                    <div class="stat-label">Dépenses ce mois</div>
+                    <div class="stat-change positive">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        +12% vs mois dernier
+                    </div>
+                </div>
+
+                <!-- Credits Purchased -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon credits">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value secondary">45</div>
+                    <div class="stat-label">Crédits achetés</div>
+                    <div class="stat-change positive">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        +15 ce mois
+                    </div>
+                </div>
+
+                <!-- Invoices -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon invoices">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value blue">8</div>
+                    <div class="stat-label">Factures ce mois</div>
+                    <div class="stat-change positive">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        +3 vs mois dernier
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon payment">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value green">Visa •••• 4242</div>
+                    <div class="stat-label">Méthode de paiement</div>
+                    <div class="stat-change positive">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Active
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHART SECTION -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Dépenses mensuelles</div>
+                        <div class="chart-subtitle">Évolution de vos dépenses sur les 12 derniers mois</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-bars">
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 45%;">
+                                <div class="chart-bar-value">67€</div>
+                            </div>
+                            <div class="chart-bar-label">Jan</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 60%;">
+                                <div class="chart-bar-value">89€</div>
+                            </div>
+                            <div class="chart-bar-label">Fév</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 75%;">
+                                <div class="chart-bar-value">112€</div>
+                            </div>
+                            <div class="chart-bar-label">Mar</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 55%;">
+                                <div class="chart-bar-value">82€</div>
+                            </div>
+                            <div class="chart-bar-label">Avr</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 85%;">
+                                <div class="chart-bar-value">127€</div>
+                            </div>
+                            <div class="chart-bar-label">Mai</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 70%;">
+                                <div class="chart-bar-value">104€</div>
+                            </div>
+                            <div class="chart-bar-label">Juin</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 90%;">
+                                <div class="chart-bar-value">134€</div>
+                            </div>
+                            <div class="chart-bar-label">Juil</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 65%;">
+                                <div class="chart-bar-value">97€</div>
+                            </div>
+                            <div class="chart-bar-label">Août</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 80%;">
+                                <div class="chart-bar-value">119€</div>
+                            </div>
+                            <div class="chart-bar-label">Sep</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 75%;">
+                                <div class="chart-bar-value">112€</div>
+                            </div>
+                            <div class="chart-bar-label">Oct</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 85%;">
+                                <div class="chart-bar-value">127€</div>
+                            </div>
+                            <div class="chart-bar-label">Nov</div>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 98%;">
+                                <div class="chart-bar-value">147€</div>
+                            </div>
+                            <div class="chart-bar-label">Déc</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE SECTION -->
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="table-title">Historique de facturation</div>
+                    <div class="table-actions">
+                        <button class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Télécharger tout
+                        </button>
+                        <button class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Mettre à jour
+                        </button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Facture</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-008</span></td>
+                                <td><span class="invoice-date">15 Déc 2024</span></td>
+                                <td>Abonnement Premium - Décembre</td>
+                                <td><span class="invoice-amount">49,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-007</span></td>
+                                <td><span class="invoice-date">10 Déc 2024</span></td>
+                                <td>Crédits supplémentaires - Pack 20</td>
+                                <td><span class="invoice-amount">29,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-006</span></td>
+                                <td><span class="invoice-date">15 Nov 2024</span></td>
+                                <td>Abonnement Premium - Novembre</td>
+                                <td><span class="invoice-amount">49,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-005</span></td>
+                                <td><span class="invoice-date">05 Nov 2024</span></td>
+                                <td>Crédits supplémentaires - Pack 10</td>
+                                <td><span class="invoice-amount">19,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-004</span></td>
+                                <td><span class="invoice-date">15 Oct 2024</span></td>
+                                <td>Abonnement Premium - Octobre</td>
+                                <td><span class="invoice-amount">49,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-003</span></td>
+                                <td><span class="invoice-date">15 Sep 2024</span></td>
+                                <td>Abonnement Premium - Septembre</td>
+                                <td><span class="invoice-amount">49,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-002</span></td>
+                                <td><span class="invoice-date">20 Août 2024</span></td>
+                                <td>Crédits supplémentaires - Pack 50</td>
+                                <td><span class="invoice-amount">69,00€</span></td>
+                                <td>
+                                    <span class="status-badge pending">
+                                        <span class="status-dot"></span>
+                                        En attente
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="invoice-id">#INV-2024-001</span></td>
+                                <td><span class="invoice-date">15 Août 2024</span></td>
+                                <td>Abonnement Premium - Août</td>
+                                <td><span class="invoice-amount">49,00€</span></td>
+                                <td>
+                                    <span class="status-badge paid">
+                                        <span class="status-dot"></span>
+                                        Payée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions-cell">
+                                        <button class="btn-icon" title="Télécharger">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon" title="Voir">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>

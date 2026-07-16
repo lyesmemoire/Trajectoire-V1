@@ -12,17 +12,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-blue-700 text-white hover:bg-blue-800 shadow-sm hover:shadow-md",
+          "bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
         primary:
-          "bg-blue-700 text-white hover:bg-blue-800 shadow-sm hover:shadow-md",
+          "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md",
         secondary:
-          "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50 hover:border-gray-300",
+          "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 shadow-sm",
         outline:
-          "bg-transparent text-blue-700 border-2 border-blue-700 hover:bg-blue-50",
+          "bg-transparent text-gray-900 border-2 border-gray-200 hover:bg-gray-50 hover:border-gray-300",
         ghost:
           "bg-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900",
         link:
-          "bg-transparent text-blue-700 underline-offset-4 hover:underline px-0",
+          "bg-transparent text-blue-600 underline-offset-4 hover:underline px-0",
         success:
           "bg-green-600 text-white hover:bg-green-700 shadow-sm hover:shadow-md",
         warning:
@@ -58,8 +58,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const buttonContent = (
       <>
-        {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-        {children}
+        {loading && <Loader2 className="h-4 w-4 animate-spin shrink-0" aria-hidden="true" />}
+        <span className={cn("inline-flex items-center gap-2", loading && "opacity-80")}>{children}</span>
       </>
     );
 

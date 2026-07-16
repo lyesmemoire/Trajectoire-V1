@@ -1,7 +1,5 @@
-"use client";
-
 import * as React from "react";
-import { Navbar, NavbarLogo, NavbarLink, NavbarActions, Footer } from "@/components/design-system";
+import { Navbar, NavbarLink, NavbarActions, Footer } from "@/components/design-system";
 import { Button } from "@/components/design-system";
 
 export interface MarketingLayoutProps {

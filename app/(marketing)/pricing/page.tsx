@@ -4,6 +4,8 @@ import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { safeFetch, NetworkError, TimeoutError } from "@/lib/api";
 import {
   CheckCircle2,
   XCircle,
@@ -106,20 +108,28 @@ export default function PricingPage() {
   const handleCheckout = async (plan: string) => {
     try {
       setLoadingPlan(plan);
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
-      const data = await res.json();
+      const data = await safeFetch<{ url?: string; error?: string }>(
+        "/api/stripe/checkout",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ plan }),
+        }
+      );
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert(data.error || "Une erreur est survenue");
+        toast.error(data.error || "Une erreur est survenue");
         setLoadingPlan(null);
       }
     } catch (err) {
-      alert("Une erreur est survenue");
+      if (err instanceof NetworkError) {
+        toast.error("Connexion impossible. Vérifiez votre réseau.");
+      } else if (err instanceof TimeoutError) {
+        toast.error("Le serveur met trop de temps à répondre.");
+      } else {
+        toast.error("Une erreur est survenue lors du paiement.");
+      }
       setLoadingPlan(null);
     }
   };

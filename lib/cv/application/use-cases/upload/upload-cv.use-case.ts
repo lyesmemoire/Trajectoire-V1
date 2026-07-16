@@ -9,6 +9,7 @@ import { RequestContext } from "@/lib/core/runtime/context/RequestContext";
 import { UnauthorizedError } from "@/lib/core/result/errors";
 import { IdGenerator } from "@/lib/core/id/IdGenerator";
 import { Clock } from "@/lib/core/clock/Clock";
+import { CVProfileExtractorEngine } from "@/core/intelligence/engines/cvProfileExtractor";
 
 export interface UploadCvInput {
   file: Buffer;
@@ -44,14 +45,27 @@ export class UploadCvUseCase extends UseCase<UploadCvInput, { cvId: string; url:
     // 3. Parse text from file
     const parseResult = await this.parser.extractText(input.file, input.mimeType);
     if (parseResult.isSuccess()) {
-      cv.attachParsedText(parseResult.unwrap());
+      const cvText = parseResult.unwrap();
+      cv.attachParsedText(cvText);
+
+      // 4. Extract enriched profile data from CV text
+      const profileExtraction = CVProfileExtractorEngine.extract({
+        cvText,
+        cvId,
+        userId,
+      });
+
+      // 5. Attach extracted profile to CV metadata
+      cv.attachAnalysis(0, {
+        profileExtraction,
+      });
     }
 
-    // 4. Persist CV
+    // 6. Persist CV
     const repoResult = await this.repository.save(cv);
     if (repoResult.isFailure()) return fail(repoResult.unwrapError());
 
-    // 5. Publish Domain Events
+    // 7. Publish Domain Events
     await this.publisher.publishEventsFrom(cv);
 
     return ok({ cvId: cv.id, url: fileUrl });

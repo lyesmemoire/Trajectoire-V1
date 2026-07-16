@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des analyses ATS | Trajectoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F3;
+            --text: #111827;
+            --accent: #0F766E;
+            --accent-light: rgba(15, 118, 110, 0.08);
+            --secondary: #C89B3C;
+            --secondary-light: rgba(200, 155, 60, 0.08);
+            --card: #FFFFFF;
+            --border: rgba(17, 24, 39, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════ LAYOUT ═══════════════════ */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 48px 0 80px;
+        }
+
+        /* ═══════════════════ HERO ═══════════════════ */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ═══════════════════ STATISTICS ═══════════════════ */
+        .stats-section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .stat-icon.best {
+            background: var(--secondary-light);
+        }
+
+        .stat-icon.best svg {
+            color: var(--secondary);
+        }
+
+        .stat-icon.average {
+            background: var(--accent-light);
+        }
+
+        .stat-icon.average svg {
+            color: var(--accent);
+        }
+
+        .stat-icon.optimized {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .stat-icon.optimized svg {
+            color: #3B82F6;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stat-value.secondary {
+            color: var(--secondary);
+        }
+
+        .stat-value.accent {
+            color: var(--accent);
+        }
+
+        .stat-value.blue {
+            color: #3B82F6;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(17, 24, 39, 0.7);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0;
+        }
+
+        .progress-fill.secondary {
+            background: linear-gradient(90deg, var(--secondary) 0%, #E5B85C 100%);
+        }
+
+        .progress-fill.accent {
+            background: linear-gradient(90deg, var(--accent) 0%, #14B8A6 100%);
+        }
+
+        .progress-fill.blue {
+            background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 100%);
+        }
+
+        /* ═══════════════════ TABLE ═══════════════════ */
+        .table-section {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .table-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 24px 32px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg);
+        }
+
+        th {
+            padding: 16px 32px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(17, 24, 39, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(15, 118, 110, 0.02);
+        }
+
+        td {
+            padding: 20px 32px;
+            font-size: 14px;
+        }
+
+        .cv-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cv-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cv-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .cv-info {
+            flex: 1;
+        }
+
+        .cv-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .cv-subtitle {
+            font-size: 12px;
+            color: rgba(17, 24, 39, 0.6);
+        }
+
+        .company-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--secondary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .company-logo svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
+
+        .company-name {
+            font-weight: 500;
+        }
+
+        .score-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .score-badge.excellent {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10B981;
+        }
+
+        .score-badge.good {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .score-badge.average {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        .score-badge.poor {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+        }
+
+        .score-bar {
+            flex: 1;
+            max-width: 120px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .date-cell {
+            color: rgba(17, 24, 39, 0.7);
+            font-size: 13px;
+        }
+
+        .status-cell {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-cell.optimized {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10B981;
+        }
+
+        .status-cell.pending {
+            background: rgba(245, 158, 11, 0.08);
+            color: #F59E0B;
+        }
+
+        .status-cell.needs-work {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-dot.optimized {
+            background: #10B981;
+        }
+
+        .status-dot.pending {
+            background: #F59E0B;
+        }
+
+        .status-dot.needs-work {
+            background: #EF4444;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(17, 24, 39, 0.7);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg);
+            color: var(--accent);
+        }
+
+        /* ═══════════════════ ANIMATIONS ═══════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(32px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════ RESPONSIVE ═══════════════════ */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            th, td {
+                padding: 16px 20px;
+            }
+
+            .actions-cell {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .table-header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            th, td {
+                padding: 12px 16px;
+            }
+
+            .cv-cell, .company-cell {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .score-cell {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .score-bar {
+                max-width: 100%;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="../unified-styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- HERO -->
+            <section class="hero">
+                <h1>Historique des analyses ATS</h1>
+            </section>
+
+            <!-- STATISTICS -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon best">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value secondary">95%</div>
+                        <div class="stat-label">Meilleur score ATS</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill secondary" data-width="95%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon average">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20V10"/>
+                                    <path d="M18 20V4"/>
+                                    <path d="M6 20v-4"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value accent">87%</div>
+                        <div class="stat-label">Score ATS moyen</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill accent" data-width="87%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon optimized">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-value blue">8</div>
+                        <div class="stat-label">Candidatures optimisées</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill blue" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h2 class="table-title">Toutes les analyses</h2>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CV</th>
+                                    <th>Entreprise</th>
+                                    <th>Score</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Directeur Marketing</div>
+                                                <div class="cv-subtitle">Version 3.2</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">L'Oréal</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge excellent">91%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: #10B981; width: 0%" data-width="91%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Hier</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell optimized">
+                                            <span class="status-dot optimized"></span>
+                                            Optimisé
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Chef de Projet</div>
+                                                <div class="cv-subtitle">Version 2.1</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">BNP Paribas</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge good">85%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: var(--accent); width: 0%" data-width="85%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Il y a 3 jours</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell optimized">
+                                            <span class="status-dot optimized"></span>
+                                            Optimisé
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Manager Commercial</div>
+                                                <div class="cv-subtitle">Version 1.8</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                                    <path d="M2 17l10 5 10-5"></path>
+                                                    <path d="M2 12l10 5 10-5"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">LVMH</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge excellent">92%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: #10B981; width: 0%" data-width="92%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Il y a 1 semaine</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell optimized">
+                                            <span class="status-dot optimized"></span>
+                                            Optimisé
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Consultant Senior</div>
+                                                <div class="cv-subtitle">Version 4.0</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">McKinsey</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge average">78%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: var(--secondary); width: 0%" data-width="78%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Il y a 2 semaines</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell pending">
+                                            <span class="status-dot pending"></span>
+                                            En cours
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 5 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Directeur RH</div>
+                                                <div class="cv-subtitle">Version 2.5</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="9" cy="7" r="4"></circle>
+                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">Total Energies</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge excellent">89%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: #10B981; width: 0%" data-width="89%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Il y a 3 semaines</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell optimized">
+                                            <span class="status-dot optimized"></span>
+                                            Optimisé
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 6 -->
+                                <tr>
+                                    <td>
+                                        <div class="cv-cell">
+                                            <div class="cv-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                </svg>
+                                            </div>
+                                            <div class="cv-info">
+                                                <div class="cv-title">CV Product Manager</div>
+                                                <div class="cv-subtitle">Version 1.2</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-cell">
+                                            <div class="company-logo">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                                </svg>
+                                            </div>
+                                            <div class="company-name">Google</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="score-cell">
+                                            <span class="score-badge poor">72%</span>
+                                            <div class="score-bar">
+                                                <div class="score-bar-fill" style="background: #EF4444; width: 0%" data-width="72%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-cell">Il y a 1 mois</div>
+                                    </td>
+                                    <td>
+                                        <span class="status-cell needs-work">
+                                            <span class="status-dot needs-work"></span>
+                                            À améliorer
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-cell">
+                                            <button class="btn btn-primary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button class="btn btn-secondary">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                                </svg>
+                                                Comparer
+                                            </button>
+                                            <button class="btn btn-ghost">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                                </svg>
+                                                Relancer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+// @ts-nocheck
+
+        // Animate progress bars on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Animate stat progress bars
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+
+                // Animate score bars
+                document.querySelectorAll('.score-bar-fill').forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+            }, 800);
+        });
+    
+</script>
+
+    <script src="../unified-scripts.js"></script>
+
+    <!-- Loading Skeletons (Examples) -->
+    <template id="skeleton-card">
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+    </template>
+    
+    <template id="skeleton-table">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton" style="width: 60px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 80px; height: 12px;"></div></th>
+                        <th><div class="skeleton" style="width: 100px; height: 12px;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton" style="width: 80px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 120px; height: 16px;"></div></td>
+                        <td><div class="skeleton" style="width: 100px; height: 16px;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Empty States (Examples) -->
+    <template id="empty-state-example">
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h3>Aucun élément pour le moment</h3>
+            <p>Commencez par créer votre premier élément pour voir les résultats ici.</p>
+            <button class="btn btn-primary">Commencer</button>
+        </div>
+    </template>
+</body>
+</html>
