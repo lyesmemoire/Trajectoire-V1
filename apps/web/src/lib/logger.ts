@@ -1,28 +1,26 @@
-import pino from "pino";
+import { envServer } from "../lib/env.server.js";
+import pino from 'pino';
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDev = envServer.NODE_ENV !== 'production';
 
 export const logger = pino({
-  level: isDevelopment ? "debug" : "info",
-  transport: isDevelopment
-    ? {
-        target: "pino-pretty",
-        options: {
-          colorize: true,
-          translateTime: "HH:MM:ss Z",
-          ignore: "pid,hostname",
-        },
-      }
-    : undefined,
-  formatters: {
-    level: (label) => {
-      return { level: label };
+  level: process.env.LOG_LEVEL || (isDev ? 'debug' : 'info'),
+  ...(isDev && {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'pid,hostname',
+      },
     },
+  }),
+  formatters: {
+    level: (label) => ({ level: label }),
   },
-  timestamp: pino.stdTimeFunctions.isoTime,
-  serializers: {
-    err: pino.stdSerializers.err,
-    error: pino.stdSerializers.err,
+  base: {
+    service: 'trajectoire',
+    env: envServer.NODE_ENV || 'development',
   },
 });
 
@@ -30,24 +28,26 @@ export type LogContext = {
   sessionId?: string;
   userId?: string;
   interviewId?: string;
+  munitionId?: string;
   component?: string;
+  duration?: number;
   [key: string]: any;
 };
 
-export function createLogger(context: LogContext = {}) {
+export const createChildLogger = (context: LogContext) => {
   return logger.child(context);
+};
+
+// Legacy compatibility wrappers
+export function logInfo(prefix: string, message: string, context?: LogContext) {
+  logger.info({ ...context, prefix }, message);
 }
 
-export function createSessionLogger(sessionId: string, component?: string) {
-  return createLogger({ sessionId, component });
+export function logWarn(prefix: string, message: string, context?: LogContext) {
+  logger.warn({ ...context, prefix }, message);
 }
 
-export function createUserLogger(userId: string, component?: string) {
-  return createLogger({ userId, component });
+export function logError(prefix: string, error: any, context?: LogContext) {
+  logger.error({ ...context, prefix, err: error }, error?.message || "Unknown error");
 }
 
-export function createInterviewLogger(interviewId: string, component?: string) {
-  return createLogger({ interviewId, component });
-}
-
-export default logger;

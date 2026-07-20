@@ -1,9 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { PostHogProvider } from "@/components/providers/PostHogProvider";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://trajectoire.app"),
@@ -25,10 +23,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-white text-ink antialiased">
+    <html lang="fr" className="scroll-smooth">
+      <body className="min-h-screen bg-white text-ink antialiased font-sans">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-primary text-white px-4 py-2 rounded-lg z-50">Aller au contenu principal</a>
-        <PostHogProvider>{children}</PostHogProvider>
+        <Navbar />
+        <div id="main">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );

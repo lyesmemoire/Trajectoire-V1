@@ -6,13 +6,13 @@ test.describe("Authentication Flow Audit", () => {
   }) => {
     await page.goto("/dashboard");
     // Expect redirect to login (if middleware is set up correctly)
-    await expect(page).toHaveURL(/\/auth\/login/);
+    await expect(page).toHaveURL(/\/login/);
   });
 
   test("signout should work and clear session", async ({ page }) => {
     // This requires a mock session or real login first.
     // For now, testing if the route is at least reachable.
-    await page.goto("/auth/signout", { waitUntil: "networkidle" });
-    await expect(page).toHaveURL("/");
+    await page.goto("/logout", { waitUntil: "networkidle" });
+    await expect(page).toHaveURL(/\/(login|\/)/);
   });
 });

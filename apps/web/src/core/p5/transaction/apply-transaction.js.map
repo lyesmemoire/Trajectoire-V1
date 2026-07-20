@@ -1,0 +1,1 @@
+{"version":3,"file":"apply-transaction.js","sourceRoot":"","sources":["apply-transaction.ts"],"names":[],"mappings":"AAGA;;;;;;;;GAQG;AACH,MAAM,UAAU,gBAAgB,CAAC,EAAe,EAAE,KAAc;IAC9D,OAAO;QACL,QAAQ,EAAE,EAAE,CAAC,QAAQ;QACrB,MAAM,EAAE,CAAC,GAAG,EAAE,CAAC,MAAM,EAAE,KAAK,CAAC;KAC9B,CAAC;AACJ,CAAC"}

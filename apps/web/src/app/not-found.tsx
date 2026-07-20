@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { SITE_NAME } from "@/lib/constants";
 
 export default function NotFound() {
   return (
@@ -83,7 +82,7 @@ export default function NotFound() {
         </div>
 
         <p className="text-xs mt-8" style={{ color: "var(--muted)", opacity: 0.6 }}>
-          {SITE_NAME} · Career Decision Intelligence Platform
+          Trajectoire · Career Decision Intelligence Platform
         </p>
       </div>
     </div>

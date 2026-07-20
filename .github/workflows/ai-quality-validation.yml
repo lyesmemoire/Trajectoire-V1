@@ -1,0 +1,87 @@
+name: AI Quality Validation
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          cd apps/web
+          npm ci
+
+      - name: TypeScript compilation
+        run: |
+          cd apps/web
+          npm run build
+
+      - name: Run AI Quality Validation
+        run: |
+          npm install -g ts-node
+          ts-node scripts/ai-quality-validation.ts
+        env:
+          CURRENT_VERSION: ${{ github.sha }}
+          PREVIOUS_VERSION: ${{ github.event.before }}
+          SIMULATIONS: 100
+          FAIL_ON_REGRESSION: true
+          OUTPUT_FORMAT: json
+
+      - name: Upload validation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-results
+          path: validation-results.json
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            try {
+              const results = JSON.parse(fs.readFileSync('validation-results.json', 'utf8'));
+              const body = `
+              ## AI Quality Validation Results
+              
+              **Version**: ${results.version}
+              **Previous Version**: ${results.previousVersion}
+              
+              ### Scores
+              - Overall Score: ${results.overallScore.toFixed(2)}
+              - Previous Score: ${results.previousScore.toFixed(2)}
+              - Score Delta: ${results.scoreDelta > 0 ? '+' : ''}${results.scoreDelta.toFixed(2)}
+              
+              ### Status
+              ${results.success ? '✅ PASSED' : '❌ FAILED'}
+              
+              ### Failures
+              ${results.failures.length > 0 ? results.failures.map(f => `- ${f}`).join('\n') : 'None'}
+              
+              ${results.success ? '✅ Deployment approved' : '❌ Deployment blocked'}
+              `;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } catch (error) {
+              console.log('Could not read validation results');
+            }

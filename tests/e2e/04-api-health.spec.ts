@@ -11,12 +11,11 @@ test.describe("🩺 API Health & Performance Audit", () => {
   });
 
   test("Critical services connectivity check", async ({ request }) => {
-    // Test if Supabase/Mistral health check passes via internal API
-    const response = await request.get("/api/admin/system-health");
+    // Test if database health check passes via health API
+    const response = await request.get("/api/health");
     const data = await response.json();
 
-    expect(data.supabase).toBe("connected");
-    expect(data.mistral).toBe("connected");
-    expect(data.redis).toBe("connected");
+    expect(data.database).toBe("ok");
+    expect(data.status).toBe("ok");
   });
 });

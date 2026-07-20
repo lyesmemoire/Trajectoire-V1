@@ -1,270 +1,337 @@
-﻿export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
-
-export type PlanType       = "free" | "pro";
-export type ObjectiveType  = "promotion" | "interview" | "transition" | "direction" | "clarity" | "other";
-export type PriorityType   = "high" | "medium" | "low";
-export type NotifType      = "success" | "info" | "warning";
-export type SimulationType = "interview" | "presentation" | "negotiation" | "feedback";
-export type MilestoneStatus = "pending" | "current" | "done";
+// types/database.ts â€” VERSION MISE Ã€ JOUR
+// Source de vÃ©ritÃ© des types correspondant exactement au schÃ©ma SQL
 
 export interface Database {
   public: {
     Tables: {
       profiles: {
         Row: {
-          id:          string;
-          first_name:  string;
-          last_name:   string;
-          role:        string | null;
-          objective:   ObjectiveType | null;
-          plan:        PlanType;
-          avatar_url:  string | null;
-          created_at:  string;
-          updated_at:  string;
-        };
-        Insert: {
-          id:          string;
-          first_name?: string;
-          last_name?:  string;
-          role?:       string | null;
-          objective?:  ObjectiveType | null;
-          plan?:       PlanType;
-          avatar_url?: string | null;
-        };
-        Update: {
-          first_name?: string;
-          last_name?:  string;
-          role?:       string | null;
-          objective?:  ObjectiveType | null;
-          plan?:       PlanType;
-          avatar_url?: string | null;
-        };
-      };
-
-      evaluations: {
-        Row: {
-          id:               string;
-          user_id:          string;
-          confidence_score: number | null;
-          stress_score:     number | null;
-          preparedness:     number | null;
-          decision_score:   number | null;
-          raw_answers:      Json | null;
-          completed_at:     string | null;
-          created_at:       string;
-        };
-        Insert: {
-          user_id:          string;
-          confidence_score?: number | null;
-          stress_score?:    number | null;
-          preparedness?:    number | null;
-          decision_score?:  number | null;
-          raw_answers?:     Json | null;
-          completed_at?:    string | null;
-        };
-        Update: {
-          confidence_score?: number | null;
-          stress_score?:    number | null;
-          preparedness?:    number | null;
-          decision_score?:  number | null;
-          raw_answers?:     Json | null;
-          completed_at?:    string | null;
-        };
-      };
-
-      competency_scores: {
-        Row: {
-          id:            string;
-          evaluation_id: string;
-          user_id:       string;
-          name:          string;
-          score:         number;
-          prev_score:    number | null;
-          created_at:    string;
-        };
-        Insert: {
-          evaluation_id: string;
-          user_id:       string;
-          name:          string;
-          score:         number;
-          prev_score?:   number | null;
-        };
-        Update: {
-          score?:      number;
-          prev_score?: number | null;
-        };
-      };
-
-      simulations: {
-        Row: {
-          id:           string;
-          user_id:      string;
-          type:         SimulationType;
-          score:        number | null;
-          feedback:     string | null;
-          duration_sec: number | null;
-          completed_at: string | null;
-          created_at:   string;
-        };
-        Insert: {
-          user_id:      string;
-          type:         SimulationType;
-          score?:       number | null;
-          feedback?:    string | null;
-          duration_sec?: number | null;
-          completed_at?: string | null;
-        };
-        Update: {
-          score?:       number | null;
-          feedback?:    string | null;
-          duration_sec?: number | null;
-          completed_at?: string | null;
-        };
-      };
-
-      action_items: {
-        Row: {
-          id:         string;
-          user_id:    string;
-          label:      string;
-          done:       boolean;
-          priority:   PriorityType;
-          due_date:   string | null;
+          id: string;
+          email: string;
+          full_name: string | null;
+          credits: number;
           created_at: string;
           updated_at: string;
         };
         Insert: {
-          user_id:   string;
-          label:     string;
-          done?:     boolean;
-          priority?: PriorityType;
-          due_date?: string | null;
+          id: string;
+          email: string;
+          full_name?: string | null;
+          credits?: number;
+          created_at?: string;
+          updated_at?: string;
         };
         Update: {
-          label?:    string;
-          done?:     boolean;
-          priority?: PriorityType;
-          due_date?: string | null;
+          full_name?: string | null;
+          credits?: number;
+          updated_at?: string;
         };
       };
-
-      plan_milestones: {
+      cvs: {
         Row: {
-          id:         string;
-          user_id:    string;
-          week_label: string;
-          title:      string;
-          status:     MilestoneStatus;
-          position:   number;
+          id: string;
+          user_id: string;
+          file_name: string;
+          storage_path: string;
+          extracted_text: string | null; // RENOMMÃ‰ depuis content
+          word_count: number;
+          page_count: number;
           created_at: string;
           updated_at: string;
         };
         Insert: {
-          user_id:    string;
-          week_label: string;
-          title:      string;
-          status?:    MilestoneStatus;
-          position?:  number;
+          user_id: string;
+          file_name: string;
+          storage_path: string;
+          extracted_text?: string | null;
+          word_count?: number;
+          page_count?: number;
         };
         Update: {
-          status?:   MilestoneStatus;
-          position?: number;
-          title?:    string;
+          extracted_text?: string | null;
+          word_count?: number;
+          page_count?: number;
+          updated_at?: string;
         };
       };
-
-      notifications: {
+      ats_reports: {
         Row: {
-          id:         string;
-          user_id:    string;
-          type:       NotifType;
-          title:      string;
-          body:       string;
-          read:       boolean;
+          id: string;
+          user_id: string;
+          cv_id: string;
+          job_description: string | null;
+          score: number;
+          matched_keywords: string[];
+          missing_keywords: string[];
+          suggestions: string[];
+          total_keywords: number;
           created_at: string;
         };
         Insert: {
           user_id: string;
-          type?:   NotifType;
-          title:   string;
-          body:    string;
-          read?:   boolean;
+          cv_id: string;
+          job_description?: string | null;
+          score: number;
+          matched_keywords?: string[];
+          missing_keywords?: string[];
+          suggestions?: string[];
+          total_keywords?: number;
         };
-        Update: {
-          read?: boolean;
-        };
+        Update: never;
       };
-
-      progression_snapshots: {
+      interview_sessions: {
         Row: {
-          id:           string;
-          user_id:      string;
-          week_label:   string;
-          confidence:   number | null;
-          preparedness: number | null;
-          recorded_at:  string;
+          id: string;
+          user_id: string;
+          cv_id: string;
+          job_title: string | null;
+          job_description: string | null;
+          questions: InterviewQuestion[];
+          answers: InterviewAnswer[];
+          feedback: InterviewFeedback | null;
+          score: number | null;
+          status: "in_progress" | "completed" | "abandoned";
+          tokens_used: number;
+          tokens_used_feedback: number;
+          completed_at: string | null;
+          created_at: string;
         };
         Insert: {
-          user_id:      string;
-          week_label:   string;
-          confidence?:  number | null;
-          preparedness?: number | null;
+          user_id: string;
+          cv_id: string;
+          job_title?: string | null;
+          job_description?: string | null;
+          questions?: InterviewQuestion[];
+          answers?: InterviewAnswer[];
+          status?: "in_progress" | "completed" | "abandoned";
+          tokens_used?: number;
         };
         Update: {
-          confidence?:  number | null;
-          preparedness?: number | null;
+          answers?: InterviewAnswer[];
+          feedback?: InterviewFeedback;
+          score?: number;
+          status?: "in_progress" | "completed" | "abandoned";
+          tokens_used_feedback?: number;
+          completed_at?: string;
         };
       };
-    };
-
-    Views: {
-      dashboard_summary: {
+      credit_usage: {
         Row: {
-          user_id:              string;
-          first_name:           string;
-          last_name:            string;
-          role:                 string | null;
-          plan:                 PlanType;
-          objective:            ObjectiveType | null;
-          last_evaluation_id:   string | null;
-          confidence_score:     number | null;
-          stress_score:         number | null;
-          preparedness:         number | null;
-          decision_score:       number | null;
-          last_evaluated_at:    string | null;
-          total_evaluations:    number;
-          total_simulations:    number;
-          pending_actions:      number;
-          unread_notifications: number;
+          id: string;
+          user_id: string;
+          action: CreditAction;
+          credits_spent: number;
+          tokens_used: number; // RENOMMÃ‰ depuis tokens
+          estimated_cost_eur: number; // RENOMMÃ‰ depuis estimated_cost
+          metadata: Record<string, unknown>;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          action: CreditAction;
+          credits_spent: number;
+          tokens_used?: number;
+          estimated_cost_eur?: number;
+          metadata?: Record<string, unknown>;
+        };
+        Update: never;
+      };
+      stripe_events: {
+        Row: {
+          id: string;
+          event_id: string;
+          user_id: string | null;
+          credits_added: number | null;
+          processed_at: string;
+          created_at: string;
+        };
+        Insert: {
+          event_id: string;
+          user_id?: string | null;
+          credits_added?: number | null;
+          processed_at?: string;
+        };
+        Update: never;
+      };
+      premium_interview_sessions: {
+        Row: {
+          id: string;
+          user_id: string;
+          job_title: string;
+          company: string | null;
+          persona:
+            | "big_tech_senior"
+            | "startup_founder"
+            | "corporate_hr"
+            | "technical_lead"
+            | "aggressive_recruiter";
+          difficulty: "normal" | "hard" | "elite";
+          phase:
+            | "intro"
+            | "cv_deep_dive"
+            | "technical_case"
+            | "behavioral"
+            | "pressure_test"
+            | "closing";
+          stress_level: number;
+          technical_score: number;
+          coherence_score: number;
+          communication_score: number | null;
+          confidence_score: number;
+          stress_score: number | null;
+          tags: string[] | null;
+          transcript: any;
+          memory: any | null;
+          is_processing: boolean | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          job_title: string;
+          company?: string | null;
+          persona:
+            | "big_tech_senior"
+            | "startup_founder"
+            | "corporate_hr"
+            | "technical_lead"
+            | "aggressive_recruiter";
+          difficulty: "normal" | "hard" | "elite";
+          phase?:
+            | "intro"
+            | "cv_deep_dive"
+            | "technical_case"
+            | "behavioral"
+            | "pressure_test"
+            | "closing";
+          stress_level?: number;
+          technical_score?: number;
+          coherence_score?: number;
+          communication_score?: number | null;
+          confidence_score?: number;
+          stress_score?: number | null;
+          tags?: string[] | null;
+          transcript?: any;
+          memory?: any;
+          is_processing?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          job_title?: string;
+          company?: string | null;
+          persona?:
+            | "big_tech_senior"
+            | "startup_founder"
+            | "corporate_hr"
+            | "technical_lead"
+            | "aggressive_recruiter";
+          difficulty?: "normal" | "hard" | "elite";
+          phase?:
+            | "intro"
+            | "cv_deep_dive"
+            | "technical_case"
+            | "behavioral"
+            | "pressure_test"
+            | "closing";
+          stress_level?: number;
+          technical_score?: number;
+          coherence_score?: number;
+          communication_score?: number | null;
+          confidence_score?: number;
+          stress_score?: number | null;
+          tags?: string[] | null;
+          transcript?: any;
+          memory?: any;
+          is_processing?: boolean;
+          created_at?: string;
+          updated_at?: string;
         };
       };
     };
-
-    Functions: {};
-    Enums: {
-      plan_type:        PlanType;
-      objective_type:   ObjectiveType;
-      priority_type:    PriorityType;
-      notif_type:       NotifType;
-      simulation_type:  SimulationType;
-      milestone_status: MilestoneStatus;
+    Functions: {
+      deduct_credits_atomic: {
+        Args: { uid: string; amt: number };
+        Returns: number;
+      };
+      add_credits_atomic: {
+        Args: { uid: string; amt: number };
+        Returns: number;
+      };
+      process_stripe_payment: {
+        Args: {
+          p_event_id: string;
+          p_user_id: string;
+          p_credits: number;
+          p_amount_cents: number;
+          p_pack_name: string;
+        };
+        Returns: {
+          success: boolean;
+          reason?: string;
+          credits_added?: number;
+          new_balance?: number;
+          event_id?: string;
+        };
+      };
+      reserve_credits_atomic: {
+        Args: {
+          p_user_id: string;
+          p_amount: number;
+          p_action: string;
+          p_idemp_key: string;
+        };
+        Returns: string;
+      };
+      commit_credits_atomic: {
+        Args: {
+          p_tx_id: string;
+          p_tokens: number;
+        };
+        Returns: void;
+      };
+      rollback_credits_atomic: {
+        Args: {
+          p_tx_id: string;
+          p_reason: string;
+        };
+        Returns: void;
+      };
     };
   };
 }
 
-/* ── Shorthand row types ── */
-export type Profile            = Database["public"]["Tables"]["profiles"]["Row"];
-export type Evaluation         = Database["public"]["Tables"]["evaluations"]["Row"];
-export type CompetencyScore    = Database["public"]["Tables"]["competency_scores"]["Row"];
-export type Simulation         = Database["public"]["Tables"]["simulations"]["Row"];
-export type ActionItem         = Database["public"]["Tables"]["action_items"]["Row"];
-export type PlanMilestone      = Database["public"]["Tables"]["plan_milestones"]["Row"];
-export type Notification       = Database["public"]["Tables"]["notifications"]["Row"];
-export type ProgressionSnapshot = Database["public"]["Tables"]["progression_snapshots"]["Row"];
-export type DashboardSummary   = Database["public"]["Views"]["dashboard_summary"]["Row"];
+// Types mÃ©tier partagÃ©s
+export type CreditAction =
+  | "ats_check"
+  | "cv_optimize"
+  | "interview_generate"
+  | "interview_feedback"
+  | "stripe_purchase"
+  | "signup_bonus"
+  | "refund";
+
+export interface InterviewQuestion {
+  id: number;
+  type: "hr" | "technical" | "behavioral";
+  question: string;
+  difficulty: "easy" | "medium" | "hard";
+}
+
+export interface InterviewAnswer {
+  questionId: number;
+  answer: string;
+  answeredAt?: string;
+}
+
+export interface InterviewFeedback {
+  score: number;
+  strengths: string[];
+  weaknesses: string[];
+  improvements: string[];
+  exampleAnswer: string;
+  summary: string;
+}

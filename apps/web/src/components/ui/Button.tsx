@@ -1,186 +1,63 @@
-"use client";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import Link from "next/link";
-import { cn } from "@/lib/cn";
-
-// ─────────────────────────────────────────────
-// Variants
-// ─────────────────────────────────────────────
-
-type ButtonVariant = "primary" | "accent" | "ghost" | "outline" | "dark";
-type ButtonSize = "sm" | "md" | "lg" | "xl";
-
-const VARIANT_STYLES: Record<ButtonVariant, string> = {
-  primary:
-    "bg-brand-primary text-white hover:bg-brand-primary-hover hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(26,60,52,0.3)]",
-  accent:
-    "bg-brand-accent text-white hover:bg-brand-accent-hover hover:-translate-y-0.5 hover:shadow-glow-accent",
-  ghost:
-    "bg-transparent text-brand-primary hover:bg-glass-primary-08",
-  outline:
-    "bg-transparent text-brand-primary border border-border hover:bg-surface-muted",
-  dark:
-    "bg-ink text-white hover:bg-ink/90 hover:-translate-y-0.5",
-};
-
-const SIZE_STYLES: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-body-sm gap-1.5",
-  md: "px-5 py-3 text-body-sm gap-2",
-  lg: "px-7 py-4 text-body gap-2",
-  xl: "px-9 py-[18px] text-[17px] gap-2",
-};
-
-// ─────────────────────────────────────────────
-// Props
-// ─────────────────────────────────────────────
-
-interface BaseProps {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  fullWidth?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  loading?: boolean;
-  children: ReactNode;
-  className?: string;
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 
-type ButtonProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement>;
-
-interface LinkButtonProps extends BaseProps {
-  href: string;
-  external?: boolean;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
-}
-
-// ─────────────────────────────────────────────
-// Button
-// ─────────────────────────────────────────────
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = "primary",
-      size = "md",
-      fullWidth = false,
-      leftIcon,
-      rightIcon,
-      loading = false,
-      disabled,
-      children,
-      className,
-      ...rest
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-900/10",
+        primary:
+          "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/25",
+        destructive:
+          "bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-500/25",
+        outline:
+          "border-2 border-slate-200 bg-transparent hover:bg-slate-50 hover:border-slate-300 text-slate-700",
+        secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
+        ghost: "hover:bg-slate-100 text-slate-600 hover:text-slate-900",
+        link: "text-blue-600 underline-offset-4 hover:underline px-0",
+      },
+      size: {
+        default: "h-12 px-6 py-2",
+        sm: "h-9 rounded-xl px-4",
+        lg: "h-14 rounded-[1.25rem] px-10 text-base font-black",
+        icon: "h-12 w-12",
+      },
     },
-    ref
-  ) => {
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+);
+
+export interface ButtonProps
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
     return (
-      <button
-        ref={ref}
-        disabled={disabled || loading}
-        className={cn(
-          "inline-flex items-center justify-center font-semibold rounded-xl",
-          "transition-all duration-200",
-          "focus-visible:outline-none focus-visible:shadow-focus-primary",
-          "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
-          VARIANT_STYLES[variant],
-          SIZE_STYLES[size],
-          fullWidth && "w-full",
-          className
-        )}
-        {...rest}
-      >
-        {loading ? (
-          <Spinner />
-        ) : (
-          <>
-            {leftIcon}
-            {children}
-            {rightIcon}
-          </>
-        )}
-      </button>
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref as any}
+        {...props as any}
+      />
     );
-  }
+  },
 );
 Button.displayName = "Button";
 
-// ─────────────────────────────────────────────
-// LinkButton (pour les <Link> stylés)
-// ─────────────────────────────────────────────
-
-export function LinkButton({
-  variant = "primary",
-  size = "md",
-  fullWidth = false,
-  leftIcon,
-  rightIcon,
-  href,
-  external = false,
-  onClick,
-  children,
-  className,
-}: LinkButtonProps) {
-  const classes = cn(
-    "inline-flex items-center justify-center font-semibold rounded-xl",
-    "transition-all duration-200",
-    "focus-visible:outline-none focus-visible:shadow-focus-primary",
-    VARIANT_STYLES[variant],
-    SIZE_STYLES[size],
-    fullWidth && "w-full",
-    className
-  );
-
-  if (external) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classes}
-        onClick={onClick}
-      >
-        {leftIcon}
-        {children}
-        {rightIcon}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} className={classes} onClick={onClick}>
-      {leftIcon}
-      {children}
-      {rightIcon}
-    </Link>
-  );
-}
-
-// ─────────────────────────────────────────────
-// Spinner interne
-// ─────────────────────────────────────────────
-
-function Spinner() {
-  return (
-    <svg
-      className="animate-spin h-4 w-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      />
-    </svg>
-  );
-}
+export { Button, buttonVariants };

@@ -1,20 +1,14 @@
-﻿import { createBrowserClient } from "@supabase/ssr";
-import type { Database } from "@/types/database";
+import { createBrowserClient } from "@supabase/ssr"
+import type { Database } from "@/types/database"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl) {
-  throw new Error("NEXT_PUBLIC_SUPABASE_URL manquante dans .env.local");
-}
-
-if (!supabaseAnonKey) {
-  throw new Error("NEXT_PUBLIC_SUPABASE_ANON_KEY manquante dans .env.local");
-}
+export const supabase = createBrowserClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export function createClient() {
   return createBrowserClient<Database>(
-    supabaseUrl,
-    supabaseAnonKey
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy",
   );
 }
