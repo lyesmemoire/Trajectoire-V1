@@ -90,7 +90,7 @@
     "motion": "^12.40.0",
     "motion-dom": "^12.40.0",
     "motion-utils": "^12.39.0",
-    "next": "15.5.18",
+    "next": "15.5.21",
     "next-auth": "^5.0.0-beta.25",
     "openai": "^6.39.0",
     "pdf-parse": "^1.1.1",
@@ -144,9 +144,34 @@
     "typescript": "^5.8.3",
     "vitest": "^4.1.8"
   },
-  "pnpm": {
-    "neverBuiltDependencies": [
-      "@discordjs/opus"
-    ]
+  "resolutions": {
+    "tar": "^7.5.21",
+    "@opentelemetry/sdk-node": "^0.217.0",
+    "form-data": "^4.0.6",
+    "multer": "^2.2.0",
+    "ws": "^8.21.0",
+    "js-yaml": "^4.3.0",
+    "@opentelemetry/propagator-jaeger": "^2.9.0",
+    "fast-uri": "^3.1.4",
+    "sharp": "^0.35.0",
+    "postcss": "^8.5.18",
+    "find-my-way": "^9.7.0",
+    "brace-expansion": "^5.0.8",
+    "protobufjs": "^8.4.1"
+  },
+  "overrides": {
+    "tar": "^7.5.21",
+    "@opentelemetry/sdk-node": "^0.217.0",
+    "form-data": "^4.0.6",
+    "multer": "^2.2.0",
+    "ws": "^8.21.0",
+    "js-yaml": "^4.3.0",
+    "@opentelemetry/propagator-jaeger": "^2.9.0",
+    "fast-uri": "^3.1.4",
+    "sharp": "^0.35.0",
+    "postcss": "^8.5.18",
+    "find-my-way": "^9.7.0",
+    "brace-expansion": "^5.0.8",
+    "protobufjs": "^8.4.1"
   }
 }
