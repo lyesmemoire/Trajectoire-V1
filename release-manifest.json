@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "releaseDate": "2026-07-29T15:00:00Z",
+  "gitCommit": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "architecturalStatus": "Frozen",
+  "supportedProfiles": [
+    "signature-v1",
+    "timestamp-v1",
+    "hermeticity-v1",
+    "laboratory-v1"
+  ],
+  "documentationRevision": "v1.0.0",
+  "qualificationReport": "docs/qualification/final-qualification-report.md",
+  "compatibilityMatrix": "docs/interoperability/compatibility-matrix.md"
+}
