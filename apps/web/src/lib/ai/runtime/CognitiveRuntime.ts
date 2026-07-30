@@ -9,18 +9,22 @@ import { InvestigationContext } from "../../../domain/cognitive/InvestigationCon
 import { BaseEvent } from "../contracts/Event";
 import { CognitiveState } from "../../../domain/cognitive/CognitiveState";
 import { SnapshotMetadata } from "../../../domain/cognitive/SnapshotMetadata";
+import { EngineExecutionError, EngineTimeoutError, EngineBudgetExceededError } from "./errors/EngineExecutionError";
+import { ExecutionBudgetManager, BudgetConfig } from "./ExecutionBudget";
+import { ExecutionReportBuilder, ExecutionReport } from "./ExecutionReport";
 
 // ===================================================================
 // COGNITIVE RUNTIME — Cognitive Runtime Contract
 // ===================================================================
 
 export interface CognitiveRuntime {
-  initialize(sessionId: string, context: InvestigationContext): Promise<void>;
-  execute(engineNames: string[], input: EngineInput): Promise<void>;
+  initialize(sessionId: string, context: InvestigationContext, budgetConfig?: BudgetConfig): Promise<void>;
+  execute(engineNames: string[], input: EngineInput, abortSignal?: AbortSignal): Promise<ExecutionReport>;
   getEventBus(): EventBus;
   getRegistry(): EngineRegistry;
   getReducerRegistry(): ReducerRegistry;
   getSnapshotBuilder(): SnapshotBuilder;
+  getExecutionReport(): ExecutionReport | null;
 }
 
 export class DefaultCognitiveRuntime implements CognitiveRuntime {
@@ -35,6 +39,9 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
   private currentState: CognitiveState | null = null;
   private currentTraceId: string | null = null;
   private currentCorrelationId: string | null = null;
+  private budgetManager: ExecutionBudgetManager | null = null;
+  private reportBuilder: ExecutionReportBuilder | null = null;
+  private executionPolicy: "stop-on-error" | "continue-on-error" = "continue-on-error";
 
   constructor() {
     this.registry = new DefaultEngineRegistry();
@@ -45,43 +52,104 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
     this.snapshotBuilder = new DefaultSnapshotBuilder();
   }
 
-  async initialize(sessionId: string, context: InvestigationContext): Promise<void> {
+  async initialize(sessionId: string, context: InvestigationContext, budgetConfig?: BudgetConfig): Promise<void> {
     this.sessionId = sessionId;
     this.currentContext = context;
     this.currentTraceId = crypto.randomUUID();
     this.currentCorrelationId = crypto.randomUUID();
-    // Runtime dispatch only - no business logic
+
+    if (budgetConfig) {
+      this.budgetManager = new ExecutionBudgetManager(budgetConfig);
+    }
+
+    this.reportBuilder = new ExecutionReportBuilder(
+      sessionId,
+      this.currentTraceId,
+      this.currentCorrelationId
+    );
   }
 
-  async execute(engineNames: string[], input: EngineInput): Promise<void> {
-    if (!this.sessionId) {
+  async execute(engineNames: string[], input: EngineInput, abortSignal?: AbortSignal): Promise<ExecutionReport> {
+    if (!this.sessionId || !this.reportBuilder) {
       throw new Error("Runtime not initialized. Call initialize() first.");
     }
 
+    const reportBuilder = this.reportBuilder;
+
     // Execute engines sequentially via scheduler
     for (const engineName of engineNames) {
+      if (abortSignal?.aborted) {
+        throw new EngineExecutionError(engineName, "unknown", "Execution aborted by AbortSignal");
+      }
+
+      if (this.budgetManager?.isExceeded()) {
+        throw new EngineBudgetExceededError(
+          engineName,
+          "unknown",
+          this.budgetManager.isDurationExceeded() ? "time" : "tokens",
+          this.budgetManager.getBudget().maxDurationMs,
+          this.budgetManager.getBudget().maxDurationMs - this.budgetManager.getBudget().remainingDurationMs
+        );
+      }
+
       const engine = this.registry.get(engineName);
       if (!engine) {
         throw new Error(`Engine ${engineName} not found in registry`);
       }
 
+      const engineStartTime = Date.now();
+
       // Hook: beforeEngine
       await this.hooks.beforeEngine?.(engine, input);
+      reportBuilder.recordHookCall("beforeEngine");
 
-      const result = await engine.execute(input);
+      try {
+        const result = await engine.execute(input);
 
-      // Hook: afterEngine
-      await this.hooks.afterEngine?.(engine, input, result.events);
+        // Hook: afterEngine
+        await this.hooks.afterEngine?.(engine, input, result.events);
+        reportBuilder.recordHookCall("afterEngine");
 
-      // Publish events to EventBus (Runtime dispatch only)
-      for (const event of result.events) {
-        // Hook: beforePublish
-        await this.hooks.beforePublish?.(event);
+        // Record engine execution metrics
+        const durationMs = Date.now() - engineStartTime;
+        reportBuilder.recordEngineExecution({
+          engineName: engine.name,
+          durationMs,
+          eventsProduced: result.events.length,
+          success: true,
+        });
 
-        this.eventBus.publish(event);
+        // Consume budget
+        if (this.budgetManager) {
+          this.budgetManager.consumeDuration(durationMs);
+          this.budgetManager.consumeTokens(result.tokens.total);
+        }
 
-        // Hook: afterPublish
-        await this.hooks.afterPublish?.(event);
+        // Publish events to EventBus (Runtime dispatch only)
+        for (const event of result.events) {
+          // Hook: beforePublish
+          await this.hooks.beforePublish?.(event);
+          reportBuilder.recordHookCall("beforePublish");
+
+          this.eventBus.publish(event);
+
+          // Hook: afterPublish
+          await this.hooks.afterPublish?.(event);
+          reportBuilder.recordHookCall("afterPublish");
+        }
+      } catch (error) {
+        const durationMs = Date.now() - engineStartTime;
+        reportBuilder.recordEngineExecution({
+          engineName: engine.name,
+          durationMs,
+          eventsProduced: 0,
+          success: false,
+          error: error instanceof Error ? error.message : String(error),
+        });
+
+        if (this.executionPolicy === "stop-on-error") {
+          throw error;
+        }
       }
     }
 
@@ -92,14 +160,31 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
     if (this.currentState && this.currentContext) {
       // Hook: beforeReducer
       await this.hooks.beforeReducer?.(events, this.currentState);
+      reportBuilder.recordHookCall("beforeReducer");
 
+      const reducerStartTime = Date.now();
       let newState = this.currentState;
       for (const reducer of this.reducerRegistry.getAll()) {
-        newState = reducer.reduce(events, newState);
+        try {
+          newState = reducer.reduce(events, newState);
+          reportBuilder.recordReducerExecution({
+            reducerName: reducer.name,
+            durationMs: Date.now() - reducerStartTime,
+            success: true,
+          });
+        } catch (error) {
+          reportBuilder.recordReducerExecution({
+            reducerName: reducer.name,
+            durationMs: Date.now() - reducerStartTime,
+            success: false,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        }
       }
 
       // Hook: afterReducer
       await this.hooks.afterReducer?.(events, newState);
+      reportBuilder.recordHookCall("afterReducer");
 
       // Build new snapshot
       const newContext = this.snapshotBuilder.build(
@@ -111,9 +196,15 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
         }
       );
 
+      reportBuilder.incrementSnapshotCount();
+
       this.currentState = newState;
       this.currentContext = newContext;
     }
+
+    // Finalize and return report
+    const report = reportBuilder.finalize();
+    return report;
   }
 
   getEventBus(): EventBus {
@@ -130,5 +221,13 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
 
   getSnapshotBuilder(): SnapshotBuilder {
     return this.snapshotBuilder;
+  }
+
+  getExecutionReport(): ExecutionReport | null {
+    return this.reportBuilder?.finalize() || null;
+  }
+
+  setExecutionPolicy(policy: "stop-on-error" | "continue-on-error"): void {
+    this.executionPolicy = policy;
   }
 }
