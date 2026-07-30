@@ -6,59 +6,110 @@ Le Sprint D suit une architecture cognitive structurée pour créer de la valeur
 
 ---
 
-## D1 - Identity Intelligence
+## D0 - Knowledge Graph Foundation ⭐⭐⭐⭐⭐
 
-**Objectif**: Construire un graphe identitaire stable
+**Objectif**: Infrastructure commune pour tous les moteurs
 
-**Structure**:
+**Composants**:
 ```
-Candidate
-├── Person
-├── Companies
-├── Projects
-├── Technologies
-├── Roles
-├── Skills
-├── Metrics
-├── Dates
-└── Relations
+Node
+Edge
+Relation
+EntityId
+CanonicalId
+MergePolicy
+GraphRepository
+GraphQueryService
 ```
 
-**Sortie**: Graphe identitaire stable et cohérent
+**Importance**: Socle commun - tous les moteurs écriront dedans
+
+**Avantage**: Identity, Hypothesis, Decision, Interview n'auront jamais à recréer leur propre représentation
 
 ---
 
-## D2 - Hypothesis Engine
+## D1 - Identity Graph
 
-**Objectif**: Produire des hypothèses, jamais des certitudes
+**Objectif**: Normalisation canonique (pas d'intelligence, pas de déduction)
+
+**Exemple**:
+```
+Au lieu de:
+"K8S"
+"Kubernetes"
+"Kube"
+
+On obtient:
+Technology
+  id: kubernetes
+  aliases:
+  - k8s
+  - kube
+```
+
+**Types normalisés**:
+- Technology
+- Entreprise
+- Projet
+- Equipe
+- Mission
+- Client
+- Produit
+- Personne
+- Date
+- Metric
+
+**Sortie**: Graphe canonique stable
+
+**Note**: Ce moteur ne fait aucune déduction, seulement de la normalisation
+
+---
+
+## D2 - Hypothesis Engine ⭐⭐⭐⭐⭐
+
+**Objectif**: Moteur de raisonnement principal - le véritable cerveau d'IOS v3
 
 **Structure**:
 ```
-Hypothesis
-├── statement: "Candidate maîtrise Kubernetes"
-├── supportingEvidence:
-│   ├── Observation A
-│   ├── Observation B
-│   └── Metric C
-├── confidence: 0.82
-└── missingEvidence:
-    ├── production scale
-    └── ownership
+HypothesisLedger
+├── id
+├── statement
+├── supportingEvidence
+├── contradictingEvidence
+├── missingEvidence
+├── confidence
+└── state
 ```
 
-**Importance**: Moteur le plus important de la plateforme
+**States possibles**:
+- Candidate
+- Supported
+- Weak
+- Rejected
+- Confirmed
+
+**Importance**: Toutes les futures décisions lisent uniquement ce ledger
+
+**Note**: Dans IOS v3, le cerveau est HypothesisEngine (pas Evidence, pas Decision, pas Interview)
 
 ---
 
 ## D3 - Decision Engine
 
-**Objectif**: Prendre des décisions basées sur les hypothèses
+**Objectif**: Prendre des décisions basées uniquement sur les artefacts structurés
 
-**Entrées**:
-- Hypotheses
+**Entrées** (uniquement):
+- Hypothesis
 - Evidence
 - Confidence
-- Contradictions
+- Contradiction
+
+**NE JAMAIS**:
+- Texte
+- CV
+- Transcription
+- Prompt
+- Observations
 
 **Sorties**:
 - Accepted
@@ -66,62 +117,80 @@ Hypothesis
 - Pending
 - NeedMoreEvidence
 
-**Contrainte**: Ne jamais lire directement le texte
+**Note**: DecisionEngine ignore complètement comment les hypothèses ont été produites
 
 ---
 
 ## D4 - Interview Planner
 
-**Objectif**: Décider quelle information manque
+**Objectif**: Décider quelle information manque (pas quelle question poser)
 
 **Entrées**:
 - Hypotheses
 - Missing Evidence
 - Contradictions
 
-**Sortie**: Quelle information manque (pas quelle question poser)
+**Sorties**:
+```
+NeedEvidence
+├── Hypothesis: "Senior Kubernetes Engineer"
+├── Need: "production scale metric"
+└── Reason: "confidence too low"
+```
 
-**Note**: Très important de séparer "manque information" de "quelle question"
+ou
+
+```
+NeedConfirmation
+├── Hypothesis: "..."
+└── Need: "..."
+```
+
+**Note**: Jamais de production de questions
 
 ---
 
 ## D5 - Question Selection
 
-**Objectif**: Transformer "Need evidence X" en "Question Y"
+**Objectif**: Transformer "Need evidence" en "Question" via policies
 
-**Mécanisme**: Utilisation de policies
-
-**Entrée**: Need evidence X
+**Entrée**: NeedEvidence X
 **Sortie**: Question Y
+
+**Exemples**:
+```
+"Vous avez parlé de Kubernetes. Pouvez-vous me donner un exemple de production ?"
+"Combien de clusters ?"
+"Quelle volumétrie ?"
+```
+
+**Note**: Toutes les variantes sont dans les Policies
 
 ---
 
-## D6 - Explainability
+## D6 - Explainability / Reasoning Graph
 
-**Objectif**: Rendre chaque décision explicable
+**Objectif**: Composant majeur - rendre chaque décision navigable
 
-**Chaîne d'explicabilité**:
+**Structure**:
 ```
-Pourquoi ?
-↓
-Hypothesis 17
-↓
-Evidence 41
-↓
-Observation 8
-↓
-Phrase CV
-↓
-Prompt
-↓
-Model
-↓
-Event
+ReasoningGraph
+├── Decision
+├── Hypothesis
+├── Evidence
+├── Observation
+├── Phrase CV
+├── Prompt
+├── Model
+└── Event
 ```
 
-**Importance**: Avantage majeur pour le débogage et la confiance des utilisateurs
+**Importance**: Différenciation majeure d'IOS v3
 
-**Priorité**: À monter très tôt
+**Avantages**:
+- Débogage
+- Confiance des utilisateurs
+- Navigation dans le raisonnement
 
 ---
 
@@ -129,7 +198,61 @@ Event
 
 **Objectif**: [À définir]
 
-**Priorité**: En dernier, quand tout le raisonnement fonctionne
+**Entrées**:
+- Identity
+- Hypothesis
+- Decision
+- Interview
+- Confidence
+- Timeline
+- Contradictions
+
+**Priorité**: En dernier, car dépend de tout
+
+---
+
+## Garde-fous avant D1
+
+### Contrats immuables
+
+**Hypothesis Schema**:
+- statement
+- supportingEvidence
+- contradictingEvidence
+- missingEvidence
+- confidence
+- state
+- traceability
+
+**Knowledge Graph**:
+- Types de nœuds
+- Types d'arêtes
+- Règles de fusion (MergePolicy)
+- Identifiants canoniques
+
+**Decision Structure**:
+- Résultat
+- Justification
+- Niveau de confiance
+- Hypothèses utilisées
+
+**NeedEvidence / NeedConfirmation**:
+- Contrat unique entre InterviewPlanner et QuestionSelection
+
+**Note**: Ces contrats éviteront que les moteurs D2 à D5 divergent au fil des itérations
+
+---
+
+## Ordre d'Exécution
+
+1. **D0** - Knowledge Graph Foundation ⭐⭐⭐⭐⭐ (infrastructure commune)
+2. **D1** - Identity Graph (normalisation canonique)
+3. **D2** - Hypothesis Engine ⭐⭐⭐⭐⭐ (moteur de raisonnement principal)
+4. **D3** - Decision Engine (décisions sur artefacts structurés)
+5. **D4** - Interview Planner (décider manque information)
+6. **D5** - Question Selection (transformer en questions)
+7. **D6** - Explainability / Reasoning Graph (navigation dans raisonnement)
+8. **D7** - Growth Engine (en dernier)
 
 ---
 
@@ -157,18 +280,6 @@ Event
 
 ---
 
-## Ordre d'Exécution
-
-1. D1 - Identity Intelligence
-2. D2 - Hypothesis Engine (moteur le plus important)
-3. D3 - Decision Engine
-4. D4 - Interview Planner
-5. D5 - Question Selection
-6. D6 - Explainability (à monter très tôt)
-7. D7 - Growth Engine (en dernier)
-
----
-
 ## Base Solide
 
 Le runtime IOS v3 a atteint un bon niveau de maturité :
@@ -184,3 +295,29 @@ Le runtime IOS v3 a atteint un bon niveau de maturité :
 - ✅ Catalogs data-driven
 
 Cette base est suffisamment solide pour créer directement de la valeur utilisateur.
+
+---
+
+## Architecture Cognitive
+
+Chaque couche ne consomme que les artefacts de la couche précédente :
+
+```
+Knowledge Graph Foundation
+    ↓
+Identity Graph
+    ↓
+Hypothesis Engine
+    ↓
+Decision Engine
+    ↓
+Interview Planner
+    ↓
+Question Selection
+    ↓
+Explainability / Reasoning Graph
+    ↓
+Growth Engine
+```
+
+Cette architecture devrait bien résister à l'ajout futur de nouveaux moteurs cognitifs sans remettre en cause les fondations.
