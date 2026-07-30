@@ -1,0 +1,36 @@
+{
+  "sessionId": "test-session-001",
+  "traceId": "trace-001",
+  "correlationId": "corr-001",
+  "knowledgeGraph": {
+    "entities": [],
+    "relationships": [],
+    "facts": []
+  },
+  "evidenceLedger": {
+    "totalEntries": 0,
+    "entries": []
+  },
+  "contradictionLedger": {
+    "totalEntries": 0,
+    "entries": []
+  },
+  "timeline": {
+    "events": [],
+    "statistics": {
+      "totalEvents": 0,
+      "withTimestamp": 0,
+      "withDuration": 0,
+      "averageConfidence": 0
+    }
+  },
+  "confidence": {
+    "overallScore": 0,
+    "dimensionScores": {}
+  },
+  "decisionGraph": {
+    "decisions": [],
+    "confidence": 0
+  },
+  "snapshots": []
+}

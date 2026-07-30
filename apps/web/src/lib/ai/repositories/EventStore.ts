@@ -18,6 +18,13 @@ export interface StoredEvent {
     ruleVersion?: string;
     aggregateId?: string;
   };
+  // Prompt metadata for replay compatibility
+  provider?: string;
+  model?: string;
+  promptId?: string;
+  promptVersion?: string;
+  promptChecksum?: string;
+  schemaVersion?: string;
 }
 
 export interface EventStreamOptions {
