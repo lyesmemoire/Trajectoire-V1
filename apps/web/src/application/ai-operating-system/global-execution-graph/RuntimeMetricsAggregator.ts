@@ -3,13 +3,17 @@ import {
   EngineSpecificMetrics,
   RuntimeMetricsSnapshot,
   RuntimeMetricsAggregator as IRuntimeMetricsAggregator,
+  CognitiveProfiler,
+  CognitiveProfilerReport,
+  EngineBreakdown,
+  TimelineEntry,
 } from "./interfaces/IRuntimeMetrics";
 
 // ===================================================================
 // RUNTIME METRICS AGGREGATOR — In-Memory Implementation
 // ===================================================================
 
-export class RuntimeMetricsAggregator implements IRuntimeMetricsAggregator {
+export class RuntimeMetricsAggregator implements IRuntimeMetricsAggregator, CognitiveProfiler {
   private metrics: Map<string, RuntimeMetrics> = new Map();
   private snapshots: RuntimeMetricsSnapshot[] = [];
 
@@ -228,6 +232,74 @@ export class RuntimeMetricsAggregator implements IRuntimeMetricsAggregator {
   clear(): void {
     this.metrics.clear();
     this.snapshots = [];
+  }
+
+  // CognitiveProfiler implementation
+  getProfilerReport(executionId: string): CognitiveProfilerReport {
+    const metrics = this.getMetrics(executionId);
+    if (!metrics) {
+      throw new Error(`No metrics found for execution ${executionId}`);
+    }
+
+    return this.buildProfilerReport(metrics);
+  }
+
+  getSessionProfilerReport(sessionId: string): CognitiveProfilerReport {
+    const metrics = this.getSessionMetrics(sessionId);
+    if (!metrics) {
+      throw new Error(`No metrics found for session ${sessionId}`);
+    }
+
+    return this.buildProfilerReport(metrics);
+  }
+
+  getGraphProfilerReport(graphId: string): CognitiveProfilerReport {
+    const metrics = this.getGraphMetrics(graphId);
+    if (!metrics) {
+      throw new Error(`No metrics found for graph ${graphId}`);
+    }
+
+    return this.buildProfilerReport(metrics);
+  }
+
+  private buildProfilerReport(metrics: RuntimeMetrics): CognitiveProfilerReport {
+    const engineBreakdown: EngineBreakdown[] = [];
+    const timeline: TimelineEntry[] = [];
+
+    for (const [engineId, engineMetrics] of Object.entries(metrics.engineMetrics)) {
+      engineBreakdown.push({
+        engineId,
+        engineName: engineId,
+        executionTime: engineMetrics.executionTime,
+        cost: engineMetrics.cost,
+        tokens: engineMetrics.tokens?.total || 0,
+        factsConsumed: 0, // Would need to track per-engine
+        factsProduced: engineMetrics.outputCount,
+        cacheHits: 0, // Would need to track per-engine
+        retries: 0, // Would need to track per-engine
+      });
+
+      timeline.push({
+        engineId,
+        engineName: engineId,
+        startTime: metrics.startTime,
+        endTime: metrics.endTime || new Date(),
+        duration: engineMetrics.executionTime,
+        cost: engineMetrics.cost,
+        tokens: engineMetrics.tokens?.total || 0,
+      });
+    }
+
+    return {
+      executionId: metrics.executionId,
+      sessionId: metrics.sessionId,
+      graphId: metrics.graphId,
+      totalDuration: metrics.duration || 0,
+      totalCost: metrics.llmCost,
+      totalTokens: metrics.llmTokens.total,
+      engineBreakdown,
+      timeline,
+    };
   }
 
   private aggregateMetrics(metricsList: RuntimeMetrics[]): RuntimeMetrics {

@@ -49,7 +49,7 @@ export interface RuntimeMetrics {
   // Memory metrics
   memoryUsed: number; // bytes
   memoryPeak: number; // bytes
-  memoryLeaked: number; // bytes
+  memoryLeaked:number; // bytes
 
   // Fact metrics
   factsConsumed: number;
@@ -74,7 +74,62 @@ export interface EngineSpecificMetrics {
   cost: number;
   confidence: number;
   outputCount: number;
+  tokens?: {
+    input: number;
+    output: number;
+    total: number;
+  };
   metadata: Record<string, unknown>;
+}
+
+export interface CognitiveProfiler {
+  /**
+   * Get profiler report for an execution
+   */
+  getProfilerReport(executionId: string): CognitiveProfilerReport;
+
+  /**
+   * Get profiler report for a session
+   */
+  getSessionProfilerReport(sessionId: string): CognitiveProfilerReport;
+
+  /**
+   * Get profiler report for a graph
+   */
+  getGraphProfilerReport(graphId: string): CognitiveProfilerReport;
+}
+
+export interface CognitiveProfilerReport {
+  executionId: string;
+  sessionId: string;
+  graphId: string;
+  totalDuration: number;
+  totalCost: number;
+  totalTokens: number;
+  engineBreakdown: EngineBreakdown[];
+  timeline: TimelineEntry[];
+}
+
+export interface EngineBreakdown {
+  engineId: string;
+  engineName: string;
+  executionTime: number;
+  cost: number;
+  tokens: number;
+  factsConsumed: number;
+  factsProduced: number;
+  cacheHits: number;
+  retries: number;
+}
+
+export interface TimelineEntry {
+  engineId: string;
+  engineName: string;
+  startTime: Date;
+  endTime: Date;
+  duration: number;
+  cost: number;
+  tokens: number;
 }
 
 export interface RuntimeMetricsSnapshot {
