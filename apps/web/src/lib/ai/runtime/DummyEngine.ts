@@ -1,6 +1,7 @@
 import { Engine, EngineInput } from "../contracts/Engine";
 import { EngineResult } from "../contracts/EngineResult";
 import { BaseEvent } from "../contracts/Event";
+import { createEventEnvelope } from "../contracts/EventEnvelope";
 
 // ===================================================================
 // DUMMY ENGINE — Test Engine for Phase A.1
@@ -8,6 +9,8 @@ import { BaseEvent } from "../contracts/Event";
 
 export interface DummyContext {
   testValue: string;
+  traceId?: string;
+  correlationId?: string;
 }
 
 export interface DummyPayload {
@@ -18,6 +21,16 @@ export type DummyInput = EngineInput<DummyContext, DummyPayload>;
 
 export interface DummyEvent extends BaseEvent<{ message: string }> {
   eventType: "DUMMY_EVENT";
+  envelope: {
+    eventId: string;
+    traceId: string;
+    correlationId: string;
+    causationId: string | null;
+    occurredAt: Date;
+    engineId: string;
+    engineVersion: string;
+    schemaVersion: string;
+  };
 }
 
 export class DummyEngine implements Engine<DummyInput, DummyEvent> {
@@ -26,6 +39,13 @@ export class DummyEngine implements Engine<DummyInput, DummyEvent> {
 
   async execute(input: DummyInput): Promise<EngineResult<DummyEvent>> {
     const startTime = Date.now();
+
+    const envelope = createEventEnvelope(
+      this.name,
+      this.version,
+      input.context.traceId,
+      input.context.correlationId
+    );
 
     const event: DummyEvent = {
       id: crypto.randomUUID(),
@@ -38,6 +58,7 @@ export class DummyEngine implements Engine<DummyInput, DummyEvent> {
         message: input.payload.message,
       },
       createdAt: new Date(),
+      envelope,
     };
 
     const durationMs = Date.now() - startTime;
