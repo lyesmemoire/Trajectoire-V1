@@ -1,14 +1,20 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { TemporalExtractor } from "../../apps/web/src/lib/ai/engines/temporal/TemporalExtractor";
+import { TemporalExtractionValidator } from "../../apps/web/src/lib/ai/engines/temporal/TemporalExtractionValidator";
+import { TemporalCatalogProvider } from "../../apps/web/src/lib/ai/catalogs/TemporalCatalogProvider";
 import { TimelineBuilder } from "../../apps/web/src/lib/ai/engines/temporal/TimelineBuilder";
 import { TemporalValidator } from "../../apps/web/src/lib/ai/engines/temporal/TemporalValidator";
 
 describe("Phase A.12 - Temporal Runtime Tests", () => {
   describe("TemporalExtractor", () => {
     let extractor: TemporalExtractor;
+    let catalogProvider: TemporalCatalogProvider;
+    let validator: TemporalExtractionValidator;
 
     beforeEach(() => {
-      extractor = new TemporalExtractor("1.0.0", "openai");
+      catalogProvider = new TemporalCatalogProvider();
+      validator = new TemporalExtractionValidator(catalogProvider);
+      extractor = new TemporalExtractor(validator, "1.0.0", "openai");
     });
 
     it("should extract temporal information from observations", async () => {

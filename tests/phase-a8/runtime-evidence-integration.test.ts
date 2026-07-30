@@ -1,15 +1,18 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { DefaultCognitiveRuntime } from "../../apps/web/src/lib/ai/runtime/CognitiveRuntime";
 import { EvidenceEngine, EvidenceManifest } from "../../apps/web/src/lib/ai/engines/EvidenceEngine";
+import { EvidencePolicyRegistry } from "../../apps/web/src/lib/ai/engines/evidence/policies/EvidencePolicyRegistry";
 import { InvestigationContext } from "../../apps/web/src/domain/cognitive/InvestigationContext";
 import { EngineInput } from "../../apps/web/src/lib/ai/contracts/Engine";
 
 describe("Phase A.8 - Runtime + EvidenceEngine Integration Tests", () => {
   let runtime: DefaultCognitiveRuntime;
   let context: InvestigationContext;
+  let policyRegistry: EvidencePolicyRegistry;
 
   beforeEach(() => {
     runtime = new DefaultCognitiveRuntime();
+    policyRegistry = new EvidencePolicyRegistry();
     context = {
       sessionId: "test-session",
       candidateId: "candidate-1",
@@ -28,7 +31,7 @@ describe("Phase A.8 - Runtime + EvidenceEngine Integration Tests", () => {
   });
 
   it("should execute EvidenceEngine via Runtime", async () => {
-    const evidenceEngine = new EvidenceEngine();
+    const evidenceEngine = new EvidenceEngine(policyRegistry);
     runtime.getRegistry().register(evidenceEngine);
 
     await runtime.initialize("test-session", context);
@@ -64,7 +67,7 @@ describe("Phase A.8 - Runtime + EvidenceEngine Integration Tests", () => {
   });
 
   it("should receive EVIDENCE_DETECTED event", async () => {
-    const evidenceEngine = new EvidenceEngine();
+    const evidenceEngine = new EvidenceEngine(policyRegistry);
     runtime.getRegistry().register(evidenceEngine);
 
     await runtime.initialize("test-session", context);
@@ -103,7 +106,7 @@ describe("Phase A.8 - Runtime + EvidenceEngine Integration Tests", () => {
   });
 
   it("should receive EVIDENCE_STRENGTH_CALCULATED event", async () => {
-    const evidenceEngine = new EvidenceEngine();
+    const evidenceEngine = new EvidenceEngine(policyRegistry);
     runtime.getRegistry().register(evidenceEngine);
 
     await runtime.initialize("test-session", context);
@@ -142,7 +145,7 @@ describe("Phase A.8 - Runtime + EvidenceEngine Integration Tests", () => {
   });
 
   it("should record evidence in ledger via Runtime", async () => {
-    const evidenceEngine = new EvidenceEngine();
+    const evidenceEngine = new EvidenceEngine(policyRegistry);
     runtime.getRegistry().register(evidenceEngine);
 
     await runtime.initialize("test-session", context);

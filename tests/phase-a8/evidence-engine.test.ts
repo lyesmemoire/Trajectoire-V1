@@ -3,17 +3,16 @@ import { EvidenceEngine, EvidenceManifest } from "../../apps/web/src/lib/ai/engi
 import { EvidenceDimensionCatalog, getDimension } from "../../apps/web/src/domain/cognitive/catalogs/EvidenceDimensionCatalog";
 import { EvidenceLedger } from "../../apps/web/src/lib/ai/engines/evidence/EvidenceLedger";
 import { EvidenceLinker } from "../../apps/web/src/lib/ai/engines/evidence/EvidenceLinker";
-import { MinimumEvidencePolicy } from "../../apps/web/src/lib/ai/engines/evidence/policies/MinimumEvidencePolicy";
-import { EvidenceQualityPolicy } from "../../apps/web/src/lib/ai/engines/evidence/policies/EvidenceQualityPolicy";
-import { CorroborationPolicy } from "../../apps/web/src/lib/ai/engines/evidence/policies/CorroborationPolicy";
-import { WeakEvidencePolicy } from "../../apps/web/src/lib/ai/engines/evidence/policies/WeakEvidencePolicy";
+import { EvidencePolicyRegistry } from "../../apps/web/src/lib/ai/engines/evidence/policies/EvidencePolicyRegistry";
 import { EngineInput } from "../../apps/web/src/lib/ai/contracts/Engine";
 
 describe("Phase A.8 - EvidenceEngine Tests", () => {
   let engine: EvidenceEngine;
+  let policyRegistry: EvidencePolicyRegistry;
 
   beforeEach(() => {
-    engine = new EvidenceEngine();
+    policyRegistry = new EvidencePolicyRegistry();
+    engine = new EvidenceEngine(policyRegistry);
   });
 
   it("should have correct manifest", () => {

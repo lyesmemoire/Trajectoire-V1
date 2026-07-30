@@ -1,11 +1,17 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { ContradictionEngine } from "../../apps/web/src/lib/ai/engines/ContradictionEngine";
+import { ContradictionPolicyRegistry } from "../../apps/web/src/lib/ai/engines/contradiction/policies/ContradictionPolicyRegistry";
+import { ContradictionValidatorRegistry } from "../../apps/web/src/lib/ai/engines/contradiction/ContradictionValidatorRegistry";
 
 describe("Phase A.11 - ContradictionEngine Tests", () => {
   let engine: ContradictionEngine;
+  let policyRegistry: ContradictionPolicyRegistry;
+  let validatorRegistry: ContradictionValidatorRegistry;
 
   beforeEach(() => {
-    engine = new ContradictionEngine();
+    policyRegistry = new ContradictionPolicyRegistry();
+    validatorRegistry = new ContradictionValidatorRegistry();
+    engine = new ContradictionEngine(policyRegistry, validatorRegistry);
   });
 
   it("should have correct manifest", () => {

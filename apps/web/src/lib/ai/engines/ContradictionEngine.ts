@@ -52,9 +52,9 @@ export class ContradictionEngine extends BaseEngine<
   private readonly validatorRegistry: ContradictionValidatorRegistry;
 
   constructor(
-    config?: Partial<BaseEngineConfig>,
-    policyRegistry?: ContradictionPolicyRegistry,
-    validatorRegistry?: ContradictionValidatorRegistry
+    policyRegistry: ContradictionPolicyRegistry,
+    validatorRegistry: ContradictionValidatorRegistry,
+    config?: Partial<BaseEngineConfig>
   ) {
     super({
       name: "ContradictionEngine",
@@ -64,8 +64,8 @@ export class ContradictionEngine extends BaseEngine<
     });
 
     this.ledger = new ContradictionLedger();
-    this.policyRegistry = policyRegistry || new ContradictionPolicyRegistry();
-    this.validatorRegistry = validatorRegistry || new ContradictionValidatorRegistry();
+    this.policyRegistry = policyRegistry;
+    this.validatorRegistry = validatorRegistry;
   }
 
   protected async process(

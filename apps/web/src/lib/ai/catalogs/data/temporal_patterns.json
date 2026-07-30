@@ -1,0 +1,109 @@
+{
+  "version": "1.0.0",
+  "patterns": [
+    {
+      "id": "year",
+      "name": "Year",
+      "regex": "\\b(20\\d{2}|19\\d{2})\\b",
+      "description": "Matches 4-digit years (1900-2099)"
+    },
+    {
+      "id": "date",
+      "name": "Date",
+      "regex": "\\d{1,2}\\/\\d{1,2}\\/\\d{4}",
+      "description": "Matches MM/DD/YYYY or DD/MM/YYYY"
+    },
+    {
+      "id": "month-day",
+      "name": "Month/Day",
+      "regex": "\\d{1,2}\\/\\d{1,2}",
+      "description": "Matches MM/DD or DD/MM"
+    },
+    {
+      "id": "years-duration",
+      "name": "Years Duration",
+      "regex": "\\d{1,2}\\s*years?",
+      "description": "Matches X years"
+    },
+    {
+      "id": "months-duration",
+      "name": "Months Duration",
+      "regex": "\\d{1,2}\\s*months?",
+      "description": "Matches X months"
+    },
+    {
+      "id": "weeks-duration",
+      "name": "Weeks Duration",
+      "regex": "\\d{1,2}\\s*weeks?",
+      "description": "Matches X weeks"
+    },
+    {
+      "id": "days-duration",
+      "name": "Days Duration",
+      "regex": "\\d{1,2}\\s*days?",
+      "description": "Matches X days"
+    },
+    {
+      "id": "hours-duration",
+      "name": "Hours Duration",
+      "regex": "\\d{1,2}\\s*hours?",
+      "description": "Matches X hours"
+    },
+    {
+      "id": "month-name",
+      "name": "Month Name",
+      "regex": "january|february|march|april|may|june|july|august|september|october|november|december",
+      "description": "Matches month names"
+    },
+    {
+      "id": "day-name",
+      "name": "Day Name",
+      "regex": "monday|tuesday|wednesday|thursday|friday|saturday|sunday",
+      "description": "Matches day names"
+    },
+    {
+      "id": "relative-today",
+      "name": "Relative Today",
+      "regex": "yesterday|today|tomorrow",
+      "description": "Matches relative days"
+    },
+    {
+      "id": "relative-last",
+      "name": "Relative Last",
+      "regex": "last week|last month|last year",
+      "description": "Matches last week/month/year"
+    },
+    {
+      "id": "relative-next",
+      "name": "Relative Next",
+      "regex": "next week|next month|next year",
+      "description": "Matches next week/month/year"
+    }
+  ],
+  "extractionRules": [
+    {
+      "id": "employment-rule",
+      "eventType": "employment",
+      "patterns": ["worked", "job", "position", "employed", "hired", "joined"],
+      "description": "Employment-related events"
+    },
+    {
+      "id": "project-rule",
+      "eventType": "project",
+      "patterns": ["project", "migration", "deployment", "implementation", "delivery"],
+      "description": "Project-related events"
+    },
+    {
+      "id": "learning-rule",
+      "eventType": "learning",
+      "patterns": ["learned", "studied", "training", "course", "certification", "education"],
+      "description": "Learning-related events"
+    },
+    {
+      "id": "incident-rule",
+      "eventType": "incident",
+      "patterns": ["incident", "outage", "failure", "crash", "downtime", "error"],
+      "description": "Incident-related events"
+    }
+  ]
+}

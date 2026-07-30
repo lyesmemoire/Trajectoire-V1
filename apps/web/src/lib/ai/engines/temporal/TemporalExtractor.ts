@@ -3,6 +3,7 @@
 // ===================================================================
 
 import { TemporalCatalog } from "./TemporalCatalog";
+import { TemporalExtractionValidator } from "./TemporalExtractionValidator";
 
 export interface TemporalExtractionInput {
   observations: any[];
@@ -36,8 +37,14 @@ export interface TemporalExtractionResult {
 export class TemporalExtractor {
   private readonly promptVersion: string;
   private readonly provider: string;
+  private readonly validator: TemporalExtractionValidator;
 
-  constructor(promptVersion: string = "1.0.0", provider: string = "openai") {
+  constructor(
+    validator: TemporalExtractionValidator,
+    promptVersion: string = "1.0.0",
+    provider: string = "openai"
+  ) {
+    this.validator = validator;
     this.promptVersion = promptVersion;
     this.provider = provider;
   }
@@ -78,30 +85,31 @@ export class TemporalExtractor {
   }
 
   /**
-   * Extract temporal information from a single content using TemporalCatalog
+   * Extract temporal information from a single content using TemporalExtractionValidator
    */
   private async extractFromContent(content: string, observationId: string): Promise<TemporalEvent | null> {
-    // Delegate all business logic to TemporalCatalog
-    const temporalExpressions = TemporalCatalog.extractTemporalExpressions(content);
+    // Delegate all business logic to TemporalExtractionValidator
+    const result = this.validator.validate({
+      content,
+      patterns: TemporalCatalog.getPatterns(),
+      extractionRules: TemporalCatalog.getExtractionRules(),
+    });
     
-    if (temporalExpressions.length === 0) {
+    if (result.expressions.length === 0) {
       return null;
     }
-
-    const timestamp = TemporalCatalog.parseTimestamp(content);
-    const duration = TemporalCatalog.parseDuration(content);
-    const eventType = TemporalCatalog.inferEventType(content);
-    const confidence = TemporalCatalog.calculateConfidence(temporalExpressions, timestamp, duration);
     
     return {
       id: crypto.randomUUID(),
       observationId,
-      eventType,
-      timestamp,
-      duration,
+      eventType: result.eventType,
+      timestamp: result.timestamp,
+      startDate: result.timestamp,
+      endDate: result.duration ? new Date((result.timestamp?.getTime() || Date.now()) + result.duration) : undefined,
+      duration: result.duration,
       description: content,
-      confidence,
-      temporalExpressions,
+      confidence: result.confidence,
+      temporalExpressions: result.expressions,
     };
   }
 

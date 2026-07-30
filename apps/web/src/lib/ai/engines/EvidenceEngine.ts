@@ -42,15 +42,16 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
   private readonly ledger: EvidenceLedger;
   private readonly policyRegistry: EvidencePolicyRegistry;
 
-  constructor(policyRegistry?: EvidencePolicyRegistry) {
+  constructor(policyRegistry: EvidencePolicyRegistry, config?: Partial<BaseEngineConfig>) {
     super({
       name: "EvidenceEngine",
       version: EvidenceManifest.version,
       schemaVersion: "1.0",
+      ...config,
     });
 
     this.ledger = new EvidenceLedger();
-    this.policyRegistry = policyRegistry || new EvidencePolicyRegistry();
+    this.policyRegistry = policyRegistry;
   }
 
   protected async process(
