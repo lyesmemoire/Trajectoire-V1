@@ -93,7 +93,7 @@ export class MemoryEventStore implements EventStore {
     filtered.sort((a, b) => a.sequence - b.sequence);
 
     const paginated = limit ? filtered.slice(offset, offset + limit) : filtered;
-    const lastSequence = filtered.length > 0 ? filtered[filtered.length - 1].sequence : undefined;
+    const lastSequence = filtered.length > 0 ? filtered[filtered.length - 1]?.sequence : undefined;
 
     return {
       events: paginated,

@@ -3,13 +3,10 @@ import { EngineManifest } from "./EngineManifest";
 import { BaseEvent } from "../contracts/Event";
 import { ContradictionCatalog, getContradictionType } from "../../../domain/cognitive/catalogs/ContradictionCatalog";
 import { ContradictionLedger, ContradictionAssessment } from "./contradiction/ContradictionLedger";
-import { BaseContradictionPolicy, ContradictionPolicyContext } from "./contradiction/policies/ContradictionPolicy";
-import { BlockingContradictionPolicy } from "./contradiction/policies/BlockingContradictionPolicy";
-import { RecoverableContradictionPolicy } from "./contradiction/policies/RecoverableContradictionPolicy";
-import { BenefitOfDoubtPolicy } from "./contradiction/policies/BenefitOfDoubtPolicy";
-import { FalsePositivePolicy } from "./contradiction/policies/FalsePositivePolicy";
+import { ContradictionPolicyContext } from "./contradiction/policies/ContradictionPolicy";
 import { ContradictionEventFactory } from "./contradiction/ContradictionEventFactory";
-import { ContradictionValidator } from "./contradiction/ContradictionValidator";
+import { ContradictionValidatorRegistry } from "./contradiction/ContradictionValidatorRegistry";
+import { ContradictionPolicyRegistry } from "./contradiction/policies/ContradictionPolicyRegistry";
 
 // ===================================================================
 // CONTRADICTION ENGINE — Pure Orchestrator (no business logic)
@@ -51,10 +48,14 @@ export class ContradictionEngine extends BaseEngine<
   BaseEvent
 > {
   private readonly ledger: ContradictionLedger;
-  private readonly policies: Map<string, BaseContradictionPolicy>;
-  private readonly validator: ContradictionValidator;
+  private readonly policyRegistry: ContradictionPolicyRegistry;
+  private readonly validatorRegistry: ContradictionValidatorRegistry;
 
-  constructor(config?: Partial<BaseEngineConfig>) {
+  constructor(
+    config?: Partial<BaseEngineConfig>,
+    policyRegistry?: ContradictionPolicyRegistry,
+    validatorRegistry?: ContradictionValidatorRegistry
+  ) {
     super({
       name: "ContradictionEngine",
       version: "1.0.0",
@@ -63,13 +64,8 @@ export class ContradictionEngine extends BaseEngine<
     });
 
     this.ledger = new ContradictionLedger();
-    this.policies = new Map([
-      ["blocking-contradiction", new BlockingContradictionPolicy()],
-      ["recoverable-contradiction", new RecoverableContradictionPolicy()],
-      ["benefit-of-doubt", new BenefitOfDoubtPolicy()],
-      ["false-positive", new FalsePositivePolicy()],
-    ]);
-    this.validator = new ContradictionValidator();
+    this.policyRegistry = policyRegistry || new ContradictionPolicyRegistry();
+    this.validatorRegistry = validatorRegistry || new ContradictionValidatorRegistry();
   }
 
   protected async process(
@@ -142,7 +138,7 @@ export class ContradictionEngine extends BaseEngine<
     }
 
     // Use validator for business logic (pattern matching, confidence calculation)
-    const validationResult = this.validator.validate({
+    const validationResult = this.validatorRegistry.validateContradiction({
       observationA: obsA,
       observationB: obsB,
       contradictionType,
@@ -158,10 +154,10 @@ export class ContradictionEngine extends BaseEngine<
       metadata: {},
     };
 
-    const blockingResult = this.policies.get("blocking-contradiction")?.evaluate(policyContext);
-    const recoverableResult = this.policies.get("recoverable-contradiction")?.evaluate(policyContext);
-    const benefitOfDoubtResult = this.policies.get("benefit-of-doubt")?.evaluate(policyContext);
-    const falsePositiveResult = this.policies.get("false-positive")?.evaluate(policyContext);
+    const blockingResult = this.policyRegistry.getBlockingResult(policyContext);
+    const recoverableResult = this.policyRegistry.getRecoverableResult(policyContext);
+    const benefitOfDoubtResult = this.policyRegistry.getBenefitOfDoubtResult(policyContext);
+    const falsePositiveResult = this.policyRegistry.getFalsePositiveResult(policyContext);
 
     // Determine assessment based on policy results
     const isBlocking = blockingResult?.passed === false;
@@ -220,7 +216,7 @@ export class ContradictionEngine extends BaseEngine<
     // Use ContradictionCatalog to drive detection
     for (const [typeId, typeConfig] of ContradictionCatalog.entries()) {
       // Delegate pattern matching to validator
-      const validationResult = this.validator.validate({
+      const validationResult = this.validatorRegistry.validateContradiction({
         observationA: obsA,
         observationB: obsB,
         contradictionType: typeId,

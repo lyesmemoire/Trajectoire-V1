@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "items": [
+    {
+      "id": "factual-number-mismatch",
+      "name": "Factual Number Mismatch",
+      "description": "Two observations contain different numbers for the same entity",
+      "category": "factual",
+      "severity": "high",
+      "policy": "blocking-contradiction",
+      "metadata": {
+        "ruleId": "contradiction-001",
+        "ruleVersion": "1.0.0"
+      }
+    },
+    {
+      "id": "entity-mismatch",
+      "name": "Entity Mismatch",
+      "description": "Two observations refer to different entities for the same context",
+      "category": "entity",
+      "severity": "critical",
+      "policy": "blocking-contradiction",
+      "metadata": {
+        "ruleId": "contradiction-002",
+        "ruleVersion": "1.0.0"
+      }
+    },
+    {
+      "id": "temporal-overlap",
+      "name": "Temporal Overlap",
+      "description": "Two observations claim to be at different locations at the same time",
+      "category": "temporal",
+      "severity": "medium",
+      "policy": "recoverable-contradiction",
+      "metadata": {
+        "ruleId": "contradiction-003",
+        "ruleVersion": "1.0.0"
+      }
+    },
+    {
+      "id": "technology-mismatch",
+      "name": "Technology Mismatch",
+      "description": "Two observations mention incompatible technologies",
+      "category": "technical",
+      "severity": "low",
+      "policy": "benefit-of-doubt",
+      "metadata": {
+        "ruleId": "contradiction-004",
+        "ruleVersion": "1.0.0"
+      }
+    }
+  ]
+}

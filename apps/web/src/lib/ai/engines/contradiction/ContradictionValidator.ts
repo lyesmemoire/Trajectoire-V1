@@ -18,6 +18,9 @@ export interface ContradictionValidatorResult {
 }
 
 export class ContradictionValidator {
+  readonly id = "contradiction-validator";
+  readonly version = "1.0.0";
+
   /**
    * Validate if two observations contradict each other
    * This contains all business logic for contradiction detection

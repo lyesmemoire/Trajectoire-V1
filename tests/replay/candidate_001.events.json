@@ -1,0 +1,105 @@
+{
+  "version": "1.0.0",
+  "sessionId": "test-session-001",
+  "traceId": "trace-001",
+  "events": [
+    {
+      "id": "evt-001",
+      "sessionId": "test-session-001",
+      "sequence": 1,
+      "eventType": "OBSERVATION_ADDED",
+      "engine": "NormalizerEngine",
+      "engineVersion": "1.0.0",
+      "payload": {
+        "observationId": "obs-001",
+        "content": "I migrated 180 microservices on Kubernetes.",
+        "category": "claim"
+      },
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "metadata": {
+        "traceId": "trace-001",
+        "correlationId": "corr-001"
+      }
+    },
+    {
+      "id": "evt-002",
+      "sessionId": "test-session-001",
+      "sequence": 2,
+      "eventType": "OBSERVATION_ADDED",
+      "engine": "NormalizerEngine",
+      "engineVersion": "1.0.0",
+      "payload": {
+        "observationId": "obs-002",
+        "content": "I migrated 120 microservices on Kubernetes.",
+        "category": "claim"
+      },
+      "createdAt": "2024-01-01T00:00:01.000Z",
+      "metadata": {
+        "traceId": "trace-001",
+        "correlationId": "corr-001"
+      }
+    },
+    {
+      "id": "evt-003",
+      "sessionId": "test-session-001",
+      "sequence": 3,
+      "eventType": "CONTRADICTION_DETECTED",
+      "engine": "ContradictionEngine",
+      "engineVersion": "1.0.0",
+      "payload": {
+        "observationAId": "obs-001",
+        "observationBId": "obs-002",
+        "contradictionType": "factual-number-mismatch",
+        "confidence": 0.85,
+        "reason": "Numbers 180 and 120 do not match"
+      },
+      "createdAt": "2024-01-01T00:00:02.000Z",
+      "metadata": {
+        "traceId": "trace-001",
+        "correlationId": "corr-001",
+        "ruleId": "contradiction-001",
+        "ruleVersion": "1.0.0"
+      }
+    }
+  ],
+  "expectedOutput": {
+    "knowledgeGraph": {
+      "nodes": [
+        {
+          "id": "obs-001",
+          "type": "OBSERVATION",
+          "data": {
+            "content": "I migrated 180 microservices on Kubernetes.",
+            "category": "claim"
+          }
+        },
+        {
+          "id": "obs-002",
+          "type": "OBSERVATION",
+          "data": {
+            "content": "I migrated 120 microservices on Kubernetes.",
+            "category": "claim"
+          }
+        }
+      ],
+      "edges": []
+    },
+    "contradictions": [
+      {
+        "id": "contradiction-001",
+        "observationAId": "obs-001",
+        "observationBId": "obs-002",
+        "type": "factual-number-mismatch",
+        "severity": "high",
+        "confidence": 0.85,
+        "resolved": false
+      }
+    ],
+    "confidence": {
+      "overall": 0.7,
+      "factuality": 0.7,
+      "temporal": 0.8,
+      "evidence": 0.75
+    }
+  }
+}

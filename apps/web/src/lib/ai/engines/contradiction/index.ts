@@ -12,6 +12,7 @@ export { BlockingContradictionPolicy } from "./policies/BlockingContradictionPol
 export { RecoverableContradictionPolicy } from "./policies/RecoverableContradictionPolicy";
 export { BenefitOfDoubtPolicy } from "./policies/BenefitOfDoubtPolicy";
 export { FalsePositivePolicy } from "./policies/FalsePositivePolicy";
+export { ContradictionPolicyRegistry } from "./policies/ContradictionPolicyRegistry";
 export type { ContradictionPolicyContext, ContradictionPolicyResult } from "./policies/ContradictionPolicy";
 
 // Ledger
@@ -23,4 +24,5 @@ export { ContradictionEventFactory } from "./ContradictionEventFactory";
 
 // Validator
 export { ContradictionValidator } from "./ContradictionValidator";
+export { ContradictionValidatorRegistry } from "./ContradictionValidatorRegistry";
 export type { ContradictionValidatorContext, ContradictionValidatorResult } from "./ContradictionValidator";
