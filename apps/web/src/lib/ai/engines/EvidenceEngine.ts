@@ -28,6 +28,8 @@ export interface EvidencePayload {
 export const EvidenceManifest: EngineManifest = {
   id: "evidence",
   version: "1.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Evaluates evidence from observations using LLM + Policies (no direct link decisions)",
   consumes: ["ObservationFacts", "EntityFacts"],
   produces: ["EvidenceAssessments"],

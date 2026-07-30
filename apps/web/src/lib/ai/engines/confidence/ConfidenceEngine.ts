@@ -52,6 +52,8 @@ export interface ConfidenceFactor {
 export const ConfidenceManifest: EngineManifest = {
   id: "confidence",
   version: "1.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Calculates overall confidence using deterministic rules (no LLM)",
   consumes: ["facts", "evidenceAssessments", "contradictionAssessments", "temporalEvents"],
   produces: ["confidenceResults"],

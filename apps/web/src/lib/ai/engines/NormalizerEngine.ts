@@ -19,6 +19,8 @@ export interface NormalizerPayload {
 export const NormalizerManifest: EngineManifest = {
   id: "normalizer",
   version: "1.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Normalize ASR transcript (punctuation, hesitation removal, sentence segmentation, Unicode normalization)",
   consumes: ["RawTranscript"],
   produces: ["NormalizedText"],

@@ -26,6 +26,8 @@ export interface ContradictionPayload {
 export const ContradictionManifest: EngineManifest = {
   id: "contradiction",
   version: "1.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Detects contradictions between observations using catalog-driven policies",
   consumes: ["observationFacts", "entityFacts"],
   produces: ["contradictionFacts"],

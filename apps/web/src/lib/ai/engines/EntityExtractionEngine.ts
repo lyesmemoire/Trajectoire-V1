@@ -23,6 +23,8 @@ export interface EntityExtractionPayload {
 export const EntityExtractionManifest: EngineManifest = {
   id: "entity-extraction",
   version: "1.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Extract and normalize entities (technologies, companies, dates, metrics) from normalized text",
   consumes: ["NormalizedText"],
   produces: ["EntityFacts"],

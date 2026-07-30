@@ -22,6 +22,8 @@ export interface PerceptionPayload {
 export const PerceptionManifest: EngineManifest = {
   id: "perception",
   version: "2.0.0",
+  manifestVersion: "1.0.0",
+  minimumRuntimeVersion: "1.0.0",
   description: "Extract observations from normalized text and entity facts (no inference, no evaluation)",
   consumes: ["NormalizedText", "EntityFacts"],
   produces: ["ObservationFacts"],

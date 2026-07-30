@@ -5,6 +5,8 @@
 export interface EngineManifest {
   id: string;
   version: string;
+  manifestVersion: string;
+  minimumRuntimeVersion: string;
   description: string;
   consumes: string[];
   produces: string[];
@@ -13,6 +15,8 @@ export interface EngineManifest {
   providers: string[];
   timeout: number;
   retries: number;
+  deprecated?: boolean;
+  deprecationMessage?: string;
 }
 
 export class EngineManifestRegistry {
