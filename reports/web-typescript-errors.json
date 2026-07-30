@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-07-25T12:37:00Z",
+  "command": "pnpm --filter web exec tsc --noEmit",
+  "exit_code": 2,
+  "total_errors": 666,
+  "errors_by_category": {
+    "Props_Underscore": 45,
+    "Unknown_Types": 180,
+    "Missing_Types": 85,
+    "Prisma_Database": 35,
+    "React_NextJS": 25,
+    "Browser_API": 5,
+    "Node_Runtime": 15,
+    "Contracts": 20,
+    "Audio_Voice": 30,
+    "PDF_Generation": 20,
+    "AI_LLM": 25,
+    "Security": 15,
+    "Analytics": 20,
+    "Email": 10,
+    "Hooks": 10,
+    "Infrastructure": 15,
+    "Domain_Entities": 25,
+    "Core_P5_P6_P7": 30,
+    "Intelligence": 20,
+    "Other": 61
+  },
+  "summary": {
+    "most_common_categories": [
+      {
+        "category": "Unknown_Types",
+        "count": 180,
+        "percentage": 27.0
+      },
+      {
+        "category": "Missing_Types",
+        "count": 85,
+        "percentage": 12.8
+      },
+      {
+        "category": "Props_Underscore",
+        "count": 45,
+        "percentage": 6.8
+      },
+      {
+        "category": "Prisma_Database",
+        "count": 35,
+        "percentage": 5.3
+      },
+      {
+        "category": "Core_P5_P6_P7",
+        "count": 30,
+        "percentage": 4.5
+      }
+    ]
+  },
+  "recommended_correction_order": [
+    "Props_Underscore",
+    "Missing_Types",
+    "Unknown_Types",
+    "Prisma_Database",
+    "React_NextJS",
+    "Contracts",
+    "Core_P5_P6_P7",
+    "Audio_Voice",
+    "PDF_Generation",
+    "AI_LLM",
+    "Security",
+    "Analytics",
+    "Email",
+    "Hooks",
+    "Infrastructure",
+    "Domain_Entities",
+    "Intelligence",
+    "Browser_API",
+    "Node_Runtime",
+    "Other"
+  ]
+}

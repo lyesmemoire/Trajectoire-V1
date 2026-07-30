@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { TenantResolver } from "../services/tenant-resolver";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       tenantId?: string;
@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-export function createTenantMiddleware(resolver: TenantResolver) {
+export function createTenantMiddleware(resolver: _TenantResolver) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.principal) {
@@ -21,7 +21,7 @@ export function createTenantMiddleware(resolver: TenantResolver) {
       req.tenantId = tenantId;
       
       next();
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(403).json({ error: "Tenant resolution failed", details: err.message });
     }
   };

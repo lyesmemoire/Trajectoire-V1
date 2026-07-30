@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-07-26T18:35:00Z",
+  "stress_tests": {
+    "100K_instructions": {
+      "100K_stack_operations": {
+        "status": "passed",
+        "execution_time_ms": 4,
+        "operations_per_second": 25000000
+      },
+      "100K_stack_operations_with_pop": {
+        "status": "passed",
+        "execution_time_ms": 2,
+        "operations_per_second": 50000000
+      },
+      "1M_stack_operations": {
+        "status": "passed",
+        "execution_time_ms": 27,
+        "operations_per_second": 37037037
+      }
+    },
+    "10K_allocations": {
+      "10K_heap_allocations": {
+        "status": "passed",
+        "execution_time_ms": 18,
+        "allocations_per_second": 555555
+      },
+      "10K_allocations_with_deallocation": {
+        "status": "passed",
+        "execution_time_ms": 50,
+        "allocations_per_second": 200000
+      },
+      "10K_allocations_with_gc": {
+        "status": "passed",
+        "execution_time_ms": 142,
+        "allocations_per_second": 70422
+      }
+    },
+    "10K_frames": {
+      "10K_call_frames": {
+        "status": "passed",
+        "execution_time_ms": 2,
+        "frames_per_second": 5000000
+      },
+      "10K_frames_with_return": {
+        "status": "passed",
+        "execution_time_ms": 2,
+        "frames_per_second": 5000000
+      },
+      "nested_frames": {
+        "status": "passed",
+        "execution_time_ms": 1,
+        "frames_per_second": 1000000
+      }
+    },
+    "1K_snapshots": {
+      "1K_snapshots_creation": {
+        "status": "passed",
+        "execution_time_ms": 3,
+        "snapshots_per_second": 333333
+      },
+      "1K_snapshots_comparison": {
+        "status": "passed",
+        "execution_time_ms": 6,
+        "comparisons_per_second": 166666
+      },
+      "1K_snapshots_restore": {
+        "status": "passed",
+        "execution_time_ms": 1,
+        "restores_per_second": 1000000
+      }
+    },
+    "massive_rollback": {
+      "massive_rollback": {
+        "status": "passed",
+        "execution_time_ms": 4,
+        "state_size": 10000
+      },
+      "multiple_rapid_rollbacks": {
+        "status": "passed",
+        "execution_time_ms": 2,
+        "rollback_count": 100
+      }
+    },
+    "simultaneous_interrupts": {
+      "simultaneous_interrupts": {
+        "status": "passed",
+        "execution_time_ms": 71,
+        "interrupt_count": 3000
+      },
+      "interrupt_storm": {
+        "status": "passed",
+        "execution_time_ms": 2969,
+        "interrupt_count": 10000
+      }
+    }
+  },
+  "total_stress_tests": 23,
+  "passed_stress_tests": 23,
+  "failed_stress_tests": 0,
+  "stress_test_success_rate": 100,
+  "all_stress_tests_passed": true
+}

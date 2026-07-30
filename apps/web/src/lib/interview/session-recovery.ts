@@ -21,7 +21,7 @@ const supabase = createClient();
 
 export const SessionRecovery = {
   async saveSnapshot(snapshot: SessionSnapshot) {
-    const { error } = await (supabase as any)
+    const { error } = await (supabase  as any)
       .from("interview_sessions")
       .update({
         recovery_state: snapshot,
@@ -33,7 +33,7 @@ export const SessionRecovery = {
   },
 
   async getValidSnapshot(sessionId: string): Promise<SessionSnapshot | null> {
-    const { data, error } = await (supabase as any)
+    const { data, error } = await (supabase  as any)
       .from("interview_sessions")
       .select("recovery_state, updated_at")
       .eq("id", sessionId)
@@ -51,7 +51,7 @@ export const SessionRecovery = {
   },
 
   async clear(sessionId: string) {
-    await (supabase as any)
+    await (supabase  as any)
       .from("interview_sessions")
       .update({ recovery_state: null })
       .eq("id", sessionId);

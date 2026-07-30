@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-07-24T16:29:49.928Z",
+  "repository": "c:\\Trajectoire",
+  "stats": {
+    "totalFiles": 9755,
+    "sourceFiles": 2727,
+    "generatedFiles": 86,
+    "duplicatedFiles": 0,
+    "generatedContracts": 6,
+    "packages": 15,
+    "sdks": 2,
+    "compilerModules": 16,
+    "runtimeModules": 1,
+    "cvmModules": 22,
+    "cprModules": 23
+  },
+  "details": {
+    "packageManager": "pnpm",
+    "nodeVersion": ">=18",
+    "pnpmVersion": ">=8",
+    "monorepo": true,
+    "workspaces": [
+      "apps",
+      "packages"
+    ]
+  }
+}

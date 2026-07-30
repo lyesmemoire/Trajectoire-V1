@@ -24,10 +24,8 @@ const ALLOWED_PROPERTIES = [
 /**
  * Scrubs any property not explicitly whitelisted.
  */
-export function sanitizeAnalyticsPayload(
-  properties: Record<string, any>,
-): Record<string, any> {
-  const sanitized: Record<string, any> = {};
+export function sanitizeAnalyticsPayload(properties: Record<string, _unknown>, ): Record<string, unknown> {
+  const sanitized: Record<string, unknown> = {};
 
   for (const key of Object.keys(properties)) {
     if (ALLOWED_PROPERTIES.includes(key)) {

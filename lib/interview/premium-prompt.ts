@@ -1,9 +1,5 @@
-import { PremiumInterviewSession } from "@/types/premium-interview";
 
-export function buildPremiumPrompt(
-  session: PremiumInterviewSession,
-  transcript: { role: "interviewer" | "candidate"; content: string }[],
-) {
+export function buildPremiumPrompt(session: _PremiumInterviewSession, transcript: { role: "interviewer" | "candidate"; content: string }[], ) {
   const summaryText = session.memory?.structuredSummary
     ? `[STATE]\n${session.memory.structuredSummary}\n`
     : "";

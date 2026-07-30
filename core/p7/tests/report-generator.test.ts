@@ -96,7 +96,7 @@ describe("P7.5 — Report Generator", () => {
       expect(report.summary.verdict).toBe("STRONG_HIRE");
 
       const badInput = buildMockInput();
-      (badInput.evaluation as any).score = 35;
+      (badInput.evaluation as unknown).score = 35;
       const badReport = builder.build(badInput);
       expect(badReport.summary.verdict).toBe("NO_HIRE");
     });

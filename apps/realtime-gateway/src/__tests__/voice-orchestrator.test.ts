@@ -6,7 +6,7 @@ import {
 } from "../voice-interview/core/voice-orchestrator-handlers.js";
 import type { TurnContext } from "../voice-interview/core/voice-orchestrator-handlers.js";
 
-const mockState = (): any => ({
+const mockState = (): unknown => ({
   phase: "intro" as const,
   askedQuestions: ["Question 1", "Question 2"],
   jobGap: "gap",

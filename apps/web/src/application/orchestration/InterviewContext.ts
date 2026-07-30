@@ -4,8 +4,6 @@
  * Contains: phase, timing, performance, candidate info, position details
  */
 
-import { z } from "zod";
-
 // Interview Phase
 export enum InterviewPhase {
   INTRODUCTION = "introduction",
@@ -73,13 +71,13 @@ export interface InterviewContext {
   sessionId: string;
   candidate: CandidateInfo;
   position: PositionDetails;
-  phase: InterviewPhase;
+  phase: any;
   status: InterviewStatus;
   
   // Timing
   startTime: Date;
   currentPhaseStartTime: Date;
-  phaseDurations: Map<InterviewPhase, number>;
+  phaseDurations: Map<any, number>;
   totalElapsedTime: number;
   
   // Performance
@@ -101,7 +99,7 @@ export interface InterviewContext {
   lastMessageTime: Date;
   
   // Goals
-  phaseGoals: Map<InterviewPhase, string[]>;
+  phaseGoals: Map<any, string[]>;
   completedGoals: string[];
   
   // Constraints
@@ -195,7 +193,7 @@ export class InterviewContextManager {
   /**
    * Update phase
    */
-  updatePhase(sessionId: string, newPhase: InterviewPhase): void {
+  updatePhase(sessionId: string, newPhase: any): void {
     const context = this.contexts.get(sessionId);
     if (!context) return;
 
@@ -349,7 +347,7 @@ export class InterviewContextManager {
    * Get phase progress
    */
   getPhaseProgress(sessionId: string): {
-    currentPhase: InterviewPhase;
+    currentPhase: any;
     phaseDuration: number;
     totalDuration: number;
     progress: number; // 0-1
@@ -381,8 +379,8 @@ export class InterviewContextManager {
   /**
    * Initialize phase goals
    */
-  private initializePhaseGoals(): Map<InterviewPhase, string[]> {
-    const goals = new Map<InterviewPhase, string[]>();
+  private initializePhaseGoals(): Map<any, string[]> {
+    const goals = new Map<any, string[]>();
 
     goals.set(InterviewPhase.INTRODUCTION, [
       "Establish rapport",

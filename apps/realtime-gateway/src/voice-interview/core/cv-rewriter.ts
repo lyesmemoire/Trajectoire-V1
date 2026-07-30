@@ -133,12 +133,7 @@ Does the rewritten CV introduce fabricated achievements, invented numbers, or un
 
 // ─── Main Orchestration Function ───────────────────────────────
 
-export async function generateExecutiveRewrite(
-  rawCV: string,
-  cabinetReport: FinalCabinetCvReport,
-  targetRole: string,
-  maxRetries = 2
-): Promise<FinalExecutiveRewriteReport> {
+export async function generateExecutiveRewrite(rawCV: string, cabinetReport: FinalCabinetCvReport, targetRole: string, maxRetries = 2): Promise<FinalExecutiveRewriteReport> {
   let attempt = 0;
   let lastRewrite: CvRewriteData | null = null;
   let feedback = "";

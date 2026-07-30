@@ -13,12 +13,7 @@ interface MetricCardProps {
 }
 
 export default function MetricCard({
-  icon: Icon,
-  label,
-  value,
-  subtitle,
-  trend,
-}: MetricCardProps) {
+  icon: Icon, label, value, subtitle, trend, _}: MetricCardProps) {
   return (
     <div className="flex flex-col items-center gap-2 text-center">
       {/* Icône */}

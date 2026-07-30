@@ -23,7 +23,7 @@ export class PresenceRhythmService {
   }> {
     // Le rythme est géré par le timing, pas par le texte
     // Ce service peut ajouter des indicateurs de pause
-    let modified = context.originalDecision;
+    const modified = context.originalDecision;
     
     return {
       modified,

@@ -57,9 +57,9 @@ async function runLoadTest() {
 
     const results = await Promise.allSettled(promises);
     
-    const successes = results.filter((r: any) => r.status === "fulfilled" && r.value.data).length;
-    const failures = results.filter((r: any) => r.status === "fulfilled" && !r.value.data).length;
-    const errors = results.filter((r: any) => r.status === "rejected").length;
+    const successes = results.filter((r: unknown) => r.status === "fulfilled" && r.value.data).length;
+    const failures = results.filter((r: unknown) => r.status === "fulfilled" && !r.value.data).length;
+    const errors = results.filter((r: unknown) => r.status === "rejected").length;
 
     console.log(`\nRESULTS:`);
     console.log(`Successes: ${successes} (Expected: 1)`);
@@ -75,7 +75,7 @@ async function runLoadTest() {
     }
 
     // Verify final balance is 0
-    const { data: finalProfile } = await supabase.from("profiles").select("credits").eq("id", userId).single();
+    const { _data: finalProfile } = await supabase.from("profiles").select("credits").eq("id", userId).single();
     if (finalProfile?.credits !== 0) {
       console.error(`\n❌ TEST FAILED: Final balance is not 0. It is ${finalProfile?.credits}`);
       process.exit(1);

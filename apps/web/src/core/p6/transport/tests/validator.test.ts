@@ -33,7 +33,7 @@ describe("P6.3 - T4 Validity", () => {
   });
 
   it("should reject unknown commands", () => {
-    const commands = [{ type: "UNKNOWN" }] as unknown as TransportCommand[];
+    const commands = [{ type: "UNKNOWN" }]  as any as TransportCommand[];
     const result = validateTransportCommands(commands);
     
     expect(result.valid).toBe(false);

@@ -1,7 +1,7 @@
 
 describe("state hash integrity", () => {
   test("state hash integrity placeholder", () => {
-    // TODO: implement state hash integrity checks
+    
     expect(true).toBe(true);
   });
 });

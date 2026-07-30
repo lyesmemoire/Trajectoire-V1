@@ -1,3 +1,4 @@
+
 /**
  * SessionRepository
  * Repository for interview_sessions table
@@ -63,7 +64,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
       );
     }
 
-    return data as unknown as InterviewSession;
+    return data  as any as InterviewSession;
   }
 
   /**
@@ -107,7 +108,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
       );
     }
 
-    return (data as unknown as InterviewSession[]) || [];
+    return (data  as any as InterviewSession[]) || [];
   }
 
   /**

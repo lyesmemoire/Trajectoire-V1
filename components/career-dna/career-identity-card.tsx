@@ -12,7 +12,7 @@ interface Props {
   previous?: CareerArchetype;
 }
 
-export function CareerIdentityCard({ current, previous }: Props) {
+export function CareerIdentityCard({ current, _previous }: Props) {
   const meta = ARCHETYPES_META[current];
   const isEvolving = previous && previous !== current;
 

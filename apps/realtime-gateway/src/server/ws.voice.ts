@@ -81,7 +81,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         clearTimeout(inactivityTimer);
         inactivityTimer = setTimeout(() => {
           if (process.env.VOICE_DEBUG === "true") {
-            // eslint-disable-next-line no-console
+             
             console.log(
               JSON.stringify({
                 ts: Date.now(),
@@ -148,9 +148,9 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       if (auth?.userId) input.userId = auth.userId;
 
       // Logs structurés légers (observabilité, pas d'infra).
-      const log = (event: string, fields: Record<string, unknown>) => {
+      const log = (event: string, fields: Record<string, _unknown>) => {
         if (process.env.VOICE_DEBUG === "true") {
-          // eslint-disable-next-line no-console
+           
           console.log(JSON.stringify({ ts: Date.now(), event, ...fields }));
         }
       };
@@ -165,9 +165,9 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
           return;
         }
 
-        const v3Input: any = {
+        const v3Input: unknown = {
           sessionId: query.sessionId as string,
-          context: record.interview_context as any
+          context: record.interview_context as unknown
         };
         if (input.userId) v3Input.userId = input.userId;
         if (record.targetRole || input.targetRole) v3Input.targetRole = record.targetRole ?? input.targetRole;

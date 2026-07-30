@@ -32,13 +32,7 @@ export type ResourceType = "user" | "session" | "message" | "report" | "quota" |
 /**
  * Enregistre une action dans l'audit trail
  */
-export async function auditLog(
-  userId: string,
-  action: AuditAction,
-  resourceType: ResourceType,
-  resourceId?: string,
-  metadata?: Record<string, unknown>
-): Promise<void> {
+export async function auditLog(userId: string, action: AuditAction, resourceType: ResourceType, resourceId?: string, metadata?: Record<string, unknown>): Promise<void> {
   const supabase = await createClient();
 
   try {
@@ -57,10 +51,7 @@ export async function auditLog(
 /**
  * Récupère l'historique d'audit pour un utilisateur
  */
-export async function getUserAuditHistory(
-  userId: string,
-  limit: number = 100
-): Promise<Array<{
+export async function getUserAuditHistory(userId: string, limit: number = 100): Promise<Array<{
   action: string;
   resource_type: string;
   resource_id: string | null;
@@ -114,10 +105,7 @@ export async function getRecentAuditLogs(limit: number = 100): Promise<Array<{
 /**
  * Compte les actions par type pour un utilisateur
  */
-export async function getActionCounts(
-  userId: string,
-  days: number = 7
-): Promise<Record<string, number>> {
+export async function getActionCounts(userId: string, days: number = 7): Promise<Record<string, number>> {
   const supabase = await createClient();
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
@@ -146,9 +134,7 @@ export async function getActionCounts(
 /**
  * Détecte les comportements anormaux
  */
-export async function detectAnomalousBehavior(
-  userId: string
-): Promise<{ anomalous: boolean; reason?: string }> {
+export async function detectAnomalousBehavior(userId: string): Promise<{ anomalous: boolean; reason?: string }> {
   const actionCounts = await getActionCounts(userId, 1); // Dernière heure
 
   // Détecter un nombre anormal de simulations

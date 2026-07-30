@@ -24,7 +24,7 @@ type GoldenReport = {
   }[];
 };
 
-function readTrace(filePath: string): any {
+function readTrace(filePath: string): unknown {
   const resolved = path.resolve(filePath);
   const raw = fs.readFileSync(resolved, "utf-8");
   return JSON.parse(raw);

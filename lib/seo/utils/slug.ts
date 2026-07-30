@@ -23,10 +23,7 @@ export function parseInterviewSlug(slug: string): ParsedInterviewSlug | null {
   return null;
 }
 
-export function buildInterviewSlug(
-  jobSlug: string,
-  companySlug: string,
-): string {
+export function buildInterviewSlug(jobSlug: string, companySlug: string, ): string {
   return `${jobSlug}-${companySlug}`;
 }
 

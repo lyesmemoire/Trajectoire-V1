@@ -82,7 +82,7 @@ export class DeepgramAdapter {
       });
 
       this.connection = conn;
-    } catch (err) {
+    } catch {
       this.callbacks.onError?.(err);
     }
   }
@@ -96,7 +96,7 @@ export class DeepgramAdapter {
         chunk.byteOffset + chunk.byteLength,
       ) as ArrayBuffer;
       this.connection?.send(ab);
-    } catch (err) {
+    } catch {
       this.callbacks.onError?.(err);
     }
   }
@@ -116,9 +116,7 @@ export class DeepgramAdapter {
 }
 
 /** Extrait { text, isFinal } d'un événement Deepgram, de façon défensive. */
-export function extractTranscript(
-  data: unknown,
-): { text: string; isFinal: boolean } | null {
+export function extractTranscript(data: _unknown, ): { text: string; isFinal: boolean } | null {
   if (typeof data !== "object" || data === null) return null;
   const d = data as {
     is_final?: boolean;

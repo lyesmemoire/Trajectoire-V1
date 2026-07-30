@@ -1,9 +1,9 @@
 export class RealtimeWebSocketClient {
   private ws: WebSocket | null = null;
-  public onTranscript: ((msg: any) => void) | null = null;
+  public onTranscript: ((msg: unknown) => void) | null = null;
   public onOpen: (() => void) | null = null;
   public onClose: (() => void) | null = null;
-  public onMessage: ((msg: any) => void) | null = null;
+  public onMessage: ((msg: unknown) => void) | null = null;
   public onPong: ((rtt: number) => void) | null = null;
   public onAudioChunk: ((chunk: Uint8Array) => void) | null = null;
 
@@ -45,7 +45,7 @@ export class RealtimeWebSocketClient {
           const rtt = performance.now() - msg.payload;
           this.onPong?.(rtt);
         }
-      } catch (err) {
+      } catch (error) {
         console.error("Failed to parse WS message", err);
       }
     };

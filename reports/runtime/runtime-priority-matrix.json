@@ -1,0 +1,427 @@
+{
+  "auditDate": "2026-07-26",
+  "auditPhase": "Phase 2 - Priorisation Enterprise",
+  "priorityLevels": {
+    "CRITICAL": {
+      "description": "Composants dont une erreur peut provoquer corruption mémoire, perte de données, crash VM, rollback incorrect, deadlock, race condition, fuite mémoire",
+      "components": [
+        {
+          "name": "cognitive-memory-manager",
+          "path": "src/memory/CognitiveMemoryManager.ts",
+          "riskFactors": ["corruption mémoire", "fuite mémoire", "perte de données"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 150,
+          "difficulty": "Haute",
+          "targetCoverage": "98%"
+        },
+        {
+          "name": "memory-block",
+          "path": "src/memory/MemoryBlock.ts",
+          "riskFactors": ["corruption mémoire"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "specialized-memory-manager",
+          "path": "src/memory/SpecializedMemoryManager.ts",
+          "riskFactors": ["corruption mémoire", "fuite mémoire"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 100,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "execution-context",
+          "path": "compiler/cvm/execution-context.ts",
+          "riskFactors": ["corruption mémoire", "crash VM", "rollback incorrect"],
+          "testDebt": "Faible",
+          "existingTests": 40,
+          "estimatedTests": 80,
+          "difficulty": "Moyenne",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "memory-manager",
+          "path": "compiler/cvm/memory-manager.ts",
+          "riskFactors": ["corruption mémoire", "fuite mémoire", "crash VM"],
+          "testDebt": "Moyen",
+          "existingTests": 50,
+          "estimatedTests": 120,
+          "difficulty": "Haute",
+          "targetCoverage": "98%"
+        },
+        {
+          "name": "instruction-execute",
+          "path": "compiler/cvm/instruction-execute.ts",
+          "riskFactors": ["corruption mémoire", "crash VM", "rollback incorrect"],
+          "testDebt": "Élevé",
+          "existingTests": 45,
+          "estimatedTests": 150,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "rollback-manager",
+          "path": "compiler/cvm/rollback-manager.ts",
+          "riskFactors": ["rollback incorrect", "perte de données", "corruption mémoire"],
+          "testDebt": "Moyen",
+          "existingTests": 40,
+          "estimatedTests": 90,
+          "difficulty": "Haute",
+          "targetCoverage": "98%"
+        },
+        {
+          "name": "garbage-collector",
+          "path": "compiler/cvm/garbage-collector.ts",
+          "riskFactors": ["fuite mémoire", "corruption mémoire", "crash VM"],
+          "testDebt": "Moyen",
+          "existingTests": 60,
+          "estimatedTests": 120,
+          "difficulty": "Haute",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "cluster-manager",
+          "path": "compiler/cpr/cluster-manager.ts",
+          "riskFactors": ["cluster split", "perte de données", "deadlock distribué"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 130,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "runtime-kernel",
+          "path": "compiler/cpr/runtime-kernel.ts",
+          "riskFactors": ["cluster crash", "perte de données", "deadlock distribué"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 140,
+          "difficulty": "Élevée",
+          "targetCoverage": "98%"
+        },
+        {
+          "name": "consensus-engine",
+          "path": "compiler/cpr/consensus-engine.ts",
+          "riskFactors": ["split brain", "perte de données", "cluster crash"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 160,
+          "difficulty": "Élevée",
+          "targetCoverage": "98%"
+        },
+        {
+          "name": "leader-election",
+          "path": "compiler/cpr/leader-election.ts",
+          "riskFactors": ["split brain", "cluster crash"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 100,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "distributed-memory",
+          "path": "compiler/cpr/distributed-memory.ts",
+          "riskFactors": ["corruption mémoire", "perte de données", "replication failure"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 120,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "recovery-manager",
+          "path": "compiler/cpr/recovery-manager.ts",
+          "riskFactors": ["recovery failure", "cascade failure", "perte de données"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 130,
+          "difficulty": "Élevée",
+          "targetCoverage": "98%"
+        }
+      ]
+    },
+    "HIGH": {
+      "description": "Composants critiques pour scheduler, pipeline, mémoire, interruptions, exceptions, providers",
+      "components": [
+        {
+          "name": "memory-quota",
+          "path": "src/memory/MemoryQuota.ts",
+          "riskFactors": ["quota violation", "fuite mémoire"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 50,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "thread-manager",
+          "path": "compiler/cvm/thread-manager.ts",
+          "riskFactors": ["deadlock", "race condition", "crash VM"],
+          "testDebt": "Faible",
+          "existingTests": 70,
+          "estimatedTests": 80,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        },
+        {
+          "name": "execution-pipeline",
+          "path": "compiler/cvm/execution-pipeline.ts",
+          "riskFactors": ["crash VM", "pipeline deadlock"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 90,
+          "difficulty": "Moyenne",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "instruction-fetch",
+          "path": "compiler/cvm/instruction-fetch.ts",
+          "riskFactors": ["pipeline deadlock", "crash VM"],
+          "testDebt": "Moyen",
+          "existingTests": 35,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "instruction-decode",
+          "path": "compiler/cvm/instruction-decode.ts",
+          "riskFactors": ["pipeline deadlock", "crash VM"],
+          "testDebt": "Moyen",
+          "existingTests": 30,
+          "estimatedTests": 50,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "instruction-cache",
+          "path": "compiler/cvm/instruction-cache.ts",
+          "riskFactors": ["cache corruption"],
+          "testDebt": "Moyen",
+          "existingTests": 25,
+          "estimatedTests": 40,
+          "difficulty": "Faible",
+          "targetCoverage": "94%"
+        },
+        {
+          "name": "exception-handler",
+          "path": "compiler/cvm/exception-handler.ts",
+          "riskFactors": ["crash VM", "exception leak"],
+          "testDebt": "Moyen",
+          "existingTests": 30,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "interrupt-manager",
+          "path": "compiler/cvm/interrupt-manager.ts",
+          "riskFactors": ["deadlock", "race condition", "crash VM"],
+          "testDebt": "Faible",
+          "existingTests": 80,
+          "estimatedTests": 60,
+          "difficulty": "Haute",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "runtime-manager",
+          "path": "compiler/cpr/runtime-manager.ts",
+          "riskFactors": ["instance orphan", "resource leak"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 80,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "distributed-scheduler",
+          "path": "compiler/cpr/distributed-scheduler.ts",
+          "riskFactors": ["scheduling deadlock", "resource starvation"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 100,
+          "difficulty": "Haute",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "provider-manager",
+          "path": "compiler/cpr/provider-manager.ts",
+          "riskFactors": ["provider leak", "request orphan"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 70,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "execution-coordinator",
+          "path": "compiler/cpr/execution-coordinator.ts",
+          "riskFactors": ["plan deadlock", "dependency cycle"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 90,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "distributed-locks",
+          "path": "compiler/cpr/distributed-locks.ts",
+          "riskFactors": ["deadlock distribué", "lock orphan"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 80,
+          "difficulty": "Haute",
+          "targetCoverage": "96%"
+        },
+        {
+          "name": "snapshot-manager",
+          "path": "compiler/cpr/snapshot-manager.ts",
+          "riskFactors": ["snapshot corruption", "perte de données"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 70,
+          "difficulty": "Moyenne",
+          "targetCoverage": "95%"
+        },
+        {
+          "name": "security",
+          "path": "compiler/cpr/security.ts",
+          "riskFactors": ["security breach", "unauthorized access"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 100,
+          "difficulty": "Haute",
+          "targetCoverage": "97%"
+        }
+      ]
+    },
+    "MEDIUM": {
+      "description": "Observabilité: profiler, debugger, tracing, telemetry",
+      "components": [
+        {
+          "name": "replay-manager",
+          "path": "compiler/cpr/replay-manager.ts",
+          "riskFactors": ["replay corruption"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "93%"
+        },
+        {
+          "name": "distributed-trace",
+          "path": "compiler/cpr/distributed-trace.ts",
+          "riskFactors": ["trace loss", "performance impact"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 70,
+          "difficulty": "Moyenne",
+          "targetCoverage": "93%"
+        },
+        {
+          "name": "distributed-profiler",
+          "path": "compiler/cpr/distributed-profiler.ts",
+          "riskFactors": ["profiler overhead"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "92%"
+        },
+        {
+          "name": "distributed-debugger",
+          "path": "compiler/cpr/distributed-debugger.ts",
+          "riskFactors": ["debugger deadlock"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 70,
+          "difficulty": "Moyenne",
+          "targetCoverage": "93%"
+        },
+        {
+          "name": "telemetry",
+          "path": "compiler/cpr/telemetry.ts",
+          "riskFactors": ["telemetry loss"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 50,
+          "difficulty": "Faible",
+          "targetCoverage": "92%"
+        },
+        {
+          "name": "governance",
+          "path": "compiler/cpr/governance.ts",
+          "riskFactors": ["policy violation"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "93%"
+        }
+      ]
+    },
+    "LOW": {
+      "description": "Infrastructure: autoscaler, gateway, governance, knowledge fabric",
+      "components": [
+        {
+          "name": "knowledge-fabric",
+          "path": "compiler/cpr/knowledge-fabric.ts",
+          "riskFactors": ["knowledge corruption"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "90%"
+        },
+        {
+          "name": "autoscaler",
+          "path": "compiler/cpr/autoscaler.ts",
+          "riskFactors": ["scaling oscillation", "resource waste"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 50,
+          "difficulty": "Moyenne",
+          "targetCoverage": "90%"
+        },
+        {
+          "name": "api-gateway",
+          "path": "compiler/cpr/api-gateway.ts",
+          "riskFactors": ["gateway deadlock", "rate limit bypass"],
+          "testDebt": "Critique",
+          "existingTests": 0,
+          "estimatedTests": 60,
+          "difficulty": "Moyenne",
+          "targetCoverage": "90%"
+        },
+        {
+          "name": "types",
+          "path": "src/memory/types.ts",
+          "riskFactors": [],
+          "testDebt": "N/A",
+          "existingTests": 0,
+          "estimatedTests": 0,
+          "difficulty": "N/A",
+          "targetCoverage": "N/A"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "totalComponents": 32,
+    "criticalCount": 14,
+    "highCount": 14,
+    "mediumCount": 6,
+    "lowCount": 4,
+    "totalEstimatedTests": 2730,
+    "totalExistingTests": 535,
+    "additionalTestsNeeded": 2195,
+    "averageTargetCoverage": "95.2%"
+  }
+}

@@ -8,7 +8,7 @@ export interface NextBestAction {
 /**
  * Propose UNE seule action prioritaire pour éviter la surcharge mentale.
  */
-export function getAdaptiveRecommendation(analysis: any): NextBestAction {
+export function getAdaptiveRecommendation(analysis: _unknown): NextBestAction {
   // Priorité 1 : Clarté (Le socle)
   if (analysis.clarity < 60) {
     return {

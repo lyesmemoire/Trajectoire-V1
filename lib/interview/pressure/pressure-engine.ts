@@ -4,11 +4,7 @@ import { PersonaConfig } from "../personas/persona-config";
 /**
  * Calcule le nouveau niveau de pression basé sur la performance et le persona.
  */
-export function calculatePressureImpact(
-  currentLevel: number,
-  analysis: AnswerAnalysis,
-  persona: PersonaConfig,
-): number {
+export function calculatePressureImpact(currentLevel: number, analysis: AnswerAnalysis, persona: PersonaConfig, ): number {
   let impact = 0;
 
   // Si la confiance est faible, on augmente souvent la pression (test de résistance)
@@ -30,10 +26,7 @@ export function calculatePressureImpact(
   return Math.round(nextLevel);
 }
 
-export function shouldTriggerInterruption(
-  pressureLevel: number,
-  persona: PersonaConfig,
-): boolean {
+export function shouldTriggerInterruption(pressureLevel: number, persona: PersonaConfig, ): boolean {
   const threshold = 100 - persona.interruptionRate;
   return pressureLevel > threshold && Math.random() * 100 > threshold;
 }

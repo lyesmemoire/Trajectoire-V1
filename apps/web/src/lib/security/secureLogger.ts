@@ -10,7 +10,7 @@
  * - OpenAI tokens
  */
 
-import { logger, LogLevel, LogContext } from "@/lib/logger/Logger";
+import { logger, LogContext } from "@/lib/logger/Logger";
 
 const SENSITIVE_PATTERNS = [
   // Emails

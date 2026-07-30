@@ -1,12 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthorizationService, Permission, Principal, Role } from "../services/rbac";
+import { AuthorizationService, Principal, Role } from "../services/rbac";
 import { SecurityAuditStore } from "../../sil/contracts/security-audit-store";
 
-export function requirePermission(
-  permission: Permission,
-  authz: AuthorizationService,
-  auditStore?: SecurityAuditStore
-) {
+export function requirePermission(permission: _Permission, authz: AuthorizationService, auditStore?: SecurityAuditStore) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!req.principal || !req.tenantId) {
@@ -21,7 +17,7 @@ export function requirePermission(
       };
 
       // Extract resource from request parameters or body
-      // Example: For /api/interviews/:sessionId we might not know reportId, but we know tenantId
+      
       const resource = {
         tenantId: req.tenantId,
         sessionId: req.params.id,
@@ -44,7 +40,7 @@ export function requirePermission(
       }
 
       next();
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(500).json({ error: "Authorization error", details: err.message });
     }
   };

@@ -1,0 +1,5 @@
+C:\Trajectoire\sdks\csharp\obj\Debug\net6.0\Blueprint.Sdk.GeneratedMSBuildEditorConfig.editorconfig
+C:\Trajectoire\sdks\csharp\obj\Debug\net6.0\Blueprint.Sdk.AssemblyInfoInputs.cache
+C:\Trajectoire\sdks\csharp\obj\Debug\net6.0\Blueprint.Sdk.AssemblyInfo.cs
+C:\Trajectoire\sdks\csharp\obj\Debug\net6.0\Blueprint.Sdk.csproj.CoreCompileInputs.cache
+C:\Trajectoire\sdks\csharp\obj\Debug\net6.0\Blueprint.Sdk.sourcelink.json

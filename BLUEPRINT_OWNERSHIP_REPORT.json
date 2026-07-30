@@ -1,0 +1,4415 @@
+{
+  "summary": {
+    "totalCanonicalElements": 242,
+    "missingOwners": 629,
+    "incorrectOwners": 0,
+    "multipleOwners": 0
+  },
+  "missingOwners": [
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+      "lineNumber": 8,
+      "type": "interface"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+      "lineNumber": 20,
+      "type": "interface"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "lineNumber": 169,
+      "type": "interface"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 125,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2710,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2712,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2889,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2918,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3196,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3198,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3402,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3404,
+      "type": "object"
+    },
+    {
+      "name": "Question",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3418,
+      "type": "object"
+    },
+    {
+      "name": "Answer",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+      "lineNumber": 15,
+      "type": "interface"
+    },
+    {
+      "name": "Answer",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2809,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\sessions\\manager.ts",
+      "lineNumber": 10,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\Session.ts",
+      "lineNumber": 27,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\observability\\DEBUGGING_CONTRACT.md",
+      "lineNumber": 34,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\observability\\DEBUGGING_CONTRACT.md",
+      "lineNumber": 36,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\observability\\PROFILING_CONTRACT.md",
+      "lineNumber": 34,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\observability\\PROFILING_CONTRACT.md",
+      "lineNumber": 36,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 455,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 456,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 457,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 458,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 459,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+      "lineNumber": 460,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3143,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3145,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3506,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3518,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3520,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2412,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2414,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2428,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2432,
+      "type": "object"
+    },
+    {
+      "name": "Session",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2434,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\perception.ts",
+      "lineNumber": 43,
+      "type": "interface"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 97,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 109,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 956,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 957,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 958,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 959,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 960,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 961,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 962,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 963,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 981,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 982,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 983,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 984,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+      "lineNumber": 985,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 47,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 37,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 45,
+      "type": "object"
+    },
+    {
+      "name": "Perception",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 51,
+      "type": "object"
+    },
+    {
+      "name": "KnowledgeGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+      "lineNumber": 244,
+      "type": "interface"
+    },
+    {
+      "name": "KnowledgeGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "lineNumber": 2424,
+      "type": "interface"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "lineNumber": 44,
+      "type": "interface"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+      "lineNumber": 20,
+      "type": "interface"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 94,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 104,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 114,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 125,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1051,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1052,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1053,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1054,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1055,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1056,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1057,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1058,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1067,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1076,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1077,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1078,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1079,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1080,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+      "lineNumber": 1081,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 63,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 69,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 70,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 78,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 110,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 48,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 45,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 59,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 65,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+      "lineNumber": 104,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+      "lineNumber": 20,
+      "type": "interface"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "lineNumber": 1158,
+      "type": "interface"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1150,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1243,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1331,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1421,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 323,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 872,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 919,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1243,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1283,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1698,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1730,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2652,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2829,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3028,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3030,
+      "type": "object"
+    },
+    {
+      "name": "Evidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts",
+      "lineNumber": 38,
+      "type": "interface"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "lineNumber": 71,
+      "type": "interface"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts",
+      "lineNumber": 26,
+      "type": "interface"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1138,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1139,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1140,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1141,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1142,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1143,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1144,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1145,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1163,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1164,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1165,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1166,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1167,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+      "lineNumber": 1168,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 127,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 133,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 77,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 115,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 121,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3058,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3060,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesis",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3069,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "lineNumber": 206,
+      "type": "interface"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 113,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 124,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 135,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 145,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1029,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1030,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1031,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1032,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1033,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1034,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1052,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1053,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1054,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1055,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+      "lineNumber": 1056,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 31,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 46,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 29,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 31,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 37,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 87,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 190,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 274,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 370,
+      "type": "object"
+    },
+    {
+      "name": "Observation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 448,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "lineNumber": 378,
+      "type": "interface"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1095,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1096,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1097,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1098,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1099,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1100,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1101,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1102,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1103,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1104,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1113,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1122,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1123,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1124,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1125,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1126,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "lineNumber": 1127,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 166,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 172,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 128,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 93,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 143,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 149,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "lineNumber": 1104,
+      "type": "interface"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3581,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3664,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3757,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3844,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3928,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 921,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 989,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1285,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1325,
+      "type": "object"
+    },
+    {
+      "name": "Decision",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts",
+      "lineNumber": 39,
+      "type": "interface"
+    },
+    {
+      "name": "EvidenceGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\EvidenceEngine.ts",
+      "lineNumber": 38,
+      "type": "interface"
+    },
+    {
+      "name": "ConfidenceGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer7-explainability\\ExplainabilityEngine.ts",
+      "lineNumber": 165,
+      "type": "interface"
+    },
+    {
+      "name": "Traceability",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+      "lineNumber": 21,
+      "type": "interface"
+    },
+    {
+      "name": "Traceability",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts",
+      "lineNumber": 21,
+      "type": "interface"
+    },
+    {
+      "name": "DecisionGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+      "lineNumber": 20,
+      "type": "interface"
+    },
+    {
+      "name": "DecisionGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\domain\\decision-graph.contract.ts",
+      "lineNumber": 20,
+      "type": "interface"
+    },
+    {
+      "name": "FeatureFlag",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\apps\\web\\src\\lib\\features\\FeatureFlagService.ts",
+      "lineNumber": 19,
+      "type": "interface"
+    },
+    {
+      "name": "FeatureFlag",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\flags\\FeatureFlagEngine.ts",
+      "lineNumber": 14,
+      "type": "interface"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+      "lineNumber": 123,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+      "lineNumber": 145,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+      "lineNumber": 154,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+      "lineNumber": 484,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+      "lineNumber": 489,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+      "lineNumber": 494,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+      "lineNumber": 500,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\docs\\BLUEPRINT_SEMANTIC_COMPILER_SPECIFICATION.md",
+      "lineNumber": 1258,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1746,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1764,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\PHASE1_STEP4_PARALLEL_ARCH.md",
+      "lineNumber": 157,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\PHASE1_STEP4_PARALLEL_ARCH.md",
+      "lineNumber": 177,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 140,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 161,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 166,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 170,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 175,
+      "type": "object"
+    },
+    {
+      "name": "Package",
+      "canonicalOwner": "Enterprise Chief Architect",
+      "location": "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+      "lineNumber": 179,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\ARCHITECTURE_MAP.md",
+      "lineNumber": 477,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+      "lineNumber": 1157,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 58,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 59,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 65,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 526,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 527,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 528,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 529,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 530,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 548,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 550,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 960,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 961,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 962,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 963,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 964,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 965,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 966,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 967,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 968,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 969,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "lineNumber": 242,
+      "type": "object"
+    },
+    {
+      "name": "Node",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "lineNumber": 244,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 101,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 112,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 122,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 132,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 142,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1129,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1130,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1131,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1132,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1133,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1134,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1135,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1136,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1137,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1146,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1155,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1156,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1157,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1158,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+      "lineNumber": 1159,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 79,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 85,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 57,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 67,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 149,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 53,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 73,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 79,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "lineNumber": 206,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1892,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1915,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1938,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 1963,
+      "type": "object"
+    },
+    {
+      "name": "Confidence",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts",
+      "lineNumber": 225,
+      "type": "interface"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1274,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1275,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1276,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1277,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1278,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1279,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1280,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1281,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1282,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1283,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1284,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1285,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1294,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1303,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1304,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1305,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1306,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1307,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+      "lineNumber": 1308,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 123,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1260,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1261,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 95,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 101,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 126,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 66,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 38,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 50,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 89,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 140,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 61,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 87,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 93,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+      "lineNumber": 282,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-005_KNOWLEDGE_FABRIC.md",
+      "lineNumber": 729,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3017,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3088,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3159,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3240,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\BLUEPRINT_SEMANTIC_COMPILER_SPECIFICATION.md",
+      "lineNumber": 771,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\COS-003_Enterprise_Knowledge_Compiler.md",
+      "lineNumber": 10,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 688,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 692,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 694,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2341,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2343,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2359,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2363,
+      "type": "object"
+    },
+    {
+      "name": "Knowledge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2365,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1171,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1172,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1173,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1174,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1175,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1176,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1177,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1178,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1179,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1180,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1198,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1199,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1200,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1201,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+      "lineNumber": 1202,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 111,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 117,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 33,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 43,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 72,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 69,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 101,
+      "type": "object"
+    },
+    {
+      "name": "Belief",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 107,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 115,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 116,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 117,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1061,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1062,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1063,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1064,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1065,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1066,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1084,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1085,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+      "lineNumber": 1086,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+      "lineNumber": 1246,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 266,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 273,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 93,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 85,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 129,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 135,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 115,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 523,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 601,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 704,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 806,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 887,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 986,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1067,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3821,
+      "type": "object"
+    },
+    {
+      "name": "Reasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\PHASE1_STEP5_AI_MAPPING.md",
+      "lineNumber": 242,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1360,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1361,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1362,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1363,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1364,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1365,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1366,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1367,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1368,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1369,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1370,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1371,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1389,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1390,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1391,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1392,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "lineNumber": 1394,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 182,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 188,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 101,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 157,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 163,
+      "type": "object"
+    },
+    {
+      "name": "Plan",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "lineNumber": 257,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 102,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 114,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 127,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 139,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1075,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1076,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1077,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1078,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1079,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1080,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1081,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1082,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1083,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1084,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1085,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1086,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1095,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1104,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1105,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1106,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1107,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1108,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "lineNumber": 1109,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 198,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 205,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 211,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 218,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 109,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 171,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 177,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+      "lineNumber": 318,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 34,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 36,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 37,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 38,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 44,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+      "lineNumber": 792,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-002_RUNTIME_ORCHESTRATOR.md",
+      "lineNumber": 879,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CPR\\CPR-003_DISTRIBUTED_SCHEDULER.md",
+      "lineNumber": 640,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2654,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2727,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2800,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2874,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2946,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2916,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2926,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3742,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3746,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3750,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3752,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1399,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1401,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1416,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1422,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1468,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2270,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2288,
+      "type": "object"
+    },
+    {
+      "name": "Memory",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2292,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1257,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1258,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1259,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1262,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1263,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1264,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1265,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1274,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1283,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1284,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1285,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1286,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1287,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+      "lineNumber": 1288,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 129,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 118,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 157,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 117,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 185,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 191,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 193,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 4013,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 4102,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 4177,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 4263,
+      "type": "object"
+    },
+    {
+      "name": "Learning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3113,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1112,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1113,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1114,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1115,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1116,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1117,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1135,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1136,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1137,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1138,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+      "lineNumber": 1139,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 251,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+      "lineNumber": 161,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 125,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 199,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 205,
+      "type": "object"
+    },
+    {
+      "name": "Adaptation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2738,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+      "lineNumber": 1155,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+      "lineNumber": 1156,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+      "lineNumber": 1158,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 253,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 259,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 79,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 85,
+      "type": "object"
+    },
+    {
+      "name": "Edge",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 86,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 204,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 327,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "lineNumber": 101,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "lineNumber": 72,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\contracts\\foundation\\OBJECT_CONTRACT.md",
+      "lineNumber": 81,
+      "type": "object"
+    },
+    {
+      "name": "Query",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 3019,
+      "type": "object"
+    },
+    {
+      "name": "Consolidated",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 212,
+      "type": "object"
+    },
+    {
+      "name": "Consolidated",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 176,
+      "type": "object"
+    },
+    {
+      "name": "Learned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 228,
+      "type": "object"
+    },
+    {
+      "name": "Learned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 235,
+      "type": "object"
+    },
+    {
+      "name": "Learned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 242,
+      "type": "object"
+    },
+    {
+      "name": "Learned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 198,
+      "type": "object"
+    },
+    {
+      "name": "Adapted",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+      "lineNumber": 258,
+      "type": "object"
+    },
+    {
+      "name": "Adapted",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 210,
+      "type": "object"
+    },
+    {
+      "name": "MetaReasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 147,
+      "type": "object"
+    },
+    {
+      "name": "MetaReasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 133,
+      "type": "object"
+    },
+    {
+      "name": "MetaReasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 213,
+      "type": "object"
+    },
+    {
+      "name": "MetaReasoning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 219,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+      "lineNumber": 156,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 141,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 227,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluation",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+      "lineNumber": 233,
+      "type": "object"
+    },
+    {
+      "name": "CognitiveGraph",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 149,
+      "type": "object"
+    },
+    {
+      "name": "CognitiveStateMachine",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 157,
+      "type": "object"
+    },
+    {
+      "name": "CognitiveMetric",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 165,
+      "type": "object"
+    },
+    {
+      "name": "CognitiveMathematics",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 173,
+      "type": "object"
+    },
+    {
+      "name": "CognitiveGuarantee",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+      "lineNumber": 181,
+      "type": "object"
+    },
+    {
+      "name": "Observing",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 31,
+      "type": "object"
+    },
+    {
+      "name": "Observed",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 36,
+      "type": "object"
+    },
+    {
+      "name": "Perceiving",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 43,
+      "type": "object"
+    },
+    {
+      "name": "Perceived",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 48,
+      "type": "object"
+    },
+    {
+      "name": "Evidencing",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 55,
+      "type": "object"
+    },
+    {
+      "name": "Evidenced",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 60,
+      "type": "object"
+    },
+    {
+      "name": "Confiding",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 67,
+      "type": "object"
+    },
+    {
+      "name": "Confided",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 72,
+      "type": "object"
+    },
+    {
+      "name": "Knowing",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 79,
+      "type": "object"
+    },
+    {
+      "name": "Known",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 84,
+      "type": "object"
+    },
+    {
+      "name": "Believing",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 91,
+      "type": "object"
+    },
+    {
+      "name": "Believed",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 96,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesizing",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 103,
+      "type": "object"
+    },
+    {
+      "name": "Hypothesized",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 108,
+      "type": "object"
+    },
+    {
+      "name": "Reasoned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 120,
+      "type": "object"
+    },
+    {
+      "name": "Deciding",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 127,
+      "type": "object"
+    },
+    {
+      "name": "Decided",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 132,
+      "type": "object"
+    },
+    {
+      "name": "Planning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 139,
+      "type": "object"
+    },
+    {
+      "name": "Planning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1869,
+      "type": "object"
+    },
+    {
+      "name": "Planning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1955,
+      "type": "object"
+    },
+    {
+      "name": "Planning",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2039,
+      "type": "object"
+    },
+    {
+      "name": "Planned",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 144,
+      "type": "object"
+    },
+    {
+      "name": "Encoding",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 151,
+      "type": "object"
+    },
+    {
+      "name": "Encoded",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 156,
+      "type": "object"
+    },
+    {
+      "name": "Retrieving",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 161,
+      "type": "object"
+    },
+    {
+      "name": "Retrieved",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 166,
+      "type": "object"
+    },
+    {
+      "name": "Consolidating",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 171,
+      "type": "object"
+    },
+    {
+      "name": "Adapting",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 205,
+      "type": "object"
+    },
+    {
+      "name": "Reflecting",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 217,
+      "type": "object"
+    },
+    {
+      "name": "Reflected",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 222,
+      "type": "object"
+    },
+    {
+      "name": "Evaluating",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 227,
+      "type": "object"
+    },
+    {
+      "name": "Evaluating",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3384,
+      "type": "object"
+    },
+    {
+      "name": "Evaluating",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3597,
+      "type": "object"
+    },
+    {
+      "name": "Evaluated",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 232,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluating",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 239,
+      "type": "object"
+    },
+    {
+      "name": "SelfEvaluated",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+      "lineNumber": 244,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+      "lineNumber": 353,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2126,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2231,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2307,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2383,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2486,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 2565,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-026_Runtime_State_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-027_Runtime_Event_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-028_Prompt_Runtime_Specification.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-029_Decision_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-030_Competency_Graph.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-031_Knowledge_Graph.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-032_Question_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-033_Follow-up_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-034_Candidate_Model.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-035_Adaptive_Difficulty.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-036_Simulation_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-037_Learning_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-038_Analytics_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-039_AI_Safety_Engine.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\ETS-040_Provider_Abstraction.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\RIK_Recruitment_Intelligence_Kernel.md",
+      "lineNumber": 9,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 607,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 625,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 627,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 999,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1012,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1016,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1261,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1273,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1277,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1534,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1536,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1600,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 1676,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2479,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2495,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2499,
+      "type": "object"
+    },
+    {
+      "name": "Execution",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 2501,
+      "type": "object"
+    },
+    {
+      "name": "Context",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+      "lineNumber": 524,
+      "type": "object"
+    },
+    {
+      "name": "Context",
+      "canonicalOwner": "Chief Cognitive Architect",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3444,
+      "type": "object"
+    },
+    {
+      "name": "Capability",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "lineNumber": 1797,
+      "type": "interface"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1515,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1606,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1702,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+      "lineNumber": 1786,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2682,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2768,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2971,
+      "type": "object"
+    },
+    {
+      "name": "Conversation",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 2999,
+      "type": "object"
+    },
+    {
+      "name": "Artifact",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\COS-005_Artifact_Generation_Engine.md",
+      "lineNumber": 6,
+      "type": "object"
+    },
+    {
+      "name": "Artifact",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\docs\\COS-005_Artifact_Generation_Engine.md",
+      "lineNumber": 10,
+      "type": "object"
+    },
+    {
+      "name": "Artifact",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 818,
+      "type": "object"
+    },
+    {
+      "name": "Artifact",
+      "canonicalOwner": "COS Team",
+      "location": "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+      "lineNumber": 824,
+      "type": "object"
+    },
+    {
+      "name": "Budget",
+      "canonicalOwner": "CVM Team",
+      "location": "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+      "lineNumber": 3458,
+      "type": "object"
+    }
+  ],
+  "incorrectOwners": [],
+  "multipleOwners": []
+}

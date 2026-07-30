@@ -13,6 +13,6 @@ export class RedisReportCache {
 
   async delete(tenantId: string, reportId: string): Promise<void> {
     // To 'delete' in this mock cache, we save null
-    await this.adapter.saveRecord<any>("cache_reports", tenantId, reportId, null as any);
+    await this.adapter.saveRecord<unknown>("cache_reports", tenantId, reportId, null as unknown);
   }
 }

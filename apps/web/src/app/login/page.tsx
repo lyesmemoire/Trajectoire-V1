@@ -1,127 +1,113 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { createClient } from "@/lib/supabase"
+import { Button } from "@/components/ui/button"
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError("");
-  };
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+    e.preventDefault()
+    setError("")
+    setLoading(true)
 
     try {
-      const supabase = createClient();
+      const supabase = createClient()
       
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
+        email,
+        password,
+      })
 
       if (signInError) {
         if (signInError.message === "Invalid login credentials") {
-          setError("Email ou mot de passe incorrect");
+          setError("Email ou mot de passe incorrect.")
         } else {
-          setError(signInError.message);
+          setError("Veuillez vérifier vos identifiants ou valider votre email.")
         }
-        setLoading(false);
-        return;
+        setLoading(false)
+        return
       }
 
       if (!data.user) {
-        setError("Erreur lors de la connexion");
-        setLoading(false);
-        return;
+        setError("Erreur inattendue lors de la connexion.")
+        setLoading(false)
+        return
       }
 
-      // Redirect to dashboard
-      router.push("/dashboard");
-      router.refresh();
+      router.push("/dashboard")
+      router.refresh()
     } catch {
-      setError("Une erreur est survenue. Veuillez réessayer.");
-      setLoading(false);
+      setError("Une erreur critique est survenue. Veuillez réessayer.")
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Se connecter</h1>
-            <p className="text-slate-600">Accédez à votre espace Trajectoire</p>
-          </div>
+    <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
+      <Link href="/" className="text-2xl font-serif font-bold text-ink-900 mb-8">
+        Trajectoire
+      </Link>
 
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
-                Mot de passe
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? "Connexion en cours..." : "Se connecter"}
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-slate-600">
-              Vous n&apos;avez pas de compte?{" "}
-              <Link href="/signup" className="text-blue-600 hover:underline font-medium">
-                Créer un compte
-              </Link>
-            </p>
-          </div>
+      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-serif font-bold text-ink-900 mb-2">Bon retour</h1>
+          <p className="text-ink-600 text-sm">Connectez-vous pour accéder à votre espace.</p>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-brick-50 border border-brick-100 rounded-xl">
+            <p className="text-brick-600 text-sm font-medium text-center">{error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              placeholder="vous@exemple.com"
+              required
+            />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-ink-700">Mot de passe</label>
+              <Link href="/forgot-password" className="text-xs text-bronze-600 hover:underline">Mot de passe oublié ?</Link>
+            </div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <Button type="submit" disabled={loading} className="w-full" size="md">
+            {loading ? "Connexion en cours..." : "Se connecter"}
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-ink-600">
+          Pas encore de compte ?{" "}
+          <Link href="/signup" className="text-bronze-600 font-medium hover:underline">
+            S'inscrire
+          </Link>
+        </p>
       </div>
     </div>
-  );
+  )
 }

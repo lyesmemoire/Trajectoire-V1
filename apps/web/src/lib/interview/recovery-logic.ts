@@ -46,7 +46,7 @@ export const SessionRecovery = {
       }
 
       return snapshot;
-    } catch (e) {
+    } catch {
       return null;
     }
   },

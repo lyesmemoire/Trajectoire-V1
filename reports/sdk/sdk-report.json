@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-07-25T21:53:04.671Z",
+  "generated": 7,
+  "compiled": 1,
+  "installed": 0,
+  "helloWorld": 1,
+  "total": 7,
+  "coverage": {
+    "typescript": 100,
+    "rust": 0,
+    "go": 0,
+    "python": 0,
+    "java": 0,
+    "kotlin": 0,
+    "csharp": 0
+  },
+  "status": "PARTIAL"
+}

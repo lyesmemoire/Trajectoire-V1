@@ -16,7 +16,7 @@ export interface FeedbackEntry {
   feedback: "positive" | "negative" | "neutral";
   rating: number; // 0-10
   reason: string;
-  context: Record<string, any>;
+  context: Record<string, unknown>;
   timestamp: Date;
 }
 

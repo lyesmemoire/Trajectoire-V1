@@ -11,7 +11,7 @@ const r = runStress(n, 1);
 const pass = (ok: boolean) => (ok ? "PASS" : "FAIL");
 const lines: string[] = [];
 lines.push(`# Stress-test P4.3 — ${n} interviews seedées\n`);
-lines.push(`Total tours cumulés: ${r.runs.reduce((a: number, x: any) => a + x.trajectory.length, 0)}\n`);
+lines.push(`Total tours cumulés: ${r.runs.reduce((a: number, x: unknown) => a + x.trajectory.length, 0)}\n`);
 lines.push(`## Bornage`);
 lines.push(`- Violations bornes (Mind+Sim): ${r.totalBoundViolations} — ${pass(r.totalBoundViolations === 0)}\n`);
 lines.push(`## Drift (pente max |β| sur 2e moitié, seuil ${STABILITY_THRESHOLDS.maxAbsDrift})`);

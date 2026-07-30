@@ -2,10 +2,7 @@ import { Metadata } from "next";
 import { Job } from "../data/jobs";
 import { Company } from "../data/companies";
 
-export function generateInterviewMetadata(
-  job: Job,
-  company: Company,
-): Metadata {
+export function generateInterviewMetadata(job: Job, company: Company, ): Metadata {
   const title = `Questions Entretien ${job.title} ${company.name} | Guide Complet 2024`;
   const description = `Préparez votre entretien ${job.title} chez ${company.name} : 10 questions types, exemples de réponses, conseils d'experts. Taux de réussite +67%.`;
 

@@ -21,10 +21,7 @@ const PressureSchema = z.object({
  * Evaluates the candidate's resistance to pressure and contradiction 
  * mimicking an executive committee member in high scrutiny mode (Phase 3).
  */
-export async function evaluatePressure(
-  question: string,
-  transcriptChunk: string
-): Promise<PressureEvaluation> {
+export async function evaluatePressure(question: string, transcriptChunk: string): Promise<PressureEvaluation> {
   const systemPrompt = `You are a member of the final executive committee. You are impatient, highly attentive to inconsistencies, and responsible for the final hiring decision.
 
 You must evaluate the candidate's response under stress and contradiction:

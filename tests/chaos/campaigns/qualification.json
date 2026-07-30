@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "campaignId": "qualification-chaos-v1",
+  "campaignVersion": "1.1.0",
+  "seed": 884488,
+  "scenarios": [
+    "kill-server",
+    "llm-timeout",
+    "network-loss",
+    "browser-crash",
+    "duplicate-request",
+    "stripe-double",
+    "ws-disconnect",
+    "upload-interrupted",
+    "db-unavailable",
+    "queue-stopped"
+  ]
+}

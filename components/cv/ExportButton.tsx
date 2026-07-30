@@ -11,7 +11,7 @@ interface ExportButtonProps {
   disabled?: boolean;
 }
 
-export function ExportButton({ cvData, disabled }: ExportButtonProps) {
+export function ExportButton({ cvData, _disabled }: ExportButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [selectedColor, setSelectedColor] =

@@ -1,26 +1,20 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { Mic, RefreshCw, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
+import { motion } from "framer-motion"
+import { Mic, RefreshCw, MessageSquare } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface Props {
-  isOpen: boolean;
-  onRetry: () => void;
-  onSwitchToText: () => void;
-  reason: "SILENT_FAILURE" | "CONTEXT_SUSPENDED" | "PERMISSION_LOST" | string;
-  aiCredits?: number;
+  isOpen: boolean
+  onRetry: () => void
+  onSwitchToText: () => void
+  reason: "SILENT_FAILURE" | "CONTEXT_SUSPENDED" | "PERMISSION_LOST" | string
+  aiCredits?: number
 }
 
 export function MicrophoneRecoveryModal({
-  isOpen,
-  onRetry,
-  onSwitchToText,
-  reason,
-  aiCredits,
-}: Props) {
-  if (!isOpen) return null;
+  isOpen, onRetry, onSwitchToText, reason, aiCredits }: Props) {
+  if (!isOpen) return null
 
   const messages: Record<string, { title: string; desc: string }> = {
     SILENT_FAILURE: {
@@ -39,24 +33,24 @@ export function MicrophoneRecoveryModal({
       title: "Problème audio",
       desc: "Une interruption technique a eu lieu.",
     },
-  };
+  }
 
-  const msg = messages[reason] ?? messages.default;
-  if (!msg) return null;
-  const { title, desc } = msg;
+  const msg = messages[reason] ?? messages.default
+  if (!msg) return null
+  const { title, desc } = msg
   return (
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="relative bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl space-y-8 text-center"
+        className="relative bg-white/70 backdrop-blur-xl rounded-[2.5rem] p-10 max-w-md w-full shadow-premium space-y-8 text-center"
       >
-        <div className="w-20 h-20 bg-amber-50 rounded-[2rem] flex items-center justify-center text-amber-500 mx-auto border border-amber-100 shadow-inner">
+        <div className="w-20 h-20 bg-terracotta-50 rounded-[2rem] flex items-center justify-center text-terracotta-500 mx-auto border border-terracotta-100 shadow-inner">
           <Mic className="w-10 h-10" />
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-2xl font-black text-slate-900 leading-tight">{title}</h2>
-          <p className="text-slate-500 font-medium">{desc}</p>
+          <h2 className="text-2xl font-black text-ink-900 leading-tight">{title}</h2>
+          <p className="text-ink-500 font-medium">{desc}</p>
         </div>
 
         <div className="space-y-3">
@@ -70,16 +64,16 @@ export function MicrophoneRecoveryModal({
           <Button
             onClick={onSwitchToText}
             variant="ghost"
-            className="w-full font-bold text-slate-400 hover:text-slate-600"
+            className="w-full font-bold text-ink-400 hover:text-ink-600"
           >
             <MessageSquare className="w-4 h-4 mr-2" /> Continuer par écrit
           </Button>
         </div>
 
-        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
+        <p className="text-[10px] font-black text-ink-300 uppercase tracking-widest">
           Votre progression est sauvegardée
         </p>
       </motion.div>
 
-  );
+  )
 }

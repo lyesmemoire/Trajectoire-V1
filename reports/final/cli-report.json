@@ -1,0 +1,235 @@
+{
+  "timestamp": "2026-07-24T17:51:07.983Z",
+  "commands": [],
+  "elapsedTimes": {
+    "--version": 1170,
+    "build": 65331
+  },
+  "cliCommands": [
+    {
+      "name": "build",
+      "command": "pnpm build",
+      "tested": true,
+      "exitCode": 0
+    },
+    {
+      "name": "build:web",
+      "command": "pnpm build:web",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "build:gateway",
+      "command": "pnpm build:gateway",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "build:all",
+      "command": "pnpm build:all",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "build:graph",
+      "command": "pnpm build:graph",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "build:clean",
+      "command": "pnpm build:clean",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "dev",
+      "command": "pnpm dev",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "dev:gateway",
+      "command": "pnpm dev:gateway",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "typecheck",
+      "command": "pnpm typecheck",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "type-check",
+      "command": "pnpm type-check",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "type-check:watch",
+      "command": "pnpm type-check:watch",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "type-check:tests:api",
+      "command": "pnpm type-check:tests:api",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "type-check:tests:gateway",
+      "command": "pnpm type-check:tests:gateway",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "validate",
+      "command": "pnpm validate",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "test:run",
+      "command": "pnpm test:run",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "test:verify",
+      "command": "pnpm test:verify",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "test",
+      "command": "pnpm test",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "test:replay",
+      "command": "pnpm test:replay",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "test:coverage",
+      "command": "pnpm test:coverage",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "start",
+      "command": "pnpm start",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "lint",
+      "command": "pnpm lint",
+      "tested": true,
+      "exitCode": 1
+    },
+    {
+      "name": "lint:fix",
+      "command": "pnpm lint:fix",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "lint:colors",
+      "command": "pnpm lint:colors",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "db:push",
+      "command": "pnpm db:push",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "db:migrate",
+      "command": "pnpm db:migrate",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "db:studio",
+      "command": "pnpm db:studio",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "email:dev",
+      "command": "pnpm email:dev",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "stripe:listen",
+      "command": "pnpm stripe:listen",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:sse",
+      "command": "pnpm audit:sse",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:env",
+      "command": "pnpm audit:env",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:auth",
+      "command": "pnpm audit:auth",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:bundle",
+      "command": "pnpm audit:bundle",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:edge",
+      "command": "pnpm audit:edge",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "audit:db",
+      "command": "pnpm audit:db",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "core:audit",
+      "command": "pnpm core:audit",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "stress",
+      "command": "pnpm stress",
+      "tested": false,
+      "exitCode": null
+    },
+    {
+      "name": "golden-diff",
+      "command": "pnpm golden-diff",
+      "tested": false,
+      "exitCode": null
+    }
+  ],
+  "errors": [],
+  "success": true,
+  "exitCode": 0
+}

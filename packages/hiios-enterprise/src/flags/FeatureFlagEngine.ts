@@ -11,6 +11,8 @@ import { randomUUID } from "crypto";
 // TYPES
 // ─────────────────────────────────────────────
 
+// Canonical Reference: COS-OBJ-010 (blueprint.runtime.featureflag)
+// Owner: COS Team
 export interface FeatureFlag {
   readonly id:        string;
   readonly key:       string;

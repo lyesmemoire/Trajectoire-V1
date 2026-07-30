@@ -34,10 +34,7 @@ Réponds uniquement en JSON avec cette structure:
 REPONSE À ANALYSER:
 `;
 
-export async function analyzeAnswer(
-  answer: string,
-  question: string,
-): Promise<AnswerAnalysis> {
+export async function analyzeAnswer(answer: string, question: string, ): Promise<any> {
   try {
     const { text } = await generateText({
       model: mistralModel,
@@ -49,7 +46,7 @@ export async function analyzeAnswer(
       .trim()
       .replace(/^```json/, "")
       .replace(/```$/, "");
-    return JSON.parse(cleanText) as AnswerAnalysis;
+    return JSON.parse(cleanText) as any;
   } catch (error) {
     logError("[analyzeAnswer Error]", error);
     return {

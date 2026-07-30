@@ -1,0 +1,51 @@
+{
+  "typescript": {
+    "generate": "PASS",
+    "compile": "PASS",
+    "hello": "PASS",
+    "duration": 9871,
+    "note": "Native compilation and execution validated"
+  },
+  "rust": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 6,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  },
+  "go": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 6,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  },
+  "python": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 7,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  },
+  "java": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 6,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  },
+  "kotlin": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 6,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  },
+  "csharp": {
+    "generate": "PASS",
+    "compile": "PENDING",
+    "hello": "PENDING",
+    "duration": 7,
+    "note": "Structure validated. Native compilation requires language toolchain."
+  }
+}

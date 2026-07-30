@@ -6,7 +6,7 @@ export interface CTSResult {
   label: string;
 }
 
-export function getCTSLabel(score: number): string {
+export function getCTSLabel(score: _number): string {
   if (score <= 40) return "Foundation Phase";
   if (score <= 60) return "Emerging Candidate";
   if (score <= 75) return "Strong Candidate";
@@ -14,11 +14,7 @@ export function getCTSLabel(score: number): string {
   return "Board-Level Ready";
 }
 
-export async function computeAndSaveCTS(
-  userId: string,
-  sessionId: string,
-  feedback: any
-): Promise<CTSResult | null> {
+export async function computeAndSaveCTS(userId: string, sessionId: string, feedback: unknown): Promise<CTSResult | null> {
   try {
     const overall = feedback?.overallScore || 0;
     const credibility = feedback?.committeeDecision?.strategicCredibility || 0;
@@ -31,7 +27,7 @@ export async function computeAndSaveCTS(
 
     // Fetch last completed sessions to compute WMA
     // We get 4 to include the current one in the 5 max limit.
-    const { data: history, error } = await supabase
+    const { _data: history, error } = await supabase
       .from("interview_sessions")
       .select("id, career_trajectory_score, feedback_json")
       .eq("user_id", userId)
@@ -86,7 +82,7 @@ export async function computeAndSaveCTS(
       delta,
       label: getCTSLabel(finalCts)
     };
-  } catch (err) {
+  } catch (error) {
     console.error("[CTS] computeAndSaveCTS error:", err);
     return null;
   }

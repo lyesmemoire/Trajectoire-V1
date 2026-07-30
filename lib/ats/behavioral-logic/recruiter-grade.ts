@@ -7,9 +7,7 @@ import { PressureMunition, PressureMunitionSchema } from "../contracts/munitions
  * 👔 Layer 1: Hiring Manager Mode
  * Analyzes architectural decision-making and ownership.
  */
-export async function analyzeTechnicalLeadership(
-  cvText: string,
-): Promise<PressureMunition[]> {
+export async function analyzeTechnicalLeadership(cvText: _string, ): Promise<PressureMunition[]> {
   const PROMPT = `Tu es un CTO / Engineering Manager. 
   Analyse si le CV montre de l'autonomie et des décisions d'architecture, ou si ce sont des "vague claims" sans preuves.
   
@@ -46,7 +44,7 @@ export async function analyzeTechnicalLeadership(
  * ⚖️ Layer 2: Consistency Engine
  * Detects mismatches between claims and seniority.
  */
-export function detectInconsistencies(cv: any, job: any): PressureMunition[] {
+export function detectInconsistencies(cv: unknown, job: unknown): PressureMunition[] {
   const issues: PressureMunition[] = [];
   
   if (cv.years_experience < job.min_years) {

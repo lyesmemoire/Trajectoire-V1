@@ -10,7 +10,7 @@ export interface InteractionSignals {
   clickChaos: boolean; // Détecte les clics trop parfaits/centrés
 }
 
-export function calculateEntropyScore(signals: InteractionSignals): number {
+export function calculateEntropyScore(signals: _InteractionSignals): number {
   let score = 0;
 
   // 1. Humain = Mouvements de souris non-linéaires

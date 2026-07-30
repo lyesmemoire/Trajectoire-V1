@@ -1,4 +1,4 @@
-export function aggressiveTrim(text: string, maxChars = 5000) {
+export function aggressiveTrim(text: _string, maxChars = 5000) {
   if (!text) return "";
 
   const cleaned = text

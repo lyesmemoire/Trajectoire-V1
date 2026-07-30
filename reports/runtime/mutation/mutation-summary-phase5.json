@@ -1,0 +1,24 @@
+{
+  "total": 12,
+  "killed": 3,
+  "survived": 0,
+  "invalid": 9,
+  "validTotal": 3,
+  "mutationScore": 100,
+  "confidence": 25,
+  "coveredFamilies": [
+    "D",
+    "G",
+    "J"
+  ],
+  "uncoveredFamilies": [
+    "A",
+    "B",
+    "C",
+    "E",
+    "F",
+    "H",
+    "I"
+  ],
+  "certification": "FAILED"
+}

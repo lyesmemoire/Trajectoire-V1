@@ -55,10 +55,7 @@ export function determineArchetype(scores: ScoreProfile): CareerArchetype {
 /**
  * Calcule l'évolution narrative.
  */
-export function generateEvolutionNarrative(
-  prev: CareerArchetype,
-  current: CareerArchetype,
-): string {
+export function generateEvolutionNarrative(prev: CareerArchetype, current: CareerArchetype, ): string {
   if (prev === current)
     return "Vous stabilisez votre identité professionnelle actuelle.";
 

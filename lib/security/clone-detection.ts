@@ -3,10 +3,7 @@ import { track } from "../analytics";
 /**
  * Detects suspicious behavioral patterns from navigation logs.
  */
-export function analyzeCloningRisk(
-  navEvents: string[],
-  timingEvents: number[],
-) {
+export function analyzeCloningRisk(navEvents: string[], timingEvents: number[], ) {
   // Logic to detect if user is visiting pages too perfectly (Bot signature)
   const isLinear = navEvents.length > 5 && isNavigationTooPerfect(timingEvents);
 

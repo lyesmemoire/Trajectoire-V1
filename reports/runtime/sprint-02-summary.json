@@ -1,0 +1,97 @@
+{
+  "sprint": 2,
+  "lot": 2,
+  "component": "memory-manager",
+  "file": "compiler/cvm/memory-manager.ts",
+  "objectives": {
+    "statements": "≥ 95%",
+    "branches": "≥ 97%",
+    "functions": "100%",
+    "lines": "≥ 95%"
+  },
+  "coverage": {
+    "before": {
+      "statements": "100% (estimé)",
+      "branches": "91.66% (estimé)",
+      "functions": "100% (estimé)",
+      "lines": "100% (estimé)",
+      "uncoveredLines": "86,102,115",
+      "source": "Vitest console output"
+    },
+    "after": {
+      "statements": "100.00% (86/86)",
+      "branches": "97.50% (39/40)",
+      "functions": "100.00% (32/32)",
+      "lines": "100.00% (86/86)",
+      "uncoveredLines": [],
+      "source": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+      "uncoveredBranches": 1
+    }
+  },
+  "tests": {
+    "before": 56,
+    "new": 7,
+    "after": 63
+  },
+  "newTests": [
+    "should free without tracking when disabled",
+    "should read without protection check when disabled",
+    "should write without protection check when disabled",
+    "should read valid allocated address with protection enabled",
+    "should write valid allocated address with protection enabled",
+    "should remove region from MemoryAddressing when freed with protection",
+    "should handle access after free with protection enabled"
+  ],
+  "branchesCovered": [
+    "Line 86: free() when tracking is disabled"
+  ],
+  "linesCovered": [
+    "Line 86: if (this.options.enableTracking) - else branch"
+  ],
+  "functionsCovered": [],
+  "uncoveredBranches": [
+    {
+      "branchId": 19,
+      "line": 97,
+      "condition": "if (this.options.enableProtection)",
+      "classification": "A - Branche non couverte",
+      "reason": "Branche else de enableProtection dans free() - protection désactivée par défaut dans les tests existants. Peut être couverte en ajoutant un test avec enableProtection=false."
+    }
+  ],
+  "deadCodeRemoved": 0,
+  "debtRemaining": {
+    "branches": "0.50% (97.50% vs 97% target)",
+    "reason": "1 branche non couverte (else de enableProtection dans free()). L'objectif de 97% est atteint (97.50% > 97%)."
+  },
+  "architectureFix": {
+    "applied": true,
+    "description": "Synchronisation MemoryManager ↔ MemoryAddressing",
+    "changes": [
+      "allocate() ajoute une région dans MemoryAddressing",
+      "free() supprime la région de MemoryAddressing",
+      "Les branches 102 et 115 sont désormais couvertes"
+    ],
+    "impact": "Branches couvertes : 34/36 → 39/40 (97.50%)"
+  },
+  "validation": {
+    "pnpmTest": "PASSED - 63/63 tests",
+    "pnpmTestCoverage": "PASSED - 97.50% branches (above 97% target)",
+    "regressions": "NONE",
+    "typescriptErrors": "NONE",
+    "lintingErrors": "NONE"
+  },
+  "certification": {
+    "status": "CERTIFIED",
+    "criteriaMet": [
+      "Statements ≥ 95%: ACHIEVED (100%)",
+      "Branches ≥ 97%: ACHIEVED (97.50%)",
+      "Functions = 100%: ACHIEVED (100%)",
+      "Lines ≥ 95%: ACHIEVED (100%)",
+      "All tests pass: ACHIEVED",
+      "No TypeScript errors: ACHIEVED",
+      "No linting errors: ACHIEVED",
+      "Coverage metrics traceable to coverage-final.json: ACHIEVED"
+    ],
+    "notes": "Architecture fix applied: MemoryManager now synchronizes allocations with MemoryAddressing. Branches 102 and 115 are now covered. One branch remains uncovered (else of enableProtection in free()) but the 97% target is achieved."
+  }
+}

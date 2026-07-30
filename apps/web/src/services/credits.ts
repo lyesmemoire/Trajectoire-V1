@@ -17,13 +17,8 @@ export interface CreditOperationResult {
   code?: "INSUFFICIENT_CREDITS" | "USER_NOT_FOUND" | "DB_ERROR";
 }
 
-export async function deductCredits(
-  userId: string,
-  amount: number,
-  action: CreditAction,
-  metadata?: Record<string, unknown>,
-): Promise<CreditOperationResult> {
-  const supabase = createAdminClient() as any;
+export async function deductCredits(userId: string, amount: number, action: CreditAction, metadata?: Record<string, unknown>, ): Promise<CreditOperationResult> {
+  const supabase = createAdminClient()  as any;
 
   const { data, error } = await supabase.rpc("deduct_credits_atomic", {
     uid: userId,
@@ -60,13 +55,8 @@ export async function deductCredits(
   return { success: true, remainingCredits: data as number };
 }
 
-export async function addCredits(
-  userId: string,
-  amount: number,
-  action: CreditAction,
-  metadata?: Record<string, unknown>,
-): Promise<CreditOperationResult> {
-  const supabase = createAdminClient() as any;
+export async function addCredits(userId: string, amount: number, action: CreditAction, metadata?: Record<string, unknown>, ): Promise<CreditOperationResult> {
+  const supabase = createAdminClient()  as any;
 
   const { data, error } = await supabase.rpc("add_credits_atomic", {
     uid: userId,
@@ -89,33 +79,29 @@ export async function addCredits(
 }
 
 export async function getCredits(userId: string): Promise<number> {
-  const supabase = createAdminClient() as any;
-  const { data, error } = await supabase
+  const supabase = createAdminClient()  as any;
+  const { data, error: _error } = await supabase
     .from("profiles")
     .select("credits")
     .eq("id", userId)
     .single();
-  const profile = data as any;
+  const profile = data  as any;
   return profile?.credits ?? 0;
 }
 
-export async function hasEnoughCredits(
-  userId: string,
-  required: number,
-): Promise<boolean> {
+export async function hasEnoughCredits(userId: string, required: number, ): Promise<boolean> {
   const balance = await getCredits(userId);
   return balance >= required;
 }
 
 async function logCreditUsage(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   userId: string,
   action: CreditAction,
   creditsSpent: number,
   tokensUsed: number,
   estimatedCostEur: number,
-  metadata?: Record<string, unknown>,
+  metadata?: Record<string, unknown>
 ) {
   const { error } = await supabase.from("credit_usage").insert({
     user_id: userId,

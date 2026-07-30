@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "totalPassed": 36,
+    "totalFailed": 0,
+    "successRate": "100.00%"
+  },
+  "validations": {
+    "contracts": {
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    },
+    "objects": {
+      "passed": 31,
+      "failed": 0,
+      "errors": []
+    },
+    "relations": {
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    },
+    "events": {
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    },
+    "graphs": {
+      "passed": 5,
+      "failed": 0,
+      "errors": []
+    },
+    "references": {
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    }
+  }
+}

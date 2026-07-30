@@ -1,10 +1,7 @@
 /**
  * Emotional Balancing Engine to prevent user fatigue.
  */
-export function balanceDifficulty(
-  consecutiveInterruptions: number,
-  currentStressLevel: number,
-): { adjustment: number; recommendation: string } {
+export function balanceDifficulty(consecutiveInterruptions: number, currentStressLevel: number, ): { adjustment: number; recommendation: string } {
   // Detection of excessive pressure
   if (consecutiveInterruptions >= 3 || currentStressLevel > 85) {
     return {

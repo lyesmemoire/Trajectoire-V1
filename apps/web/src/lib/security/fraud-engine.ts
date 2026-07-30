@@ -3,10 +3,7 @@ import { createAdminClient } from "@/lib/supabase/service";
 const isProduction = process.env.NODE_ENV === "production";
 
 export async function evaluateFraud({
-  userId,
-  ip,
-  fingerprint,
-}: {
+  userId, ip, fingerprint}: {
   userId: string;
   ip: string;
   fingerprint?: string;
@@ -39,8 +36,8 @@ export async function evaluateFraud({
         risk += 30;
         flags.push("high_ip_fraud_score");
       }
-    } catch (e) {
-      console.error("IPQS Error", e);
+    } catch (error) {
+      console.error("IPQS Error", error);
     }
   }
 
@@ -49,7 +46,7 @@ export async function evaluateFraud({
   ----------------------------- */
 
   if (fingerprint) {
-    const { data: existing } = await (supabaseAdmin as any)
+    const { data: existing } = await (supabaseAdmin  as any)
       .from("user_devices")
       .select("id")
       .eq("fingerprint", fingerprint);
@@ -64,13 +61,13 @@ export async function evaluateFraud({
      ✅ 3. IP registration spike
   ----------------------------- */
 
-  const { data: ipData } = await (supabaseAdmin as any)
+  const { data: ipData } = await (supabaseAdmin  as any)
     .from("ip_activity")
     .select("*")
     .eq("ip_address", ip)
     .single();
 
-  if (ipData && (ipData as any).registration_count > 3) {
+  if (ipData && (ipData  as any).registration_count > 3) {
     risk += 30;
     flags.push("ip_spike");
   }
@@ -81,7 +78,7 @@ export async function evaluateFraud({
 
   const fraudFlag = risk >= 70;
 
-  await (supabaseAdmin as any).from("user_risk_scores").upsert({
+  await (supabaseAdmin  as any).from("user_risk_scores").upsert({
     user_id: userId,
     risk_score: risk,
     fraud_flag: fraudFlag,

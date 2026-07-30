@@ -112,7 +112,7 @@ export class SILIngestor {
     if (incomingEvent.type === "SESSION_CREATED") {
       try {
         this.registry.register(incomingEvent.sessionId, incomingEvent.tenantId);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(`[Ingestor] TENANT_ISOLATION_VIOLATION during concurrent registration: ${err.message}`);
         return;
       }

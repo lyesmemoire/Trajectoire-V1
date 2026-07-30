@@ -23,6 +23,8 @@ export type HypothesisStatus =
 // STRUCTURE D'UNE HYPOTHÈSE
 // ──────────────────────────────────────────────────────────
 
+// Canonical Reference: BCM-OBJ-007 (blueprint.cognitive.hypothesis)
+// Owner: Chief Cognitive Architect
 export interface Hypothesis {
   id                : string;
   label             : string;            // Ex : "Leadership fort sous pression"

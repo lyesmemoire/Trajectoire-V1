@@ -11,7 +11,7 @@ export function stripHtml(html: string): string {
 export function removeMarkdown(text: string): string {
   if (!text) return "";
   return text
-    .replace(/[#*`_~>\[\]\(\)]/g, "") // Remove basic MD chars
+    .replace(/[#*`_~>[\]()]/g, "") // Remove basic MD chars
     .replace(/\n{3,}/g, "\n\n") // Normalize newlines
     .trim();
 }

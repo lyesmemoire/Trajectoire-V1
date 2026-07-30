@@ -27,10 +27,7 @@ export function createHashChain(sessionId: string, tenantDid: string): HashChain
  * Append a signed event to the chain.
  * Validates that the event's previousEventHash matches the current head.
  */
-export function appendToChain(
-  chain: HashChainState,
-  event: SignedEvent
-): HashChainState {
+export function appendToChain(chain: HashChainState, event: SignedEvent): HashChainState {
   if (event.previousEventHash !== chain.headHash) {
     throw new Error(
       `CHAIN_INTEGRITY_VIOLATION: event.previousEventHash (${event.previousEventHash}) ` +

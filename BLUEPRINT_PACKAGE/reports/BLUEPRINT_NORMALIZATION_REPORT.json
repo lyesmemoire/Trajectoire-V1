@@ -1,0 +1,1015 @@
+{
+  "summary": {
+    "totalCanonicalElements": 242,
+    "nonStandardIDs": 0,
+    "nonStandardSemanticIDs": 192,
+    "nonStandardVersions": 0,
+    "nonStandardNames": 10
+  },
+  "nonStandardIDs": [],
+  "nonStandardSemanticIDs": [
+    {
+      "name": "Observation",
+      "semanticId": "blueprint.cognitive.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Perception",
+      "semanticId": "blueprint.cognitive.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Evidence",
+      "semanticId": "blueprint.cognitive.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Confidence",
+      "semanticId": "blueprint.cognitive.confidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Knowledge",
+      "semanticId": "blueprint.cognitive.knowledge",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Belief",
+      "semanticId": "blueprint.cognitive.belief",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Hypothesis",
+      "semanticId": "blueprint.cognitive.hypothesis",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Reasoning",
+      "semanticId": "blueprint.state.reasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Decision",
+      "semanticId": "blueprint.cognitive.decision",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Plan",
+      "semanticId": "blueprint.cognitive.plan",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Memory",
+      "semanticId": "blueprint.cognitive.memory",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Learning",
+      "semanticId": "blueprint.state.learning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Adaptation",
+      "semanticId": "blueprint.cognitive.adaptation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetaReasoning",
+      "semanticId": "blueprint.cognitive.metareasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluation",
+      "semanticId": "blueprint.cognitive.selfevaluation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveGraph",
+      "semanticId": "blueprint.graph.cognitive",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveStateMachine",
+      "semanticId": "blueprint.cognitive.statemachine",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveMetric",
+      "semanticId": "blueprint.cognitive.metric",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveMathematics",
+      "semanticId": "blueprint.cognitive.mathematics",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveGuarantee",
+      "semanticId": "blueprint.cognitive.guarantee",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Node",
+      "semanticId": "blueprint.cognitive.node",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Edge",
+      "semanticId": "blueprint.cognitive.edge",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Context",
+      "semanticId": "blueprint.cognitive.context",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Session",
+      "semanticId": "blueprint.runtime.session",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Conversation",
+      "semanticId": "blueprint.runtime.conversation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Question",
+      "semanticId": "blueprint.runtime.question",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Answer",
+      "semanticId": "blueprint.runtime.answer",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Strategy",
+      "semanticId": "blueprint.runtime.strategy",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Capability",
+      "semanticId": "blueprint.runtime.capability",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Policy",
+      "semanticId": "blueprint.runtime.policy",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Command",
+      "semanticId": "blueprint.runtime.command",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Query",
+      "semanticId": "blueprint.runtime.query",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "FeatureFlag",
+      "semanticId": "blueprint.runtime.featureflag",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Artifact",
+      "semanticId": "blueprint.runtime.artifact",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Execution",
+      "semanticId": "blueprint.execution.execution",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Budget",
+      "semanticId": "blueprint.execution.budget",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Version",
+      "semanticId": "blueprint.system.version",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Package",
+      "semanticId": "blueprint.system.package",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Object Contract",
+      "semanticId": "blueprint.contract.object",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Event Contract",
+      "semanticId": "blueprint.contract.event",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Runtime Contract",
+      "semanticId": "blueprint.contract.runtime",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Scheduling Contract",
+      "semanticId": "blueprint.contract.scheduling",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Memory Contract",
+      "semanticId": "blueprint.contract.memory",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Graph Contract",
+      "semanticId": "blueprint.contract.graph",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Debugging Contract",
+      "semanticId": "blueprint.contract.debugging",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Profiling Contract",
+      "semanticId": "blueprint.contract.profiling",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Tracing Contract",
+      "semanticId": "blueprint.contract.tracing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Security Contract",
+      "semanticId": "blueprint.contract.security",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceThresholdBreached",
+      "semanticId": "blueprint.event.confidence.threshold_breached",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetricThresholdBreached",
+      "semanticId": "blueprint.event.metric.threshold_breached",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Observing",
+      "semanticId": "blueprint.state.observing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Observed",
+      "semanticId": "blueprint.state.observed",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Perceiving",
+      "semanticId": "blueprint.state.perceiving",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Perceived",
+      "semanticId": "blueprint.state.perceived",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Evidencing",
+      "semanticId": "blueprint.state.evidencing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Evidenced",
+      "semanticId": "blueprint.state.evidenced",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Confiding",
+      "semanticId": "blueprint.state.confiding",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Confided",
+      "semanticId": "blueprint.state.confided",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Knowing",
+      "semanticId": "blueprint.state.knowing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Known",
+      "semanticId": "blueprint.state.known",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Believing",
+      "semanticId": "blueprint.state.believing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Believed",
+      "semanticId": "blueprint.state.believed",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Hypothesizing",
+      "semanticId": "blueprint.state.hypothesizing",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Hypothesized",
+      "semanticId": "blueprint.state.hypothesized",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Reasoned",
+      "semanticId": "blueprint.state.reasoned",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Deciding",
+      "semanticId": "blueprint.state.deciding",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Decided",
+      "semanticId": "blueprint.state.decided",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Planning",
+      "semanticId": "blueprint.state.planning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Planned",
+      "semanticId": "blueprint.state.planned",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Encoding",
+      "semanticId": "blueprint.state.encoding",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Encoded",
+      "semanticId": "blueprint.state.encoded",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Retrieving",
+      "semanticId": "blueprint.state.retrieving",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Retrieved",
+      "semanticId": "blueprint.state.retrieved",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Consolidating",
+      "semanticId": "blueprint.state.consolidating",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Consolidated",
+      "semanticId": "blueprint.state.consolidated",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Learned",
+      "semanticId": "blueprint.state.learned",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Adapting",
+      "semanticId": "blueprint.state.adapting",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Adapted",
+      "semanticId": "blueprint.state.adapted",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Reflecting",
+      "semanticId": "blueprint.state.reflecting",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Reflected",
+      "semanticId": "blueprint.state.reflected",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Evaluating",
+      "semanticId": "blueprint.state.evaluating",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Evaluated",
+      "semanticId": "blueprint.state.evaluated",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluating",
+      "semanticId": "blueprint.state.selfevaluating",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluated",
+      "semanticId": "blueprint.state.selfevaluated",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationGraph",
+      "semanticId": "blueprint.graph.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionGraph",
+      "semanticId": "blueprint.graph.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceGraph",
+      "semanticId": "blueprint.graph.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceGraph",
+      "semanticId": "blueprint.graph.confidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeGraph",
+      "semanticId": "blueprint.graph.knowledge",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "BeliefGraph",
+      "semanticId": "blueprint.graph.belief",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "HypothesisGraph",
+      "semanticId": "blueprint.graph.hypothesis",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ReasoningGraph",
+      "semanticId": "blueprint.graph.reasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "DecisionGraph",
+      "semanticId": "blueprint.graph.decision",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PlanningGraph",
+      "semanticId": "blueprint.graph.planning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MemoryGraph",
+      "semanticId": "blueprint.graph.memory",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "LearningGraph",
+      "semanticId": "blueprint.graph.learning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "AdaptationGraph",
+      "semanticId": "blueprint.graph.adaptation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetaReasoningGraph",
+      "semanticId": "blueprint.graph.metareasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluationGraph",
+      "semanticId": "blueprint.graph.selfevaluation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "StateMachineGraph",
+      "semanticId": "blueprint.graph.statemachine",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetricGraph",
+      "semanticId": "blueprint.graph.metric",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MathematicsGraph",
+      "semanticId": "blueprint.graph.mathematics",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "GuaranteeGraph",
+      "semanticId": "blueprint.graph.guarantee",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationAlgorithm",
+      "semanticId": "blueprint.algorithm.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionAlgorithm",
+      "semanticId": "blueprint.algorithm.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceAlgorithm",
+      "semanticId": "blueprint.algorithm.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceAlgorithm",
+      "semanticId": "blueprint.algorithm.confidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeAlgorithm",
+      "semanticId": "blueprint.algorithm.knowledge",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "BeliefAlgorithm",
+      "semanticId": "blueprint.algorithm.belief",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "HypothesisAlgorithm",
+      "semanticId": "blueprint.algorithm.hypothesis",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ReasoningAlgorithm",
+      "semanticId": "blueprint.algorithm.reasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "DecisionAlgorithm",
+      "semanticId": "blueprint.algorithm.decision",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PlanningAlgorithm",
+      "semanticId": "blueprint.algorithm.planning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MemoryAlgorithm",
+      "semanticId": "blueprint.algorithm.memory",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "LearningAlgorithm",
+      "semanticId": "blueprint.algorithm.learning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "AdaptationAlgorithm",
+      "semanticId": "blueprint.algorithm.adaptation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetaReasoningAlgorithm",
+      "semanticId": "blueprint.algorithm.metareasoning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluationAlgorithm",
+      "semanticId": "blueprint.algorithm.selfevaluation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SingleSourceOfTruth",
+      "semanticId": "blueprint.invariant.single_source_of_truth",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "UniqueOwnership",
+      "semanticId": "blueprint.invariant.unique_ownership",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "AcyclicDependencies",
+      "semanticId": "blueprint.invariant.acyclic_dependencies",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ExplicitContracts",
+      "semanticId": "blueprint.invariant.explicit_contracts",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SemanticVersioning",
+      "semanticId": "blueprint.invariant.semantic_versioning",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "GlobalUniqueness",
+      "semanticId": "blueprint.invariant.global_uniqueness",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "DeterministicExecution",
+      "semanticId": "blueprint.invariant.deterministic_execution",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "Traceability",
+      "semanticId": "blueprint.invariant.traceability",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationDeterminism",
+      "semanticId": "blueprint.invariant.observation_determinism",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionConsistency",
+      "semanticId": "blueprint.invariant.perception_consistency",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceValidity",
+      "semanticId": "blueprint.invariant.evidence_validity",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceCoherence",
+      "semanticId": "blueprint.invariant.confidence_coherence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeConsistency",
+      "semanticId": "blueprint.invariant.knowledge_consistency",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "BeliefCoherence",
+      "semanticId": "blueprint.invariant.belief_coherence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "HypothesisTestability",
+      "semanticId": "blueprint.invariant.hypothesis_testability",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ReasoningSoundness",
+      "semanticId": "blueprint.invariant.reasoning_soundness",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "DecisionOptimality",
+      "semanticId": "blueprint.invariant.decision_optimality",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PlanFeasibility",
+      "semanticId": "blueprint.invariant.plan_feasibility",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MemoryPersistence",
+      "semanticId": "blueprint.invariant.memory_persistence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "LearningEffectiveness",
+      "semanticId": "blueprint.invariant.learning_effectiveness",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "AdaptationStability",
+      "semanticId": "blueprint.invariant.adaptation_stability",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MetaReasoningAccuracy",
+      "semanticId": "blueprint.invariant.metareasoning_accuracy",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "SelfEvaluationHonesty",
+      "semanticId": "blueprint.invariant.selfevaluation_honesty",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "COSCoreDeterminism",
+      "semanticId": "blueprint.invariant.cos_core_determinism",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObjectiveCoherence",
+      "semanticId": "blueprint.invariant.objective_coherence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ArchitectureLayering",
+      "semanticId": "blueprint.invariant.architecture_layering",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveCycleCompleteness",
+      "semanticId": "blueprint.invariant.cognitive_cycle_completeness",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "RuntimeLoopDeterminism",
+      "semanticId": "blueprint.invariant.runtime_loop_determinism",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "BytecodeFidelity",
+      "semanticId": "blueprint.invariant.bytecode_fidelity",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "InstructionIsolation",
+      "semanticId": "blueprint.invariant.instruction_isolation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MemoryConsistency",
+      "semanticId": "blueprint.invariant.memory_consistency",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "TraceCompleteness",
+      "semanticId": "blueprint.invariant.trace_completeness",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "LLMAbstraction",
+      "semanticId": "blueprint.invariant.llm_abstraction",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "NoDuplicateDefinitions",
+      "semanticId": "blueprint.rule.no_duplicate_definitions",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "UniqueOwnershipEnforcement",
+      "semanticId": "blueprint.rule.unique_ownership_enforcement",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "DependencyValidation",
+      "semanticId": "blueprint.rule.dependency_validation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ContractCompliance",
+      "semanticId": "blueprint.rule.contract_compliance",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "VersionCompatibility",
+      "semanticId": "blueprint.rule.version_compatibility",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationValidation",
+      "semanticId": "blueprint.rule.observation_validation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionInterpretation",
+      "semanticId": "blueprint.rule.perception_interpretation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceEvaluation",
+      "semanticId": "blueprint.rule.evidence_evaluation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceCalculation",
+      "semanticId": "blueprint.rule.confidence_calculation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeAcquisition",
+      "semanticId": "blueprint.rule.knowledge_acquisition",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "COSObjectiveAlignment",
+      "semanticId": "blueprint.rule.cos_objective_alignment",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ArchitectureCompliance",
+      "semanticId": "blueprint.rule.architecture_compliance",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveCycleExecution",
+      "semanticId": "blueprint.rule.cognitive_cycle_execution",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "RuntimeLoopExecution",
+      "semanticId": "blueprint.rule.runtime_loop_execution",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.confidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.knowledge",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "COSCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.cos",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObjectiveCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.objective",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveCycleCognitiveRule",
+      "semanticId": "blueprint.cognitive_rule.cognitive_cycle",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "NoDuplicateDefinitionsViolation",
+      "semanticId": "blueprint.forbidden.duplicate_definitions",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "MultipleOwnershipViolation",
+      "semanticId": "blueprint.forbidden.multiple_ownership",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CyclicDependencyViolation",
+      "semanticId": "blueprint.forbidden.cyclic_dependency",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ImplicitContractViolation",
+      "semanticId": "blueprint.forbidden.implicit_contract",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationViolation",
+      "semanticId": "blueprint.forbidden.observation_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionViolation",
+      "semanticId": "blueprint.forbidden.perception_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceViolation",
+      "semanticId": "blueprint.forbidden.evidence_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ConfidenceViolation",
+      "semanticId": "blueprint.forbidden.confidence_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "KnowledgeViolation",
+      "semanticId": "blueprint.forbidden.knowledge_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "COSViolation",
+      "semanticId": "blueprint.forbidden.cos_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObjectiveViolation",
+      "semanticId": "blueprint.forbidden.objective_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ArchitectureViolation",
+      "semanticId": "blueprint.forbidden.architecture_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "CognitiveCycleViolation",
+      "semanticId": "blueprint.forbidden.cognitive_cycle_violation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationType",
+      "semanticId": "blueprint.typescript.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionType",
+      "semanticId": "blueprint.typescript.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceType",
+      "semanticId": "blueprint.typescript.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "ObservationStruct",
+      "semanticId": "blueprint.rust.observation",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "PerceptionStruct",
+      "semanticId": "blueprint.rust.perception",
+      "expectedFormat": "blueprint.layer.category.name"
+    },
+    {
+      "name": "EvidenceStruct",
+      "semanticId": "blueprint.rust.evidence",
+      "expectedFormat": "blueprint.layer.category.name"
+    }
+  ],
+  "nonStandardVersions": [],
+  "nonStandardNames": [
+    {
+      "name": "Object Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Event Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Runtime Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Scheduling Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Memory Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Graph Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Debugging Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Profiling Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Tracing Contract",
+      "expectedFormat": "PascalCase"
+    },
+    {
+      "name": "Security Contract",
+      "expectedFormat": "PascalCase"
+    }
+  ]
+}

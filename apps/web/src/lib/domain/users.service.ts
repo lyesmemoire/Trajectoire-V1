@@ -22,7 +22,7 @@ export class UsersService {
       id: profile.id,
       fullName: profile.full_name,
       email: profile.email,
-      referralCode: (profile as any).referral_code,
+      referralCode: (profile  as any).referral_code,
       stats: {
         cvCount: 0, // placeholder futur join
       },
@@ -32,6 +32,6 @@ export class UsersService {
   async updateUserProfile(userId: string, name: string) {
     return this.repo.update(userId, {
       full_name: name,
-    } as any); // Cast temporaire en attendant le STEP 0 (types Supabase)
+    }  as any); // Cast temporaire en attendant le STEP 0 (types Supabase)
   }
 }

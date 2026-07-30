@@ -9,7 +9,7 @@ interface Props {
   score: number;
 }
 
-export function ReplayTracker({ sessionId, score }: Props) {
+export function ReplayTracker({ sessionId, _score }: Props) {
   const startTime = useRef(Date.now());
   const hasSentReturn = useRef(false);
 

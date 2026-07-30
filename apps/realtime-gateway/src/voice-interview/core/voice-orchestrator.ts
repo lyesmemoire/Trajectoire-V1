@@ -65,7 +65,7 @@ export interface VoiceOpeningResult {
  * Retourne { audio?, fallback } — ne rejette jamais.
  */
 async function safeSynthesize(
-  tts: TTSAdapter | undefined,
+  tts: TTSAdapter | _undefined,
   text: string,
 ): Promise<{ audio?: ArrayBuffer; fallback: boolean }> {
   if (!tts) return { fallback: true };

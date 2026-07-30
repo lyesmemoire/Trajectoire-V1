@@ -10,16 +10,16 @@ export class RtcPeer {
   private readonly ws: WebSocket;
   private readonly pc: RTCPeerConnection;
 
-  constructor(ws: WebSocket, turnServers: any[]) {
+  constructor(ws: WebSocket, turnServers: unknown[]) {
     this.ws = ws;
     this.pc = new RTCPeerConnection({ iceServers: turnServers });
 
-    this.pc.connectionStateChange.subscribe((state: any) => {
+    this.pc.connectionStateChange.subscribe((state: unknown) => {
       logger.info({ state }, "Peer connection state changed");
     });
   }
 
-  async processOffer(offer: any) {
+  async processOffer(offer: unknown) {
     await this.pc.setRemoteDescription(
       new RTCSessionDescription(offer.sdp, offer.type),
     );
@@ -28,13 +28,13 @@ export class RtcPeer {
     this.ws.send(JSON.stringify({ type: "answer", payload: answer }));
   }
 
-  async processAnswer(answer: any) {
+  async processAnswer(answer: unknown) {
     await this.pc.setRemoteDescription(
       new RTCSessionDescription(answer.sdp, answer.type),
     );
   }
 
-  async addIceCandidate(candidate: any) {
+  async addIceCandidate(candidate: unknown) {
     await this.pc.addIceCandidate(new RTCIceCandidate(candidate));
   }
 

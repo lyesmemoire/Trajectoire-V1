@@ -15,10 +15,7 @@ export interface ATSAnalysis {
   confidence: number;
 }
 
-export async function processATSAnalysis(
-  cvBuffer: Buffer,
-  jobDescription: string,
-): Promise<ATSAnalysis> {
+export async function processATSAnalysis(cvBuffer: _Buffer, jobDescription: string, ): Promise<ATSAnalysis> {
   // 1. Extraction
   const extraction = await extractCVText(cvBuffer);
 

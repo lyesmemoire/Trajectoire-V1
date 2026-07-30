@@ -10,14 +10,14 @@ export interface Alert {
   severity: "info" | "warning" | "error" | "critical";
   title: string;
   message: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   timestamp: Date;
 }
 
 export interface AlertChannel {
   type: "slack" | "discord" | "email" | "webhook";
   enabled: boolean;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
 }
 
 export class AlertingService {
@@ -129,7 +129,7 @@ export class AlertingService {
   /**
    * Send Slack alert
    */
-  private async sendSlackAlert(config: Record<string, any>, alert: Alert): Promise<void> {
+  private async sendSlackAlert(config: Record<string, unknown>, alert: Alert): Promise<void> {
     const color = this.getSeverityColor(alert.severity);
     
     const payload = {
@@ -149,7 +149,7 @@ export class AlertingService {
       ],
     };
 
-    const response = await fetch(config.webhookUrl, {
+    const response = await fetch(config.webhookUrl as string, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -163,7 +163,7 @@ export class AlertingService {
   /**
    * Send Discord alert
    */
-  private async sendDiscordAlert(config: Record<string, any>, alert: Alert): Promise<void> {
+  private async sendDiscordAlert(config: Record<string, unknown>, alert: Alert): Promise<void> {
     const color = this.getSeverityColor(alert.severity);
     
     const payload = {
@@ -182,7 +182,7 @@ export class AlertingService {
       ],
     };
 
-    const response = await fetch(config.webhookUrl, {
+    const response = await fetch(config.webhookUrl as string, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -196,11 +196,11 @@ export class AlertingService {
   /**
    * Send email alert
    */
-  private async sendEmailAlert(config: Record<string, any>, alert: Alert): Promise<void> {
+  private async sendEmailAlert(config: Record<string, unknown>, alert: Alert): Promise<void> {
     // Placeholder for email sending
     // In production, use a service like SendGrid, AWS SES, or Resend
-    logger.debug(`Email alert to ${config.to.join(", ")}: ${alert.title}`, { 
-      to: config.to, 
+    logger.debug(`Email alert to ${(config.to as string[]).join(", ")}: ${alert.title}`, { 
+      to: (config.to as string[]), 
       title: alert.title 
     });
   }
@@ -208,7 +208,7 @@ export class AlertingService {
   /**
    * Send webhook alert
    */
-  private async sendWebhookAlert(config: Record<string, any>, alert: Alert): Promise<void> {
+  private async sendWebhookAlert(config: Record<string, unknown>, alert: Alert): Promise<void> {
     const payload = {
       severity: alert.severity,
       title: alert.title,
@@ -217,7 +217,7 @@ export class AlertingService {
       timestamp: alert.timestamp.toISOString(),
     };
 
-    const response = await fetch(config.url, {
+    const response = await fetch(config.url as string, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -251,7 +251,7 @@ export class AlertingService {
   /**
    * Convenience method for info alerts
    */
-  async info(title: string, message: string, metadata?: Record<string, any>): Promise<void> {
+  async info(title: string, message: string, metadata?: Record<string, unknown>): Promise<void> {
     await this.sendAlert({
       severity: "info",
       title,
@@ -264,7 +264,7 @@ export class AlertingService {
   /**
    * Convenience method for warning alerts
    */
-  async warning(title: string, message: string, metadata?: Record<string, any>): Promise<void> {
+  async warning(title: string, message: string, metadata?: Record<string, unknown>): Promise<void> {
     await this.sendAlert({
       severity: "warning",
       title,
@@ -277,7 +277,7 @@ export class AlertingService {
   /**
    * Convenience method for error alerts
    */
-  async error(title: string, message: string, metadata?: Record<string, any>): Promise<void> {
+  async error(title: string, message: string, metadata?: Record<string, unknown>): Promise<void> {
     await this.sendAlert({
       severity: "error",
       title,
@@ -290,7 +290,7 @@ export class AlertingService {
   /**
    * Convenience method for critical alerts
    */
-  async critical(title: string, message: string, metadata?: Record<string, any>): Promise<void> {
+  async critical(title: string, message: string, metadata?: Record<string, unknown>): Promise<void> {
     await this.sendAlert({
       severity: "critical",
       title,

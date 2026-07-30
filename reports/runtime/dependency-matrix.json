@@ -1,0 +1,707 @@
+{
+  "cvm": {
+    "graph": {
+      "branch-predictor": {
+        "file": "compiler\\cvm\\branch-predictor.ts",
+        "imports": [
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "debugger-hooks": {
+        "file": "compiler\\cvm\\debugger-hooks.ts",
+        "imports": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "dependents": []
+      },
+      "exception-handler": {
+        "file": "compiler\\cvm\\exception-handler.ts",
+        "imports": [
+          "execution-context",
+          "exception-table"
+        ],
+        "dependents": []
+      },
+      "execution-context": {
+        "file": "compiler\\cvm\\execution-context.ts",
+        "imports": [
+          "stack",
+          "heap",
+          "call-frames",
+          "register-table"
+        ],
+        "dependents": [
+          "branch-predictor",
+          "debugger-hooks",
+          "exception-handler",
+          "execution-pipeline",
+          "garbage-collector",
+          "instruction-execute",
+          "interrupt-manager",
+          "memory-manager",
+          "microcode-engine",
+          "profiler-hooks",
+          "rollback-manager",
+          "scheduler",
+          "snapshot-manager",
+          "thread-manager",
+          "trace-hooks"
+        ]
+      },
+      "execution-pipeline": {
+        "file": "compiler\\cvm\\execution-pipeline.ts",
+        "imports": [
+          "execution-context",
+          "instruction-fetch",
+          "instruction-decode",
+          "instruction-execute"
+        ],
+        "dependents": []
+      },
+      "frame-manager": {
+        "file": "compiler\\cvm\\frame-manager.ts",
+        "imports": [
+          "stack",
+          "call-frames"
+        ],
+        "dependents": []
+      },
+      "garbage-collector": {
+        "file": "compiler\\cvm\\garbage-collector.ts",
+        "imports": [
+          "heap",
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "instruction-cache": {
+        "file": "compiler\\cvm\\instruction-cache.ts",
+        "imports": [
+          "instruction-table"
+        ],
+        "dependents": []
+      },
+      "instruction-decode": {
+        "file": "compiler\\cvm\\instruction-decode.ts",
+        "imports": [
+          "instruction-table",
+          "opcode-table"
+        ],
+        "dependents": [
+          "execution-pipeline",
+          "instruction-execute"
+        ]
+      },
+      "instruction-execute": {
+        "file": "compiler\\cvm\\instruction-execute.ts",
+        "imports": [
+          "execution-context",
+          "instruction-decode",
+          "opcode-table"
+        ],
+        "dependents": [
+          "execution-pipeline"
+        ]
+      },
+      "instruction-fetch": {
+        "file": "compiler\\cvm\\instruction-fetch.ts",
+        "imports": [
+          "instruction-table"
+        ],
+        "dependents": [
+          "execution-pipeline"
+        ]
+      },
+      "interrupt-manager": {
+        "file": "compiler\\cvm\\interrupt-manager.ts",
+        "imports": [
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "memory-manager": {
+        "file": "compiler\\cvm\\memory-manager.ts",
+        "imports": [
+          "heap",
+          "stack",
+          "memory-addressing",
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "microcode-engine": {
+        "file": "compiler\\cvm\\microcode-engine.ts",
+        "imports": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "dependents": []
+      },
+      "profiler-hooks": {
+        "file": "compiler\\cvm\\profiler-hooks.ts",
+        "imports": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "dependents": []
+      },
+      "register-file": {
+        "file": "compiler\\cvm\\register-file.ts",
+        "imports": [
+          "register-table"
+        ],
+        "dependents": []
+      },
+      "rollback-manager": {
+        "file": "compiler\\cvm\\rollback-manager.ts",
+        "imports": [
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "scheduler": {
+        "file": "compiler\\cvm\\scheduler.ts",
+        "imports": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "dependents": []
+      },
+      "snapshot-manager": {
+        "file": "compiler\\cvm\\snapshot-manager.ts",
+        "imports": [
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "thread-manager": {
+        "file": "compiler\\cvm\\thread-manager.ts",
+        "imports": [
+          "execution-context"
+        ],
+        "dependents": []
+      },
+      "trace-hooks": {
+        "file": "compiler\\cvm\\trace-hooks.ts",
+        "imports": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "dependents": []
+      }
+    },
+    "levels": {
+      "execution-context": 0,
+      "branch-predictor": 1,
+      "debugger-hooks": 1,
+      "exception-handler": 1,
+      "instruction-fetch": 0,
+      "instruction-decode": 0,
+      "instruction-execute": 1,
+      "execution-pipeline": 2,
+      "frame-manager": 0,
+      "garbage-collector": 1,
+      "instruction-cache": 0,
+      "interrupt-manager": 1,
+      "memory-manager": 1,
+      "microcode-engine": 1,
+      "profiler-hooks": 1,
+      "register-file": 0,
+      "rollback-manager": 1,
+      "scheduler": 1,
+      "snapshot-manager": 1,
+      "thread-manager": 1,
+      "trace-hooks": 1
+    },
+    "scores": {
+      "branch-predictor": {
+        "score": 22,
+        "dependents": 0,
+        "complexity": 15,
+        "level": 1
+      },
+      "debugger-hooks": {
+        "score": 59,
+        "dependents": 0,
+        "complexity": 39,
+        "level": 1
+      },
+      "exception-handler": {
+        "score": 19,
+        "dependents": 0,
+        "complexity": 11,
+        "level": 1
+      },
+      "execution-context": {
+        "score": 57,
+        "dependents": 15,
+        "complexity": 5,
+        "level": 0
+      },
+      "execution-pipeline": {
+        "score": 26,
+        "dependents": 0,
+        "complexity": 14,
+        "level": 2
+      },
+      "frame-manager": {
+        "score": 24,
+        "dependents": 0,
+        "complexity": 11,
+        "level": 0
+      },
+      "garbage-collector": {
+        "score": 41,
+        "dependents": 0,
+        "complexity": 32,
+        "level": 1
+      },
+      "instruction-cache": {
+        "score": 28,
+        "dependents": 0,
+        "complexity": 18,
+        "level": 0
+      },
+      "instruction-decode": {
+        "score": 22,
+        "dependents": 2,
+        "complexity": 10,
+        "level": 0
+      },
+      "instruction-execute": {
+        "score": 38,
+        "dependents": 1,
+        "complexity": 32,
+        "level": 1
+      },
+      "instruction-fetch": {
+        "score": 29,
+        "dependents": 1,
+        "complexity": 16,
+        "level": 0
+      },
+      "interrupt-manager": {
+        "score": 30,
+        "dependents": 0,
+        "complexity": 17,
+        "level": 1
+      },
+      "memory-manager": {
+        "score": 36,
+        "dependents": 0,
+        "complexity": 18,
+        "level": 1
+      },
+      "microcode-engine": {
+        "score": 32,
+        "dependents": 0,
+        "complexity": 27,
+        "level": 1
+      },
+      "profiler-hooks": {
+        "score": 24,
+        "dependents": 0,
+        "complexity": 14,
+        "level": 1
+      },
+      "register-file": {
+        "score": 30,
+        "dependents": 0,
+        "complexity": 18,
+        "level": 0
+      },
+      "rollback-manager": {
+        "score": 36,
+        "dependents": 0,
+        "complexity": 23,
+        "level": 1
+      },
+      "scheduler": {
+        "score": 34,
+        "dependents": 0,
+        "complexity": 20,
+        "level": 1
+      },
+      "snapshot-manager": {
+        "score": 24,
+        "dependents": 0,
+        "complexity": 14,
+        "level": 1
+      },
+      "thread-manager": {
+        "score": 33,
+        "dependents": 0,
+        "complexity": 19,
+        "level": 1
+      },
+      "trace-hooks": {
+        "score": 44,
+        "dependents": 0,
+        "complexity": 27,
+        "level": 1
+      }
+    }
+  },
+  "cpr": {
+    "graph": {
+      "api-gateway": {
+        "file": "compiler\\cpr\\api-gateway.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "autoscaler": {
+        "file": "compiler\\cpr\\autoscaler.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "dependents": []
+      },
+      "cluster-manager": {
+        "file": "compiler\\cpr\\cluster-manager.ts",
+        "imports": [],
+        "dependents": [
+          "api-gateway",
+          "autoscaler",
+          "consensus-engine",
+          "distributed-debugger",
+          "distributed-locks",
+          "distributed-memory",
+          "distributed-profiler",
+          "distributed-scheduler",
+          "distributed-trace",
+          "execution-coordinator",
+          "governance",
+          "leader-election",
+          "recovery-manager",
+          "replay-manager",
+          "runtime-kernel",
+          "runtime-manager",
+          "security",
+          "snapshot-manager",
+          "telemetry"
+        ]
+      },
+      "consensus-engine": {
+        "file": "compiler\\cpr\\consensus-engine.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": [
+          "runtime-kernel"
+        ]
+      },
+      "distributed-debugger": {
+        "file": "compiler\\cpr\\distributed-debugger.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "dependents": []
+      },
+      "distributed-locks": {
+        "file": "compiler\\cpr\\distributed-locks.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "distributed-memory": {
+        "file": "compiler\\cpr\\distributed-memory.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": [
+          "snapshot-manager"
+        ]
+      },
+      "distributed-profiler": {
+        "file": "compiler\\cpr\\distributed-profiler.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "distributed-scheduler": {
+        "file": "compiler\\cpr\\distributed-scheduler.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "dependents": [
+          "runtime-kernel"
+        ]
+      },
+      "distributed-trace": {
+        "file": "compiler\\cpr\\distributed-trace.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "execution-coordinator": {
+        "file": "compiler\\cpr\\execution-coordinator.ts",
+        "imports": [
+          "runtime-manager",
+          "cluster-manager"
+        ],
+        "dependents": [
+          "runtime-kernel"
+        ]
+      },
+      "governance": {
+        "file": "compiler\\cpr\\governance.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "knowledge-fabric": {
+        "file": "compiler\\cpr\\knowledge-fabric.ts",
+        "imports": [],
+        "dependents": []
+      },
+      "leader-election": {
+        "file": "compiler\\cpr\\leader-election.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": [
+          "runtime-kernel"
+        ]
+      },
+      "provider-manager": {
+        "file": "compiler\\cpr\\provider-manager.ts",
+        "imports": [],
+        "dependents": []
+      },
+      "recovery-manager": {
+        "file": "compiler\\cpr\\recovery-manager.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "dependents": []
+      },
+      "replay-manager": {
+        "file": "compiler\\cpr\\replay-manager.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "dependents": []
+      },
+      "runtime-kernel": {
+        "file": "compiler\\cpr\\runtime-kernel.ts",
+        "imports": [
+          "cluster-manager",
+          "runtime-manager",
+          "execution-coordinator",
+          "distributed-scheduler",
+          "consensus-engine",
+          "leader-election"
+        ],
+        "dependents": []
+      },
+      "runtime-manager": {
+        "file": "compiler\\cpr\\runtime-manager.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": [
+          "autoscaler",
+          "distributed-debugger",
+          "distributed-scheduler",
+          "execution-coordinator",
+          "recovery-manager",
+          "replay-manager",
+          "runtime-kernel"
+        ]
+      },
+      "security": {
+        "file": "compiler\\cpr\\security.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      },
+      "snapshot-manager": {
+        "file": "compiler\\cpr\\snapshot-manager.ts",
+        "imports": [
+          "cluster-manager",
+          "distributed-memory"
+        ],
+        "dependents": []
+      },
+      "telemetry": {
+        "file": "compiler\\cpr\\telemetry.ts",
+        "imports": [
+          "cluster-manager"
+        ],
+        "dependents": []
+      }
+    },
+    "levels": {
+      "cluster-manager": 0,
+      "api-gateway": 1,
+      "runtime-manager": 1,
+      "autoscaler": 2,
+      "consensus-engine": 1,
+      "distributed-debugger": 2,
+      "distributed-locks": 1,
+      "distributed-memory": 1,
+      "distributed-profiler": 1,
+      "distributed-scheduler": 2,
+      "distributed-trace": 1,
+      "execution-coordinator": 2,
+      "governance": 1,
+      "knowledge-fabric": 0,
+      "leader-election": 1,
+      "provider-manager": 0,
+      "recovery-manager": 2,
+      "replay-manager": 2,
+      "runtime-kernel": 3,
+      "security": 1,
+      "snapshot-manager": 2,
+      "telemetry": 1
+    },
+    "scores": {
+      "api-gateway": {
+        "score": 28,
+        "dependents": 0,
+        "complexity": 19,
+        "level": 1
+      },
+      "autoscaler": {
+        "score": 31,
+        "dependents": 0,
+        "complexity": 22,
+        "level": 2
+      },
+      "cluster-manager": {
+        "score": 68,
+        "dependents": 19,
+        "complexity": 16,
+        "level": 0
+      },
+      "consensus-engine": {
+        "score": 41,
+        "dependents": 1,
+        "complexity": 30,
+        "level": 1
+      },
+      "distributed-debugger": {
+        "score": 44,
+        "dependents": 0,
+        "complexity": 32,
+        "level": 2
+      },
+      "distributed-locks": {
+        "score": 27,
+        "dependents": 0,
+        "complexity": 18,
+        "level": 1
+      },
+      "distributed-memory": {
+        "score": 39,
+        "dependents": 1,
+        "complexity": 23,
+        "level": 1
+      },
+      "distributed-profiler": {
+        "score": 27,
+        "dependents": 0,
+        "complexity": 17,
+        "level": 1
+      },
+      "distributed-scheduler": {
+        "score": 36,
+        "dependents": 1,
+        "complexity": 20,
+        "level": 2
+      },
+      "distributed-trace": {
+        "score": 35,
+        "dependents": 0,
+        "complexity": 22,
+        "level": 1
+      },
+      "execution-coordinator": {
+        "score": 42,
+        "dependents": 1,
+        "complexity": 26,
+        "level": 2
+      },
+      "governance": {
+        "score": 31,
+        "dependents": 0,
+        "complexity": 17,
+        "level": 1
+      },
+      "knowledge-fabric": {
+        "score": 48,
+        "dependents": 0,
+        "complexity": 38,
+        "level": 0
+      },
+      "leader-election": {
+        "score": 34,
+        "dependents": 1,
+        "complexity": 22,
+        "level": 1
+      },
+      "provider-manager": {
+        "score": 30,
+        "dependents": 0,
+        "complexity": 17,
+        "level": 0
+      },
+      "recovery-manager": {
+        "score": 40,
+        "dependents": 0,
+        "complexity": 28,
+        "level": 2
+      },
+      "replay-manager": {
+        "score": 41,
+        "dependents": 0,
+        "complexity": 28,
+        "level": 2
+      },
+      "runtime-kernel": {
+        "score": 19,
+        "dependents": 0,
+        "complexity": 9,
+        "level": 3
+      },
+      "runtime-manager": {
+        "score": 49,
+        "dependents": 7,
+        "complexity": 11,
+        "level": 1
+      },
+      "security": {
+        "score": 30,
+        "dependents": 0,
+        "complexity": 15,
+        "level": 1
+      },
+      "snapshot-manager": {
+        "score": 37,
+        "dependents": 0,
+        "complexity": 27,
+        "level": 2
+      },
+      "telemetry": {
+        "score": 33,
+        "dependents": 0,
+        "complexity": 23,
+        "level": 1
+      }
+    }
+  }
+}

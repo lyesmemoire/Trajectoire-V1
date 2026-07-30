@@ -1,0 +1,58 @@
+{
+  "cycle": {
+    "total": 24,
+    "killed": 4,
+    "survived": 0,
+    "invalid": 20,
+    "totalWeight": 106,
+    "killedWeight": 4
+  },
+  "run": {
+    "total": 4,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 3,
+    "totalWeight": 15,
+    "killedWeight": 10
+  },
+  "validate": {
+    "total": 5,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 5,
+    "totalWeight": 16,
+    "killedWeight": 0
+  },
+  "stop": {
+    "total": 1,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 1,
+    "totalWeight": 2,
+    "killedWeight": 0
+  },
+  "reset": {
+    "total": 2,
+    "killed": 2,
+    "survived": 0,
+    "invalid": 0,
+    "totalWeight": 4,
+    "killedWeight": 4
+  },
+  "runCycles": {
+    "total": 1,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 1,
+    "totalWeight": 1,
+    "killedWeight": 0
+  },
+  "getStatistics": {
+    "total": 3,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 3,
+    "totalWeight": 3,
+    "killedWeight": 0
+  }
+}

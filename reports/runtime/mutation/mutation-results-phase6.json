@@ -1,0 +1,134 @@
+[
+  {
+    "id": "D1",
+    "family": "D",
+    "file": "execution-pipeline.ts",
+    "line": 127,
+    "mutation": "Supprimer stop()",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 12516
+  },
+  {
+    "id": "G1",
+    "family": "G",
+    "file": "execution-pipeline.ts",
+    "line": 105,
+    "mutation": "while(true) avec arrêt après 100 cycles",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 11264
+  },
+  {
+    "id": "J1",
+    "family": "J",
+    "file": "execution-pipeline.ts",
+    "line": 133,
+    "mutation": "Transformer reset() en fonction vide",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 11267
+  },
+  {
+    "id": "A1",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 64,
+    "mutation": "Supprimer fetch()",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "A2",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 68,
+    "mutation": "Supprimer decode()",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "A3",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 71,
+    "mutation": "Supprimer execute()",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "B1",
+    "family": "B",
+    "file": "execution-pipeline.ts",
+    "line": 64,
+    "mutation": "Permuter decode avant fetch",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "C1",
+    "family": "C",
+    "file": "execution-pipeline.ts",
+    "line": 228,
+    "mutation": "validate() → return true",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "E1",
+    "family": "E",
+    "file": "execution-pipeline.ts",
+    "line": 31,
+    "mutation": "Forcer isHalted=true au démarrage",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "F1",
+    "family": "F",
+    "file": "execution-pipeline.ts",
+    "line": 93,
+    "mutation": "Remplacer throw par return",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Exception levée",
+    "justification": "Une exception a été levée pendant l'exécution - le composant refuse de fonctionner"
+  },
+  {
+    "id": "H1",
+    "family": "H",
+    "file": "execution-pipeline.ts",
+    "line": 144,
+    "mutation": "Retourner {} au lieu des statistiques",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  },
+  {
+    "id": "I1",
+    "family": "I",
+    "file": "execution-pipeline.ts",
+    "line": 144,
+    "mutation": "Toujours retourner 0 pour tous les compteurs",
+    "oldStatus": "INVALID",
+    "newStatus": "KILLED",
+    "cause": "Tests rouges",
+    "justification": "Les tests échouent sans cause précise identifiée"
+  }
+]

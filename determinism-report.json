@@ -1,0 +1,11 @@
+{
+  "phase": 3,
+  "title": "Rapport de Déterminisme",
+  "isDeterministic": false,
+  "causes": [
+    "Les métriques de timestamps (createdAt, generatedAt) sont intégrées dans les fichiers JSON des rapports, ce qui modifie le SHA256 des fichiers de preuve.",
+    "La durée d'exécution est également calculée et incluse, ce qui change à chaque run.",
+    "Le manifeste final intègre les hachages de tous ces fichiers non déterministes, entraînant un SHA256 de manifeste différent pour deux exécutions identiques sur la même base de code."
+  ],
+  "conclusion": "Le pipeline N'EST PAS strictement déterministe cryptographiquement à cause des métadonnées temporelles."
+}

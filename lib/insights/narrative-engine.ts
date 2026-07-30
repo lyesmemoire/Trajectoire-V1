@@ -16,7 +16,7 @@ export interface HumanVerdict {
   nextStep: string;
 }
 
-export function translateSignalsToNarrative(signals: RawSignals): HumanVerdict {
+export function translateSignalsToNarrative(signals: _RawSignals): HumanVerdict {
   // 1. Détection du pattern dominant
   if (signals.recoverySpeed > 75 && signals.clarity < 50) {
     return {

@@ -5,7 +5,6 @@
  */
 
 import {
-  SkillGraph,
   SkillNode,
   Skill,
   Candidate,

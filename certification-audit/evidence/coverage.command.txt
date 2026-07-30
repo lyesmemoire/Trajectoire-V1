@@ -1,0 +1,1 @@
+npx vitest run tests/vm/advanced/execution-pipeline.test.ts tests/vm/advanced/execution-pipeline-r5-minimal.test.ts --coverage --reporter=verbose

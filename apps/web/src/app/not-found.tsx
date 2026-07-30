@@ -1,6 +1,6 @@
-﻿"use client";
+﻿"use client"
 
-import Link from "next/link";
+import Link from "next/link"
 
 export default function NotFound() {
   return (
@@ -52,16 +52,16 @@ export default function NotFound() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
             style={{ backgroundColor: "var(--primary)", color: "white" }}
             onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.backgroundColor = "var(--primary-hover)";
-              el.style.transform       = "translateY(-1px)";
-              el.style.boxShadow       = "0 8px 24px rgba(26,60,52,0.25)";
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.backgroundColor = "var(--primary-hover)"
+              el.style.transform       = "translateY(-1px)"
+              el.style.boxShadow       = "0 8px 24px rgba(26,60,52,0.25)"
             }}
             onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.backgroundColor = "var(--primary)";
-              el.style.transform       = "translateY(0)";
-              el.style.boxShadow       = "none";
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.backgroundColor = "var(--primary)"
+              el.style.transform       = "translateY(0)"
+              el.style.boxShadow       = "none"
             }}
           >
             Tableau de bord
@@ -71,10 +71,10 @@ export default function NotFound() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm border transition-all duration-200"
             style={{ borderColor: "var(--border)", color: "var(--text)", backgroundColor: "white" }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--primary)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--primary)"
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border)"
             }}
           >
             Accueil
@@ -86,5 +86,5 @@ export default function NotFound() {
         </p>
       </div>
     </div>
-  );
+  )
 }

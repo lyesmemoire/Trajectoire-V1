@@ -1,0 +1,25 @@
+{
+  "lab": {
+    "total": 1,
+    "detected": 1,
+    "missed": 0,
+    "invalid": 0,
+    "regressions": [
+      {
+        "id": "R5",
+        "status": "REGRESSION_DETECTED",
+        "duration": 2485
+      }
+    ],
+    "detectionRate": 100
+  },
+  "pipeline": {
+    "total": 1,
+    "detected": 0,
+    "missed": 1,
+    "buildErrors": 0,
+    "timeouts": 0,
+    "detectionRate": 0
+  },
+  "match": false
+}

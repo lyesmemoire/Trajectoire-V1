@@ -260,7 +260,7 @@ export class ExperienceMemoryService {
     averageSessionsPerUser: number;
     averageSatisfaction: number;
     averageDuration: number;
-    preferenceDistribution: Record<string, any>;
+    preferenceDistribution: Record<string, unknown>;
   } {
     const totalUsers = this.memories.size;
     const allMemories = Array.from(this.memories.values());
@@ -275,7 +275,7 @@ export class ExperienceMemoryService {
       ? allMemories.reduce((sum, memory) => sum + (memory.totalDuration / Math.max(1, memory.totalSessions)), 0) / allMemories.length
       : 0;
 
-    const preferenceDistribution: Record<string, any> = {
+    const preferenceDistribution: Record<string, unknown> = {
       timeOfDay: {},
       difficulty: {},
       learningStyle: {},
@@ -283,13 +283,13 @@ export class ExperienceMemoryService {
 
     allMemories.forEach(memory => {
       const timeOfDay = memory.preferences.preferredTimeOfDay;
-      preferenceDistribution.timeOfDay[timeOfDay] = (preferenceDistribution.timeOfDay[timeOfDay] || 0) + 1;
+      (preferenceDistribution.timeOfDay as any)[timeOfDay] = ((preferenceDistribution.timeOfDay as any)[timeOfDay] || 0) + 1;
 
       const difficulty = memory.preferences.preferredDifficulty;
-      preferenceDistribution.difficulty[difficulty] = (preferenceDistribution.difficulty[difficulty] || 0) + 1;
+      (preferenceDistribution.difficulty as any)[difficulty] = ((preferenceDistribution.difficulty as any)[difficulty] || 0) + 1;
 
       const learningStyle = memory.preferences.learningStyle;
-      preferenceDistribution.learningStyle[learningStyle] = (preferenceDistribution.learningStyle[learningStyle] || 0) + 1;
+      (preferenceDistribution.learningStyle as any)[learningStyle] = ((preferenceDistribution.learningStyle as any)[learningStyle] || 0) + 1;
     });
 
     return {

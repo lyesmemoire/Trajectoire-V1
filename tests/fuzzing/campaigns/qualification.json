@@ -1,0 +1,10 @@
+{
+  "campaignId": "qualification-v1",
+  "campaignVersion": "1.0",
+  "iterations": 100000,
+  "timeoutMs": 3600000,
+  "coverage": true,
+  "saveCorpus": true,
+  "minimizeCrashes": true,
+  "seed": 4812361
+}

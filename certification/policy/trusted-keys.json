@@ -1,0 +1,18 @@
+{
+  "keys": [
+    {
+      "keyId": "urn:trajectoire:keys:ed25519:v1",
+      "algorithm": "Ed25519",
+      "fingerprint": "MOCK_FINGERPRINT",
+      "issuer": "Trajectoire CA",
+      "status": "active",
+      "trustLevel": "production",
+      "notBefore": "2026-07-29T00:00:00Z",
+      "notAfter": "2027-07-29T00:00:00Z",
+      "revokedAt": null,
+      "revocationReason": null,
+      "successorKeyId": null,
+      "usages": ["sign", "verify"]
+    }
+  ]
+}

@@ -15,10 +15,7 @@ const prisma = new PrismaClient();
 
 const SYS = `Expert évaluation comportementale/cognitive. Produis un rapport JSON strict. Scores: entiers 0-100. Réponds UNIQUEMENT avec du JSON valide.`;
 
-export async function generateReport(
-  sessionId: string,
-  signal?: AbortSignal
-): Promise<Analysis> {
+export async function generateReport(sessionId: _string, signal?: AbortSignal): Promise<Analysis> {
   const session = await prisma.interviewSession.findUnique({
     where: { id: sessionId },
     select: {
@@ -45,13 +42,13 @@ export async function generateReport(
 
   try {
     questions = parseQuestions(session.questions);
-  } catch (e) {
+  } catch {
     throw new Error(`questions JSONB invalide [${sessionId}]: ${e}`);
   }
 
   try {
     answers = parseAnswers(session.answers);
-  } catch (e) {
+  } catch {
     throw new Error(`answers JSONB invalide [${sessionId}]: ${e}`);
   }
 

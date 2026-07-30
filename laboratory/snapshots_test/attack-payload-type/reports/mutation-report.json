@@ -1,0 +1,469 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "MUTATION_REPORT",
+  "metadata": {
+    "id": "MUT-execution-pipeline-20260729T120310Z",
+    "createdAt": "2026-07-29T12:03:10.686Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+    "gitBranch": "main",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "node certification/mutation.cjs",
+    "script": "certification/mutation.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T12:02:35.234Z",
+    "completedAt": "2026-07-29T12:03:10.686Z",
+    "durationMs": 35452,
+    "exitCode": 0
+  },
+  "content": {
+    "summary": {
+      "total": 12,
+      "killed": 12,
+      "survived": 0,
+      "invalid": 0,
+      "timeout": 0,
+      "mutationScore": 100
+    },
+    "mutations": [
+      {
+        "id": "AST-MUT-03d02f907b162c94",
+        "description": "true -> false",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "true",
+        "mutated": "false",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute loop iterations in run() when not halted",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2670,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:38.414Z",
+        "completedAt": "2026-07-29T12:02:41.084Z"
+      },
+      {
+        "id": "AST-MUT-070de91e4b59395d",
+        "description": "Operator FirstBinaryOperator to >=",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() < 0",
+        "mutated": "this.context.getProgramCounter() >= 0",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2444,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:41.085Z",
+        "completedAt": "2026-07-29T12:02:43.529Z"
+      },
+      {
+        "id": "AST-MUT-1236d2bdfcc84f69",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should reset statistics on flush",
+          "should not execute when halted",
+          "should reset pipeline state",
+          "should reset on bytecode change",
+          "should run until halt",
+          "should stop pipeline",
+          "should handle rapid start-stop",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should reset statistics to zero after reset()",
+          "should call fetch.disableCache when disableCache is called",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2827,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:43.532Z",
+        "completedAt": "2026-07-29T12:02:46.359Z"
+      },
+      {
+        "id": "AST-MUT-202a1299ed1fc32b",
+        "description": "Operator EqualsEqualsEqualsToken to !==",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "errors.length === 0",
+        "mutated": "errors.length !== 0",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state",
+          "should detect negative program counter",
+          "should detect program counter exceeding bytecode",
+          "should include \"Program counter is negative\" in errors for PC < 0",
+          "should report valid=true when PC < 0 check is disabled (force false kills this)",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2640,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:46.360Z",
+        "completedAt": "2026-07-29T12:02:49.000Z"
+      },
+      {
+        "id": "AST-MUT-38d92de671166b18",
+        "description": "Operator EqualsEqualsEqualsToken to !==",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken === false",
+        "mutated": "result.branchTaken !== false",
+        "status": "KILLED",
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2827,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:49.003Z",
+        "completedAt": "2026-07-29T12:02:51.830Z"
+      },
+      {
+        "id": "AST-MUT-648687dc1faf646e",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2566,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:51.832Z",
+        "completedAt": "2026-07-29T12:02:54.398Z"
+      },
+      {
+        "id": "AST-MUT-91f8e2b7aed4657d",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should set running to false when stop() is called",
+          "should prevent runCycles() from executing cycles when running is false",
+          "should stop pipeline",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2911,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:54.400Z",
+        "completedAt": "2026-07-29T12:02:57.311Z"
+      },
+      {
+        "id": "AST-MUT-d34a02cddd093be0",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2570,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:57.313Z",
+        "completedAt": "2026-07-29T12:02:59.883Z"
+      },
+      {
+        "id": "AST-MUT-e13f2cd6ad385f61",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should set running to false after reset, even if it was true",
+          "should prevent runCycles from executing after reset",
+          "should set running to false after reset()",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2870,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:02:59.887Z",
+        "completedAt": "2026-07-29T12:03:02.757Z"
+      },
+      {
+        "id": "AST-MUT-e553ba9125541b1b",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should run for N cycles",
+          "should handle many cycles",
+          "should maintain performance over many cycles",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2567,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:03:02.759Z",
+        "completedAt": "2026-07-29T12:03:05.326Z"
+      },
+      {
+        "id": "AST-MUT-f2acf880f59a9d5a",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2803,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:03:05.328Z",
+        "completedAt": "2026-07-29T12:03:08.131Z"
+      },
+      {
+        "id": "AST-MUT-fdb5b9d0b40d6444",
+        "description": "Operator FirstBinaryOperator to >=",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "i < n",
+        "mutated": "i >= n",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute loop iterations in runCycles() when not halted",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 2551,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T12:03:08.132Z",
+        "completedAt": "2026-07-29T12:03:10.683Z"
+      }
+    ],
+    "catalogSha256": "f4955b6ae5750f3c017dba574b3d422c0fb124329de797d207da0b45215ef5c7"
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-03d02f907b162c94.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-03d02f907b162c94.json",
+      "sha256": "9c680756d2de92e3135f2955828a1c4a8126d5f5df76ddf6de242322b1b7a74e"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-03d02f907b162c94.stdout.log",
+      "sha256": "c5baa0bc229228e3439a026b17f45a80faaab85dcc4516df718dc3c0859b13b0"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-070de91e4b59395d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-070de91e4b59395d.json",
+      "sha256": "9a07d4e46abc2ed545e306284450c4cedd09cb04dec97e65acbc4ff9743e0e9a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-070de91e4b59395d.stdout.log",
+      "sha256": "bb402b9fbbc9744a24e43419a2107390732dfa161a162d2c904507ddd6a73fec"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-1236d2bdfcc84f69.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-1236d2bdfcc84f69.json",
+      "sha256": "928a24bd542d3735a1743bb0350029c4ec8c0bf408d6bace7030c09e50c974d4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-1236d2bdfcc84f69.stdout.log",
+      "sha256": "9e080da4549b32a7a732ccea16235e09148e64e290b7360a4f3730a2c2769c18"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-202a1299ed1fc32b.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-202a1299ed1fc32b.json",
+      "sha256": "cc319fcac5ff99d5c8d981965469b9a1253e9cb8ee0b4382a015cf8e9376ca7c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-202a1299ed1fc32b.stdout.log",
+      "sha256": "35c8e06dcc06f0f1fbcfbdd847ac3b699471f14ab8e31f4092396ed77fdadaa6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-38d92de671166b18.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-38d92de671166b18.json",
+      "sha256": "0bbc53c32a60f7b55fa2331bcc46e6409a008edbd61f42fed7967ad3b08d0ee5"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-38d92de671166b18.stdout.log",
+      "sha256": "909cad1e1cc7b91433a62b9b87f62a5d8a8a277744b98c92aaea26cb4d9f9df9"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-648687dc1faf646e.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-648687dc1faf646e.json",
+      "sha256": "91c14b74b4e2268d0e90f441aba0e57f4ce30b96d6d172acab1bd574197bafce"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-648687dc1faf646e.stdout.log",
+      "sha256": "3eb816a42faf91930351cc61b28616d5ac24b9f1aaf770db0bc73b8a9ca2ab41"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-91f8e2b7aed4657d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-91f8e2b7aed4657d.json",
+      "sha256": "5bb60f00a81ffd6b5c56a64370291b5143d454b12dd73317ab341c5741c63eb2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-91f8e2b7aed4657d.stdout.log",
+      "sha256": "67834c6186adadd5b056c780559b3cb2a69da0c4cfe91ed34eeb7085dfe430ba"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-d34a02cddd093be0.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-d34a02cddd093be0.json",
+      "sha256": "41b05c870fb3c62ef93fd876f62b51e95dfcbd98e3e875ada4dc712d828b695a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-d34a02cddd093be0.stdout.log",
+      "sha256": "614b75a882c2528d9022f05b2f3e9a7f1b29dd5b0c60ad38bfb249c9c9bb3c3f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e13f2cd6ad385f61.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-e13f2cd6ad385f61.json",
+      "sha256": "93bc20b0333627744320e70c356c93f72951a914f82adbf304bc1de23f6c9759"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e13f2cd6ad385f61.stdout.log",
+      "sha256": "28b51ed6b3b4bdd27c1bb15c6f0140ee0b480c1e9861c9e270418a6888b455c1"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e553ba9125541b1b.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-e553ba9125541b1b.json",
+      "sha256": "a00e7167ee962c3afc2d9f69a7ac1ccb853326f4f51df1eb9fef8c8a099d804b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e553ba9125541b1b.stdout.log",
+      "sha256": "193d23de9a3397852c0c6cb330d7a7d877ad0529cbe416faac5745110c9fddc9"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-f2acf880f59a9d5a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-f2acf880f59a9d5a.json",
+      "sha256": "74d7517aab95add805dbb662fe83ba7a8d3ad37c025a50e2d88248033ea82e81"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-f2acf880f59a9d5a.stdout.log",
+      "sha256": "26e555c12b5f1e1089eda530b9195d042ca7de4f8c0857e7b9de6309a6b930eb"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-fdb5b9d0b40d6444.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-fdb5b9d0b40d6444.json",
+      "sha256": "25a5735cda8896819f72897814e433fc7e432f4f18b51ff2d8e6363460f09c3c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-fdb5b9d0b40d6444.stdout.log",
+      "sha256": "f214fa28a32e37c090508b1543becc2e96f2331a9309b47e9bc36e0058d9f98f"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "43636f00a9a4c2fd8bb5b80b5099fa3ab2d5510a2dd5dae661066164b8985d55",
+    "algorithm": "sha256"
+  }
+}

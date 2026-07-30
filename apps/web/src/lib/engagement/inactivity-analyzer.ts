@@ -7,10 +7,7 @@ export type DropoutType =
 /**
  * Détermine pourquoi l'utilisateur s'est arrêté.
  */
-export function analyzeDropoutReason(
-  lastSession: any,
-  totalSessions: number,
-): DropoutType {
+export function analyzeDropoutReason(lastSession: any, totalSessions: number, ): DropoutType {
   if (totalSessions === 0) return "friction";
 
   const wasHighPressure = lastSession.pressureLevel > 80;

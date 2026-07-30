@@ -1,0 +1,38 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "component": "execution-pipeline",
+  "script": "scripts/test-regression-detection.cjs",
+  "regressionsTested": ["R5", "R10", "R19"],
+  "regressionsNotTested": ["R1", "R2", "R3", "R4", "R6", "R7", "R8", "R9", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R20", "R21", "R22"],
+  "results": {
+    "R5": {
+      "id": "R5",
+      "description": "Supprimer stop()",
+      "compilation": "KO",
+      "status": "BUILD ERROR",
+      "duration": 2980
+    },
+    "R10": {
+      "id": "R10",
+      "description": "Ne jamais incrémenter cycles",
+      "compilation": "KO",
+      "status": "BUILD ERROR",
+      "duration": 2459
+    },
+    "R19": {
+      "id": "R19",
+      "description": "Supprimer remise à zéro des statistiques dans reset()",
+      "compilation": "KO",
+      "status": "BUILD ERROR",
+      "duration": 2777
+    }
+  },
+  "summary": {
+    "totalTested": 3,
+    "buildErrors": 3,
+    "detected": 0,
+    "missed": 0
+  },
+  "note": "Le script test-regression-detection.cjs ne teste que R5, R10, R19. Les 19 autres régressions n'ont pas été testées."
+}

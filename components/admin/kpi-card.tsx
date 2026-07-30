@@ -9,7 +9,7 @@ interface Props {
   icon: React.ReactNode;
 }
 
-export function KPICard({ title, value, trend, icon }: Props) {
+export function KPICard({ title, value, trend, _icon }: Props) {
   return (
     <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-all">
       <div className="flex justify-between items-start mb-4">

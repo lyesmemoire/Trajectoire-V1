@@ -1,0 +1,81 @@
+{
+  "identity": {
+    "id": "trajectoire-clean-room",
+    "name": "Trajectoire Independent Laboratory",
+    "version": "2.1.0",
+    "profile": "A",
+    "profileName": "Audit A - Structural",
+    "governanceVersion": "1.0"
+  },
+  "snapshot": "C:\\Trajectoire\\tests\\laboratory\\mock-snapshot",
+  "timestamp": "2026-07-29T19:27:35.163Z",
+  "result": "INCOMPLETE",
+  "justification": "Certains tests ont été ignorés (Profil).",
+  "verified": [],
+  "notVerified": [
+    "mutation",
+    "coverage"
+  ],
+  "controls": [
+    {
+      "id": "L-001",
+      "status": "PASS",
+      "details": "Snapshot trouvé (v1.0)"
+    },
+    {
+      "id": "L-006",
+      "status": "PASS",
+      "details": "Le graphe est acyclique"
+    },
+    {
+      "id": "L-007",
+      "status": "PASS",
+      "details": "Aucun artefact orphelin détecté"
+    },
+    {
+      "id": "L-033",
+      "status": "PASS",
+      "details": "Property suite exécutée (pbt-2026-07-29-44feb280)"
+    },
+    {
+      "id": "L-034",
+      "status": "PASS",
+      "details": "Couverture des propriétés suffisante (9 props)"
+    },
+    {
+      "id": "L-035",
+      "status": "PASS",
+      "details": "Distribution des générateurs équilibrée (Arbitraries)"
+    },
+    {
+      "id": "L-036",
+      "status": "PASS",
+      "details": "Aucun contre-exemple résiduel"
+    },
+    {
+      "id": "L-037",
+      "status": "PASS",
+      "details": "Seeds reproductibles et stables"
+    },
+    {
+      "id": "L-038",
+      "status": "PASS",
+      "details": "Intégrité du catalogue validée (Version 1.0, 9 props)"
+    },
+    {
+      "id": "L-039",
+      "status": "FAIL",
+      "details": "Déséquilibre des générateurs détecté (Invalid: 42.6%, Families complètes: true)"
+    },
+    {
+      "id": "L-040",
+      "status": "PASS",
+      "details": "Reproductibilité garantie via seed déterministe (123456789)"
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "passed": 10,
+    "failed": 1
+  }
+}

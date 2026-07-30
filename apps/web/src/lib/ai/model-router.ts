@@ -1,4 +1,4 @@
-export function selectModel(plan: string, endpoint: string) {
+export function selectModel(plan: string) {
   if (plan === "enterprise") return "gpt-4o";
 
   // Default for Free and Pro is the much cheaper and still highly capable mini

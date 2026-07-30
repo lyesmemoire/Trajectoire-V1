@@ -1,0 +1,151 @@
+{
+  "component": "execution-pipeline",
+  "file": "compiler/cvm/execution-pipeline.ts",
+  "auditDate": "2026-07-27T00:20:00Z",
+  "metrics": {
+    "lines": {
+      "total": 249,
+      "code": 249,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "functions": {
+      "total": 18,
+      "public": 15,
+      "private": 3,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "constructor",
+        "cycle",
+        "run",
+        "runCycles",
+        "stop",
+        "reset",
+        "getStatistics",
+        "getFetch",
+        "getDecode",
+        "getExecute",
+        "getContext",
+        "setBytecode",
+        "getBytecode",
+        "step",
+        "getCacheStatistics",
+        "enableCache",
+        "disableCache",
+        "setCacheSize",
+        "validate"
+      ],
+      "private": [
+        "initializeStatistics"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 12,
+      "estimated": "Based on branching statements and loops"
+    },
+    "conditions": {
+      "total": 10,
+      "details": [
+        "Line 57: if (this.context.isHalted())",
+        "Line 77: if (result.branchTaken)",
+        "Line 79: else if (result.branchTaken === false)",
+        "Line 83: if (decoded.isCall)",
+        "Line 87: if (decoded.isReturn)",
+        "Line 91: if (!result.success)",
+        "Line 105: while (!this.context.isHalted() && this.running)",
+        "Line 116: for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+        "Line 234: if (this.context.getProgramCounter() < 0)",
+        "Line 239: if (this.context.getProgramCounter() >= bytecode.length)"
+      ]
+    },
+    "interfaces": [
+      "PipelineStatistics"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "ExecutionContext",
+        "path": "./execution-context",
+        "type": "import"
+      },
+      {
+        "name": "InstructionFetch",
+        "path": "./instruction-fetch",
+        "type": "import"
+      },
+      {
+        "name": "InstructionDecode",
+        "path": "./instruction-decode",
+        "type": "import"
+      },
+      {
+        "name": "InstructionExecute",
+        "path": "./instruction-execute",
+        "type": "import"
+      },
+      {
+        "name": "ExecutionResult",
+        "path": "./instruction-execute",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingExecutionPipeline": [],
+    "usedByExecutionPipeline": [
+      "ExecutionContext",
+      "InstructionFetch",
+      "InstructionDecode",
+      "InstructionExecute"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Pipeline Pattern (Fetch-Decode-Execute)",
+    "responsibilities": [
+      "Pipeline coordination",
+      "Statistics tracking",
+      "Execution control",
+      "Cache management",
+      "Validation"
+    ],
+    "keyFeatures": [
+      "Fetch-decode-execute pipeline",
+      "Cycle-based execution",
+      "Statistics tracking",
+      "Cache integration",
+      "Halt detection",
+      "Validation"
+    ]
+  },
+  "algorithm": {
+    "pipeline": "Fetch-Decode-Execute",
+    "implementation": "Coordinates fetch, decode, and execute units in a cycle",
+    "complexity": {
+      "cycle": "O(1)",
+      "run": "O(n) where n is number of cycles until halt",
+      "runCycles": "O(n) where n is specified number of cycles"
+    }
+  },
+  "potentialComplexity": {
+    "reasons": [
+      "Multiple conditional branches in cycle()",
+      "Loop conditions in run() and runCycles()",
+      "Validation logic with multiple checks",
+      "Integration with multiple components"
+    ],
+    "riskLevel": "Medium"
+  }
+}

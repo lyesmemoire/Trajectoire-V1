@@ -133,7 +133,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
           icon_emoji: ":warning:",
         }),
       });
-    } catch (err) {
+    } catch (error) {
       console.error("Slack alert failed:", err);
     }
   }
@@ -155,7 +155,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
           text: message,
         }),
       });
-    } catch (err) {
+    } catch (error) {
       console.error("Email alert failed:", err);
     }
   }

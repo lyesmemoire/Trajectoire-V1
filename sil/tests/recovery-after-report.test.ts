@@ -74,7 +74,7 @@ describe("SIL Phase 2-D — Recovery after Report", () => {
     // Now simulate restart and recovery - since no checkpoint was saved, it starts from scratch or last valid checkpoint
     const newRegistry = new MemorySessionRegistry();
     const recoveryManager = new RecoveryManager(
-      loop, storageAdapter, checkpointRepo, {} as any, {} as any, reportRepo, newRegistry
+      loop, storageAdapter, checkpointRepo, {} as unknown, {} as unknown, reportRepo, newRegistry
     );
     const recovered = await recoveryManager.recover("tenant", sessionId);
     expect(recovered).toBe(false); // No checkpoint was successfully saved

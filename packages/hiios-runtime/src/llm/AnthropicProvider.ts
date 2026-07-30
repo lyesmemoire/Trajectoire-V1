@@ -74,7 +74,7 @@ export class AnthropicProvider implements LLMProvider {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json() as any;
+    const data = await response.json() as unknown;
 
     if (!response.ok) {
       throw new LLMError(
@@ -140,7 +140,7 @@ export class AnthropicProvider implements LLMProvider {
 
       for (const line of lines) {
         try {
-          const parsed = JSON.parse(line.slice(6)) as any;
+          const parsed = JSON.parse(line.slice(6)) as unknown;
 
           if (parsed.type === "content_block_delta") {
             const delta = parsed.delta?.text ?? "";

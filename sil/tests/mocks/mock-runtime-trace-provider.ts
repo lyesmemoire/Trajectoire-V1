@@ -8,9 +8,9 @@ import { RuntimeTrace } from "../../../core/p7/trace-contract";
  * Used by integration tests to avoid coupling to Kafka/Postgres/Collector.
  */
 export class MockRuntimeTraceProvider implements RuntimeTraceProvider {
-  async getTrace(sessionId: string): Promise<RuntimeTrace> {
+  async getTrace(_sessionId: string): Promise<RuntimeTrace> {
     return {
-      sessionId,
+      sessionId: _sessionId,
       turns: [
         {
           index: 0,
@@ -26,7 +26,7 @@ export class MockRuntimeTraceProvider implements RuntimeTraceProvider {
     };
   }
 
-  async hasTrace(sessionId: string): Promise<boolean> {
+  async hasTrace(_sessionId: string): Promise<boolean> {
     return true;
   }
 }

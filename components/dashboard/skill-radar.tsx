@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function SkillRadar({ data }: { data: any[] }) {
+export default function SkillRadar({ data }: { data: unknown[] }) {
   return (
     <div className="h-[350px] w-full bg-white rounded-3xl border border-slate-100 p-4 shadow-sm">
       <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">

@@ -48,7 +48,7 @@ export class FeedbackLearningEngine {
     feedback: "positive" | "negative" | "neutral",
     rating: number,
     reason: string,
-    context: Record<string, any>
+    context: Record<string, unknown>
   ): FeedbackEntry {
     const entry: FeedbackEntry = {
       id: `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -97,12 +97,12 @@ export class FeedbackLearningEngine {
   private analyzePatterns(): Array<{
     pattern: string;
     confidence: number;
-    context: Record<string, any>;
+    context: Record<string, unknown>;
   }> {
     const patterns: Array<{
       pattern: string;
       confidence: number;
-      context: Record<string, any>;
+      context: Record<string, unknown>;
     }> = [];
 
     // Pattern 1: High rating with positive feedback
@@ -149,12 +149,12 @@ export class FeedbackLearningEngine {
   /**
    * Extract common context from feedback
    */
-  private extractCommonContext(feedback: FeedbackEntry[]): Record<string, any> {
-    const context: Record<string, any> = {};
+  private extractCommonContext(feedback: FeedbackEntry[]): Record<string, unknown> {
+    const context: Record<string, unknown> = {};
 
     // Find common action types
     const actionTypes = feedback.map(f => f.context.actionType);
-    const actionTypeCounts = actionTypes.reduce((acc, type) => {
+    const actionTypeCounts: any = actionTypes.reduce((acc: any, type: any) => {
       acc[type] = (acc[type] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -172,7 +172,7 @@ export class FeedbackLearningEngine {
 
     // Find common difficulty
     const difficulties = feedback.map(f => f.context.difficulty);
-    const difficultyCounts = difficulties.reduce((acc, diff) => {
+    const difficultyCounts: any = difficulties.reduce((acc: any, diff: any) => {
       acc[diff] = (acc[diff] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -197,7 +197,7 @@ export class FeedbackLearningEngine {
   private generateInsight(pattern: {
     pattern: string;
     confidence: number;
-    context: Record<string, any>;
+    context: Record<string, unknown>;
   }): LearningInsight | null {
     let recommendation = "";
     let action = "";
@@ -213,7 +213,7 @@ export class FeedbackLearningEngine {
       expectedImprovement = 0.2;
     } else if (pattern.pattern.startsWith("Action type:")) {
       const actionType = pattern.context.actionType;
-      const avgRating = pattern.context.avgRating;
+      const avgRating: any = pattern.context.avgRating;
 
       if (avgRating >= 7) {
         recommendation = `Increase use of ${actionType} actions`;

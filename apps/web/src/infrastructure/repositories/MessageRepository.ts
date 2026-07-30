@@ -1,3 +1,4 @@
+
 /**
  * MessageRepository
  * Repository for interview_messages table
@@ -51,7 +52,7 @@ export class MessageRepository implements IRepository<InterviewMessage> {
       );
     }
 
-    return data as unknown as InterviewMessage;
+    return data  as any as InterviewMessage;
   }
 
   /**
@@ -90,7 +91,7 @@ export class MessageRepository implements IRepository<InterviewMessage> {
       );
     }
 
-    return (data as unknown as InterviewMessage[]) || [];
+    return (data  as any as InterviewMessage[]) || [];
   }
 
   /**

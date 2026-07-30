@@ -8,7 +8,7 @@ async function main() {
   try {
     await gateway.start(PORT);
     console.log(`[P0] API Gateway started on port ${PORT}`);
-  } catch (err) {
+  } catch (error) {
     console.error("Error starting Gateway", err);
     process.exit(1);
   }

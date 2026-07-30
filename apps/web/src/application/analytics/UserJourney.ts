@@ -4,8 +4,6 @@
  * Tracks: user paths, common journeys, drop-off points
  */
 
-import { z } from "zod";
-
 // Journey Step
 export interface JourneyStep {
   stepId: string;
@@ -13,7 +11,7 @@ export interface JourneyStep {
   pageUrl: string;
   timestamp: Date;
   duration?: number; // seconds spent on this step
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // User Journey Data
@@ -102,7 +100,7 @@ export class UserJourneyAnalytics {
     stepName: string,
     pageUrl: string,
     duration?: number,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const journey = this.journeys.get(journeyId);
     if (!journey) return;

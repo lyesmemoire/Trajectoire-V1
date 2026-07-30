@@ -1,5 +1,6 @@
 import { Timeline } from "./timeline-contract.js";
 
+
 /**
  * Result of structural validation of a Timeline.
  */

@@ -4,7 +4,6 @@
  */
 
 import {
-  ImprovementType,
   ComparisonMetric,
   ImprovementAction,
   LearningEvent,
@@ -46,7 +45,7 @@ export class ContinuousImprovementEngine {
   /**
    * Start improvement session
    */
-  async startSession(userId: string, expectedDecision: unknown): Promise<string> {
+  async startSession(userId: string, expectedDecision: any): Promise<string> {
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
     const session: ImprovementSession = {
@@ -78,7 +77,7 @@ export class ContinuousImprovementEngine {
   /**
    * Complete session
    */
-  async completeSession(sessionId: string, actualDecision: unknown, realResult: unknown, userFeedback: string): Promise<ImprovementSession> {
+  async completeSession(sessionId: string, actualDecision: any, realResult: any, userFeedback: string): Promise<ImprovementSession> {
     const session = this.sessions.get(sessionId);
     if (!session) {
       throw new Error(`Session ${sessionId} not found`);

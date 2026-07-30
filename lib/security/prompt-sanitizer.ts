@@ -70,7 +70,7 @@ export function sanitizeForPrompt(text: string): string {
 /**
  * Ensures structured output is clean.
  */
-export function enforceJsonBoundary(payload: any): any {
+export function enforceJsonBoundary(payload: unknown): unknown {
   // Deep clone and remove any fields starting with internal markers like "_"
   return JSON.parse(
     JSON.stringify(payload, (key, value) => {

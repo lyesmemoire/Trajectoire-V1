@@ -1,0 +1,309 @@
+{
+  "component": "rollback-manager",
+  "file": "compiler/cvm/rollback-manager.ts",
+  "auditDate": "2026-07-27T01:00:00Z",
+  "metrics": {
+    "lines": {
+      "total": 304,
+      "code": 304,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "functions": {
+      "total": 18,
+      "public": 17,
+      "private": 1,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "constructor",
+        "createSnapshot",
+        "restoreSnapshot",
+        "deleteSnapshot",
+        "getSnapshot",
+        "getCurrentSnapshot",
+        "getAllSnapshots",
+        "clearSnapshots",
+        "autoSnapshot",
+        "rollback",
+        "rollbackTo",
+        "getSnapshotCount",
+        "getMaxSnapshots",
+        "setMaxSnapshots",
+        "enableAutoSnapshot",
+        "disableAutoSnapshot",
+        "isAutoSnapshotEnabled",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ],
+      "private": [
+        "evictIfNeeded"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 12,
+      "estimated": "Based on branching statements and loops"
+    },
+    "conditions": {
+      "total": 12,
+      "details": [
+        "Line 70: if (!snapshot)",
+        "Line 99: if (this.currentSnapshot === id)",
+        "Line 118: if (this.currentSnapshot === null)",
+        "Line 145: if (this.snapshots.size <= this.options.maxSnapshots!)",
+        "Line 154: if (snapshot.timestamp < oldestTimestamp)",
+        "Line 160: if (oldestId !== null)",
+        "Line 163: if (this.currentSnapshot === oldestId)",
+        "Line 173: if (!this.options.autoSnapshot)",
+        "Line 184: if (this.currentSnapshot === null)",
+        "Line 248: if (snapshot.id !== id)",
+        "Line 252: if (snapshot.programCounter < 0)",
+        "Line 256: if (snapshot.stack.length === 0)",
+        "Line 261: if (this.currentSnapshot !== null && !this.snapshots.has(this.currentSnapshot))"
+      ]
+    },
+    "interfaces": [
+      "Snapshot",
+      "RollbackOptions"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "ExecutionContext",
+        "path": "./execution-context",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingRollbackManager": [
+      "ExecutionPipeline"
+    ],
+    "usedByRollbackManager": [
+      "ExecutionContext"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Snapshot Pattern / Memento Pattern",
+    "responsibilities": [
+      "State snapshot management",
+      "Rollback to previous state",
+      "Auto-snapshot",
+      "Snapshot eviction",
+      "State validation"
+    ],
+    "keyFeatures": [
+      "LRU snapshot eviction",
+      "Auto-snapshot",
+      "Rollback to specific snapshot",
+      "State validation",
+      "Statistics tracking"
+    ]
+  },
+  "invariants": {
+    "preconditions": {
+      "createSnapshot": "context must be initialized",
+      "restoreSnapshot": "snapshot must exist",
+      "deleteSnapshot": "snapshot must exist"
+    },
+    "postconditions": {
+      "createSnapshot": "returns snapshot id",
+      "restoreSnapshot": "returns true if successful",
+      "deleteSnapshot": "returns true if deleted"
+    },
+    "invariants": [
+      "snapshots.size <= maxSnapshots (enforced by evictIfNeeded)",
+      "snapshotCounter is monotonically increasing",
+      "currentSnapshot is either null or a valid snapshot id"
+    ]
+  },
+  "api": {
+    "public": [
+      {
+        "name": "constructor",
+        "params": ["context: ExecutionContext", "options?: RollbackOptions"],
+        "returns": "RollbackManager"
+      },
+      {
+        "name": "createSnapshot",
+        "params": ["metadata?: Record<string, unknown>"],
+        "returns": "number"
+      },
+      {
+        "name": "restoreSnapshot",
+        "params": ["id: number"],
+        "returns": "boolean"
+      },
+      {
+        "name": "deleteSnapshot",
+        "params": ["id: number"],
+        "returns": "boolean"
+      },
+      {
+        "name": "getSnapshot",
+        "params": ["id: number"],
+        "returns": "Snapshot | null"
+      },
+      {
+        "name": "getCurrentSnapshot",
+        "params": [],
+        "returns": "Snapshot | null"
+      },
+      {
+        "name": "getAllSnapshots",
+        "params": [],
+        "returns": "Snapshot[]"
+      },
+      {
+        "name": "clearSnapshots",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "autoSnapshot",
+        "params": [],
+        "returns": "number | null"
+      },
+      {
+        "name": "rollback",
+        "params": [],
+        "returns": "boolean"
+      },
+      {
+        "name": "rollbackTo",
+        "params": ["id: number"],
+        "returns": "boolean"
+      },
+      {
+        "name": "getSnapshotCount",
+        "params": [],
+        "returns": "number"
+      },
+      {
+        "name": "getMaxSnapshots",
+        "params": [],
+        "returns": "number"
+      },
+      {
+        "name": "setMaxSnapshots",
+        "params": ["max: number"],
+        "returns": "void"
+      },
+      {
+        "name": "enableAutoSnapshot",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "disableAutoSnapshot",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "isAutoSnapshotEnabled",
+        "params": [],
+        "returns": "boolean"
+      },
+      {
+        "name": "validate",
+        "params": [],
+        "returns": "{ valid: boolean; errors: string[] }"
+      },
+      {
+        "name": "getStatistics",
+        "params": [],
+        "returns": "{ snapshotCount, maxSnapshots, autoSnapshot, currentSnapshot, utilization }"
+      },
+      {
+        "name": "setContext",
+        "params": ["context: ExecutionContext"],
+        "returns": "void"
+      },
+      {
+        "name": "getContext",
+        "params": [],
+        "returns": "ExecutionContext"
+      }
+    ]
+  },
+  "callGraph": {
+    "createSnapshot": {
+      "calls": ["context.getProgramCounter", "context.getStack.getSnapshot", "context.getHeap.getAllBlocks", "context.getCallFrames.getAllFrames", "evictIfNeeded"],
+      "calledBy": ["autoSnapshot"]
+    },
+    "restoreSnapshot": {
+      "calls": ["context.setProgramCounter", "context.getStack.restoreSnapshot", "context.getHeap.clear", "context.getHeap.allocate", "context.getHeap.write", "context.getCallFrames.clear", "context.getCallFrames.createFrame"],
+      "calledBy": ["rollback", "rollbackTo"]
+    },
+    "deleteSnapshot": {
+      "calls": [],
+      "calledBy": []
+    },
+    "getSnapshot": {
+      "calls": [],
+      "calledBy": ["getCurrentSnapshot"]
+    },
+    "getCurrentSnapshot": {
+      "calls": ["getSnapshot"],
+      "calledBy": []
+    },
+    "getAllSnapshots": {
+      "calls": [],
+      "calledBy": []
+    },
+    "clearSnapshots": {
+      "calls": [],
+      "calledBy": []
+    },
+    "evictIfNeeded": {
+      "calls": [],
+      "calledBy": ["createSnapshot", "setMaxSnapshots"]
+    },
+    "autoSnapshot": {
+      "calls": ["createSnapshot"],
+      "calledBy": []
+    },
+    "rollback": {
+      "calls": ["restoreSnapshot"],
+      "calledBy": []
+    },
+    "rollbackTo": {
+      "calls": ["restoreSnapshot"],
+      "calledBy": []
+    },
+    "validate": {
+      "calls": [],
+      "calledBy": []
+    },
+    "getStatistics": {
+      "calls": [],
+      "calledBy": []
+    }
+  },
+  "criticalPaths": [
+    "createSnapshot() - snapshot creation",
+    "restoreSnapshot() - state restoration",
+    "evictIfNeeded() - LRU eviction"
+  ],
+  "internalState": {
+    "context": "ExecutionContext - the execution context",
+    "snapshots": "Map<number, Snapshot> - stored snapshots",
+    "snapshotCounter": "number - counter for snapshot IDs",
+    "options": "RollbackOptions - configuration options",
+    "currentSnapshot": "number | null - current snapshot ID"
+  }
+}

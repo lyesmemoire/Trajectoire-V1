@@ -24,10 +24,7 @@ FORMAT JSON ATTENDU:
 }
 `;
 
-export function buildATSPrompt(
-  resumeText: string,
-  jobDescription: string,
-): string {
+export function buildATSPrompt(resumeText: string, jobDescription: string, ): string {
   return `
 DESCRIPTION DU POSTE:
 """
@@ -63,10 +60,7 @@ FORMAT JSON ATTENDU:
 }
 `;
 
-export function buildCVOptimizePrompt(
-  cvText: string,
-  jobDescription?: string,
-): string {
+export function buildCVOptimizePrompt(cvText: string, jobDescription?: string, ): string {
   const jdSection = jobDescription
     ? `\nDESCRIPTION DU POSTE CIBLÉ:\n"""\n${jobDescription}\n"""\n`
     : "\nAucune description de poste provided. Optimise le CV de manière générale pour maximiser l'impact.\n";

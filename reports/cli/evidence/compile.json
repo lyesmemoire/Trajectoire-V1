@@ -1,0 +1,29 @@
+{
+  "command": "npx",
+  "args": [
+    "tsx",
+    "bin/blueprint",
+    "compile",
+    "--input",
+    "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\src\\contracts\\SampleContract.bp",
+    "--output",
+    "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\artifacts\\SampleContract.bpp"
+  ],
+  "exitCode": 0,
+  "duration": 3897,
+  "stdout": "[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36mCompiling: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\src\\contracts\\SampleContract.bp\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Read 237 bytes from C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\src\\contracts\\SampleContract.bp\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36mRunning compilation pipeline...\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[9%] Lexing\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[18%] Parsing\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[27%] Semantic Analysis\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[36%] Type Checking\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[45%] Constraint Solving\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[55%] Symbol Table Building\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[64%] Reference Resolution\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[73%] Optimization\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[82%] IR Generation\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[91%] Bytecode Generation\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m[100%] Bytecode Verification\u001b[39m\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Output written to: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\artifacts\\SampleContract.bpp\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:27:52] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Compilation completed in 189ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+  "stderr": "",
+  "timestamp": "2026-07-25T20:27:53.174Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "artifacts": [
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\artifacts\\SampleContract.bpp",
+      "size": 396,
+      "sha256": "1f4da8dfe74199fa5387d69936db084d867174e25dff4217bcc6c5c9689e5703"
+    }
+  ]
+}

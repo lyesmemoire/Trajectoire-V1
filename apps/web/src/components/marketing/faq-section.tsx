@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { useState } from "react"
+import { Plus, Minus } from "lucide-react"
 
 const FAQS = [
   {
@@ -16,13 +16,13 @@ const FAQS = [
     q: "Puis-je vraiment tester gratuitement ?",
     a: "Oui. L'inscription vous donne accès à une session complète incluant l'analyse de tension et la révélation de votre premier archétype.",
   },
-];
+]
 
 export function FAQSection() {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section className="py-32 px-6 bg-slate-950">
+    <section className="py-32 px-6 bg-ink-950">
       <div className="max-w-3xl mx-auto space-y-12">
         <h2 className="text-3xl lg:text-5xl font-black text-center">
           Questions fréquentes
@@ -39,13 +39,13 @@ export function FAQSection() {
               >
                 <span className="font-bold text-lg">{faq.q}</span>
                 {open === i ? (
-                  <Minus className="w-5 h-5 text-blue-500" />
+                  <Minus className="w-5 h-5 text-ink-600" />
                 ) : (
-                  <Plus className="w-5 h-5 text-slate-500" />
+                  <Plus className="w-5 h-5 text-ink-500" />
                 )}
               </button>
               {open === i && (
-                <div className="px-8 pb-8 text-slate-400 font-medium leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="px-8 pb-8 text-ink-400 font-medium leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
                   {faq.a}
                 </div>
               )}
@@ -54,5 +54,5 @@ export function FAQSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

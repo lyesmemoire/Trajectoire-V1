@@ -1,0 +1,26 @@
+{
+  "file": "C:\\Trajectoire\\compiler\\cvm\\instruction-fetch.ts",
+  "metrics": {
+    "statements": {
+      "total": 70,
+      "covered": 70,
+      "percentage": "100.00"
+    },
+    "branches": {
+      "total": 25,
+      "covered": 24,
+      "percentage": "96.00"
+    },
+    "functions": {
+      "total": 17,
+      "covered": 17,
+      "percentage": "100.00"
+    },
+    "lines": {
+      "total": 70,
+      "covered": 70,
+      "percentage": "100.00"
+    }
+  },
+  "uncoveredLines": []
+}

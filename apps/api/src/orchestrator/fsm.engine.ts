@@ -81,7 +81,7 @@ export class FsmEngine {
   transition(session: InterviewSession, event: VoiceEventType): SessionState {
     const from = session.state;
     const key = `${from}:${event}`;
-    const to = (FsmEngine as any).transitionTable[key] ?? from;
+    const to = (FsmEngine as unknown).transitionTable[key] ?? from;
 
     if (to !== from) {
       session.state = to;

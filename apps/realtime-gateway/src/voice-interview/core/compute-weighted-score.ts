@@ -1,10 +1,6 @@
-import type { StructuredScore } from "./scoring.js";
 import { ROLE_WEIGHT_MATRIX, type RoleType } from "./role-weights.js";
 
-export function computeWeightedOverall(
-  score: StructuredScore,
-  role: RoleType = "generic",
-): number {
+export function computeWeightedOverall(score: _StructuredScore, role: RoleType = "generic", ): number {
   const weights = ROLE_WEIGHT_MATRIX[role] ?? ROLE_WEIGHT_MATRIX["generic"];
 
   const weighted =

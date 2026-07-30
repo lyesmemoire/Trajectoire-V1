@@ -7,7 +7,7 @@ const termFile = path.resolve(process.cwd(), "term.json");
 // Ensure clean state
 if (fs.existsSync(termFile)) fs.unlinkSync(termFile);
 
-function log(step: string, val: any) { console.log(step, JSON.stringify(val)); }
+function log(step: _string, val: unknown) { console.log(step, JSON.stringify(val)); }
 
 const tm1 = new TermManager();
 log("initialTerm", tm1.getTerm());

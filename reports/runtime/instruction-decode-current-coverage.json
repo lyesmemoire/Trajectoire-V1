@@ -1,0 +1,29 @@
+{
+  "file": "C:\\Trajectoire\\compiler\\cvm\\instruction-decode.ts",
+  "metrics": {
+    "statements": {
+      "total": 36,
+      "covered": 34,
+      "percentage": "94.44"
+    },
+    "branches": {
+      "total": 14,
+      "covered": 13,
+      "percentage": "92.86"
+    },
+    "functions": {
+      "total": 11,
+      "covered": 11,
+      "percentage": "100.00"
+    },
+    "lines": {
+      "total": 36,
+      "covered": 34,
+      "percentage": "94.44"
+    }
+  },
+  "uncoveredLines": [
+    67,
+    68
+  ]
+}

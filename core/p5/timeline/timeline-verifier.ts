@@ -1,4 +1,3 @@
-import { Timeline } from "./timeline-contract.js";
 
 /**
  * Result of structural validation of a Timeline.
@@ -18,7 +17,7 @@ export interface TimelineValidation {
  *
  * Pure function — no side effects.
  */
-export function verifyTimeline(timeline: Timeline): TimelineValidation {
+export function verifyTimeline(timeline: _Timeline): TimelineValidation {
   const violations: string[] = [];
 
   for (let i = 0; i < timeline.entries.length; i++) {

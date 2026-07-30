@@ -17,6 +17,8 @@ export type QuestionCategory =
 
 export type Difficulty = 1 | 2 | 3 | 4 | 5;
 
+// Canonical Reference: COS-OBJ-003 (blueprint.runtime.question)
+// Owner: COS Team
 export interface Question {
   id: string;
   text: string;

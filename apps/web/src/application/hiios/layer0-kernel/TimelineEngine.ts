@@ -1,3 +1,4 @@
+
 /**
  * Timeline Engine - Layer 0 Kernel
  * Moteur de timeline selon les spécifications HIIOS v4.0
@@ -5,7 +6,6 @@
 
 import {
   Turn,
-  Hypothesis,
   Evidence,
   Contradiction,
   BiasEvent,
@@ -13,7 +13,6 @@ import {
   Observation,
   TechniqueUsed,
   InterviewState,
-  Timestamp,
   EvidenceType,
   EvidenceReliability,
   EvidenceDirection,

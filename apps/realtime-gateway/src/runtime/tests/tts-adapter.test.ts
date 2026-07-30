@@ -12,7 +12,7 @@ describe("P6.6 - W3 TTS Adapter Isolation", () => {
     let errorCaught = false;
     try {
       await adapter.synthesize("test", 1.0);
-    } catch (e) {
+    } catch (error) {
       errorCaught = true;
     }
     

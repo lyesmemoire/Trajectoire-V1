@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "totalBenchmarksGenerated": 10
+  },
+  "generatedBenchmarks": [
+    "c:\\Trajectoire\\benchmarks\\compiler\\compiler.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\runtime\\runtime.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\scheduler\\scheduler.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\memory\\memory.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\gc\\gc.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\trace\\trace.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\profiler\\profiler.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\network\\network.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\provider\\provider.bench.ts",
+    "c:\\Trajectoire\\benchmarks\\llm\\llm.bench.ts"
+  ]
+}

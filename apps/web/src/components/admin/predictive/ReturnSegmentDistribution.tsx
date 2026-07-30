@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
 
 interface Props {
   data: {
-    high: number;
-    medium: number;
-    low: number;
-  };
+    high: number
+    medium: number
+    low: number
+  }
 }
 
 export function ReturnSegmentDistribution({ data }: Props) {
@@ -15,11 +15,11 @@ export function ReturnSegmentDistribution({ data }: Props) {
     { name: "HIGH", value: data.high, color: "#3B82F6" },
     { name: "MEDIUM", value: data.medium, color: "#F59E0B" },
     { name: "LOW", value: data.low, color: "#EF4444" },
-  ];
+  ]
 
   return (
     <div className="bg-[#0B1023] rounded-[2.5rem] border border-white/[0.08] p-8 space-y-6 shadow-2xl h-full flex flex-col">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest">
+      <h3 className="text-sm font-black text-ink-400 uppercase tracking-widest">
         Return Segment Distribution
       </h3>
       <div className="flex-1 min-h-[200px]">
@@ -54,7 +54,7 @@ export function ReturnSegmentDistribution({ data }: Props) {
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-[10px] font-black text-slate-400">
+              <span className="text-[10px] font-black text-ink-400">
                 {item.name}
               </span>
             </div>
@@ -63,5 +63,5 @@ export function ReturnSegmentDistribution({ data }: Props) {
         ))}
       </div>
     </div>
-  );
+  )
 }

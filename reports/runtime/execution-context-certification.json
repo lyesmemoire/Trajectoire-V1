@@ -1,0 +1,95 @@
+{
+  "component": "execution-context",
+  "file": "compiler/cvm/execution-context.ts",
+  "auditDate": "2026-07-27T09:22:02.151Z",
+  "coverageSource": "coverage-final.json",
+  "provider": "Vitest with V8 coverage",
+  "before": {
+    "statements": {
+      "total": 53,
+      "covered": 0,
+      "uncovered": 53,
+      "percentage": "0.00"
+    },
+    "branches": {
+      "total": 6,
+      "covered": 0,
+      "uncovered": 6,
+      "percentage": "0.00"
+    },
+    "functions": {
+      "total": 21,
+      "covered": 0,
+      "uncovered": 21,
+      "percentage": "0.00"
+    },
+    "lines": {
+      "total": 53,
+      "covered": 0,
+      "uncovered": 53,
+      "percentage": "0.00"
+    }
+  },
+  "after": {
+    "statements": {
+      "total": 53,
+      "covered": 53,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "branches": {
+      "total": 10,
+      "covered": 10,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "functions": {
+      "total": 21,
+      "covered": 21,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "lines": {
+      "total": 53,
+      "covered": 53,
+      "uncovered": 0,
+      "percentage": "100.00"
+    }
+  },
+  "certificationStatus": "CERTIFIED",
+  "summary": "Component achieved 100% coverage across all metrics after resolving coverage data inconsistency. The initial discrepancy was due to an outdated coverage-final.json file. After regeneration, the component met all Enterprise certification criteria.",
+  "changes": [
+    "Regenerated coverage-final.json to obtain accurate coverage data",
+    "Verified Vitest configuration includes compiler/cvm/**/*.ts",
+    "Confirmed all 47 tests pass successfully",
+    "Validated branch coverage calculation using V8 branch locations method"
+  ],
+  "validation": {
+    "vitest": "PASSED - 47 tests passed",
+    "coverage": "PASSED - 100% statements, 100% branches, 100% functions, 100% lines",
+    "build": "PASSED",
+    "tsc": "PASSED"
+  },
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    }
+  }
+}

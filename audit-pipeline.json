@@ -1,0 +1,35 @@
+{
+  "phase": 1,
+  "title": "Audit de l'Architecture",
+  "entryPoints": ["pnpm cert:full", "node certification/certify.cjs"],
+  "scripts": {
+    "certify.cjs": "Orchestrateur principal",
+    "archive.cjs": "Nettoyage des anciens runs",
+    "evidence.cjs": "Capture de l'environnement (Step 0)",
+    "coverage.cjs": "Extraction de la couverture de code (Step 3-4)",
+    "mutation.cjs": "Exécution des tests de mutation (Step 5)",
+    "regression.cjs": "Exécution des tests de régression (Step 6)",
+    "root-cause.cjs": "Analyse des causes racines (Step 7)",
+    "report.cjs": "Décision de certification (Step 8)",
+    "manifest.cjs": "Génération du manifeste cryptographique (Step 9)",
+    "verify.cjs": "Auto-vérification (Step 10)",
+    "validate.cjs": "Validation de schéma JSON",
+    "hash.cjs": "Fonctions de hachage SHA256",
+    "replay.cjs": "Rejoue une certification (Script mort/non appelé par cert:full)"
+  },
+  "executionOrder": [
+    "archive.cjs clean",
+    "evidence.cjs",
+    "tsc --noEmit",
+    "vitest run (Tests)",
+    "coverage.cjs",
+    "mutation.cjs",
+    "regression.cjs",
+    "root-cause.cjs",
+    "report.cjs",
+    "manifest.cjs",
+    "verify.cjs"
+  ],
+  "deadScripts": ["replay.cjs"],
+  "circularDependencies": "Aucune dépendance circulaire détectée parmi les scripts de certification."
+}

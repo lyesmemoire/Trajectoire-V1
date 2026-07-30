@@ -17,7 +17,7 @@ test("mutationResistance.test.ts: state remains frozen after reducer", () => {
   expect(Object.isFrozen(finalState)).toBe(true);
   expect(Object.isFrozen(finalState.nested)).toBe(true);
   // Attempt mutation should not affect frozen object
-  // @ts-ignore
+  // @ts-expect-error - Intentionally testing mutation resistance on frozen object
   finalState.count = 999;
   expect(finalState.count).toBe(1);
 });

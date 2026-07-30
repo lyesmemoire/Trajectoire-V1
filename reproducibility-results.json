@@ -1,0 +1,10 @@
+{
+  "phase": 3,
+  "title": "Tests de Reproductibilité",
+  "methodology": "Suppression de tous les artefacts via le script archive.cjs clean. Lancement de deux exécutions consécutives du pipeline (Run 1 et Run 2). Comparaison des manifestes.",
+  "run1_manifestSha256": "9d769b8cd8fd0ef829f583f8d4025452f97c0c6433aa8d3d2d4d0ca1f7b5ebbc",
+  "run2_manifestSha256": "54c72246b920a39d70885d84508a57ea895e48ffe39dc84968b0cca75ab6429d",
+  "decisionComparison": "Run 1: REJECTED, Run 2: REJECTED",
+  "metricsComparison": "Mêmes métriques artificielles dans les deux cas (100% partout).",
+  "conclusion": "La décision finale est reproductible (REJECTED), mais les artefacts générés ne sont pas cryptographiquement reproductibles car ils incluent des horodatages (timestamps), ce qui entraîne un SHA256 de manifeste différent à chaque exécution."
+}

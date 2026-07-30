@@ -1,0 +1,15 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "component": "execution-pipeline",
+  "status": "PREUVE INSUFFISANTE",
+  "reason": "Le fichier coverage.raw.json contient le coverage du scheduler (CVM/src/scheduler), pas du execution-pipeline (compiler/cvm/execution-pipeline.ts). Impossible de calculer les métriques de coverage pour execution-pipeline à partir de ce fichier.",
+  "rawEvidence": "coverage.raw.json",
+  "metrics": {
+    "statements": "PREUVE INSUFFISANTE",
+    "branches": "PREUVE INSUFFISANTE",
+    "functions": "PREUVE INSUFFISANTE",
+    "lines": "PREUVE INSUFFISANTE"
+  },
+  "conclusion": "PREUVE INSUFFISANTE - Impossible de recalculer les métriques de coverage pour execution-pipeline"
+}

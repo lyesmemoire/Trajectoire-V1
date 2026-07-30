@@ -1,6 +1,9 @@
-import { MindState } from "../execution-contract.js";
+
+
 import { createSnapshot } from "../snapshot/create-snapshot.js";
 import { Transaction } from "./transaction-contract.js";
+import { MindState } from "../execution-contract.js";
+
 
 /**
  * Begins a new transaction by capturing a snapshot of the current state.

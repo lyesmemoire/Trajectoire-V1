@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "signatureAlgorithm": "Ed25519",
+  "timestamp": "2026-07-29T12:01:50.731Z",
+  "hashSigned": "8381a560bec91cacc85d2a39cfa4a70e5d96545d2fd85d8ca157c29c6b5f7246",
+  "signature": "UY3vvj7MxNUIY9Ywf5DWyeOTnQCnRmWM2UUMU72hcgIVeeIKMI3q8TH2oZdoXK59VTcavHQkvLc0iN6S56JeDw==",
+  "fileSigned": "audit-cve.json"
+}

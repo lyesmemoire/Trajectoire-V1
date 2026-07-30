@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-24T17:50:44.185Z",
+  "commands": [],
+  "elapsedTimes": {},
+  "packages": [],
+  "errors": [],
+  "success": true,
+  "exitCode": 0,
+  "warnings": [
+    "No packages found in packages/ directory"
+  ],
+  "rootPackageValid": true
+}

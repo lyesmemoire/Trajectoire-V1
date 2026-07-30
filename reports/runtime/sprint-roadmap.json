@@ -1,0 +1,446 @@
+[
+  {
+    "id": 1,
+    "lots": [
+      {
+        "id": 1,
+        "name": "execution-context",
+        "category": "CVM",
+        "criticalityScore": 36,
+        "estimatedEffort": 1
+      },
+      {
+        "id": 2,
+        "name": "register-file",
+        "category": "CVM",
+        "criticalityScore": 30,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 3,
+        "name": "instruction-cache",
+        "category": "CVM",
+        "criticalityScore": 28,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 4,
+        "name": "instruction-fetch",
+        "category": "CVM",
+        "criticalityScore": 26,
+        "estimatedEffort": 4
+      }
+    ],
+    "totalEffort": 13,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 2,
+    "lots": [
+      {
+        "id": 5,
+        "name": "frame-manager",
+        "category": "CVM",
+        "criticalityScore": 24,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 6,
+        "name": "instruction-decode",
+        "category": "CVM",
+        "criticalityScore": 17,
+        "estimatedEffort": 2
+      },
+      {
+        "id": 7,
+        "name": "debugger-hooks",
+        "category": "CVM",
+        "criticalityScore": 62,
+        "estimatedEffort": 8
+      },
+      {
+        "id": 8,
+        "name": "trace-hooks",
+        "category": "CVM",
+        "criticalityScore": 47,
+        "estimatedEffort": 6
+      }
+    ],
+    "totalEffort": 19,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 3,
+    "lots": [
+      {
+        "id": 9,
+        "name": "garbage-collector",
+        "category": "CVM",
+        "criticalityScore": 44,
+        "estimatedEffort": 7
+      },
+      {
+        "id": 10,
+        "name": "instruction-execute",
+        "category": "CVM",
+        "criticalityScore": 39,
+        "estimatedEffort": 7
+      },
+      {
+        "id": 11,
+        "name": "memory-manager",
+        "category": "CVM",
+        "criticalityScore": 39,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 12,
+        "name": "rollback-manager",
+        "category": "CVM",
+        "criticalityScore": 39,
+        "estimatedEffort": 5
+      }
+    ],
+    "totalEffort": 23,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 4,
+    "lots": [
+      {
+        "id": 13,
+        "name": "scheduler",
+        "category": "CVM",
+        "criticalityScore": 37,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 14,
+        "name": "thread-manager",
+        "category": "CVM",
+        "criticalityScore": 36,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 15,
+        "name": "microcode-engine",
+        "category": "CVM",
+        "criticalityScore": 35,
+        "estimatedEffort": 6
+      },
+      {
+        "id": 16,
+        "name": "interrupt-manager",
+        "category": "CVM",
+        "criticalityScore": 33,
+        "estimatedEffort": 4
+      }
+    ],
+    "totalEffort": 18,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 5,
+    "lots": [
+      {
+        "id": 17,
+        "name": "profiler-hooks",
+        "category": "CVM",
+        "criticalityScore": 27,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 18,
+        "name": "snapshot-manager",
+        "category": "CVM",
+        "criticalityScore": 27,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 19,
+        "name": "branch-predictor",
+        "category": "CVM",
+        "criticalityScore": 25,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 20,
+        "name": "exception-handler",
+        "category": "CVM",
+        "criticalityScore": 22,
+        "estimatedEffort": 3
+      }
+    ],
+    "totalEffort": 12,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 6,
+    "lots": [
+      {
+        "id": 21,
+        "name": "execution-pipeline",
+        "category": "CVM",
+        "criticalityScore": 32,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 22,
+        "name": "cluster-manager",
+        "category": "CPR",
+        "criticalityScore": 52,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 23,
+        "name": "knowledge-fabric",
+        "category": "CPR",
+        "criticalityScore": 48,
+        "estimatedEffort": 8
+      },
+      {
+        "id": 24,
+        "name": "provider-manager",
+        "category": "CPR",
+        "criticalityScore": 30,
+        "estimatedEffort": 4
+      }
+    ],
+    "totalEffort": 19,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 7,
+    "lots": [
+      {
+        "id": 25,
+        "name": "consensus-engine",
+        "category": "CPR",
+        "criticalityScore": 42,
+        "estimatedEffort": 6
+      },
+      {
+        "id": 26,
+        "name": "distributed-memory",
+        "category": "CPR",
+        "criticalityScore": 39,
+        "estimatedEffort": 5
+      },
+      {
+        "id": 27,
+        "name": "distributed-trace",
+        "category": "CPR",
+        "criticalityScore": 38,
+        "estimatedEffort": 5
+      },
+      {
+        "id": 28,
+        "name": "telemetry",
+        "category": "CPR",
+        "criticalityScore": 36,
+        "estimatedEffort": 5
+      }
+    ],
+    "totalEffort": 21,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 8,
+    "lots": [
+      {
+        "id": 29,
+        "name": "governance",
+        "category": "CPR",
+        "criticalityScore": 35,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 30,
+        "name": "leader-election",
+        "category": "CPR",
+        "criticalityScore": 34,
+        "estimatedEffort": 5
+      },
+      {
+        "id": 31,
+        "name": "security",
+        "category": "CPR",
+        "criticalityScore": 34,
+        "estimatedEffort": 3
+      },
+      {
+        "id": 32,
+        "name": "runtime-manager",
+        "category": "CPR",
+        "criticalityScore": 32,
+        "estimatedEffort": 3
+      }
+    ],
+    "totalEffort": 15,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 9,
+    "lots": [
+      {
+        "id": 33,
+        "name": "api-gateway",
+        "category": "CPR",
+        "criticalityScore": 31,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 34,
+        "name": "distributed-locks",
+        "category": "CPR",
+        "criticalityScore": 30,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 35,
+        "name": "distributed-profiler",
+        "category": "CPR",
+        "criticalityScore": 30,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 36,
+        "name": "distributed-debugger",
+        "category": "CPR",
+        "criticalityScore": 50,
+        "estimatedEffort": 7
+      }
+    ],
+    "totalEffort": 19,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 10,
+    "lots": [
+      {
+        "id": 37,
+        "name": "replay-manager",
+        "category": "CPR",
+        "criticalityScore": 47,
+        "estimatedEffort": 6
+      },
+      {
+        "id": 38,
+        "name": "recovery-manager",
+        "category": "CPR",
+        "criticalityScore": 46,
+        "estimatedEffort": 6
+      },
+      {
+        "id": 39,
+        "name": "execution-coordinator",
+        "category": "CPR",
+        "criticalityScore": 45,
+        "estimatedEffort": 6
+      },
+      {
+        "id": 40,
+        "name": "snapshot-manager",
+        "category": "CPR",
+        "criticalityScore": 43,
+        "estimatedEffort": 6
+      }
+    ],
+    "totalEffort": 24,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  },
+  {
+    "id": 11,
+    "lots": [
+      {
+        "id": 41,
+        "name": "distributed-scheduler",
+        "category": "CPR",
+        "criticalityScore": 40,
+        "estimatedEffort": 4
+      },
+      {
+        "id": 42,
+        "name": "autoscaler",
+        "category": "CPR",
+        "criticalityScore": 38,
+        "estimatedEffort": 5
+      },
+      {
+        "id": 43,
+        "name": "runtime-kernel",
+        "category": "CPR",
+        "criticalityScore": 28,
+        "estimatedEffort": 2
+      }
+    ],
+    "totalEffort": 11,
+    "validationSteps": [
+      "pnpm test",
+      "pnpm test --coverage",
+      "Correction immédiate des régressions",
+      "Mise à jour des rapports",
+      "Validation du lot"
+    ]
+  }
+]

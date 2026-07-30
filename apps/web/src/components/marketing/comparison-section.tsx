@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { XCircle, CheckCircle2, ChevronRight } from "lucide-react";
-import { COMPARISON_DATA } from "@/lib/marketing/homepage-copy";
+import { motion } from "framer-motion"
+import { XCircle, CheckCircle2, ChevronRight } from "lucide-react"
+import { COMPARISON_DATA } from "@/lib/marketing/homepage-copy"
 
 export function ComparisonSection() {
   return (
@@ -24,10 +24,10 @@ export function ComparisonSection() {
             className="p-10 rounded-[var(--radius-card)] bg-[var(--bg-card)] border border-[var(--border)] space-y-8 grayscale hover:grayscale-0 transition-all duration-500"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
-                <XCircle className="w-6 h-6 text-slate-500" />
+              <div className="w-10 h-10 rounded-xl bg-ink-800 flex items-center justify-center">
+                <XCircle className="w-6 h-6 text-ink-500" />
               </div>
-              <h3 className="text-xl font-black text-slate-500">
+              <h3 className="text-xl font-black text-ink-500">
                 Outils IA Classiques
               </h3>
             </div>
@@ -35,7 +35,7 @@ export function ComparisonSection() {
               {COMPARISON_DATA.traditional.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-4 text-slate-500 font-medium"
+                  className="flex items-center gap-4 text-ink-500 font-medium"
                 >
                   <XCircle className="w-5 h-5 flex-shrink-0 opacity-30" />
                   {item}
@@ -51,7 +51,7 @@ export function ComparisonSection() {
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-                <CheckCircle2 className="w-6 h-6 text-blue-600" />
+                <CheckCircle2 className="w-6 h-6 text-forest-600" />
               </div>
               <h3 className="text-xl font-black text-[var(--text-primary)]">Trajectoire</h3>
             </div>
@@ -78,5 +78,5 @@ export function ComparisonSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

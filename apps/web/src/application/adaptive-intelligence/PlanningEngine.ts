@@ -396,7 +396,7 @@ export class PlanningEngine {
     let confidence = 0.5;
     
     // More activities matching preferences = higher confidence
-    const matchingActivities = activities.filter(a => preferences.preferredActivities.includes(a.type));
+    const matchingActivities = activities.filter(a => (preferences as any).preferredActivities.includes(a.type));
     confidence += (matchingActivities.length / activities.length) * 0.3;
 
     return Math.min(1, confidence);

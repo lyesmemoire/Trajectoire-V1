@@ -1,0 +1,161 @@
+name: Blueprint CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  release:
+    types: [ created ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+
+  compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/blueprint-compiler/master-index-builder.cjs . BLUEPRINT_MASTER_INDEX.json
+      - run: node scripts/blueprint-compiler/dependency-graph-builder.cjs . BLUEPRINT_MASTER_INDEX.json BLUEPRINT_DEPENDENCY_GRAPH.json
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm run benchmark
+      - uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'npm'
+          output-file-path: benchmark-results.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blueprint-package
+          path: dist/*.tar.gz
+
+  sign:
+    name: Sign
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: blueprint-package
+          path: dist
+      - name: Sign package
+        run: |
+          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
+            gpg --batch --yes --passphrase "${{ secrets.SIGNING_PASSPHRASE }}" \
+              --default-key "${{ secrets.SIGNING_KEY }}" \
+              --detach-sign dist/*.tar.gz
+          fi
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: sign
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: blueprint-package
+          path: dist
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/*.tar.gz
+            dist/*.tar.gz.sig
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  artifacts:
+    name: Artifacts
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: blueprint-package
+          path: dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blueprint-artifacts
+          path: |
+            dist/*.tar.gz
+            dist/*.tar.gz.sig
+          retention-days: 30

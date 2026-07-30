@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "ROOT_CAUSE_REPORT",
+  "metadata": {
+    "id": "RC-20260729T194658Z",
+    "createdAt": "2026-07-29T19:46:58.509Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "node certification/root-cause.cjs",
+    "script": "certification/root-cause.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0"
+    },
+    "startedAt": "2026-07-29T19:46:53.593Z",
+    "completedAt": "2026-07-29T19:46:58.509Z",
+    "durationMs": 4916,
+    "exitCode": 0
+  },
+  "content": {
+    "totalCauses": 4,
+    "causes": [
+      {
+        "source": "regression",
+        "id": "AST-REG-3ed667d2f247611d",
+        "description": "Remove statement",
+        "status": "REGRESSION_MISSED",
+        "rootCause": "Regression AST-REG-3ed667d2f247611d (Remove statement) not detected — tests pass even with the destructive change",
+        "recommendation": "Add assertion covering the behavior of line -1"
+      },
+      {
+        "source": "regression",
+        "id": "AST-REG-60ff61e600bcd34b",
+        "description": "Force if condition to false",
+        "status": "REGRESSION_MISSED",
+        "rootCause": "Regression AST-REG-60ff61e600bcd34b (Force if condition to false) not detected — tests pass even with the destructive change",
+        "recommendation": "Add assertion covering the behavior of line -1"
+      },
+      {
+        "source": "regression",
+        "id": "AST-REG-7a4351f1fe270b25",
+        "description": "Force if condition to true",
+        "status": "REGRESSION_MISSED",
+        "rootCause": "Regression AST-REG-7a4351f1fe270b25 (Force if condition to true) not detected — tests pass even with the destructive change",
+        "recommendation": "Add assertion covering the behavior of line -1"
+      },
+      {
+        "source": "regression",
+        "id": "AST-REG-8f99636551e7aca2",
+        "description": "Remove statement",
+        "status": "REGRESSION_MISSED",
+        "rootCause": "Regression AST-REG-8f99636551e7aca2 (Remove statement) not detected — tests pass even with the destructive change",
+        "recommendation": "Add assertion covering the behavior of line -1"
+      }
+    ]
+  },
+  "evidenceRefs": [
+    {
+      "type": "SECONDARY",
+      "file": "mutation-report.json",
+      "sha256": "00efd75a955cfa9372b38c6f869771c0d82c228e877ac748125d9f810b118feb"
+    },
+    {
+      "type": "SECONDARY",
+      "file": "regression-report.json",
+      "sha256": "a8e71d15ab6f8772da7d46463168dba3cf7993484736f33bf7f8b6b1fbf493a5"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "19c70ca83406d622c639aa07dde8c3500521bcba6b854f62f98da658102164fd",
+    "algorithm": "sha256"
+  }
+}

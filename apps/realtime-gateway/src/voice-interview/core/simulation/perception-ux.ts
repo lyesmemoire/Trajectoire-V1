@@ -107,11 +107,7 @@ export function perceiveUX(mind: RecruiterMindState): PerceptionUX {
  * deux tours. Mélange l'UX précédente et la nouvelle (facteur 0–1).
  * Pur : ne dépend que des entrées.
  */
-export function smoothUX(
-  prev: PerceptionUX,
-  next: PerceptionUX,
-  blend = 0.5,
-): PerceptionUX {
+export function smoothUX(prev: PerceptionUX, next: PerceptionUX, blend = 0.5, ): PerceptionUX {
   const b = clamp(blend, 0, 1);
   const lerp = (a: number, c: number) => a + (c - a) * b;
   return {

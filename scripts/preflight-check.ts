@@ -20,7 +20,7 @@ async function preflightCheck() {
   for (const route of routes) {
     try {
       console.log(`✅ Route [${route}] : OK (Simulé)`);
-    } catch (e) {
+    } catch (error) {
       console.error(`❌ Route [${route}] : ERREUR`);
     }
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Document,
   Page,
@@ -6,8 +6,8 @@ import {
   View,
   StyleSheet,
   Font,
-} from "@react-pdf/renderer";
-import { CVData, ExportOptions } from "../types";
+} from "@react-pdf/renderer"
+import { CVData, ExportOptions } from "../types"
 
 Font.register({
   family: "Inter",
@@ -29,7 +29,7 @@ Font.register({
       fontWeight: 700,
     },
   ],
-});
+})
 
 const PALETTES = {
   blue: {
@@ -56,10 +56,10 @@ const PALETTES = {
     line: "#E2E8F0",
     dot: "#94A3B8",
   },
-};
+}
 
 const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
-  const c = PALETTES[colorScheme] || PALETTES.blue;
+  const c = PALETTES[colorScheme] || PALETTES.blue
   return StyleSheet.create({
     page: {
       fontFamily: "Inter",
@@ -301,23 +301,21 @@ const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
       fontSize: 7,
       color: "#CBD5E1",
     },
-  });
-};
+  })
+}
 
 export const MinimalTemplate = ({
-  data,
-  options,
+  data, options
 }: {
-  data: CVData;
-  options: ExportOptions;
+  data: CVData
+  options: ExportOptions
 }) => {
-  const styles = createStyles(options.colorScheme);
+  const styles = createStyles(options.colorScheme)
   const SectionRow = ({
-    label,
-    children,
+    label, children
   }: {
-    label: string;
-    children: React.ReactNode;
+    label: string
+    children: React.ReactNode
   }) => (
     <View style={styles.section}>
       <View style={styles.sectionLabel}>
@@ -325,7 +323,7 @@ export const MinimalTemplate = ({
       </View>
       <View style={styles.sectionContent}>{children}</View>
     </View>
-  );
+  )
 
   return (
     <Document
@@ -428,6 +426,6 @@ export const MinimalTemplate = ({
         </View>
       </Page>
     </Document>
-  );
-};
-export default MinimalTemplate;
+  )
+}
+export default MinimalTemplate

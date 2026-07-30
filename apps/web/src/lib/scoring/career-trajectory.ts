@@ -15,11 +15,7 @@ export function getCTSLabel(score: number): string {
   return "Board-Level Ready";
 }
 
-export async function computeAndSaveCTS(
-  userId: string,
-  sessionId: string,
-  feedback: any
-): Promise<CTSResult | null> {
+export async function computeAndSaveCTS(userId: string, sessionId: string, feedback: any): Promise<CTSResult | null> {
   try {
     const overall = feedback?.overallScore || 0;
     const credibility = feedback?.committeeDecision?.strategicCredibility || 0;
@@ -87,8 +83,8 @@ export async function computeAndSaveCTS(
       delta,
       label: getCTSLabel(finalCts)
     };
-  } catch (err) {
-    logError("[CTS] computeAndSaveCTS error", err);
+  } catch (error) {
+    logError("[CTS] computeAndSaveCTS error", error);
     return null;
   }
 }

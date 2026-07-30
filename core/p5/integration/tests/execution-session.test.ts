@@ -48,8 +48,8 @@ describe("execution-session — R1, R3, R4, R5", () => {
     const state = getState();
     const decision = { trustDelta: 0.1, emotion: "happy" };
 
-    const { result: a } = executeDecision(createSession(state, 0), decision, 1);
-    const { result: b } = executeDecision(createSession(state, 0), decision, 1);
+    const { _result: a } = executeDecision(createSession(state, 0), decision, 1);
+    const { _result: b } = executeDecision(createSession(state, 0), decision, 1);
 
     expect(a).toEqual(b);
   });

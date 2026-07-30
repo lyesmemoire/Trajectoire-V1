@@ -1,9 +1,8 @@
-"use client";
+"use client"
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Terminal, Cpu, Database } from "lucide-react";
-import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy";
+import React from "react"
+import { Cpu, Database } from "lucide-react"
+import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy"
 
 export function BehavioralEngineSection() {
   return (
@@ -46,5 +45,5 @@ export function BehavioralEngineSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

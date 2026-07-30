@@ -6,11 +6,7 @@ export type InterviewState =
   | "recovery"
   | "closing";
 
-export function transitionState(
-  currentState: InterviewState,
-  completedQuestions: number,
-  totalExpected: number,
-): InterviewState {
+export function transitionState(_currentState: InterviewState, completedQuestions: number, totalExpected: number, ): InterviewState {
   // Début
   if (completedQuestions === 0) return "intro";
   if (completedQuestions === 1) return "warmup";

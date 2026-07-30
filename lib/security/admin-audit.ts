@@ -12,7 +12,7 @@ export async function logAdminAction(params: {
     | "UPDATE_USER_PLAN"
     | "DELETE_USER";
   targetId?: string;
-  metadata?: any;
+  metadata?: unknown;
   ipAddress?: string;
   userAgent?: string;
 }) {

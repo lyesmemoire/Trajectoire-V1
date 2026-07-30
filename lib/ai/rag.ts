@@ -9,12 +9,8 @@ function getOpenAI() {
 }
 
 export async function getRelevantCVSections({
-  supabaseAdmin,
-  cvId,
-  jobDescription,
-  topK = 5,
-}: {
-  supabaseAdmin: any;
+  supabaseAdmin, cvId, jobDescription, topK = 5, _}: {
+  supabaseAdmin: unknown;
   cvId: string;
   jobDescription: string;
   topK?: number;
@@ -37,10 +33,10 @@ export async function getRelevantCVSections({
 
     if (error || !data || data.length === 0) return "";
 
-    const combined = data.map((row: any) => row.section_text).join("\n\n");
+    const combined = data.map((row: unknown) => row.section_text).join("\n\n");
 
     return combined;
-  } catch (err) {
+  } catch (error) {
     console.error("RAG Error:", err);
     return "";
   }

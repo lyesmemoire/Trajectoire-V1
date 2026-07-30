@@ -1,0 +1,135 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "auditor": "Independent Evidence Reconstruction Audit",
+  "comparisons": [
+    {
+      "category": "Coverage",
+      "metric": "Source Component",
+      "official": "execution-pipeline (compiler/cvm/execution-pipeline.ts)",
+      "recomputed": "PREUVE INSUFFISANTE - coverage.raw.json contient scheduler (CVM/src/scheduler)",
+      "difference": "CRITICAL - Mauvais composant dans le fichier brut",
+      "proof": "coverage.raw.json contient 14 fichiers du scheduler, aucun fichier execution-pipeline",
+      "cause": "Le fichier coverage-final.json utilisé comme source est pour le scheduler, pas pour execution-pipeline",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Statements",
+      "official": "90.48%",
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Impossible de calculer - mauvais composant dans le fichier brut",
+      "cause": "Coverage brut pour le mauvais composant",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Branches",
+      "official": "73.91%",
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Impossible de calculer - mauvais composant dans le fichier brut",
+      "cause": "Coverage brut pour le mauvais composant",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Functions",
+      "official": "100.00%",
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Impossible de calculer - mauvais composant dans le fichier brut",
+      "cause": "Coverage brut pour le mauvais composant",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Lines",
+      "official": "90.48%",
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Impossible de calculer - mauvais composant dans le fichier brut",
+      "cause": "Coverage brut pour le mauvais composant",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Total",
+      "official": 10,
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Définitions des mutations non disponibles dans mutation-official.json",
+      "cause": "mutation-official.json ne contient que le résumé, pas les définitions spécifiques",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Killed",
+      "official": 3,
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Définitions des mutations non disponibles",
+      "cause": "mutation-official.json ne contient que le résumé",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Invalid",
+      "official": 7,
+      "recomputed": "PREUVE INSUFFISANTE",
+      "difference": "PREUVE INSUFFISANTE",
+      "proof": "Définitions des mutations non disponibles",
+      "cause": "mutation-official.json ne contient que le résumé",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Regression",
+      "metric": "Total Tested",
+      "official": 22,
+      "recomputed": 3,
+      "difference": "DIFFÉRENT",
+      "proof": "regression.raw.json montre seulement 3 régressions testées (R5, R10, R19)",
+      "cause": "Le script test-regression-detection.cjs ne teste que R5, R10, R19",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Regression",
+      "metric": "R5 Status",
+      "official": "REGRESSION MISSED",
+      "recomputed": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "proof": "regression.raw.json montre BUILD ERROR pour R5",
+      "cause": "Le script test-regression-detection.cjs échoue à la compilation",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Regression",
+      "metric": "R10 Status",
+      "official": "REGRESSION MISSED",
+      "recomputed": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "proof": "regression.raw.json montre BUILD ERROR pour R10",
+      "cause": "Le script test-regression-detection.cjs échoue à la compilation",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "Regression",
+      "metric": "R19 Status",
+      "official": "REGRESSION MISSED",
+      "recomputed": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "proof": "regression.raw.json montre BUILD ERROR pour R19",
+      "cause": "Le script test-regression-detection.cjs échoue à la compilation",
+      "confidence": "HIGH"
+    }
+  ],
+  "summary": {
+    "totalComparisons": 12,
+    "critical": 1,
+    "high": 11,
+    "preuveInsuffisante": 7,
+    "differencesVerifiees": 5
+  },
+  "conclusion": "PREUVE INSUFFISANTE - Les preuves brutes ne permettent pas de recalculer les métriques officielles car (1) le coverage brut est pour le mauvais composant, (2) les définitions de mutations ne sont pas disponibles, (3) seulement 3 sur 22 régressions ont été testées"
+}

@@ -1,0 +1,6 @@
+{
+  "gold":   { "statements": 95, "branches": 90, "functions": 100, "mutationScore": 95, "minValidMutations": 30, "maxSurvived": 0, "detectionRate": 95, "maxMissed": 0 },
+  "silver": { "statements": 85, "branches": 75, "functions": 90,  "mutationScore": 90, "minValidMutations": 15, "detectionRate": 85, "maxMissed": 2 },
+  "bronze": { "statements": 70, "branches": 60, "functions": 80,  "mutationScore": 80, "minValidMutations": 10, "detectionRate": 70, "maxMissed": 5 },
+  "policy": { "deterministicHashExclusions": ["metadata.manifestId", "metadata.id", "metadata.createdAt", "artifacts.*.artifactId", "artifacts.*.generatedAt", "artifacts.*.sha256", "artifacts.*.sizeBytes", "evidence.*.evidenceId", "evidence.*.generatedAt", "evidence.*.sha256", "evidence.*.sizeBytes", "evidenceRefs.*.sha256", "logs", "provenance.durationMs", "provenance.startedAt", "provenance.completedAt", "provenance.command", "content.mutations.*.durationMs", "content.mutations.*.startedAt", "content.mutations.*.completedAt", "content.regressions.*.durationMs", "content.regressions.*.startedAt", "content.regressions.*.completedAt", "createdAt"] }
+}

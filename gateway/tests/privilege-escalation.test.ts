@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { CryptoJwtVerifier } from "../services/auth";
 import * as crypto from "crypto";
 
-function createJwt(payload: any, secret: string): string {
+function createJwt(payload: _unknown, secret: string): string {
   const header = { alg: "HS256", typ: "JWT" };
   const headerB64 = Buffer.from(JSON.stringify(header)).toString("base64url");
   const payloadB64 = Buffer.from(JSON.stringify(payload)).toString("base64url");

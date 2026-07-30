@@ -1,0 +1,704 @@
+{
+  "cvm": [
+    {
+      "file": "compiler\\cvm\\branch-predictor.ts",
+      "lines": 215,
+      "classes": 1,
+      "functions": 14,
+      "branches": 14,
+      "methods": {
+        "public": 11,
+        "private": 3
+      },
+      "imports": [
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 15
+    },
+    {
+      "file": "compiler\\cvm\\debugger-hooks.ts",
+      "lines": 475,
+      "classes": 1,
+      "functions": 31,
+      "branches": 39,
+      "methods": {
+        "public": 31,
+        "private": 0
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 39
+    },
+    {
+      "file": "compiler\\cvm\\exception-handler.ts",
+      "lines": 196,
+      "classes": 1,
+      "functions": 15,
+      "branches": 10,
+      "methods": {
+        "public": 13,
+        "private": 2
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/exception-table"
+      ],
+      "cyclomaticComplexity": 11
+    },
+    {
+      "file": "compiler\\cvm\\execution-context.ts",
+      "lines": 236,
+      "classes": 1,
+      "functions": 20,
+      "branches": 4,
+      "methods": {
+        "public": 19,
+        "private": 1
+      },
+      "imports": [
+        "../cbs/stack",
+        "../cbs/heap",
+        "../cbs/call-frames",
+        "../cbs/register-table"
+      ],
+      "cyclomaticComplexity": 5
+    },
+    {
+      "file": "compiler\\cvm\\execution-pipeline.ts",
+      "lines": 249,
+      "classes": 1,
+      "functions": 19,
+      "branches": 13,
+      "methods": {
+        "public": 18,
+        "private": 1
+      },
+      "imports": [
+        "./execution-context",
+        "./instruction-fetch",
+        "./instruction-decode",
+        "./instruction-execute"
+      ],
+      "cyclomaticComplexity": 14
+    },
+    {
+      "file": "compiler\\cvm\\frame-manager.ts",
+      "lines": 239,
+      "classes": 1,
+      "functions": 21,
+      "branches": 10,
+      "methods": {
+        "public": 20,
+        "private": 0
+      },
+      "imports": [
+        "../cbs/stack",
+        "../cbs/call-frames"
+      ],
+      "cyclomaticComplexity": 11
+    },
+    {
+      "file": "compiler\\cvm\\garbage-collector.ts",
+      "lines": 337,
+      "classes": 1,
+      "functions": 20,
+      "branches": 32,
+      "methods": {
+        "public": 14,
+        "private": 6
+      },
+      "imports": [
+        "../cbs/heap",
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 32
+    },
+    {
+      "file": "compiler\\cvm\\index.ts",
+      "lines": 77,
+      "classes": 0,
+      "functions": 0,
+      "branches": 1,
+      "methods": {
+        "public": 0,
+        "private": 0
+      },
+      "imports": [],
+      "cyclomaticComplexity": 2
+    },
+    {
+      "file": "compiler\\cvm\\instruction-cache.ts",
+      "lines": 263,
+      "classes": 1,
+      "functions": 18,
+      "branches": 17,
+      "methods": {
+        "public": 15,
+        "private": 3
+      },
+      "imports": [
+        "../cbs/instruction-table"
+      ],
+      "cyclomaticComplexity": 18
+    },
+    {
+      "file": "compiler\\cvm\\instruction-decode.ts",
+      "lines": 126,
+      "classes": 1,
+      "functions": 7,
+      "branches": 9,
+      "methods": {
+        "public": 7,
+        "private": 0
+      },
+      "imports": [
+        "../cbs/instruction-table",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 10
+    },
+    {
+      "file": "compiler\\cvm\\instruction-execute.ts",
+      "lines": 420,
+      "classes": 1,
+      "functions": 28,
+      "branches": 33,
+      "methods": {
+        "public": 3,
+        "private": 25
+      },
+      "imports": [
+        "./execution-context",
+        "./instruction-decode",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 32
+    },
+    {
+      "file": "compiler\\cvm\\instruction-fetch.ts",
+      "lines": 241,
+      "classes": 1,
+      "functions": 15,
+      "branches": 15,
+      "methods": {
+        "public": 14,
+        "private": 1
+      },
+      "imports": [
+        "../cbs/instruction-table"
+      ],
+      "cyclomaticComplexity": 16
+    },
+    {
+      "file": "compiler\\cvm\\interrupt-manager.ts",
+      "lines": 330,
+      "classes": 1,
+      "functions": 23,
+      "branches": 17,
+      "methods": {
+        "public": 20,
+        "private": 3
+      },
+      "imports": [
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 17
+    },
+    {
+      "file": "compiler\\cvm\\memory-manager.ts",
+      "lines": 347,
+      "classes": 1,
+      "functions": 31,
+      "branches": 17,
+      "methods": {
+        "public": 28,
+        "private": 3
+      },
+      "imports": [
+        "../cbs/heap",
+        "../cbs/stack",
+        "../cbs/memory-addressing",
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 18
+    },
+    {
+      "file": "compiler\\cvm\\microcode-engine.ts",
+      "lines": 318,
+      "classes": 1,
+      "functions": 10,
+      "branches": 28,
+      "methods": {
+        "public": 7,
+        "private": 3
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 27
+    },
+    {
+      "file": "compiler\\cvm\\profiler-hooks.ts",
+      "lines": 233,
+      "classes": 1,
+      "functions": 16,
+      "branches": 13,
+      "methods": {
+        "public": 16,
+        "private": 0
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 14
+    },
+    {
+      "file": "compiler\\cvm\\register-file.ts",
+      "lines": 227,
+      "classes": 1,
+      "functions": 19,
+      "branches": 17,
+      "methods": {
+        "public": 18,
+        "private": 1
+      },
+      "imports": [
+        "../cbs/register-table"
+      ],
+      "cyclomaticComplexity": 18
+    },
+    {
+      "file": "compiler\\cvm\\rollback-manager.ts",
+      "lines": 304,
+      "classes": 1,
+      "functions": 21,
+      "branches": 22,
+      "methods": {
+        "public": 20,
+        "private": 1
+      },
+      "imports": [
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 23
+    },
+    {
+      "file": "compiler\\cvm\\scheduler.ts",
+      "lines": 304,
+      "classes": 1,
+      "functions": 24,
+      "branches": 19,
+      "methods": {
+        "public": 21,
+        "private": 3
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 20
+    },
+    {
+      "file": "compiler\\cvm\\snapshot-manager.ts",
+      "lines": 256,
+      "classes": 1,
+      "functions": 15,
+      "branches": 13,
+      "methods": {
+        "public": 15,
+        "private": 0
+      },
+      "imports": [
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 14
+    },
+    {
+      "file": "compiler\\cvm\\thread-manager.ts",
+      "lines": 313,
+      "classes": 1,
+      "functions": 20,
+      "branches": 22,
+      "methods": {
+        "public": 20,
+        "private": 0
+      },
+      "imports": [
+        "./execution-context"
+      ],
+      "cyclomaticComplexity": 19
+    },
+    {
+      "file": "compiler\\cvm\\trace-hooks.ts",
+      "lines": 375,
+      "classes": 1,
+      "functions": 27,
+      "branches": 26,
+      "methods": {
+        "public": 26,
+        "private": 1
+      },
+      "imports": [
+        "./execution-context",
+        "../cbs/opcode-table"
+      ],
+      "cyclomaticComplexity": 27
+    }
+  ],
+  "cpr": [
+    {
+      "file": "compiler\\cpr\\api-gateway.ts",
+      "lines": 332,
+      "classes": 1,
+      "functions": 19,
+      "branches": 18,
+      "methods": {
+        "public": 14,
+        "private": 5
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 19
+    },
+    {
+      "file": "compiler\\cpr\\autoscaler.ts",
+      "lines": 333,
+      "classes": 1,
+      "functions": 17,
+      "branches": 25,
+      "methods": {
+        "public": 13,
+        "private": 4
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager"
+      ],
+      "cyclomaticComplexity": 22
+    },
+    {
+      "file": "compiler\\cpr\\cluster-manager.ts",
+      "lines": 292,
+      "classes": 1,
+      "functions": 19,
+      "branches": 15,
+      "methods": {
+        "public": 19,
+        "private": 0
+      },
+      "imports": [],
+      "cyclomaticComplexity": 16
+    },
+    {
+      "file": "compiler\\cpr\\consensus-engine.ts",
+      "lines": 429,
+      "classes": 1,
+      "functions": 22,
+      "branches": 30,
+      "methods": {
+        "public": 11,
+        "private": 11
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 30
+    },
+    {
+      "file": "compiler\\cpr\\distributed-debugger.ts",
+      "lines": 357,
+      "classes": 1,
+      "functions": 20,
+      "branches": 32,
+      "methods": {
+        "public": 18,
+        "private": 0
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager"
+      ],
+      "cyclomaticComplexity": 32
+    },
+    {
+      "file": "compiler\\cpr\\distributed-locks.ts",
+      "lines": 246,
+      "classes": 1,
+      "functions": 14,
+      "branches": 17,
+      "methods": {
+        "public": 14,
+        "private": 0
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 18
+    },
+    {
+      "file": "compiler\\cpr\\distributed-memory.ts",
+      "lines": 307,
+      "classes": 1,
+      "functions": 20,
+      "branches": 22,
+      "methods": {
+        "public": 18,
+        "private": 2
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 23
+    },
+    {
+      "file": "compiler\\cpr\\distributed-profiler.ts",
+      "lines": 303,
+      "classes": 1,
+      "functions": 17,
+      "branches": 16,
+      "methods": {
+        "public": 16,
+        "private": 1
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 17
+    },
+    {
+      "file": "compiler\\cpr\\distributed-scheduler.ts",
+      "lines": 345,
+      "classes": 1,
+      "functions": 20,
+      "branches": 19,
+      "methods": {
+        "public": 19,
+        "private": 1
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager"
+      ],
+      "cyclomaticComplexity": 20
+    },
+    {
+      "file": "compiler\\cpr\\distributed-trace.ts",
+      "lines": 369,
+      "classes": 1,
+      "functions": 20,
+      "branches": 21,
+      "methods": {
+        "public": 20,
+        "private": 0
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 22
+    },
+    {
+      "file": "compiler\\cpr\\execution-coordinator.ts",
+      "lines": 315,
+      "classes": 1,
+      "functions": 18,
+      "branches": 25,
+      "methods": {
+        "public": 18,
+        "private": 0
+      },
+      "imports": [
+        "./runtime-manager",
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 26
+    },
+    {
+      "file": "compiler\\cpr\\governance.ts",
+      "lines": 368,
+      "classes": 1,
+      "functions": 23,
+      "branches": 21,
+      "methods": {
+        "public": 20,
+        "private": 3
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 17
+    },
+    {
+      "file": "compiler\\cpr\\index.ts",
+      "lines": 72,
+      "classes": 0,
+      "functions": 0,
+      "branches": 1,
+      "methods": {
+        "public": 0,
+        "private": 0
+      },
+      "imports": [],
+      "cyclomaticComplexity": 2
+    },
+    {
+      "file": "compiler\\cpr\\knowledge-fabric.ts",
+      "lines": 374,
+      "classes": 1,
+      "functions": 22,
+      "branches": 39,
+      "methods": {
+        "public": 14,
+        "private": 8
+      },
+      "imports": [],
+      "cyclomaticComplexity": 38
+    },
+    {
+      "file": "compiler\\cpr\\leader-election.ts",
+      "lines": 280,
+      "classes": 1,
+      "functions": 18,
+      "branches": 21,
+      "methods": {
+        "public": 12,
+        "private": 6
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 22
+    },
+    {
+      "file": "compiler\\cpr\\provider-manager.ts",
+      "lines": 316,
+      "classes": 1,
+      "functions": 20,
+      "branches": 16,
+      "methods": {
+        "public": 20,
+        "private": 0
+      },
+      "imports": [],
+      "cyclomaticComplexity": 17
+    },
+    {
+      "file": "compiler\\cpr\\recovery-manager.ts",
+      "lines": 433,
+      "classes": 1,
+      "functions": 23,
+      "branches": 34,
+      "methods": {
+        "public": 15,
+        "private": 8
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager"
+      ],
+      "cyclomaticComplexity": 28
+    },
+    {
+      "file": "compiler\\cpr\\replay-manager.ts",
+      "lines": 354,
+      "classes": 1,
+      "functions": 21,
+      "branches": 28,
+      "methods": {
+        "public": 20,
+        "private": 1
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager"
+      ],
+      "cyclomaticComplexity": 28
+    },
+    {
+      "file": "compiler\\cpr\\runtime-kernel.ts",
+      "lines": 298,
+      "classes": 1,
+      "functions": 19,
+      "branches": 8,
+      "methods": {
+        "public": 16,
+        "private": 3
+      },
+      "imports": [
+        "./cluster-manager",
+        "./runtime-manager",
+        "./execution-coordinator",
+        "./distributed-scheduler",
+        "./consensus-engine",
+        "./leader-election"
+      ],
+      "cyclomaticComplexity": 9
+    },
+    {
+      "file": "compiler\\cpr\\runtime-manager.ts",
+      "lines": 239,
+      "classes": 1,
+      "functions": 16,
+      "branches": 10,
+      "methods": {
+        "public": 15,
+        "private": 1
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 11
+    },
+    {
+      "file": "compiler\\cpr\\security.ts",
+      "lines": 368,
+      "classes": 1,
+      "functions": 24,
+      "branches": 19,
+      "methods": {
+        "public": 21,
+        "private": 3
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 15
+    },
+    {
+      "file": "compiler\\cpr\\snapshot-manager.ts",
+      "lines": 322,
+      "classes": 1,
+      "functions": 16,
+      "branches": 26,
+      "methods": {
+        "public": 15,
+        "private": 1
+      },
+      "imports": [
+        "./cluster-manager",
+        "./distributed-memory"
+      ],
+      "cyclomaticComplexity": 27
+    },
+    {
+      "file": "compiler\\cpr\\telemetry.ts",
+      "lines": 273,
+      "classes": 1,
+      "functions": 15,
+      "branches": 22,
+      "methods": {
+        "public": 15,
+        "private": 0
+      },
+      "imports": [
+        "./cluster-manager"
+      ],
+      "cyclomaticComplexity": 23
+    }
+  ],
+  "memory": []
+}

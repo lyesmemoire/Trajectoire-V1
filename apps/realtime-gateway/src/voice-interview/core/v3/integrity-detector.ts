@@ -25,10 +25,7 @@ const ConsistencySchema = z.object({
  * Detects inconsistency between a written CV claim and the candidate's verbal explanation.
  * Evaluates depth, superficiality, and absence of quantification.
  */
-export async function evaluateConsistencyGap(
-  cvClaim: string,
-  transcriptChunk: string
-): Promise<ConsistencyEvaluation> {
+export async function evaluateConsistencyGap(cvClaim: string, transcriptChunk: string): Promise<ConsistencyEvaluation> {
   const systemPrompt = `You are an executive-level evaluation engine.
 
 Your task is to detect inconsistency between:

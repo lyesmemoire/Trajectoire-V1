@@ -4,8 +4,6 @@
  * Tracks: Day 1, Day 7, Day 30 retention rates
  */
 
-import { z } from "zod";
-
 // User Activity Data
 export interface UserActivity {
   userId: string;

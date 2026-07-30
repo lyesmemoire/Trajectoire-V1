@@ -53,7 +53,7 @@ async function runTest() {
 
   // Inject fault overlay on node2 to trigger leaseRisk and restartBlock
   // Simulate fault telemetry (global map used by FederatedWatchdog)
-  (globalThis as any).faultTelemetryMap = {
+  (globalThis as unknown).faultTelemetryMap = {
     node2: { cpu: 0.9, memory: 0.9, replayLag: 500, ledgerDrift: 0 }
   };
   // Emit updated health (still healthy) to trigger fault processing

@@ -1,4 +1,4 @@
-type EventCallback = (data: any) => Promise<void> | void;
+type EventCallback = (data: unknown) => Promise<void> | void;
 
 /**
  * Core Event Bus for decoupled behavioral orchestration.
@@ -13,7 +13,7 @@ export class EventBus {
     this.listeners.get(event)?.push(callback);
   }
 
-  async emit(event: string, data: any) {
+  async emit(event: string, data: unknown) {
     const callbacks = this.listeners.get(event) || [];
     await Promise.all(callbacks.map((callback) => callback(data)));
   }

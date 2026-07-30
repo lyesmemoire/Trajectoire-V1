@@ -1,6 +1,6 @@
 interface KeywordBadgeProps {
-  keyword: string;
-  status: "matched" | "missing";
+  keyword: string
+  status: "matched" | "missing"
 }
 
 export function KeywordBadge({ keyword, status }: KeywordBadgeProps) {
@@ -11,13 +11,13 @@ export function KeywordBadge({ keyword, status }: KeywordBadgeProps) {
         text-xs font-medium capitalize
         ${
           status === "matched"
-            ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
-            : "bg-red-50 text-red-600 ring-1 ring-red-200"
+            ? "bg-forest-50 text-forest-700 ring-1 ring-forest-200"
+            : "bg-brick-50 text-brick-600 ring-1 ring-brick-200"
         }
       `}
     >
       <span>{status === "matched" ? "✓" : "✗"}</span>
       {keyword}
     </span>
-  );
+  )
 }

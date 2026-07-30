@@ -21,7 +21,7 @@ const windowMs: Record<string, number> = {
 // En moi mémoire pour les tests — remplacer par Redis en production
 const store = new Map<string, { count: number; resetAt: number }>();
 
-export function rateLimiter(config: RateLimitConfig) {
+export function rateLimiter(config: _RateLimitConfig) {
   return createMiddleware(async (c: Context, next: Next) => {
     const user = c.get("user");
     if (!user) {

@@ -1,31 +1,29 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { ParsedCV } from "@/types/cv";
-import { ExperienceEditor } from "./ExperienceEditor";
-import { Loader2, Save, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { ParsedCV } from "@/types/cv"
+import { ExperienceEditor } from "./ExperienceEditor"
+import { Loader2, Save, Download } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 // Helper to proceed to interview lab only if cookie is present
 const handleProceed = async (router: any) => {
   const hasCookie = document.cookie
     .split("; ")
-    .some((c) => c.startsWith("cv-editor-completed=true"));
+    .some((c) => c.startsWith("cv-editor-completed=true"))
   if (!hasCookie) {
-    toast.error("Veuillez exporter votre CV avant de commencer l'entretien.");
-    return;
+    toast.error("Veuillez exporter votre CV avant de commencer l'entretien.")
+    return
   }
-  router.push("/interview-lab");
-};
+  router.push("/interview-lab")
+}
 
 export function CVEditorShell({
-  initialCV,
-  aiCredits,
-}: {
-  initialCV: any;
-  aiCredits: number;
+  initialCV, aiCredits }: {
+  initialCV: any
+  aiCredits: number
 }) {
   // Default blank CV
   const defaultCV: ParsedCV = {
@@ -36,97 +34,97 @@ export function CVEditorShell({
     skills: [],
     certifications: [],
     languages: [],
-  };
+  }
 
   const [cv, setCv] = useState<ParsedCV>(
     initialCV ? (initialCV as ParsedCV) : defaultCV,
-  );
-  const [isSaving, setIsSaving] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
-  const [exported, setExported] = useState(false);
-  const router = useRouter();
-  const [credits, setCredits] = useState<number>(aiCredits ?? 0);
-  const [mounted, setMounted] = useState(false);
+  )
+  const [isSaving, setIsSaving] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
+  const [exported, setExported] = useState(false)
+  const router = useRouter()
+  const [credits, setCredits] = useState<number>(aiCredits ?? 0)
+  const [mounted, setMounted] = useState(false)
+
+  const saveCV = async (currentCV: ParsedCV) => {
+    setIsSaving(true)
+    try {
+      // Not implemented in this phase's API, but simulating a save route
+      // await fetch('/api/cv/save', { method: 'POST', body: JSON.stringify({ cv: currentCV }) })
+      setIsSaving(false)
+    } catch (error) {
+      console.error("Autosave failed", error)
+      setIsSaving(false)
+    }
+  }
 
   // Mount guard to ensure hooks run consistently
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+    setMounted(true)
+  }, [])
 
   // Autosave logic (debounce)
   useEffect(() => {
     const timer = setTimeout(() => {
-      saveCV(cv);
+      saveCV(cv)
     }, 5000); // 5 seconds debounce
-    return () => clearTimeout(timer);
-  }, [cv]);
+    return () => clearTimeout(timer)
+  }, [cv])
 
   // Defensive parse of pending CV rewrite data
   useEffect(() => {
-    const raw = localStorage.getItem("pendingCVRewrite");
-    if (!raw) return;
+    const raw = localStorage.getItem("pendingCVRewrite")
+    if (!raw) return
     try {
-      const parsed = JSON.parse(raw);
+      const parsed = JSON.parse(raw)
       // You may set state with parsed data here if needed
-    } catch (err) {
-      console.error("[CV_EDITOR_PARSE_ERROR]", err);
+    } catch (error) {
+      console.error("[CV_EDITOR_PARSE_ERROR]", error)
     }
-  }, []);
+  }, [])
 
-  const saveCV = async (currentCV: ParsedCV) => {
-    setIsSaving(true);
-    try {
-      // Not implemented in this phase's API, but simulating a save route
-      // await fetch('/api/cv/save', { method: 'POST', body: JSON.stringify({ cv: currentCV }) });
-      setIsSaving(false);
-    } catch (err) {
-      console.error("Autosave failed", err);
-      setIsSaving(false);
-    }
-  };
+  if (!mounted) {
+    return null
+  }
 
   const exportDocx = async () => {
     // Prevent double export / race conditions
-    if (isExporting) return;
-    setIsExporting(true);
+    if (isExporting) return
+    setIsExporting(true)
     try {
       const res = await fetch("/api/cv/export-docx", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cv }),
-      });
+      })
 
-      if (!res.ok) throw new Error("Export failed");
+      if (!res.ok) throw new Error("Export failed")
 
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${cv.personalInfo.fullName.replace(/\s+/g, "_")}_CV.docx`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-      toast.success("CV exporté avec succès !");
+      const blob = await res.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `${cv.personalInfo.fullName.replace(/\s+/g, "_")}_CV.docx`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+      toast.success("CV exporté avec succès !")
       // After successful export, mark flow as completed via API (ensures server flag)
-      await fetch("/api/user/set-cv-editor-completed", { method: "POST" });
+      await fetch("/api/user/set-cv-editor-completed", { method: "POST" })
       // Also set local storage for immediate UI state
-      localStorage.setItem("cv-editor-completed", "true");
+      localStorage.setItem("cv-editor-completed", "true")
       const secureFlag =
-        process.env.NODE_ENV === "production" ? "; Secure" : "";
-      document.cookie = `cv-editor-completed=true; Path=/; Max-Age=86400; SameSite=Lax${secureFlag}`;
-      setExported(true);
-    } catch (err) {
-      console.error(err);
-      toast.error("Erreur lors de l'export.");
+        process.env.NODE_ENV === "production" ? "; Secure" : ""
+      document.cookie = `cv-editor-completed=true; Path=/; Max-Age=86400; SameSite=Lax${secureFlag}`
+      setExported(true)
+    } catch (error) {
+      console.error(error)
+      toast.error("Erreur lors de l'export.")
     } finally {
-      setIsExporting(false);
+      setIsExporting(false)
     }
-  };
+  }
 
   const handleRewrite = async (
     action: string,
@@ -134,50 +132,50 @@ export function CVEditorShell({
     sectionIndex?: number,
   ) => {
     if (credits <= 0) {
-      toast.error("Crédits IA épuisés.");
-      return;
+      toast.error("Crédits IA épuisés.")
+      return
     }
 
-    const loadingToast = toast.loading("Amélioration IA en cours...");
+    const loadingToast = toast.loading("Amélioration IA en cours...")
 
     try {
       const res = await fetch("/api/cv/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action, content }),
-      });
+      })
 
       if (!res.ok) {
-        if (res.status === 403) throw new Error("Crédits IA épuisés");
-        throw new Error("Erreur IA");
+        if (res.status === 403) throw new Error("Crédits IA épuisés")
+        throw new Error("Erreur IA")
       }
 
-      const { result } = await res.json();
+      const { result } = await res.json()
 
       // Update state based on action
       if (action === "improve_experience" && sectionIndex !== undefined) {
-        const newExperiences = [...cv.experiences];
-        newExperiences[sectionIndex]!.description = result;
-        setCv({ ...cv, experiences: newExperiences });
+        const newExperiences = [...cv.experiences]
+        newExperiences[sectionIndex]!.description = result
+        setCv({ ...cv, experiences: newExperiences })
       } else if (action === "rewrite_summary") {
-        setCv({ ...cv, summary: result });
+        setCv({ ...cv, summary: result })
       }
 
-      setCredits((prev: number) => prev - 1);
-      toast.success("Section améliorée !");
+      setCredits((prev: number) => prev - 1)
+      toast.success("Section améliorée !")
     } catch (err: any) {
-      console.error(err);
-      toast.error(err.message || "Erreur lors de l'amélioration.");
+      console.error(err)
+      toast.error(err.message || "Erreur lors de l'amélioration.")
     } finally {
-      toast.dismiss(loadingToast);
+      toast.dismiss(loadingToast)
     }
-  };
+  }
 
   return (
-    <div className="space-y-8 bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+    <div className="space-y-8 bg-white p-8 rounded-3xl shadow-sm border border-ivoire-100">
       {/* Toolbar */}
-      <div className="flex justify-between items-center pb-6 border-b border-slate-100">
-        <div className="flex items-center gap-4 text-sm font-medium text-slate-500">
+      <div className="flex justify-between items-center pb-6 border-b border-ivoire-100">
+        <div className="flex items-center gap-4 text-sm font-medium text-ink-500">
           <span className="flex items-center gap-2">
             {isSaving ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -186,7 +184,7 @@ export function CVEditorShell({
             )}
             {isSaving ? "Sauvegarde..." : "Sauvegardé"}
           </span>
-          <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold">
+          <span className="px-3 py-1 bg-ivoire-100 text-ink-700 rounded-full text-xs font-bold">
             {credits} crédits IA
           </span>
         </div>
@@ -204,9 +202,9 @@ export function CVEditorShell({
             Exporter DOCX
           </Button>
           <Button
-            onClick={handleProceed}
+            onClick={() => handleProceed(router)}
             disabled={!exported}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full"
+            className="bg-ink-900 hover:bg-ink-800 text-white px-6 py-2 rounded-full"
           >
             Commencer l'entretien IA
           </Button>
@@ -226,7 +224,7 @@ export function CVEditorShell({
               })
             }
             placeholder="Nom complet"
-            className="p-3 rounded-xl border border-slate-200"
+            className="p-3 rounded-xl border border-ivoire-200"
           />
           <input
             value={cv.personalInfo.email}
@@ -237,7 +235,7 @@ export function CVEditorShell({
               })
             }
             placeholder="Email"
-            className="p-3 rounded-xl border border-slate-200"
+            className="p-3 rounded-xl border border-ivoire-200"
           />
         </div>
 
@@ -245,10 +243,10 @@ export function CVEditorShell({
         <textarea
           value={cv.summary}
           onChange={(e) => setCv({ ...cv, summary: e.target.value })}
-          className="w-full p-4 min-h-[120px] rounded-xl border border-slate-200"
+          className="w-full p-4 min-h-[120px] rounded-xl border border-ivoire-200"
         />
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={() => handleRewrite("rewrite_summary", cv.summary || "")}
         >
           Améliorer le résumé
@@ -260,9 +258,9 @@ export function CVEditorShell({
             key={idx}
             experience={exp}
             onChange={(updatedExp) => {
-              const newExps = [...cv.experiences];
-              newExps[idx] = updatedExp;
-              setCv({ ...cv, experiences: newExps });
+              const newExps = [...cv.experiences]
+              newExps[idx] = updatedExp
+              setCv({ ...cv, experiences: newExps })
             }}
             onRewrite={() =>
               handleRewrite("improve_experience", exp.description || "", idx)
@@ -271,5 +269,5 @@ export function CVEditorShell({
         ))}
       </div>
     </div>
-  );
+  )
 }

@@ -1,0 +1,149 @@
+{
+  "summary": {
+    "totalComponents": 28,
+    "okCount": 28,
+    "missingCount": 0
+  },
+  "validationResults": [
+    {
+      "component": "Execution Context",
+      "status": "OK",
+      "file": "execution-context.ts"
+    },
+    {
+      "component": "Register File",
+      "status": "OK",
+      "file": "register-file.ts"
+    },
+    {
+      "component": "Instruction Fetch",
+      "status": "OK",
+      "file": "instruction-fetch.ts"
+    },
+    {
+      "component": "Instruction Decode",
+      "status": "OK",
+      "file": "instruction-decode.ts"
+    },
+    {
+      "component": "Instruction Execute",
+      "status": "OK",
+      "file": "instruction-execute.ts"
+    },
+    {
+      "component": "Execution Pipeline",
+      "status": "OK",
+      "file": "execution-pipeline.ts"
+    },
+    {
+      "component": "Microcode Engine",
+      "status": "OK",
+      "file": "microcode-engine.ts"
+    },
+    {
+      "component": "Frame Manager",
+      "status": "OK",
+      "file": "frame-manager.ts"
+    },
+    {
+      "component": "Exception Handler",
+      "status": "OK",
+      "file": "exception-handler.ts"
+    },
+    {
+      "component": "Interrupt Manager",
+      "status": "OK",
+      "file": "interrupt-manager.ts"
+    },
+    {
+      "component": "Scheduler",
+      "status": "OK",
+      "file": "scheduler.ts"
+    },
+    {
+      "component": "Instruction Cache",
+      "status": "OK",
+      "file": "instruction-cache.ts"
+    },
+    {
+      "component": "Branch Predictor",
+      "status": "OK",
+      "file": "branch-predictor.ts"
+    },
+    {
+      "component": "Rollback Manager",
+      "status": "OK",
+      "file": "rollback-manager.ts"
+    },
+    {
+      "component": "Snapshot Manager",
+      "status": "OK",
+      "file": "snapshot-manager.ts"
+    },
+    {
+      "component": "Thread Manager",
+      "status": "OK",
+      "file": "thread-manager.ts"
+    },
+    {
+      "component": "Garbage Collector",
+      "status": "OK",
+      "file": "garbage-collector.ts"
+    },
+    {
+      "component": "Memory Manager",
+      "status": "OK",
+      "file": "memory-manager.ts"
+    },
+    {
+      "component": "Profiler Hooks",
+      "status": "OK",
+      "file": "profiler-hooks.ts"
+    },
+    {
+      "component": "Trace Hooks",
+      "status": "OK",
+      "file": "trace-hooks.ts"
+    },
+    {
+      "component": "Debugger Hooks",
+      "status": "OK",
+      "file": "debugger-hooks.ts"
+    },
+    {
+      "component": "Heap",
+      "status": "OK",
+      "file": "cbs/heap.ts"
+    },
+    {
+      "component": "Stack",
+      "status": "OK",
+      "file": "cbs/stack.ts"
+    },
+    {
+      "component": "Call Frames",
+      "status": "OK",
+      "file": "cbs/call-frames.ts"
+    },
+    {
+      "component": "Bytecode Interpreter",
+      "status": "OK",
+      "file": "execution-pipeline.ts"
+    },
+    {
+      "component": "Instruction Dispatcher",
+      "status": "OK",
+      "file": "instruction-execute.ts"
+    },
+    {
+      "component": "Memory Allocator",
+      "status": "OK",
+      "file": "memory-manager.ts"
+    },
+    {
+      "component": "Handle Table",
+      "status": "OK",
+      "file": "memory-manager.ts"
+    }
+  ]
+}

@@ -6,11 +6,7 @@ interface PitchMetricCardProps {
 }
 
 export default function PitchMetricCard({
-  value,
-  label,
-  sublabel,
-  highlight = false,
-}: PitchMetricCardProps) {
+  value, label, sublabel, highlight = false, _}: PitchMetricCardProps) {
   return (
     <div
       className={`flex flex-col gap-1 rounded-xl border p-6 transition-all ${

@@ -57,11 +57,16 @@ export default [
 
       "**/.turbo/**",
       "**/.cache/**",
+      "**/.stryker-tmp/**",
 
       "**/*.min.js",
       "**/*.bundle.js",
 
       "**/generated/**",
+      "**/BLUEPRINT_GENERATED/**",
+      "**/BLUEPRINT_MULTI_LANG_GENERATED/**",
+      "**/BLUEPRINT_PACKAGE/**",
+      "**/apps/realtime-gateway-v2/**",
       "**/public/**"
     ],
   },

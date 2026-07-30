@@ -4,7 +4,7 @@
  * File: layer0-kernel/QuestionPlanner.ts
  */
 
-import { HypothesisEngine, Hypothesis } from './HypothesisEngine';
+import { HypothesisEngine } from './HypothesisEngine';
 import { EvidenceEngine } from './EvidenceEngine';
 
 // ──────────────────────────────────────────────────────────

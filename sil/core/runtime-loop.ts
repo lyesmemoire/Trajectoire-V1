@@ -163,8 +163,10 @@ export class SILRuntimeLoop implements WakeupNotifier {
           // Gateway-driven session finish — triggers the same P6→P7 evaluation flow
           state.status = "EVALUATING";
           
-          const finishResult = await this.p6.endSession(state.sessionId);
-          state.runtimeContext.p6State = finishResult;
+          {
+            const finishResult = await this.p6.endSession(state.sessionId);
+            state.runtimeContext.p6State = finishResult;
+          }
 
           this.router.emit({
             type: "TRACE_RECOVERY_STARTED",
@@ -179,8 +181,10 @@ export class SILRuntimeLoop implements WakeupNotifier {
         case "P6_RUNTIME_COMPLETED":
           state.status = "EVALUATING";
           
-          const finalResult = await this.p6.endSession(state.sessionId);
-          state.runtimeContext.p6State = finalResult;
+          {
+            const finalResult = await this.p6.endSession(state.sessionId);
+            state.runtimeContext.p6State = finalResult;
+          }
 
           // Explicit trace recovery step — observable, retriable, independent
           this.router.emit({
@@ -206,7 +210,7 @@ export class SILRuntimeLoop implements WakeupNotifier {
               hash: "", signature: "",
               payload: { trace },
             });
-          } catch (traceErr: any) {
+          } catch (traceErr: unknown) {
             this.router.emit({
               type: "TRACE_RECOVERY_FAILED",
               sessionId: state.sessionId,
@@ -252,7 +256,7 @@ export class SILRuntimeLoop implements WakeupNotifier {
               hash: "", signature: "",
               payload: evalResult,
             });
-          } catch (evalErr: any) {
+          } catch (evalErr: unknown) {
             this.router.emit({
               type: "P7_EVALUATION_FAILED",
               sessionId: state.sessionId,
@@ -380,7 +384,7 @@ export class SILRuntimeLoop implements WakeupNotifier {
                 timestamp: Date.now(),
                 hash: "", signature: "",
               });
-            } catch (err: any) {
+            } catch (err: unknown) {
               await tx.rollback();
               throw err; // will be caught by the generic loop failure handler
             }
@@ -409,13 +413,13 @@ export class SILRuntimeLoop implements WakeupNotifier {
         case "P6_RUNTIME_FAILED":
         case "FAILURE_DETECTED":
           state.status = "FAILED";
-          this.failureController.handle(state, event.error as any, event.details);
+          this.failureController.handle(state, event.error as unknown, event.details);
           break;
 
         case "RECOVERY_TRIGGERED":
           break;
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(`[SIL] Critical Execution Error: ${e.message}`);
       this.router.emit({
         type: "FAILURE_DETECTED",

@@ -1,0 +1,2491 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "REGRESSION_REPORT",
+  "metadata": {
+    "id": "REG-execution-pipeline-20260729T193222Z",
+    "createdAt": "2026-07-29T19:32:22.141Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "node certification/regression.cjs",
+    "script": "certification/regression.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T19:28:08.644Z",
+    "completedAt": "2026-07-29T19:32:22.141Z",
+    "durationMs": 253497,
+    "exitCode": 0
+  },
+  "content": {
+    "summary": {
+      "total": 60,
+      "detected": 54,
+      "missed": 4,
+      "buildErrors": 0,
+      "timeouts": 2,
+      "detectionRate": 90
+    },
+    "regressions": [
+      {
+        "id": "AST-REG-03fe0e006343fc8a",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.fetch.getBytecode();",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should set bytecode",
+          "should get bytecode"
+        ],
+        "durationMs": 3303,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:28:12.059Z",
+        "completedAt": "2026-07-29T19:28:15.362Z"
+      },
+      {
+        "id": "AST-REG-08f5fa77e26099ae",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.cycle();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should execute loop iterations in runCycles() when not halted",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)"
+        ],
+        "durationMs": 3159,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:28:15.364Z",
+        "completedAt": "2026-07-29T19:28:18.523Z"
+      },
+      {
+        "id": "AST-REG-0aa32135a18351e6",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.cycle();",
+        "mutated": "/* statement removed */",
+        "status": "TIMEOUT",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [],
+        "durationMs": 30132,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:28:18.525Z",
+        "completedAt": "2026-07-29T19:28:48.657Z"
+      },
+      {
+        "id": "AST-REG-16b9421469b36ddd",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.running = true;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should execute loop iterations in run() when not halted"
+        ],
+        "durationMs": 3156,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:28:48.659Z",
+        "completedAt": "2026-07-29T19:28:51.815Z"
+      },
+      {
+        "id": "AST-REG-1c7bcd3e1b84f2f8",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.isHalted()",
+        "mutated": "true",
+        "status": "TIMEOUT",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [],
+        "durationMs": 30109,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:28:51.816Z",
+        "completedAt": "2026-07-29T19:29:21.925Z"
+      },
+      {
+        "id": "AST-REG-1f55f7a71d8acda4",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.getStatistics();",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles() from executing cycles when running is false",
+          "should run for N cycles",
+          "should stop pipeline",
+          "should handle many cycles",
+          "should execute loop iterations in runCycles() when not halted",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)"
+        ],
+        "durationMs": 3315,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:21.927Z",
+        "completedAt": "2026-07-29T19:29:25.242Z"
+      },
+      {
+        "id": "AST-REG-2789b92558d69eb4",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return { ...this.statistics };",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles() from executing cycles when running is false",
+          "should reset statistics on flush",
+          "should handle structural hazards",
+          "should not execute when halted",
+          "should track branch taken statistics",
+          "should track branches not taken",
+          "should track total branches",
+          "should reset pipeline state",
+          "should track error statistics",
+          "should track instructions executed",
+          "should track cycles",
+          "should track calls",
+          "should track returns",
+          "should track errors",
+          "should return statistics copy",
+          "should reset on bytecode change",
+          "should run for N cycles",
+          "should run until halt",
+          "should stop pipeline",
+          "should handle many cycles",
+          "should handle rapid start-stop",
+          "should handle rapid bytecode changes",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3035,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:25.243Z",
+        "completedAt": "2026-07-29T19:29:28.278Z"
+      },
+      {
+        "id": "AST-REG-28e52039b56ca060",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.fetch;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should get fetch unit",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should call clearCache on reset()",
+          "should call fetch.enableCache when enableCache is called",
+          "should call fetch.disableCache when disableCache is called",
+          "should call fetch.setCacheSize when setCacheSize is called",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3797,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:28.280Z",
+        "completedAt": "2026-07-29T19:29:32.077Z"
+      },
+      {
+        "id": "AST-REG-2f301fe3071ce26c",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch.setCacheSize(size);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should call fetch.setCacheSize when setCacheSize is called"
+        ],
+        "durationMs": 3234,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:32.078Z",
+        "completedAt": "2026-07-29T19:29:35.312Z"
+      },
+      {
+        "id": "AST-REG-390e77f0cb1ca4f7",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics = this.initializeStatistics();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles() from executing cycles when running is false",
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should handle structural hazards",
+          "should not execute when halted",
+          "should track branch taken statistics",
+          "should track branches not taken",
+          "should track total branches",
+          "should track error statistics",
+          "should track instructions executed",
+          "should track cycles",
+          "should track calls",
+          "should track returns",
+          "should track errors",
+          "should run for N cycles",
+          "should run until halt",
+          "should stop pipeline",
+          "should handle many cycles",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3494,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:35.314Z",
+        "completedAt": "2026-07-29T19:29:38.808Z"
+      },
+      {
+        "id": "AST-REG-3b0b2d37b9283742",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.incrementProgramCounter(fetchResult.size);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should increment program counter by fetch size after each cycle"
+        ],
+        "durationMs": 3999,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:38.817Z",
+        "completedAt": "2026-07-29T19:29:42.816Z"
+      },
+      {
+        "id": "AST-REG-3cf0501cd3f1ef6a",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.returns++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track return instructions",
+          "should track return instructions"
+        ],
+        "durationMs": 3764,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:42.818Z",
+        "completedAt": "2026-07-29T19:29:46.582Z"
+      },
+      {
+        "id": "AST-REG-3ed667d2f247611d",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "errors.push(...contextValidation.errors);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_MISSED",
+        "tscExitCode": null,
+        "vitestExitCode": 0,
+        "failedTests": [],
+        "durationMs": 2886,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:46.584Z",
+        "completedAt": "2026-07-29T19:29:49.470Z"
+      },
+      {
+        "id": "AST-REG-40bf1d4fc583a2c5",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.running = false;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should set running to false when stop() is called"
+        ],
+        "durationMs": 3321,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:49.472Z",
+        "completedAt": "2026-07-29T19:29:52.793Z"
+      },
+      {
+        "id": "AST-REG-451032d6fb709b89",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "decoded.isReturn",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should NOT increment returns when isReturn is false (force true kills this)"
+        ],
+        "durationMs": 2875,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:52.794Z",
+        "completedAt": "2026-07-29T19:29:55.669Z"
+      },
+      {
+        "id": "AST-REG-467355b3cd739d3f",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken === false",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)"
+        ],
+        "durationMs": 2758,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:55.671Z",
+        "completedAt": "2026-07-29T19:29:58.429Z"
+      },
+      {
+        "id": "AST-REG-473daf49e1e4b5f6",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch.enableCache();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should call fetch.enableCache when enableCache is called"
+        ],
+        "durationMs": 3005,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:29:58.431Z",
+        "completedAt": "2026-07-29T19:30:01.436Z"
+      },
+      {
+        "id": "AST-REG-49cec40dc683a9fa",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return null;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle pipeline stall on halt"
+        ],
+        "durationMs": 3107,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:01.438Z",
+        "completedAt": "2026-07-29T19:30:04.545Z"
+      },
+      {
+        "id": "AST-REG-49e84382cdf76713",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.context;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should get context"
+        ],
+        "durationMs": 3353,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:04.546Z",
+        "completedAt": "2026-07-29T19:30:07.899Z"
+      },
+      {
+        "id": "AST-REG-4a17022b36e263be",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.execute = new InstructionExecute(context);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should recover from errors",
+          "should get execute unit",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3190,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:07.901Z",
+        "completedAt": "2026-07-29T19:30:11.091Z"
+      },
+      {
+        "id": "AST-REG-5435b9d5c090457e",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.cycles++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should increment cycles exactly once per cycle() call",
+          "should reset statistics to zero after reset()"
+        ],
+        "durationMs": 3159,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:11.094Z",
+        "completedAt": "2026-07-29T19:30:14.253Z"
+      },
+      {
+        "id": "AST-REG-563e0ad03e8869cd",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.fetch.getCacheStatistics();",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should clear fetch cache on reset",
+          "should clear fetch cache",
+          "should enable instruction cache",
+          "should disable instruction cache",
+          "should set cache size",
+          "should get cache statistics"
+        ],
+        "durationMs": 2736,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:14.254Z",
+        "completedAt": "2026-07-29T19:30:16.990Z"
+      },
+      {
+        "id": "AST-REG-574bbc4cee6bb78a",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "decoded.isCall",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should NOT increment calls when isCall is false (force true kills this)"
+        ],
+        "durationMs": 3360,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:16.991Z",
+        "completedAt": "2026-07-29T19:30:20.351Z"
+      },
+      {
+        "id": "AST-REG-5916b9a8d8a9d2d2",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "errors.push('Program counter exceeds bytecode length');",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should detect program counter exceeding bytecode"
+        ],
+        "durationMs": 3101,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:20.352Z",
+        "completedAt": "2026-07-29T19:30:23.453Z"
+      },
+      {
+        "id": "AST-REG-5ad3a4b199a65361",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return { instructionsExecuted: 0, cycles: 0, branchesTaken: 0, branchesNotTaken: 0, calls: 0, returns: 0, errors: 0, };",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles() from executing cycles when running is false",
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should reset statistics on flush",
+          "should handle structural hazards",
+          "should not execute when halted",
+          "should track branch taken statistics",
+          "should track branches not taken",
+          "should track total branches",
+          "should reset pipeline state",
+          "should recover from errors",
+          "should track error statistics",
+          "should track instructions executed",
+          "should track cycles",
+          "should track calls",
+          "should track returns",
+          "should track errors",
+          "should reset on bytecode change",
+          "should run for N cycles",
+          "should run until halt",
+          "should stop pipeline",
+          "should handle many cycles",
+          "should handle rapid start-stop",
+          "should handle rapid bytecode changes",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3229,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:23.455Z",
+        "completedAt": "2026-07-29T19:30:26.684Z"
+      },
+      {
+        "id": "AST-REG-5c1592e08207dee7",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch.disableCache();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should call fetch.disableCache when disableCache is called"
+        ],
+        "durationMs": 3077,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:26.686Z",
+        "completedAt": "2026-07-29T19:30:29.763Z"
+      },
+      {
+        "id": "AST-REG-60ff61e600bcd34b",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() < 0",
+        "mutated": "false",
+        "status": "REGRESSION_MISSED",
+        "tscExitCode": null,
+        "vitestExitCode": 0,
+        "failedTests": [],
+        "durationMs": 2791,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:29.764Z",
+        "completedAt": "2026-07-29T19:30:32.555Z"
+      },
+      {
+        "id": "AST-REG-619fe0e2c67b2b24",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch.setBytecode(bytecode);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should set bytecode"
+        ],
+        "durationMs": 3165,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:32.556Z",
+        "completedAt": "2026-07-29T19:30:35.721Z"
+      },
+      {
+        "id": "AST-REG-64d33353428780a8",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)"
+        ],
+        "durationMs": 3382,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:35.722Z",
+        "completedAt": "2026-07-29T19:30:39.104Z"
+      },
+      {
+        "id": "AST-REG-6eebd3edb1192bbc",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics = this.initializeStatistics();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles from executing after reset",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 5459,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:39.106Z",
+        "completedAt": "2026-07-29T19:30:44.565Z"
+      },
+      {
+        "id": "AST-REG-76ed5d4841f71075",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch.clearCache();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should call clearCache on reset()"
+        ],
+        "durationMs": 2951,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:44.567Z",
+        "completedAt": "2026-07-29T19:30:47.518Z"
+      },
+      {
+        "id": "AST-REG-778d5f8c5358db30",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return { valid: errors.length === 0, errors, };",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should validate valid state",
+          "should detect negative program counter",
+          "should detect program counter exceeding bytecode",
+          "should include context validation errors",
+          "should include \"Program counter is negative\" in errors for PC < 0",
+          "should include context validation errors",
+          "should report valid=true when PC < 0 check is disabled (force false kills this)"
+        ],
+        "durationMs": 3608,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:47.520Z",
+        "completedAt": "2026-07-29T19:30:51.128Z"
+      },
+      {
+        "id": "AST-REG-7a4351f1fe270b25",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken === false",
+        "mutated": "true",
+        "status": "REGRESSION_MISSED",
+        "tscExitCode": null,
+        "vitestExitCode": 0,
+        "failedTests": [],
+        "durationMs": 3005,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:51.130Z",
+        "completedAt": "2026-07-29T19:30:54.135Z"
+      },
+      {
+        "id": "AST-REG-81d28d363e10f2b0",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.errors++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle execution error with no error message",
+          "should handle execution error with no error message"
+        ],
+        "durationMs": 3229,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:54.137Z",
+        "completedAt": "2026-07-29T19:30:57.366Z"
+      },
+      {
+        "id": "AST-REG-82ad2a3763706331",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.reset();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should reset context on flush",
+          "should reset context",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2690,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:30:57.368Z",
+        "completedAt": "2026-07-29T19:31:00.058Z"
+      },
+      {
+        "id": "AST-REG-86de1c8817352e2a",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.calls++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track call instructions",
+          "should track call instructions"
+        ],
+        "durationMs": 3096,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:00.059Z",
+        "completedAt": "2026-07-29T19:31:03.155Z"
+      },
+      {
+        "id": "AST-REG-899119ba5b04f091",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.reset();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3063,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:03.157Z",
+        "completedAt": "2026-07-29T19:31:06.220Z"
+      },
+      {
+        "id": "AST-REG-8f99636551e7aca2",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "errors.push('Program counter is negative');",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_MISSED",
+        "tscExitCode": null,
+        "vitestExitCode": 0,
+        "failedTests": [],
+        "durationMs": 3222,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:06.223Z",
+        "completedAt": "2026-07-29T19:31:09.445Z"
+      },
+      {
+        "id": "AST-REG-93af3f6d51ace729",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.setError(new Error(result.error || 'Execution error'));",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle execution error with no error message",
+          "should handle execution error with no error message"
+        ],
+        "durationMs": 2998,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:09.446Z",
+        "completedAt": "2026-07-29T19:31:12.444Z"
+      },
+      {
+        "id": "AST-REG-a852d6460120beeb",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.decode;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should get decode unit",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3004,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:12.446Z",
+        "completedAt": "2026-07-29T19:31:15.450Z"
+      },
+      {
+        "id": "AST-REG-aff692289eb32e5d",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.getStatistics();",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should run until halt",
+          "should execute loop iterations in run() when not halted"
+        ],
+        "durationMs": 6936,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:15.451Z",
+        "completedAt": "2026-07-29T19:31:22.387Z"
+      },
+      {
+        "id": "AST-REG-b43b786438b5ef69",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.isHalted()",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle pipeline stall on halt",
+          "should not execute when halted"
+        ],
+        "durationMs": 4524,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:22.389Z",
+        "completedAt": "2026-07-29T19:31:26.913Z"
+      },
+      {
+        "id": "AST-REG-baa34499c190853e",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.branchesTaken++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track branch taken when result.branchTaken is true",
+          "should track branch taken when result.branchTaken is true"
+        ],
+        "durationMs": 3167,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:26.915Z",
+        "completedAt": "2026-07-29T19:31:30.082Z"
+      },
+      {
+        "id": "AST-REG-bb3cb9d4825b7318",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return result;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should recover from errors"
+        ],
+        "durationMs": 2905,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:30.083Z",
+        "completedAt": "2026-07-29T19:31:32.988Z"
+      },
+      {
+        "id": "AST-REG-bebedbf8c2c9422e",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() >= bytecode.length",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should detect program counter exceeding bytecode"
+        ],
+        "durationMs": 2711,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:32.990Z",
+        "completedAt": "2026-07-29T19:31:35.701Z"
+      },
+      {
+        "id": "AST-REG-c2a85c0d4947e18d",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context = context;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should prevent runCycles() from executing cycles when running is false",
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should clear fetch cache on reset",
+          "should reset statistics on flush",
+          "should reset context on flush",
+          "should handle pipeline stall on halt",
+          "should not execute when halted",
+          "should resume after reset",
+          "should reset pipeline state",
+          "should reset context",
+          "should clear fetch cache",
+          "should stop running on reset",
+          "should recover from errors",
+          "should set bytecode",
+          "should reset on bytecode change",
+          "should get context",
+          "should run single cycle",
+          "should run for N cycles",
+          "should run until halt",
+          "should stop pipeline",
+          "should step through execution",
+          "should validate valid state",
+          "should detect negative program counter",
+          "should detect program counter exceeding bytecode",
+          "should include context validation errors",
+          "should handle many cycles",
+          "should handle rapid start-stop",
+          "should handle rapid bytecode changes",
+          "should maintain performance over many cycles",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should set running to false after reset, even if it was true",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should include \"Program counter is negative\" in errors for PC < 0",
+          "should include context validation errors",
+          "should report valid=true when PC < 0 check is disabled (force false kills this)",
+          "should reset statistics to zero after reset()",
+          "should set running to false after reset()",
+          "should call clearCache on reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3215,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:35.703Z",
+        "completedAt": "2026-07-29T19:31:38.918Z"
+      },
+      {
+        "id": "AST-REG-c2da4b8239cb07f4",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track branch taken when result.branchTaken is true",
+          "should track branch taken when result.branchTaken is true"
+        ],
+        "durationMs": 2880,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:38.919Z",
+        "completedAt": "2026-07-29T19:31:41.799Z"
+      },
+      {
+        "id": "AST-REG-c525c5b0c0dde0cf",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.execute;",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should get execute unit",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2813,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:41.801Z",
+        "completedAt": "2026-07-29T19:31:44.614Z"
+      },
+      {
+        "id": "AST-REG-cabc11365d8636ba",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "decoded.isReturn",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track return instructions",
+          "should track return instructions"
+        ],
+        "durationMs": 3515,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:44.615Z",
+        "completedAt": "2026-07-29T19:31:48.130Z"
+      },
+      {
+        "id": "AST-REG-d95cb323ce34e0aa",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() >= bytecode.length",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should validate valid state"
+        ],
+        "durationMs": 2775,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:48.132Z",
+        "completedAt": "2026-07-29T19:31:50.907Z"
+      },
+      {
+        "id": "AST-REG-da2bf52df83856da",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() < 0",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should validate valid state"
+        ],
+        "durationMs": 3384,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:50.909Z",
+        "completedAt": "2026-07-29T19:31:54.293Z"
+      },
+      {
+        "id": "AST-REG-ddc41c7b0cbc65b9",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.fetch = new InstructionFetch(bytecode);",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should clear fetch cache on reset",
+          "should reset statistics on flush",
+          "should reset context on flush",
+          "should resume after reset",
+          "should reset pipeline state",
+          "should reset context",
+          "should clear fetch cache",
+          "should stop running on reset",
+          "should recover from errors",
+          "should enable instruction cache",
+          "should disable instruction cache",
+          "should set cache size",
+          "should get cache statistics",
+          "should set bytecode",
+          "should get bytecode",
+          "should reset on bytecode change",
+          "should get fetch unit",
+          "should run single cycle",
+          "should step through execution",
+          "should validate valid state",
+          "should detect negative program counter",
+          "should detect program counter exceeding bytecode",
+          "should include context validation errors",
+          "should handle rapid start-stop",
+          "should handle rapid bytecode changes",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should set running to false after reset, even if it was true",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should include \"Program counter is negative\" in errors for PC < 0",
+          "should include context validation errors",
+          "should report valid=true when PC < 0 check is disabled (force false kills this)",
+          "should reset statistics to zero after reset()",
+          "should set running to false after reset()",
+          "should call clearCache on reset()",
+          "should call fetch.enableCache when enableCache is called",
+          "should call fetch.disableCache when disableCache is called",
+          "should call fetch.setCacheSize when setCacheSize is called",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2918,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:54.294Z",
+        "completedAt": "2026-07-29T19:31:57.212Z"
+      },
+      {
+        "id": "AST-REG-e0778ab24faa53f3",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "decoded.isCall",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track call instructions",
+          "should track call instructions"
+        ],
+        "durationMs": 3068,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:31:57.213Z",
+        "completedAt": "2026-07-29T19:32:00.281Z"
+      },
+      {
+        "id": "AST-REG-e09e378b3982d597",
+        "description": "Return undefined",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "return this.cycle();",
+        "mutated": "return undefined;",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should step through execution"
+        ],
+        "durationMs": 2802,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:00.282Z",
+        "completedAt": "2026-07-29T19:32:03.084Z"
+      },
+      {
+        "id": "AST-REG-e229c57c9afd4801",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.decode = new InstructionDecode();",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle decode errors gracefully",
+          "should handle execution errors",
+          "should recover from errors",
+          "should get decode unit",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should track branch taken when result.branchTaken is true",
+          "should track branch not taken when result.branchTaken is false",
+          "should track call instructions",
+          "should track return instructions",
+          "should handle execution error with no error message",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)",
+          "should NOT increment calls when isCall is false (force true kills this)",
+          "should NOT increment returns when isReturn is false (force true kills this)",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2961,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:03.086Z",
+        "completedAt": "2026-07-29T19:32:06.047Z"
+      },
+      {
+        "id": "AST-REG-e3e93807d03d7ae7",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.instructionsExecuted++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should execute loop iterations in run() when not halted",
+          "should execute loop iterations in runCycles() when not halted",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 2999,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:06.049Z",
+        "completedAt": "2026-07-29T19:32:09.048Z"
+      },
+      {
+        "id": "AST-REG-e3f2f30488dedb2d",
+        "description": "Force if condition to false",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "!result.success",
+        "mutated": "false",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should handle execution error with no error message",
+          "should handle execution error with no error message"
+        ],
+        "durationMs": 2966,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:09.050Z",
+        "completedAt": "2026-07-29T19:32:12.016Z"
+      },
+      {
+        "id": "AST-REG-e9329a553521f487",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.statistics.branchesNotTaken++;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)"
+        ],
+        "durationMs": 3113,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:12.018Z",
+        "completedAt": "2026-07-29T19:32:15.131Z"
+      },
+      {
+        "id": "AST-REG-f1fca6f7f3212a37",
+        "description": "Force if condition to true",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "!result.success",
+        "mutated": "true",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should increment cycles exactly once per cycle() call",
+          "should increment program counter by fetch size after each cycle",
+          "should NOT set error when result.success is true (force true on !result.success kills this)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3090,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:15.132Z",
+        "completedAt": "2026-07-29T19:32:18.222Z"
+      },
+      {
+        "id": "AST-REG-f5a90e77b3650deb",
+        "description": "Remove statement",
+        "category": "Regression",
+        "line": -1,
+        "type": "AST",
+        "original": "this.running = false;",
+        "mutated": "/* statement removed */",
+        "status": "REGRESSION_DETECTED",
+        "tscExitCode": null,
+        "vitestExitCode": 1,
+        "failedTests": [
+          "should set running to false after reset, even if it was true",
+          "should prevent runCycles from executing after reset",
+          "should set running to false after reset()"
+        ],
+        "durationMs": 3915,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T19:32:18.224Z",
+        "completedAt": "2026-07-29T19:32:22.139Z"
+      }
+    ],
+    "catalogSha256": "5d4817a9f60a72b50b6b7ada25bad52db74840e377bad77b00f2c2baedcf295e"
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-03fe0e006343fc8a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-03fe0e006343fc8a.json",
+      "sha256": "f5bfe1fe05b2275bef739bf74f1fd384fdd06426738bcb272d98ac8192d4ba3a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-03fe0e006343fc8a.stdout.log",
+      "sha256": "866ad7bb1f6cb2104a960d4f605082d81d401d9e83384ec0eaefba4c0ae38ed7"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-08f5fa77e26099ae.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-08f5fa77e26099ae.json",
+      "sha256": "091bac30b878b6b52d6b7790bf0d0261e944d21e83ddf0c1c736096c327d1700"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-08f5fa77e26099ae.stdout.log",
+      "sha256": "17bd369d0f4868157bf27d2dbf5b438171ce84a641d26f48b6b2a011e9010ad6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-0aa32135a18351e6.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-0aa32135a18351e6.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-16b9421469b36ddd.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-16b9421469b36ddd.json",
+      "sha256": "467f75961a49cdf9b8c0a3cca707067200aa898fb0de3704dc2dc58a6af972a4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-16b9421469b36ddd.stdout.log",
+      "sha256": "f59e83d72d8c6bdc76ee51d77de4dc06c607c5c1ec63820e503c96d8b5365b5d"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-1c7bcd3e1b84f2f8.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-1c7bcd3e1b84f2f8.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-1f55f7a71d8acda4.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-1f55f7a71d8acda4.json",
+      "sha256": "a794462e84515bfa5afb3bc439ba5ea6832f81834ef2bf9dafbde56ac257ecc6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-1f55f7a71d8acda4.stdout.log",
+      "sha256": "c7e2a870d2bd996630e1e8c0a3ebdf292b5fa201cca2a67b6b89dcd701bf8b6c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-2789b92558d69eb4.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-2789b92558d69eb4.json",
+      "sha256": "0886f8ddd4378cac6fd42d229d8c97186aab78bbee917d3a1f82055b352ad3d1"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-2789b92558d69eb4.stdout.log",
+      "sha256": "789018aea45334b4ce7cb29d1c59832f01f223baad3d791a34682e3d1a2b1c8f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-28e52039b56ca060.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-28e52039b56ca060.json",
+      "sha256": "a27f652c82e7d85e9f076aae6ce38c418b8409f635698db78f71cce3ee50b74d"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-28e52039b56ca060.stdout.log",
+      "sha256": "7936714d4f655328ba8ba5740f8470f8d993aa66e24a472fff0576558ea76a3d"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-2f301fe3071ce26c.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-2f301fe3071ce26c.json",
+      "sha256": "7bc9c8c8c93627cc5f0373ca2eb8201e2ecf906911d73ab507f2dfc373477e05"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-2f301fe3071ce26c.stdout.log",
+      "sha256": "16e862d1446b1f44b0614f14cb473c0887312196f852f07739d76820c31092b0"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-390e77f0cb1ca4f7.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-390e77f0cb1ca4f7.json",
+      "sha256": "37b8b7785a406efa522c370a68836972a27b4cd096ea573756d9fb2d8fdd80b6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-390e77f0cb1ca4f7.stdout.log",
+      "sha256": "27c75fca50167f3540636b6954bd82148bcfc4aa35b7bd5ea4fa06599e458a41"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3b0b2d37b9283742.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-3b0b2d37b9283742.json",
+      "sha256": "8841e1c71f9ea4b3b0d5d0a8141dd02d10449c152bec7660b718a829199124e1"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3b0b2d37b9283742.stdout.log",
+      "sha256": "33efdde68a3004119ba76802c554f6b74e88581f9c87ca83932afe9f9dd68bd6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3cf0501cd3f1ef6a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-3cf0501cd3f1ef6a.json",
+      "sha256": "c9760982501a454dcdb898ec4e6ef300c19f3cb812029f3f9a59add0a45a1ec2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3cf0501cd3f1ef6a.stdout.log",
+      "sha256": "2c7ea2be22707e4171432e85f76166fe425a20ab51e352e3d80347f2fabdba3b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3ed667d2f247611d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-3ed667d2f247611d.json",
+      "sha256": "f5fcf3fdde5fea9487a4490ab9e0b7e4fac28ab39fa716a8dc6967c58a6c1db4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-3ed667d2f247611d.stdout.log",
+      "sha256": "906c6a83f1597a63793f0dc7386839e19d03488aa942b26c47e238d0a229e504"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-40bf1d4fc583a2c5.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-40bf1d4fc583a2c5.json",
+      "sha256": "91b9328a62ed9474d8afe746fe5a6eb539adfd4de1ddc3cdd710e4eb34b413b7"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-40bf1d4fc583a2c5.stdout.log",
+      "sha256": "8d8a69566ad1ba016dded43008d06b5f40383f54b756fa3ccef4b1bc2c1982fc"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-451032d6fb709b89.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-451032d6fb709b89.json",
+      "sha256": "0f94388fa09e3e0104fa6d345ced12c7394392df9b092b7ed3afc4fb981431d1"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-451032d6fb709b89.stdout.log",
+      "sha256": "740533232b5e47fee2a6dc58d24e2c37e484815e778ffcba1160083d7a3ec1f8"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-467355b3cd739d3f.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-467355b3cd739d3f.json",
+      "sha256": "45f486ec77e7612a793edea259ce11536a06eb6ed659733e7abefca145fe8e3c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-467355b3cd739d3f.stdout.log",
+      "sha256": "fa151c3f5226c7ea9d75ea9dc1d3c6d3c77da3f2d02599f0bbd48e5a101e93c6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-473daf49e1e4b5f6.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-473daf49e1e4b5f6.json",
+      "sha256": "1c8314472097c03f90f707965d4acb1c53ad309e4b98a598d1dbe0f2481eb72a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-473daf49e1e4b5f6.stdout.log",
+      "sha256": "88b61320037803a1a4347a92f1ad5497a226143351a1334c85ac61907ff20fa1"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-49cec40dc683a9fa.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-49cec40dc683a9fa.json",
+      "sha256": "675381009e7c02bf27f5ed073df2570988dca7d1388064fc2385a5fdd58180f0"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-49cec40dc683a9fa.stdout.log",
+      "sha256": "4b1eb41653462ac02bcdd2b20bec938966a667ed094f904e0895d230e628c792"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-49e84382cdf76713.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-49e84382cdf76713.json",
+      "sha256": "519428347cba61ec28a3a8f8f53f9d5b8e6ebf2f2a7bc4efd7497cdb10ff8ab6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-49e84382cdf76713.stdout.log",
+      "sha256": "f0f67f44f2364db65daaaa287ab59aa3c9600829e0428ee292b79914eb040d80"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-4a17022b36e263be.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-4a17022b36e263be.json",
+      "sha256": "a223578aa8ac896d301cb42b8b1eb663f1d198c6c293da9aae1f0d54fc9c4dc4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-4a17022b36e263be.stdout.log",
+      "sha256": "2930c4cc5e6a7d2b6dd7daf96e9703bc6fdfbbaea1cbdb8446fd8095bdd5aee2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5435b9d5c090457e.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-5435b9d5c090457e.json",
+      "sha256": "f4aae2c60a01f01ccdf6cda3bf6555b55d447c69197473a7e038c1572d414274"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5435b9d5c090457e.stdout.log",
+      "sha256": "f8a427157f62b97658009f605561482203b73c94a0da308b72f662fe55be8dce"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-563e0ad03e8869cd.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-563e0ad03e8869cd.json",
+      "sha256": "1108178ac163bca8d6c7ff3b94eed95c4b3e12756b200c678f7cb3673bc6bc5f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-563e0ad03e8869cd.stdout.log",
+      "sha256": "9f99734b1eef39a483a3b930c58b3a97248ab1dddfdcbb30c5d80eff726d8c3b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-574bbc4cee6bb78a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-574bbc4cee6bb78a.json",
+      "sha256": "e57949592ac7e8b9c94f51e89b2f9e0d38f36918b63d695b90efcb1dc7256a08"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-574bbc4cee6bb78a.stdout.log",
+      "sha256": "e638f7226ede34ed80576aa8a0722f47f43ef15deeee523e30dac65293325571"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5916b9a8d8a9d2d2.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-5916b9a8d8a9d2d2.json",
+      "sha256": "67b957e133d134974122e24cbcb0bf4bf7d956e45c771761beadf2bcbcd0c6a7"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5916b9a8d8a9d2d2.stdout.log",
+      "sha256": "90a4fe0fff08215f72d30345607eb6705d0f4429a3867f57c7fabc5e580e929c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5ad3a4b199a65361.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-5ad3a4b199a65361.json",
+      "sha256": "9d32b52bf5b3224c2866f305c7e02cef9a62df545f28ee5086defe818b7c72fd"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5ad3a4b199a65361.stdout.log",
+      "sha256": "9f44a9a0a00a4622857dc2c1a88f680560a0dc21e9c4c463f4838576f8e3cb58"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5c1592e08207dee7.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-5c1592e08207dee7.json",
+      "sha256": "6504b51dc927da834f3466035c761cb032c750d99fa94c5093ebb9b30e0dfe7a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-5c1592e08207dee7.stdout.log",
+      "sha256": "055ffc7b6d3250550420f9b6b83e3e48f52157c7ec9e2e8a59d2e4b41236bf6b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-60ff61e600bcd34b.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-60ff61e600bcd34b.json",
+      "sha256": "bb873f3f416140ad82e4dd5ec538639b33421174fe31d9af179fa7180f99608b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-60ff61e600bcd34b.stdout.log",
+      "sha256": "92d4a017fb8927758f19d836bacb596d7a97dce12fd0172ae64632ed9fea937c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-619fe0e2c67b2b24.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-619fe0e2c67b2b24.json",
+      "sha256": "7aae9c98fe188f99d9ecc0452a508b85574ad1cc4291da45c0bb6b431ed49bdc"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-619fe0e2c67b2b24.stdout.log",
+      "sha256": "11bc6b9d396a3194a611dfb3ceceed9aedc36da5d54975bf1454999986da36c2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-64d33353428780a8.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-64d33353428780a8.json",
+      "sha256": "1348ce112923a6d91ccb47a20bb3d6e5d5d6165cb19a7917ad2b16efcc0e7242"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-64d33353428780a8.stdout.log",
+      "sha256": "781c4c904fbf80f94979a950fa3d37e5f885ea59469c6cfc1c87ab51d35a04be"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-6eebd3edb1192bbc.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-6eebd3edb1192bbc.json",
+      "sha256": "c2b658294139f5805d73837919bedba4220962cb7e3a388c83303f8ed385b06b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-6eebd3edb1192bbc.stdout.log",
+      "sha256": "00c2c180c4107d96dea2630bf4b5b553b5bd53631f24d33a1456f61467f33d41"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-76ed5d4841f71075.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-76ed5d4841f71075.json",
+      "sha256": "eed7a7ddc75786b0c65b75a69af2b751c767e301b640fc7387b182130093dcb8"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-76ed5d4841f71075.stdout.log",
+      "sha256": "f520cb5c98c03e50bc407c10d734b92ce1a5347cfe6ba1ce45d89fa5638c9b74"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-778d5f8c5358db30.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-778d5f8c5358db30.json",
+      "sha256": "3177a64f9f6f86acd67466b6e332b06cf4ea9e3a9deedc5be01642dabde516ef"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-778d5f8c5358db30.stdout.log",
+      "sha256": "6830895cb0ca31011affadc0ef008fcd70467278cccfb467444923673f85ff33"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-7a4351f1fe270b25.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-7a4351f1fe270b25.json",
+      "sha256": "5fd338594c745c151a0a5aee0142aacaaca7747e464da2ab1fd55f3449846bbc"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-7a4351f1fe270b25.stdout.log",
+      "sha256": "bbedd81a8f39ca985d9e3e9348c247818b80c23e1afc7e158d9784620ab0e407"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-81d28d363e10f2b0.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-81d28d363e10f2b0.json",
+      "sha256": "091c49e001ce12b984734f354bf5e939dea27a19c23c8b548745e543230d1b04"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-81d28d363e10f2b0.stdout.log",
+      "sha256": "8658e289145b76b6bbf02d461910627db2f36fdec88b6f701719ef20f8dfb757"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-82ad2a3763706331.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-82ad2a3763706331.json",
+      "sha256": "fc3cc4732736895836ff114584fbfd704f0cc44c5b18913c7099e66c4b1310bc"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-82ad2a3763706331.stdout.log",
+      "sha256": "9267a1a3c1a89a5ed71db0c9b05c311779b052ad94e2c79cd2a0007c0234029c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-86de1c8817352e2a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-86de1c8817352e2a.json",
+      "sha256": "b196b2071882de48f156923c4737210d7d2121e182ea5e45dd28b95087f6d512"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-86de1c8817352e2a.stdout.log",
+      "sha256": "ed261a8624a5e711f807767b986de516168e32c756a7af641ceee6eee7368e08"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-899119ba5b04f091.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-899119ba5b04f091.json",
+      "sha256": "9f1cb661fa93a6a27373106dca9385516710c20b7111d817641c2f538ac1045f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-899119ba5b04f091.stdout.log",
+      "sha256": "2cde0228653bd5fa36197ae5da0ed46dab2199667f33d8120db90fc36f148c83"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-8f99636551e7aca2.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-8f99636551e7aca2.json",
+      "sha256": "f196c649a044eddd224543eee0c98f54b6b4757d7e9ff4954bafb9ecba4650c8"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-8f99636551e7aca2.stdout.log",
+      "sha256": "06c9ffe935327904ac13a2e9f9df351c2eb351b729461e7e392401459a0869ad"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-93af3f6d51ace729.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-93af3f6d51ace729.json",
+      "sha256": "5e404f446f71628a49f68ee1a264eccf3e6d54921cb2296303dd0fad53fd8084"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-93af3f6d51ace729.stdout.log",
+      "sha256": "ae534daae87ce785d59ce2fb67f6a170015a5d6a8d8f34ca751edb9cd47acf36"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-a852d6460120beeb.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-a852d6460120beeb.json",
+      "sha256": "e2a796ca5de0a7166ca9caea29d84422dc4ad6c5f62eeb6dc370ca662d2a2278"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-a852d6460120beeb.stdout.log",
+      "sha256": "42e5bd57b2fe7cb69c3263fbd897cc30cef5d4cd6d089db4fd06d169e22a94fd"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-aff692289eb32e5d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-aff692289eb32e5d.json",
+      "sha256": "c5b54317a28821e599953818cd0faccd065d10354920b02bc3ce426307978cfd"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-aff692289eb32e5d.stdout.log",
+      "sha256": "873db6833628d3951c97f916420dbf14c52e24a238ec9f193c65d658fe5068df"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-b43b786438b5ef69.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-b43b786438b5ef69.json",
+      "sha256": "5462c73da20bc882ee66e2cda5835259f872321bc19e81a81bebcff48ec348e0"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-b43b786438b5ef69.stdout.log",
+      "sha256": "7d7d2abb1502c9ee382f38c40470824da13488967b62e93044a2062f11acaa50"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-baa34499c190853e.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-baa34499c190853e.json",
+      "sha256": "6554204757d89dacf64170bc25110746f7efec41114bb173027ca70a6fdb70dd"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-baa34499c190853e.stdout.log",
+      "sha256": "fedb7810827d036b686bb530f5ba63a10e34c6bc1560726016573f469a8c3653"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-bb3cb9d4825b7318.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-bb3cb9d4825b7318.json",
+      "sha256": "069f1e020b8ff205cf226dd9ba3cb3d222e38e2fae35124e390f1294b8ded8d6"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-bb3cb9d4825b7318.stdout.log",
+      "sha256": "325a343c9c8d68ebcadb46b6ff6ce0724c14b41fd1caea00b931826a824c3f68"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-bebedbf8c2c9422e.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-bebedbf8c2c9422e.json",
+      "sha256": "fac9ade903370f2027e11482dd450ec43ff0b22d8da3939204d22412d8ee1aad"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-bebedbf8c2c9422e.stdout.log",
+      "sha256": "fa8a933abd5f5f421b9a66d63bfc6455d1356b9429a43e6038e28fcdf264acb2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c2a85c0d4947e18d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-c2a85c0d4947e18d.json",
+      "sha256": "6eccf8092c22bb2cb78871bf96b96ab1513c39a4e1089feada2123de31d865f9"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c2a85c0d4947e18d.stdout.log",
+      "sha256": "7c2d645ee5fce68838ac539a9776825b2ac2614464411d91f49df99e652d5190"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c2da4b8239cb07f4.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-c2da4b8239cb07f4.json",
+      "sha256": "637c45fa24c7cc210bec19281235541d0f42937c31fc6e85bd6813de204c08b7"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c2da4b8239cb07f4.stdout.log",
+      "sha256": "4b8265aac533348a4aa06dd583bbe6a169eeb74372f3409e1043187e95f0d47e"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c525c5b0c0dde0cf.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-c525c5b0c0dde0cf.json",
+      "sha256": "8828e8868fc3feb9dffb1bf869ed064fcad61ffd3aeecf2bf666e33ee54dd497"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-c525c5b0c0dde0cf.stdout.log",
+      "sha256": "4dbc7a6607d811d052dc0f9d4468d1db27a480990b99cedae0d56a3489f349a5"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-cabc11365d8636ba.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-cabc11365d8636ba.json",
+      "sha256": "6b2ca0638a494d3bfd1a571aaf534b2038914315a38538665ab4b47b2d47ebac"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-cabc11365d8636ba.stdout.log",
+      "sha256": "6a226aa1c8fef8632f9e1467f550dd5dac08885327ad9fdeffa1e845bf38c1a3"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-d95cb323ce34e0aa.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-d95cb323ce34e0aa.json",
+      "sha256": "691623483183fcf98b519b29fa7a528c8b870e1a864a13cb39cb930eac91cd7b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-d95cb323ce34e0aa.stdout.log",
+      "sha256": "0f8870e000977092be0ed02e5a26e9c7ee6834d1b40ac04b5d43f170cee0a654"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-da2bf52df83856da.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-da2bf52df83856da.json",
+      "sha256": "ec724fc319f7537ede98ca9687dfcc2b3a2f9bae49485394ada2654df077ea3c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-da2bf52df83856da.stdout.log",
+      "sha256": "5cb3e1adf9fec7543f0e8fe07abcb1095567b29a5cfd1b790442f222c543189c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-ddc41c7b0cbc65b9.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-ddc41c7b0cbc65b9.json",
+      "sha256": "40c3a7e109e9353b618a35e924ec1de207975e0daab9b4b140ffa4f9b22268c2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-ddc41c7b0cbc65b9.stdout.log",
+      "sha256": "9bafc669d49180f3daaabcc7630605ef3ced37759fecd7e4ab03cfbb19fd3343"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e0778ab24faa53f3.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e0778ab24faa53f3.json",
+      "sha256": "aa8c3788ddef384a285deb0728b707073566e85c0d0aa6949bc4b0cdf845b9d8"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e0778ab24faa53f3.stdout.log",
+      "sha256": "a5b141c3446b23db25930a3da189f3fe04c4c8aa09c4120a97d83df7461b012f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e09e378b3982d597.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e09e378b3982d597.json",
+      "sha256": "378001f3e0e5c5956d59f9d1bf2754fbcd2b5cf5dbc940b14f4b8f9425c00a2f"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e09e378b3982d597.stdout.log",
+      "sha256": "b9bd983b99b8dcbcf2e8f914237a32aef3e5a79d55c9453b521f8f555a78735b"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e229c57c9afd4801.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e229c57c9afd4801.json",
+      "sha256": "b85677068376e3c41bc12f1b5c786ff1737791a11cf5afdd32850ad1b61d0e1e"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e229c57c9afd4801.stdout.log",
+      "sha256": "8dfbd227c1eb5dcb49d4e55f3af1d63c244ccb412f6cb3f7591ec3939b562a9d"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e3e93807d03d7ae7.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e3e93807d03d7ae7.json",
+      "sha256": "3993f9f07cf2ca12dd10885a3def51f41dabedbc9039e0b8be3b95cdb4fed956"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e3e93807d03d7ae7.stdout.log",
+      "sha256": "b556b17064a733099c2ae1015e4a2a0b189d5011cc3605bede3738d669aad970"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e3f2f30488dedb2d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e3f2f30488dedb2d.json",
+      "sha256": "d9f2c08fdc119fff12de06d4564cf1ae8b1aaac9a92d2b2d855f150bc1478919"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e3f2f30488dedb2d.stdout.log",
+      "sha256": "14212a04cffc09754020a03db9ef90be7f811860da69f5e26804c35d464a7079"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e9329a553521f487.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-e9329a553521f487.json",
+      "sha256": "dee20ee082a93001be23d00cbd538a308d93aa097496b6039cf4c5f3d4a0f665"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-e9329a553521f487.stdout.log",
+      "sha256": "f5b36362d000ea7cfd7626dac63b9d31353a2c255cf04ea5880924330ef058b3"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-f1fca6f7f3212a37.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-f1fca6f7f3212a37.json",
+      "sha256": "ac30b4daea923e9b07f262a5526299752efd324b52d0f23d9f4d2c3933da5485"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-f1fca6f7f3212a37.stdout.log",
+      "sha256": "477099c9f917ddacde3bad44b301d7adbc96cd86a72b9a054048cea6f44dd1af"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-f5a90e77b3650deb.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-RAST-REG-f5a90e77b3650deb.json",
+      "sha256": "a0074f944d80a19a69df3ce87fc3d6b16f0ec5e5552d0c30d40b0734c32a31ee"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/06-regression-AST-REG-f5a90e77b3650deb.stdout.log",
+      "sha256": "7044fdb563288d03a1f7fc8a29a7a3ca1bc259c6e1dc9a15d0c47c554116a0bb"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "db19042b8a9e6a28e2451d04c361d69294b9b6e65d5c799eb95e59d428dd0632",
+    "algorithm": "sha256"
+  }
+}

@@ -8,7 +8,7 @@ import {
   AudioSpeechParams,
   AudioSpeechResponse,
 } from "./Provider";
-import { InfrastructureError, ExternalServiceError } from "@/core/errors";
+import { ExternalServiceError } from "@/core/errors";
 import { recordAIRequest, recordError } from "@/lib/monitoring/metricsSupabase";
 
 /**
@@ -46,7 +46,8 @@ export class OpenAIProvider implements AIProvider {
         createParams.response_format = params.responseFormat as { type: "json_object" | "text" };
       }
 
-      const response = await this.client.chat.completions.create(createParams);
+      const options = params.signal ? { signal: params.signal } : undefined;
+      const response = await this.client.chat.completions.create(createParams, options);
 
       const latency = Date.now() - startTime;
 

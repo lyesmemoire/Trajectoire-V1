@@ -1,0 +1,1418 @@
+{
+  "asyncapi": "2.6.0",
+  "info": {
+    "title": "Blueprint V3 Enterprise Events",
+    "version": "1.0.0",
+    "description": "Auto-generated AsyncAPI specification from Canonical Model"
+  },
+  "channels": {
+    "observationcreated": {
+      "publish": {
+        "message": {
+          "name": "ObservationCreated",
+          "payload": {
+            "$ref": "#/components/schemas/ObservationCreated"
+          }
+        }
+      }
+    },
+    "observationupdated": {
+      "publish": {
+        "message": {
+          "name": "ObservationUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/ObservationUpdated"
+          }
+        }
+      }
+    },
+    "observationarchived": {
+      "publish": {
+        "message": {
+          "name": "ObservationArchived",
+          "payload": {
+            "$ref": "#/components/schemas/ObservationArchived"
+          }
+        }
+      }
+    },
+    "perceptioncreated": {
+      "publish": {
+        "message": {
+          "name": "PerceptionCreated",
+          "payload": {
+            "$ref": "#/components/schemas/PerceptionCreated"
+          }
+        }
+      }
+    },
+    "perceptionupdated": {
+      "publish": {
+        "message": {
+          "name": "PerceptionUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/PerceptionUpdated"
+          }
+        }
+      }
+    },
+    "perceptionarchived": {
+      "publish": {
+        "message": {
+          "name": "PerceptionArchived",
+          "payload": {
+            "$ref": "#/components/schemas/PerceptionArchived"
+          }
+        }
+      }
+    },
+    "evidencecreated": {
+      "publish": {
+        "message": {
+          "name": "EvidenceCreated",
+          "payload": {
+            "$ref": "#/components/schemas/EvidenceCreated"
+          }
+        }
+      }
+    },
+    "evidenceupdated": {
+      "publish": {
+        "message": {
+          "name": "EvidenceUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/EvidenceUpdated"
+          }
+        }
+      }
+    },
+    "evidencearchived": {
+      "publish": {
+        "message": {
+          "name": "EvidenceArchived",
+          "payload": {
+            "$ref": "#/components/schemas/EvidenceArchived"
+          }
+        }
+      }
+    },
+    "confidenceupdated": {
+      "publish": {
+        "message": {
+          "name": "ConfidenceUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/ConfidenceUpdated"
+          }
+        }
+      }
+    },
+    "confidencethresholdbreached": {
+      "publish": {
+        "message": {
+          "name": "ConfidenceThresholdBreached",
+          "payload": {
+            "$ref": "#/components/schemas/ConfidenceThresholdBreached"
+          }
+        }
+      }
+    },
+    "knowledgeacquired": {
+      "publish": {
+        "message": {
+          "name": "KnowledgeAcquired",
+          "payload": {
+            "$ref": "#/components/schemas/KnowledgeAcquired"
+          }
+        }
+      }
+    },
+    "knowledgeupdated": {
+      "publish": {
+        "message": {
+          "name": "KnowledgeUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/KnowledgeUpdated"
+          }
+        }
+      }
+    },
+    "knowledgearchived": {
+      "publish": {
+        "message": {
+          "name": "KnowledgeArchived",
+          "payload": {
+            "$ref": "#/components/schemas/KnowledgeArchived"
+          }
+        }
+      }
+    },
+    "beliefcreated": {
+      "publish": {
+        "message": {
+          "name": "BeliefCreated",
+          "payload": {
+            "$ref": "#/components/schemas/BeliefCreated"
+          }
+        }
+      }
+    },
+    "beliefupdated": {
+      "publish": {
+        "message": {
+          "name": "BeliefUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/BeliefUpdated"
+          }
+        }
+      }
+    },
+    "beliefrevised": {
+      "publish": {
+        "message": {
+          "name": "BeliefRevised",
+          "payload": {
+            "$ref": "#/components/schemas/BeliefRevised"
+          }
+        }
+      }
+    },
+    "hypothesiscreated": {
+      "publish": {
+        "message": {
+          "name": "HypothesisCreated",
+          "payload": {
+            "$ref": "#/components/schemas/HypothesisCreated"
+          }
+        }
+      }
+    },
+    "hypothesisvalidated": {
+      "publish": {
+        "message": {
+          "name": "HypothesisValidated",
+          "payload": {
+            "$ref": "#/components/schemas/HypothesisValidated"
+          }
+        }
+      }
+    },
+    "hypothesisrejected": {
+      "publish": {
+        "message": {
+          "name": "HypothesisRejected",
+          "payload": {
+            "$ref": "#/components/schemas/HypothesisRejected"
+          }
+        }
+      }
+    },
+    "reasoningstarted": {
+      "publish": {
+        "message": {
+          "name": "ReasoningStarted",
+          "payload": {
+            "$ref": "#/components/schemas/ReasoningStarted"
+          }
+        }
+      }
+    },
+    "reasoningcompleted": {
+      "publish": {
+        "message": {
+          "name": "ReasoningCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/ReasoningCompleted"
+          }
+        }
+      }
+    },
+    "reasoningfailed": {
+      "publish": {
+        "message": {
+          "name": "ReasoningFailed",
+          "payload": {
+            "$ref": "#/components/schemas/ReasoningFailed"
+          }
+        }
+      }
+    },
+    "decisionmade": {
+      "publish": {
+        "message": {
+          "name": "DecisionMade",
+          "payload": {
+            "$ref": "#/components/schemas/DecisionMade"
+          }
+        }
+      }
+    },
+    "decisionexecuted": {
+      "publish": {
+        "message": {
+          "name": "DecisionExecuted",
+          "payload": {
+            "$ref": "#/components/schemas/DecisionExecuted"
+          }
+        }
+      }
+    },
+    "decisionreversed": {
+      "publish": {
+        "message": {
+          "name": "DecisionReversed",
+          "payload": {
+            "$ref": "#/components/schemas/DecisionReversed"
+          }
+        }
+      }
+    },
+    "plancreated": {
+      "publish": {
+        "message": {
+          "name": "PlanCreated",
+          "payload": {
+            "$ref": "#/components/schemas/PlanCreated"
+          }
+        }
+      }
+    },
+    "planstarted": {
+      "publish": {
+        "message": {
+          "name": "PlanStarted",
+          "payload": {
+            "$ref": "#/components/schemas/PlanStarted"
+          }
+        }
+      }
+    },
+    "plancompleted": {
+      "publish": {
+        "message": {
+          "name": "PlanCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/PlanCompleted"
+          }
+        }
+      }
+    },
+    "planfailed": {
+      "publish": {
+        "message": {
+          "name": "PlanFailed",
+          "payload": {
+            "$ref": "#/components/schemas/PlanFailed"
+          }
+        }
+      }
+    },
+    "memoryencoded": {
+      "publish": {
+        "message": {
+          "name": "MemoryEncoded",
+          "payload": {
+            "$ref": "#/components/schemas/MemoryEncoded"
+          }
+        }
+      }
+    },
+    "memoryretrieved": {
+      "publish": {
+        "message": {
+          "name": "MemoryRetrieved",
+          "payload": {
+            "$ref": "#/components/schemas/MemoryRetrieved"
+          }
+        }
+      }
+    },
+    "memoryconsolidated": {
+      "publish": {
+        "message": {
+          "name": "MemoryConsolidated",
+          "payload": {
+            "$ref": "#/components/schemas/MemoryConsolidated"
+          }
+        }
+      }
+    },
+    "memoryevicted": {
+      "publish": {
+        "message": {
+          "name": "MemoryEvicted",
+          "payload": {
+            "$ref": "#/components/schemas/MemoryEvicted"
+          }
+        }
+      }
+    },
+    "learningstarted": {
+      "publish": {
+        "message": {
+          "name": "LearningStarted",
+          "payload": {
+            "$ref": "#/components/schemas/LearningStarted"
+          }
+        }
+      }
+    },
+    "learningcompleted": {
+      "publish": {
+        "message": {
+          "name": "LearningCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/LearningCompleted"
+          }
+        }
+      }
+    },
+    "learningfailed": {
+      "publish": {
+        "message": {
+          "name": "LearningFailed",
+          "payload": {
+            "$ref": "#/components/schemas/LearningFailed"
+          }
+        }
+      }
+    },
+    "adaptationtriggered": {
+      "publish": {
+        "message": {
+          "name": "AdaptationTriggered",
+          "payload": {
+            "$ref": "#/components/schemas/AdaptationTriggered"
+          }
+        }
+      }
+    },
+    "adaptationcompleted": {
+      "publish": {
+        "message": {
+          "name": "AdaptationCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/AdaptationCompleted"
+          }
+        }
+      }
+    },
+    "adaptationfailed": {
+      "publish": {
+        "message": {
+          "name": "AdaptationFailed",
+          "payload": {
+            "$ref": "#/components/schemas/AdaptationFailed"
+          }
+        }
+      }
+    },
+    "metareasoningcreated": {
+      "publish": {
+        "message": {
+          "name": "MetaReasoningCreated",
+          "payload": {
+            "$ref": "#/components/schemas/MetaReasoningCreated"
+          }
+        }
+      }
+    },
+    "metareasoningcompleted": {
+      "publish": {
+        "message": {
+          "name": "MetaReasoningCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/MetaReasoningCompleted"
+          }
+        }
+      }
+    },
+    "selfevaluationcreated": {
+      "publish": {
+        "message": {
+          "name": "SelfEvaluationCreated",
+          "payload": {
+            "$ref": "#/components/schemas/SelfEvaluationCreated"
+          }
+        }
+      }
+    },
+    "selfevaluationcompleted": {
+      "publish": {
+        "message": {
+          "name": "SelfEvaluationCompleted",
+          "payload": {
+            "$ref": "#/components/schemas/SelfEvaluationCompleted"
+          }
+        }
+      }
+    },
+    "graphcreated": {
+      "publish": {
+        "message": {
+          "name": "GraphCreated",
+          "payload": {
+            "$ref": "#/components/schemas/GraphCreated"
+          }
+        }
+      }
+    },
+    "graphupdated": {
+      "publish": {
+        "message": {
+          "name": "GraphUpdated",
+          "payload": {
+            "$ref": "#/components/schemas/GraphUpdated"
+          }
+        }
+      }
+    },
+    "nodecreated": {
+      "publish": {
+        "message": {
+          "name": "NodeCreated",
+          "payload": {
+            "$ref": "#/components/schemas/NodeCreated"
+          }
+        }
+      }
+    },
+    "edgecreated": {
+      "publish": {
+        "message": {
+          "name": "EdgeCreated",
+          "payload": {
+            "$ref": "#/components/schemas/EdgeCreated"
+          }
+        }
+      }
+    },
+    "statetransitioned": {
+      "publish": {
+        "message": {
+          "name": "StateTransitioned",
+          "payload": {
+            "$ref": "#/components/schemas/StateTransitioned"
+          }
+        }
+      }
+    },
+    "metriccollected": {
+      "publish": {
+        "message": {
+          "name": "MetricCollected",
+          "payload": {
+            "$ref": "#/components/schemas/MetricCollected"
+          }
+        }
+      }
+    },
+    "metricthresholdbreached": {
+      "publish": {
+        "message": {
+          "name": "MetricThresholdBreached",
+          "payload": {
+            "$ref": "#/components/schemas/MetricThresholdBreached"
+          }
+        }
+      }
+    },
+    "guaranteeviolated": {
+      "publish": {
+        "message": {
+          "name": "GuaranteeViolated",
+          "payload": {
+            "$ref": "#/components/schemas/GuaranteeViolated"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ObservationCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ObservationUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ObservationArchived": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PerceptionCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PerceptionUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PerceptionArchived": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "EvidenceCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "EvidenceUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "EvidenceArchived": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfidenceUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfidenceThresholdBreached": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "KnowledgeAcquired": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "KnowledgeUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "KnowledgeArchived": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "BeliefCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "BeliefUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "BeliefRevised": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "HypothesisCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "HypothesisValidated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "HypothesisRejected": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ReasoningStarted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ReasoningCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "ReasoningFailed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "DecisionMade": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "DecisionExecuted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "DecisionReversed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PlanCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PlanStarted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PlanCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "PlanFailed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MemoryEncoded": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MemoryRetrieved": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MemoryConsolidated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MemoryEvicted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "LearningStarted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "LearningCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "LearningFailed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "AdaptationTriggered": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "AdaptationCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "AdaptationFailed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MetaReasoningCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MetaReasoningCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "SelfEvaluationCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "SelfEvaluationCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "GraphCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "GraphUpdated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "NodeCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "EdgeCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "StateTransitioned": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MetricCollected": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "MetricThresholdBreached": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "GuaranteeViolated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,25 +1,25 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy";
-import { PressureDemo } from "./pressure-demo";
-import { useEffect } from "react";
-import { WowTracker } from "@/lib/analytics/time-to-wow";
-import ExposureTestButton from "./exposure-test-button";
+import { motion } from "framer-motion"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { HOME_STRATEGY } from "@/lib/marketing/homepage-copy"
+import { PressureDemo } from "./pressure-demo"
+import { useEffect } from "react"
+import { WowTracker } from "@/lib/analytics/time-to-wow"
+import ExposureTestButton from "./exposure-test-button"
 
 export function HeroSection() {
   useEffect(() => {
     // Démarrage du tracking Time to Wow dès l'affichage
-    WowTracker.start();
-  }, []);
+    WowTracker.start()
+  }, [])
 
-  const handleAction = (type: string) => {
+  const handleAction = (_type: string) => {
     // Si l'utilisateur clique sur la démo ou le CTA, on peut considérer ça comme un signal d'engagement
     // Mais le vrai "Wow" sera le doute recruteur
-  };
+  }
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-40 px-6 overflow-hidden bg-[#050816]">
@@ -36,7 +36,7 @@ export function HeroSection() {
             className="inline-flex items-center gap-3 px-4 py-2 bg-white/[0.03] border border-white/[0.08] rounded-full backdrop-blur-xl"
           >
             <span className="w-2 h-2 rounded-full bg-[#7C3AED] animate-pulse shadow-[0_0_12px_#7C3AED]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-ink-400">
               {HOME_STRATEGY.hero.badge}
             </span>
           </motion.div>
@@ -48,7 +48,7 @@ export function HeroSection() {
             className="space-y-8"
           >
             <h1 className="text-6xl lg:text-8xl font-black tracking-tight leading-[0.9] text-white">
-              {HOME_STRATEGY.hero.headline.split(" ").map((word, i) => (
+              {HOME_STRATEGY.hero.headline.split(" ").map((word: string, i: number) => (
                 <span
                   key={i}
                   className={
@@ -61,7 +61,7 @@ export function HeroSection() {
                 </span>
               ))}
             </h1>
-            <p className="text-xl text-slate-400 font-medium max-w-xl leading-relaxed">
+            <p className="text-xl text-ink-400 font-medium max-w-xl leading-relaxed">
               {HOME_STRATEGY.hero.subheadline}
             </p>
           </motion.div>
@@ -72,26 +72,23 @@ export function HeroSection() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-5"
           >
-            <Button
-              asChild
-              size="lg"
-              className="h-16 px-10 rounded-2xl bg-[#7C3AED] text-white hover:bg-[#6D28D9] font-black text-lg shadow-2xl shadow-[#7C3AED]/20 group"
-            >
-              <Link href="/onboarding" onClick={() => handleAction("primary")}>
+            <Link href="/onboarding" onClick={() => handleAction("primary")}>
+              <Button
+                size="lg"
+                className="h-16 px-10 rounded-2xl bg-[#7C3AED] text-white hover:bg-[#6D28D9] font-black text-lg shadow-2xl shadow-[#7C3AED]/20 group"
+              >
                 {HOME_STRATEGY.hero.primaryCTA}{" "}
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-16 px-10 rounded-2xl font-bold text-lg"
-            >
-              <Link href="/product" onClick={() => handleAction("secondary")}>
+              </Button>
+            </Link>
+            <Link href="/product" onClick={() => handleAction("secondary")}>
+              <Button
+                size="lg"
+                className="h-16 px-10 rounded-2xl font-bold text-lg"
+              >
                 Coller mon CV
-              </Link>
-            </Button>
+              </Button>
+            </Link>
             <ExposureTestButton />
           </motion.div>
 
@@ -105,7 +102,7 @@ export function HeroSection() {
               {[1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
-                  className="w-12 h-12 rounded-full border-4 border-[#050816] bg-[#0B1023] flex items-center justify-center text-xs font-black text-slate-500"
+                  className="w-12 h-12 rounded-full border-4 border-[#050816] bg-[#0B1023] flex items-center justify-center text-xs font-black text-ink-500"
                 >
                   {["M", "S", "A", "L", "K"][i - 1]}
                 </div>
@@ -115,7 +112,7 @@ export function HeroSection() {
               <p className="text-xs font-black text-white uppercase tracking-widest">
                 {HOME_STRATEGY.hero.proof}
               </p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase">
+              <p className="text-[10px] font-bold text-ink-500 uppercase">
                 Top performers d'Amazon, Google et Goldman Sachs s'entraînent
                 ici
               </p>
@@ -129,5 +126,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

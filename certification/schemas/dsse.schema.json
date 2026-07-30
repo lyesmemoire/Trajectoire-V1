@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DSSE Envelope",
+  "type": "object",
+  "required": ["payloadType", "payload", "signatures"],
+  "properties": {
+    "payloadType": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "string"
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sig"],
+        "properties": {
+          "keyid": { "type": "string" },
+          "sig": { "type": "string" },
+          "metadata": { "type": "object" }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}

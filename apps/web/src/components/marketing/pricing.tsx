@@ -1,10 +1,9 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import Link from "next/link"
+import { Check } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 const PLANS = [
   {
@@ -52,7 +51,7 @@ const PLANS = [
     cta: "Devenir Expert",
     color: "purple",
   },
-];
+]
 
 export function Pricing() {
   return (
@@ -61,9 +60,9 @@ export function Pricing() {
         <div className="text-center space-y-6">
           <h2 className="text-4xl lg:text-7xl font-black text-white leading-tight tracking-tight">
             Investissez dans votre{" "}
-            <span className="text-blue-500">mutation.</span>
+            <span className="text-bronze-500">mutation.</span>
           </h2>
-          <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto">
+          <p className="text-ink-400 text-xl font-medium max-w-2xl mx-auto">
             Un entretien raté coûte des mois de salaire. Trajectoire est
             rentable dès votre premier oui.
           </p>
@@ -76,15 +75,15 @@ export function Pricing() {
               className={cn(
                 "relative p-10 rounded-[3rem] border transition-all duration-500 flex flex-col justify-between hover:shadow-2xl",
                 plan.popular
-                  ? "bg-blue-600 border-blue-400 shadow-blue-500/20 scale-105 z-10"
+                  ? "bg-bronze-600 border-bronze-400 shadow-bronze-500/20 scale-105 z-10"
                   : "bg-white/5 border-white/10 hover:bg-white/[0.08]",
               )}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-white text-blue-600 font-black px-6 py-1.5 border-none shadow-xl">
+                  <span className="inline-block bg-white text-bronze-600 font-black px-6 py-1.5 border-none shadow-premium rounded-full text-xs uppercase tracking-wider">
                     LE PLUS POPULAIRE
-                  </Badge>
+                  </span>
                 </div>
               )}
 
@@ -94,7 +93,7 @@ export function Pricing() {
                   <p
                     className={cn(
                       "text-sm font-bold mt-1 uppercase tracking-widest",
-                      plan.popular ? "text-blue-100" : "text-slate-500",
+                      plan.popular ? "text-bronze-100" : "text-ink-500",
                     )}
                   >
                     {plan.tagline}
@@ -106,7 +105,7 @@ export function Pricing() {
                   <span
                     className={cn(
                       "text-sm font-bold",
-                      plan.popular ? "text-blue-100" : "text-slate-500",
+                      plan.popular ? "text-bronze-100" : "text-ink-500",
                     )}
                   >
                     /mois
@@ -119,7 +118,7 @@ export function Pricing() {
                       <Check
                         className={cn(
                           "w-5 h-5 flex-shrink-0 mt-0.5",
-                          plan.popular ? "text-blue-200" : "text-blue-500",
+                          plan.popular ? "text-bronze-200" : "text-bronze-500",
                         )}
                       />
                       <span className="text-sm font-medium">{f}</span>
@@ -128,21 +127,22 @@ export function Pricing() {
                 </ul>
               </div>
 
-              <Button
-                asChild
-                className={cn(
-                  "mt-10 h-16 rounded-2xl font-black text-lg",
-                  plan.popular
-                    ? "bg-white text-blue-600 hover:bg-slate-100"
-                    : "bg-blue-600 text-white hover:bg-blue-700",
-                )}
-              >
-                <Link href="/auth/signup">{plan.cta}</Link>
-              </Button>
+              <Link href="/auth/signup">
+                <Button
+                  className={cn(
+                    "mt-10 h-16 rounded-2xl font-black text-lg w-full",
+                    plan.popular
+                      ? "bg-white text-bronze-600 hover:bg-ivoire-100"
+                      : "bg-bronze-600 text-white hover:bg-bronze-700",
+                  )}
+                >
+                  {plan.cta}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }

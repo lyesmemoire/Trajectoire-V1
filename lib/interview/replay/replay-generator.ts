@@ -4,7 +4,7 @@ import {
   ReplayEventType,
 } from "../types/replay.types";
 
-export function generateReplayFromSession(session: any): SessionReplay {
+export function generateReplayFromSession(session: unknown): SessionReplay {
   const events: ReplayEvent[] = [];
   const pressureCurve: { time: number; level: number }[] = [];
 
@@ -13,7 +13,7 @@ export function generateReplayFromSession(session: any): SessionReplay {
 
   // 1. Reconstruire la courbe de pression
   let currentTime = 0;
-  answers.forEach((ans: any, idx: number) => {
+  answers.forEach((ans: unknown, idx: number) => {
     const duration = ans.duration || 60;
     pressureCurve.push({ time: currentTime, level: ans.pressureBefore || 50 });
     currentTime += duration;
@@ -50,7 +50,7 @@ export function generateReplayFromSession(session: any): SessionReplay {
   });
 
   // 4. Intégrer les événements d'interruption de la DB
-  dbEvents.forEach((evt: any, i: number) => {
+  dbEvents.forEach((evt: unknown, i: number) => {
     const type = evt.type.startsWith("interruption")
       ? "interruption"
       : "pressure_peak";
@@ -77,7 +77,7 @@ export function generateReplayFromSession(session: any): SessionReplay {
   };
 }
 
-function computeArchetype(answers: any[]): string {
+function computeArchetype(answers: unknown[]): string {
   const avgConfidence =
     answers.reduce((s, a) => s + (a.confidence || 50), 0) / answers.length;
   if (avgConfidence > 80) return "Confident Performer";

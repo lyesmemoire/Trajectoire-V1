@@ -21,7 +21,7 @@ export class MockTenantKeyManager implements TenantKeyManager {
   }
 }
 
-export function signEventForTest(event: Partial<IncomingSILEvent>, secret: string): IncomingSILEvent {
+export function signEventForTest(event: Partial<IncomingSILEvent>, secret: _string): IncomingSILEvent {
   const hashPayload = `${event.tenantId}:${event.sessionId}:${event.eventId}:${event.timestamp}:${event.type}:${canonicalize(event.payload || {})}`;
   const hash = crypto.createHash("sha256").update(hashPayload).digest("hex");
   const signature = crypto.createHmac("sha256", secret).update(hash).digest("hex");

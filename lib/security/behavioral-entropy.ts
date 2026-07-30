@@ -32,7 +32,7 @@ export function calculateBehavioralEntropy(events: {
 /**
  * Flags suspicious sessions based on entropy score.
  */
-export function isSuspiciousScraper(score: number): boolean {
+export function isSuspiciousScraper(score: _number): boolean {
   const SKEPTICISM_THRESHOLD = 0.25;
   return score < SKEPTICISM_THRESHOLD;
 }

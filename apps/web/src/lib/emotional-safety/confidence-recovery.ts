@@ -4,7 +4,7 @@ import { detectUserFreeze } from "./freeze-detector";
 /**
  * Gère le basculement vers le mode Recovery (Honeypot de Confiance).
  */
-export function evaluateConfidenceRecovery(session: any, currentMetrics: any) {
+export function evaluateConfidenceRecovery(_session: any, currentMetrics: any) {
   const isFrozen = detectUserFreeze(currentMetrics);
 
   if (isFrozen) {

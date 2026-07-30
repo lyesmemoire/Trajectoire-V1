@@ -1,0 +1,235 @@
+{
+  "phase": "PHASE 1 — INDÉPENDANCE",
+  "labFilesScanned": [
+    "determinism.cjs",
+    "hostile.cjs",
+    "independent-lab.cjs",
+    "iso-17025-audit.cjs",
+    "iso-final-audit.cjs",
+    "machine-b.cjs",
+    "parsers\\coverage.cjs",
+    "parsers\\hash.cjs",
+    "parsers\\vitest.cjs",
+    "replay\\mutation.cjs",
+    "replay\\regression.cjs",
+    "ultimate-validation.cjs",
+    "validators\\decision.cjs"
+  ],
+  "allImports": [
+    {
+      "file": "determinism.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "determinism.cjs",
+      "module": "path"
+    },
+    {
+      "file": "determinism.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "hostile.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "hostile.cjs",
+      "module": "path"
+    },
+    {
+      "file": "hostile.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "path"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "./parsers/coverage.cjs"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "./replay/mutation.cjs"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "./replay/regression.cjs"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "./validators/decision.cjs"
+    },
+    {
+      "file": "independent-lab.cjs",
+      "module": "./parsers/hash.cjs"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "path"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "os"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "crypto"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "./parsers/coverage.cjs"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "./replay/mutation.cjs"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "./replay/regression.cjs"
+    },
+    {
+      "file": "iso-17025-audit.cjs",
+      "module": "./parsers/hash.cjs"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "path"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "os"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "crypto"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "./parsers/coverage.cjs"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "./parsers/vitest.cjs"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "./replay/mutation.cjs"
+    },
+    {
+      "file": "iso-final-audit.cjs",
+      "module": "./replay/regression.cjs"
+    },
+    {
+      "file": "machine-b.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "machine-b.cjs",
+      "module": "path"
+    },
+    {
+      "file": "machine-b.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "machine-b.cjs",
+      "module": "os"
+    },
+    {
+      "file": "parsers\\coverage.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "parsers\\hash.cjs",
+      "module": "crypto"
+    },
+    {
+      "file": "parsers\\hash.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "parsers\\vitest.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "replay\\mutation.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "replay\\mutation.cjs",
+      "module": "path"
+    },
+    {
+      "file": "replay\\mutation.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "replay\\mutation.cjs",
+      "module": "../parsers/vitest.cjs"
+    },
+    {
+      "file": "replay\\regression.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "replay\\regression.cjs",
+      "module": "path"
+    },
+    {
+      "file": "replay\\regression.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "replay\\regression.cjs",
+      "module": "../parsers/vitest.cjs"
+    },
+    {
+      "file": "ultimate-validation.cjs",
+      "module": "fs"
+    },
+    {
+      "file": "ultimate-validation.cjs",
+      "module": "path"
+    },
+    {
+      "file": "ultimate-validation.cjs",
+      "module": "child_process"
+    },
+    {
+      "file": "ultimate-validation.cjs",
+      "module": "os"
+    },
+    {
+      "file": "validators\\decision.cjs",
+      "module": "fs"
+    }
+  ],
+  "bannedImports": [],
+  "conclusion": "OUI",
+  "evidence": "Aucun module du dossier certification/ n'est importé par le laboratoire."
+}

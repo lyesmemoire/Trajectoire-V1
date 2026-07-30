@@ -12,7 +12,7 @@ export type RuminationOutput = {
 /**
  * Détecte une forte réflexion sans passage à l'action.
  */
-export function detectRumination(input: RuminationInput): RuminationOutput {
+export function detectRumination(input: _RuminationInput): RuminationOutput {
   const isRuminating =
     input.replayReturns > 4 && input.newSessionsStarted === 0;
 

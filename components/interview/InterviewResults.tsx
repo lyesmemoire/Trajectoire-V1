@@ -15,7 +15,7 @@ import { CommitteeDecisionReveal } from "./CommitteeDecisionReveal";
  * Section 2: Le point à corriger (Max 1)
  * Section 3: Exercice recommandé (Max 1, < 5 min)
  */
-export function InterviewResults({ session }: { session: any }) {
+export function InterviewResults({ session }: { session: unknown }) {
   const analysis = session.analysis || {};
   const strengths = (analysis.strengths || []).slice(0, 2);
   const improvement = (analysis.improvements || [])[0];

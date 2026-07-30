@@ -6,11 +6,7 @@ export type InterviewState =
   | "recovery"
   | "closing";
 
-export function transitionState(
-  currentState: InterviewState,
-  questionIndex: number,
-  totalQuestions: number,
-): InterviewState {
+export function transitionState(_currentState: InterviewState, questionIndex: number, totalQuestions: number, ): InterviewState {
   if (questionIndex === 0) return "intro";
   if (questionIndex === 1) return "warmup";
 
@@ -22,9 +18,6 @@ export function transitionState(
   return "pressure";
 }
 
-export function shouldIncreasePressure(
-  state: InterviewState,
-  analysis: any,
-): boolean {
+export function shouldIncreasePressure(state: InterviewState, analysis: unknown, ): boolean {
   return state === "pressure" && analysis.confidence < 70;
 }

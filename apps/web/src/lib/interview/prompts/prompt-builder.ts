@@ -1,13 +1,13 @@
 import { PersonaConfig } from "../personas/persona-config";
 import { InterviewState } from "../orchestration/interview-state-machine";
-import { AnswerAnalysis } from "../behavior/answer-analysis";
+import { AnswerAnalysis } from '../behavior/answer-analysis';
 import { mistralModel } from "@/lib/mistral";
 import { generateText } from "ai";
 
 interface PromptInputs {
   persona: PersonaConfig;
   state: InterviewState;
-  analysis: AnswerAnalysis;
+  analysis: any;
   strategy: string;
   userAnswer: string;
 }

@@ -4,8 +4,6 @@
  * Tracks: NPS, CSAT, CES, feedback classification
  */
 
-import { z } from "zod";
-
 // Feedback Type
 export enum FeedbackType {
   NPS = "nps", // Net Promoter Score
@@ -40,7 +38,7 @@ export interface FeedbackData {
     featureUsed?: string;
     interviewId?: string;
   };
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // Feedback Metrics

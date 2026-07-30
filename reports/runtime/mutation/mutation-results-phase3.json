@@ -1,0 +1,134 @@
+[
+  {
+    "id": 36,
+    "line": 151,
+    "description": "return decode instead of fetch",
+    "status": "INVALID"
+  },
+  {
+    "id": 37,
+    "line": 151,
+    "description": "return execute instead of fetch",
+    "status": "INVALID"
+  },
+  {
+    "id": 38,
+    "line": 158,
+    "description": "return fetch instead of decode",
+    "status": "INVALID"
+  },
+  {
+    "id": 39,
+    "line": 158,
+    "description": "return execute instead of decode",
+    "status": "INVALID"
+  },
+  {
+    "id": 40,
+    "line": 165,
+    "description": "return fetch instead of execute",
+    "status": "INVALID"
+  },
+  {
+    "id": 41,
+    "line": 165,
+    "description": "return decode instead of execute",
+    "status": "INVALID"
+  },
+  {
+    "id": 42,
+    "line": 172,
+    "description": "return null instead of context",
+    "status": "INVALID"
+  },
+  {
+    "id": 43,
+    "line": 179,
+    "description": "remove setBytecode call",
+    "status": "INVALID"
+  },
+  {
+    "id": 44,
+    "line": 180,
+    "description": "remove reset call",
+    "status": "KILLED"
+  },
+  {
+    "id": 45,
+    "line": 187,
+    "description": "return empty array",
+    "status": "INVALID"
+  },
+  {
+    "id": 46,
+    "line": 208,
+    "description": "remove enableCache call",
+    "status": "KILLED"
+  },
+  {
+    "id": 47,
+    "line": 215,
+    "description": "remove disableCache call",
+    "status": "KILLED"
+  },
+  {
+    "id": 48,
+    "line": 222,
+    "description": "remove setCacheSize call",
+    "status": "KILLED"
+  },
+  {
+    "id": 49,
+    "line": 222,
+    "description": "size * 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 50,
+    "line": 222,
+    "description": "size + 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 51,
+    "line": 201,
+    "description": "return null",
+    "status": "KILLED"
+  },
+  {
+    "id": 52,
+    "line": 201,
+    "description": "return empty stats",
+    "status": "KILLED"
+  },
+  {
+    "id": 53,
+    "line": 134,
+    "description": "remove context.reset",
+    "status": "INVALID"
+  },
+  {
+    "id": 54,
+    "line": 135,
+    "description": "remove clearCache",
+    "status": "KILLED"
+  },
+  {
+    "id": 55,
+    "line": 136,
+    "description": "remove statistics reset",
+    "status": "KILLED"
+  },
+  {
+    "id": 56,
+    "line": 127,
+    "description": "remove stop",
+    "status": "KILLED"
+  },
+  {
+    "id": 57,
+    "line": 194,
+    "description": "return null instead of cycle",
+    "status": "KILLED"
+  }
+]

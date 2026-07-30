@@ -24,7 +24,7 @@ export class WorldModelEngine {
   private static instance: WorldModelEngine;
   private config: WorldModelConfig;
   private knowledgeGraph: KnowledgeGraph;
-  private cache: Map<string, { data: unknown; timestamp: Date }> = new Map();
+  private cache: Map<string, { data: any; timestamp: Date }> = new Map();
 
   private constructor() {
     this.config = defaultWorldModelConfig;
@@ -71,7 +71,7 @@ export class WorldModelEngine {
   /**
    * Query world model
    */
-  async query(query: WorldModelQuery): Promise<WorldModelResult<unknown>> {
+  async query(query: WorldModelQuery): Promise<WorldModelResult<any>> {
     const cacheKey = this.generateCacheKey(query);
     
     if (this.config.enableCaching) {
@@ -91,7 +91,7 @@ export class WorldModelEngine {
       }
     }
 
-    let result: WorldModelResult<unknown>;
+    let result: WorldModelResult<any>;
 
     switch (query.type) {
       case "skill":
@@ -182,7 +182,7 @@ export class WorldModelEngine {
   /**
    * Query job
    */
-  private async queryJob(query: WorldModelQuery): Promise<WorldModelResult<Job | Job[]>> {
+  private async queryJob(query: WorldModelQuery): Promise<WorldModelResult<any | any[]>> {
     const jobId = query.params.id as string;
     const jobTitle = query.params.title as string;
 
@@ -194,7 +194,7 @@ export class WorldModelEngine {
           data: job,
           confidence: 1,
           sources: ["knowledge_graph"],
-          reasoning: "Job found by ID",
+          reasoning: "any found by ID",
           timestamp: new Date(),
         };
       }
@@ -208,7 +208,7 @@ export class WorldModelEngine {
           data: job,
           confidence: 0.9,
           sources: ["knowledge_graph"],
-          reasoning: "Job found by title",
+          reasoning: "any found by title",
           timestamp: new Date(),
         };
       }
@@ -362,12 +362,12 @@ export class WorldModelEngine {
   /**
    * Query relation
    */
-  private async queryRelation(query: WorldModelQuery): Promise<WorldModelResult<unknown>> {
+  private async queryRelation(query: WorldModelQuery): Promise<WorldModelResult<any>> {
     const fromType = query.params.fromType as string;
     const fromId = query.params.fromId as string;
     const relationType = query.params.relationType as string;
 
-    let relations: unknown;
+    let relations: any;
 
     switch (relationType) {
       case "skillToSkill":
@@ -402,7 +402,7 @@ export class WorldModelEngine {
   /**
    * Query pathway
    */
-  private async queryPathway(query: WorldModelQuery): Promise<WorldModelResult<unknown>> {
+  private async queryPathway(query: WorldModelQuery): Promise<WorldModelResult<any>> {
     const fromSkillId = query.params.fromSkillId as string;
     const toJobId = query.params.toJobId as string;
 
@@ -421,7 +421,7 @@ export class WorldModelEngine {
   /**
    * Calculate pathway
    */
-  private calculatePathway(fromSkillId: string, toJobId: string): unknown {
+  private calculatePathway(fromSkillId: string, toJobId: string): any {
     // Simplified pathway calculation
     const fromSkill = this.knowledgeGraph.nodes.skills.get(fromSkillId);
     const toJob = this.knowledgeGraph.nodes.jobs.get(toJobId);
@@ -430,7 +430,7 @@ export class WorldModelEngine {
       return { error: "Invalid skill or job ID" };
     }
 
-    const missingSkills = toJob.requiredSkills.filter(skillId => skillId !== fromSkillId);
+    const missingSkills = toJob.requiredSkills.filter((skillId: any) => skillId !== fromSkillId);
     const relatedSkills = this.knowledgeGraph.edges.skillToSkill.get(fromSkillId) || [];
 
     return {
@@ -463,7 +463,7 @@ export class WorldModelEngine {
   /**
    * Add job
    */
-  addJob(job: Job): void {
+  addJob(job: any): void {
     this.knowledgeGraph.nodes.jobs.set(job.id, job);
     this.knowledgeGraph.lastUpdated = new Date();
   }
@@ -498,38 +498,48 @@ export class WorldModelEngine {
   addRelation(fromId: string, toId: string, relationType: string): void {
     switch (relationType) {
       case "skillToSkill":
-        const skillRelations = this.knowledgeGraph.edges.skillToSkill.get(fromId) || [];
-        if (!skillRelations.includes(toId)) {
-          skillRelations.push(toId);
-          this.knowledgeGraph.edges.skillToSkill.set(fromId, skillRelations);
+        {
+          const skillRelations = this.knowledgeGraph.edges.skillToSkill.get(fromId) || [];
+          if (!skillRelations.includes(toId)) {
+            skillRelations.push(toId);
+            this.knowledgeGraph.edges.skillToSkill.set(fromId, skillRelations);
+          }
         }
         break;
       case "skillToJob":
-        const skillJobs = this.knowledgeGraph.edges.skillToJob.get(fromId) || [];
-        if (!skillJobs.includes(toId)) {
-          skillJobs.push(toId);
-          this.knowledgeGraph.edges.skillToJob.set(fromId, skillJobs);
+        {
+          const skillJobs = this.knowledgeGraph.edges.skillToJob.get(fromId) || [];
+          if (!skillJobs.includes(toId)) {
+            skillJobs.push(toId);
+            this.knowledgeGraph.edges.skillToJob.set(fromId, skillJobs);
+          }
         }
         break;
       case "jobToCompany":
-        const jobCompanies = this.knowledgeGraph.edges.jobToCompany.get(fromId) || [];
-        if (!jobCompanies.includes(toId)) {
-          jobCompanies.push(toId);
-          this.knowledgeGraph.edges.jobToCompany.set(fromId, jobCompanies);
+        {
+          const jobCompanies = this.knowledgeGraph.edges.jobToCompany.get(fromId) || [];
+          if (!jobCompanies.includes(toId)) {
+            jobCompanies.push(toId);
+            this.knowledgeGraph.edges.jobToCompany.set(fromId, jobCompanies);
+          }
         }
         break;
       case "companyToIndustry":
-        const companyIndustries = this.knowledgeGraph.edges.companyToIndustry.get(fromId) || [];
-        if (!companyIndustries.includes(toId)) {
-          companyIndustries.push(toId);
-          this.knowledgeGraph.edges.companyToIndustry.set(fromId, companyIndustries);
+        {
+          const companyIndustries = this.knowledgeGraph.edges.companyToIndustry.get(fromId) || [];
+          if (!companyIndustries.includes(toId)) {
+            companyIndustries.push(toId);
+            this.knowledgeGraph.edges.companyToIndustry.set(fromId, companyIndustries);
+          }
         }
         break;
       case "skillToCertification":
-        const skillCerts = this.knowledgeGraph.edges.skillToCertification.get(fromId) || [];
-        if (!skillCerts.includes(toId)) {
-          skillCerts.push(toId);
-          this.knowledgeGraph.edges.skillToCertification.set(fromId, skillCerts);
+        {
+          const skillCerts = this.knowledgeGraph.edges.skillToCertification.get(fromId) || [];
+          if (!skillCerts.includes(toId)) {
+            skillCerts.push(toId);
+            this.knowledgeGraph.edges.skillToCertification.set(fromId, skillCerts);
+          }
         }
         break;
     }

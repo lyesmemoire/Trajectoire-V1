@@ -1,7 +1,10 @@
+
+
 import { MindState } from "../execution-contract.js";
 import { applyEvents } from "../execution-engine.js";
 import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
 import { Transaction } from "./transaction-contract.js";
+
 
 /**
  * Verifies that a committed state matches what a replay of the
@@ -16,10 +19,7 @@ export interface TransactionVerification {
   readonly diff: string[];
 }
 
-export function verifyTransaction(
-  tx: Transaction,
-  committedState: MindState,
-): TransactionVerification {
+export function verifyTransaction(tx: Transaction, committedState: MindState, ): TransactionVerification {
   const replayed = applyEvents(restoreSnapshot(tx.snapshot), tx.events);
   const diff: string[] = [];
 

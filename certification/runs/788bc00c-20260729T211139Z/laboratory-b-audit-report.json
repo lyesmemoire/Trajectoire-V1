@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "2.1",
+  "protocolVersion": "qualification-protocol-2.0",
+  "laboratoryId": "lab-b-python",
+  "implementation": {
+    "family": "python",
+    "runtime": "Python 3.14.3",
+    "implementationId": "lab-b-cleanroom"
+  },
+  "maintainer": "Trajectoire",
+  "profile": "Q1.0",
+  "runId": "788bc00c-20260729T211139Z",
+  "qualificationId": "TRAJECTOIRE-Q1.0-2026-686d4ef3",
+  "snapshotDigest": "UNKNOWN",
+  "executionStatus": "SUCCESS",
+  "decision": "MATCH",
+  "decisionScope": {
+    "manifest": true,
+    "sbom": true,
+    "provenance": true,
+    "pbtReplay": false,
+    "chaosReplay": false,
+    "fuzzReplay": false,
+    "coverageReplay": false,
+    "mutationReplay": false
+  },
+  "capabilities": {
+    "manifest": true,
+    "sbom": true,
+    "provenance": true,
+    "pbtReplay": false,
+    "chaosReplay": false,
+    "fuzzReplay": false,
+    "coverageReplay": false,
+    "mutationReplay": false
+  },
+  "environment": {},
+  "digests": {},
+  "metrics": {
+    "totalControls": 3,
+    "passedControls": 3,
+    "failedControls": 0
+  },
+  "justification": "All Python checks passed (DSSE, SHA256).",
+  "executionTimeMs": 60
+}

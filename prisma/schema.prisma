@@ -24,6 +24,9 @@ model User {
   referralCode           String                   @unique
   referredBy             String?
   referralCount          Int                      @default(0)
+  monthlyAnalysisCount   Int                      @default(0)
+  monthlyResetDate       DateTime                 @default(dbgenerated("(NOW() + INTERVAL '1 month')"))
+  credits                Int                      @default(100)
   AIUsageLog             AIUsageLog[]
   Account                Account[]
   AdminAuditLog          AdminAuditLog[]
@@ -43,6 +46,7 @@ model User {
 
   @@index([email])
   @@index([stripeCustomerId])
+  @@index([monthlyResetDate])
   @@schema("public")
 }
 
@@ -423,5 +427,101 @@ model SimulationSession {
   scores     Json
   level      String
 
+  @@schema("public")
+}
+
+// ============================================================
+// SUPABASE TABLES (Billing & Idempotency)
+// These tables are created by SQL migrations but need Prisma models
+// for type-checking and TypeScript support.
+// ============================================================
+
+// REMOVED: Model Profile mapped to table "profiles" which does not exist in the database.
+// 15 Supabase SDK callers use supabase.from("profiles") but this Prisma model was never
+// the source — those callers target a table that must be created or migrated to "User".
+// See AUDIT/evidence/phase2-schema-alignment.md for full usage inventory.
+// Dead code removal tracked in migration 20260730000004_schema_alignment.sql
+
+model CreditTransaction {
+  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String  @unique @map("idempotency_key") @db.Text
+  userId         String  @map("user_id") @db.Text
+  amount         Int     @db.Integer
+  action         String  @db.Text
+  state          tx_state @default(reserved)
+  tokensUsed     Int     @default(0) @map("tokens_used") @db.Integer
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@map("credit_transactions")
+  @@schema("public")
+}
+
+model CreditUsage {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  action            String  @db.Text
+  creditsSpent      Int     @map("credits_spent") @db.Integer
+  tokensUsed        Int     @default(0) @map("tokens_used") @db.Integer
+  estimatedCostEur  Decimal @default(0) @map("estimated_cost_eur") @db.Decimal(10, 6)
+  metadata          Json?   @default("{}") @db.JsonB
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("credit_usage")
+  @@schema("public")
+}
+
+model StripeEvent {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventId      String   @unique @map("event_id") @db.Text
+  userId       String?  @map("user_id") @db.Uuid
+  creditsAdded Int?     @map("credits_added") @db.Integer
+  processedAt  DateTime @default(now()) @map("processed_at") @db.Timestamptz
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("stripe_events")
+  @@schema("public")
+}
+
+model Idempotency {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String   @map("idempotency_key") @db.Text
+  userId         String   @map("user_id") @db.Text
+  operation      String   @db.Text
+  requestParams  Json     @map("request_params") @db.JsonB
+  resultRef      String?  @map("result_ref") @db.Text
+  status         String   @db.Text
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  completedAt    DateTime? @map("completed_at") @db.Timestamptz
+  expiresAt      DateTime @map("expires_at") @db.Timestamptz
+
+  @@unique([idempotencyKey, userId, operation], name: "idempotency_key_user_op_unique")
+  @@index([expiresAt], map: "idx_idempotency_expires_at")
+  @@map("idempotency")
+  @@schema("public")
+}
+
+enum tx_state {
+  reserved
+  committed
+  failed
+  expired
+
+  @@schema("public")
+}
+
+model CvRewrite {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String   @map("user_id") @db.Text
+  idempotencyKey   String   @unique @map("idempotency_key") @db.Text
+  action           String   @db.Text
+  originalContent  String   @map("original_content") @db.Text
+  rewrittenContent String   @map("rewritten_content") @db.Text
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz
+  expiresAt        DateTime @map("expires_at") @db.Timestamptz
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("cv_rewrites")
   @@schema("public")
 }

@@ -15,9 +15,7 @@ export interface CrossSessionState {
   previousSessions: PreviousSession[];
 }
 
-export function createCrossSessionState(
-  previous: PreviousSession[] = [],
-): CrossSessionState {
+export function createCrossSessionState(previous: PreviousSession[] = [], ): CrossSessionState {
   return { previousSessions: previous };
 }
 

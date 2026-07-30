@@ -52,7 +52,7 @@ Réponds uniquement avec le JSON.
 TEXTE DU CV:
 `;
 
-export async function parseCVToStructure(cvText: string): Promise<CVData> {
+export async function parseCVToStructure(cvText: _string): Promise<CVData> {
   try {
     const { text } = await generateText({
       model: mistralModel,

@@ -1,5 +1,3 @@
-// @ts-nocheck - Logger API type mismatches, not critical for build
-import { logger } from "@/lib/logger";
 import { createClient } from "@supabase/supabase-js";
 import { envServer } from "@/lib/env.server";
 import crypto from "crypto";
@@ -15,13 +13,12 @@ export class CreditTransaction {
     contentHash: string,
   ): Promise<{ txId: string } | { error: string }> {
     const correlationId = crypto.randomUUID();
-    const log = logger.child({ correlationId, userId, action });
 
     // Fenêtre glissante de 1 heure pour éviter les retries agressifs du même job
     const hourBucket = new Date().toISOString().slice(0, 13);
     const idempotencyKey = `${userId}:${action}:${contentHash}:${hourBucket}`;
 
-    log.info("credit_reserve_attempt", { amount, idempotencyKey });
+    console.info("credit_reserve_attempt", { amount, idempotencyKey, correlationId, userId, action });
 
     const supabase = createClient(
       envServer.NEXT_PUBLIC_SUPABASE_URL,
@@ -36,25 +33,24 @@ export class CreditTransaction {
     });
 
     if (error) {
-      log.warn("credit_reserve_failed", { error: error.message });
+      console.warn("credit_reserve_failed", { error: error.message });
       return {
         error: error.message.includes("unique")
-          ? "Job already in progress for this content."
+          ? "any already in progress for this content."
           : "Insufficient credits or system error.",
       };
     }
 
-    log.info("credit_reserved", { txId: data });
+    console.info("credit_reserved", { txId: data });
     return { txId: data };
   }
 
   /**
    * Commit (Succès) : Confirme l'utilisation, log les tokens
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async commit(txId: string, metadata?: Record<string, any>) {
-    const log = logger.child({ txId });
-    log.info("credit_commit_attempt", metadata);
+   
+  static async commit(txId: string, metadata?: Record<string, unknown>) {
+    console.info("credit_commit_attempt", { txId, ...metadata });
 
     const supabase = createClient(
       envServer.NEXT_PUBLIC_SUPABASE_URL,
@@ -68,19 +64,18 @@ export class CreditTransaction {
     });
 
     if (error) {
-      log.error("credit_commit_failed", { error: error.message });
+      console.error("credit_commit_failed", { error: error.message });
       throw new Error("Failed to commit transaction");
     }
 
-    log.info("credit_committed");
+    console.info("credit_committed");
   }
 
   /**
    * Rollback (Échec) : Rembourse les crédits à l'utilisateur
    */
   static async rollback(txId: string, reason: string) {
-    const log = logger.child({ txId });
-    log.warn("credit_rollback_attempt", { reason });
+    console.warn("credit_rollback_attempt", { txId, reason });
 
     const supabase = createClient(
       envServer.NEXT_PUBLIC_SUPABASE_URL,
@@ -92,10 +87,10 @@ export class CreditTransaction {
     });
 
     if (error) {
-      log.error("credit_rollback_failed", { error: error.message });
+      console.error("credit_rollback_failed", { error: error.message });
       throw new Error("Failed to rollback transaction");
     }
 
-    log.info("credit_rollbacked");
+    console.info("credit_rollbacked");
   }
 }

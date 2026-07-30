@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "COVERAGE_REPORT",
+  "metadata": {
+    "id": "COV-execution-pipeline-20260729T205403Z",
+    "createdAt": "2026-07-29T20:54:03.209Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "npx vitest run tests/vm/advanced/execution-pipeline.test.ts tests/vm/advanced/execution-pipeline-r5-minimal.test.ts --coverage --reporter=verbose --reporter=json --outputFile=certification/runs/788bc00c-20260729T205351Z/vitest-results.json --coverage.reporter=json --coverage.reportsDirectory=certification/runs/788bc00c-20260729T205351Z/coverage",
+    "script": "certification/coverage.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T20:53:56.447Z",
+    "completedAt": "2026-07-29T20:54:03.209Z",
+    "durationMs": 6762,
+    "exitCode": 0
+  },
+  "content": {
+    "metrics": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "details": {
+        "statementsTotal": 63,
+        "statementsCovered": 63,
+        "branchesTotal": 23,
+        "branchesCovered": 23,
+        "functionsTotal": 20,
+        "functionsCovered": 20,
+        "linesTotal": 82,
+        "linesCovered": 82
+      }
+    },
+    "uncoveredLines": [],
+    "uncoveredBranches": [],
+    "coverageFinalSha256": "389be39434abd280d3b4e06c7cc9c5baac36bf8cc8aa2853ec5ebbd97bb91aa5",
+    "sourceFileFound": true
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "coverage-final.json",
+      "sha256": "389be39434abd280d3b4e06c7cc9c5baac36bf8cc8aa2853ec5ebbd97bb91aa5"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/03-coverage.stdout.log",
+      "sha256": "89da9531ef348521615933fb3667a34a3c69699f727632283b0cd3d48146d00d"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "099e071503a40c38b713a1e332674b7159913f0368fb77e5d30a1fae146c1f7d",
+    "algorithm": "sha256"
+  }
+}

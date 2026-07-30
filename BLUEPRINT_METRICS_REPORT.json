@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-07-24T09:54:01.814Z",
+  "coverage": {
+    "canonical": {
+      "percentage": "99.80",
+      "total": 28735,
+      "canonical": 28677,
+      "nonCanonical": 58
+    },
+    "ownership": {
+      "percentage": "0.20",
+      "total": 28735,
+      "withOwner": 58,
+      "withoutOwner": 28677
+    },
+    "contract": {
+      "percentage": "0.00",
+      "total": 28735,
+      "contracts": 1,
+      "nonContracts": 28734
+    },
+    "dependency": {
+      "percentage": "0.00",
+      "total": 28735,
+      "withDependencies": 0,
+      "withoutDependencies": 28735
+    },
+    "documentation": {
+      "percentage": "34.47",
+      "total": 28735,
+      "documented": 9906,
+      "undocumented": 18829
+    },
+    "generation": {
+      "percentage": "9.06",
+      "total": 28735,
+      "generated": 2602
+    },
+    "validation": {
+      "percentage": "0.00",
+      "total": 28735,
+      "validated": 0,
+      "violations": 4
+    },
+    "compiler": {
+      "percentage": 100,
+      "total": 28735,
+      "compiled": 28735
+    },
+    "runtime": {
+      "percentage": "5.56",
+      "total": 28735,
+      "runtimeAware": 1598
+    }
+  },
+  "statistics": {
+    "totalSymbols": 28735,
+    "symbolsByType": {
+      "section": 9876,
+      "json": 15026,
+      "class": 619,
+      "interface": 1458,
+      "variable": 660,
+      "function": 768,
+      "yaml": 15,
+      "struct": 249,
+      "enum": 63,
+      "contract": 1
+    },
+    "symbolsByLayer": {
+      "UNKNOWN": 24644,
+      "TYPES": 43,
+      "CONTRACTS": 165,
+      "DOMAIN": 125,
+      "BCM": 743,
+      "CPR": 1417,
+      "CVM": 1598
+    },
+    "symbolsByOwner": {
+      "unknown": 28677,
+      "COS Team": 19,
+      "Chief Cognitive Architect": 34,
+      "Enterprise Chief Architect": 3,
+      "CVM Team": 2
+    },
+    "totalASTNodes": 28735,
+    "astNodesByType": {
+      "section": 9876,
+      "json": 15026,
+      "class": 619,
+      "interface": 1458,
+      "variable": 660,
+      "function": 768,
+      "yaml": 15,
+      "struct": 249,
+      "enum": 63,
+      "contract": 1
+    },
+    "totalGraphNodes": 28713,
+    "totalGraphEdges": 14841
+  }
+}

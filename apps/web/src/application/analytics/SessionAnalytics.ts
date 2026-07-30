@@ -4,8 +4,7 @@
  * Tracks: session duration, page views, feature usage, abandonment
  */
 
-import { z } from "zod";
-import { analyticsService, EventType, AnalyticsContext } from "./AnalyticsService";
+import { analyticsService, EventType } from "./AnalyticsService";
 
 // Session Data
 export interface SessionData {

@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getServerDb } from "@/lib/db/client";
 
-
 import { Prisma } from "@prisma/client";
 
 export const UserService = {

@@ -13,14 +13,14 @@ const sourceFiles = project.getSourceFiles([
   "services/**/*.ts"
 ])
 
-function replaceImport(sourceFile: any) {
+function replaceImport(sourceFile: unknown) {
   const imports = sourceFile.getImportDeclarations()
 
-  imports.forEach((imp: any) => {
+  imports.forEach((imp: unknown) => {
     const moduleSpecifier = imp.getModuleSpecifierValue()
 
     if (moduleSpecifier === "@/lib/supabase-server") {
-      const namedImports = imp.getNamedImports().map((i: any) => i.getName())
+      const namedImports = imp.getNamedImports().map((i: unknown) => i.getName())
       imp.remove()
 
       if (namedImports.includes("createSupabaseServerClient")) {
@@ -30,7 +30,7 @@ function replaceImport(sourceFile: any) {
         })
         
         const calls = sourceFile.getDescendantsOfKind(SyntaxKind.CallExpression)
-        calls.forEach((call: any) => {
+        calls.forEach((call: unknown) => {
            if (call.getExpression().getText() === "createSupabaseServerClient") {
                call.getExpression().replaceWithText("createServerClient")
            }
@@ -44,7 +44,7 @@ function replaceImport(sourceFile: any) {
         })
         
         const calls = sourceFile.getDescendantsOfKind(SyntaxKind.CallExpression)
-        calls.forEach((call: any) => {
+        calls.forEach((call: unknown) => {
            if (call.getExpression().getText() === "createSupabaseServiceClient") {
                call.replaceWithText("supabaseAdmin")
            }

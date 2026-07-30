@@ -1,0 +1,87 @@
+{
+  "component": "instruction-fetch",
+  "file": "compiler/cvm/instruction-fetch.ts",
+  "certificationDate": "2026-07-27T00:40:00Z",
+  "status": "CERTIFIED AFTER REFACTOR",
+  "metrics": {
+    "before": {
+      "statements": {
+        "total": 70,
+        "covered": 70,
+        "percentage": "100.00"
+      },
+      "branches": {
+        "total": 25,
+        "covered": 24,
+        "percentage": "96.00"
+      },
+      "functions": {
+        "total": 17,
+        "covered": 17,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 70,
+        "covered": 70,
+        "percentage": "100.00"
+      }
+    },
+    "after": {
+      "statements": {
+        "total": 69,
+        "covered": 69,
+        "percentage": "100.00"
+      },
+      "branches": {
+        "total": 24,
+        "covered": 24,
+        "percentage": "100.00"
+      },
+      "functions": {
+        "total": 17,
+        "covered": 17,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 69,
+        "covered": 69,
+        "percentage": "100.00"
+      }
+    },
+    "objectives": {
+      "statements": ">=95%",
+      "branches": ">=97%",
+      "functions": "100%",
+      "lines": ">=95%"
+    }
+  },
+  "summary": {
+    "testsAdded": 0,
+    "totalTests": 55,
+    "branchesFixed": 0,
+    "branchesRemoved": 1,
+    "branchesTypeA": 0,
+    "branchesTypeB": 0,
+    "branchesTypeC": 1,
+    "filesModified": 1,
+    "refactoringRequired": true,
+    "refactoringType": "Dead code removal",
+    "refactoringDescription": "Removed unreachable branch in evictIfNeeded() method. The condition 'if (firstKey !== undefined)' was always true when cache.size > cacheSize, making the else branch unreachable."
+  },
+  "validation": {
+    "tests": "PASSED (55/55)",
+    "build": "PASSED",
+    "typescript": "PASSED",
+    "coverage": "PASSED (100% on all metrics)"
+  },
+  "artifacts": [
+    "reports/runtime/instruction-fetch-audit.json",
+    "reports/runtime/instruction-fetch-current-coverage.json",
+    "reports/runtime/instruction-fetch-gap-analysis.json",
+    "reports/runtime/instruction-fetch-branch-analysis.md",
+    "reports/runtime/instruction-fetch-architectural-analysis.md",
+    "reports/runtime/instruction-fetch-decision.md",
+    "reports/runtime/instruction-fetch-certification.json",
+    "INSTRUCTIONFETCH_ENTERPRISE_CERTIFICATION.md"
+  ]
+}

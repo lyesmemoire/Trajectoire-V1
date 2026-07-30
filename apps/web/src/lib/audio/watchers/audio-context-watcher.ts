@@ -3,9 +3,7 @@
  */
 import { logInfo, logError } from "@/lib/logger/Logger";
 
-export function createAudioContextWatcher(
-  context: AudioContext,
-  onStateChange: (state: AudioContextState) => void,
+export function createAudioContextWatcher(context: AudioContext, onStateChange: (state: AudioContextState) => void,
 ) {
   const handleStateChange = () => {
     logInfo(`[AudioContext Watcher] State: ${context.state}`);
@@ -22,9 +20,7 @@ export function createAudioContextWatcher(
 /**
  * Tente de reprendre l'AudioContext après une suspension (ex: appel entrant).
  */
-export async function resumeAudioContext(
-  context: AudioContext,
-): Promise<boolean> {
+export async function resumeAudioContext(context: AudioContext, ): Promise<boolean> {
   if (context.state === "suspended") {
     try {
       await context.resume();

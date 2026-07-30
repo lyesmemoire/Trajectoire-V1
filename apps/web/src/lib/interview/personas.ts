@@ -45,10 +45,7 @@ Règle : Pose UNE SEULE question à la fois. Reste poli et formel.`,
   },
 };
 
-export function getPersonaPrompt(
-  personaId: string,
-  jobContext: string = "",
-): string {
+export function getPersonaPrompt(personaId: string, jobContext: string = "", ): string {
   const persona = PERSONAS[personaId] || PERSONAS["corporate-hr"]!;
   let prompt = persona.systemPrompt;
 

@@ -1,10 +1,9 @@
-import { FastifyInstance } from "fastify";
 import crypto from "crypto";
 import { saveSessionRecord, publishEvent, getSession } from "../contracts/api-contract";
 
-export function registerSessionRoutes(app: FastifyInstance) {
+export function registerSessionRoutes(app: _FastifyInstance) {
   app.post("/v1/sessions", async (req, res) => {
-    const tenant = (req as any).tenant;
+    const tenant = (req as unknown).tenant;
 
     const sessionId = crypto.randomUUID();
 
@@ -26,12 +25,12 @@ export function registerSessionRoutes(app: FastifyInstance) {
   });
 
   app.get("/v1/sessions/:id", async (req) => {
-    const sessionId = (req.params as any).id;
+    const sessionId = (req.params as unknown).id;
     return getSession(sessionId);
   });
 
   app.delete("/v1/sessions/:id", async (req) => {
-    const sessionId = (req.params as any).id;
+    const sessionId = (req.params as unknown).id;
     // Mock ending session
     await publishEvent("runtime.command", {
       sessionId,

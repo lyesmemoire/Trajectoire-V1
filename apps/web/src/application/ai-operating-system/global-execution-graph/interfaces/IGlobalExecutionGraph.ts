@@ -74,7 +74,7 @@ export interface ExecutionNode {
   startTime: Date | null;
   endTime: Date | null;
   retryCount: number;
-  result: unknown;
+  result: any;
   error: string | null;
   metadata: Record<string, unknown>;
 }
@@ -200,7 +200,7 @@ export interface ExecutionResult {
   nodeResults: Map<string, unknown>;
   errors: string[];
   warnings: string[];
-  finalOutput: unknown;
+  finalOutput: any;
   confidence: number; // 0-1
 }
 

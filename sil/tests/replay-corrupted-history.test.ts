@@ -49,7 +49,7 @@ describe("Phase 2-I: Replay Corrupted History", () => {
     const allEvents = await query.getSessionEvents(tenantId, sessionId);
     
     // We hack the memory store for test purposes
-    (store as any).events = allEvents.filter(e => e.type !== "P6_RUNTIME_STARTED");
+    (store as { events: unknown[] }).events = allEvents.filter(e => e.type !== "P6_RUNTIME_STARTED");
 
     // 3. Run replay
     // When we delete an event, it will actually still process, but the original trace logic might fail
@@ -61,9 +61,9 @@ describe("Phase 2-I: Replay Corrupted History", () => {
     // In reality, the traceProvider trace hash depends on the event history hash. Let's mock traceProvider to return a different trace if history changed.
     
     // We will simulate that the trace provider returns a different trace if an event is missing.
-    (traceProvider as any).getTrace = async () => ({
+    (traceProvider as { getTrace: () => Promise<{ version: string; events: unknown[]; finalSnapshotHash: string }> }).getTrace = async () => ({
       version: "1.0",
-      events: (store as any).events, // trace depends on remaining events
+      events: (store as { events: unknown[] }).events, // trace depends on remaining events
       finalSnapshotHash: "hash-diff",
     });
 

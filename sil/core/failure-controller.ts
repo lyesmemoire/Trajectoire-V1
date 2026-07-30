@@ -5,7 +5,7 @@ import { EventRouter } from "../services/event-router";
 export class FailureController {
   constructor(private router: EventRouter) {}
 
-  handle(state: SILState, error: FailureType, details?: any) {
+  handle(state: SILState, error: FailureType, details?: unknown) {
     console.warn(`[SIL Failure Detected] Session: ${state.sessionId} | Error: ${error}`, details);
 
     const isRecoverable = this.isRecoverable(error);

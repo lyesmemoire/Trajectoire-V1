@@ -3,7 +3,7 @@ import { LeaseManager } from "../src/watchdog/federation/LeaseManager";
 import * as fs from "fs";
 import * as path from "path";
 
-function log(step:string, result:any){ console.log(`${step}\t${JSON.stringify(result)}`); }
+function log(step:_string, result: unknown){ console.log(`${step}\t${JSON.stringify(result)}`); }
 
 const nodeId1 = "node1";
 const leaseTtl = 60000; // ms, not used in logic
@@ -40,7 +40,7 @@ log("node2AcquireTerm2", lm2.acquire(2)); // expect false because node1 holds le
 
 // Fault overlay revocation: induce risk >0.75 and criticalCount>=2
 lm1_restart.revokeIfFaulty({ leaseRisk: 0.8, criticalCount: 2 });
-log("afterRiskAtRisk", { atRisk: (lm1_restart as any).atRisk }); // internal state, expect true
+log("afterRiskAtRisk", { atRisk: (lm1_restart as unknown).atRisk }); // internal state, expect true
 // Continue ticking to reach riskTicks >=5
 for(let i=0;i<5;i++) lm1_restart.revokeIfFaulty({ leaseRisk: 0.8, criticalCount: 2 });
-log("afterRiskTicks", { riskTicks: (lm1_restart as any).riskTicks, leaseExists: !!lm1_restart.getLease() }); // expect lease released
+log("afterRiskTicks", { riskTicks: (lm1_restart as unknown).riskTicks, leaseExists: !!lm1_restart.getLease() }); // expect lease released

@@ -1,41 +1,90 @@
-import { mistralModel } from "@/lib/mistral";
-import { generateText } from "ai";
+import AIClient from "./client";
+import { AI_MODELS } from "./models";
+import { RetryManager } from "./retry/RetryManager";
+import { ExternalServiceError } from "@/core/errors";
 
-export async function improveExperience(originalText: string): Promise<string> {
-  const prompt = `En tant qu'expert RH senior, améliore cette expérience professionnelle pour la rendre plus percutante et orientée résultats (impact). Ne retourne QUE le texte réécrit, sans introduction, sans guillemets.\n\nExpérience originale :\n${originalText}`;
+/**
+ * CV Rewriter Service
+ * Real implementation using AIClient and RetryManager
+ */
 
-  const { text } = await generateText({
-    model: mistralModel,
-    prompt,
-    temperature: 0.3,
-  });
+export async function improveExperience(content: string, signal?: AbortSignal): Promise<string> {
+  const client = AIClient.getInstance();
+  const systemPrompt = "Tu es un expert RH de haut niveau. Améliore la description de l'expérience professionnelle suivante pour la rendre plus percutante, orientée résultats et professionnelle. Ne rajoute pas d'informations fausses.";
 
-  return text.trim();
+  const result = await RetryManager.execute(
+    async () => {
+      const response = await client.chatCompletion({
+        model: AI_MODELS.INTERVIEW, // We reuse the text model
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content },
+        ],
+        temperature: 0.7,
+        signal,
+      });
+      return response.content;
+    },
+    { maxRetries: 3, initialDelay: 2000 }
+  );
+
+  if (!result.success || !result.data) {
+    throw new ExternalServiceError(result.error || "Failed to improve experience", "CVRewriter");
+  }
+
+  return result.data;
 }
 
-export async function rewriteSummary(originalText: string): Promise<string> {
-  const prompt = `En tant qu'expert RH senior, réécris ce résumé de CV (profil) pour le rendre plus professionnel, accrocheur et concis. Ne retourne QUE le texte réécrit, sans introduction.\n\nRésumé original :\n${originalText}`;
+export async function rewriteSummary(content: string, signal?: AbortSignal): Promise<string> {
+  const client = AIClient.getInstance();
+  const systemPrompt = "Tu es un expert RH. Réécris ce résumé de CV pour le rendre concis, accrocheur et mettre en valeur les compétences clés du candidat en 3 ou 4 phrases maximum.";
 
-  const { text } = await generateText({
-    model: mistralModel,
-    prompt,
-    temperature: 0.4,
-  });
+  const result = await RetryManager.execute(
+    async () => {
+      const response = await client.chatCompletion({
+        model: AI_MODELS.INTERVIEW,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content },
+        ],
+        temperature: 0.7,
+        signal,
+      });
+      return response.content;
+    },
+    { maxRetries: 3, initialDelay: 2000 }
+  );
 
-  return text.trim();
+  if (!result.success || !result.data) {
+    throw new ExternalServiceError(result.error || "Failed to rewrite summary", "CVRewriter");
+  }
+
+  return result.data;
 }
 
-export async function generateImpactMetrics(
-  role: string,
-  context: string,
-): Promise<string> {
-  const prompt = `Pour le rôle de "${role}" dans le contexte suivant :\n"${context}"\n\nGénère 3 suggestions de métriques d'impact quantitatives que le candidat pourrait ajouter à son CV. Sois très concis, sous forme de liste à puces.`;
+export async function generateImpactMetrics(role: string, context: string, signal?: AbortSignal): Promise<string> {
+  const client = AIClient.getInstance();
+  const systemPrompt = "En tant qu'expert métier, suggère 3 métriques d'impact quantitatives (KPIs) pertinentes que ce candidat pourrait ajouter à son CV pour ce rôle, basées sur le contexte fourni. Limite-toi à une liste à puces.";
 
-  const { text } = await generateText({
-    model: mistralModel,
-    prompt,
-    temperature: 0.5,
-  });
+  const result = await RetryManager.execute(
+    async () => {
+      const response = await client.chatCompletion({
+        model: AI_MODELS.INTERVIEW,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: `Rôle: ${role}\nContexte: ${context}` },
+        ],
+        temperature: 0.7,
+        signal,
+      });
+      return response.content;
+    },
+    { maxRetries: 3, initialDelay: 2000 }
+  );
 
-  return text.trim();
+  if (!result.success || !result.data) {
+    throw new ExternalServiceError(result.error || "Failed to generate metrics", "CVRewriter");
+  }
+
+  return result.data;
 }

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blueprint.enterprise/schemas/CVM-OBJ-002.json",
+  "title": "Budget",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "owner"
+  ],
+  "_metadata": {
+    "canonicalId": "CVM-OBJ-002",
+    "owner": "CVM Team",
+    "layer": "UNKNOWN",
+    "generatedBy": "Blueprint Incremental Compiler"
+  }
+}

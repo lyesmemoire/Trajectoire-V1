@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-07-26T18:35:00Z",
+  "performance_metrics": {
+    "stack_operations": {
+      "100K_operations_ms": 4,
+      "100K_operations_with_pop_ms": 2,
+      "1M_operations_ms": 27,
+      "status": "excellent"
+    },
+    "heap_operations": {
+      "10K_allocations_ms": 18,
+      "10K_allocations_with_deallocation_ms": 50,
+      "10K_allocations_with_gc_ms": 142,
+      "status": "good"
+    },
+    "call_frames": {
+      "10K_frames_ms": 2,
+      "10K_frames_with_return_ms": 2,
+      "nested_frames_ms": 1,
+      "status": "excellent"
+    },
+    "snapshots": {
+      "1K_snapshots_ms": 3,
+      "1K_snapshots_with_comparison_ms": 6,
+      "1K_snapshots_with_restore_ms": 1,
+      "status": "excellent"
+    },
+    "rollback": {
+      "massive_rollback_ms": 4,
+      "multiple_rapid_rollbacks_ms": 2,
+      "status": "excellent"
+    },
+    "interrupts": {
+      "simultaneous_interrupts_ms": 71,
+      "interrupt_storm_ms": 2969,
+      "status": "good"
+    },
+    "combined_operations": {
+      "combined_stack_heap_frames_ms": 17,
+      "combined_with_gc_ms": 8523,
+      "combined_with_snapshots_ms": 1,
+      "status": "acceptable"
+    }
+  },
+  "overall_performance": {
+    "average_execution_time_ms": 856,
+    "max_execution_time_ms": 8523,
+    "min_execution_time_ms": 1,
+    "status": "acceptable"
+  },
+  "performance_thresholds": {
+    "fast_threshold_ms": 100,
+    "acceptable_threshold_ms": 5000,
+    "slow_threshold_ms": 10000,
+    "meets_performance_requirements": true
+  }
+}

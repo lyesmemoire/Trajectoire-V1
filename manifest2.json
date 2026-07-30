@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0.0",
+  "metadata": {
+    "manifestId": "MAN-20260728T092300Z-3e22378b",
+    "createdAt": "2026-07-28T09:23:00.557Z",
+    "component": "execution-pipeline",
+    "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+    "gitBranch": "main",
+    "gitClean": false,
+    "pipelineVersion": "1.0.0",
+    "pipelineCommand": "node certification/certify.cjs"
+  },
+  "environment": {
+    "nodeVersion": "v24.13.0",
+    "pnpmVersion": "9.15.9",
+    "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+    "typescriptVersion": "5.9.3",
+    "os": "win32 x64",
+    "arch": "x64",
+    "cpuModel": "11th Gen Intel(R) Core(TM) i5-1145G7 @ 2.60GHz",
+    "totalMemoryMB": 16112,
+    "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+    "gitBranch": "main",
+    "gitClean": false,
+    "pnpmLockSha256": "6ac36c5ea195989c57e796ae4c3d9355305ee146ca3d48d41ad7dc1c79e2711a",
+    "packageJsonSha256": "b1948176ae8ddde6c889c84e968b86dae928f279d82c1b16903721ed27db2d2e"
+  },
+  "sourceFiles": [
+    {
+      "path": "compiler/cvm/execution-pipeline.ts",
+      "sha256": "6313fe1741390dbab06eb66fc5708fd4775c28c6b5db9293d8e6be14eca8c831",
+      "sizeBytes": 5079
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "tests/vm/advanced/execution-pipeline.test.ts",
+      "sha256": "793016a97a331b5d3c1348cb966ebb86d418b1a57543a8210f9c590e2864365b",
+      "sizeBytes": 37369
+    },
+    {
+      "path": "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts",
+      "sha256": "af73d7d5794c7a49cdaa363019f185a300723fcb93ed5b84501d729fa660d934",
+      "sizeBytes": 1289
+    }
+  ],
+  "artifacts": [],
+  "evidence": [
+    {
+      "evidenceId": "EV-def-mutations",
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/definitions/execution-pipeline/mutations.json",
+      "sha256": "67dc87d469b6fd2322d96f8a0008629734fa1568e17175f237709d9d85cfd57f",
+      "sizeBytes": 659
+    },
+    {
+      "evidenceId": "EV-def-regressions",
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/definitions/execution-pipeline/regressions.json",
+      "sha256": "454bebec1b5d4f828adfa5c3f4c4ba9db3ccbc79d07bea9e9beefaa75b25905a",
+      "sizeBytes": 177
+    },
+    {
+      "evidenceId": "EV-thresholds",
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/policy/thresholds.json",
+      "sha256": "593457248aae937edd97d5e621cec7ca168a720eb7fa9004b747884bb20559d0",
+      "sizeBytes": 474
+    }
+  ],
+  "logs": [
+    {
+      "step": "07-manifest",
+      "stdoutFile": "07-manifest.stdout.log",
+      "stdoutSha256": "a21e96d794ebd0d9429849b7e59796cca5e069b0335d9056f51e0ff366f0b5d8",
+      "stderrFile": "07-manifest.stderr.log",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "verification": {
+    "allHashesValid": true,
+    "allSchemasValid": true,
+    "allEvidencePresent": false,
+    "noContradictions": true,
+    "reproducible": true,
+    "certificationDecision": "PENDING",
+    "failures": []
+  },
+  "integrity": {
+    "manifestContentSha256": "eeb4df8f5727537a3ad70ecf5076f852489cd215219f7ac19d07d1ff3c79cf7b",
+    "algorithm": "sha256"
+  }
+}

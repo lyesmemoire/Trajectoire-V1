@@ -1,0 +1,28 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "component": "execution-pipeline",
+  "sourceFile": "compiler/cvm/execution-pipeline.ts",
+  "rawCoverageFile": "coverage.raw.json",
+  "rawCoverageSource": "reports/runtime/coverage/coverage-final.json",
+  "criticalIssue": "Le fichier coverage.raw.json contient le coverage du scheduler (CVM/src/scheduler), pas du execution-pipeline (compiler/cvm/execution-pipeline.ts)",
+  "impact": "CRITICAL - Le coverage officiel est basé sur un mauvais fichier source",
+  "componentsInRawCoverage": [
+    "CVM/src/scheduler/AffinityManager.ts",
+    "CVM/src/scheduler/BinaryHeap.ts",
+    "CVM/src/scheduler/BudgetManager.ts",
+    "CVM/src/scheduler/CognitiveScheduler.ts",
+    "CVM/src/scheduler/DeadlineScheduler.ts",
+    "CVM/src/scheduler/DependencyResolver.ts",
+    "CVM/src/scheduler/PriorityQueueManager.ts",
+    "CVM/src/scheduler/RetryManager.ts",
+    "CVM/src/scheduler/SchedulerCore.ts",
+    "CVM/src/scheduler/TaskDispatcher.ts",
+    "CVM/src/scheduler/TaskQueueManager.ts",
+    "CVM/src/scheduler/WorkStealingManager.ts",
+    "CVM/src/scheduler/WorkerPool.ts",
+    "CVM/src/scheduler/types.ts"
+  ],
+  "executionPipelineInRawCoverage": false,
+  "conclusion": "PREUVE INSUFFISANTE - Le fichier coverage brut ne contient pas les données pour execution-pipeline"
+}

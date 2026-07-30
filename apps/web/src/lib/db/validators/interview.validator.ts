@@ -77,13 +77,13 @@ export type PremiumSessionRow = z.infer<typeof PremiumSessionSchema>;
 /**
  * Helper to validate standard session DB row.
  */
-export function validateStandardSession(data: unknown): StandardSessionRow {
+export function validateStandardSession(data: any): StandardSessionRow {
   return StandardSessionSchema.parse(data);
 }
 
 /**
  * Helper to validate premium session DB row.
  */
-export function validatePremiumSession(data: unknown): PremiumSessionRow {
+export function validatePremiumSession(data: any): PremiumSessionRow {
   return PremiumSessionSchema.parse(data);
 }

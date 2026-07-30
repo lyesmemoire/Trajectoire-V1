@@ -1,7 +1,7 @@
 /**
  * Pressure and interruption signal types for orchestration.
  */
-export interface InterruptionSignals {
+export interface PressureSignal {
   verbosity: number;
   specificity: number;
   fillerDensity: number;

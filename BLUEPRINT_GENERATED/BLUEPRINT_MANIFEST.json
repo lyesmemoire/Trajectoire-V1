@@ -1,0 +1,1593 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-07-24T09:34:53.433Z",
+  "totalFiles": 317,
+  "canonicalElements": 242,
+  "files": [
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-001.md",
+      "checksum": "d15f2a12b6ff88947ef288b9f6b8f0462ae316936e1735f3bd8fd929016ac6aa",
+      "generatedAt": "2026-07-24T09:34:53.180Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-002.md",
+      "checksum": "70b0d98f1a38a2135c217607656366c5a8524d87cf81a5bf561108297493dfb7",
+      "generatedAt": "2026-07-24T09:34:53.182Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-003.md",
+      "checksum": "00a9d61cfe5068feb5490d32570ea5bad7ee707d1ff3a890a7147a74f6128c4d",
+      "generatedAt": "2026-07-24T09:34:53.183Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-004.md",
+      "checksum": "5f6688da0a05945ee9e122f8b4191bbdd215d207b868510e0a813e418da66b16",
+      "generatedAt": "2026-07-24T09:34:53.184Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-005.md",
+      "checksum": "3985e8b9344848eca37a7bb08184af92aa403296a74a2e268d0a46425240b3c5",
+      "generatedAt": "2026-07-24T09:34:53.186Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-006.md",
+      "checksum": "8ac468afef6168ec1ff45b9ce32cbb1ae415889b4e1ffce58a160b07a41f69de",
+      "generatedAt": "2026-07-24T09:34:53.187Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-007.md",
+      "checksum": "5bc18df13aa4c195995c9dfd62738d905fd484da23eae81b4912ba434eec4682",
+      "generatedAt": "2026-07-24T09:34:53.188Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-008.md",
+      "checksum": "45e47281dacaf1a457b7478b1313655bb24b48a1f785ae11523e04756d701f92",
+      "generatedAt": "2026-07-24T09:34:53.189Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-009.md",
+      "checksum": "99805a6bce55eef2ab31a8093a04d380bb92bfb0c0d3e3af6d97ff7d1dae4bd4",
+      "generatedAt": "2026-07-24T09:34:53.190Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-010.md",
+      "checksum": "4405fc6882d17202b2e2d85aa63db051bd890c45de976c76c39d694107519010",
+      "generatedAt": "2026-07-24T09:34:53.191Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-OBJ-011.md",
+      "checksum": "9e50a63e885efcb4ee8b13162721b2a52fe4ac7286fa8a67a93d924761cbdfeb",
+      "generatedAt": "2026-07-24T09:34:53.192Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-INV-001.md",
+      "checksum": "8bebe0fc0ca192f8c50918ea7b65034a691a683b814d6d7d3ba098bbdd24dc46",
+      "generatedAt": "2026-07-24T09:34:53.192Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-INV-002.md",
+      "checksum": "e7f19a9a1151b91d2b086f929ed802b26d79043db1b52e794fb445706d451137",
+      "generatedAt": "2026-07-24T09:34:53.193Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-INV-003.md",
+      "checksum": "afdecca9a93782c6274ec604489c107d27806756d0af546b8aaa3a08c495ae80",
+      "generatedAt": "2026-07-24T09:34:53.194Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-INV-004.md",
+      "checksum": "a74bce61c74bc1f246260d42990e96c6fd0540141a961eee5189460d7e76e84f",
+      "generatedAt": "2026-07-24T09:34:53.195Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-INV-005.md",
+      "checksum": "1c23d1fe7d332362a63e689a5f9f6c280fae5986ee55539e98b75bef17e31b3a",
+      "generatedAt": "2026-07-24T09:34:53.196Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-BR-001.md",
+      "checksum": "c83c5835ce6cb36d0fbf3db1d907cf29c485d35b359f887b25da84b2a7fe3229",
+      "generatedAt": "2026-07-24T09:34:53.196Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-BR-002.md",
+      "checksum": "135028e9ec057ab81e9e1e98c0081466b04decd4f04e8ae81e46f8e8f3ef6d5a",
+      "generatedAt": "2026-07-24T09:34:53.198Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-BR-003.md",
+      "checksum": "abaf2d35b1aaec185664cb80899e0cdfb034ac86d4dc4602c09a85aed4e7300d",
+      "generatedAt": "2026-07-24T09:34:53.199Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-BR-004.md",
+      "checksum": "08163d3d8fc6670dc795a5675a5dc5001330a0a11da232bcaae0a7cbc3362711",
+      "generatedAt": "2026-07-24T09:34:53.200Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-CR-001.md",
+      "checksum": "e6e5e4a923833ad7ec8090e1b024fed98dbfde0113d44733dd01f6fe7fd736be",
+      "generatedAt": "2026-07-24T09:34:53.201Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-CR-002.md",
+      "checksum": "9b568ceeeb3cb77c0aef3bc5acdbca01d107a466ada05c8eba244e1b86416281",
+      "generatedAt": "2026-07-24T09:34:53.202Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-CR-003.md",
+      "checksum": "432d3f77c013355e5729471f9db97129e4b6d8f0072894e096310ed2426d4b8f",
+      "generatedAt": "2026-07-24T09:34:53.203Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-FB-001.md",
+      "checksum": "218238d6406ad38f9413680448f0dde031f29c45793fe8ebf127b912ed2c1bab",
+      "generatedAt": "2026-07-24T09:34:53.203Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-FB-002.md",
+      "checksum": "05cb5b6c6d05013f604408ea3cc7daa390d77e9606b86b25993d5a31f8047efa",
+      "generatedAt": "2026-07-24T09:34:53.204Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-FB-003.md",
+      "checksum": "9c2b6823dda43c159866732618bd99440abefbf1191492f909ef320f4f2dec44",
+      "generatedAt": "2026-07-24T09:34:53.205Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\COS\\COS-FB-004.md",
+      "checksum": "2a4374368eee8b3802050bc9ff9c3bbff335b33c14ff6cb50efdc011bfaddea0",
+      "generatedAt": "2026-07-24T09:34:53.205Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-OBJ-001.md",
+      "checksum": "9ee9bcf030f5d88f44bc700da548eb4f24cf00f53fa38484cbdaba32538298de",
+      "generatedAt": "2026-07-24T09:34:53.208Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-OBJ-002.md",
+      "checksum": "499386d3b9860ee1a62684463b9b38694da5d315e7919b0a43520706abc8f16d",
+      "generatedAt": "2026-07-24T09:34:53.209Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-INV-001.md",
+      "checksum": "04656c4af4edb44e512649b5c9d846065a54e0c66cb02c8156ee595780f539b9",
+      "generatedAt": "2026-07-24T09:34:53.210Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-INV-002.md",
+      "checksum": "b09195c199443bdb18737d5e7c1b615fe63913c7f03c1d01c9155bb9f089896a",
+      "generatedAt": "2026-07-24T09:34:53.211Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-INV-003.md",
+      "checksum": "90b86261faf708c9b5290cb7892686b01cf99495e0b3b619a9bde5b86c200e73",
+      "generatedAt": "2026-07-24T09:34:53.212Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-INV-004.md",
+      "checksum": "cc311c682c8518d819d3217f1e2be8d82a2fa00fcc679c4d394afc32941a7baa",
+      "generatedAt": "2026-07-24T09:34:53.212Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\CVM\\CVM-INV-005.md",
+      "checksum": "40fed0dc1f4a43fa30b769d6602795f182cda7e1e7ae434fccbd2bbd65ae3523",
+      "generatedAt": "2026-07-24T09:34:53.213Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-001.md",
+      "checksum": "3556d03129124649840a6bbfb35b0e9538c6d1721eb81c5cd07a61820ce162cd",
+      "generatedAt": "2026-07-24T09:34:53.217Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-002.md",
+      "checksum": "bb02e8e6276eda0b05a2c02fdc36bad32de73647c6019c01bf87d15a27ffe903",
+      "generatedAt": "2026-07-24T09:34:53.218Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-003.md",
+      "checksum": "ed0caf6950f568294524f007240dfa6496da8a75b5c0653b0027f7729c5f6b48",
+      "generatedAt": "2026-07-24T09:34:53.219Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-004.md",
+      "checksum": "c1fe620ecac0cf599e1b43017fa7955a12b1386781d10ead415856700577243d",
+      "generatedAt": "2026-07-24T09:34:53.219Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-005.md",
+      "checksum": "5437cc713d9253743111527afe8fbbd3b4bd56ddb7308b5e44a59cd37cd68932",
+      "generatedAt": "2026-07-24T09:34:53.220Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-006.md",
+      "checksum": "eff1dcdd64cea1fdeb0e83d78f1a50f0f1921ff435747ef9489caf4d8fc6f700",
+      "generatedAt": "2026-07-24T09:34:53.221Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-007.md",
+      "checksum": "cf1c176191c5f4bd9ebfec3206d3dfdae40bf6000c20b12e10d4aa0b0744733c",
+      "generatedAt": "2026-07-24T09:34:53.222Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-015.md",
+      "checksum": "2e294af9a547b595d19b6c3ab3e29fd1e7d1aa33ac1a85afcb9530583a7d4928",
+      "generatedAt": "2026-07-24T09:34:53.223Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-009.md",
+      "checksum": "06dfb2d215a4b718c49f3672224f66be308c9e42ccb9c52ca9be7c1e454158fc",
+      "generatedAt": "2026-07-24T09:34:53.224Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-010.md",
+      "checksum": "5f019293726ef228a81dfa37679d2bbc9acee0e367381b3ba20779b4fa7dc104",
+      "generatedAt": "2026-07-24T09:34:53.225Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-011.md",
+      "checksum": "945ba6037d17f853faa462b15c4a2b55ab004ff14cf667398d12c3abcf54e10b",
+      "generatedAt": "2026-07-24T09:34:53.226Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-027.md",
+      "checksum": "facf80fb167206e873e3ec144cf4879e0d1bd5787ec703eee40b05cac71e8d3e",
+      "generatedAt": "2026-07-24T09:34:53.227Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-013.md",
+      "checksum": "71e3339c6683e30bd00d20f650282dff6601a6ec594123d6b935e5b9832c79c2",
+      "generatedAt": "2026-07-24T09:34:53.227Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-014.md",
+      "checksum": "a72bed25586bbd518124dc2db6f1abdca98b088ba0af1ecc3a13e3569c31fef9",
+      "generatedAt": "2026-07-24T09:34:53.228Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-015.md",
+      "checksum": "5d596f2b57a6c6dba290ac0da9c6af808844517cd6a2496fc84ec81090749649",
+      "generatedAt": "2026-07-24T09:34:53.229Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-016.md",
+      "checksum": "6e67d8b5096810038fdd1cd8dcf8051ce192792a964c443c555049c80ce047bb",
+      "generatedAt": "2026-07-24T09:34:53.229Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-017.md",
+      "checksum": "35df7188d54b5beb5a602c74d0827c164c6d2e5634f5ae60f32593c47c0d9fb2",
+      "generatedAt": "2026-07-24T09:34:53.230Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-018.md",
+      "checksum": "c7dfbaa5dc3decbcd7b01a0b8496dbb1ede9df83323f4a8e017a3a95844bd8b2",
+      "generatedAt": "2026-07-24T09:34:53.231Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-019.md",
+      "checksum": "14d2b8ad6b62146c658f1428875126f62e3bf057359f0466a0f6904823c021b1",
+      "generatedAt": "2026-07-24T09:34:53.232Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-020.md",
+      "checksum": "ec48eb0c7bd509701c9d269c76d1ae6dae5bf2ce737968f87622f4a4e397df25",
+      "generatedAt": "2026-07-24T09:34:53.233Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-021.md",
+      "checksum": "ec72c7d7a204197f7d68dd19bce8d6e45e5b534ea88fc55017b04fdd1a7fdf2d",
+      "generatedAt": "2026-07-24T09:34:53.234Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-022.md",
+      "checksum": "8c04f811f4c45cdc087c18a42439679bdb0b4f59e7a519a0f4ad31f9697ed5f5",
+      "generatedAt": "2026-07-24T09:34:53.235Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-OBJ-023.md",
+      "checksum": "1d3c6c7b34d1fe7e14063f61c14f8bf0de6d8705fa2e4431a7e5a96a116f2de0",
+      "generatedAt": "2026-07-24T09:34:53.236Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-001.md",
+      "checksum": "6392188bd5662670f56900f53ebc8f591248918aa37b4c689be4c46b502cd5e5",
+      "generatedAt": "2026-07-24T09:34:53.237Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-002.md",
+      "checksum": "08653b376cccdae590cbff12d44be55cf9195b17bd37be480e7c77f2798484f5",
+      "generatedAt": "2026-07-24T09:34:53.237Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-003.md",
+      "checksum": "0d7daf5ecc7ad3f75fa8907ea598b612778319813812e14467427e2d193fa568",
+      "generatedAt": "2026-07-24T09:34:53.238Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-004.md",
+      "checksum": "b0de6fb8480de6b71b97d6aaed9cbe909f623586c75e2c3cda10f07838f6ad3d",
+      "generatedAt": "2026-07-24T09:34:53.239Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-005.md",
+      "checksum": "3a680a9d8b1b0069cba3b6795267c335cbb9dc40db3a43884b7bfb34994c3939",
+      "generatedAt": "2026-07-24T09:34:53.240Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-006.md",
+      "checksum": "d351d6c0d010d013a6a07727689bde4d01696f6824f2db33c98ce35bc12c0213",
+      "generatedAt": "2026-07-24T09:34:53.241Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-007.md",
+      "checksum": "d63195c3845d63f95730d9ebafa8e495ab1a7479f006b10787213a142d902290",
+      "generatedAt": "2026-07-24T09:34:53.242Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-008.md",
+      "checksum": "f0d04d993b2e0632719628b067e1c110a1fab453bc4ab4d094021ea2f5239246",
+      "generatedAt": "2026-07-24T09:34:53.243Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-009.md",
+      "checksum": "05728f10813bdb8fed11073c36a98b0c323b9881b7725b89a9547c153e888a3f",
+      "generatedAt": "2026-07-24T09:34:53.243Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-010.md",
+      "checksum": "f9e45a4577496384e2115f281c675cc71c10db399653bc3b51ce5ef4f8ae5c45",
+      "generatedAt": "2026-07-24T09:34:53.244Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-011.md",
+      "checksum": "a2e76c85eca30a3803eac97bcb4fbbc0bff5c91bbeb2d3f5e5a6d80718c16906",
+      "generatedAt": "2026-07-24T09:34:53.245Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-012.md",
+      "checksum": "cbc2d8b087358036370e3359cf9472104d67b62a48cdf059fd595784b103e859",
+      "generatedAt": "2026-07-24T09:34:53.246Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-013.md",
+      "checksum": "196547cc0f11cb939a521758f0d4f85d34c7d00cb2e3a727c90327821624b214",
+      "generatedAt": "2026-07-24T09:34:53.247Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-014.md",
+      "checksum": "befff9e5745fd9b17b8cf1033ba90125bfb5182e0674e78ba7d2b8ef9b6a56c2",
+      "generatedAt": "2026-07-24T09:34:53.248Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-015.md",
+      "checksum": "8c73cda588635414b3560c59e7e8ad795f47fbe136f7fa183934c9c3aad46530",
+      "generatedAt": "2026-07-24T09:34:53.249Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-016.md",
+      "checksum": "e4d5b131bf3730b681de0cbc1ed09f6e2f4391b2dd50d3ff2cd42aed5917a63b",
+      "generatedAt": "2026-07-24T09:34:53.250Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-017.md",
+      "checksum": "50e1ac940c467a8457d18056dcc44b4194f9b1f755fcd1ef5d390d519cd3cf81",
+      "generatedAt": "2026-07-24T09:34:53.251Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-018.md",
+      "checksum": "7434d7a1c42f0f7ea515a70995dde5402564988eb98ccc1c11df0c138dd8f017",
+      "generatedAt": "2026-07-24T09:34:53.251Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-019.md",
+      "checksum": "912a5ed3b0d97e9c2169e92e776866d42c90889bbcaf84ee42eb693628ee0861",
+      "generatedAt": "2026-07-24T09:34:53.252Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-020.md",
+      "checksum": "bed2493ac3e965006f5e786921de0dca87aabc4c6eaf77c073f1a49d767bac00",
+      "generatedAt": "2026-07-24T09:34:53.253Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-021.md",
+      "checksum": "d00206db3533291779d2902e22b018d1769250cf04753dffaa07b6a43190532c",
+      "generatedAt": "2026-07-24T09:34:53.254Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-022.md",
+      "checksum": "7df4ac39d534027cee4c0acd53c59bec106ebd31103118e8f376befa08cccf2e",
+      "generatedAt": "2026-07-24T09:34:53.254Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-023.md",
+      "checksum": "e3eb1ea09f1c40eb06cf54a00edf6470c9ecd83fef002808af69d1d28a70d91e",
+      "generatedAt": "2026-07-24T09:34:53.255Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-024.md",
+      "checksum": "38d0353d0261cc259f2c1db19814ba0b6c4e24b97c36551a6dce9052d3685d27",
+      "generatedAt": "2026-07-24T09:34:53.255Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-025.md",
+      "checksum": "3c16fc80cd7fb3e86543116bc26ab216944b9b862911849cde693dc18fc377ef",
+      "generatedAt": "2026-07-24T09:34:53.256Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-026.md",
+      "checksum": "f2f02910417a921ffbb8049db3bddb489dc6fcb6cbb95bb88dbbf4a2a0888a0a",
+      "generatedAt": "2026-07-24T09:34:53.257Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-027.md",
+      "checksum": "4846f5db13cf0e85ccdc689594b6f0b2e89e76a2c4006d8a7b20ce79ce390ac1",
+      "generatedAt": "2026-07-24T09:34:53.258Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-028.md",
+      "checksum": "f5c94d599bcb60a1a33a2d15694c99ef7f24728dd5b8ac9f9300e302afa3a410",
+      "generatedAt": "2026-07-24T09:34:53.258Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-029.md",
+      "checksum": "76e481e7104c70ce4f80adcbc44f795414c620083efc59e74e0512d72fc90f1a",
+      "generatedAt": "2026-07-24T09:34:53.259Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-030.md",
+      "checksum": "1d4ae0798d6c59e318fbdc07e3dbad0b3f5d119e38d012d19c6610fee9d82334",
+      "generatedAt": "2026-07-24T09:34:53.259Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-031.md",
+      "checksum": "9220b7c5b88722fbd7e1006772b31d1877b801a1d511ea1749faf8661d19d760",
+      "generatedAt": "2026-07-24T09:34:53.260Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-032.md",
+      "checksum": "3a15b46f9530c32794c6ce79e62c6c1b1653797dd2b20bf2cad68115ff807eb3",
+      "generatedAt": "2026-07-24T09:34:53.261Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-033.md",
+      "checksum": "a86e458b35ced5ee32103990bcefc8473e0c916bc7d3c82d12f5f25b958d8103",
+      "generatedAt": "2026-07-24T09:34:53.262Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-034.md",
+      "checksum": "9e7ce07912ccd50f3da88de33eb78218d39be0dc65e17f69083e99a75ee18765",
+      "generatedAt": "2026-07-24T09:34:53.262Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-035.md",
+      "checksum": "1491e2d9f69cd218835a2535b0c22b2f07a70d2cb760834e13d4b1679c3684f2",
+      "generatedAt": "2026-07-24T09:34:53.263Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-036.md",
+      "checksum": "fb356242e0517329bc87d86dc0bfa7f4d5033433c5b591560ca54296b4c1e5e9",
+      "generatedAt": "2026-07-24T09:34:53.263Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-037.md",
+      "checksum": "b247e2d691d603d0fd41028f9f62a90a3314f28496a1607a8ac61a3e99e69b41",
+      "generatedAt": "2026-07-24T09:34:53.265Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-038.md",
+      "checksum": "ba1f6259323a198cdcefb4f3997cd9420636e5ad1554fdcf40b58929a0e8a5dc",
+      "generatedAt": "2026-07-24T09:34:53.266Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-039.md",
+      "checksum": "265a3e13b6a40a257a7e4845741be274d49fc314177ce234b4f3602c8deb2432",
+      "generatedAt": "2026-07-24T09:34:53.266Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-040.md",
+      "checksum": "5cb710e1510ab5f9020a95395645431266911f68f781bfefe9ff607d7844ba8f",
+      "generatedAt": "2026-07-24T09:34:53.267Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-041.md",
+      "checksum": "20d446e7b66f5a3a3295df170394a943e6489f4d24bbedb36e49fab5db513062",
+      "generatedAt": "2026-07-24T09:34:53.268Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-042.md",
+      "checksum": "2cdc6fd15b281bc10b029dd616dc90d302d0b902c24966cbd10a5ca230f271b3",
+      "generatedAt": "2026-07-24T09:34:53.269Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-043.md",
+      "checksum": "c99fc970d340f7e18b2723a70269e7add9778bc7a44256ab7bbc0a99171b0230",
+      "generatedAt": "2026-07-24T09:34:53.269Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-044.md",
+      "checksum": "0f49b4cb02c795c8d0609879db5691a757a36a39a380f5560e8975ac15440e17",
+      "generatedAt": "2026-07-24T09:34:53.270Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-045.md",
+      "checksum": "f076d557ca743d9de7cb491fe624885a2d3b40e62d5d48571f5fc5f0007f6c17",
+      "generatedAt": "2026-07-24T09:34:53.271Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-046.md",
+      "checksum": "6a762c3cc2a7546873a997ab41cb78a032c48cf9259b099e91949caae56967f4",
+      "generatedAt": "2026-07-24T09:34:53.272Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-047.md",
+      "checksum": "7df57c5e357051cb3d5bc7f6c8e6dc4773c8303230c3867c54e8277d9d9e06cc",
+      "generatedAt": "2026-07-24T09:34:53.272Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-048.md",
+      "checksum": "664d79b6968cd77b67ad3a4bd759bdae4e6d22f4f404f356234857b5e610f843",
+      "generatedAt": "2026-07-24T09:34:53.273Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-049.md",
+      "checksum": "e5656eb679720e501db32f3689b80e0bdf8d16e68aa325bb01fe87509adf9664",
+      "generatedAt": "2026-07-24T09:34:53.273Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-050.md",
+      "checksum": "be2b22c50bd8030109398188a95f95e83b6bb7cf8648d21c3e0a24783597ff9e",
+      "generatedAt": "2026-07-24T09:34:53.274Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-051.md",
+      "checksum": "89a49808b65787ff73e9595a9da579a3bbcbf5788e288c444c22a110e9778620",
+      "generatedAt": "2026-07-24T09:34:53.275Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-EVT-052.md",
+      "checksum": "bc4c3a901149de96a90feb443e7817cfa45faa013e8e520aea5bd4dd50c7f75d",
+      "generatedAt": "2026-07-24T09:34:53.275Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-001.md",
+      "checksum": "27e28765a0deb5574b450a6798b1db12e45e37fc8abc67987b0c74539722ca36",
+      "generatedAt": "2026-07-24T09:34:53.276Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-002.md",
+      "checksum": "c5acbe3a5990c0cbb49ffa2e3c6bbde89776fe1da2653840f8fd693c53fd5077",
+      "generatedAt": "2026-07-24T09:34:53.277Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-003.md",
+      "checksum": "0818358623122a47813c9805da1e17391a4a4c461ddd56e42db9b3648ce81d34",
+      "generatedAt": "2026-07-24T09:34:53.277Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-004.md",
+      "checksum": "0c08b8e6c6d9ab5bdfaaff9f48b4f2784426699bf7769f65006ddf5bbed5fee0",
+      "generatedAt": "2026-07-24T09:34:53.277Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-005.md",
+      "checksum": "96fec146f1f3da5f2df231c5379f86f038737154df35886d94f2ade01121cc02",
+      "generatedAt": "2026-07-24T09:34:53.278Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-006.md",
+      "checksum": "14e07c6193ec24915ae488cbdfc088fc8335fde84b90da818bd806b049f7ef4e",
+      "generatedAt": "2026-07-24T09:34:53.279Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-007.md",
+      "checksum": "7f8b5556275cf141fc37a01ed272a4ef88ce74999b36371d77db88f7fce430e6",
+      "generatedAt": "2026-07-24T09:34:53.279Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-008.md",
+      "checksum": "901f3509c4eb238f78b5cb6495e6a5253d70818fae95d9a81a2618919dda24a5",
+      "generatedAt": "2026-07-24T09:34:53.280Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-009.md",
+      "checksum": "6832a9d71dc2cde3c6d1279ad5e0900cb603c7c3eb85db754cf8a6bf148dffb3",
+      "generatedAt": "2026-07-24T09:34:53.281Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-010.md",
+      "checksum": "c963a9b435b82fdc4d87148d148a945ccf5c085e4702d2e385510af25fae3664",
+      "generatedAt": "2026-07-24T09:34:53.282Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-011.md",
+      "checksum": "965282dd3489e7952c164645c8e41f83905996f308363f8ad378a702b055c58f",
+      "generatedAt": "2026-07-24T09:34:53.283Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-012.md",
+      "checksum": "a8a1899bb635401149e1e2a21050b89a77b308d4bc8e3568d4be136100b04216",
+      "generatedAt": "2026-07-24T09:34:53.284Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-013.md",
+      "checksum": "8dd998d751f49fec48c02b0161bb0f3514319f6ba99dda847b62cca3abad4387",
+      "generatedAt": "2026-07-24T09:34:53.284Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-014.md",
+      "checksum": "35139d33d0a38f13ed6aaf783d9067ce9407127c393a372f8257080960c02437",
+      "generatedAt": "2026-07-24T09:34:53.285Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-016.md",
+      "checksum": "e39a0765c05e5574439feafde89f86fd560d746dc736b75c0352f37947e1583d",
+      "generatedAt": "2026-07-24T09:34:53.286Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-017.md",
+      "checksum": "badc3d4604ccfef910a3c1eeae87af9f12e2ad1cd959c0b26cf1dbd6090ad7c7",
+      "generatedAt": "2026-07-24T09:34:53.286Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-018.md",
+      "checksum": "9f303b31c66b7c50d342995e33b8dd5ae3b8ae604217a36639e1087ccf15decd",
+      "generatedAt": "2026-07-24T09:34:53.287Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-019.md",
+      "checksum": "4ecd5d372370ec8a80410352c487b245930e5020d057712f1fa3592a8a03b0d1",
+      "generatedAt": "2026-07-24T09:34:53.288Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-020.md",
+      "checksum": "25151b9c9651a58bb0fbda444a18fa930c091f4ae337cb8deccf819c5823f431",
+      "generatedAt": "2026-07-24T09:34:53.288Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-021.md",
+      "checksum": "1668b563984ca9b6eb646963d389221024c4c8b5810cefddbcc7e7be5677bc5d",
+      "generatedAt": "2026-07-24T09:34:53.289Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-022.md",
+      "checksum": "23c2022fd8b36a866f4c1a6cfa314949de70883af3b15f629805b781d616e9aa",
+      "generatedAt": "2026-07-24T09:34:53.290Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-023.md",
+      "checksum": "d8d3e9cbb72bc3422783ade816ea2d838e5366c8837b11040b002b4ae7c5cd28",
+      "generatedAt": "2026-07-24T09:34:53.290Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-024.md",
+      "checksum": "28df0066eb8dfd8b82b52bf7f49901d32fd03520bc323d3fe97b8e44fd1cd7c1",
+      "generatedAt": "2026-07-24T09:34:53.291Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-025.md",
+      "checksum": "75d976ccb93d07cab73a121f08e54ba84c6c1a6996b47c006aa62ef799cc3e97",
+      "generatedAt": "2026-07-24T09:34:53.292Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-026.md",
+      "checksum": "b8e4d57b0c8b7669aec16c716aeba9ff9c8801d2d7d99d1d9918f73d238e3f5c",
+      "generatedAt": "2026-07-24T09:34:53.292Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-028.md",
+      "checksum": "78d803d71c044ebbbe0c10341db0fc5af18fa1a55bde0321c866b3bbb8683952",
+      "generatedAt": "2026-07-24T09:34:53.293Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-029.md",
+      "checksum": "d0cd1bbdb4a880fca868eef13a2d3949fe60f52c0be51da781b71479f95bf97d",
+      "generatedAt": "2026-07-24T09:34:53.293Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-030.md",
+      "checksum": "671230da6175990f8c2f435c216b38bfc4016728367c900f21161ce3b3f8031f",
+      "generatedAt": "2026-07-24T09:34:53.294Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-031.md",
+      "checksum": "350fcf7b344024467834058d152a263c6f0683255fc13d40df17b1a21ef2f9fe",
+      "generatedAt": "2026-07-24T09:34:53.295Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-032.md",
+      "checksum": "74e91f365cf006dd1266afc54e9fcec2747fadabe2b48971e94799400258f7e2",
+      "generatedAt": "2026-07-24T09:34:53.295Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-033.md",
+      "checksum": "fc95d4aaf4130cbac8b0b7ad6b6ebc0a3380fa02a1414b544f0079c62cfb1c93",
+      "generatedAt": "2026-07-24T09:34:53.296Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-034.md",
+      "checksum": "e8845b4f930212eb6d6077cf9eb2c37f2a2cacf8aa5055e33ddca18b87b19233",
+      "generatedAt": "2026-07-24T09:34:53.298Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-035.md",
+      "checksum": "bd3c71ad6b60f6f6af89edec229b01512540c608fb33feb806169fadbf7954c0",
+      "generatedAt": "2026-07-24T09:34:53.299Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-STATE-036.md",
+      "checksum": "251c6ec8e70ab9e488a4fff5f5d00579108020a42e3f595e207e7ae8501e481a",
+      "generatedAt": "2026-07-24T09:34:53.299Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-001.md",
+      "checksum": "d3ce8ba0e4c7d2626af51452e040348e8329f436e9f3ebed8033bfa1e2d61d4a",
+      "generatedAt": "2026-07-24T09:34:53.300Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-002.md",
+      "checksum": "0bfd0fc8df9eeaf965fd35a97ad4968e922dca3e8e86632962e6c5537c83481c",
+      "generatedAt": "2026-07-24T09:34:53.301Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-003.md",
+      "checksum": "d71cc7c340dd986be4b993b9d613061679b856aac58eca3611e6f5670acb8650",
+      "generatedAt": "2026-07-24T09:34:53.301Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-004.md",
+      "checksum": "666fa41fa95167fe6acb4671a7dddaf039629d1f8e4ca1b8680554d56ed3b25b",
+      "generatedAt": "2026-07-24T09:34:53.302Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-005.md",
+      "checksum": "3c48a163bf8d2e0975b94b76c2ef14630877bc1c2d9d2f5a4c54be6471ee5ccb",
+      "generatedAt": "2026-07-24T09:34:53.302Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-006.md",
+      "checksum": "70fe20d353978710979e5a7592d56340489832d21134a0b88bbeccc0be324e68",
+      "generatedAt": "2026-07-24T09:34:53.303Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-007.md",
+      "checksum": "b5c81bceaabdf5d9bddb16bbdc25749a51fb77237830a61a3e1fbc4ce011eb5b",
+      "generatedAt": "2026-07-24T09:34:53.304Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-008.md",
+      "checksum": "74363dbdae89e87f42a1e594a116d5c74463468537d94b2353f8fc678a8854e3",
+      "generatedAt": "2026-07-24T09:34:53.305Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-009.md",
+      "checksum": "f58e7a57f0012e5285ae5955d020426b4645ef513b2074fb5b61d533af754a4e",
+      "generatedAt": "2026-07-24T09:34:53.306Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-010.md",
+      "checksum": "10ec7a3520266807ee28ac456e57adf98b6b9e42fec79e4f988a5695d06609bd",
+      "generatedAt": "2026-07-24T09:34:53.306Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-011.md",
+      "checksum": "fd72aee241d861a6ba4ed6c527bb862c512fd75d8e2a6b90f33d5329ad9868ea",
+      "generatedAt": "2026-07-24T09:34:53.307Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-012.md",
+      "checksum": "41324aecfb9179cd68bae65aa2ec7fe92462c10a6b6bf0aee037c96af6115a81",
+      "generatedAt": "2026-07-24T09:34:53.308Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-013.md",
+      "checksum": "4705ce772ff5fc3cc7f114f8d634a6d53158ee18c8bde8da61fa851f0ae683e2",
+      "generatedAt": "2026-07-24T09:34:53.309Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-014.md",
+      "checksum": "521e331a0915b06300a57db67f646afaee6265c7a9b923523d39bfa54a14dc6b",
+      "generatedAt": "2026-07-24T09:34:53.310Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-015.md",
+      "checksum": "abb7978cf38bc0f1534bfd1ef51893bbbfc3a98c76cdd2301445ae09015f68db",
+      "generatedAt": "2026-07-24T09:34:53.311Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-017.md",
+      "checksum": "abcff2274ea4fb39aeed36cc49d3458c4f92f78dc74d632343bd4041bdf7fccc",
+      "generatedAt": "2026-07-24T09:34:53.312Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-018.md",
+      "checksum": "c256067059ff3a4658b4526c03b043807c9d25cdae450639fa2c8704e7db6ede",
+      "generatedAt": "2026-07-24T09:34:53.312Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-019.md",
+      "checksum": "217d6852626721f90e834015cb650be8bce8d6fe2e883dc349a3a0246f19427e",
+      "generatedAt": "2026-07-24T09:34:53.313Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-GRAPH-020.md",
+      "checksum": "8c64c79731f209b4602fc562d0d416c3f66650d56628f933f9b779e106726d82",
+      "generatedAt": "2026-07-24T09:34:53.314Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-001.md",
+      "checksum": "18781e588d0c41658c4dd0fed9082b873438b215d7189dc900c63b8d194b48c5",
+      "generatedAt": "2026-07-24T09:34:53.315Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-002.md",
+      "checksum": "d4da136d9ac6a5a651f8b395fd013b6ec194d5b1d56d91028aa2b7288d17fdb6",
+      "generatedAt": "2026-07-24T09:34:53.316Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-003.md",
+      "checksum": "19dc810374ed292df43b41daf05e7bea5376858df54363efe4def33786294801",
+      "generatedAt": "2026-07-24T09:34:53.316Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-004.md",
+      "checksum": "418d970cea034fca2c0bd7e228301a5fbc51679a40f30acee888953d5bebb6ee",
+      "generatedAt": "2026-07-24T09:34:53.317Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-005.md",
+      "checksum": "1996b46e7b8250890ce0447e464e235a5ce5b2a244d6e62f61ab53a04361dee0",
+      "generatedAt": "2026-07-24T09:34:53.318Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-006.md",
+      "checksum": "ee192b91ae2286c04778abad51fe464b8755e0a4a9626b487545a63aeee4b9b8",
+      "generatedAt": "2026-07-24T09:34:53.318Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-007.md",
+      "checksum": "1cdade756ebc162ec5a1cee3d0a301c9e467b995b618c09fb3c5623561e9e63b",
+      "generatedAt": "2026-07-24T09:34:53.319Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-008.md",
+      "checksum": "b3798402938fb8620e0db97ce01a7c469fcf3466d9d7bc1285ec1d37d31b1ab3",
+      "generatedAt": "2026-07-24T09:34:53.320Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-009.md",
+      "checksum": "a24a1e9dac2f4498f792b61ea28a9cc8afe9a99144a8cb233a454374d3182bd8",
+      "generatedAt": "2026-07-24T09:34:53.321Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-010.md",
+      "checksum": "24667269820edff8ac2127dde99090ed098f01f409d7fd8c2c68172d8d77c844",
+      "generatedAt": "2026-07-24T09:34:53.322Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-011.md",
+      "checksum": "897b9de5244b0a78c64fa6f1160f882978af6405ad635a8646236404a278ba52",
+      "generatedAt": "2026-07-24T09:34:53.322Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-012.md",
+      "checksum": "a981ed988ab98f4acba97731cd46f25f56ed9b2a704b21023be094f9c4fa3b63",
+      "generatedAt": "2026-07-24T09:34:53.323Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-013.md",
+      "checksum": "f8c849b8b16a5d6e8fccea00ddb328324b7a7cea46d6bf81f5d06ea5296f02ed",
+      "generatedAt": "2026-07-24T09:34:53.324Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-014.md",
+      "checksum": "1d3cc7475580a4672fe8d5dc43dadc8471715b798c3990dacea73ec8e842e04a",
+      "generatedAt": "2026-07-24T09:34:53.325Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-ALG-015.md",
+      "checksum": "09187232d6cfe66472691feada7ce553ed2598ac2a32a514effa472e5116dd64",
+      "generatedAt": "2026-07-24T09:34:53.326Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-001.md",
+      "checksum": "c9843d63157fb983d2e8a680baf86c14cb2fd12e9860ecd9d1041000d3765cae",
+      "generatedAt": "2026-07-24T09:34:53.326Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-002.md",
+      "checksum": "599d5b99370cf1a0fbd5309fd8796f0765326f5faca6847be305770020c8393c",
+      "generatedAt": "2026-07-24T09:34:53.327Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-003.md",
+      "checksum": "55480dad29e1816d6853e05a3a9907e59eb4aae753e5373505515d14fa0572cb",
+      "generatedAt": "2026-07-24T09:34:53.328Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-004.md",
+      "checksum": "99192eb57bcb19ebb6e424d8d733bbd04802127fab4805f337bf644246cb7115",
+      "generatedAt": "2026-07-24T09:34:53.328Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-005.md",
+      "checksum": "fcb7ab2913861515853259e691be617c04f4a243bdf6f68dae6826c3a1a14270",
+      "generatedAt": "2026-07-24T09:34:53.329Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-006.md",
+      "checksum": "85c70e8c43ae006bd4c03af65fa21e9172db1418a1478f4e853ef433decbb02e",
+      "generatedAt": "2026-07-24T09:34:53.330Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-007.md",
+      "checksum": "a50e3179943b26bc4209b51e11372bece62c2b54a9e18ccd55a19302cb163e28",
+      "generatedAt": "2026-07-24T09:34:53.330Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-008.md",
+      "checksum": "b08356e1335854b1c46028e5e8ecbee573358fd2ad3ab6c99908ec53c0c1344e",
+      "generatedAt": "2026-07-24T09:34:53.331Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-009.md",
+      "checksum": "f0289e57c1fc0bc36fa2e280071d7bb2e8dd759d73d09c740145425a8d34a34c",
+      "generatedAt": "2026-07-24T09:34:53.332Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-010.md",
+      "checksum": "7265dc794719f60f3d30f33a5aa772f78909c055bdada5a463495d2e8ff6043f",
+      "generatedAt": "2026-07-24T09:34:53.333Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-011.md",
+      "checksum": "931c5fd3b129d6714eecf99bdd382bb41d8ec7868af7bd4d0f6e88f8b69b5286",
+      "generatedAt": "2026-07-24T09:34:53.334Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-012.md",
+      "checksum": "1fdad3ad94e811b174d812910288be02a1cae6e0335ce17a0b41454eb7fe9900",
+      "generatedAt": "2026-07-24T09:34:53.334Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-013.md",
+      "checksum": "b1fa201f6d2e652f355a9d797c762e77a1625fac268b7b41441aac78a57cc079",
+      "generatedAt": "2026-07-24T09:34:53.335Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-014.md",
+      "checksum": "076e5ca227fc531b18128cee3ee4141fc268c8bab56752d13e536c2a0dec2beb",
+      "generatedAt": "2026-07-24T09:34:53.335Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-INV-015.md",
+      "checksum": "9de0ecebe70d8af207a368f212f1794586c6bcc1e9d7170671a56efb14b576e1",
+      "generatedAt": "2026-07-24T09:34:53.336Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-BR-001.md",
+      "checksum": "86e693b7235413100a23caf998a2e779a411878e3a769765f39d65f80d3fb5e9",
+      "generatedAt": "2026-07-24T09:34:53.337Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-BR-002.md",
+      "checksum": "df89ec08369789651ce455ead824c80355e90ad19a13d61e70c2df3dd11b5a2a",
+      "generatedAt": "2026-07-24T09:34:53.337Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-BR-003.md",
+      "checksum": "e1bf482521f90ce762c9bdab4b0177124d808d5e6e26124807b75799941df66b",
+      "generatedAt": "2026-07-24T09:34:53.338Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-BR-004.md",
+      "checksum": "a49e95b7a0e96e2f1ab6cae8a66daf205cb9c32ef4b563895e418edc981598e0",
+      "generatedAt": "2026-07-24T09:34:53.338Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-BR-005.md",
+      "checksum": "83f63f64089235182f9738db2b21b3381836b41363d0fe9c6d1aad196a28db35",
+      "generatedAt": "2026-07-24T09:34:53.339Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-CR-001.md",
+      "checksum": "538918d4dd759b4ef52f16534ff32020dae111c5f13af13878c4d084d7edc0af",
+      "generatedAt": "2026-07-24T09:34:53.340Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-CR-002.md",
+      "checksum": "71c7c395a45eb8a036071aafd763d7b5c8de5a0a5b9533f23f92410c054c2ecc",
+      "generatedAt": "2026-07-24T09:34:53.340Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-CR-003.md",
+      "checksum": "abf4c4d687cc2982b9d8dede8e792518d941b057ca14bd3420bddb1ff465deed",
+      "generatedAt": "2026-07-24T09:34:53.341Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-CR-004.md",
+      "checksum": "d6dbf7867a49db35ff26f439adcb0aac718b592f4aac8587703e2628c448f3fb",
+      "generatedAt": "2026-07-24T09:34:53.341Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-CR-005.md",
+      "checksum": "f401273a30598bd653226fe5dc46014d2505e29be69fabaacae3cdf44b49cec5",
+      "generatedAt": "2026-07-24T09:34:53.342Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-FB-001.md",
+      "checksum": "1d56a3d6bcc117a2eb7f0d36eee1975db98805fb848a628764793e7d1103c641",
+      "generatedAt": "2026-07-24T09:34:53.343Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-FB-002.md",
+      "checksum": "ffe1a11cfdf717b26372072a531ba50bb8cfc901c6bf1074aa821690fd1d1ad1",
+      "generatedAt": "2026-07-24T09:34:53.343Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-FB-003.md",
+      "checksum": "eb9dc7ca043e8e9697ea1139496486723c03d0eed08ce3f23236c86ecbb0e460",
+      "generatedAt": "2026-07-24T09:34:53.344Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-FB-004.md",
+      "checksum": "02444009127df417e3cf8c14b2b5041941a9a803debffd9e0fae7eed95d9ba1b",
+      "generatedAt": "2026-07-24T09:34:53.345Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BCM\\BCM-FB-005.md",
+      "checksum": "58ab72985277d1b73d7ddbdd3967b2c7a9ff6c0845d390160c5011fa3a05d48b",
+      "generatedAt": "2026-07-24T09:34:53.346Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-OBJ-001.md",
+      "checksum": "b1ac8c908b4ff2bfc3faf0127afbe7222a4bded3c3963ed3dca090062bb83e2f",
+      "generatedAt": "2026-07-24T09:34:53.347Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-OBJ-002.md",
+      "checksum": "bb89af75b0a57f1bd41f2f46af1da2dd552c39931f1464993b5fedb7288f04bd",
+      "generatedAt": "2026-07-24T09:34:53.348Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-001.md",
+      "checksum": "67ccb528af170286a55bd46e6d9553b69a629821669fde8da262d752c2974467",
+      "generatedAt": "2026-07-24T09:34:53.349Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-002.md",
+      "checksum": "0b6e3a8d596c9468e37fd284c51e7942d20dbcac9b81d89d997e26a9395a707b",
+      "generatedAt": "2026-07-24T09:34:53.350Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-003.md",
+      "checksum": "73e0bb25f72801a8803644da33494f78d5721f0e5d3e297f81cadb7dc73265b5",
+      "generatedAt": "2026-07-24T09:34:53.351Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-004.md",
+      "checksum": "e20a4a2a95a0923473f4be60b6199507ef12fabdacb4ac11c5cd83faabe40085",
+      "generatedAt": "2026-07-24T09:34:53.351Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-005.md",
+      "checksum": "2c2154f6a58840004e725d136042452b88da7670e45f1ce7355eed4dca6c4de2",
+      "generatedAt": "2026-07-24T09:34:53.352Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-006.md",
+      "checksum": "ae4d47f8bd63a15772d4f5e1bc4bf927c3ccaf84a3d91f2fc1e81209203299fb",
+      "generatedAt": "2026-07-24T09:34:53.353Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-007.md",
+      "checksum": "1fa37d012613c5319197718aa031a31b3e4623712f4aa945821577b772420f8b",
+      "generatedAt": "2026-07-24T09:34:53.354Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-008.md",
+      "checksum": "9d4f1a8a69db6139ddf4cd05bd39311b936ace8f92e5c40d0f59ffcc7c227932",
+      "generatedAt": "2026-07-24T09:34:53.354Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-009.md",
+      "checksum": "61217ada9f1269deb18734ff043acf223b5a282152393d10c55b127b99807adf",
+      "generatedAt": "2026-07-24T09:34:53.355Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-CONTRACT-010.md",
+      "checksum": "04c15288249f5b23bd5a033ebdfc5b4e76594e66dd5598221da3c0d5b9a3c951",
+      "generatedAt": "2026-07-24T09:34:53.356Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-001.md",
+      "checksum": "db6b57f31a31389dadab1cfc560650a82e5c47fc645862b339e1896826be7e0d",
+      "generatedAt": "2026-07-24T09:34:53.357Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-002.md",
+      "checksum": "7951f694a2076f07c7d3a5663f37b8fc3c1ecba1391c37ddff0ddad6781d23ce",
+      "generatedAt": "2026-07-24T09:34:53.357Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-003.md",
+      "checksum": "681225b07a34203132fde7e4a4072d4de4b87c398b812f62a4789e53bc12f029",
+      "generatedAt": "2026-07-24T09:34:53.358Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-004.md",
+      "checksum": "ca864c21f8affa148406596a05820b90ea672ebfbebe0281fd126ab5206ea68e",
+      "generatedAt": "2026-07-24T09:34:53.359Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-005.md",
+      "checksum": "5ba71fd2c0f373580ad0fc22b5a1d10c20b41011f516aa29e11779695401751a",
+      "generatedAt": "2026-07-24T09:34:53.359Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-006.md",
+      "checksum": "21c85d4907503a921455e1416e9815f84cedf6130d12d7ae35eaa1d2db8d69e6",
+      "generatedAt": "2026-07-24T09:34:53.359Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-007.md",
+      "checksum": "3f71ad8661b2cc60a27b6b6c9173302b6177c508881226613c693730c4a2b710",
+      "generatedAt": "2026-07-24T09:34:53.360Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-INV-008.md",
+      "checksum": "3bc8eb9eefc01a98e23fb2143e9c2418113020a39b5a86d86edfca3850709e77",
+      "generatedAt": "2026-07-24T09:34:53.361Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-BR-001.md",
+      "checksum": "0bb96b04bd55fbef566d2ec96e987e49c4bc8c5f930c1fc8ce4a1b4fc6b58b64",
+      "generatedAt": "2026-07-24T09:34:53.361Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-BR-002.md",
+      "checksum": "a2636dccf6fcd4e85ef9f5318f946b7133141e3a949636a5e245f2f2dfc2a61f",
+      "generatedAt": "2026-07-24T09:34:53.362Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-BR-003.md",
+      "checksum": "c23d4bccce79a3bdd04d0dec0ff29cbdd9dc04488bd316d1ab4dbf7ac8736055",
+      "generatedAt": "2026-07-24T09:34:53.362Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-BR-004.md",
+      "checksum": "17a87f74a6dc1ad71bcf4395c3d763bc75c82ab82d0bdff0c877d0d37df7a189",
+      "generatedAt": "2026-07-24T09:34:53.363Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-BR-005.md",
+      "checksum": "78d4e8766f74246f34af80dd1c06c0e79567c8a5e63ce2dd103ba08e1326520b",
+      "generatedAt": "2026-07-24T09:34:53.364Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-FB-001.md",
+      "checksum": "697971e188dbfa5bf4c9085d39cb2e02b7088adab67a412a3fe1322c51565f77",
+      "generatedAt": "2026-07-24T09:34:53.365Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-FB-002.md",
+      "checksum": "a0924de7da3e75be8ff6b606ff5a9f5d702ac03bf75ddcaabfc80b01913dcb87",
+      "generatedAt": "2026-07-24T09:34:53.365Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-FB-003.md",
+      "checksum": "c5c067e07ae196c86d3e2900677a2033c889c2a3853940bd331cbc4b518c724d",
+      "generatedAt": "2026-07-24T09:34:53.366Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\BEA\\BEA-FB-004.md",
+      "checksum": "84cf172f60f47b8d19aa29728369e603761ec968b5612cdb1b2fb96ed8bfbb96",
+      "generatedAt": "2026-07-24T09:34:53.367Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-001.md",
+      "checksum": "64b0c61c16c8ec14c791c879e4bc5baaa18725ef06a514b83688b43bd3a8a748",
+      "generatedAt": "2026-07-24T09:34:53.370Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-002.md",
+      "checksum": "75210cf2f8de1c551ef3d41eaf11843374d48d79cea31d92457bbf1ebf8db7e0",
+      "generatedAt": "2026-07-24T09:34:53.371Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-003.md",
+      "checksum": "6fbd7fdd41919d8f0c14454bffd31b49e9b7b03d796ee24fed284a06eb4f411d",
+      "generatedAt": "2026-07-24T09:34:53.372Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-004.md",
+      "checksum": "88041a1eac7b17a7d1455b9f8f791be0549012ad134e7b0490fef6dfed835559",
+      "generatedAt": "2026-07-24T09:34:53.372Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-005.md",
+      "checksum": "8a46ddeb9d2561320b3e5db685b5dd9b7f7f23fe21998f34e69c0d4542033ef3",
+      "generatedAt": "2026-07-24T09:34:53.373Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-006.md",
+      "checksum": "837920d41ba7324579853e007b6a098aad795f104306e1178f65f70df85b16b3",
+      "generatedAt": "2026-07-24T09:34:53.373Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-007.md",
+      "checksum": "d6ffe07d0074fdcd90c9d0fa1d22698e849bb6f882e21584b4b1f2e124a9873a",
+      "generatedAt": "2026-07-24T09:34:53.374Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-008.md",
+      "checksum": "958e76536a9d768e85024e6d96d936bf230d0cf3f056d8fd112f15988e1c04e2",
+      "generatedAt": "2026-07-24T09:34:53.374Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-009.md",
+      "checksum": "821a39ac4cd8139359f9aa6c54b3f9ec46237d52259073d71f493879cc897201",
+      "generatedAt": "2026-07-24T09:34:53.375Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\contracts\\BEA-CONTRACT-010.md",
+      "checksum": "eefc329e1378f12003ee0d2a47964ee696c8c044ec3305726e92bb9d89975af3",
+      "generatedAt": "2026-07-24T09:34:53.376Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Observation.ts",
+      "checksum": "859db4acba26c59c1a982954d8ec2a8e2d0f0463e9950d44c880e6ef15ee3535",
+      "generatedAt": "2026-07-24T09:34:53.378Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Observation.schema.json",
+      "checksum": "4c987f1482502802389552363663d5d5231125e4521ba6828df0db252d575af0",
+      "generatedAt": "2026-07-24T09:34:53.379Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Perception.ts",
+      "checksum": "fb88f3f826c3a0f65f5623ed24e6027d8f60cbb58b57f5b1abe7e6228c7d3aec",
+      "generatedAt": "2026-07-24T09:34:53.380Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Perception.schema.json",
+      "checksum": "f4dffdf86af2fab5d88644f7475a71ee961f50e8191cc9e2214c9d23ec94c077",
+      "generatedAt": "2026-07-24T09:34:53.381Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Evidence.ts",
+      "checksum": "28544f174e0b86dad33301961fd6ae09552f21b5b0dfc4a321f4025875f8903f",
+      "generatedAt": "2026-07-24T09:34:53.382Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Evidence.schema.json",
+      "checksum": "88e7fe38bd149228dd9d0f57ed1ad25356092f6c75f9b11d0b7bd76822e428b6",
+      "generatedAt": "2026-07-24T09:34:53.383Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Confidence.ts",
+      "checksum": "cb75b65ff7e7de352bbca996d187db7b7a9a90393f10ed073834bffeab95d34b",
+      "generatedAt": "2026-07-24T09:34:53.384Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Confidence.schema.json",
+      "checksum": "33ee927f8d3daeba80c7824fac1a518603d6adaa4329c853da5f37c4a17ae616",
+      "generatedAt": "2026-07-24T09:34:53.385Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Knowledge.ts",
+      "checksum": "b5d0ae31e9cefc5af7ce8a1080fa2b61c64e00ff9b123c517a8c27107740f7d3",
+      "generatedAt": "2026-07-24T09:34:53.386Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Knowledge.schema.json",
+      "checksum": "e82a19cfa8bb9c03c349625c00ffa1831fa2270cd4d67775901b05bce1dca609",
+      "generatedAt": "2026-07-24T09:34:53.386Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Belief.ts",
+      "checksum": "2d47cf4519e34947722dda69e74757bfe48e20933265b2068a685c4f813914ad",
+      "generatedAt": "2026-07-24T09:34:53.387Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Belief.schema.json",
+      "checksum": "c26eed5fb7ea5e56cb1a30cb5cedfda2eeb6bdbc1171e29bd3b32e03c460213e",
+      "generatedAt": "2026-07-24T09:34:53.388Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Hypothesis.ts",
+      "checksum": "b483673ce17319e2fc5e0c8c1e7d1f19c0f04bd9a62035b36203dd2cd8108845",
+      "generatedAt": "2026-07-24T09:34:53.388Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Hypothesis.schema.json",
+      "checksum": "b8d8262e54fd2d1ebd27b55ebfd1a6c20b6bdd20f351a12eeecbb9398757706d",
+      "generatedAt": "2026-07-24T09:34:53.389Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Decision.ts",
+      "checksum": "237ff5574a3efdd800c18e19107a995bf287ce3a804c02e1dc7cc049084f6794",
+      "generatedAt": "2026-07-24T09:34:53.389Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Decision.schema.json",
+      "checksum": "18f076cccf2417389e6174db80591b6d91e5e68a42bf54a6d8f8d20261e046ea",
+      "generatedAt": "2026-07-24T09:34:53.390Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Plan.ts",
+      "checksum": "774e180f9b3e20ff482c944f7c8d7d5c34418f9d0fa45a057f9ae8fdb90c7d28",
+      "generatedAt": "2026-07-24T09:34:53.390Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Plan.schema.json",
+      "checksum": "96945afe234b9c0777289e4c0c5237431072543d7cc87decab016c90cbfaad4c",
+      "generatedAt": "2026-07-24T09:34:53.391Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Memory.ts",
+      "checksum": "962b957572d16308a9af9aa3be92a561b82bc0f6e23fee0933408d8f7446b981",
+      "generatedAt": "2026-07-24T09:34:53.392Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Memory.schema.json",
+      "checksum": "c15974b7356071c2793159459b0def9e965b09ec2b078bd8327e155525ece0d1",
+      "generatedAt": "2026-07-24T09:34:53.393Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Adaptation.ts",
+      "checksum": "5ef51977880e41b359d9c2fbce32b1a1d8a4ecd3a7f1a14ceb8659ec33c97e24",
+      "generatedAt": "2026-07-24T09:34:53.394Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Adaptation.schema.json",
+      "checksum": "9050bd02b9abf74f663d7a1a3bd14c42153f8cef2a4d200211c1eaf2ea708167",
+      "generatedAt": "2026-07-24T09:34:53.395Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\MetaReasoning.ts",
+      "checksum": "b1b447617046b6561b473ac663ec5e49ab60cdf7e54c90515f44737caf5999f1",
+      "generatedAt": "2026-07-24T09:34:53.396Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\MetaReasoning.schema.json",
+      "checksum": "3d04bcea38f446859f5947ab797b89548526363133bb0f1a34486603294e5f14",
+      "generatedAt": "2026-07-24T09:34:53.397Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\SelfEvaluation.ts",
+      "checksum": "bef3ffba59e4a483ce040bb30981b477e8f99ac805140841c15c6651d857883a",
+      "generatedAt": "2026-07-24T09:34:53.397Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\SelfEvaluation.schema.json",
+      "checksum": "da58dc28df70cd1ef2e9b39643608b92625b3a4cd98e9b149a58e06d5dc08350",
+      "generatedAt": "2026-07-24T09:34:53.399Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveStateMachine.ts",
+      "checksum": "354c514e0c9690f1f5b08bfc4fc9c8ba3e2b4ec685f09773a3104de21f6d2aa0",
+      "generatedAt": "2026-07-24T09:34:53.400Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveStateMachine.schema.json",
+      "checksum": "4ab170ce428d13667c68c883fd6b6ba4b7a20c354691b905be847a51bd7c14a9",
+      "generatedAt": "2026-07-24T09:34:53.401Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveMetric.ts",
+      "checksum": "bc752bf655302db5b512dedc563557314cdfa7bbd29cd41064831f050ecb41f3",
+      "generatedAt": "2026-07-24T09:34:53.402Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveMetric.schema.json",
+      "checksum": "aa9eb14f81aebe7be29ee44412e2de2f875135bf8f78471884fbd2450668db25",
+      "generatedAt": "2026-07-24T09:34:53.403Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveMathematics.ts",
+      "checksum": "da4a1014e1fc00dbe7590b991d99660a57cb98cb358e2b5aeb8ee6811f94da0f",
+      "generatedAt": "2026-07-24T09:34:53.403Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveMathematics.schema.json",
+      "checksum": "9e9db2ce0c2a1702b248007494446f6f1937759e89ac722daba7c0ed017ba740",
+      "generatedAt": "2026-07-24T09:34:53.404Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveGuarantee.ts",
+      "checksum": "f9475cebfbab259593bcd98db814307d8c662bc3c6547418619810ef42fc03dc",
+      "generatedAt": "2026-07-24T09:34:53.405Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\CognitiveGuarantee.schema.json",
+      "checksum": "576b1e5c6c132163ff0136ea3f5e39e5dad6363fa7efd860bdb848b692170c5e",
+      "generatedAt": "2026-07-24T09:34:53.405Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Node.ts",
+      "checksum": "1cadba51e4d42237da0b9302fbdaf21389cea1aac43e2f1887a3551610edf90e",
+      "generatedAt": "2026-07-24T09:34:53.406Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Node.schema.json",
+      "checksum": "1196ce90a2ad6c811a8756a4992065c0788de563aed25ca9efd292fd3b3f90c4",
+      "generatedAt": "2026-07-24T09:34:53.407Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Edge.ts",
+      "checksum": "5ac7202c57494b237ea68a23f0b75c5fc57a40f78e862a6c5e8aba03b23a0a0a",
+      "generatedAt": "2026-07-24T09:34:53.408Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Edge.schema.json",
+      "checksum": "57d56e07f0362f67fab3ab1651b982d324e6cc5d5afb3eb830d2f5a88a9758d6",
+      "generatedAt": "2026-07-24T09:34:53.408Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Context.ts",
+      "checksum": "38c63c43ab7cfd4458496863e43ecd075aa568595142162d0a08d60b71b741c4",
+      "generatedAt": "2026-07-24T09:34:53.409Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Context.schema.json",
+      "checksum": "1039bdf75bb9c8814a261adb9ae3e602bc1f56abca99943cdfe4d13dce6b579f",
+      "generatedAt": "2026-07-24T09:34:53.410Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Session.ts",
+      "checksum": "0aedbb54e0c13d31c86d0d73fd427cbe38933b088a9f85305af4d1628a2e2f2f",
+      "generatedAt": "2026-07-24T09:34:53.411Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Session.schema.json",
+      "checksum": "c532b7945da171f80d7b976d99edd92191354d54e0bb99d7c5a361567567d175",
+      "generatedAt": "2026-07-24T09:34:53.411Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Conversation.ts",
+      "checksum": "751c6a292ea777f1a87ffa0a86dc9a22da6475621acab44bab2233afebd55cdc",
+      "generatedAt": "2026-07-24T09:34:53.412Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Conversation.schema.json",
+      "checksum": "eb7117bf1a9a480001248c91bdccbe0dfbd46fc0f84093acfceb11014c29ef8d",
+      "generatedAt": "2026-07-24T09:34:53.412Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Question.ts",
+      "checksum": "79290d38062ef4993398fa2bd4188ec6c11c51fd369a0ac899f1a62547a1575e",
+      "generatedAt": "2026-07-24T09:34:53.413Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Question.schema.json",
+      "checksum": "2d2fdf0f98e3010f1a4a3c2ffd569f91d487ff35bbb5d838de88323565d8fc1b",
+      "generatedAt": "2026-07-24T09:34:53.414Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Answer.ts",
+      "checksum": "8244c237bfad1e22d3bd71cf8c7eeb2e2b8034ae62e9ade3b1cd466f9c14de47",
+      "generatedAt": "2026-07-24T09:34:53.415Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Answer.schema.json",
+      "checksum": "32fc5b373122520b30f8ac622435df0c53f08fee1a35e8e0ecfce5c62a3889b3",
+      "generatedAt": "2026-07-24T09:34:53.416Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Strategy.ts",
+      "checksum": "a51ac892407a6ffe2f2d96f959bad64dff6f3f154d82e94c917990853c4e32be",
+      "generatedAt": "2026-07-24T09:34:53.416Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Strategy.schema.json",
+      "checksum": "8a1864fcad49fa4275a22f188f3c9812398d165760efc09a537428a8d1432d5b",
+      "generatedAt": "2026-07-24T09:34:53.417Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Capability.ts",
+      "checksum": "b8e55288c29ca1b98a1f4ed7d44e3b807524752db56e296a941a7339ee4ccbcc",
+      "generatedAt": "2026-07-24T09:34:53.418Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Capability.schema.json",
+      "checksum": "000d7314244f3cb9250f55c89772a45dbc3332c030ff79383954b776fa8697df",
+      "generatedAt": "2026-07-24T09:34:53.418Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Policy.ts",
+      "checksum": "98e802466d77c8a511535bd5ce6fa58c81130ba62849c69ce473dea01889fb4a",
+      "generatedAt": "2026-07-24T09:34:53.419Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Policy.schema.json",
+      "checksum": "158a31ac0b9d88545f3c55e2c4bd5c825f30a2873e0efbba077fe50db6db09fd",
+      "generatedAt": "2026-07-24T09:34:53.419Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Command.ts",
+      "checksum": "caf63566139dd8b4c73530255b7f7176608c70bd925d8c172d8cce4a920b8dcf",
+      "generatedAt": "2026-07-24T09:34:53.420Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Command.schema.json",
+      "checksum": "f3096a3cef7d5bbd1eaea6180c08f0e3891d7e9e0655d2eefb04fce8c305dd0f",
+      "generatedAt": "2026-07-24T09:34:53.420Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Query.ts",
+      "checksum": "a9f3fcdbcd4f743c51b9fc3707ac830c6274afd1173bab690b0503021a4dd66d",
+      "generatedAt": "2026-07-24T09:34:53.421Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Query.schema.json",
+      "checksum": "0589991f8af4ce22799d26aba432e730df56dd3ea2b2e75e2d80d8b6061f2b61",
+      "generatedAt": "2026-07-24T09:34:53.422Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\FeatureFlag.ts",
+      "checksum": "37862e94195c6f6d6948d40bf244903e83f60fbabcb05a67006b3159efc56d95",
+      "generatedAt": "2026-07-24T09:34:53.422Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\FeatureFlag.schema.json",
+      "checksum": "b1656c7533aa3cac00db735d7e49fbecd9af5682fd9f15352f3981102fcc1714",
+      "generatedAt": "2026-07-24T09:34:53.423Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Artifact.ts",
+      "checksum": "18f2c65b326a3fd94e3aafb9c59972951d6efbe9e73586905ac56028f7b58b0c",
+      "generatedAt": "2026-07-24T09:34:53.424Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Artifact.schema.json",
+      "checksum": "8b5ddf3231d35f616f8a1982aad7a468a2be927c84a66dea4249c8b3be020298",
+      "generatedAt": "2026-07-24T09:34:53.424Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Execution.ts",
+      "checksum": "948f2d73aa90a033121e9e3f0daa597d33f6338e78889658c61cc50487413ad5",
+      "generatedAt": "2026-07-24T09:34:53.425Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Execution.schema.json",
+      "checksum": "b998b3f0899a98e538c805c233b6284048b08b1c712884bd7afdf850794ad940",
+      "generatedAt": "2026-07-24T09:34:53.426Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Budget.ts",
+      "checksum": "8fd74c4edaad621642367dd1f6c048c8649f8cad045c4310e0250e3609fa9269",
+      "generatedAt": "2026-07-24T09:34:53.426Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Budget.schema.json",
+      "checksum": "3d8726281438a152b8ebe65cac8eefe39839db3d747123ff641e546ec5e81c7b",
+      "generatedAt": "2026-07-24T09:34:53.427Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Version.ts",
+      "checksum": "cc2c9ff6b35ae934c814e225d19a350993bbbe6c546717b13d2f66173412a3e2",
+      "generatedAt": "2026-07-24T09:34:53.428Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Version.schema.json",
+      "checksum": "6221b900c50d50f5f23409252b4213c938896c59157ab5cf1ce9c7f5ee6704b0",
+      "generatedAt": "2026-07-24T09:34:53.428Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Package.ts",
+      "checksum": "477e3720578ed73145d2614627402b52020998041115a0159f284e3e484edf26",
+      "generatedAt": "2026-07-24T09:34:53.429Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\generated-interfaces\\Package.schema.json",
+      "checksum": "3f6b17146b86f39ee6df4be2baccee653d24fe4c4af8c1f904d6dbdc799366a8",
+      "generatedAt": "2026-07-24T09:34:53.430Z"
+    },
+    {
+      "path": "C:\\Trajectoire\\BLUEPRINT_GENERATED\\documentation\\INDEX.md",
+      "checksum": "b4a12af9a6cebed3b163ef8d571b38cc53bedc57ff01893af127b9acb67a0950",
+      "generatedAt": "2026-07-24T09:34:53.433Z"
+    }
+  ]
+}

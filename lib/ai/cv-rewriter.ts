@@ -25,10 +25,7 @@ export async function rewriteSummary(originalText: string): Promise<string> {
   return text.trim();
 }
 
-export async function generateImpactMetrics(
-  role: string,
-  context: string,
-): Promise<string> {
+export async function generateImpactMetrics(role: string, context: string, ): Promise<string> {
   const prompt = `Pour le rôle de "${role}" dans le contexte suivant :\n"${context}"\n\nGénère 3 suggestions de métriques d'impact quantitatives que le candidat pourrait ajouter à son CV. Sois très concis, sous forme de liste à puces.`;
 
   const { text } = await generateText({

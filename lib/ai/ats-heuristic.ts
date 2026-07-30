@@ -3,10 +3,7 @@
  * Returns a score between 0 and 100 based on word frequency match.
  * Improved with stop words and better filtering.
  */
-export function calculateHeuristicScore(
-  cvText: string,
-  jobDescription: string,
-): number {
+export function calculateHeuristicScore(cvText: string, jobDescription: string, ): number {
   if (!cvText || !jobDescription) return 0;
 
   const cvLower = cvText.toLowerCase();

@@ -11,10 +11,7 @@ export interface UserBehaviorProfile {
   stabilityScore: number;
 }
 
-export function updateUserBehaviorProfile(
-  previous: UserBehaviorProfile | null,
-  session: InterviewAnalyticsProjection
-): UserBehaviorProfile {
+export function updateUserBehaviorProfile(previous: UserBehaviorProfile | null, session: InterviewAnalyticsProjection): UserBehaviorProfile {
   if (!previous) {
     return {
       userId: session.userId,

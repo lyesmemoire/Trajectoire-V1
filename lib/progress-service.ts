@@ -39,10 +39,7 @@ export type ProgressData = {
   careerTrajectory: CareerTrajectory | null;
 };
 
-export async function getProgressData(
-  supabase: any,
-  userId: string,
-): Promise<ProgressData | null> {
+export async function getProgressData(supabase: unknown, userId: string, ): Promise<ProgressData | null> {
   const { data, error } = await supabase
     .from("premium_interview_sessions")
     .select(
@@ -71,7 +68,7 @@ export async function getProgressData(
   }
 
   // Format history
-  const history: InterviewSessionSummary[] = data.map((session: any) => ({
+  const history: InterviewSessionSummary[] = data.map((session: unknown) => ({
     id: session.id,
     createdAt: session.created_at,
     jobTitle: session.job_title,
@@ -116,7 +113,7 @@ export async function getProgressData(
   // Build career trajectory from CTS data
   let careerTrajectory: CareerTrajectory | null = null;
   if (ctsData && ctsData.length > 0) {
-    const ctsHistory = ctsData.map((s: any) => s.career_trajectory_score as number).reverse();
+    const ctsHistory = ctsData.map((s: unknown) => s.career_trajectory_score as number).reverse();
     const current = ctsHistory[ctsHistory.length - 1];
     const previous = ctsHistory.length > 1 ? ctsHistory[ctsHistory.length - 2] : null;
     const delta = previous !== null ? Math.round((current - previous) * 10) / 10 : 0;

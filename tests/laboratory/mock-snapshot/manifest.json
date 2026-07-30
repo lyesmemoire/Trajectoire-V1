@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0.0","metadata":{"gitSha":"mock"},"environment":{},"buildEnvironment":{"node":"24.13.0","typescript":"5.9.3","pnpm":"N/A","vitest":"4.1.8","fastCheck":"N/A","os":"win32 x64","architecture":"x64"},"environmentDigest":"5bd0ac57d432d5718ff171808a94715082371f3d266df6fd5a0f534ac1f1415d","artifacts":[],"evidence":[],"verification":{},"integrity":{}}

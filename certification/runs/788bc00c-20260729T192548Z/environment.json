@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "ENVIRONMENT_SNAPSHOT",
+  "metadata": {
+    "id": "ENV-20260729T192548Z",
+    "createdAt": "2026-07-29T19:25:48.464Z",
+    "component": "execution-pipeline",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "node certification/certify.cjs",
+    "script": "certification/evidence.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T19:25:45.203Z",
+    "completedAt": "2026-07-29T19:25:48.464Z",
+    "durationMs": 0,
+    "exitCode": 0
+  },
+  "content": {
+    "nodeVersion": "v24.13.0",
+    "pnpmVersion": "9.15.9",
+    "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+    "typescriptVersion": "5.9.3",
+    "fastCheckVersion": "4.8.0",
+    "os": "win32 x64",
+    "arch": "x64",
+    "cpuModel": "11th Gen Intel(R) Core(TM) i5-1145G7 @ 2.60GHz",
+    "totalMemoryMB": 16112,
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false,
+    "pnpmLockSha256": "d8f1305b3b7bc6bdedd2ea179d9b248c2bcee057d9ed9badd28c905bd9e9900d",
+    "packageJsonSha256": "932a0baf0f38cf6f7dd885284d5cb591cee7b0c4f603860d83f72cb9132faf58"
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "environment.json",
+      "sha256": "self"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "6f5acbdd9da022b9cbdfbded786ab4e2099f8c8283b943aadc1c9544fe149d76",
+    "algorithm": "sha256"
+  }
+}

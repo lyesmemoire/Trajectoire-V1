@@ -1,0 +1,62 @@
+{
+  "component": "execution-pipeline",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "gitBranch": "main",
+  "auditDate": "2026-07-27",
+  "evidenceChain": {
+    "source": {
+      "component": "execution-pipeline",
+      "file": "compiler/cvm/execution-pipeline.ts",
+      "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c"
+    },
+    "tests": {
+      "mainTest": "tests/vm/advanced/execution-pipeline.test.ts",
+      "r5MinimalTest": "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts",
+      "totalTests": 80,
+      "passed": 80
+    },
+    "coverage": {
+      "report": "coverage-official.json",
+      "source": "reports/runtime/execution-pipeline-current-coverage.json",
+      "metrics": {
+        "statements": "90.48%",
+        "branches": "73.91%",
+        "functions": "100.00%",
+        "lines": "90.48%"
+      }
+    },
+    "mutation": {
+      "report": "mutation-official.json",
+      "source": "reports/runtime/mutation/mutation-summary.json",
+      "metrics": {
+        "total": 10,
+        "killed": 3,
+        "survived": 0,
+        "invalid": 7,
+        "score": 100
+      }
+    },
+    "regression": {
+      "report": "regression-official.json",
+      "source": "reports/runtime/regression/regression-stable-results.json",
+      "metrics": {
+        "total": 22,
+        "detected": 19,
+        "missed": 2,
+        "buildErrors": 1,
+        "detectionRate": 86.36
+      }
+    },
+    "rootCause": {
+      "report": "root-cause-official.md",
+      "source": "reports/runtime/regression/root-cause-r5.md",
+      "decision": "A - Le code est correct. Le test est faux."
+    },
+    "certification": {
+      "report": "certification-official.json",
+      "decision": "A - CERTIFICATION REFUSÉE",
+      "externalAuditorAnswer": "NON"
+    }
+  }
+}

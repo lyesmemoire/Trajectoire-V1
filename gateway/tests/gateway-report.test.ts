@@ -64,7 +64,7 @@ describe("Gateway Phase 2-E — Report API", () => {
     expect(finishRes.status).toBe(202);
 
     // Give SIL time to process P6 -> P7 -> Storage (retry loop for async processing)
-    let getReportRes: any;
+    let getReportRes: unknown;
     for (let attempt = 0; attempt < 10; attempt++) {
       await new Promise(r => setTimeout(r, 100));
       getReportRes = await request(app)

@@ -36,10 +36,7 @@ function cosineSimilarity(a: number[], b: number[]): number {
 
 // ── Score sémantique ─────────────────────────────────────
 
-export async function computeSemanticScore(
-  cvText: string,
-  jobText: string,
-): Promise<number> {
+export async function computeSemanticScore(cvText: string, jobText: string, ): Promise<number> {
   const [cvEmbed, jobEmbed] = await Promise.all([
     getEmbedding(cvText),
     getEmbedding(jobText),
@@ -69,10 +66,7 @@ export function computeKeywordScore(cv: string, job: string): number {
 
 // ── Feedback structuré via Llama3 ────────────────────────
 
-export async function generateFeedback(
-  cvText: string,
-  jobText: string,
-): Promise<{
+export async function generateFeedback(cvText: string, jobText: string, ): Promise<{
   matched_keywords: string[];
   missing_keywords: string[];
   strengths: string[];
@@ -139,7 +133,7 @@ ${jobText.slice(0, 2000)}`,
         ? parsed.recommendations
         : [],
     };
-  } catch {
+  } catch (error) {
     console.error("[LocalATS] Failed to parse Llama3 response:", raw);
     return {
       matched_keywords: [],

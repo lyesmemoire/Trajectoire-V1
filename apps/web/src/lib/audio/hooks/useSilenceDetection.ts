@@ -5,9 +5,7 @@ import { useState, useEffect, useRef } from "react";
 /**
  * Detects prolonged silence during an answer.
  */
-export function useSilenceDetection(
-  stream: MediaStream | null,
-  onSilenceThreshold: () => void,
+export function useSilenceDetection(stream: MediaStream | null, onSilenceThreshold: () => void,
 ) {
   const [isSilent, setIsSilent] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -18,7 +16,7 @@ export function useSilenceDetection(
     if (!stream) return;
 
     const audioContext = new (
-      window.AudioContext || (window as any).webkitAudioContext
+      window.AudioContext || (window  as any).webkitAudioContext
     )();
     const source = audioContext.createMediaStreamSource(stream);
     const analyser = audioContext.createAnalyser();

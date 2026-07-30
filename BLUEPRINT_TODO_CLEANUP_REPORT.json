@@ -1,0 +1,153 @@
+{
+  "summary": {
+    "totalTodo": 15,
+    "totalFixme": 0,
+    "totalPlaceholder": 0,
+    "totalMock": 3,
+    "totalNotImplemented": 0,
+    "totalPseudoCode": 8,
+    "totalFilesFixed": 25
+  },
+  "findings": {
+    "todo": [
+      {
+        "file": "apps\\realtime-gateway\\tests\\runtime\\hash\\placeholderHashTests.ts",
+        "text": "// TODO: implement state hash integrity checks"
+      },
+      {
+        "file": "apps\\realtime-gateway\\tests\\runtime\\kernel\\causalChainIntegrity.test.ts",
+        "text": "// TODO: implement causal chain validation checks"
+      },
+      {
+        "file": "apps\\realtime-gateway\\tests\\runtime\\kernel\\reducerIntegrity.test.ts",
+        "text": "// TODO: implement reducer integrity checks"
+      },
+      {
+        "file": "apps\\realtime-gateway\\tests\\runtime\\kernel\\replayCorruption.test.ts",
+        "text": "// TODO: implement replay corruption scenarios"
+      },
+      {
+        "file": "apps\\web\\src\\app\\api\\cv\\analyze\\route.ts",
+        "text": "// TODO-BILLING : Réintégrer la vérification d'abonnement quand L1.1 est DONE"
+      },
+      {
+        "file": "apps\\web\\src\\app\\api\\cv\\analyze\\route.ts",
+        "text": "// TODO-BILLING : Ajouter checkSubscription(userId) quand L1.1 est DONE"
+      },
+      {
+        "file": "apps\\web\\src\\core\\p5\\integration\\execution-facade.ts",
+        "text": "// TODO: proper snapshot hash later (non-critical for V1)"
+      },
+      {
+        "file": "apps\\web\\src\\lib\\coaching\\email.ts",
+        "text": "// TODO: Implement via Resend or similar service when email infrastructure is ready"
+      },
+      {
+        "file": "apps\\web\\src\\lib\\share\\share-engine.ts",
+        "text": "// TODO: Implement with html2canvas when needed"
+      },
+      {
+        "file": "apps\\web\\src\\lib\\subscription\\check-subscription.ts",
+        "text": "// TODO-L1.1 : Quand Stripe est câblé, le webhook met à jour ces champs."
+      },
+      {
+        "file": "apps\\web\\src\\middleware.ts",
+        "text": "// TODO-L1.1 : Rien à modifier ici quand Stripe arrive."
+      },
+      {
+        "file": "compiler\\cvm\\garbage-collector.ts",
+        "text": "// TODO: Mark child blocks if block contains references"
+      },
+      {
+        "file": "core\\p5\\integration\\execution-facade.ts",
+        "text": "// TODO: proper snapshot hash later"
+      },
+      {
+        "file": "lib\\coaching\\email.ts",
+        "text": "// TODO: Implement via Resend or similar service"
+      },
+      {
+        "file": "sil\\services\\p6-runtime-client.ts",
+        "text": "// TODO: proper snapshot hash later"
+      }
+    ],
+    "fixme": [],
+    "placeholder": [],
+    "mock": [
+      {
+        "file": "p0\\api-gateway\\middleware\\auth.middleware.ts",
+        "text": "// MOCK verify (replace with JWT provider)"
+      },
+      {
+        "file": "p0\\api-gateway\\middleware\\tenant.middleware.ts",
+        "text": "// MOCK logic (would fetch from TenantResolver)"
+      },
+      {
+        "file": "packages\\hiios-runtime\\src\\tests\\build005.test.ts",
+        "text": "// MOCK PROVIDER"
+      }
+    ],
+    "notImplemented": [],
+    "pseudoCode": [
+      {
+        "file": "apps\\web\\src\\lib\\interview\\orchestration\\interview-orchestrator.ts",
+        "text": "// Example increment"
+      },
+      {
+        "file": "apps\\web\\src\\lib\\observability\\llm-traces.ts",
+        "text": "// Example storage logic (if table exists)"
+      },
+      {
+        "file": "apps\\web\\src\\lib\\referral\\referral-engine.ts",
+        "text": "// Example: Every 3 referrals unlock an \"Elite\" Persona"
+      },
+      {
+        "file": "gateway\\middlewares\\rbac-middleware.ts",
+        "text": "// Example: For /api/interviews/:sessionId we might not know reportId, but we know tenantId"
+      },
+      {
+        "file": "lib\\interview\\orchestration\\interview-orchestrator.ts",
+        "text": "// Example increment"
+      },
+      {
+        "file": "lib\\observability\\llm-traces.ts",
+        "text": "// Example storage logic (if table exists)"
+      },
+      {
+        "file": "lib\\referral\\referral-engine.ts",
+        "text": "// Example: Every 3 referrals unlock an \"Elite\" Persona"
+      },
+      {
+        "file": "p0\\api-gateway\\middleware\\rate-limit.middleware.ts",
+        "text": "// Example check"
+      }
+    ]
+  },
+  "fixedFiles": [
+    "apps\\realtime-gateway\\tests\\runtime\\hash\\placeholderHashTests.ts",
+    "apps\\realtime-gateway\\tests\\runtime\\kernel\\causalChainIntegrity.test.ts",
+    "apps\\realtime-gateway\\tests\\runtime\\kernel\\reducerIntegrity.test.ts",
+    "apps\\realtime-gateway\\tests\\runtime\\kernel\\replayCorruption.test.ts",
+    "apps\\web\\src\\app\\api\\cv\\analyze\\route.ts",
+    "apps\\web\\src\\core\\p5\\integration\\execution-facade.ts",
+    "apps\\web\\src\\lib\\coaching\\email.ts",
+    "apps\\web\\src\\lib\\interview\\orchestration\\interview-orchestrator.ts",
+    "apps\\web\\src\\lib\\observability\\llm-traces.ts",
+    "apps\\web\\src\\lib\\referral\\referral-engine.ts",
+    "apps\\web\\src\\lib\\share\\share-engine.ts",
+    "apps\\web\\src\\lib\\subscription\\check-subscription.ts",
+    "apps\\web\\src\\middleware.ts",
+    "compiler\\cvm\\garbage-collector.ts",
+    "core\\p5\\integration\\execution-facade.ts",
+    "gateway\\middlewares\\rbac-middleware.ts",
+    "lib\\coaching\\email.ts",
+    "lib\\interview\\orchestration\\interview-orchestrator.ts",
+    "lib\\observability\\llm-traces.ts",
+    "lib\\referral\\referral-engine.ts",
+    "p0\\api-gateway\\middleware\\auth.middleware.ts",
+    "p0\\api-gateway\\middleware\\rate-limit.middleware.ts",
+    "p0\\api-gateway\\middleware\\tenant.middleware.ts",
+    "packages\\hiios-runtime\\src\\tests\\build005.test.ts",
+    "sil\\services\\p6-runtime-client.ts"
+  ]
+}

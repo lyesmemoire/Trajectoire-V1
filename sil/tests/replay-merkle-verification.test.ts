@@ -11,7 +11,7 @@ import { SILEvent } from "../contracts/sil-events";
 class MockMerkleLedgerReader implements MerkleLedgerReader {
   constructor(private expectedHash: string) {}
 
-  async verifySession(tenantId: string, sessionId: string) {
+  async verifySession(_tenantId: string, _sessionId: string) {
     return {
       valid: true,
       finalHash: this.expectedHash,
@@ -23,7 +23,7 @@ class MockMerkleLedgerReader implements MerkleLedgerReader {
 describe("Phase 2-L Finale: Merkle Verified Replay Engine", () => {
   it("verifies determinism against both runtime and ledger historical state", async () => {
     const store = new MemoryEventStore();
-    const query = new DefaultEventQueryService(store as any);
+    const query = new DefaultEventQueryService(store as unknown);
     const p7 = new MockP7EvaluatorClient();
     const trace = new MockRuntimeTraceProvider();
     
@@ -56,7 +56,7 @@ describe("Phase 2-L Finale: Merkle Verified Replay Engine", () => {
 
   it("throws error if merkle divergence is detected", async () => {
     const store = new MemoryEventStore();
-    const query = new DefaultEventQueryService(store as any);
+    const query = new DefaultEventQueryService(store as unknown);
     const p7 = new MockP7EvaluatorClient();
     const trace = new MockRuntimeTraceProvider();
     

@@ -1,0 +1,92 @@
+{
+  "component": "instruction-cache",
+  "file": "compiler/cvm/instruction-cache.ts",
+  "testFile": "tests/vm/performance/instruction-cache.test.ts",
+  "coverageDate": "2026-07-27T00:10:00Z",
+  "coverageSource": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+  "provider": "Vitest with V8 coverage",
+  "metrics": {
+    "statements": {
+      "total": 76,
+      "covered": 75,
+      "uncovered": 1,
+      "percentage": "98.68",
+      "target": "≥95%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "total": 22,
+      "covered": 20,
+      "uncovered": 2,
+      "percentage": "90.91",
+      "target": "≥97%",
+      "status": "NOT_PASSED",
+      "gap": "6.09%",
+      "note": "2 branches are unreachable dead code (lines 107, 189)"
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "100%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "total": 76,
+      "covered": 75,
+      "uncovered": 1,
+      "percentage": "98.68",
+      "target": "≥95%",
+      "status": "PASSED"
+    }
+  },
+  "uncoveredLines": [189],
+  "uncoveredBranches": {
+    "total": 2,
+    "details": [
+      {
+        "line": 107,
+        "type": "dead code",
+        "reason": "Unreachable - if cache is empty, method returns before reaching this branch"
+      },
+      {
+        "line": 189,
+        "type": "dead code",
+        "reason": "Unreachable - updateHitRate() is only called after incrementing hits or misses, so total is always >= 1"
+      }
+    ]
+  },
+  "testSummary": {
+    "total": 57,
+    "passed": 57,
+    "failed": 0,
+    "passRate": "100%",
+    "newTests": 3
+  },
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "98.68%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "90.91%",
+      "status": "NOT_PASSED",
+      "justification": "2 uncovered branches are unreachable dead code documented in branch analysis"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "98.68%",
+      "status": "PASSED"
+    }
+  },
+  "overallStatus": "CONDITIONAL_CERTIFIED",
+  "blockingCriteria": "Branches coverage (90.91%) below target (97%) but all uncovered branches are documented as unreachable dead code"
+}

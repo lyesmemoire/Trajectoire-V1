@@ -127,11 +127,7 @@ export async function mockOptimize(cv: string, job: string) {
 
 // ── Mock Interview Analyze ───────────────────────────────
 
-export async function mockInterviewAnalyze(
-  questions: string[],
-  answers: string[],
-  jobTitle?: string,
-) {
+export async function mockInterviewAnalyze(questions: string[], answers: string[], _jobTitle?: string, ) {
   await simulateDelay(2000);
 
   const avgLength =

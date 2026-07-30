@@ -53,12 +53,12 @@ const phases: Phase[] = [
 ];
 
 const STATUS_STYLES = {
-  done: { dot: "bg-green-500", badge: "text-green-400 bg-green-900/20" },
+  done: { dot: "bg-forest-500", badge: "text-forest-400 bg-forest-900/20" },
   current: {
-    dot: "bg-red-500 ring-4 ring-red-500/20",
-    badge: "text-red-400 bg-red-900/20",
+    dot: "bg-brick-500 ring-4 ring-brick-500/20",
+    badge: "text-brick-400 bg-brick-900/20",
   },
-  upcoming: { dot: "bg-gray-600", badge: "text-gray-400 bg-gray-900/40" },
+  upcoming: { dot: "bg-ink-600", badge: "text-ink-400 bg-ink-900/40" },
 };
 
 const STATUS_LABELS = {
@@ -70,7 +70,7 @@ const STATUS_LABELS = {
 export default function RoadmapTimeline() {
   return (
     <div className="relative">
-      <div className="absolute left-4 top-0 h-full w-0.5 bg-gradient-to-b from-green-900/60 via-red-900/60 to-gray-800/60 lg:left-1/2" />
+      <div className="absolute left-4 top-0 h-full w-0.5 bg-gradient-to-b from-forest-900/60 via-brick-900/60 to-ink-800/60 lg:left-1/2" />
       <div className="space-y-10">
         {phases.map((phase, i) => {
           const s = STATUS_STYLES[phase.status];
@@ -84,7 +84,7 @@ export default function RoadmapTimeline() {
                 className={`absolute left-4 top-1.5 z-10 h-4 w-4 shrink-0 -translate-x-1/2 rounded-full ${s.dot} lg:left-1/2`}
               />
               <div
-                className={`ml-12 w-full rounded-xl border border-red-900/30 bg-black/50 p-6 lg:ml-0 lg:w-[45%] ${isRight ? "lg:mr-auto lg:pr-10" : "lg:ml-auto lg:pl-10"}`}
+                className={`ml-12 w-full rounded-xl border border-brick-900/30 bg-black/50 p-6 lg:ml-0 lg:w-[45%] ${isRight ? "lg:mr-auto lg:pr-10" : "lg:ml-auto lg:pl-10"}`}
               >
                 <div className="mb-3 flex items-center justify-between">
                   <span className="text-sm font-bold text-gray-400">
@@ -105,7 +105,7 @@ export default function RoadmapTimeline() {
                       key={item}
                       className="flex items-start gap-2 text-sm text-gray-300"
                     >
-                      <span className="mt-1 text-red-400">→</span>
+                      <span className="mt-1 text-brick-400">→</span>
                       {item}
                     </li>
                   ))}

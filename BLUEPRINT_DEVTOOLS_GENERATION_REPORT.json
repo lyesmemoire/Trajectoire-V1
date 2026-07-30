@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "totalDevToolsGenerated": 9
+  },
+  "generatedDevTools": [
+    "c:\\Trajectoire\\devtools\\visual-graph\\index.tsx",
+    "c:\\Trajectoire\\devtools\\ast-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\ir-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\bytecode-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\execution-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\trace-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\memory-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\profiler-viewer\\index.tsx",
+    "c:\\Trajectoire\\devtools\\debugger-ui\\index.tsx"
+  ]
+}

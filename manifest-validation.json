@@ -1,0 +1,28 @@
+{
+  "phase1_2": {
+    "action": "Suppression des dossiers de runs existants, puis exécution de 'pnpm cert:manifest' à deux reprises successives."
+  },
+  "phase3": {
+    "comparaison": {
+      "sha256_1": "a5098f4b32a7c18953b1c5b7bcdd6ba9c6d6498f9e461d7eab4e22bfb4a0f329",
+      "sha256_2": "eeb4df8f5727537a3ad70ecf5076f852489cd215219f7ac19d07d1ff3c79cf7b",
+      "manifestId_1": "MAN-20260728T092251Z-3e22378b",
+      "manifestId_2": "MAN-20260728T092300Z-3e22378b",
+      "createdAt_1": "2026-07-28T09:22:51.042Z",
+      "createdAt_2": "2026-07-28T09:23:00.557Z",
+      "logs_1": "Tableau vide []",
+      "logs_2": "Contient le log '07-manifest' généré par la première exécution (fuite d'état)."
+    }
+  },
+  "phase4_5": {
+    "champsVariables": ["metadata.manifestId", "metadata.createdAt", "logs"],
+    "participentAuHash": true,
+    "explication": "La fonction 'sha256Json' calcule le hachage sur la base de tout l'objet JSON (sauf le champ 'integrity' lui-même). Puisque le manifestId, la date de création et l'état des logs restants varient, le hachage du contenu change systématiquement."
+  },
+  "phase6": {
+    "suppressionEtRecalcul": "Après suppression des champs variables (manifestId, createdAt, logs), le hachage des deux manifestes a été recalculé.",
+    "hashIdentique": true,
+    "nouveauHash": "69bf619b434f32a43e6ac06c64c68dea5e6b1aa7410e0dccdd88a81ea7f8bdcb"
+  },
+  "conclusion": "B. Non déterministe"
+}

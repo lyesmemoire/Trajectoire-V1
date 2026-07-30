@@ -1,4 +1,3 @@
-import { MindState } from "../execution-contract.js";
 import { MindSnapshot } from "./snapshot-contract.js";
 
 /**
@@ -11,7 +10,7 @@ import { MindSnapshot } from "./snapshot-contract.js";
  * - Deep copy: no shared references between input state and snapshot.state.
  * - The original state is never mutated.
  */
-export function createSnapshot(state: MindState, timestamp: number): MindSnapshot {
+export function createSnapshot(state: _MindState, timestamp: number): MindSnapshot {
   return {
     id: `snapshot-${timestamp}`,
     version: 1,

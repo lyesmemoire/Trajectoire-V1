@@ -122,7 +122,7 @@ export class ABTestingEngine {
     }
 
     // Get scenarios to test
-    let scenarios = scenarioLibrary.getAllScenarios();
+    const scenarios = scenarioLibrary.getAllScenarios();
     if (scenarios.length === 0) {
       throw new Error("No scenarios available");
     }

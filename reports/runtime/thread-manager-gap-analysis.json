@@ -1,0 +1,240 @@
+{
+  "component": "thread-manager",
+  "file": "compiler/cvm/thread-manager.ts",
+  "testFile": "tests/vm/advanced/thread-manager.test.ts",
+  "analysisDate": "2026-07-26T23:45:00Z",
+  "existingTests": {
+    "total": 61,
+    "suites": [
+      "Thread Creation",
+      "Thread Destruction",
+      "Thread Termination",
+      "Thread States",
+      "Thread Unblock (Wake)",
+      "Thread Block",
+      "Thread Yield",
+      "Scheduler",
+      "Thread Priorities",
+      "Thread Query",
+      "Configuration",
+      "Validation",
+      "Statistics",
+      "Stress Tests"
+    ]
+  },
+  "methodsCovered": {
+    "createThread": {
+      "covered": true,
+      "testCount": 4,
+      "tests": [
+        "should create a new thread",
+        "should create multiple threads with incrementing IDs",
+        "should create threads with different priorities",
+        "should throw error when max threads exceeded"
+      ]
+    },
+    "getThread": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should get thread by id",
+        "should return null for non-existent thread"
+      ]
+    },
+    "getCurrentThread": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should get current thread",
+        "should return null when no current thread"
+      ]
+    },
+    "setThreadState": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should set thread state"
+      ]
+    },
+    "schedule": {
+      "covered": true,
+      "testCount": 5,
+      "tests": [
+        "should schedule next thread with ROUND_ROBIN policy",
+        "should schedule next thread with PRIORITY policy",
+        "should schedule next thread with FIFO policy",
+        "should return null when no ready threads",
+        "should only schedule READY threads"
+      ]
+    },
+    "yield": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should yield current thread",
+        "should set yielded thread to READY state",
+        "should handle yield when no current thread"
+      ]
+    },
+    "block": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should block current thread",
+        "should schedule next thread after blocking",
+        "should handle block when no current thread"
+      ]
+    },
+    "unblock": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should unblock a blocked thread",
+        "should not unblock a thread that is not blocked",
+        "should handle unblock of non-existent thread gracefully"
+      ]
+    },
+    "terminate": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should terminate a thread",
+        "should schedule next thread when current is terminated",
+        "should handle termination of non-existent thread gracefully"
+      ]
+    },
+    "deleteThread": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should delete a thread",
+        "should return false when deleting non-existent thread"
+      ]
+    },
+    "getAllThreads": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get all threads"
+      ]
+    },
+    "getThreadsByState": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get threads by state"
+      ]
+    },
+    "getThreadCount": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get thread count"
+      ]
+    },
+    "clear": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should clear all threads"
+      ]
+    },
+    "setSchedulingPolicy": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should set scheduling policy",
+        "should use custom options on creation"
+      ]
+    },
+    "getSchedulingPolicy": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should set scheduling policy",
+        "should use custom options on creation"
+      ]
+    },
+    "setDefaultQuantum": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should set default quantum",
+        "should use custom options on creation"
+      ]
+    },
+    "getDefaultQuantum": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should set default quantum",
+        "should use custom options on creation"
+      ]
+    },
+    "validate": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should validate valid state",
+        "should detect invalid priority",
+        "should detect invalid quantum"
+      ]
+    },
+    "getStatistics": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should get statistics",
+        "should report null current thread when none scheduled"
+      ]
+    }
+  },
+  "methodsNotCovered": [],
+  "privateFunctions": {
+    "none": "No private functions in ThreadManager"
+  },
+  "coverageGaps": {
+    "potential": [
+      "Edge cases for scheduling policies",
+      "Thread starvation scenarios",
+      "Deadlock prevention tests",
+      "Context switching edge cases",
+      "Thread join/detach operations (not implemented)",
+      "Sleep/wake operations (not implemented)",
+      "Pause/resume operations (not implemented)",
+      "Mutex/lock synchronization (not implemented)",
+      "Condition variables (not implemented)",
+      "Barriers (not implemented)"
+    ],
+    "notImplemented": [
+      "join",
+      "detach",
+      "sleep",
+      "wake",
+      "pause",
+      "resume",
+      "mutex",
+      "lock",
+      "unlock",
+      "wait",
+      "notify",
+      "condition variable",
+      "barrier"
+    ]
+  },
+  "testQuality": {
+    "strengths": [
+      "Comprehensive coverage of public API",
+      "Multiple scheduling policies tested",
+      "Edge cases covered (max threads, non-existent threads)",
+      "Stress tests included",
+      "Validation logic tested"
+    ],
+    "weaknesses": [
+      "Some edge cases in scheduling not fully tested",
+      "Thread starvation scenarios not tested",
+      "Deadlock prevention not tested (not implemented)",
+      "Context switching edge cases not fully tested"
+    ]
+  }
+}

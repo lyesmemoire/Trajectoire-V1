@@ -14,7 +14,7 @@ interface Props {
   };
 }
 
-export function ChallengeBanner({ challenge }: Props) {
+export function ChallengeBanner({ challenge }: _Props) {
   const timeLeft = new Date(challenge.endDate).getTime() - new Date().getTime();
   const daysLeft = Math.ceil(timeLeft / (1000 * 3600 * 24));
 

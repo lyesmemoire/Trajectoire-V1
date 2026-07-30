@@ -8,9 +8,7 @@ import { logError } from "@/lib/logger/Logger";
  * 👔 Layer 1: Hiring Manager Mode
  * Analyzes architectural decision-making and ownership.
  */
-export async function analyzeTechnicalLeadership(
-  cvText: string,
-): Promise<PressureMunition[]> {
+export async function analyzeTechnicalLeadership(cvText: string, ): Promise<PressureMunition[]> {
   const PROMPT = `Tu es un CTO / Engineering Manager. 
   Analyse si le CV montre de l'autonomie et des décisions d'architecture, ou si ce sont des "vague claims" sans preuves.
   

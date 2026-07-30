@@ -74,7 +74,7 @@ export const BillingService = {
     assertValidCreditOperation(op);
     const supabase = dbClient || await getServerDb();
 
-    // Idempotency check
+    // Idempotency fast-path check
     const { data: existingTx } = await supabase
       .from("credit_transactions")
       .select("*")
@@ -85,6 +85,8 @@ export const BillingService = {
       if (existingTx.state === "reserved" || existingTx.state === "committed") {
         return { success: true, txId: existingTx.id, cached: true };
       }
+      // Transaction exists but is expired/failed/rollback — caller must use a new key
+      return { success: false, error: `Previous transaction ${existingTx.id} is in state '${existingTx.state}'. Use a new idempotency key.` };
     }
 
     const { data, error } = await supabase.rpc("reserve_credits_atomic", {
@@ -95,7 +97,19 @@ export const BillingService = {
     });
 
     if (error) {
-      console.error("[PRISMA_ERROR] Reserve failed:", error.message);
+      // Concurrent duplicate — RPC threw unique_violation
+      if (error.message.includes("unique") || error.message.includes("duplicate") || error.code === "23505") {
+        const { data: concurrentTx } = await supabase
+          .from("credit_transactions")
+          .select("id, state")
+          .eq("idempotency_key", op.operationId)
+          .single();
+        if (concurrentTx && (concurrentTx.state === "reserved" || concurrentTx.state === "committed")) {
+          return { success: true, txId: concurrentTx.id, cached: true };
+        }
+        return { success: false, error: `Transaction already processed in state '${concurrentTx?.state ?? "unknown"}'.` };
+      }
+      console.error("[BILLING] Reserve failed:", error.message);
       return { success: false, error: error.message };
     }
 
@@ -148,36 +162,26 @@ export const BillingService = {
 
     const supabase = dbClient || await getServerDb();
 
-    // 0. Check Idempotency
-    const { data: existingTx } = await supabase
-      .from("credit_transactions")
-      .select("*")
-      .eq("idempotency_key", op.operationId)
-      .single();
-
-    if (existingTx && existingTx.state === "committed") {
-      return { success: true, remainingCredits: await this.getBalance(op.userId, supabase), cached: true } as any;
-    }
-
-    // 1. Atomic Add
+    // Single atomic RPC call — idempotency is enforced by PostgreSQL
+    // via UNIQUE(idempotency_key) + ON CONFLICT DO NOTHING inside the function.
+    // No check-then-act: if the key already exists, the RPC returns
+    // the current balance without modifying it.
     const { data, error } = await supabase.rpc("add_credits_atomic", {
       uid: op.userId,
       amt: op.amount,
+      p_idemp_key: op.operationId,
+      p_action: op.action,
     });
 
     if (error) {
-      console.error("[PRISMA_ERROR] Addition failed:", error.message);
+      logError("[BILLING] refundCredits failed", {
+        userId: op.userId,
+        amount: op.amount,
+        action: op.action,
+        error: error.message,
+      });
       return { success: false, error: error.message, code: "DB_ERROR" };
     }
-
-    // 2. Mark in transactions
-    await supabase.from("credit_transactions").insert({
-      idempotency_key: op.operationId,
-      user_id: op.userId,
-      amount: op.amount,
-      action: op.action,
-      state: "committed"
-    });
 
     return { success: true, remainingCredits: data as number };
   },
@@ -193,7 +197,7 @@ export const BillingService = {
       console.error("[PRISMA_ERROR] Failed to read balance:", error.message);
       return 0;
     }
-    const profile = data as any;
+    const profile = data  as any;
     return profile?.credits ?? 0;
   },
 

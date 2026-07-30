@@ -4,8 +4,8 @@
  * File: app/api/interview/route.ts
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { KernelState, InterviewState } from '@/application/hiios/layer0-kernel/KernelState';
+import { NextResponse, NextRequest } from 'next/server';
+import { KernelState } from '@/application/hiios/layer0-kernel/KernelState';
 import { EvidenceType, EvidenceReliability, EvidenceDirection } from '@/application/hiios/interfaces/IHIIOSKernel';
 
 // ──────────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
     }
-  } catch (err) {
+  } catch (err: any) {
     const message = err instanceof Error ? err.message : 'Erreur interne';
     return NextResponse.json({ error: message }, { status: 500 });
   }
@@ -95,7 +95,7 @@ function handleRespond(body: InterviewRequest): NextResponse {
   const kernel = getSession(body.session_id);
 
   // 1. Extraire les observations de la réponse
-  const observations = extractObservations(body.response ?? '', body.question_id ?? '');
+  const observations = extractObservations(body.response ?? '');
 
   // 2. Créer les preuves depuis les observations
   const addedEvidenceIds: string[] = [];
@@ -146,7 +146,7 @@ function handleRespond(body: InterviewRequest): NextResponse {
     candidate_response: body.response ?? '',
     evidence_ids_added: addedEvidenceIds,
     hypotheses_updated: hypothesesUpdated,
-    bias_events       : biasCheck ? [biasCheck.bias_type] : [],
+    bias_events       : [],
     empathy_level     : kernel.session.empathy_level,
     pressure_level    : kernel.session.pressure_level,
     information_gain  : 0.35,
@@ -173,9 +173,7 @@ function handleRespond(body: InterviewRequest): NextResponse {
     snapshot         : kernel.snapshot(),
     hypothesis_map   : kernel.hypothesis.formatHypothesisMap(),
     coverage_map     : kernel.skills.formatCoverageMap(),
-    bias_detected    : biasCheck
-                       ? `Biais détecté : ${biasCheck.bias_type}`
-                       : null,
+    bias_detected    : null,
   });
 }
 
@@ -295,10 +293,7 @@ function initializeDefaultHypotheses(kernel: KernelState): void {
   }
 }
 
-function extractObservations(
-  response    : string,
-  questionId  : string,
-): Observation[] {
+function extractObservations(response: string): Observation[] {
   // Version simplifiée — à remplacer par analyse NLP en production
   const observations: Observation[] = [];
 
@@ -317,7 +312,7 @@ function extractObservations(
   return observations;
 }
 
-function detectBias(kernel: KernelState, response: string): any | null {
+function detectBias(_kernel: KernelState, response: string): null {
   // Version simplifiée — à remplacer par détection réelle
   return null;
 }

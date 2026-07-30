@@ -24,7 +24,7 @@ export interface PremiumInterviewSession {
   id: string;
   userId: string;
   transcript: Message[];
-  memory: Record<string, any>;
+  memory: Record<string, unknown>;
   persona: string;
   phases: string[];
   scores?: {
@@ -69,11 +69,7 @@ export interface UnifiedInterviewView {
   completedAt?: string;
 }
 
-export function mergeInterviewViews(
-  standard?: StandardInterviewSession,
-  premium?: PremiumInterviewSession,
-  analytics?: InterviewAnalyticsProjection
-): UnifiedInterviewView {
+export function mergeInterviewViews(standard?: StandardInterviewSession, premium?: PremiumInterviewSession, analytics?: InterviewAnalyticsProjection): UnifiedInterviewView {
   if (!standard && !premium) {
     throw new Error("Must provide at least one session type");
   }

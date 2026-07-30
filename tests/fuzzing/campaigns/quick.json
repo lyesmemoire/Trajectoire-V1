@@ -1,0 +1,10 @@
+{
+  "campaignId": "quick-v1",
+  "campaignVersion": "1.0",
+  "iterations": 1000,
+  "timeoutMs": 60000,
+  "coverage": false,
+  "saveCorpus": false,
+  "minimizeCrashes": false,
+  "seed": 12345
+}

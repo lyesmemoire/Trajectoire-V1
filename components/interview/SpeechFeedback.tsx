@@ -89,13 +89,8 @@ const OVERALL_CONFIG: Record<
 };
 
 function StatCard({
-  icon: Icon,
-  label,
-  value,
-  sub,
-  color = "text-gray-700",
-}: {
-  icon: any;
+  icon: Icon, label, value, sub, color = "text-gray-700", _}: {
+  icon: unknown;
   label: string;
   value: string | number;
   sub?: string;
@@ -118,10 +113,7 @@ function StatCard({
 }
 
 export function SpeechFeedback({
-  result,
-  compact = false,
-  className = "",
-}: {
+  result, compact = false, className = "", _}: {
   result: SpeechAnalysisResult;
   compact?: boolean;
   className?: string;

@@ -1,11 +1,11 @@
-import { VoiceExecutionPlan, VoicePlanValidationResult } from "./voice-contract.js";
+import { VoicePlanValidationResult } from "./voice-contract.js";
 
 const BOUNDS = {
   delayMs: { min: 0, max: 10000 },
   speechRate: { min: 0.5, max: 2.0 },
 };
 
-export function validateVoicePlan(plan: VoiceExecutionPlan): VoicePlanValidationResult {
+export function validateVoicePlan(plan: _VoiceExecutionPlan): VoicePlanValidationResult {
   const errors: string[] = [];
 
   if (plan.version !== 1) {

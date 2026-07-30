@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "https://trajectoire.com/schema/publication/v1",
+  "metadata": {
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "version": "1.0.0",
+    "publishedAt": "2026-07-29T21:07:06.109Z"
+  },
+  "artifacts": [
+    {
+      "name": "audit-cve.dsse.json",
+      "digest": {
+        "sha256": "87e5c56a5cc5a9389fae59c8653cb993e0e5ee9cf78b691701879e0b35d0d0d8"
+      }
+    },
+    {
+      "name": "audit-cve.json",
+      "digest": {
+        "sha256": "ff278c53009ef640bd39f78d8d48a790838ce0dccd00443cbeb7d151d4de6f35"
+      }
+    },
+    {
+      "name": "certification.json",
+      "digest": {
+        "sha256": "c78f2de9fac23ce724ba280f6aa43230e5cc780f644db29db730e0152a784ba7"
+      }
+    },
+    {
+      "name": "dependency-integrity.json",
+      "digest": {
+        "sha256": "8686f4cc162d4052debf7f7bd5521bf3608902f88bc8f9c315955d38ff6cba43"
+      }
+    },
+    {
+      "name": "licenses.json",
+      "digest": {
+        "sha256": "2c74815e3972e94067e5aacb7c6ccc4ac3e37069ba7e2b3d1c524e3f78874f58"
+      }
+    },
+    {
+      "name": "mutation-report.json",
+      "digest": {
+        "sha256": "b386131c256f5419eafab8ee0392a8f62995c2b5ed6a9be458030a0f44ac62be"
+      }
+    },
+    {
+      "name": "provenance.dsse.json",
+      "digest": {
+        "sha256": "7105147e079cc83202354c9b834eb6f784ebe91cdb0630766813a00e214f5b79"
+      }
+    },
+    {
+      "name": "regression-report.json",
+      "digest": {
+        "sha256": "dbeb544ff9fd1a69fa1726e12a1b3b6bc475b25b0ce86a55d50ef9c1394528f3"
+      }
+    },
+    {
+      "name": "reproducible-build.json",
+      "digest": {
+        "sha256": "01ad8563297f516da9379279b5e5942656dcc41dc77319f5a0fef1d013d40c15"
+      }
+    },
+    {
+      "name": "root-cause-report.json",
+      "digest": {
+        "sha256": "c07a91655dc33681a8c13293c1a37a20180900231ffa1ed9c9e008d0584f26cb"
+      }
+    },
+    {
+      "name": "sbom-cyclonedx.dsse.json",
+      "digest": {
+        "sha256": "cb55fdf30e70ff075e70fa22b2fec8743df627b6693f61ec7a01a89640f5afd9"
+      }
+    },
+    {
+      "name": "sbom-cyclonedx.json",
+      "digest": {
+        "sha256": "b83c507e8756b5bbf870e264f6b63189541d62ed5c27254eaf1372259ce3c50c"
+      }
+    },
+    {
+      "name": "sbom-spdx.dsse.json",
+      "digest": {
+        "sha256": "ef9ea57228e422ecf7f5e08bfaa4ecd2264402e38954424a4f0c22436baedc3f"
+      }
+    },
+    {
+      "name": "sbom-spdx.json",
+      "digest": {
+        "sha256": "e810fab653a6a6a52b8e3e922fa024edf18b648b5ac4285e6c37e1a18e10804b"
+      }
+    },
+    {
+      "name": "secret-scan.json",
+      "digest": {
+        "sha256": "3c50dc34d3d932212db9e1d0722ee0cbc4b7b17ffff1fcb8cba23d6709a95b72"
+      }
+    },
+    {
+      "name": "security-summary.json",
+      "digest": {
+        "sha256": "b01260ad2ee790a07f8676d787b0c560393b3dbe32f8cbfdffbc1f77ff73982a"
+      }
+    }
+  ],
+  "provenance": {
+    "uri": "provenance.dsse.json",
+    "digest": {
+      "sha256": "7105147e079cc83202354c9b834eb6f784ebe91cdb0630766813a00e214f5b79"
+    }
+  },
+  "sbom": {
+    "uri": "sbom.json",
+    "digest": {
+      "sha256": "MOCK_SBOM_DIGEST"
+    }
+  }
+}

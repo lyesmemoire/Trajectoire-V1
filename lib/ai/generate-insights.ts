@@ -1,9 +1,9 @@
 import prisma from "@/lib/prisma";
 
-export async function generateCareerInsights(userId: string) {
+export async function generateCareerInsights(userId: _string) {
   // Placeholder implementation
   const insights =
-    (await (prisma as any).careerInsight?.findMany?.({
+    (await (prisma as unknown).careerInsight?.findMany?.({
       where: { userId },
       orderBy: { createdAt: "desc" },
       take: 5,

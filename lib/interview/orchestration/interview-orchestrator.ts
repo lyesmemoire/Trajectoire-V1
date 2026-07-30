@@ -13,8 +13,9 @@ export async function orchestrateInterviewStep(
   sessionId: string,
   userAnswer: string,
   currentQuestion: string,
-  metrics: any, // { silenceDuration, wordCount, consecutiveHesitations }
-): Promise<any> {
+  metrics: unknown
+  // { silenceDuration, _wordCount, _consecutiveHesitations }
+): Promise<unknown> {
   const session = await prisma.interviewSession.findUnique({
     where: { id: sessionId },
   });
@@ -38,7 +39,7 @@ export async function orchestrateInterviewStep(
       userAnswer,
       currentQuestion,
     );
-    pressure = Math.min(100, pressure + 5); // Example increment
+    pressure = Math.min(100, pressure + 5); 
     const followup: FollowUpIntent = chooseStrategy(analysis, pressure);
     strategy = followup.strategy;
   }
@@ -47,7 +48,7 @@ export async function orchestrateInterviewStep(
   const nextQuestion = await generateRecruiterPrompt({
     persona: activePersona,
     state: session.currentState as InterviewState,
-    analysis: { clarity: 50, specificity: 50, confidence: 50 } as any, // Simplified for brevity
+    analysis: { clarity: 50, specificity: 50, confidence: 50 } as unknown, // Simplified for brevity
     strategy,
     userAnswer,
   });

@@ -65,9 +65,7 @@ export function inferSeniority(cvText: string, matchScore: number): Seniority {
   return "junior";
 }
 
-export function buildCandidateProfile(
-  input: BuildProfileInput,
-): CandidateProfile {
+export function buildCandidateProfile(input: BuildProfileInput, ): CandidateProfile {
   const cvText = input.cvText ?? "";
   const jobText = input.jobText ?? "";
   const matchScore = typeof input.matchScore === "number" ? input.matchScore : 50;

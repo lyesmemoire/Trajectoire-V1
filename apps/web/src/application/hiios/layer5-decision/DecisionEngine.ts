@@ -7,10 +7,6 @@
 import {
   Candidate,
   Decision,
-  DecisionType,
-  DecisionConfidence,
-  Hypothesis,
-  BiasEvent,
 } from "../interfaces/IHIIOSKernel";
 import { logInfo } from "@/lib/logger/Logger";
 

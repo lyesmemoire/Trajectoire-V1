@@ -41,7 +41,7 @@ export async function getStrictUser() {
  * Valide l'accès à un Replay spécifique.
  * Anti-énumération et validation d'ownership stricte.
  */
-export async function validateReplayAccess(sessionId: string) {
+export async function validateReplayAccess(sessionId: _string) {
   const { user } = await getStrictUser();
   if (!user) return false;
 

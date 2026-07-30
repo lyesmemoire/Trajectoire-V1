@@ -14,7 +14,7 @@ export interface IdempotencyRecord {
   user_id: string;
   operation: string;
   request_params: string; // JSON stringified
-  response_data: string; // JSON stringified
+  result_ref: string; // ID + Hash reference instead of full payload
   status: "pending" | "completed" | "failed";
   created_at: string;
   completed_at?: string;
@@ -23,7 +23,7 @@ export interface IdempotencyRecord {
 
 export interface IdempotencyResult<T> {
   isCached: boolean;
-  data?: T;
+  resultRef?: string;
   error?: Error;
 }
 
@@ -70,22 +70,13 @@ export class IdempotencyService {
 
     // Record exists, return cached result
     if (data.status === "completed") {
-      logger.info("Returning cached idempotency result", {
+      logger.info("Returning cached idempotency reference", {
         idempotencyKey,
         operation,
         userId,
       });
 
-      try {
-        const responseData = JSON.parse(data.response_data);
-        return { isCached: true, data: responseData as T };
-      } catch (parseError) {
-        throw new AppError(
-          "Failed to parse cached response",
-          ErrorCode.INTERNAL_ERROR,
-          500
-        );
-      }
+      return { isCached: true, resultRef: data.result_ref };
     }
 
     // Operation is still pending
@@ -107,7 +98,7 @@ export class IdempotencyService {
     idempotencyKey: string,
     userId: string,
     operation: string,
-    requestParams: unknown
+    requestParams: any
   ): Promise<void> {
     const supabase = await createClient();
 
@@ -147,24 +138,24 @@ export class IdempotencyService {
   }
 
   /**
-   * Mark an operation as completed with the result
+   * Mark an operation as completed with the result reference
    * @param idempotencyKey - Unique key for the operation
    * @param userId - User ID
    * @param operation - Operation name
-   * @param responseData - Response data (will be JSON stringified)
+   * @param resultRef - Reference to the persisted result
    */
-  async complete<T>(
+  async complete(
     idempotencyKey: string,
     userId: string,
     operation: string,
-    responseData: T
+    resultRef: string
   ): Promise<void> {
     const supabase = await createClient();
 
     const { error } = await supabase
       .from(IdempotencyService.TABLE_NAME)
       .update({
-        response_data: JSON.stringify(responseData),
+        result_ref: resultRef,
         status: "completed",
         completed_at: new Date().toISOString(),
       })
@@ -208,7 +199,7 @@ export class IdempotencyService {
     const { error: updateError } = await supabase
       .from(IdempotencyService.TABLE_NAME)
       .update({
-        response_data: JSON.stringify({ error: error.message }),
+        result_ref: `ERROR:${error.message}`,
         status: "failed",
         completed_at: new Date().toISOString(),
       })
@@ -239,20 +230,25 @@ export class IdempotencyService {
    * @param userId - User ID
    * @param operation - Operation name
    * @param requestParams - Request parameters
-   * @param fn - Function to execute
+   * @param fn - Function to execute (must return data and resultRef)
+   * @param loadFn - Function to load data if cached
    * @returns Function result (cached or fresh)
    */
   async execute<T>(
     idempotencyKey: string,
     userId: string,
     operation: string,
-    requestParams: unknown,
-    fn: () => Promise<T>
+    requestParams: any,
+    fn: () => Promise<{ resultRef: string; data: T }>,
+    loadFn: (resultRef: string) => Promise<T>
   ): Promise<T> {
     // Check if operation was already executed
     const cachedResult = await this.check<T>(idempotencyKey, userId, operation);
-    if (cachedResult.isCached && cachedResult.data) {
-      return cachedResult.data;
+    if (cachedResult.isCached && cachedResult.resultRef) {
+      if (cachedResult.resultRef.startsWith("ERROR:")) {
+        throw new AppError(cachedResult.resultRef.substring(6), ErrorCode.INTERNAL_ERROR, 500);
+      }
+      return await loadFn(cachedResult.resultRef);
     }
 
     // Create idempotency record
@@ -260,12 +256,12 @@ export class IdempotencyService {
 
     try {
       // Execute the operation
-      const result = await fn();
+      const { resultRef, data } = await fn();
 
       // Mark as completed
-      await this.complete(idempotencyKey, userId, operation, result);
+      await this.complete(idempotencyKey, userId, operation, resultRef);
 
-      return result;
+      return data;
     } catch (error) {
       // Mark as failed
       await this.fail(

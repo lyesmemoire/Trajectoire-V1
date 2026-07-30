@@ -4,8 +4,6 @@
  * Tracks: which features are used, how often, by whom
  */
 
-import { z } from "zod";
-
 // Feature Usage Data
 export interface FeatureUsageData {
   featureName: string;
@@ -13,7 +11,7 @@ export interface FeatureUsageData {
   sessionId: string;
   timestamp: Date;
   duration?: number; // seconds
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // Feature Metrics
@@ -65,7 +63,7 @@ export class FeatureUsage {
     userId: string,
     sessionId: string,
     duration?: number,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const usage: FeatureUsageData = {
       featureName,

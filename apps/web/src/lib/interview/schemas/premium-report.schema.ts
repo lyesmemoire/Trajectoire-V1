@@ -33,9 +33,7 @@ export const PremiumReportSchema = z.object({
 
 export type PremiumReport = z.infer<typeof PremiumReportSchema>;
 
-export function computeReadinessLevel(
-  scores: PremiumReport["dimension_scores"],
-): PremiumReport["readiness_level"] {
+export function computeReadinessLevel(scores: PremiumReport["dimension_scores"], ): PremiumReport["readiness_level"] {
   const overall = computeOverallScore(scores);
 
   if (overall >= 85) return "EXCELLENT";
@@ -44,9 +42,7 @@ export function computeReadinessLevel(
   return "NOT_READY";
 }
 
-export function computeOverallScore(
-  scores: PremiumReport["dimension_scores"],
-): number {
+export function computeOverallScore(scores: PremiumReport["dimension_scores"], ): number {
   return Math.round(
     scores.structure * 0.25 +
       scores.specificity * 0.3 +

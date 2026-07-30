@@ -10,8 +10,8 @@ export class AuditServiceSupabaseImpl implements IAuditService {
   async log(entry: AuditLogEntry): Promise<void> {
     await auditLog(
       entry.userId,
-      entry.action as any,
-      entry.resourceType as any,
+      entry.action  as any,
+      entry.resourceType  as any,
       entry.resourceId,
       entry.metadata as Record<string, unknown>
     );

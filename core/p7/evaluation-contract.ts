@@ -17,6 +17,8 @@ export interface CompetencyScore {
   signals: string[]; // references to extractors/signals
 }
 
+// Canonical Reference: BCM-OBJ-003 (blueprint.cognitive.evidence)
+// Owner: Chief Cognitive Architect
 export interface Evidence {
   id: string;
   type: "DIALOGUE" | "BEHAVIOR" | "TIMING";

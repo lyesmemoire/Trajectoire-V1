@@ -249,7 +249,7 @@ export class AdvancedSecurityService {
       }
 
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

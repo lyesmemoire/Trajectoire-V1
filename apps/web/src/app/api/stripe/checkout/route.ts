@@ -16,7 +16,7 @@ let stripeClient: Stripe | null = null;
 function getStripe(): Stripe {
   if (!stripeClient) {
     stripeClient = new Stripe(envServer.STRIPE_SECRET_KEY ?? "", {
-      apiVersion: "2025-05-28.basil" as any,
+      apiVersion: "2025-08-27.basil" as Stripe.LatestApiVersion,
     });
   }
   return stripeClient;
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   // ── Guard : au moins un prix configuré ───────────────────────────────
   const allowedPriceIds = getAllowedPriceIds();
   if (allowedPriceIds.length === 0) {
-    console.error("[Checkout] Aucun STRIPE_PRICE_* configuré dans les variables d'environnement");
+    logError("[Checkout]", "Aucun STRIPE_PRICE_* configuré dans les variables d'environnement");
     return NextResponse.json({ error: "Configuration paiement invalide." }, { status: 503 });
   }
 
@@ -165,7 +165,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
 
-  } catch (err) {
+  } catch (err: any) {
     logError("[STRIPE_ERROR]", err, { route: "api/stripe/checkout", userId: user.id });
     const message = err instanceof Error ? err.message : "Erreur Stripe";
     return NextResponse.json(

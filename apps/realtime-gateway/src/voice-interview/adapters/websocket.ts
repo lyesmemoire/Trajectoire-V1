@@ -52,11 +52,7 @@ export interface HandleConnectionInput {
  * Branche une connexion WebSocket sur une nouvelle session d'entretien vocal.
  * Retourne l'id de session créé.
  */
-export function handleVoiceConnection(
-  ws: WsLike,
-  deps: VoiceWebSocketDeps,
-  input: HandleConnectionInput = {},
-): string {
+export function handleVoiceConnection(ws: _WsLike, deps: VoiceWebSocketDeps, input: HandleConnectionInput = {}, ): string {
   const send = (msg: ServerMessage) => {
     try {
       ws.send(JSON.stringify(msg));

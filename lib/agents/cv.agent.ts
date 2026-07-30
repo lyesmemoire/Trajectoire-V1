@@ -1,4 +1,4 @@
-import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract";
+import { AgentOpinion } from "@/domain/orchestration.contract";
 
 /**
  * CV Agent
@@ -7,7 +7,7 @@ import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract
  * Nature: structurelle + sémantique
  * Autorité: faible à moyenne
  */
-export function evaluateCV(ctx: EvaluationContext): AgentOpinion {
+export function evaluateCV(ctx: _EvaluationContext): AgentOpinion {
   const matchScore = ctx.cvMatchScore ?? 0.5; // Default if not provided
   
   return {

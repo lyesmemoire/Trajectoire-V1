@@ -45,9 +45,9 @@ export class OrchestratorService implements OnModuleInit, OnModuleDestroy {
   async handleEvent(sessionId: string, event: VoiceEvent): Promise<void> {
     const session = this.sessionManager.getOrCreate(sessionId);
     // expose providers to handlers via the session (lazy typing)
-    (session as any).asr = this.asr;
-    (session as any).llm = this.llm;
-    (session as any).tts = this.tts;
+    (session as unknown).asr = this.asr;
+    (session as unknown).llm = this.llm;
+    (session as unknown).tts = this.tts;
     // also expose playback queue & socket if not already set – handlers manage lazily
 
     if (!this.fsmEngine.canTransition(session.state, event.type)) {
@@ -73,7 +73,7 @@ export class OrchestratorService implements OnModuleInit, OnModuleDestroy {
     }
     try {
       await handler(session, event);
-    } catch (err) {
+    } catch (error) {
       this.logger.error(
         {
           sessionId: session.sessionId,

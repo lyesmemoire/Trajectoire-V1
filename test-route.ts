@@ -10,9 +10,9 @@ envServer.SUPABASE_SERVICE_ROLE_KEY = "mock_key";
 async function run() {
   // We can't actually start the real route without a DB because supabase.from().select() will fail with 500
   // Let's just output the expected empty JSON that my code produces when logs = []
-  const logs: any[] = [];
+  const logs: unknown[] = [];
   
-  const calculateStats = (subset: any[]) => {
+  const calculateStats = (subset: unknown[]) => {
     const count = subset.length;
     if (count === 0) {
       return { count: 0, meanScore: null, meanIntegrity: null, percentHighPressure: null, timeoutRate: null, errorRate: null };

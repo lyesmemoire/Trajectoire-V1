@@ -100,9 +100,9 @@ async function run() {
       // In a real system, the failover manager would redirect to a replica
       // For this benchmark, we just measure the read attempt
       try {
-        const events = await distStore.readAll(tenantId, sessionId);
+        const _events = await distStore.readAll(tenantId, sessionId);
         recoveredSessions++;
-      } catch (e) {
+      } catch {
         failedRecoveries++;
       }
     }

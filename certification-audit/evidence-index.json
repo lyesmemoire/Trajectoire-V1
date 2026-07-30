@@ -1,0 +1,77 @@
+{
+  "component": "execution-pipeline",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "gitBranch": "main",
+  "auditDate": "2026-07-27",
+  "auditor": "Independent Certification Audit",
+  "evidence": [
+    {
+      "id": "EVIDENCE_001",
+      "name": "coverage-official.json",
+      "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "fileSha256": "PREUVE INSUFFISANTE - SHA256 non calculé",
+      "generationDate": "2026-07-27T00:13:15",
+      "tool": "Vitest with V8 coverage",
+      "command": "PREUVE INSUFFISANTE - commande exacte non documentée",
+      "nodeVersion": "PREUVE INSUFFISANTE",
+      "pnpmVersion": "PREUVE INSUFFISANTE",
+      "vitestVersion": "PREUVE INSUFFISANTE",
+      "typescriptVersion": "PREUVE INSUFFISANTE",
+      "duration": "PREUVE INSUFFISANTE",
+      "source": "reports/runtime/execution-pipeline-current-coverage.json"
+    },
+    {
+      "id": "EVIDENCE_002",
+      "name": "mutation-official.json",
+      "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "fileSha256": "PREUVE INSUFFISANTE - SHA256 non calculé",
+      "generationDate": "2026-07-27T13:36:23",
+      "tool": "Mutation testing",
+      "command": "PREUVE INSUFFISANTE - commande exacte non documentée",
+      "nodeVersion": "PREUVE INSUFFISANTE",
+      "pnpmVersion": "PREUVE INSUFFISANTE",
+      "vitestVersion": "PREUVE INSUFFISANTE",
+      "typescriptVersion": "PREUVE INSUFFISANTE",
+      "duration": "PREUVE INSUFFISANTE",
+      "source": "reports/runtime/mutation/mutation-summary.json"
+    },
+    {
+      "id": "EVIDENCE_003",
+      "name": "regression-official.json",
+      "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "fileSha256": "PREUVE INSUFFISANTE - SHA256 non calculé",
+      "generationDate": "2026-07-27T22:29:00",
+      "tool": "Regression testing",
+      "command": "PREUVE INSUFFISANTE - commande exacte non documentée",
+      "nodeVersion": "PREUVE INSUFFISANTE",
+      "pnpmVersion": "PREUVE INSUFFISANTE",
+      "vitestVersion": "PREUVE INSUFFISANTE",
+      "typescriptVersion": "PREUVE INSUFFISANTE",
+      "duration": "PREUVE INSUFFISANTE",
+      "source": "reports/runtime/regression/regression-stable-results.json"
+    },
+    {
+      "id": "EVIDENCE_004",
+      "name": "root-cause-official.md",
+      "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "fileSha256": "PREUVE INSUFFISANTE - SHA256 non calculé",
+      "generationDate": "2026-07-27",
+      "tool": "Manual analysis",
+      "command": "N/A",
+      "nodeVersion": "N/A",
+      "pnpmVersion": "N/A",
+      "vitestVersion": "N/A",
+      "typescriptVersion": "N/A",
+      "duration": "N/A",
+      "source": "reports/runtime/regression/root-cause-r5.md"
+    }
+  ],
+  "metadata": {
+    "totalEvidence": 4,
+    "componentAudited": "execution-pipeline",
+    "fileAudited": "compiler/cvm/execution-pipeline.ts",
+    "testFile": "tests/vm/advanced/execution-pipeline.test.ts",
+    "additionalTestFile": "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts"
+  }
+}

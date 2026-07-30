@@ -107,7 +107,7 @@ export class SpeechAnalyzer {
   async initialize(): Promise<void> {
     if (typeof window === "undefined") return;
     this.audioContext = new (
-      window.AudioContext || (window as any).webkitAudioContext
+      window.AudioContext || (window as unknown).webkitAudioContext
     )();
     this.analyserNode = this.audioContext.createAnalyser();
     this.analyserNode.fftSize = 2048;
@@ -165,7 +165,7 @@ export class SpeechAnalyzer {
   analyzeTranscript(
     transcript: string,
     durationSeconds: number,
-    segments?: any[],
+    segments?: unknown[],
   ): SpeechAnalysisResult {
     const words = transcript
       .toLowerCase()
@@ -256,7 +256,7 @@ export class SpeechAnalyzer {
       .sort((a, b) => b.count - a.count);
   }
 
-  private analyzeWhisperSegments(segments: any[]): SpeechSegment[] {
+  private analyzeWhisperSegments(segments: unknown[]): SpeechSegment[] {
     return segments.map((s) => ({
       startTime: s.start,
       endTime: s.end,
@@ -268,7 +268,7 @@ export class SpeechAnalyzer {
     }));
   }
 
-  private analyzeSpeedVariation(segments?: any[]): {
+  private analyzeSpeedVariation(segments?: unknown[]): {
     speedVariation: number;
     speedVariationRating: string;
   } {
@@ -314,7 +314,7 @@ export class SpeechAnalyzer {
     wpm: number,
     rating: SpeedRating,
     fillerRate: number,
-    fillers: any[],
+    fillers: unknown[],
     longPauses: number,
     variation: number,
   ): Recommendation[] {

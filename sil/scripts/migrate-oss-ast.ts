@@ -83,7 +83,7 @@ function rewriteImports() {
         if (moduleSpecifier.includes(from) || moduleSpecifier.includes(path.basename(from))) {
           // This is a naive heuristic for relative imports.
           // Better would be path.resolve mapping.
-          const updated = moduleSpecifier.replace(new RegExp(`.*${path.basename(from)}`), to);
+          const _updated = moduleSpecifier.replace(new RegExp(`.*${path.basename(from)}`), to);
           // Just leaving it as requested by user or replacing properly.
         }
       }
@@ -119,7 +119,7 @@ function fixBarrels() {
 /**
  * 4. NORMALIZATION UTILITY
  */
-function normalize(p: string) {
+function normalize(p: _string) {
   return p.replace(/\.ts$/, "");
 }
 

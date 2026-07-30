@@ -12,7 +12,6 @@ import {
   defaultHumanPresenceConfig,
 } from "./interfaces/IHumanPresenceService";
 
-import { conversationPresenceService } from "./ConversationPresenceService";
 import { presenceConversationService } from "./PresenceConversationService";
 import { presenceMemoryService } from "./PresenceMemoryService";
 import { presenceEmotionService } from "./PresenceEmotionService";
@@ -74,7 +73,7 @@ export class HumanPresenceService {
 
     // Étape 1 : PresenceConversationService transforme comme un réalisateur de cinéma
     const conversationTransformation = await presenceConversationService.transformConversation(presenceContext);
-    let currentDecision = conversationTransformation.modified;
+    const currentDecision = conversationTransformation.modified;
 
     // Étape 2 : Appliquer les autres services de présence sur la décision transformée
     const memoryModification = await presenceMemoryService.modifyMemory({

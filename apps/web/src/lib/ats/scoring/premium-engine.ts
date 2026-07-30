@@ -13,10 +13,7 @@ export interface PremiumATSScore {
 /**
  * Calculates a highly detailed ATS score based on multiple vectors.
  */
-export function calculatePremiumATSScore(
-  baseMetrics: any,
-  behavioralSignals: any,
-): PremiumATSScore {
+export function calculatePremiumATSScore(baseMetrics: any, behavioralSignals: any, ): PremiumATSScore {
   const dimensions = {
     skillMatch: baseMetrics.skillMatchScore || 0,
     seniorityFit: baseMetrics.seniorityScore || 0,
@@ -36,7 +33,7 @@ export function calculatePremiumATSScore(
   };
 
   const overall = Object.keys(dimensions).reduce((acc, key) => {
-    return acc + (dimensions as any)[key] * (weights as any)[key];
+    return acc + (dimensions  as any)[key] * (weights  as any)[key];
   }, 0);
 
   return {

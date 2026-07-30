@@ -1,0 +1,257 @@
+{
+  "component": "execution-pipeline",
+  "file": "compiler/cvm/execution-pipeline.ts",
+  "testFile": "tests/vm/advanced/execution-pipeline.test.ts",
+  "analysisDate": "2026-07-27T00:30:00Z",
+  "objectives": {
+    "statements": "≥95%",
+    "branches": "≥97%",
+    "functions": "100%",
+    "lines": "≥95%"
+  },
+  "currentCoverage": {
+    "statements": "90.48% (57/63)",
+    "branches": "73.91% (17/23)",
+    "functions": "100.00% (20/20)",
+    "lines": "90.48% (57/63)"
+  },
+  "gaps": {
+    "statements": {
+      "target": "≥95%",
+      "current": "90.48%",
+      "gap": "4.52%",
+      "missing": 6,
+      "status": "NOT_PASSED"
+    },
+    "branches": {
+      "target": "≥97%",
+      "current": "73.91%",
+      "gap": "23.09%",
+      "missing": 6,
+      "status": "NOT_PASSED"
+    },
+    "functions": {
+      "target": "100%",
+      "current": "100.00%",
+      "gap": "0%",
+      "missing": 0,
+      "status": "PASSED"
+    },
+    "lines": {
+      "target": "≥95%",
+      "current": "90.48%",
+      "gap": "4.52%",
+      "missing": 6,
+      "status": "NOT_PASSED"
+    }
+  },
+  "uncoveredLines": [
+    {
+      "line": 78,
+      "code": "this.statistics.branchesTaken++;",
+      "method": "cycle()",
+      "condition": "if (result.branchTaken)",
+      "why": "No test executes a branch instruction with branchTaken = true",
+      "howToReach": "Execute a branch instruction that is taken (branchTaken = true)",
+      "existingTests": "Tests exist for branch prediction but don't execute actual branch instructions with branchTaken = true",
+      "missingTests": "Test that executes a branch instruction with branchTaken = true"
+    },
+    {
+      "line": 80,
+      "code": "this.statistics.branchesNotTaken++;",
+      "method": "cycle()",
+      "condition": "else if (result.branchTaken === false)",
+      "why": "No test executes a branch instruction with branchTaken = false",
+      "howToReach": "Execute a branch instruction that is not taken (branchTaken = false)",
+      "existingTests": "Tests exist for branch prediction but don't execute actual branch instructions with branchTaken = false",
+      "missingTests": "Test that executes a branch instruction with branchTaken = false"
+    },
+    {
+      "line": 84,
+      "code": "this.statistics.calls++;",
+      "method": "cycle()",
+      "condition": "if (decoded.isCall)",
+      "why": "No test executes a call instruction (decoded.isCall = true)",
+      "howToReach": "Execute a call instruction (isCall = true)",
+      "existingTests": "Tests exist for call statistics tracking but don't execute actual call instructions",
+      "missingTests": "Test that executes a call instruction"
+    },
+    {
+      "line": 88,
+      "code": "this.statistics.returns++;",
+      "method": "cycle()",
+      "condition": "if (decoded.isReturn)",
+      "why": "No test executes a return instruction (decoded.isReturn = true)",
+      "howToReach": "Execute a return instruction (isReturn = true)",
+      "existingTests": "Tests exist for return statistics tracking but don't execute actual return instructions",
+      "missingTests": "Test that executes a return instruction"
+    },
+    {
+      "line": 106,
+      "code": "this.cycle();",
+      "method": "run()",
+      "condition": "while (!this.context.isHalted() && this.running)",
+      "why": "No test executes run() with loop iterations (context not halted and running = true)",
+      "howToReach": "Call run() with context not halted and running = true",
+      "existingTests": "Test exists for run() with halted context, but not for non-halted context",
+      "missingTests": "Test that calls run() with non-halted context to execute loop iterations"
+    },
+    {
+      "line": 117,
+      "code": "this.cycle();",
+      "method": "runCycles()",
+      "condition": "for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+      "why": "No test executes runCycles() with loop iterations (context not halted and running = true)",
+      "howToReach": "Call runCycles(n) with context not halted and running = true",
+      "existingTests": "Test exists for runCycles() but doesn't verify loop execution with non-halted context",
+      "missingTests": "Test that calls runCycles() with non-halted context to execute loop iterations"
+    }
+  ],
+  "uncoveredBranches": [
+    {
+      "line": 77,
+      "condition": "if (result.branchTaken)",
+      "type": "conditional",
+      "why": "result.branchTaken is never true in current tests",
+      "howToReach": "Mock or execute a branch instruction that sets branchTaken = true",
+      "existingTests": "None",
+      "missingTests": "Test for branchTaken = true scenario"
+    },
+    {
+      "line": 79,
+      "condition": "else if (result.branchTaken === false)",
+      "type": "conditional",
+      "why": "result.branchTaken is never false in current tests",
+      "howToReach": "Mock or execute a branch instruction that sets branchTaken = false",
+      "existingTests": "None",
+      "missingTests": "Test for branchTaken = false scenario"
+    },
+    {
+      "line": 83,
+      "condition": "if (decoded.isCall)",
+      "type": "conditional",
+      "why": "decoded.isCall is never true in current tests",
+      "howToReach": "Mock or execute a call instruction that sets isCall = true",
+      "existingTests": "None",
+      "missingTests": "Test for isCall = true scenario"
+    },
+    {
+      "line": 87,
+      "condition": "if (decoded.isReturn)",
+      "type": "conditional",
+      "why": "decoded.isReturn is never true in current tests",
+      "howToReach": "Mock or execute a return instruction that sets isReturn = true",
+      "existingTests": "None",
+      "missingTests": "Test for isReturn = true scenario"
+    },
+    {
+      "line": 105,
+      "condition": "while (!this.context.isHalted() && this.running)",
+      "type": "loop",
+      "why": "Loop body is never executed in current tests (context is always halted before run())",
+      "howToReach": "Call run() with context not halted and running = true",
+      "existingTests": "Test exists for run() with halted context only",
+      "missingTests": "Test for run() with non-halted context"
+    },
+    {
+      "line": 116,
+      "condition": "for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+      "type": "loop",
+      "why": "Loop body is never executed in current tests (context is always halted or running = false)",
+      "howToReach": "Call runCycles(n) with context not halted and running = true",
+      "existingTests": "Test exists for runCycles() but doesn't execute loop body",
+      "missingTests": "Test for runCycles() with non-halted context"
+    }
+  ],
+  "testAnalysis": {
+    "totalTests": 80,
+    "testSuites": [
+      "Fetch",
+      "Decode",
+      "Execute",
+      "Commit",
+      "Flush",
+      "Hazards",
+      "Dependency",
+      "Stall",
+      "Branch Prediction",
+      "Reset",
+      "Recovery",
+      "Statistics",
+      "Cache Management",
+      "Bytecode Management",
+      "Context Management",
+      "Pipeline Units",
+      "Run Modes",
+      "Validation",
+      "Stress Tests"
+    ],
+    "coverageGaps": [
+      "No test for branchTaken = true",
+      "No test for branchTaken = false",
+      "No test for isCall = true",
+      "No test for isReturn = true",
+      "No test for run() with non-halted context",
+      "No test for runCycles() with non-halted context"
+    ],
+    "strengths": [
+      "Comprehensive test coverage for basic operations",
+      "Good coverage for error handling",
+      "Good coverage for statistics tracking",
+      "Good coverage for cache management",
+      "Good coverage for validation"
+    ],
+    "weaknesses": [
+      "Missing tests for branch instructions (taken/not taken)",
+      "Missing tests for call/return instructions",
+      "Missing tests for loop execution in run() and runCycles()",
+      "Tests rely on invalid bytecode which may not execute all code paths"
+    ]
+  },
+  "requiredTests": [
+    {
+      "id": "test-branch-taken",
+      "description": "Test that executes a branch instruction with branchTaken = true",
+      "targetLine": 78,
+      "targetBranch": "if (result.branchTaken)",
+      "priority": "high"
+    },
+    {
+      "id": "test-branch-not-taken",
+      "description": "Test that executes a branch instruction with branchTaken = false",
+      "targetLine": 80,
+      "targetBranch": "else if (result.branchTaken === false)",
+      "priority": "high"
+    },
+    {
+      "id": "test-call-instruction",
+      "description": "Test that executes a call instruction with isCall = true",
+      "targetLine": 84,
+      "targetBranch": "if (decoded.isCall)",
+      "priority": "high"
+    },
+    {
+      "id": "test-return-instruction",
+      "description": "Test that executes a return instruction with isReturn = true",
+      "targetLine": 88,
+      "targetBranch": "if (decoded.isReturn)",
+      "priority": "high"
+    },
+    {
+      "id": "test-run-loop",
+      "description": "Test that calls run() with non-halted context to execute loop iterations",
+      "targetLine": 106,
+      "targetBranch": "while (!this.context.isHalted() && this.running)",
+      "priority": "high"
+    },
+    {
+      "id": "test-runcycles-loop",
+      "description": "Test that calls runCycles() with non-halted context to execute loop iterations",
+      "targetLine": 117,
+      "targetBranch": "for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+      "priority": "high"
+    }
+  ],
+  "overallStatus": "NOT_CERTIFIED",
+  "blockingCriteria": "Statements coverage (90.48%) and Branches coverage (73.91%) below targets (95% and 97% respectively)"
+}

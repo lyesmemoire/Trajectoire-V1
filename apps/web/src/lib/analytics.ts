@@ -27,7 +27,7 @@ export function track(event: string, properties?: any) {
 
   logInfo(`[Privacy-Safe Analytics] ${event}`, enrichedProps);
 
-  if ((window as any).posthog) {
-    (window as any).posthog.capture(event, enrichedProps);
+  if ((window  as any).posthog) {
+    (window  as any).posthog.capture(event, enrichedProps);
   }
 }

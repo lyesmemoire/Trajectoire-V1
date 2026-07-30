@@ -48,7 +48,7 @@ export interface SmartNotification {
   sentAt?: Date;
   readAt?: Date;
   dismissedAt?: Date;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   generatedBy: string[];
   timestamp: Date;
 }

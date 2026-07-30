@@ -23,12 +23,12 @@ export interface MerkleLedgerWriter {
 }
 
 export class InMemoryMerkleLedgerWriter implements MerkleLedgerWriter {
-  private buffer: any[] = [];
+  private buffer: unknown[] = [];
   private BATCH_SIZE = 100;
 
   constructor(private eventStore: EventStore) {}
 
-  async append(event: any): Promise<void> {
+  async append(event: unknown): Promise<void> {
     this.buffer.push(event);
 
     if (this.buffer.length >= this.BATCH_SIZE) {
@@ -61,7 +61,7 @@ export class InMemoryMerkleLedgerWriter implements MerkleLedgerWriter {
     return batch;
   }
 
-  private computeMerkleRoot(events: any[]): string {
+  private computeMerkleRoot(events: unknown[]): string {
     let hashes = events.map(e =>
       crypto.createHash("sha256").update(e.hash).digest("hex")
     );
@@ -87,7 +87,7 @@ export class InMemoryMerkleLedgerWriter implements MerkleLedgerWriter {
     return hashes[0];
   }
 
-  private async persistLedger(batch: LedgerBatch) {
+  private async persistLedger(_batch: LedgerBatch) {
     // intentionally isolated side-effect
     // In production, this would persist to the ledger_batches Postgres table
     // console.log("[LEDGER]", batch);

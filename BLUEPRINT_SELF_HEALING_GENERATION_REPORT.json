@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "totalComponentsGenerated": 8
+  },
+  "generatedComponents": [
+    "c:\\Trajectoire\\packages\\blueprint-healing\\duplication-detector.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\drift-detector.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\violation-detector.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\cycle-detector.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\contract-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\ownership-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\auto-repair.ts",
+    "c:\\Trajectoire\\packages\\blueprint-healing\\orchestrator.ts"
+  ]
+}

@@ -1,12 +1,12 @@
 interface Step {
-  id: string;
-  label: string;
-  completed: boolean;
-  current: boolean;
+  id: string
+  label: string
+  completed: boolean
+  current: boolean
 }
 
 interface ProgressStepsProps {
-  steps: Step[];
+  steps: Step[]
 }
 
 export function ProgressSteps({ steps }: ProgressStepsProps) {
@@ -21,10 +21,10 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
                 transition-all duration-300
                 ${
                   step.completed
-                    ? "bg-emerald-500 text-white"
+                    ? "bg-forest-500 text-white"
                     : step.current
-                      ? "bg-blue-600 text-white ring-4 ring-blue-100"
-                      : "bg-gray-100 text-gray-400"
+                      ? "bg-ink-900 text-white ring-4 ring-ink-100"
+                      : "bg-ivoire-100 text-ink-400"
                 }
               `}
             >
@@ -33,7 +33,7 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
             <span
               className={`
                 mt-1 text-xs font-medium
-                ${step.current ? "text-blue-600" : step.completed ? "text-emerald-600" : "text-gray-400"}
+                ${step.current ? "text-ink-900" : step.completed ? "text-forest-600" : "text-ink-400"}
               `}
             >
               {step.label}
@@ -43,12 +43,12 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
             <div
               className={`
                 mx-2 h-0.5 w-12 transition-colors duration-300
-                ${step.completed ? "bg-emerald-400" : "bg-gray-200"}
+                ${step.completed ? "bg-forest-400" : "bg-ivoire-200"}
               `}
             />
           )}
         </div>
       ))}
     </nav>
-  );
+  )
 }

@@ -1,0 +1,19 @@
+{
+  "phase": 4,
+  "title": "Tests de Falsification (Tampering)",
+  "tests": [
+    {
+      "target": "coverage-report.json",
+      "modification": "Modification de content.metrics.statements à 99.9 au lieu de 100",
+      "detection": "Détecté par V-05: All artifact hashes match (Hash mismatch sur coverage-report.json)",
+      "result": "PASS"
+    },
+    {
+      "target": "manifest.json",
+      "modification": "Modification de verification.allEvidencePresent à false",
+      "detection": "Détecté par V-11: Manifest self-hash valid (Recalculated vs stored hash diffèrent)",
+      "result": "PASS"
+    }
+  ],
+  "conclusion": "Le pipeline de vérification (verify.cjs) est robuste contre la falsification des artefacts et du manifeste."
+}

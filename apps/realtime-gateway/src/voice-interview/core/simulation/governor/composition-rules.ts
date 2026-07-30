@@ -84,10 +84,7 @@ export const COMPOSITION_RULES: UXRule[] = [
 ];
 
 /** Applique toutes les règles dans l'ordre de priorité. */
-export function applyCompositionRules(
-  ux: PerceptionUX,
-  personaMode: ReactiveMode,
-): PerceptionUX {
+export function applyCompositionRules(ux: PerceptionUX, personaMode: ReactiveMode, ): PerceptionUX {
   const ordered = [...COMPOSITION_RULES].sort((a, b) => a.priority - b.priority);
   let out = ux;
   for (const rule of ordered) {

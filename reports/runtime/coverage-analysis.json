@@ -1,0 +1,738 @@
+{
+  "cvm": {
+    "branch-predictor": {
+      "file": "compiler\\cvm\\branch-predictor.ts",
+      "testFile": "tests/vm/performance/branch-predictor.test.ts",
+      "testCount": 52,
+      "hasTests": true,
+      "lines": 215,
+      "functions": 14,
+      "branches": 14,
+      "publicMethods": 11,
+      "privateMethods": 3,
+      "complexity": 15,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 14,
+        "debtScore": 0.47
+      }
+    },
+    "debugger-hooks": {
+      "file": "compiler\\cvm\\debugger-hooks.ts",
+      "testFile": "tests/vm/advanced/debugger-hooks.test.ts",
+      "testCount": 93,
+      "hasTests": true,
+      "lines": 475,
+      "functions": 31,
+      "branches": 39,
+      "publicMethods": 31,
+      "privateMethods": 0,
+      "complexity": 39,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 39,
+        "debtScore": 0.5
+      }
+    },
+    "exception-handler": {
+      "file": "compiler\\cvm\\exception-handler.ts",
+      "testFile": "tests/vm/exceptions/exception-handler.test.ts",
+      "testCount": 40,
+      "hasTests": true,
+      "lines": 196,
+      "functions": 15,
+      "branches": 10,
+      "publicMethods": 13,
+      "privateMethods": 2,
+      "complexity": 11,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 10,
+        "debtScore": 0.45
+      }
+    },
+    "execution-context": {
+      "file": "compiler\\cvm\\execution-context.ts",
+      "testFile": "tests/vm/core/execution-context.test.ts",
+      "testCount": 59,
+      "hasTests": true,
+      "lines": 236,
+      "functions": 20,
+      "branches": 4,
+      "publicMethods": 19,
+      "privateMethods": 1,
+      "complexity": 5,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 4,
+        "debtScore": 0.4
+      }
+    },
+    "execution-pipeline": {
+      "file": "compiler\\cvm\\execution-pipeline.ts",
+      "testFile": "tests/vm/advanced/execution-pipeline.test.ts",
+      "testCount": 86,
+      "hasTests": true,
+      "lines": 249,
+      "functions": 19,
+      "branches": 13,
+      "publicMethods": 18,
+      "privateMethods": 1,
+      "complexity": 14,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 13,
+        "debtScore": 0.46
+      }
+    },
+    "frame-manager": {
+      "file": "compiler\\cvm\\frame-manager.ts",
+      "testFile": "tests/vm/core/frame-manager.test.ts",
+      "testCount": 69,
+      "hasTests": true,
+      "lines": 239,
+      "functions": 21,
+      "branches": 10,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "complexity": 11,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 10,
+        "debtScore": 0.45
+      }
+    },
+    "garbage-collector": {
+      "file": "compiler\\cvm\\garbage-collector.ts",
+      "testFile": "tests/vm/advanced/garbage-collector.test.ts",
+      "testCount": 65,
+      "hasTests": true,
+      "lines": 337,
+      "functions": 20,
+      "branches": 32,
+      "publicMethods": 14,
+      "privateMethods": 6,
+      "complexity": 32,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 32,
+        "debtScore": 0.5
+      }
+    },
+    "instruction-cache": {
+      "file": "compiler\\cvm\\instruction-cache.ts",
+      "testFile": "tests/vm/performance/instruction-cache.test.ts",
+      "testCount": 68,
+      "hasTests": true,
+      "lines": 263,
+      "functions": 18,
+      "branches": 17,
+      "publicMethods": 15,
+      "privateMethods": 3,
+      "complexity": 18,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 17,
+        "debtScore": 0.47
+      }
+    },
+    "instruction-decode": {
+      "file": "compiler\\cvm\\instruction-decode.ts",
+      "testFile": "tests/vm/decoder/instruction-decode.test.ts",
+      "testCount": 36,
+      "hasTests": true,
+      "lines": 126,
+      "functions": 7,
+      "branches": 9,
+      "publicMethods": 7,
+      "privateMethods": 0,
+      "complexity": 10,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 9,
+        "debtScore": 0.45
+      }
+    },
+    "instruction-execute": {
+      "file": "compiler\\cvm\\instruction-execute.ts",
+      "testFile": "tests/vm/executor/instruction-execute.test.ts",
+      "testCount": 92,
+      "hasTests": true,
+      "lines": 420,
+      "functions": 28,
+      "branches": 33,
+      "publicMethods": 3,
+      "privateMethods": 25,
+      "complexity": 32,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 33,
+        "debtScore": 0.52
+      }
+    },
+    "instruction-fetch": {
+      "file": "compiler\\cvm\\instruction-fetch.ts",
+      "testFile": "tests/vm/loader/instruction-fetch.test.ts",
+      "testCount": 70,
+      "hasTests": true,
+      "lines": 241,
+      "functions": 15,
+      "branches": 15,
+      "publicMethods": 14,
+      "privateMethods": 1,
+      "complexity": 16,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 15,
+        "debtScore": 0.47
+      }
+    },
+    "interrupt-manager": {
+      "file": "compiler\\cvm\\interrupt-manager.ts",
+      "testFile": "tests/vm/advanced/interrupt-manager.test.ts",
+      "testCount": 77,
+      "hasTests": true,
+      "lines": 330,
+      "functions": 23,
+      "branches": 17,
+      "publicMethods": 20,
+      "privateMethods": 3,
+      "complexity": 17,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 17,
+        "debtScore": 0.5
+      }
+    },
+    "memory-manager": {
+      "file": "compiler\\cvm\\memory-manager.ts",
+      "testFile": "tests/vm/memory/memory-manager.test.ts",
+      "testCount": 71,
+      "hasTests": true,
+      "lines": 347,
+      "functions": 31,
+      "branches": 17,
+      "publicMethods": 28,
+      "privateMethods": 3,
+      "complexity": 18,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 17,
+        "debtScore": 0.47
+      }
+    },
+    "microcode-engine": {
+      "file": "compiler\\cvm\\microcode-engine.ts",
+      "testFile": "tests/vm/advanced/microcode-engine.test.ts",
+      "testCount": 77,
+      "hasTests": true,
+      "lines": 318,
+      "functions": 10,
+      "branches": 28,
+      "publicMethods": 7,
+      "privateMethods": 3,
+      "complexity": 27,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 28,
+        "debtScore": 0.52
+      }
+    },
+    "profiler-hooks": {
+      "file": "compiler\\cvm\\profiler-hooks.ts",
+      "testFile": "tests/vm/advanced/profiler-hooks.test.ts",
+      "testCount": 70,
+      "hasTests": true,
+      "lines": 233,
+      "functions": 16,
+      "branches": 13,
+      "publicMethods": 16,
+      "privateMethods": 0,
+      "complexity": 14,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 13,
+        "debtScore": 0.46
+      }
+    },
+    "register-file": {
+      "file": "compiler\\cvm\\register-file.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 227,
+      "functions": 19,
+      "branches": 17,
+      "publicMethods": 18,
+      "privateMethods": 1,
+      "complexity": 18,
+      "debt": {
+        "untestedFunctions": 19,
+        "untestedBranches": 17,
+        "debtScore": 1.53
+      }
+    },
+    "rollback-manager": {
+      "file": "compiler\\cvm\\rollback-manager.ts",
+      "testFile": "tests/vm/advanced/rollback-manager.test.ts",
+      "testCount": 80,
+      "hasTests": true,
+      "lines": 304,
+      "functions": 21,
+      "branches": 22,
+      "publicMethods": 20,
+      "privateMethods": 1,
+      "complexity": 23,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 22,
+        "debtScore": 0.48
+      }
+    },
+    "scheduler": {
+      "file": "compiler\\cvm\\scheduler.ts",
+      "testFile": "tests/unit/scheduler.test.ts",
+      "testCount": 4,
+      "hasTests": true,
+      "lines": 304,
+      "functions": 24,
+      "branches": 19,
+      "publicMethods": 21,
+      "privateMethods": 3,
+      "complexity": 20,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 19,
+        "debtScore": 1.48
+      }
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cvm\\snapshot-manager.ts",
+      "testFile": "tests/vm/advanced/snapshot-manager.test.ts",
+      "testCount": 62,
+      "hasTests": true,
+      "lines": 256,
+      "functions": 15,
+      "branches": 13,
+      "publicMethods": 15,
+      "privateMethods": 0,
+      "complexity": 14,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 13,
+        "debtScore": 0.46
+      }
+    },
+    "thread-manager": {
+      "file": "compiler\\cvm\\thread-manager.ts",
+      "testFile": "tests/vm/advanced/thread-manager.test.ts",
+      "testCount": 68,
+      "hasTests": true,
+      "lines": 313,
+      "functions": 20,
+      "branches": 22,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "complexity": 19,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 22,
+        "debtScore": 0.58
+      }
+    },
+    "trace-hooks": {
+      "file": "compiler\\cvm\\trace-hooks.ts",
+      "testFile": "tests/vm/advanced/trace-hooks.test.ts",
+      "testCount": 95,
+      "hasTests": true,
+      "lines": 375,
+      "functions": 27,
+      "branches": 26,
+      "publicMethods": 26,
+      "privateMethods": 1,
+      "complexity": 27,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 26,
+        "debtScore": 0.48
+      }
+    }
+  },
+  "cpr": {
+    "api-gateway": {
+      "file": "compiler\\cpr\\api-gateway.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 332,
+      "functions": 19,
+      "branches": 18,
+      "publicMethods": 14,
+      "privateMethods": 5,
+      "complexity": 19,
+      "debt": {
+        "untestedFunctions": 19,
+        "untestedBranches": 18,
+        "debtScore": 1.47
+      }
+    },
+    "autoscaler": {
+      "file": "compiler\\cpr\\autoscaler.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 333,
+      "functions": 17,
+      "branches": 25,
+      "publicMethods": 13,
+      "privateMethods": 4,
+      "complexity": 22,
+      "debt": {
+        "untestedFunctions": 17,
+        "untestedBranches": 25,
+        "debtScore": 1.34
+      }
+    },
+    "cluster-manager": {
+      "file": "compiler\\cpr\\cluster-manager.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 292,
+      "functions": 19,
+      "branches": 15,
+      "publicMethods": 19,
+      "privateMethods": 0,
+      "complexity": 16,
+      "debt": {
+        "untestedFunctions": 19,
+        "untestedBranches": 15,
+        "debtScore": 1.66
+      }
+    },
+    "consensus-engine": {
+      "file": "compiler\\cpr\\consensus-engine.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 429,
+      "functions": 22,
+      "branches": 30,
+      "publicMethods": 11,
+      "privateMethods": 11,
+      "complexity": 30,
+      "debt": {
+        "untestedFunctions": 22,
+        "untestedBranches": 30,
+        "debtScore": 1.23
+      }
+    },
+    "distributed-debugger": {
+      "file": "compiler\\cpr\\distributed-debugger.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 357,
+      "functions": 20,
+      "branches": 32,
+      "publicMethods": 18,
+      "privateMethods": 0,
+      "complexity": 32,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 32,
+        "debtScore": 1.13
+      }
+    },
+    "distributed-locks": {
+      "file": "compiler\\cpr\\distributed-locks.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 246,
+      "functions": 14,
+      "branches": 17,
+      "publicMethods": 14,
+      "privateMethods": 0,
+      "complexity": 18,
+      "debt": {
+        "untestedFunctions": 14,
+        "untestedBranches": 17,
+        "debtScore": 1.25
+      }
+    },
+    "distributed-memory": {
+      "file": "compiler\\cpr\\distributed-memory.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 307,
+      "functions": 20,
+      "branches": 22,
+      "publicMethods": 18,
+      "privateMethods": 2,
+      "complexity": 23,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 22,
+        "debtScore": 1.35
+      }
+    },
+    "distributed-profiler": {
+      "file": "compiler\\cpr\\distributed-profiler.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 303,
+      "functions": 17,
+      "branches": 16,
+      "publicMethods": 16,
+      "privateMethods": 1,
+      "complexity": 17,
+      "debt": {
+        "untestedFunctions": 17,
+        "untestedBranches": 16,
+        "debtScore": 1.47
+      }
+    },
+    "distributed-scheduler": {
+      "file": "compiler\\cpr\\distributed-scheduler.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 345,
+      "functions": 20,
+      "branches": 19,
+      "publicMethods": 19,
+      "privateMethods": 1,
+      "complexity": 20,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 19,
+        "debtScore": 1.48
+      }
+    },
+    "distributed-trace": {
+      "file": "compiler\\cpr\\distributed-trace.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 369,
+      "functions": 20,
+      "branches": 21,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "complexity": 22,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 21,
+        "debtScore": 1.39
+      }
+    },
+    "execution-coordinator": {
+      "file": "compiler\\cpr\\execution-coordinator.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 315,
+      "functions": 18,
+      "branches": 25,
+      "publicMethods": 18,
+      "privateMethods": 0,
+      "complexity": 26,
+      "debt": {
+        "untestedFunctions": 18,
+        "untestedBranches": 25,
+        "debtScore": 1.17
+      }
+    },
+    "governance": {
+      "file": "compiler\\cpr\\governance.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 368,
+      "functions": 23,
+      "branches": 21,
+      "publicMethods": 20,
+      "privateMethods": 3,
+      "complexity": 17,
+      "debt": {
+        "untestedFunctions": 23,
+        "untestedBranches": 21,
+        "debtScore": 1.97
+      }
+    },
+    "knowledge-fabric": {
+      "file": "compiler\\cpr\\knowledge-fabric.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 374,
+      "functions": 22,
+      "branches": 39,
+      "publicMethods": 14,
+      "privateMethods": 8,
+      "complexity": 38,
+      "debt": {
+        "untestedFunctions": 22,
+        "untestedBranches": 39,
+        "debtScore": 1.09
+      }
+    },
+    "leader-election": {
+      "file": "compiler\\cpr\\leader-election.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 280,
+      "functions": 18,
+      "branches": 21,
+      "publicMethods": 12,
+      "privateMethods": 6,
+      "complexity": 22,
+      "debt": {
+        "untestedFunctions": 18,
+        "untestedBranches": 21,
+        "debtScore": 1.3
+      }
+    },
+    "provider-manager": {
+      "file": "compiler\\cpr\\provider-manager.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 316,
+      "functions": 20,
+      "branches": 16,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "complexity": 17,
+      "debt": {
+        "untestedFunctions": 20,
+        "untestedBranches": 16,
+        "debtScore": 1.65
+      }
+    },
+    "recovery-manager": {
+      "file": "compiler\\cpr\\recovery-manager.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 433,
+      "functions": 23,
+      "branches": 34,
+      "publicMethods": 15,
+      "privateMethods": 8,
+      "complexity": 28,
+      "debt": {
+        "untestedFunctions": 23,
+        "untestedBranches": 34,
+        "debtScore": 1.43
+      }
+    },
+    "replay-manager": {
+      "file": "compiler\\cpr\\replay-manager.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 354,
+      "functions": 21,
+      "branches": 28,
+      "publicMethods": 20,
+      "privateMethods": 1,
+      "complexity": 28,
+      "debt": {
+        "untestedFunctions": 21,
+        "untestedBranches": 28,
+        "debtScore": 1.25
+      }
+    },
+    "runtime-kernel": {
+      "file": "compiler\\cpr\\runtime-kernel.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 298,
+      "functions": 19,
+      "branches": 8,
+      "publicMethods": 16,
+      "privateMethods": 3,
+      "complexity": 9,
+      "debt": {
+        "untestedFunctions": 19,
+        "untestedBranches": 8,
+        "debtScore": 2.56
+      }
+    },
+    "runtime-manager": {
+      "file": "compiler\\cpr\\runtime-manager.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 239,
+      "functions": 16,
+      "branches": 10,
+      "publicMethods": 15,
+      "privateMethods": 1,
+      "complexity": 11,
+      "debt": {
+        "untestedFunctions": 16,
+        "untestedBranches": 10,
+        "debtScore": 1.91
+      }
+    },
+    "security": {
+      "file": "compiler\\cpr\\security.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 368,
+      "functions": 24,
+      "branches": 19,
+      "publicMethods": 21,
+      "privateMethods": 3,
+      "complexity": 15,
+      "debt": {
+        "untestedFunctions": 24,
+        "untestedBranches": 19,
+        "debtScore": 2.23
+      }
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cpr\\snapshot-manager.ts",
+      "testFile": "tests/vm/advanced/snapshot-manager.test.ts",
+      "testCount": 62,
+      "hasTests": true,
+      "lines": 322,
+      "functions": 16,
+      "branches": 26,
+      "publicMethods": 15,
+      "privateMethods": 1,
+      "complexity": 27,
+      "debt": {
+        "untestedFunctions": 0,
+        "untestedBranches": 26,
+        "debtScore": 0.48
+      }
+    },
+    "telemetry": {
+      "file": "compiler\\cpr\\telemetry.ts",
+      "testFile": null,
+      "testCount": 0,
+      "hasTests": false,
+      "lines": 273,
+      "functions": 15,
+      "branches": 22,
+      "publicMethods": 15,
+      "privateMethods": 0,
+      "complexity": 23,
+      "debt": {
+        "untestedFunctions": 15,
+        "untestedBranches": 22,
+        "debtScore": 1.13
+      }
+    }
+  },
+  "memory": {}
+}

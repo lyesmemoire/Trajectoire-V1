@@ -98,9 +98,7 @@ export interface PolicyEngine {
 /**
  * Create the default DEDS policy engine with all core rules.
  */
-export function createPolicyEngine(
-  additionalRules: PolicyRule[] = []
-): PolicyEngine {
+export function createPolicyEngine(additionalRules: PolicyRule[] = []): PolicyEngine {
   const rules: PolicyRule[] = [
     tenantIsolationRule,
     sessionOwnershipRule,

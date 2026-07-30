@@ -39,6 +39,11 @@ const EnvClientSchema = z.object({
     .string()
     .url()
     .optional(),
+
+  NEXT_PUBLIC_SENTRY_DSN: z
+    .string()
+    .url()
+    .optional(),
 });
 
 function validateClientEnv() {
@@ -51,6 +56,7 @@ function validateClientEnv() {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_GATEWAY_URL:            process.env.NEXT_PUBLIC_GATEWAY_URL,
     NEXT_PUBLIC_API_URL:                process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_SENTRY_DSN:             process.env.NEXT_PUBLIC_SENTRY_DSN,
   });
 
   if (!result.success && process.env.NODE_ENV === "development") {

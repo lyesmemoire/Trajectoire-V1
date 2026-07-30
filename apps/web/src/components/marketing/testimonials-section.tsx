@@ -1,12 +1,12 @@
-import React from "react";
-import { testimonials } from "./landing-config";
-import SectionBadge from "./section-badge";
+import React from "react"
+import { testimonials } from "./landing-config"
+import SectionBadge from "./section-badge"
 
 export default function TestimonialsSection() {
   return (
     <section
       id="testimonials"
-      className="section px-6 border-t border-white/5 bg-[#050816]"
+      className="section px-6 border-t border-ivoire-200/20 bg-ink-900"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -23,27 +23,27 @@ export default function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-[#0B1023] rounded-3xl p-8 border border-white/10 shadow-sm flex flex-col justify-between"
+              className="bg-ink-800 rounded-3xl p-8 border border-ivoire-200/20 shadow-premium flex flex-col justify-between"
             >
               <div className="space-y-4">
-                <div className="flex text-amber-400 text-sm font-display">
+                <div className="flex text-bronze-400 text-sm font-display">
                   {Array.from({ length: testimonial.stars }).map((_, i) => (
                     <span key={i}>★</span>
                   ))}
                 </div>
-                <p className="text-slate-400 text-sm italic leading-relaxed">
+                <p className="text-ink-400 text-sm italic leading-relaxed">
                   {testimonial.quote}
                 </p>
               </div>
-              <div className="flex items-center gap-3 pt-6 border-t border-white/5 mt-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+              <div className="flex items-center gap-3 pt-6 border-t border-ivoire-200/20 mt-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-bronze-500 to-ink-600 text-ivoire-50 flex items-center justify-center font-bold text-xs shadow-premium">
                   {testimonial.initials}
                 </div>
                 <div>
-                  <strong className="text-white text-sm font-bold block">
+                  <strong className="text-ivoire-50 text-sm font-bold block">
                     {testimonial.author}
                   </strong>
-                  <span className="text-slate-400 text-xs font-medium block">
+                  <span className="text-ink-400 text-xs font-medium block">
                     {testimonial.role}
                   </span>
                 </div>
@@ -53,5 +53,5 @@ export default function TestimonialsSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

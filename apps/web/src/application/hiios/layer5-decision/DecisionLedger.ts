@@ -4,9 +4,9 @@
  * File: layer5-decision/DecisionLedger.ts
  */
 
-import { HypothesisEngine, Hypothesis } from '../layer0-kernel/HypothesisEngine';
+import { HypothesisEngine } from '../layer0-kernel/HypothesisEngine';
 import { EvidenceEngine } from '../layer0-kernel/EvidenceEngine';
-import { SkillGraph, SkillNode } from '../layer0-kernel/SkillGraph';
+import { SkillGraph } from '../layer0-kernel/SkillGraph';
 
 // ──────────────────────────────────────────────────────────
 // TYPES

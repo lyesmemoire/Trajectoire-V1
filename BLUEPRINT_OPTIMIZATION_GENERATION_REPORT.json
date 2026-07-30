@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "totalComponentsGenerated": 9
+  },
+  "generatedComponents": [
+    "c:\\Trajectoire\\compiler\\optimizer\\dead-code-elimination.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\inlining.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\constant-folding.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\ssa.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\loop-optimization.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\graph-simplification.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\memory-optimization.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\instruction-fusion.ts",
+    "c:\\Trajectoire\\compiler\\optimizer\\pipeline.ts"
+  ]
+}

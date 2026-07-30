@@ -1,0 +1,114 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "gitBranch": "main",
+  "auditor": "Independent Evidence Reconstruction Audit",
+  "evidenceDirectory": "certification-audit/evidence",
+  "files": [
+    {
+      "name": "comparison.json",
+      "size": 5095,
+      "sha256": "B161F5307D67D40D8A688F943CB753A90B541B32E93A0BA221C2944C3CB0BA8F",
+      "date": "2026-07-27T23:19:19",
+      "purpose": "Comparison between raw evidence and official reports"
+    },
+    {
+      "name": "confidence.json",
+      "size": 2876,
+      "sha256": "53FC0609390774461D4135B7F180B44FAEA02E0BB161C415FAB24FD024CC72DE",
+      "date": "2026-07-27T23:19:47",
+      "purpose": "Documentary confidence index calculation"
+    },
+    {
+      "name": "coverage.command.txt",
+      "size": 146,
+      "sha256": "070B451D0B8E6B5A06B16F3D0F8AA63DE61C7C8361E3FE23C5711469759DA88F",
+      "date": "2026-07-27T23:16:30",
+      "purpose": "Command used to generate coverage"
+    },
+    {
+      "name": "coverage.environment.json",
+      "size": 426,
+      "sha256": "6F564222111F7311565997FF2A1346F51F1790B76384D60FCF1FD9D000CE48D8",
+      "date": "2026-07-27T23:16:46",
+      "purpose": "Environment information for coverage generation"
+    },
+    {
+      "name": "coverage.raw.json",
+      "size": 175488,
+      "sha256": "590DB33194D458F7A04A6FC8A9A77086287C558070E3011ED416AC15996220FC",
+      "date": "2026-07-26T22:50:51",
+      "purpose": "Raw coverage data from Vitest",
+      "note": "Contains scheduler coverage, not execution-pipeline coverage"
+    },
+    {
+      "name": "coverage.recomputed.json",
+      "size": 752,
+      "sha256": "863398BBF2540A230A89EF73596FBFC60CAB1B16A52A5B2AE0C9B9B0DD8AAB41",
+      "date": "2026-07-27T23:18:27",
+      "purpose": "Metrics recalculated from raw coverage"
+    },
+    {
+      "name": "coverage.sha256",
+      "size": 65,
+      "sha256": "64192F8F5969CDDA2DA6D6ADAEE8D434E9EB9B379EDF0F936AC1357C9CB9DC79",
+      "date": "2026-07-27T23:16:57",
+      "purpose": "SHA256 hash of coverage.raw.json"
+    },
+    {
+      "name": "coverage.summary.json",
+      "size": 1351,
+      "sha256": "AC101A7319207373DBF28D51A5141550F04A35AF1DE90F31F4BB50C504E8F8EF",
+      "date": "2026-07-27T23:17:17",
+      "purpose": "Summary of coverage raw data"
+    },
+    {
+      "name": "mutation.raw.json",
+      "size": 692,
+      "sha256": "83F269CCBCB7C94F51C728D7625038FC97BB169C247F1FD9DC690B64B65EC359",
+      "date": "2026-07-27T23:17:33",
+      "purpose": "Raw mutation data",
+      "note": "PREUVE INSUFFISANTE - mutation definitions not available"
+    },
+    {
+      "name": "mutation.recomputed.json",
+      "size": 675,
+      "sha256": "F06E9F8AFEF3D72AB1A2A2742EB0A05F8C10AAEE4174330B31B1934A14F09389",
+      "date": "2026-07-27T23:18:36",
+      "purpose": "Metrics recalculated from raw mutation data"
+    },
+    {
+      "name": "regression.log",
+      "size": 1020,
+      "sha256": "2804F2B05E66F1A929BDFA35A7882B877FFCB8E1144F4C5EEB95EE37885C52AE",
+      "date": "2026-07-27T23:17:52",
+      "purpose": "Log output from regression testing"
+    },
+    {
+      "name": "regression.raw.json",
+      "size": 1160,
+      "sha256": "2B5775DDD6031A6BF9FAF203896C250EF50999170A1116EAA9B09B2650DC2639",
+      "date": "2026-07-27T23:18:02",
+      "purpose": "Raw regression data"
+    },
+    {
+      "name": "regression.recomputed.json",
+      "size": 647,
+      "sha256": "51F3506659EEFC6A735A37C82B3E5DE154C2C463901B994071FB418EF917E45F",
+      "date": "2026-07-27T23:18:45",
+      "purpose": "Metrics recalculated from raw regression data"
+    },
+    {
+      "name": "regression.sha256",
+      "size": 65,
+      "sha256": "8C633755D92B81DDD3A8566B835C2ECA3B1CD528332C526DEAE4CBD60B68278D",
+      "date": "2026-07-27T23:18:13",
+      "purpose": "SHA256 hash of regression.raw.json"
+    }
+  ],
+  "totalFiles": 14,
+  "totalSize": 192059,
+  "manifestSha256": "PREUVE INSUFFISANTE - Calculé lors de la génération",
+  "integrity": "All files have been hashed with SHA256 for cryptographic verification"
+}

@@ -44,7 +44,7 @@ export interface TraceRecord {
   sessionId: string;
   tenantId: string;
   traceHash: string;
-  tracePayload: any; 
+  tracePayload: unknown; 
 }
 
 export interface ReportRecord {
@@ -53,7 +53,7 @@ export interface ReportRecord {
   tenantId: string;
   reportHash: string;
   evaluationHash: string;
-  reportPayload: any; 
+  reportPayload: unknown; 
 }
 
 // Repositories abstraction layer

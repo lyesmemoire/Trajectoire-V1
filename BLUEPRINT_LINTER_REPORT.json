@@ -1,0 +1,4487 @@
+{
+  "summary": {
+    "totalViolations": 471,
+    "failed": true
+  },
+  "violations": {
+    "duplications": [
+      {
+        "name": "Question",
+        "count": 13,
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Answer",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Session",
+        "count": 22,
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\sessions\\manager.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\Session.ts",
+          "C:\\Trajectoire\\contracts\\observability\\DEBUGGING_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\observability\\DEBUGGING_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\observability\\PROFILING_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\observability\\PROFILING_CONTRACT.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-006_COGNITIVE_SESSION_MANAGER.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "Perception",
+        "count": 20,
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\perception.ts",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "KnowledgeGraph",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "Evidence",
+        "count": 49,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts"
+        ]
+      },
+      {
+        "name": "Hypothesis",
+        "count": 24,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Observation",
+        "count": 26,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md"
+        ]
+      },
+      {
+        "name": "Decision",
+        "count": 35,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts"
+        ]
+      },
+      {
+        "name": "Traceability",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ]
+      },
+      {
+        "name": "DecisionGraph",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+          "C:\\Trajectoire\\domain\\decision-graph.contract.ts"
+        ]
+      },
+      {
+        "name": "FeatureFlag",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\features\\FeatureFlagService.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\flags\\FeatureFlagEngine.ts"
+        ]
+      },
+      {
+        "name": "Package",
+        "count": 18,
+        "locations": [
+          "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+          "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+          "C:\\Trajectoire\\architecture\\00_CURRENT_ARCHITECTURE.md",
+          "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+          "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+          "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+          "C:\\Trajectoire\\BEA-004_BLUEPRINT_PACKAGE_SPECIFICATION.md",
+          "C:\\Trajectoire\\docs\\BLUEPRINT_SEMANTIC_COMPILER_SPECIFICATION.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\PHASE1_STEP4_PARALLEL_ARCH.md",
+          "C:\\Trajectoire\\PHASE1_STEP4_PARALLEL_ARCH.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md",
+          "C:\\Trajectoire\\SPRINT1_ARCHITECTURE_ACTUELLE.md"
+        ]
+      },
+      {
+        "name": "Node",
+        "count": 24,
+        "locations": [
+          "C:\\Trajectoire\\ARCHITECTURE_MAP.md",
+          "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+          "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md"
+        ]
+      },
+      {
+        "name": "Confidence",
+        "count": 34,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts"
+        ]
+      },
+      {
+        "name": "Knowledge",
+        "count": 49,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+          "C:\\Trajectoire\\CPR\\CPR-005_KNOWLEDGE_FABRIC.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\BLUEPRINT_SEMANTIC_COMPILER_SPECIFICATION.md",
+          "C:\\Trajectoire\\docs\\COS-003_Enterprise_Knowledge_Compiler.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "Belief",
+        "count": 23,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "Reasoning",
+        "count": 29,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\PHASE1_STEP5_AI_MAPPING.md"
+        ]
+      },
+      {
+        "name": "Plan",
+        "count": 23,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md"
+        ]
+      },
+      {
+        "name": "Memory",
+        "count": 58,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\CPR\\CPR-001_CLUSTER_MANAGER.md",
+          "C:\\Trajectoire\\CPR\\CPR-002_RUNTIME_ORCHESTRATOR.md",
+          "C:\\Trajectoire\\CPR\\CPR-003_DISTRIBUTED_SCHEDULER.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "Learning",
+        "count": 26,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Adaptation",
+        "count": 17,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_MATHEMATICAL_FOUNDATIONS.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Edge",
+        "count": 8,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+          "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+          "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md"
+        ]
+      },
+      {
+        "name": "Query",
+        "count": 6,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\OBJECT_CONTRACT.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md"
+        ]
+      },
+      {
+        "name": "Consolidated",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "Learned",
+        "count": 4,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "Adapted",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_ALGORITHM_CATALOG.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "MetaReasoning",
+        "count": 4,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "SelfEvaluation",
+        "count": 4,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_GRAPH_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_OBJECT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_RELATION_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "Planning",
+        "count": 4,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md"
+        ]
+      },
+      {
+        "name": "Evaluating",
+        "count": 3,
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Execution",
+        "count": 40,
+        "locations": [
+          "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\ETS-026_Runtime_State_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-027_Runtime_Event_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-028_Prompt_Runtime_Specification.md",
+          "C:\\Trajectoire\\docs\\ETS-029_Decision_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-030_Competency_Graph.md",
+          "C:\\Trajectoire\\docs\\ETS-031_Knowledge_Graph.md",
+          "C:\\Trajectoire\\docs\\ETS-032_Question_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-033_Follow-up_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-034_Candidate_Model.md",
+          "C:\\Trajectoire\\docs\\ETS-035_Adaptive_Difficulty.md",
+          "C:\\Trajectoire\\docs\\ETS-036_Simulation_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-037_Learning_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-038_Analytics_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-039_AI_Safety_Engine.md",
+          "C:\\Trajectoire\\docs\\ETS-040_Provider_Abstraction.md",
+          "C:\\Trajectoire\\docs\\RIK_Recruitment_Intelligence_Kernel.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "Context",
+        "count": 2,
+        "locations": [
+          "C:\\Trajectoire\\BEA-003_CANONICAL_OBJECT_MODEL.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Conversation",
+        "count": 8,
+        "locations": [
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\CVM\\CVM-003_COGNITIVE_INSTRUCTION_SET.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md"
+        ]
+      },
+      {
+        "name": "Artifact",
+        "count": 4,
+        "locations": [
+          "C:\\Trajectoire\\docs\\COS-005_Artifact_Generation_Engine.md",
+          "C:\\Trajectoire\\docs\\COS-005_Artifact_Generation_Engine.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      }
+    ],
+    "multipleOwnership": [],
+    "duplicateContracts": [],
+    "unknownEvents": [
+      {
+        "name": "VoiceEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\api\\src\\orchestrator\\handlers.ts"
+        ]
+      },
+      {
+        "name": "RuntimeWireEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\runtime\\collector\\runtime-wire-event.ts"
+        ]
+      },
+      {
+        "name": "InboundVoiceEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\runtime\\transport-binding.ts"
+        ]
+      },
+      {
+        "name": "LearningEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\continuous-improvement\\interfaces\\IContinuousImprovementEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\reflection\\interfaces\\IReflectionEngine.ts"
+        ]
+      },
+      {
+        "name": "LifecycleEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\lifecycle-manager\\interfaces\\IAILifecycleManager.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\lifecycle\\lifecycle-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\lifecycle\\lifecycle-contract.ts"
+        ]
+      },
+      {
+        "name": "TimelineEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\timeline-engine\\interfaces\\IAITimelineEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "AnalyticsEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\AnalyticsService.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\posthog.ts",
+          "C:\\Trajectoire\\lib\\posthog.ts"
+        ]
+      },
+      {
+        "name": "HeatmapEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\HeatmapEvents.ts"
+        ]
+      },
+      {
+        "name": "AgentEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\multi-agent\\interfaces\\IMultiAgentCollaboration.ts"
+        ]
+      },
+      {
+        "name": "BiasEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts"
+        ]
+      },
+      {
+        "name": "P5Event",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\execution-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\execution-contract.ts"
+        ]
+      },
+      {
+        "name": "ReplayEvent",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\replay.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\replay.types.ts"
+        ]
+      },
+      {
+        "name": "Event",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_EVENT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_EVENT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_EVENT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_EVENT_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+          "C:\\Trajectoire\\CPR\\CPR-015_RUNTIME_REPLAY.md",
+          "C:\\Trajectoire\\CPR\\CPR-016_RUNTIME_RECOVERY.md",
+          "C:\\Trajectoire\\docs\\AUDIT_360_PHASE_G_DATA.md",
+          "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "TraceEvent",
+        "locations": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "FaultEvent",
+        "locations": [
+          "C:\\Trajectoire\\FEDERATION_INVENTORY.md"
+        ]
+      },
+      {
+        "name": "DomainEvent",
+        "locations": [
+          "C:\\Trajectoire\\libs\\domain\\src\\interview\\entities\\InterviewSession.ts"
+        ]
+      },
+      {
+        "name": "P0Event",
+        "locations": [
+          "C:\\Trajectoire\\p0\\api-gateway\\contracts\\api-contract.ts"
+        ]
+      },
+      {
+        "name": "SignedEvent",
+        "locations": [
+          "C:\\Trajectoire\\p0\\security\\signed-event.ts"
+        ]
+      },
+      {
+        "name": "SpanEvent",
+        "locations": [
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\observability\\Telemetry.ts"
+        ]
+      },
+      {
+        "name": "InterviewEvent",
+        "locations": [
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts"
+        ]
+      },
+      {
+        "name": "StreamEvent",
+        "locations": [
+          "C:\\Trajectoire\\packages\\hiios-sdk\\src\\HIIOSClient.ts"
+        ]
+      },
+      {
+        "name": "RuntimeEvent",
+        "locations": [
+          "C:\\Trajectoire\\runtime\\router\\types.ts"
+        ]
+      },
+      {
+        "name": "RoutedEvent",
+        "locations": [
+          "C:\\Trajectoire\\runtime\\router\\types.ts"
+        ]
+      },
+      {
+        "name": "ObservabilityEvent",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\observability.ts"
+        ]
+      },
+      {
+        "name": "IncomingSILEvent",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\sil-events.ts"
+        ]
+      },
+      {
+        "name": "SILEvent",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\sil-events.ts"
+        ]
+      },
+      {
+        "name": "IndexedSILEvent",
+        "locations": [
+          "C:\\Trajectoire\\sil\\distributed\\event-store\\distributed-event-store.ts"
+        ]
+      }
+    ],
+    "unknownStates": [
+      {
+        "name": "CrossSessionState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\cross-session.ts"
+        ]
+      },
+      {
+        "name": "AntiDriftState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\governor\\anti-drift.ts"
+        ]
+      },
+      {
+        "name": "GuardrailState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\governor\\guardrails.ts"
+        ]
+      },
+      {
+        "name": "GovernorState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\governor\\ux-pipeline.ts"
+        ]
+      },
+      {
+        "name": "MemoryState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\memory.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\memory\\ConversationMemory.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\memory\\MemoryManager.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "PipelineState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\pipeline.ts"
+        ]
+      },
+      {
+        "name": "PressureState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\pressure.ts"
+        ]
+      },
+      {
+        "name": "RecruiterMindState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\recruiter-mind.ts"
+        ]
+      },
+      {
+        "name": "SimulationState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\simulation-state.ts"
+        ]
+      },
+      {
+        "name": "InterviewState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\state.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\interview-state-machine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\orchestration\\interview-state-machine.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\lib\\interview\\interview-state-machine.ts",
+          "C:\\Trajectoire\\lib\\interview\\orchestration\\interview-state-machine.ts",
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts"
+        ]
+      },
+      {
+        "name": "UserState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-intelligence\\interfaces\\IAdaptiveIntelligenceOrchestrator.ts"
+        ]
+      },
+      {
+        "name": "RecruiterAdaptationState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-interview\\interfaces\\IAdaptiveInterviewExperience.ts"
+        ]
+      },
+      {
+        "name": "NodeStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts"
+        ]
+      },
+      {
+        "name": "HealthStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\health-monitor\\interfaces\\IAIHealthMonitor.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\observability\\Telemetry.ts"
+        ]
+      },
+      {
+        "name": "HypothesisStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts"
+        ]
+      },
+      {
+        "name": "KernelState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts"
+        ]
+      },
+      {
+        "name": "AdjustmentStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer8-learning\\LearningEngine.ts"
+        ]
+      },
+      {
+        "name": "CoachingSessionState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\live-coaching\\interfaces\\ILiveCoaching.ts"
+        ]
+      },
+      {
+        "name": "MindState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\execution-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\execution-contract.ts"
+        ]
+      },
+      {
+        "name": "SessionLifecycleState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\lifecycle\\lifecycle-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\lifecycle\\lifecycle-contract.ts"
+        ]
+      },
+      {
+        "name": "TransactionState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ]
+      },
+      {
+        "name": "BillingState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\hooks\\use-billing-state.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ]
+      },
+      {
+        "name": "EmotionalState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\ConversationState.ts"
+        ]
+      },
+      {
+        "name": "ConversationState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\ConversationState.ts"
+        ]
+      },
+      {
+        "name": "SessionStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\Session.ts"
+        ]
+      },
+      {
+        "name": "DecisionStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ]
+      },
+      {
+        "name": "CreditState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ]
+      },
+      {
+        "name": "PremiumStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\hooks\\usePremium.ts"
+        ]
+      },
+      {
+        "name": "MicStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\hooks\\useMicrophoneManager.ts"
+        ]
+      },
+      {
+        "name": "CircuitBreakerState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\resilience.ts",
+          "C:\\Trajectoire\\lib\\resilience.ts"
+        ]
+      },
+      {
+        "name": "SubscriptionStatus",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\subscription\\check-subscription.ts"
+        ]
+      },
+      {
+        "name": "VoiceClientState",
+        "locations": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\voice\\client.ts",
+          "C:\\Trajectoire\\lib\\voice\\client.ts"
+        ]
+      },
+      {
+        "name": "State",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM-001_OBSERVATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-002_PERCEPTION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-003_EVIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-004_CONFIDENCE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-005_KNOWLEDGE_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-006_BELIEF_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-007_HYPOTHESIS_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-008_REASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-012_LEARNING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-013_ADAPTATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-015_SELFEVALUATION_THEORY.md",
+          "C:\\Trajectoire\\BCM\\BCM-016_COGNITIVE_GRAPH_MODEL.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-017_COGNITIVE_STATE_MACHINE.md",
+          "C:\\Trajectoire\\BCM\\BCM-018_COGNITIVE_METRICS.md",
+          "C:\\Trajectoire\\BCM\\BCM-019_COGNITIVE_MATHEMATICS.md",
+          "C:\\Trajectoire\\BCM\\BCM-020_COGNITIVE_GUARANTEES.md",
+          "C:\\Trajectoire\\BCM\\BCM_FORMAL_SPECIFICATION.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\docs\\AUDIT_360_PHASE_F_EVENTS.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\docs\\specifications\\rik\\RIK-001_Recruitment_Intelligence_Foundation.md",
+          "C:\\Trajectoire\\MASTER_COMPONENT_INDEX.md"
+        ]
+      },
+      {
+        "name": "ActiveState",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "CompletedState",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "PausedState",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "StoppedState",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "ErrorState",
+        "locations": [
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md",
+          "C:\\Trajectoire\\BCM\\BCM_STATE_REGISTRY.md"
+        ]
+      },
+      {
+        "name": "CVMState",
+        "locations": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "StackState",
+        "locations": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "ExecutorState",
+        "locations": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "ExecutionState",
+        "locations": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ]
+      },
+      {
+        "name": "FaultOverlayState",
+        "locations": [
+          "C:\\Trajectoire\\FEDERATION_INVENTORY.md"
+        ]
+      },
+      {
+        "name": "WatchdogState",
+        "locations": [
+          "C:\\Trajectoire\\FEDERATION_INVENTORY.md"
+        ]
+      },
+      {
+        "name": "HashChainState",
+        "locations": [
+          "C:\\Trajectoire\\p0\\security\\hash-chain.ts"
+        ]
+      },
+      {
+        "name": "ExperimentStatus",
+        "locations": [
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\experimentation\\ExperimentationEngine.ts"
+        ]
+      },
+      {
+        "name": "SILStateStatus",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\public-api.ts"
+        ]
+      },
+      {
+        "name": "SILStatus",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\session-state.ts"
+        ]
+      },
+      {
+        "name": "SILState",
+        "locations": [
+          "C:\\Trajectoire\\sil\\contracts\\session-state.ts"
+        ]
+      }
+    ],
+    "brokenInvariants": [],
+    "contradictoryRules": [
+      {
+        "message": "Rule files detected but canonical rule contradiction verification not implemented",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\governor\\composition-rules.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\governor\\composition-rules.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\valueObjects\\RateLimitRules.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\valueObjects\\RateLimitRules.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\valueObjects\\RateLimitRules.ts"
+        ]
+      }
+    ],
+    "incompatibleInterfaces": [
+      {
+        "name": "InterviewSession",
+        "files": [
+          "C:\\Trajectoire\\apps\\api\\src\\common\\session.types.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\infrastructure\\repositories\\SessionRepository.ts",
+          "C:\\Trajectoire\\packages\\hiios-sdk\\src\\HIIOSClient.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Message",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\ai\\memory.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\memory\\ConversationMemory.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TTSProvider",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\ai\\tts\\provider.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\adapters\\tts\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TranscriptMessage",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\contracts\\events.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\contracts\\signaling.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\contracts\\transcript.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "GatewayEvents",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\contracts\\events.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\events\\bus.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Question",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeTrace",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\runtime\\collector\\runtime-trace.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\trace-contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\trace-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\trace-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TurnTrace",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\runtime\\collector\\runtime-trace.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\trace-contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\trace-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\trace-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FeedbackLevel",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\evaluation.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\interview\\evaluate-answer.ts",
+          "C:\\Trajectoire\\lib\\runtime\\interview\\evaluate-answer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewSummary",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\interview-summary.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\schemas\\interview.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PremiumReport",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\premium-report.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\schemas\\premium-report.schema.ts",
+          "C:\\Trajectoire\\lib\\interview\\schemas\\premium-report.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MemoryState",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\memory.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\memory\\ConversationMemory.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\memory\\MemoryManager.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewPhase",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\state.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\types\\premium-interview.ts",
+          "C:\\Trajectoire\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\types\\premium-interview.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewState",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\state.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\interview-state-machine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\orchestration\\interview-state-machine.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\lib\\interview\\interview-state-machine.ts",
+          "C:\\Trajectoire\\lib\\interview\\orchestration\\interview-state-machine.ts",
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Contradiction",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\candidate-facts.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CandidateProfile",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\candidate-profile.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-quality\\interfaces\\IEvaluationPlatform.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewPlan",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\interview-plan-builder.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\interview\\entities\\InterviewSession.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\planner\\value-objects\\InterviewPlan.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HiringRecommendation",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\interview-report.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer5-decision\\DecisionLedger.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "QuestionCategory",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\QuestionPlanner.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\question-bank.ts",
+          "C:\\Trajectoire\\lib\\interview\\question-bank.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TurnPlan",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\voice-orchestrator-handlers.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\runtime\\turn-timing.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Clock",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\runtime\\clock.ts",
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\sessions\\session-manager.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeTurnResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\runtime\\voice-runtime.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\types.ts",
+          "C:\\Trajectoire\\core\\p6\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreateSessionInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\sessions\\session-manager.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\validation\\CreateSessionSchema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutionResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-intelligence\\interfaces\\IAdaptiveIntelligenceOrchestrator.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\integration\\integration-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\integration\\integration-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CacheEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-intelligence\\interfaces\\ICostOptimizationEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\cache\\MemoryCache.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PolicyDecision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-intelligence\\interfaces\\IDecisionPolicyEngine.ts",
+          "C:\\Trajectoire\\p0\\security\\policy-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "JourneyStep",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\adaptive-journey\\interfaces\\IAdaptiveJourney.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\UserJourney.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "OptimizationProposal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\autonomous-optimization\\interfaces\\IAutonomousOptimizationEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\product-optimization\\interfaces\\IProductOptimizationLoop.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "OptimizationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\autonomous-optimization\\interfaces\\IAutonomousOptimizationEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "OptimizationMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\autonomous-optimization\\interfaces\\IAutonomousOptimizationEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LearningEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\continuous-improvement\\interfaces\\IContinuousImprovementEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\reflection\\interfaces\\IReflectionEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DecisionExplanation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\decision-explainability\\interfaces\\IDecisionExplainabilityEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "NodeType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+          "C:\\Trajectoire\\domain\\decision-graph.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutionNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutionEdge",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutionGraph",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\global-execution-graph\\interfaces\\IGlobalExecutionGraph.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PolicyCorrection",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\governance\\interfaces\\IAIGovernanceEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\reflection\\interfaces\\IReflectionEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HealthStatus",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\health-monitor\\interfaces\\IAIHealthMonitor.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\observability\\Telemetry.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LifecycleEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\lifecycle-manager\\interfaces\\IAILifecycleManager.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\lifecycle\\lifecycle-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\lifecycle\\lifecycle-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DecisionContext",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\lifecycle-manager\\interfaces\\IAILifecycleManager.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TimelineEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-operating-system\\timeline-engine\\interfaces\\IAITimelineEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "QualityMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\ai-quality\\interfaces\\IEvaluationPlatform.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\analytics\\AnalyticsEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AnalyticsEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\AnalyticsService.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\posthog.ts",
+          "C:\\Trajectoire\\lib\\posthog.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\InterviewAnalytics.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\orchestration\\InterviewContext.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\analytics\\AnalyticsEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\analytics\\SessionAnalytics.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\product-optimization\\interfaces\\IProductOptimizationLoop.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MetricType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\meta-cognition\\interfaces\\IMetaCognitionEngine.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\observability\\Telemetry.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ConflictResolution",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\multi-agent\\interfaces\\IMultiAgentCollaboration.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReasoningStep",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\reasoning\\interfaces\\IReasoningEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer2-reasoning\\ReasoningEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer5-decision\\DecisionLedger.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer7-explainability\\ExplainabilityEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CostOptimization",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\reflection\\interfaces\\IReflectionEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Skill",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\types\\cv.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts",
+          "C:\\Trajectoire\\types\\cv.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Job",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\jobs.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\jobs.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Company",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\companies.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\companies.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "KnowledgeGraph",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Evidence",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Hypothesis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BiasEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PlannedQuestion",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\QuestionPlanner.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SkillNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\SkillGraph.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HypothesisUpdate",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Turn",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\KernelState.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Decision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ConfidencePoint",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer7-explainability\\ExplainabilityEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CoachingTrigger",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer3-competence\\CompetenceGraphEngine.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\application\\live-coaching\\interfaces\\ILiveCoaching.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Signal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer5-decision\\DecisionLedger.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\scoring-engine\\scoring-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\scoring-engine\\scoring-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewContext",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\orchestration\\InterviewContext.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\services\\interview.service.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\lib\\interview\\engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TimeRange",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\application\\product-analytics\\interfaces\\IProductAnalytics.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StatItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FeatureItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StepItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TestimonialItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FAQItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AboutBulletItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PerformanceMetricItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PricingPlanItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FooterLinkItem",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FooterGroup",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\components\\marketing\\landing-config.ts",
+          "C:\\Trajectoire\\components\\marketing\\landing-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ChatMessage",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ChatCompletionParams",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ChatCompletionResponse",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AudioTranscriptionParams",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AudioTranscriptionResponse",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AudioSpeechParams",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AudioSpeechResponse",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAIProvider.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\providers\\Provider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AuditLogEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IAuditService.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audit\\AuditService.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LogEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\ILogger.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\logger\\Logger.ts",
+          "C:\\Trajectoire\\sil\\contracts\\structured-logger.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RateLimitResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\interfaces\\IRateLimiter.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\rate-limit.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\AdvancedSecurityService.ts",
+          "C:\\Trajectoire\\lib\\rate-limit.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BatchResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\bridge\\event-batch.ts",
+          "C:\\Trajectoire\\core\\p5\\bridge\\event-batch.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "GovernorDecision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\bridge\\normalization-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\bridge\\normalization-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ValidationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\bridge\\normalization-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\bridge\\normalization-contract.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Emotion",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\execution-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\execution-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MindState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\execution-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\execution-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "P5Event",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\execution-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\execution-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutionSession",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\integration\\execution-session.ts",
+          "C:\\Trajectoire\\core\\p5\\integration\\execution-session.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AdaptResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\integration\\governor-adapter.ts",
+          "C:\\Trajectoire\\core\\p5\\integration\\governor-adapter.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeDecision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\integration\\integration-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\integration\\integration-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "JournalEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\journal\\journal-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\journal\\journal-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EventJournal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\journal\\journal-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\journal\\journal-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VerificationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\journal\\replay-verifier.ts",
+          "C:\\Trajectoire\\core\\p5\\journal\\replay-verifier.ts",
+          "C:\\Trajectoire\\sil\\contracts\\event-verifier.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MindSnapshot",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\snapshot\\snapshot-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\snapshot\\snapshot-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Tick",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\timeline\\timeline-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\timeline\\timeline-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TimelineEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\timeline\\timeline-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\timeline\\timeline-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Timeline",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\timeline\\timeline-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\timeline\\timeline-contract.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TimelineValidation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\timeline\\timeline-verifier.ts",
+          "C:\\Trajectoire\\core\\p5\\timeline\\timeline-verifier.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Transaction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\transaction\\transaction-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\transaction\\transaction-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CommitResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\transaction\\transaction-contract.ts",
+          "C:\\Trajectoire\\core\\p5\\transaction\\transaction-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TransactionVerification",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p5\\transaction\\transaction-verifier.ts",
+          "C:\\Trajectoire\\core\\p5\\transaction\\transaction-verifier.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionLifecycleState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\lifecycle\\lifecycle-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\lifecycle\\lifecycle-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeContext",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\orchestrator\\orchestrator-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\orchestrator\\orchestrator-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeStepResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\orchestrator\\orchestrator-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\orchestrator\\orchestrator-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuntimeStepFailure",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\orchestrator\\orchestrator-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\orchestrator\\orchestrator-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "OrchestratorResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\orchestrator\\orchestrator-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\orchestrator\\orchestrator-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceUXCalculator",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\orchestrator\\orchestrator-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\orchestrator\\orchestrator-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TransportCommandValidationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\transport\\command-validator.ts",
+          "C:\\Trajectoire\\core\\p6\\transport\\command-validator.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TransportCommand",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\transport\\transport-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\transport\\transport-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CandidateMessage",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\types.ts",
+          "C:\\Trajectoire\\core\\p6\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionGovernor",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\types.ts",
+          "C:\\Trajectoire\\core\\p6\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\types.ts",
+          "C:\\Trajectoire\\core\\p6\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\voice\\voice-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\voice\\voice-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceExecutionPlan",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\voice\\voice-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\voice\\voice-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoicePlanValidationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p6\\voice\\voice-contract.ts",
+          "C:\\Trajectoire\\core\\p6\\voice\\voice-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CandidateEvaluation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CompetencyScore",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluationSummary",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluationMetadata",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DAGValidationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\dag-builder.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\dag-builder.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Traceability",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SignalNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvidenceNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ScoreComponentNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AggregatedScoreNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExplanationGraph",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExplainedScore",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExplanationNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExplanationEdge",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "NormalizedScore",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\ranking\\ranking-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\ranking\\ranking-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "GlobalRankingEntry",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\ranking\\ranking-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\ranking\\ranking-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CohortStats",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\ranking\\ranking-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\ranking\\ranking-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CohortLabel",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\ranking\\ranking-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\ranking\\ranking-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "GlobalRankingReport",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\ranking\\ranking-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\ranking\\ranking-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluationReport",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\services\\report.service.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportSummary",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Verdict",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvidenceRef",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportRanking",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CohortStatsSnapshot",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EmbeddedExplanationGraph",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExplanationIndex",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportExports",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportJSON",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TracePointers",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PdfArtifact",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AuditPack",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplayInstruction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportMetadata",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\report\\report-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\report\\report-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SignalExtractor",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\scoring-engine\\scoring-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\scoring-engine\\scoring-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CompetencyWeights",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\scoring-engine\\scoring-contract.ts",
+          "C:\\Trajectoire\\core\\p7\\scoring-engine\\scoring-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CompetencyName",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\scoring-engine\\scoring-contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\ConversationState.ts",
+          "C:\\Trajectoire\\core\\p7\\scoring-engine\\scoring-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditAction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\types\\database.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\types\\database.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditOperation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditOperationResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\services\\credits.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\services\\credits.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditErrorCode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditUsageRecord",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TransactionState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditTransaction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BillingState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\billing.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\hooks\\use-billing-state.ts",
+          "C:\\Trajectoire\\domain\\billing.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DecisionNode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+          "C:\\Trajectoire\\domain\\decision-graph.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DecisionGraph",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+          "C:\\Trajectoire\\domain\\decision-graph.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PersonalInfo",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\ConversationState.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\types\\cv.ts",
+          "C:\\Trajectoire\\types\\cv.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FraudSignal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\fraud-kernel.contract.ts",
+          "C:\\Trajectoire\\domain\\fraud-kernel.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FraudAssessment",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\fraud-kernel.contract.ts",
+          "C:\\Trajectoire\\domain\\fraud-kernel.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FraudKernelConfig",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\fraud-kernel.contract.ts",
+          "C:\\Trajectoire\\domain\\fraud-kernel.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StandardInterviewSession",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PremiumInterviewSession",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\types\\premium-interview.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\types\\premium-interview.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewAnalyticsProjection",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "UnifiedInterviewView",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\interview.contract.ts",
+          "C:\\Trajectoire\\domain\\interview.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AgentType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AgentRecommendation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AgentOpinion",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DecisionStatus",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SystemDecision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluationContext",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\orchestration.contract.ts",
+          "C:\\Trajectoire\\domain\\orchestration.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "UserRole",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "UserPlan",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CanonicalUser",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AuthIdentity",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CreditState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PrismaUserRow",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SupabaseProfileRow",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\user.contract.ts",
+          "C:\\Trajectoire\\domain\\user.contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ResourceType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\domain\\valueObjects\\QuotaLimits.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\auditService.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecruiterPersona",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\premium-interview.ts",
+          "C:\\Trajectoire\\types\\premium-interview.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CostBreakdown",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\cost\\CostCalculator.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AggregatedMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\observability\\MetricsCollector.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReportAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\schemas\\report.schema.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai\\services\\report.service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AIQualityMetric",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai-monitoring\\quality-monitor.ts",
+          "C:\\Trajectoire\\lib\\ai-monitoring\\quality-monitor.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TrackAIUsageInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai-monitoring\\track-ai-usage.ts",
+          "C:\\Trajectoire\\lib\\ai-monitoring\\track-ai-usage.ts",
+          "C:\\Trajectoire\\lib\\ai-routing\\track-ai-usage.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TaskType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai-routing\\model-router.ts",
+          "C:\\Trajectoire\\lib\\ai-routing\\model-router.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InferenceConfig",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ai-routing\\model-router.ts",
+          "C:\\Trajectoire\\lib\\ai-routing\\model-router.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BehavioralAnalytics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\behavioral-analytics.ts",
+          "C:\\Trajectoire\\lib\\analytics\\behavioral-analytics.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StabilityMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\behavioral-stability.ts",
+          "C:\\Trajectoire\\lib\\analytics\\behavioral-stability.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "UserMutation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\mutations\\mutation-engine.ts",
+          "C:\\Trajectoire\\lib\\analytics\\mutations\\mutation-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FeatureValueScore",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\product-truth.ts",
+          "C:\\Trajectoire\\lib\\analytics\\product-truth.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecoveryType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\recovery-analytics.ts",
+          "C:\\Trajectoire\\lib\\analytics\\recovery-analytics.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecoveryConversionPayload",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\recovery-analytics.ts",
+          "C:\\Trajectoire\\lib\\analytics\\recovery-analytics.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecoveryMetrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\analytics\\recovery-audit.ts",
+          "C:\\Trajectoire\\lib\\analytics\\recovery-audit.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ScoreProfile",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\archetypes\\archetype-engine.ts",
+          "C:\\Trajectoire\\lib\\archetypes\\archetype-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CareerArchetype",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\archetypes\\career-archetypes.ts",
+          "C:\\Trajectoire\\lib\\archetypes\\career-archetypes.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ArchetypeMetadata",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\archetypes\\career-archetypes.ts",
+          "C:\\Trajectoire\\lib\\archetypes\\career-archetypes.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PressureMunition",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\contracts\\munitions.ts",
+          "C:\\Trajectoire\\lib\\ats\\contracts\\munitions.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MunitionPack",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\contracts\\munitions.ts",
+          "C:\\Trajectoire\\lib\\ats\\contracts\\munitions.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExtractionResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\extraction\\extract-pdf-text.ts",
+          "C:\\Trajectoire\\lib\\ats\\extraction\\extract-pdf-text.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ATSAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\orchestrator.ts",
+          "C:\\Trajectoire\\lib\\ats\\orchestrator.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PremiumATSAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\premium-orchestrator.ts",
+          "C:\\Trajectoire\\lib\\ats\\premium-orchestrator.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecruiterSignal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\recruiter-signals\\detector.ts",
+          "C:\\Trajectoire\\lib\\ats\\recruiter-signals\\detector.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AtsAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\schemas\\ats-analysis.schema.ts",
+          "C:\\Trajectoire\\lib\\ats\\schemas\\ats-analysis.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "JobExtraction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\schemas\\job-extraction.schema.ts",
+          "C:\\Trajectoire\\lib\\ats\\schemas\\job-extraction.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PremiumATSResponse",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\schemas\\premium-ats-response.schema.ts",
+          "C:\\Trajectoire\\lib\\ats\\schemas\\premium-ats-response.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PremiumATSScore",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ats\\scoring\\premium-engine.ts",
+          "C:\\Trajectoire\\lib\\ats\\scoring\\premium-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SpeechAnalysisResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SpeedRating",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "OverallRating",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FillerWordOccurrence",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Recommendation",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SpeechSegment",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\speech-analyzer.ts",
+          "C:\\Trajectoire\\lib\\audio\\speech-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceSignals",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\voice-analysis.ts",
+          "C:\\Trajectoire\\lib\\audio\\voice-analysis.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StressAnalysisResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\audio\\voice-analysis.ts",
+          "C:\\Trajectoire\\lib\\audio\\voice-analysis.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AnswerAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\behavior\\answer-analysis.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\answer-analysis.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\behavior\\answer-analysis.ts",
+          "C:\\Trajectoire\\lib\\behavior\\answer-analysis.ts",
+          "C:\\Trajectoire\\lib\\interview\\answer-analysis.ts",
+          "C:\\Trajectoire\\lib\\interview\\behavior\\answer-analysis.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BenchmarkResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\benchmark\\benchmark-engine.ts",
+          "C:\\Trajectoire\\lib\\benchmark\\benchmark-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ChallengeConfig",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\challenges\\challenge-config.ts",
+          "C:\\Trajectoire\\lib\\challenges\\challenge-config.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Config",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\config\\ConfigService.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SafetyCheck",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotion\\safety-layer.ts",
+          "C:\\Trajectoire\\lib\\emotion\\safety-layer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RiskLevel",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\engagement\\risk-score.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProbableCause",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\risk-score.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecommendedTone",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\risk-score.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RiskScoreInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\risk-score.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RiskScoreOutput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\risk-score.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\risk-score.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuminationInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\rumination-detector.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\rumination-detector.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RuminationOutput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\rumination-detector.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\rumination-detector.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SeniorityLevel",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\silence-thresholds.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\silence-thresholds.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SilenceThresholds",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\emotional-safety\\silence-thresholds.ts",
+          "C:\\Trajectoire\\lib\\emotional-safety\\silence-thresholds.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "NextBestAction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\adaptive-recommendation.ts",
+          "C:\\Trajectoire\\lib\\engagement\\adaptive-recommendation.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FrequencyGuardInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\email-frequency-guard.ts",
+          "C:\\Trajectoire\\lib\\engagement\\email-frequency-guard.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FrequencyGuardOutput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\email-frequency-guard.ts",
+          "C:\\Trajectoire\\lib\\engagement\\email-frequency-guard.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EmailTemplateParams",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\email-templates.ts",
+          "C:\\Trajectoire\\lib\\engagement\\email-templates.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DropoutType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\inactivity-analyzer.ts",
+          "C:\\Trajectoire\\lib\\engagement\\inactivity-analyzer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecoveryAction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\recovery-action.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\lib\\engagement\\recovery-action.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecoveryEmailInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\resend-coaching.ts",
+          "C:\\Trajectoire\\lib\\engagement\\resend-coaching.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReturnIntent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\engagement\\return-intent.ts",
+          "C:\\Trajectoire\\lib\\engagement\\return-intent.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EnvClient",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\env.client.ts",
+          "C:\\Trajectoire\\lib\\env.client.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EnvServer",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\env.server.d.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\env.server.ts",
+          "C:\\Trajectoire\\lib\\env.server.d.ts",
+          "C:\\Trajectoire\\lib\\env.server.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BehaviorEventType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\events\\behavior-graph.ts",
+          "C:\\Trajectoire\\lib\\events\\behavior-graph.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutiveAxis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\executive\\executive-result-engine.ts",
+          "C:\\Trajectoire\\lib\\executive\\executive-result-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutiveScores",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\executive\\executive-result-engine.ts",
+          "C:\\Trajectoire\\lib\\executive\\executive-result-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExecutiveResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\executive\\executive-result-engine.ts",
+          "C:\\Trajectoire\\lib\\executive\\executive-result-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FeatureFlag",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\features\\FeatureFlagService.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\flags\\FeatureFlagEngine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FraudTrajectoryPoint",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\fraud\\fraud-tracker.ts",
+          "C:\\Trajectoire\\lib\\fraud\\fraud-tracker.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StreakInfo",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\habits\\streak-engine.ts",
+          "C:\\Trajectoire\\lib\\habits\\streak-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RawSignals",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\insights\\narrative-engine.ts",
+          "C:\\Trajectoire\\lib\\insights\\narrative-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HumanVerdict",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\insights\\narrative-engine.ts",
+          "C:\\Trajectoire\\lib\\insights\\narrative-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ConfidenceReport",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\behavior\\analyze-confidence.ts",
+          "C:\\Trajectoire\\lib\\interview\\behavior\\analyze-confidence.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "BehavioralPattern",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\behavioral-memory.ts",
+          "C:\\Trajectoire\\lib\\interview\\behavioral-memory.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewMode",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\engine.ts",
+          "C:\\Trajectoire\\lib\\interview\\engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FollowUpStrategy",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\followup-strategy.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\orchestration\\followup-strategy.ts",
+          "C:\\Trajectoire\\lib\\interview\\followup-strategy.ts",
+          "C:\\Trajectoire\\lib\\interview\\orchestration\\followup-strategy.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "FollowUpIntent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\followup-strategy.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\orchestration\\followup-strategy.ts",
+          "C:\\Trajectoire\\lib\\interview\\followup-strategy.ts",
+          "C:\\Trajectoire\\lib\\interview\\orchestration\\followup-strategy.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PersonaConfig",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\personas\\persona-config.ts",
+          "C:\\Trajectoire\\lib\\interview\\persona-config.ts",
+          "C:\\Trajectoire\\lib\\interview\\personas\\persona-config.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\persona\\value-objects\\PersonaParameters.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Persona",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\personas.ts",
+          "C:\\Trajectoire\\lib\\interview\\personas.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProgressionSnapshot",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\progression-engine.ts",
+          "C:\\Trajectoire\\lib\\interview\\progression-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionSnapshot",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\recovery-logic.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\session-recovery.ts",
+          "C:\\Trajectoire\\lib\\interview\\recovery-logic.ts",
+          "C:\\Trajectoire\\lib\\interview\\session-recovery.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ContinueSession",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\schemas\\continue-session.schema.ts",
+          "C:\\Trajectoire\\lib\\interview\\schemas\\continue-session.schema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterruptionSignals",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\lib\\types\\pressure.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterruptionType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\pressure.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterruptionDecision",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\pressure.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplayEventType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\replay.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\replay.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplayEvent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\replay.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\replay.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SessionReplay",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview\\types\\replay.types.ts",
+          "C:\\Trajectoire\\lib\\interview\\types\\replay.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewStyle",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\interview-style.ts",
+          "C:\\Trajectoire\\lib\\interview-style.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "JobSourceType",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\jobs\\detect-source.ts",
+          "C:\\Trajectoire\\lib\\jobs\\detect-source.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LogContext",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\logger\\Logger.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\logger.ts",
+          "C:\\Trajectoire\\lib\\logger.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Metrics",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\metrics\\types.ts",
+          "C:\\Trajectoire\\lib\\metrics\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MetricCardProps",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\metrics\\types.ts",
+          "C:\\Trajectoire\\lib\\metrics\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewFeatures",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ml\\interview.feature-engine.ts",
+          "C:\\Trajectoire\\lib\\ml\\interview.feature-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ModelVersion",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ml\\model.registry.ts",
+          "C:\\Trajectoire\\lib\\ml\\model.registry.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LLMTrace",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\observability\\llm-traces.ts",
+          "C:\\Trajectoire\\lib\\observability\\llm-traces.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AIResponse",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\openai.ts",
+          "C:\\Trajectoire\\lib\\openai.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CVData",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\pdf\\types.ts",
+          "C:\\Trajectoire\\lib\\pdf\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TemplateId",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\pdf\\types.ts",
+          "C:\\Trajectoire\\lib\\pdf\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExportOptions",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\pdf\\types.ts",
+          "C:\\Trajectoire\\lib\\pdf\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReturnScoreInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\prediction\\return-model-v1.ts",
+          "C:\\Trajectoire\\lib\\prediction\\return-model-v1.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReturnPrediction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\prediction\\return-model-v1.ts",
+          "C:\\Trajectoire\\lib\\prediction\\return-model-v1.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewSessionSummary",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\progress-service.ts",
+          "C:\\Trajectoire\\lib\\progress-service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProgressKPI",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\progress-service.ts",
+          "C:\\Trajectoire\\lib\\progress-service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SkillInsight",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\progress-service.ts",
+          "C:\\Trajectoire\\lib\\progress-service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CareerTrajectory",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\progress-service.ts",
+          "C:\\Trajectoire\\lib\\progress-service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProgressData",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\progress-service.ts",
+          "C:\\Trajectoire\\lib\\progress-service.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PromptAssemblyResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\prompts\\assembly\\engine.ts",
+          "C:\\Trajectoire\\lib\\prompts\\assembly\\engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PromptMetadata",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\prompts\\integrity.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\lib\\prompts\\integrity.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplayCard",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\replay\\generate-replay-story.ts",
+          "C:\\Trajectoire\\lib\\replay\\generate-replay-story.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplaySimplified",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\replay\\generate-replay-story.ts",
+          "C:\\Trajectoire\\lib\\replay\\generate-replay-story.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CircuitBreakerOptions",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\resilience.ts",
+          "C:\\Trajectoire\\lib\\resilience.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CircuitBreakerState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\resilience.ts",
+          "C:\\Trajectoire\\lib\\resilience.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "KeywordAnalysis",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\adapters.ts",
+          "C:\\Trajectoire\\lib\\runtime\\adapters.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LlmFeedback",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\adapters.ts",
+          "C:\\Trajectoire\\lib\\runtime\\adapters.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluateAnswerInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\interview\\evaluate-answer.ts",
+          "C:\\Trajectoire\\lib\\runtime\\interview\\evaluate-answer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AnswerFeedback",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\interview\\evaluate-answer.ts",
+          "C:\\Trajectoire\\lib\\runtime\\interview\\evaluate-answer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluateAnswerResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\interview\\evaluate-answer.ts",
+          "C:\\Trajectoire\\lib\\runtime\\interview\\evaluate-answer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProductInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\product-contract.ts",
+          "C:\\Trajectoire\\lib\\runtime\\product-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ProductOutput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\product-contract.ts",
+          "C:\\Trajectoire\\lib\\runtime\\product-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewPrep",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\product-contract.ts",
+          "C:\\Trajectoire\\lib\\runtime\\product-contract.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RunProductFlowOptions",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\runtime\\run-product-flow.ts",
+          "C:\\Trajectoire\\lib\\runtime\\run-product-flow.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CTSResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\scoring\\career-trajectory.ts",
+          "C:\\Trajectoire\\lib\\scoring\\career-trajectory.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AuditAction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\audit-log.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\auditService.ts",
+          "C:\\Trajectoire\\lib\\security\\audit-log.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AuditDetails",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\audit-log.ts",
+          "C:\\Trajectoire\\lib\\security\\audit-log.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InteractionSignals",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\detectors\\entropy-engine.ts",
+          "C:\\Trajectoire\\lib\\security\\detectors\\entropy-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "IntegritySignals",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\security\\integrity-engine.ts",
+          "C:\\Trajectoire\\lib\\security\\integrity-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "QuestionTemplate",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\questions.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\questions.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TemplateStyle",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\templates.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\templates.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "TemplateColor",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\templates.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\templates.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CVTemplate",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\data\\templates.ts",
+          "C:\\Trajectoire\\lib\\seo\\data\\templates.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewPageContent",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\generators\\interview.ts",
+          "C:\\Trajectoire\\lib\\seo\\generators\\interview.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ParsedInterviewSlug",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\seo\\utils\\slug.ts",
+          "C:\\Trajectoire\\lib\\seo\\utils\\slug.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "IdentityCardData",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\share\\identity-card.ts",
+          "C:\\Trajectoire\\lib\\share\\identity-card.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ShareCardData",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\share\\share-card-generator.ts",
+          "C:\\Trajectoire\\lib\\share\\share-card-generator.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RawSignal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\signals\\signal-normalizer.ts",
+          "C:\\Trajectoire\\lib\\signals\\signal-normalizer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "NormalizedSignal",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\signals\\signal-normalizer.ts",
+          "C:\\Trajectoire\\lib\\signals\\signal-normalizer.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "DB",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\supabase\\types.ts",
+          "C:\\Trajectoire\\lib\\supabase\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Tables",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\supabase\\types.ts",
+          "C:\\Trajectoire\\lib\\supabase\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Profiles",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\supabase\\types.ts",
+          "C:\\Trajectoire\\lib\\supabase\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "CVs",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\supabase\\types.ts",
+          "C:\\Trajectoire\\lib\\supabase\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "PressureConfig",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\types\\pressure.types.ts",
+          "C:\\Trajectoire\\lib\\types\\pressure.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "UserPriority",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ux\\decision-engine.ts",
+          "C:\\Trajectoire\\lib\\ux\\decision-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "RecommendedAction",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ux\\decision-engine.ts",
+          "C:\\Trajectoire\\lib\\ux\\decision-engine.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HumanizedFeedback",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\ux\\humanize-insights.ts",
+          "C:\\Trajectoire\\lib\\ux\\humanize-insights.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "SendMessageInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\validation\\schemas.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\validation\\SendMessageSchema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EndSessionInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\validation\\schemas.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\validation\\EndSessionSchema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "GenerateReportInput",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\validation\\schemas.ts",
+          "C:\\Trajectoire\\apps\\web\\src\\validation\\GenerateReportSchema.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceClientState",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\voice\\client.ts",
+          "C:\\Trajectoire\\lib\\voice\\client.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceClientCallbacks",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\voice\\client.ts",
+          "C:\\Trajectoire\\lib\\voice\\client.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "VoiceClientOptions",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\lib\\voice\\client.ts",
+          "C:\\Trajectoire\\lib\\voice\\client.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ATSResult",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\services\\ats.ts",
+          "C:\\Trajectoire\\services\\ats.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Experience",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\cv.ts",
+          "C:\\Trajectoire\\types\\cv.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Education",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\cv.ts",
+          "C:\\Trajectoire\\types\\cv.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ParsedCV",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\cv.ts",
+          "C:\\Trajectoire\\types\\cv.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Database",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\database.ts",
+          "C:\\Trajectoire\\types\\database.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewQuestion",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\database.ts",
+          "C:\\Trajectoire\\types\\database.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewAnswer",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\database.ts",
+          "C:\\Trajectoire\\types\\database.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewFeedback",
+        "files": [
+          "C:\\Trajectoire\\apps\\web\\src\\types\\database.ts",
+          "C:\\Trajectoire\\types\\database.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "AnalysisResult",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "HandlerResult",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\runtime\\router\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Snapshot",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\sil\\services\\store\\session-snapshot-store.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ReplayResult",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\sil\\contracts\\replay.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "EvaluationResult",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\sil\\contracts\\p7-evaluator.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Cost",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MetricSample",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\observability\\Telemetry.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "MemoryMetrics",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\CVM\\src\\memory\\types.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "Permission",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\gateway\\services\\rbac.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "LLMResponse",
+        "files": [
+          "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+          "C:\\Trajectoire\\packages\\hiios-runtime\\src\\llm\\LLMProvider.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "StageObjective",
+        "files": [
+          "C:\\Trajectoire\\libs\\domain\\src\\interview\\entities\\InterviewSession.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\planner\\value-objects\\InterviewPlan.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "ExitCondition",
+        "files": [
+          "C:\\Trajectoire\\libs\\domain\\src\\interview\\entities\\InterviewSession.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\planner\\value-objects\\InterviewPlan.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      },
+      {
+        "name": "InterviewTransition",
+        "files": [
+          "C:\\Trajectoire\\libs\\domain\\src\\interview\\entities\\InterviewSession.ts",
+          "C:\\Trajectoire\\libs\\domain\\src\\planner\\value-objects\\InterviewPlan.ts"
+        ],
+        "message": "Interface defined in multiple locations - potential incompatibility"
+      }
+    ]
+  }
+}

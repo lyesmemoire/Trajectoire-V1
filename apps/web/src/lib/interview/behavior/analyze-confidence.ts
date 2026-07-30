@@ -10,9 +10,7 @@ export interface ConfidenceReport {
 /**
  * Analyse la confiance de l'IA envers la réponse du candidat.
  */
-export async function analyzeAnswerConfidence(
-  answer: string,
-): Promise<ConfidenceReport> {
+export async function analyzeAnswerConfidence(answer: string, ): Promise<ConfidenceReport> {
   const { text } = await generateText({
     model: mistralModel,
     system:

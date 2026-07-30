@@ -200,7 +200,7 @@ export class RateLimitError extends APIError {
 // ERROR HANDLER
 // ============================================
 
-export function handleAPIError(error: unknown) {
+export function handleAPIError(error: any) {
   logError("[API Error]", error);
 
   if (error instanceof APIError) {

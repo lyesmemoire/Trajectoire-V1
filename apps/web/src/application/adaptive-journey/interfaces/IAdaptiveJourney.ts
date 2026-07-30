@@ -15,7 +15,7 @@ export interface JourneyStep {
   type: "simulation" | "exercise" | "skill" | "difficulty" | "personality" | "company" | "interview";
   title: string;
   description: string;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   priority: number; // 0-100
   estimatedDuration: number; // minutes
   difficulty: "easy" | "medium" | "hard" | "adaptive";

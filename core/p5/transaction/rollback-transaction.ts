@@ -1,6 +1,5 @@
 import { MindState } from "../execution-contract.js";
 import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
-import { Transaction } from "./transaction-contract.js";
 
 /**
  * Rolls back a transaction: discards all pending events and restores
@@ -12,6 +11,6 @@ import { Transaction } from "./transaction-contract.js";
  *
  * Pure function — no side effects.
  */
-export function rollbackTransaction(tx: Transaction): MindState {
+export function rollbackTransaction(tx: _Transaction): MindState {
   return restoreSnapshot(tx.snapshot);
 }

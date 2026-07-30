@@ -1,7 +1,7 @@
 import fs from "fs";
 import { AutoScorer } from "../src/scoring/AutoScorer";
 
-function loadJSON(path: string) {
+function loadJSON(path: _string) {
   return JSON.parse(fs.readFileSync(path, "utf-8"));
 }
 

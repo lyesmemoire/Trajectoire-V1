@@ -46,7 +46,7 @@ export interface TurnObservation {
   previousScore?: number;
 }
 
-export function deriveSignal(obs: TurnObservation): SimulationSignal {
+export function deriveSignal(obs: _TurnObservation): SimulationSignal {
   const weakAnswer = obs.score < 55 || obs.specificity < 0.25;
   const strongAnswer = obs.score >= 75;
   const bluff = obs.bluffProbability >= 0.55;
@@ -71,10 +71,7 @@ function toneFromPressure(p: PressureState): SimulationContext["tone"] {
 }
 
 /** Construit le contexte de simulation depuis l'état global. */
-export function buildSimulationContext(
-  state: SimulationState,
-  opts: { opening?: boolean } = {},
-): SimulationContext {
+export function buildSimulationContext(state: SimulationState, opts: { opening?: boolean } = {}, ): SimulationContext {
   return {
     recruiterMood: state.persona.mode,
     tone: toneFromPressure(state.pressure),
@@ -89,10 +86,7 @@ export function buildSimulationContext(
  * Applique le contexte au TEXTE d'une question V2 (façonnage de sortie).
  * V2 a déjà choisi QUOI demander ; ici on ajuste COMMENT c'est formulé.
  */
-export function applySimulationToQuestion(
-  question: string,
-  ctx: SimulationContext,
-): string {
+export function applySimulationToQuestion(question: string, ctx: SimulationContext, ): string {
   if (!question) return question;
   let out = question;
 
@@ -112,10 +106,7 @@ export function applySimulationToQuestion(
 /**
  * Hook d'ouverture : préfixe la première question avec l'accroche cross-session.
  */
-export function applyOpeningContext(
-  question: string,
-  ctx: SimulationContext,
-): string {
+export function applyOpeningContext(question: string, ctx: SimulationContext, ): string {
   if (ctx.crossSessionHook) return `${ctx.crossSessionHook} ${question}`;
   return question;
 }

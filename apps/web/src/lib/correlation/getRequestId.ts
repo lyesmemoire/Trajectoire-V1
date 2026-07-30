@@ -1,9 +1,9 @@
+import { NextRequest } from 'next/server'
 /**
  * Get Request ID from NextRequest
  * Helper function to extract correlation ID from Next.js request headers
  */
 
-import { NextRequest } from "next/server";
 import { getCorrelationId } from "./correlationId";
 
 /**

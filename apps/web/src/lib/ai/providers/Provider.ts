@@ -15,6 +15,7 @@ export interface ChatCompletionParams {
   temperature?: number;
   maxTokens?: number;
   responseFormat?: { type: "json_object" | "text" };
+  signal?: AbortSignal;
 }
 
 export interface ChatCompletionResponse {

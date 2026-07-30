@@ -32,7 +32,7 @@ describe("Phase 2-F: Fuzz Testing - Tenant Key Collisions", () => {
   };
 
   it("Scenario 1: 1000 random sessions with same generic IDs across different tenants", async () => {
-    const { ingestor, store, loop, registry } = setup();
+    const { ingestor, store, registry } = setup();
 
     const GENERIC_SESSION_IDS = ["session-1", "session-2", "session-3", "session-test", "default-session"];
     const TENANTS = Array.from({ length: 20 }, (_, i) => `tenant-${i}`);

@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { MindSnapshot } from "./snapshot-contract.js";
 
 /**
  * Produces a deterministic SHA-256 hash of a MindSnapshot's logical state.
@@ -10,10 +9,10 @@ import { MindSnapshot } from "./snapshot-contract.js";
  *
  * Guarantees:
  * - S3: same state → same hash.
- * - S4: any field change → different hash.
+ * - S4: unknown field change → different hash.
  * - Pure function, no side effects.
  */
-export function snapshotHash(snapshot: MindSnapshot): string {
+export function snapshotHash(snapshot: _MindSnapshot): string {
   const canonical = JSON.stringify({
     v: snapshot.version,
     t: snapshot.state.trust,

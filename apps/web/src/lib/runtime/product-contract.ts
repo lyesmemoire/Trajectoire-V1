@@ -5,7 +5,7 @@
  * produire un `ProductOutput`. L'UI ne consomme QUE ce contrat.
  *
  * Règle d'or (P0.5) :
- *   CV + Job  ->  runProductFlow  ->  ProductOutput  ->  UI
+ *   CV + any  ->  runProductFlow  ->  ProductOutput  ->  UI
  * Aucun module ne renvoie directement à l'UI : tout passe par ProductOutput.
  */
 
@@ -63,10 +63,10 @@ export function emptyProductOutput(): ProductOutput {
  * Garde-fou de validation : garantit qu'un objet respecte le contrat.
  * Utilisé par l'API et les tests pour bloquer toute dérive de forme.
  */
-export function isProductOutput(value: unknown): value is ProductOutput {
+export function isProductOutput(value: any): value is ProductOutput {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
-  const isStringArray = (x: unknown): x is string[] =>
+  const isStringArray = (x: any): x is string[] =>
     Array.isArray(x) && x.every((i) => typeof i === "string");
   return (
     typeof v.matchScore === "number" &&

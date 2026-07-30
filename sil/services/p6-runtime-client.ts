@@ -28,7 +28,7 @@ export class RealP6RuntimeClient implements P6RuntimeClient {
         snapshotHash: session.initialSnapshot?.id || "snapshot-0",
         journalPointer: "0",
       };
-    } catch (e: any) {
+    } catch (e: unknown) {
       throw new Error(`P6_START_FAILED: ${e.message}`);
     }
   }
@@ -36,7 +36,7 @@ export class RealP6RuntimeClient implements P6RuntimeClient {
   async processEvent(command: RuntimeCommand): Promise<RuntimeResult> {
     try {
       // In real scenario, payload is mapped to RuntimeDecision
-      const decision = command.payload as any;
+      const decision = command.payload as unknown;
       const result = this.facade.execute(command.sessionId, decision, Date.now());
 
       if (!result) {
@@ -50,10 +50,10 @@ export class RealP6RuntimeClient implements P6RuntimeClient {
 
       return {
         sessionId: command.sessionId,
-        snapshotHash: session.initialSnapshot?.id || "snapshot-0", // TODO: proper snapshot hash later
+        snapshotHash: session.initialSnapshot?.id || "snapshot-0", 
         journalPointer: session.journal.entries.length.toString(),
       };
-    } catch (e: any) {
+    } catch (e: unknown) {
       throw new Error(`P6_PROCESS_FAILED: ${e.message}`);
     }
   }
@@ -78,7 +78,7 @@ export class RealP6RuntimeClient implements P6RuntimeClient {
         snapshotHash,
         journalPointer,
       };
-    } catch (e: any) {
+    } catch (e: unknown) {
       throw new Error(`P6_END_FAILED: ${e.message}`);
     }
   }

@@ -1,0 +1,127 @@
+{
+  "component": "memory-manager",
+  "sprint": 2,
+  "lot": 2,
+  "timestamp": "2026-07-26T23:30:00Z",
+  "coverageSource": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+  "gapAnalysis": {
+    "before": {
+      "statements": {
+        "target": 95,
+        "current": 100,
+        "gap": 0,
+        "details": "82/82 (estimated)"
+      },
+      "branches": {
+        "target": 97,
+        "current": 91.66,
+        "gap": 5.34,
+        "details": "33/36 (estimated)"
+      },
+      "functions": {
+        "target": 100,
+        "current": 100,
+        "gap": 0,
+        "details": "32/32 (estimated)"
+      },
+      "lines": {
+        "target": 95,
+        "current": 100,
+        "gap": 0,
+        "details": "82/82 (estimated)"
+      }
+    },
+    "after": {
+      "statements": {
+        "target": 95,
+        "current": 100,
+        "gap": 0,
+        "details": "86/86"
+      },
+      "branches": {
+        "target": 97,
+        "current": 97.5,
+        "gap": -0.5,
+        "details": "39/40"
+      },
+      "functions": {
+        "target": 100,
+        "current": 100,
+        "gap": 0,
+        "details": "32/32"
+      },
+      "lines": {
+        "target": 95,
+        "current": 100,
+        "gap": 0,
+        "details": "86/86"
+      }
+    }
+  },
+  "actionsTaken": [
+    {
+      "action": "Added test for free without tracking",
+      "description": "Test free() when enableTracking is disabled",
+      "impact": "Branches +2.78% (91.66% -> 94.44%)"
+    },
+    {
+      "action": "Added test for read without protection",
+      "description": "Test read() when enableProtection is disabled",
+      "impact": "Statements coverage maintained"
+    },
+    {
+      "action": "Added test for write without protection",
+      "description": "Test write() when enableProtection is disabled",
+      "impact": "Statements coverage maintained"
+    },
+    {
+      "action": "Architecture fix: MemoryManager ↔ MemoryAddressing synchronization",
+      "description": "allocate() adds region to MemoryAddressing, free() removes region",
+      "impact": "Branches +3.06% (94.44% -> 97.50%), Statements +4 lines (82 -> 86)"
+    },
+    {
+      "action": "Added test for read valid allocated address with protection",
+      "description": "Test read() on allocated address with protection enabled",
+      "impact": "Covers branch 102 (checkAccess returning true)"
+    },
+    {
+      "action": "Added test for write valid allocated address with protection",
+      "description": "Test write() on allocated address with protection enabled",
+      "impact": "Covers branch 115 (checkAccess returning true)"
+    },
+    {
+      "action": "Added test for region removal on free",
+      "description": "Test that region is removed from MemoryAddressing after free()",
+      "impact": "Validates synchronization behavior"
+    },
+    {
+      "action": "Added test for access after free",
+      "description": "Test that access fails after free() with protection enabled",
+      "impact": "Validates region removal and access control"
+    }
+  ],
+  "remainingGaps": [
+    {
+      "metric": "branches",
+      "current": 97.5,
+      "target": 97,
+      "gap": -0.5,
+      "uncoveredBranches": 1,
+      "totalBranches": 40,
+      "coveredBranches": 39,
+      "reason": "1 branch uncovered (else of enableProtection in free()). The 97% target is achieved (97.50% > 97%).",
+      "classification": "A - Branche non couverte (non critique)"
+    }
+  ],
+  "debt": 0,
+  "architectureFix": {
+    "applied": true,
+    "description": "Synchronization MemoryManager ↔ MemoryAddressing",
+    "changes": [
+      "allocate() adds region to MemoryAddressing when enableProtection is true",
+      "free() removes region from MemoryAddressing when enableProtection is true",
+      "Branches 102 and 115 are now covered (checkAccess returning true)"
+    ],
+    "impact": "Branches: 34/36 (94.44%) → 39/40 (97.50%), Statements: 82/82 → 86/86"
+  }
+}

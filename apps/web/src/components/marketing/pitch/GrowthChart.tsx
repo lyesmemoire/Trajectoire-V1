@@ -71,11 +71,11 @@ export default function GrowthChart() {
     <div ref={ref} className="w-full">
       <div className="mb-4 flex items-center gap-6">
         <div className="flex items-center gap-2">
-          <div className="h-3 w-8 rounded-full bg-red-500" />
+          <div className="h-3 w-8 rounded-full bg-[#EF4444]" />
           <span className="text-sm text-gray-400">Utilisateurs</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-8 rounded-full bg-orange-400" />
+          <div className="h-3 w-8 rounded-full bg-[#FB923C]" />
           <span className="text-sm text-gray-400">ARR (K€)</span>
         </div>
       </div>

@@ -42,13 +42,13 @@ export class InterviewEngine {
   }
 
   nextPhase() {
-    const phaseOrderDiagnostic: InterviewPhase[] = [
+    const phaseOrderDiagnostic: any[] = [
       "positionnement",
       "impact",
       "contradiction",
       "pression",
     ];
-    const phaseOrderSimulation: InterviewPhase[] = [
+    const phaseOrderSimulation: any[] = [
       "positionnement",
       "impact",
       "contradiction",

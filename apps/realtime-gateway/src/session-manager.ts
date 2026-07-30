@@ -65,7 +65,7 @@ export function destroySession(sessionId: string): void {
   if (session.sttCleanup) {
     try {
       session.sttCleanup();
-    } catch (err) {
+    } catch (error) {
       console.error(`[SessionManager] Erreur STT cleanup session ${sessionId}:`, err);
     }
   }

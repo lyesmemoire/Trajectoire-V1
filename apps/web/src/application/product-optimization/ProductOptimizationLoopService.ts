@@ -10,7 +10,6 @@ import {
   ProductOptimizationLoopConfig,
   defaultProductOptimizationLoopConfig,
 } from "./interfaces/IProductOptimizationLoop";
-import { experienceMemoryService } from "../experience-memory/ExperienceMemoryService";
 import { productAnalyticsService } from "../product-analytics/ProductAnalyticsService";
 import { adaptiveIntelligenceOrchestrator } from "../adaptive-intelligence/AdaptiveIntelligenceOrchestrator";
 

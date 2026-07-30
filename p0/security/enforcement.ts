@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { verifySignedEvent, SignedEvent } from "./signed-event";
+import { verifySignedEvent } from "./signed-event";
 import { createPolicyEngine, PolicyInput } from "./policy-engine";
 
 const policyEngine = createPolicyEngine();
@@ -15,11 +15,7 @@ const policyEngine = createPolicyEngine();
  * - forged signatures
  * - broken chain links
  */
-export function kafkaEventInterceptor(
-  event: SignedEvent,
-  publicKeyHex: string,
-  expectedPreviousHash?: string
-): { accepted: boolean; reason?: string } {
+export function kafkaEventInterceptor(event: _SignedEvent, publicKeyHex: string, expectedPreviousHash?: string): { accepted: boolean; reason?: string } {
   const result = verifySignedEvent(event, publicKeyHex, expectedPreviousHash);
 
   if (!result.valid) {
@@ -40,11 +36,8 @@ export function kafkaEventInterceptor(
  * Fastify pre-handler that enforces OPA policies on every request.
  * Extracts the auth context from the request and evaluates all rules.
  */
-export async function policyMiddleware(
-  req: FastifyRequest,
-  reply: FastifyReply
-): Promise<void> {
-  const auth = (req as any).auth;
+export async function policyMiddleware(req: FastifyRequest, reply: FastifyReply): Promise<void> {
+  const auth = (req as unknown).auth;
   if (!auth) {
     reply.code(401).send({ error: "UNAUTHORIZED", message: "Missing auth context" });
     return;
@@ -93,8 +86,8 @@ function resolveAction(method: string, url: string): string {
 }
 
 function extractResourceContext(req: FastifyRequest): { tenantId: string; sessionId?: string } | undefined {
-  const auth = (req as any).auth;
-  const params = req.params as any;
+  const auth = (req as unknown).auth;
+  const params = req.params as unknown;
 
   return {
     tenantId: auth?.tenantId || "",

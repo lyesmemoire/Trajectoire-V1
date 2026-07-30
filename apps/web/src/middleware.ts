@@ -10,14 +10,15 @@
 //   La vérification Premium se fait via une route API dédiée
 //   car Prisma ne fonctionne pas dans l'Edge Runtime.
 //
-// TODO-L1.1 : Rien à modifier ici quand Stripe arrive.
+
 //             Le webhook Stripe met à jour la BDD.
 //             Ce middleware lit la BDD via /api/auth/check-access.
 //             (Architecture déjà prête pour Stripe)
 
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { getCorrelationId, setCorrelationId, getCorrelationIdHeader } from "@/lib/correlation/correlationId";
+import { getCorrelationId, getCorrelationIdHeader } from "@/lib/correlation/correlationId";
+import { logger } from "@/lib/logger";
 
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
@@ -175,12 +176,12 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet: any[]) { // eslint-disable-line @typescript-eslint/no-explicit-any
-          cookiesToSet.forEach(({ name, value }: any) => request.cookies.set(name, value)); // eslint-disable-line @typescript-eslint/no-explicit-any
+        setAll(cookiesToSet: any[]) {  
+          cookiesToSet.forEach(({ name, value }: any) => request.cookies.set(name, value));  
           supabaseResponse = NextResponse.next({
             request,
           });
-          cookiesToSet.forEach(({ name, value, options }: any) => // eslint-disable-line @typescript-eslint/no-explicit-any
+          cookiesToSet.forEach(({ name, value, options }: any) =>  
             supabaseResponse.cookies.set(name, value, options)
           );
         },
@@ -232,11 +233,7 @@ export async function middleware(request: NextRequest) {
 // Via route API interne — Prisma non disponible dans Edge
 // ============================================================
 
-async function checkPremiumAccess(
-  request: NextRequest,
-  userId: string,
-  originalPath: string
-): Promise<NextResponse | null> {
+async function checkPremiumAccess(request: NextRequest, userId: string, originalPath: string): Promise<NextResponse | null> {
 
   try {
     // Appel à la route interne de vérification d'accès
@@ -254,11 +251,7 @@ async function checkPremiumAccess(
 
     if (!checkResponse.ok) {
       // Fail closed avec logging détaillé
-      console.error("[Middleware] check-access failed:", {
-        status: checkResponse.status,
-        userId,
-        pathname: originalPath,
-      });
+      logger.error({ status: checkResponse.status, userId, pathname: originalPath, component: "middleware" }, "check-access failed");
       const pricingUrl = new URL('/pricing', request.url);
       pricingUrl.searchParams.set('redirect', originalPath);
       pricingUrl.searchParams.set('reason', 'access_check_failed');
@@ -277,12 +270,8 @@ async function checkPremiumAccess(
 
     return null; // Accès accordé
 
-  } catch (error) {
-    console.error("[Middleware] check-access error:", {
-      error: error instanceof Error ? error.message : error,
-      userId,
-      pathname: originalPath,
-    });
+  } catch (error: any) {
+    logger.error({ err: error, userId, pathname: originalPath, component: "middleware" }, "check-access error");
     const pricingUrl = new URL('/pricing', request.url);
     pricingUrl.searchParams.set('redirect', originalPath);
     pricingUrl.searchParams.set('reason', 'access_check_error');

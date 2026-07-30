@@ -44,7 +44,7 @@ export function extractKeywords(text: string): string[] {
 }
 
 /**
- * Analyse déterministe CV ↔ Job basée sur la couverture de mots-clés.
+ * Analyse déterministe CV ↔ any basée sur la couverture de mots-clés.
  * Aucune dépendance externe : fonctionne hors-ligne, idéal pour le socle produit.
  */
 export interface KeywordAnalysis {
@@ -70,9 +70,7 @@ export function analyzeKeywords(cvText: string, jobText: string): KeywordAnalysi
 }
 
 /** Convertit une analyse déterministe de mots-clés en ProductOutput. */
-export function mapKeywordAnalysisToProductOutput(
-  analysis: KeywordAnalysis,
-): ProductOutput {
+export function mapKeywordAnalysisToProductOutput(analysis: KeywordAnalysis, ): ProductOutput {
   const { score, matched, missing } = analysis;
 
   // On limite à des listes courtes et lisibles (P0.5 : simplicité).
@@ -177,10 +175,7 @@ export interface LlmFeedback {
  * Fusionne un feedback LLM par-dessus une base déterministe.
  * Le LLM enrichit mais ne remplace jamais la base (robustesse).
  */
-export function mergeLlmFeedback(
-  base: ProductOutput,
-  llm: LlmFeedback,
-): ProductOutput {
+export function mergeLlmFeedback(base: ProductOutput, llm: LlmFeedback, ): ProductOutput {
   const dedupe = (arr: string[]) => [...new Set(arr.filter(Boolean))];
   return {
     ...base, // préserve les champs P1 (interpretation, estimatedImpact, interviewPrep)

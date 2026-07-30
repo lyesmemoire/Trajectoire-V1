@@ -14,12 +14,7 @@ interface Props {
 }
 
 export function MicrophoneRecoveryModal({
-  isOpen,
-  onRetry,
-  onSwitchToText,
-  reason,
-  aiCredits,
-}: Props) {
+  isOpen, onRetry, onSwitchToText, reason, _aiCredits, _}: Props) {
   if (!isOpen) return null;
 
   const messages: Record<string, { title: string; desc: string }> = {

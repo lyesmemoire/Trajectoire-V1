@@ -1,35 +1,28 @@
-"use client";
+"use client"
 
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  description?: string;
-  children: ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
-  showClose?: boolean;
+  isOpen: boolean
+  onClose: () => void
+  title?: string
+  description?: string
+  children: ReactNode
+  size?: "sm" | "md" | "lg" | "xl"
+  showClose?: boolean
 }
 
 export function Modal({
-  isOpen,
-  onClose,
-  title,
-  description,
-  children,
-  size = "md",
-  showClose = true,
-}: ModalProps) {
-  if (!isOpen) return null;
+  isOpen, onClose, title, description, children, size = "md", showClose = true }: ModalProps) {
+  if (!isOpen) return null
 
   const sizes = {
     sm: "max-w-sm",
     md: "max-w-md",
     lg: "max-w-lg",
     xl: "max-w-xl",
-  };
+  }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -45,7 +38,7 @@ export function Modal({
         <div
           className={cn(
             "relative w-full bg-white rounded-3xl shadow-2xl transform transition-all",
-            "border border-slate-200/50",
+            "border border-ivoire-200",
             sizes[size],
           )}
           role="dialog"
@@ -59,19 +52,19 @@ export function Modal({
                 {title && (
                   <h2
                     id="modal-title"
-                    className="text-xl font-bold text-slate-900"
+                    className="text-xl font-serif font-bold text-ink-900"
                   >
                     {title}
                   </h2>
                 )}
                 {description && (
-                  <p className="mt-1 text-sm text-slate-500">{description}</p>
+                  <p className="mt-1 text-sm text-ink-600">{description}</p>
                 )}
               </div>
               {showClose && (
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-xl hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
+                  className="p-2 rounded-xl hover:bg-ivoire-100 transition-colors text-ink-400 hover:text-ink-600"
                   aria-label="Fermer"
                 >
                   <svg
@@ -97,45 +90,36 @@ export function Modal({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 interface ConfirmModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  title: string;
-  message: string;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: "danger" | "warning" | "info";
-  isLoading?: boolean;
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title: string
+  message: string
+  confirmText?: string
+  cancelText?: string
+  variant?: "danger" | "warning" | "info"
+  isLoading?: boolean
 }
 
 export function ConfirmModal({
-  isOpen,
-  onClose,
-  onConfirm,
-  title,
-  message,
-  confirmText = "Confirmer",
-  cancelText = "Annuler",
-  variant = "danger",
-  isLoading = false,
-}: ConfirmModalProps) {
+  isOpen, onClose, onConfirm, title, message, confirmText = "Confirmer", cancelText = "Annuler", variant = "danger", isLoading = false }: ConfirmModalProps) {
   const variantStyles = {
-    danger: "bg-red-500 hover:bg-red-600",
-    warning: "bg-amber-500 hover:bg-amber-600",
-    info: "bg-blue-500 hover:bg-blue-600",
-  };
+    danger: "bg-brick-600 hover:bg-brick-700",
+    warning: "bg-terracotta-600 hover:bg-terracotta-700",
+    info: "bg-ink-900 hover:bg-ink-800",
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-slate-600 mb-6">{message}</p>
+      <p className="text-ink-600 mb-6">{message}</p>
       <div className="flex gap-3">
         <button
           onClick={onClose}
-          className="flex-1 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors"
+          className="flex-1 py-3 bg-ivoire-100 text-ink-700 font-bold rounded-xl hover:bg-ivoire-200 transition-colors"
           disabled={isLoading}
         >
           {cancelText}
@@ -152,5 +136,5 @@ export function ConfirmModal({
         </button>
       </div>
     </Modal>
-  );
+  )
 }

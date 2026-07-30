@@ -1,7 +1,7 @@
 /**
  * Génère un renforcement positif basé sur l'effort, pas juste le score.
  */
-export function getConfidenceReinforcement(session: any): string {
+export function getConfidenceReinforcement(session: _unknown): string {
   if (session.pressureLevel > 75 && session.recoveryScore > 60) {
     return "Même sous une tension extrême, vous avez su garder votre cap. C'est une force rare.";
   }

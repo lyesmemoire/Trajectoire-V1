@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Subject } from 'rxjs';
 
 // Use require or ignore import types to bypass TS module resolution issues with deepgram
-const deepgramSdk = require('@deepgram/sdk');
+import deepgramSdk from '@deepgram/sdk';
 
 interface TranscriptChunk {
   transcript: string;
@@ -13,7 +13,7 @@ interface TranscriptChunk {
 @Injectable()
 export class DeepgramProvider {
   private readonly logger = new Logger(DeepgramProvider.name);
-  private client: any;
+  private client: unknown;
 
   constructor(private readonly config: ConfigService) {
     const apiKey = this.config.get<string>('DEEPGRAM_API_KEY');
@@ -36,7 +36,7 @@ export class DeepgramProvider {
     });
 
     // Wire SDK events to the subject
-    live.on('transcript', (data: any) => {
+    live.on('transcript', (data: unknown) => {
       const alt = data.channel?.alternatives?.[0];
       if (alt) {
         const chunk: TranscriptChunk = {
@@ -60,7 +60,7 @@ export class DeepgramProvider {
           if (abortSignal.aborted) break;
           live.send(chunk);
         }
-      } catch (err) {
+      } catch (error) {
         this.logger.error('Error streaming audio to Deepgram', err);
       } finally {
         live.finish();
@@ -70,8 +70,8 @@ export class DeepgramProvider {
 
     // Yield from the subject as an async iterable
     // If Subject is not async iterable, we mock the behavior or cast it
-    const iterator = (transcriptSubject as any)[Symbol.asyncIterator]
-      ? (transcriptSubject as any)[Symbol.asyncIterator]()
+    const iterator = (transcriptSubject as unknown)[Symbol.asyncIterator]
+      ? (transcriptSubject as unknown)[Symbol.asyncIterator]()
       : null;
     
     if (iterator) {

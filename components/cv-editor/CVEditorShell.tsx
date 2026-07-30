@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 // Helper to proceed to interview lab only if cookie is present
-const handleProceed = async (router: any) => {
+const handleProceed = async (router: unknown) => {
   const hasCookie = document.cookie
     .split("; ")
     .some((c) => c.startsWith("cv-editor-completed=true"));
@@ -21,10 +21,8 @@ const handleProceed = async (router: any) => {
 };
 
 export function CVEditorShell({
-  initialCV,
-  aiCredits,
-}: {
-  initialCV: any;
+  initialCV, aiCredits, _}: {
+  initialCV: unknown;
   aiCredits: number;
 }) {
   // Default blank CV
@@ -72,7 +70,7 @@ export function CVEditorShell({
     try {
       const parsed = JSON.parse(raw);
       // You may set state with parsed data here if needed
-    } catch (err) {
+    } catch (error) {
       console.error("[CV_EDITOR_PARSE_ERROR]", err);
     }
   }, []);
@@ -83,7 +81,7 @@ export function CVEditorShell({
       // Not implemented in this phase's API, but simulating a save route
       // await fetch('/api/cv/save', { method: 'POST', body: JSON.stringify({ cv: currentCV }) });
       setIsSaving(false);
-    } catch (err) {
+    } catch (error) {
       console.error("Autosave failed", err);
       setIsSaving(false);
     }
@@ -120,7 +118,7 @@ export function CVEditorShell({
         process.env.NODE_ENV === "production" ? "; Secure" : "";
       document.cookie = `cv-editor-completed=true; Path=/; Max-Age=86400; SameSite=Lax${secureFlag}`;
       setExported(true);
-    } catch (err) {
+    } catch (error) {
       console.error(err);
       toast.error("Erreur lors de l'export.");
     } finally {
@@ -165,7 +163,7 @@ export function CVEditorShell({
 
       setCredits((prev: number) => prev - 1);
       toast.success("Section améliorée !");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       toast.error(err.message || "Erreur lors de l'amélioration.");
     } finally {

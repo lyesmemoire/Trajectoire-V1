@@ -109,8 +109,8 @@ export interface EngineCorrection {
   id: string;
   engineId: string;
   correctionType: "parameter" | "logic" | "threshold" | "weight" | "algorithm";
-  currentValue: unknown;
-  recommendedValue: unknown;
+  currentValue: any;
+  recommendedValue: any;
   reason: string;
   expectedImprovement: number; // 0-1
   status: "pending" | "applied" | "rejected";

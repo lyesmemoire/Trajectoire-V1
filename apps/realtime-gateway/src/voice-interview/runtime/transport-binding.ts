@@ -2,7 +2,6 @@
  * runtime/transport-binding.ts — Frontière I/O (P4.2).
  * Sépare strictement les flux entrants (Inbound) et sortants (Outbound).
  */
-import type { TTSAdapter } from "../adapters/tts/types.js";
 import type { VoiceInstruction } from "./voice-runtime.js";
 
 export type OutboundVoiceSignal =
@@ -62,11 +61,7 @@ export interface VoiceSink {
   sendSignal(signal: OutboundVoiceSignal): void;
 }
 
-export async function bindAndPlay(
-  instructions: VoiceInstruction[],
-  tts: TTSAdapter,
-  sink: VoiceSink,
-): Promise<void> {
+export async function bindAndPlay(instructions: VoiceInstruction[], tts: _TTSAdapter, sink: VoiceSink, ): Promise<void> {
   for (const instr of instructions) {
     switch (instr.type) {
       case "wait":

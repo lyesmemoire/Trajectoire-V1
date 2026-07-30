@@ -25,7 +25,7 @@ export type RecoveryEmailInput = {
 /**
  * Service unique d'envoi d'email de reprise doux et minimaliste.
  */
-export async function sendRecoveryEmail(input: RecoveryEmailInput) {
+export async function sendRecoveryEmail(input: _RecoveryEmailInput) {
   // 1. Vérification de la fréquence
   const lastLog = await prisma.recoveryEmailLog.findFirst({
     where: { userId: input.userId },

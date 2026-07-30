@@ -31,11 +31,7 @@ export const RATE_LIMITS = {
 /**
  * Vérifie si une requête est autorisée selon le rate limit
  */
-export function checkRateLimit(
-  identifier: string,
-  limit: number,
-  windowMs: number
-): { allowed: boolean; remaining: number; resetTime: number } {
+export function checkRateLimit(identifier: string, limit: number, windowMs: number): { allowed: boolean; remaining: number; resetTime: number } {
   const now = Date.now();
   const entry = rateLimitStore.get(identifier);
 

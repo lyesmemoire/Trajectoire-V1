@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-25T12:37:00Z",
+  "campaign": "CAMPAGNE 1 — TypeScript",
+  "category": "Props_Underscore",
+  "status": "COMPLETED",
+  "objective": "Corriger toutes les erreurs Props_Underscore",
+  "result": {
+    "before": 666,
+    "after": 502,
+    "errors_removed": 164,
+    "percentage_remaining": 75.4
+  },
+  "method": "Codemod automatique (scripts/codemod-fix-props-underscore.ts)",
+  "details": {
+    "files_scanned": 847,
+    "files_modified": 125,
+    "corrections_applied": 129,
+    "corrections_per_file": 1.03
+  },
+  "verdict": "PARTIAL_SUCCESS",
+  "next_category": "Missing_Types",
+  "artifacts": [
+    "scripts/codemod-fix-props-underscore.ts",
+    "C:/Temp/web-typescript-after-props-underscore.log"
+  ]
+}

@@ -9,7 +9,7 @@ interface Props {
   };
 }
 
-export function ReplayFatiguePanel({ data }: Props) {
+export function ReplayFatiguePanel({ data }: _Props) {
   return (
     <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm space-y-6">
       <div className="flex items-center gap-3 text-amber-500">

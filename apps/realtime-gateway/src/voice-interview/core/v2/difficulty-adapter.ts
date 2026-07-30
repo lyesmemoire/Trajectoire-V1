@@ -25,10 +25,7 @@ const TECH_TREES: Record<string, string[]> = {
 };
 
 /** Sujet suivant dans l'arbre, selon le niveau atteint. */
-export function nextTopicInTree(
-  domain: string,
-  level: number,
-): string | null {
+export function nextTopicInTree(domain: string, level: number, ): string | null {
   const tree = TECH_TREES[domain.toLowerCase()];
   if (!tree) return null;
   const idx = Math.max(0, Math.min(tree.length - 1, level - 1));

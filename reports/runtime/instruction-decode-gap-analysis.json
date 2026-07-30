@@ -1,0 +1,66 @@
+{
+  "component": "instruction-decode",
+  "file": "compiler/cvm/instruction-decode.ts",
+  "auditDate": "2026-07-27T00:50:00Z",
+  "objectives": {
+    "statements": {
+      "target": ">=95%",
+      "current": "94.44%",
+      "status": "FAILED",
+      "gap": "0.56%"
+    },
+    "branches": {
+      "target": ">=97%",
+      "current": "92.86%",
+      "status": "FAILED",
+      "gap": "4.14%"
+    },
+    "functions": {
+      "target": "100%",
+      "current": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "target": ">=95%",
+      "current": "94.44%",
+      "status": "FAILED",
+      "gap": "0.56%"
+    }
+  },
+  "gaps": {
+    "statements": [
+      {
+        "line": 67,
+        "description": "Operand count mismatch error push",
+        "hits": 0,
+        "function": "validate",
+        "reason": "No test covers operand count mismatch"
+      },
+      {
+        "line": 68,
+        "description": "Operand count mismatch error message",
+        "hits": 0,
+        "function": "validate",
+        "reason": "No test covers operand count mismatch"
+      }
+    ],
+    "branches": [
+      {
+        "line": 66,
+        "condition": "if (!encoding)",
+        "uncovered": "true branch (when encoding is null)",
+        "hits": "[0,3]",
+        "function": "validate",
+        "reason": "No test covers missing encoding for opcode"
+      }
+    ],
+    "functions": [],
+    "lines": [67, 68]
+  },
+  "summary": {
+    "totalGaps": 3,
+    "type": "Statement and branch coverage gaps",
+    "blocking": true,
+    "blockingCriteria": "Statements 94.44% < 95%, Branches 92.86% < 97%"
+  }
+}

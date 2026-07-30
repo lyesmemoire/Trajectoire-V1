@@ -1,0 +1,21 @@
+{
+  "total": 40,
+  "killed": 7,
+  "survived": 0,
+  "invalid": 33,
+  "validTotal": 7,
+  "mutationScore": 100,
+  "mutationDensity": 0.175,
+  "mutationDiversity": 10,
+  "mutationStability": 17.5,
+  "mutationReliability": 1,
+  "mutationConfidence": 0.23,
+  "mutationRobustness": 0.18,
+  "mutationQualityIndex": 4.08,
+  "certification": "SILVER",
+  "certificationReasons": [
+    "Échantillon insuffisant: 7 mutations valides < 30 requis pour GOLD",
+    "Taux d'INVALID trop élevé: 82.5% > 20% requis pour GOLD",
+    "Familles non couvertes par des mutations valides: E, F, I, J"
+  ]
+}

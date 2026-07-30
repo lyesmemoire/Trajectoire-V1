@@ -1,0 +1,27 @@
+{
+  "summary": {
+    "totalFilesRemoved": 18,
+    "totalFilesReplaced": 0
+  },
+  "removedFiles": [
+    "apps/web/src/lib/audio/buffering/chunk-protection.ts",
+    "apps/web/src/lib/cognitive-load/click-chaos-detector.ts",
+    "apps/web/src/lib/cognitive-load/confusion-events.ts",
+    "apps/web/src/lib/cognitive-load/replay-skip-analyzer.ts",
+    "apps/web/src/lib/emotional-safety/confidence-protection.ts",
+    "apps/web/src/lib/emotional-safety/replay-balance.ts",
+    "apps/web/src/lib/emotional-safety/session-fatigue.ts",
+    "apps/web/src/lib/engagement/momentum-engine.ts",
+    "apps/web/src/lib/interview/fairness/interruption-fairness.ts",
+    "apps/web/src/lib/progressive-disclosure/cognitive_load_limits.ts",
+    "apps/web/src/lib/progressive-disclosure/user_maturity.ts",
+    "apps/web/src/lib/prompts/fragments/pressure.ts",
+    "apps/web/src/lib/prompts/fragments/scoring.ts",
+    "apps/web/src/lib/replay/confidence-recovery.ts",
+    "apps/web/src/lib/replay/humanized-moments.ts",
+    "apps/web/src/lib/replay/progress-comparison.ts",
+    "apps/web/src/lib/marketing/homepage-copy.ts",
+    "apps/web/src/lib/share/share-copy.ts"
+  ],
+  "replacedFiles": []
+}

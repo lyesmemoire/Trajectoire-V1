@@ -4,10 +4,10 @@
  * Handles business logic for creating interview reports
  */
 
-import { Report, ReportProps } from "@/domain/entities";
+import { Report } from "@/domain/entities";
 import { SessionRepository, ReportRepository, MessageRepository } from "@/infrastructure/repositories";
 import { IRateLimiter, IQuotaService, IAuditService, ILogger } from "@/core/interfaces";
-import { AppError, ErrorCode, QuotaError, AIError } from "@/core/errors";
+import { AppError, ErrorCode, QuotaError } from "@/core/errors";
 import { RateLimitRules, EndpointType } from "@/domain/valueObjects";
 import { ReportService as AIReportService } from "@/lib/ai/services/report.service";
 
@@ -156,7 +156,7 @@ export class ReportService {
     });
 
     // Persist report
-    const persistedReport = await this.reportRepository.create(report.toPersistence());
+    const persistedReport = await this.reportRepository.create(report.toPersistence() as any);
 
     // Increment quota
     await this.quotaService.incrementQuota(command.userId, "reports");

@@ -1,0 +1,5574 @@
+# Auto-generated GraphQL schema from Canonical Model
+
+type Observation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Perception {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Evidence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Confidence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Knowledge {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Belief {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Hypothesis {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Reasoning {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Decision {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Plan {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Memory {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Learning {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Adaptation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoning {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveStateMachine {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveMetric {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveMathematics {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveGuarantee {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Node {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Edge {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Context {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Session {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Conversation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Question {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Answer {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Strategy {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Capability {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Policy {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Command {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Query {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type FeatureFlag {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Artifact {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Execution {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Budget {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Version {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Package {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Object Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Event Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Runtime Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Scheduling Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Memory Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Graph Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Debugging Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Profiling Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Tracing Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Security Contract {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationArchived {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionArchived {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceArchived {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceThresholdBreached {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeAcquired {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeArchived {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefRevised {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisValidated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisRejected {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningStarted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningFailed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionMade {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionExecuted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionReversed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanStarted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanFailed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryEncoded {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryRetrieved {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryConsolidated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryEvicted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningStarted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningFailed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationTriggered {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationFailed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoningCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoningCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluationCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluationCompleted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type GraphCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type GraphUpdated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type NodeCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EdgeCreated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type StateTransitioned {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetricCollected {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetricThresholdBreached {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type GuaranteeViolated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Observing {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Observed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Perceiving {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Perceived {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Evidencing {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Evidenced {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Confiding {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Confided {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Knowing {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Known {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Believing {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Believed {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Hypothesizing {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Hypothesized {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Reasoned {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Deciding {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Decided {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Planning {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Planned {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Encoding {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Encoded {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Retrieving {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Retrieved {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Consolidating {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Consolidated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Learned {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Adapting {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Adapted {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Reflecting {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Reflected {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Evaluating {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Evaluated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluating {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluated {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanningGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoningGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluationGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type StateMachineGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetricGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MathematicsGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type GuaranteeGraph {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanningAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoningAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluationAlgorithm {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SingleSourceOfTruth {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type UniqueOwnership {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AcyclicDependencies {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ExplicitContracts {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SemanticVersioning {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type GlobalUniqueness {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DeterministicExecution {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Traceability {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationDeterminism {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionConsistency {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceValidity {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceCoherence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeConsistency {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BeliefCoherence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type HypothesisTestability {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ReasoningSoundness {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DecisionOptimality {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PlanFeasibility {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryPersistence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LearningEffectiveness {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type AdaptationStability {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MetaReasoningAccuracy {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type SelfEvaluationHonesty {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type COSCoreDeterminism {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObjectiveCoherence {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ArchitectureLayering {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveCycleCompleteness {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type RuntimeLoopDeterminism {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type BytecodeFidelity {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type InstructionIsolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MemoryConsistency {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type TraceCompleteness {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type LLMAbstraction {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type NoDuplicateDefinitions {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type UniqueOwnershipEnforcement {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type DependencyValidation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ContractCompliance {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type VersionCompatibility {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationValidation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionInterpretation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceEvaluation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceCalculation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeAcquisition {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type COSObjectiveAlignment {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ArchitectureCompliance {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveCycleExecution {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type RuntimeLoopExecution {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type COSCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObjectiveCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveCycleCognitiveRule {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type NoDuplicateDefinitionsViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type MultipleOwnershipViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CyclicDependencyViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ImplicitContractViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ConfidenceViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type KnowledgeViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type COSViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObjectiveViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ArchitectureViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type CognitiveCycleViolation {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationType {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionType {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceType {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type ObservationStruct {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type PerceptionStruct {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type EvidenceStruct {
+  id: ID!
+  name: String!
+  owner: String!
+  version: String!
+}
+
+type Query {
+  observation(id: ID!): Observation
+  perception(id: ID!): Perception
+  evidence(id: ID!): Evidence
+  confidence(id: ID!): Confidence
+  knowledge(id: ID!): Knowledge
+  belief(id: ID!): Belief
+  hypothesis(id: ID!): Hypothesis
+  reasoning(id: ID!): Reasoning
+  decision(id: ID!): Decision
+  plan(id: ID!): Plan
+  memory(id: ID!): Memory
+  learning(id: ID!): Learning
+  adaptation(id: ID!): Adaptation
+  metaReasoning(id: ID!): MetaReasoning
+  selfEvaluation(id: ID!): SelfEvaluation
+  cognitiveGraph(id: ID!): CognitiveGraph
+  cognitiveStateMachine(id: ID!): CognitiveStateMachine
+  cognitiveMetric(id: ID!): CognitiveMetric
+  cognitiveMathematics(id: ID!): CognitiveMathematics
+  cognitiveGuarantee(id: ID!): CognitiveGuarantee
+  node(id: ID!): Node
+  edge(id: ID!): Edge
+  context(id: ID!): Context
+  session(id: ID!): Session
+  conversation(id: ID!): Conversation
+  question(id: ID!): Question
+  answer(id: ID!): Answer
+  strategy(id: ID!): Strategy
+  capability(id: ID!): Capability
+  policy(id: ID!): Policy
+  command(id: ID!): Command
+  query(id: ID!): Query
+  featureFlag(id: ID!): FeatureFlag
+  artifact(id: ID!): Artifact
+  execution(id: ID!): Execution
+  budget(id: ID!): Budget
+  version(id: ID!): Version
+  package(id: ID!): Package
+  object Contract(id: ID!): Object Contract
+  event Contract(id: ID!): Event Contract
+  runtime Contract(id: ID!): Runtime Contract
+  scheduling Contract(id: ID!): Scheduling Contract
+  memory Contract(id: ID!): Memory Contract
+  graph Contract(id: ID!): Graph Contract
+  debugging Contract(id: ID!): Debugging Contract
+  profiling Contract(id: ID!): Profiling Contract
+  tracing Contract(id: ID!): Tracing Contract
+  security Contract(id: ID!): Security Contract
+  observationCreated(id: ID!): ObservationCreated
+  observationUpdated(id: ID!): ObservationUpdated
+  observationArchived(id: ID!): ObservationArchived
+  perceptionCreated(id: ID!): PerceptionCreated
+  perceptionUpdated(id: ID!): PerceptionUpdated
+  perceptionArchived(id: ID!): PerceptionArchived
+  evidenceCreated(id: ID!): EvidenceCreated
+  evidenceUpdated(id: ID!): EvidenceUpdated
+  evidenceArchived(id: ID!): EvidenceArchived
+  confidenceUpdated(id: ID!): ConfidenceUpdated
+  confidenceThresholdBreached(id: ID!): ConfidenceThresholdBreached
+  knowledgeAcquired(id: ID!): KnowledgeAcquired
+  knowledgeUpdated(id: ID!): KnowledgeUpdated
+  knowledgeArchived(id: ID!): KnowledgeArchived
+  beliefCreated(id: ID!): BeliefCreated
+  beliefUpdated(id: ID!): BeliefUpdated
+  beliefRevised(id: ID!): BeliefRevised
+  hypothesisCreated(id: ID!): HypothesisCreated
+  hypothesisValidated(id: ID!): HypothesisValidated
+  hypothesisRejected(id: ID!): HypothesisRejected
+  reasoningStarted(id: ID!): ReasoningStarted
+  reasoningCompleted(id: ID!): ReasoningCompleted
+  reasoningFailed(id: ID!): ReasoningFailed
+  decisionMade(id: ID!): DecisionMade
+  decisionExecuted(id: ID!): DecisionExecuted
+  decisionReversed(id: ID!): DecisionReversed
+  planCreated(id: ID!): PlanCreated
+  planStarted(id: ID!): PlanStarted
+  planCompleted(id: ID!): PlanCompleted
+  planFailed(id: ID!): PlanFailed
+  memoryEncoded(id: ID!): MemoryEncoded
+  memoryRetrieved(id: ID!): MemoryRetrieved
+  memoryConsolidated(id: ID!): MemoryConsolidated
+  memoryEvicted(id: ID!): MemoryEvicted
+  learningStarted(id: ID!): LearningStarted
+  learningCompleted(id: ID!): LearningCompleted
+  learningFailed(id: ID!): LearningFailed
+  adaptationTriggered(id: ID!): AdaptationTriggered
+  adaptationCompleted(id: ID!): AdaptationCompleted
+  adaptationFailed(id: ID!): AdaptationFailed
+  metaReasoningCreated(id: ID!): MetaReasoningCreated
+  metaReasoningCompleted(id: ID!): MetaReasoningCompleted
+  selfEvaluationCreated(id: ID!): SelfEvaluationCreated
+  selfEvaluationCompleted(id: ID!): SelfEvaluationCompleted
+  graphCreated(id: ID!): GraphCreated
+  graphUpdated(id: ID!): GraphUpdated
+  nodeCreated(id: ID!): NodeCreated
+  edgeCreated(id: ID!): EdgeCreated
+  stateTransitioned(id: ID!): StateTransitioned
+  metricCollected(id: ID!): MetricCollected
+  metricThresholdBreached(id: ID!): MetricThresholdBreached
+  guaranteeViolated(id: ID!): GuaranteeViolated
+  observing(id: ID!): Observing
+  observed(id: ID!): Observed
+  perceiving(id: ID!): Perceiving
+  perceived(id: ID!): Perceived
+  evidencing(id: ID!): Evidencing
+  evidenced(id: ID!): Evidenced
+  confiding(id: ID!): Confiding
+  confided(id: ID!): Confided
+  knowing(id: ID!): Knowing
+  known(id: ID!): Known
+  believing(id: ID!): Believing
+  believed(id: ID!): Believed
+  hypothesizing(id: ID!): Hypothesizing
+  hypothesized(id: ID!): Hypothesized
+  reasoned(id: ID!): Reasoned
+  deciding(id: ID!): Deciding
+  decided(id: ID!): Decided
+  planning(id: ID!): Planning
+  planned(id: ID!): Planned
+  encoding(id: ID!): Encoding
+  encoded(id: ID!): Encoded
+  retrieving(id: ID!): Retrieving
+  retrieved(id: ID!): Retrieved
+  consolidating(id: ID!): Consolidating
+  consolidated(id: ID!): Consolidated
+  learned(id: ID!): Learned
+  adapting(id: ID!): Adapting
+  adapted(id: ID!): Adapted
+  reflecting(id: ID!): Reflecting
+  reflected(id: ID!): Reflected
+  evaluating(id: ID!): Evaluating
+  evaluated(id: ID!): Evaluated
+  selfEvaluating(id: ID!): SelfEvaluating
+  selfEvaluated(id: ID!): SelfEvaluated
+  observationGraph(id: ID!): ObservationGraph
+  perceptionGraph(id: ID!): PerceptionGraph
+  evidenceGraph(id: ID!): EvidenceGraph
+  confidenceGraph(id: ID!): ConfidenceGraph
+  knowledgeGraph(id: ID!): KnowledgeGraph
+  beliefGraph(id: ID!): BeliefGraph
+  hypothesisGraph(id: ID!): HypothesisGraph
+  reasoningGraph(id: ID!): ReasoningGraph
+  decisionGraph(id: ID!): DecisionGraph
+  planningGraph(id: ID!): PlanningGraph
+  memoryGraph(id: ID!): MemoryGraph
+  learningGraph(id: ID!): LearningGraph
+  adaptationGraph(id: ID!): AdaptationGraph
+  metaReasoningGraph(id: ID!): MetaReasoningGraph
+  selfEvaluationGraph(id: ID!): SelfEvaluationGraph
+  stateMachineGraph(id: ID!): StateMachineGraph
+  metricGraph(id: ID!): MetricGraph
+  mathematicsGraph(id: ID!): MathematicsGraph
+  guaranteeGraph(id: ID!): GuaranteeGraph
+  observationAlgorithm(id: ID!): ObservationAlgorithm
+  perceptionAlgorithm(id: ID!): PerceptionAlgorithm
+  evidenceAlgorithm(id: ID!): EvidenceAlgorithm
+  confidenceAlgorithm(id: ID!): ConfidenceAlgorithm
+  knowledgeAlgorithm(id: ID!): KnowledgeAlgorithm
+  beliefAlgorithm(id: ID!): BeliefAlgorithm
+  hypothesisAlgorithm(id: ID!): HypothesisAlgorithm
+  reasoningAlgorithm(id: ID!): ReasoningAlgorithm
+  decisionAlgorithm(id: ID!): DecisionAlgorithm
+  planningAlgorithm(id: ID!): PlanningAlgorithm
+  memoryAlgorithm(id: ID!): MemoryAlgorithm
+  learningAlgorithm(id: ID!): LearningAlgorithm
+  adaptationAlgorithm(id: ID!): AdaptationAlgorithm
+  metaReasoningAlgorithm(id: ID!): MetaReasoningAlgorithm
+  selfEvaluationAlgorithm(id: ID!): SelfEvaluationAlgorithm
+  singleSourceOfTruth(id: ID!): SingleSourceOfTruth
+  uniqueOwnership(id: ID!): UniqueOwnership
+  acyclicDependencies(id: ID!): AcyclicDependencies
+  explicitContracts(id: ID!): ExplicitContracts
+  semanticVersioning(id: ID!): SemanticVersioning
+  globalUniqueness(id: ID!): GlobalUniqueness
+  deterministicExecution(id: ID!): DeterministicExecution
+  traceability(id: ID!): Traceability
+  observationDeterminism(id: ID!): ObservationDeterminism
+  perceptionConsistency(id: ID!): PerceptionConsistency
+  evidenceValidity(id: ID!): EvidenceValidity
+  confidenceCoherence(id: ID!): ConfidenceCoherence
+  knowledgeConsistency(id: ID!): KnowledgeConsistency
+  beliefCoherence(id: ID!): BeliefCoherence
+  hypothesisTestability(id: ID!): HypothesisTestability
+  reasoningSoundness(id: ID!): ReasoningSoundness
+  decisionOptimality(id: ID!): DecisionOptimality
+  planFeasibility(id: ID!): PlanFeasibility
+  memoryPersistence(id: ID!): MemoryPersistence
+  learningEffectiveness(id: ID!): LearningEffectiveness
+  adaptationStability(id: ID!): AdaptationStability
+  metaReasoningAccuracy(id: ID!): MetaReasoningAccuracy
+  selfEvaluationHonesty(id: ID!): SelfEvaluationHonesty
+  cOSCoreDeterminism(id: ID!): COSCoreDeterminism
+  objectiveCoherence(id: ID!): ObjectiveCoherence
+  architectureLayering(id: ID!): ArchitectureLayering
+  cognitiveCycleCompleteness(id: ID!): CognitiveCycleCompleteness
+  runtimeLoopDeterminism(id: ID!): RuntimeLoopDeterminism
+  bytecodeFidelity(id: ID!): BytecodeFidelity
+  instructionIsolation(id: ID!): InstructionIsolation
+  memoryConsistency(id: ID!): MemoryConsistency
+  traceCompleteness(id: ID!): TraceCompleteness
+  lLMAbstraction(id: ID!): LLMAbstraction
+  noDuplicateDefinitions(id: ID!): NoDuplicateDefinitions
+  uniqueOwnershipEnforcement(id: ID!): UniqueOwnershipEnforcement
+  dependencyValidation(id: ID!): DependencyValidation
+  contractCompliance(id: ID!): ContractCompliance
+  versionCompatibility(id: ID!): VersionCompatibility
+  observationValidation(id: ID!): ObservationValidation
+  perceptionInterpretation(id: ID!): PerceptionInterpretation
+  evidenceEvaluation(id: ID!): EvidenceEvaluation
+  confidenceCalculation(id: ID!): ConfidenceCalculation
+  knowledgeAcquisition(id: ID!): KnowledgeAcquisition
+  cOSObjectiveAlignment(id: ID!): COSObjectiveAlignment
+  architectureCompliance(id: ID!): ArchitectureCompliance
+  cognitiveCycleExecution(id: ID!): CognitiveCycleExecution
+  runtimeLoopExecution(id: ID!): RuntimeLoopExecution
+  observationCognitiveRule(id: ID!): ObservationCognitiveRule
+  perceptionCognitiveRule(id: ID!): PerceptionCognitiveRule
+  evidenceCognitiveRule(id: ID!): EvidenceCognitiveRule
+  confidenceCognitiveRule(id: ID!): ConfidenceCognitiveRule
+  knowledgeCognitiveRule(id: ID!): KnowledgeCognitiveRule
+  cOSCognitiveRule(id: ID!): COSCognitiveRule
+  objectiveCognitiveRule(id: ID!): ObjectiveCognitiveRule
+  cognitiveCycleCognitiveRule(id: ID!): CognitiveCycleCognitiveRule
+  noDuplicateDefinitionsViolation(id: ID!): NoDuplicateDefinitionsViolation
+  multipleOwnershipViolation(id: ID!): MultipleOwnershipViolation
+  cyclicDependencyViolation(id: ID!): CyclicDependencyViolation
+  implicitContractViolation(id: ID!): ImplicitContractViolation
+  observationViolation(id: ID!): ObservationViolation
+  perceptionViolation(id: ID!): PerceptionViolation
+  evidenceViolation(id: ID!): EvidenceViolation
+  confidenceViolation(id: ID!): ConfidenceViolation
+  knowledgeViolation(id: ID!): KnowledgeViolation
+  cOSViolation(id: ID!): COSViolation
+  objectiveViolation(id: ID!): ObjectiveViolation
+  architectureViolation(id: ID!): ArchitectureViolation
+  cognitiveCycleViolation(id: ID!): CognitiveCycleViolation
+  observationType(id: ID!): ObservationType
+  perceptionType(id: ID!): PerceptionType
+  evidenceType(id: ID!): EvidenceType
+  observationStruct(id: ID!): ObservationStruct
+  perceptionStruct(id: ID!): PerceptionStruct
+  evidenceStruct(id: ID!): EvidenceStruct
+}
+
+type Mutation {
+  createObservation(input: ObservationInput!): Observation
+  updateObservation(id: ID!, input: ObservationUpdate!): Observation
+  deleteObservation(id: ID!): Boolean
+  createPerception(input: PerceptionInput!): Perception
+  updatePerception(id: ID!, input: PerceptionUpdate!): Perception
+  deletePerception(id: ID!): Boolean
+  createEvidence(input: EvidenceInput!): Evidence
+  updateEvidence(id: ID!, input: EvidenceUpdate!): Evidence
+  deleteEvidence(id: ID!): Boolean
+  createConfidence(input: ConfidenceInput!): Confidence
+  updateConfidence(id: ID!, input: ConfidenceUpdate!): Confidence
+  deleteConfidence(id: ID!): Boolean
+  createKnowledge(input: KnowledgeInput!): Knowledge
+  updateKnowledge(id: ID!, input: KnowledgeUpdate!): Knowledge
+  deleteKnowledge(id: ID!): Boolean
+  createBelief(input: BeliefInput!): Belief
+  updateBelief(id: ID!, input: BeliefUpdate!): Belief
+  deleteBelief(id: ID!): Boolean
+  createHypothesis(input: HypothesisInput!): Hypothesis
+  updateHypothesis(id: ID!, input: HypothesisUpdate!): Hypothesis
+  deleteHypothesis(id: ID!): Boolean
+  createReasoning(input: ReasoningInput!): Reasoning
+  updateReasoning(id: ID!, input: ReasoningUpdate!): Reasoning
+  deleteReasoning(id: ID!): Boolean
+  createDecision(input: DecisionInput!): Decision
+  updateDecision(id: ID!, input: DecisionUpdate!): Decision
+  deleteDecision(id: ID!): Boolean
+  createPlan(input: PlanInput!): Plan
+  updatePlan(id: ID!, input: PlanUpdate!): Plan
+  deletePlan(id: ID!): Boolean
+  createMemory(input: MemoryInput!): Memory
+  updateMemory(id: ID!, input: MemoryUpdate!): Memory
+  deleteMemory(id: ID!): Boolean
+  createLearning(input: LearningInput!): Learning
+  updateLearning(id: ID!, input: LearningUpdate!): Learning
+  deleteLearning(id: ID!): Boolean
+  createAdaptation(input: AdaptationInput!): Adaptation
+  updateAdaptation(id: ID!, input: AdaptationUpdate!): Adaptation
+  deleteAdaptation(id: ID!): Boolean
+  createMetaReasoning(input: MetaReasoningInput!): MetaReasoning
+  updateMetaReasoning(id: ID!, input: MetaReasoningUpdate!): MetaReasoning
+  deleteMetaReasoning(id: ID!): Boolean
+  createSelfEvaluation(input: SelfEvaluationInput!): SelfEvaluation
+  updateSelfEvaluation(id: ID!, input: SelfEvaluationUpdate!): SelfEvaluation
+  deleteSelfEvaluation(id: ID!): Boolean
+  createCognitiveGraph(input: CognitiveGraphInput!): CognitiveGraph
+  updateCognitiveGraph(id: ID!, input: CognitiveGraphUpdate!): CognitiveGraph
+  deleteCognitiveGraph(id: ID!): Boolean
+  createCognitiveStateMachine(input: CognitiveStateMachineInput!): CognitiveStateMachine
+  updateCognitiveStateMachine(id: ID!, input: CognitiveStateMachineUpdate!): CognitiveStateMachine
+  deleteCognitiveStateMachine(id: ID!): Boolean
+  createCognitiveMetric(input: CognitiveMetricInput!): CognitiveMetric
+  updateCognitiveMetric(id: ID!, input: CognitiveMetricUpdate!): CognitiveMetric
+  deleteCognitiveMetric(id: ID!): Boolean
+  createCognitiveMathematics(input: CognitiveMathematicsInput!): CognitiveMathematics
+  updateCognitiveMathematics(id: ID!, input: CognitiveMathematicsUpdate!): CognitiveMathematics
+  deleteCognitiveMathematics(id: ID!): Boolean
+  createCognitiveGuarantee(input: CognitiveGuaranteeInput!): CognitiveGuarantee
+  updateCognitiveGuarantee(id: ID!, input: CognitiveGuaranteeUpdate!): CognitiveGuarantee
+  deleteCognitiveGuarantee(id: ID!): Boolean
+  createNode(input: NodeInput!): Node
+  updateNode(id: ID!, input: NodeUpdate!): Node
+  deleteNode(id: ID!): Boolean
+  createEdge(input: EdgeInput!): Edge
+  updateEdge(id: ID!, input: EdgeUpdate!): Edge
+  deleteEdge(id: ID!): Boolean
+  createContext(input: ContextInput!): Context
+  updateContext(id: ID!, input: ContextUpdate!): Context
+  deleteContext(id: ID!): Boolean
+  createSession(input: SessionInput!): Session
+  updateSession(id: ID!, input: SessionUpdate!): Session
+  deleteSession(id: ID!): Boolean
+  createConversation(input: ConversationInput!): Conversation
+  updateConversation(id: ID!, input: ConversationUpdate!): Conversation
+  deleteConversation(id: ID!): Boolean
+  createQuestion(input: QuestionInput!): Question
+  updateQuestion(id: ID!, input: QuestionUpdate!): Question
+  deleteQuestion(id: ID!): Boolean
+  createAnswer(input: AnswerInput!): Answer
+  updateAnswer(id: ID!, input: AnswerUpdate!): Answer
+  deleteAnswer(id: ID!): Boolean
+  createStrategy(input: StrategyInput!): Strategy
+  updateStrategy(id: ID!, input: StrategyUpdate!): Strategy
+  deleteStrategy(id: ID!): Boolean
+  createCapability(input: CapabilityInput!): Capability
+  updateCapability(id: ID!, input: CapabilityUpdate!): Capability
+  deleteCapability(id: ID!): Boolean
+  createPolicy(input: PolicyInput!): Policy
+  updatePolicy(id: ID!, input: PolicyUpdate!): Policy
+  deletePolicy(id: ID!): Boolean
+  createCommand(input: CommandInput!): Command
+  updateCommand(id: ID!, input: CommandUpdate!): Command
+  deleteCommand(id: ID!): Boolean
+  createQuery(input: QueryInput!): Query
+  updateQuery(id: ID!, input: QueryUpdate!): Query
+  deleteQuery(id: ID!): Boolean
+  createFeatureFlag(input: FeatureFlagInput!): FeatureFlag
+  updateFeatureFlag(id: ID!, input: FeatureFlagUpdate!): FeatureFlag
+  deleteFeatureFlag(id: ID!): Boolean
+  createArtifact(input: ArtifactInput!): Artifact
+  updateArtifact(id: ID!, input: ArtifactUpdate!): Artifact
+  deleteArtifact(id: ID!): Boolean
+  createExecution(input: ExecutionInput!): Execution
+  updateExecution(id: ID!, input: ExecutionUpdate!): Execution
+  deleteExecution(id: ID!): Boolean
+  createBudget(input: BudgetInput!): Budget
+  updateBudget(id: ID!, input: BudgetUpdate!): Budget
+  deleteBudget(id: ID!): Boolean
+  createVersion(input: VersionInput!): Version
+  updateVersion(id: ID!, input: VersionUpdate!): Version
+  deleteVersion(id: ID!): Boolean
+  createPackage(input: PackageInput!): Package
+  updatePackage(id: ID!, input: PackageUpdate!): Package
+  deletePackage(id: ID!): Boolean
+  createObject Contract(input: Object ContractInput!): Object Contract
+  updateObject Contract(id: ID!, input: Object ContractUpdate!): Object Contract
+  deleteObject Contract(id: ID!): Boolean
+  createEvent Contract(input: Event ContractInput!): Event Contract
+  updateEvent Contract(id: ID!, input: Event ContractUpdate!): Event Contract
+  deleteEvent Contract(id: ID!): Boolean
+  createRuntime Contract(input: Runtime ContractInput!): Runtime Contract
+  updateRuntime Contract(id: ID!, input: Runtime ContractUpdate!): Runtime Contract
+  deleteRuntime Contract(id: ID!): Boolean
+  createScheduling Contract(input: Scheduling ContractInput!): Scheduling Contract
+  updateScheduling Contract(id: ID!, input: Scheduling ContractUpdate!): Scheduling Contract
+  deleteScheduling Contract(id: ID!): Boolean
+  createMemory Contract(input: Memory ContractInput!): Memory Contract
+  updateMemory Contract(id: ID!, input: Memory ContractUpdate!): Memory Contract
+  deleteMemory Contract(id: ID!): Boolean
+  createGraph Contract(input: Graph ContractInput!): Graph Contract
+  updateGraph Contract(id: ID!, input: Graph ContractUpdate!): Graph Contract
+  deleteGraph Contract(id: ID!): Boolean
+  createDebugging Contract(input: Debugging ContractInput!): Debugging Contract
+  updateDebugging Contract(id: ID!, input: Debugging ContractUpdate!): Debugging Contract
+  deleteDebugging Contract(id: ID!): Boolean
+  createProfiling Contract(input: Profiling ContractInput!): Profiling Contract
+  updateProfiling Contract(id: ID!, input: Profiling ContractUpdate!): Profiling Contract
+  deleteProfiling Contract(id: ID!): Boolean
+  createTracing Contract(input: Tracing ContractInput!): Tracing Contract
+  updateTracing Contract(id: ID!, input: Tracing ContractUpdate!): Tracing Contract
+  deleteTracing Contract(id: ID!): Boolean
+  createSecurity Contract(input: Security ContractInput!): Security Contract
+  updateSecurity Contract(id: ID!, input: Security ContractUpdate!): Security Contract
+  deleteSecurity Contract(id: ID!): Boolean
+  createObservationCreated(input: ObservationCreatedInput!): ObservationCreated
+  updateObservationCreated(id: ID!, input: ObservationCreatedUpdate!): ObservationCreated
+  deleteObservationCreated(id: ID!): Boolean
+  createObservationUpdated(input: ObservationUpdatedInput!): ObservationUpdated
+  updateObservationUpdated(id: ID!, input: ObservationUpdatedUpdate!): ObservationUpdated
+  deleteObservationUpdated(id: ID!): Boolean
+  createObservationArchived(input: ObservationArchivedInput!): ObservationArchived
+  updateObservationArchived(id: ID!, input: ObservationArchivedUpdate!): ObservationArchived
+  deleteObservationArchived(id: ID!): Boolean
+  createPerceptionCreated(input: PerceptionCreatedInput!): PerceptionCreated
+  updatePerceptionCreated(id: ID!, input: PerceptionCreatedUpdate!): PerceptionCreated
+  deletePerceptionCreated(id: ID!): Boolean
+  createPerceptionUpdated(input: PerceptionUpdatedInput!): PerceptionUpdated
+  updatePerceptionUpdated(id: ID!, input: PerceptionUpdatedUpdate!): PerceptionUpdated
+  deletePerceptionUpdated(id: ID!): Boolean
+  createPerceptionArchived(input: PerceptionArchivedInput!): PerceptionArchived
+  updatePerceptionArchived(id: ID!, input: PerceptionArchivedUpdate!): PerceptionArchived
+  deletePerceptionArchived(id: ID!): Boolean
+  createEvidenceCreated(input: EvidenceCreatedInput!): EvidenceCreated
+  updateEvidenceCreated(id: ID!, input: EvidenceCreatedUpdate!): EvidenceCreated
+  deleteEvidenceCreated(id: ID!): Boolean
+  createEvidenceUpdated(input: EvidenceUpdatedInput!): EvidenceUpdated
+  updateEvidenceUpdated(id: ID!, input: EvidenceUpdatedUpdate!): EvidenceUpdated
+  deleteEvidenceUpdated(id: ID!): Boolean
+  createEvidenceArchived(input: EvidenceArchivedInput!): EvidenceArchived
+  updateEvidenceArchived(id: ID!, input: EvidenceArchivedUpdate!): EvidenceArchived
+  deleteEvidenceArchived(id: ID!): Boolean
+  createConfidenceUpdated(input: ConfidenceUpdatedInput!): ConfidenceUpdated
+  updateConfidenceUpdated(id: ID!, input: ConfidenceUpdatedUpdate!): ConfidenceUpdated
+  deleteConfidenceUpdated(id: ID!): Boolean
+  createConfidenceThresholdBreached(input: ConfidenceThresholdBreachedInput!): ConfidenceThresholdBreached
+  updateConfidenceThresholdBreached(id: ID!, input: ConfidenceThresholdBreachedUpdate!): ConfidenceThresholdBreached
+  deleteConfidenceThresholdBreached(id: ID!): Boolean
+  createKnowledgeAcquired(input: KnowledgeAcquiredInput!): KnowledgeAcquired
+  updateKnowledgeAcquired(id: ID!, input: KnowledgeAcquiredUpdate!): KnowledgeAcquired
+  deleteKnowledgeAcquired(id: ID!): Boolean
+  createKnowledgeUpdated(input: KnowledgeUpdatedInput!): KnowledgeUpdated
+  updateKnowledgeUpdated(id: ID!, input: KnowledgeUpdatedUpdate!): KnowledgeUpdated
+  deleteKnowledgeUpdated(id: ID!): Boolean
+  createKnowledgeArchived(input: KnowledgeArchivedInput!): KnowledgeArchived
+  updateKnowledgeArchived(id: ID!, input: KnowledgeArchivedUpdate!): KnowledgeArchived
+  deleteKnowledgeArchived(id: ID!): Boolean
+  createBeliefCreated(input: BeliefCreatedInput!): BeliefCreated
+  updateBeliefCreated(id: ID!, input: BeliefCreatedUpdate!): BeliefCreated
+  deleteBeliefCreated(id: ID!): Boolean
+  createBeliefUpdated(input: BeliefUpdatedInput!): BeliefUpdated
+  updateBeliefUpdated(id: ID!, input: BeliefUpdatedUpdate!): BeliefUpdated
+  deleteBeliefUpdated(id: ID!): Boolean
+  createBeliefRevised(input: BeliefRevisedInput!): BeliefRevised
+  updateBeliefRevised(id: ID!, input: BeliefRevisedUpdate!): BeliefRevised
+  deleteBeliefRevised(id: ID!): Boolean
+  createHypothesisCreated(input: HypothesisCreatedInput!): HypothesisCreated
+  updateHypothesisCreated(id: ID!, input: HypothesisCreatedUpdate!): HypothesisCreated
+  deleteHypothesisCreated(id: ID!): Boolean
+  createHypothesisValidated(input: HypothesisValidatedInput!): HypothesisValidated
+  updateHypothesisValidated(id: ID!, input: HypothesisValidatedUpdate!): HypothesisValidated
+  deleteHypothesisValidated(id: ID!): Boolean
+  createHypothesisRejected(input: HypothesisRejectedInput!): HypothesisRejected
+  updateHypothesisRejected(id: ID!, input: HypothesisRejectedUpdate!): HypothesisRejected
+  deleteHypothesisRejected(id: ID!): Boolean
+  createReasoningStarted(input: ReasoningStartedInput!): ReasoningStarted
+  updateReasoningStarted(id: ID!, input: ReasoningStartedUpdate!): ReasoningStarted
+  deleteReasoningStarted(id: ID!): Boolean
+  createReasoningCompleted(input: ReasoningCompletedInput!): ReasoningCompleted
+  updateReasoningCompleted(id: ID!, input: ReasoningCompletedUpdate!): ReasoningCompleted
+  deleteReasoningCompleted(id: ID!): Boolean
+  createReasoningFailed(input: ReasoningFailedInput!): ReasoningFailed
+  updateReasoningFailed(id: ID!, input: ReasoningFailedUpdate!): ReasoningFailed
+  deleteReasoningFailed(id: ID!): Boolean
+  createDecisionMade(input: DecisionMadeInput!): DecisionMade
+  updateDecisionMade(id: ID!, input: DecisionMadeUpdate!): DecisionMade
+  deleteDecisionMade(id: ID!): Boolean
+  createDecisionExecuted(input: DecisionExecutedInput!): DecisionExecuted
+  updateDecisionExecuted(id: ID!, input: DecisionExecutedUpdate!): DecisionExecuted
+  deleteDecisionExecuted(id: ID!): Boolean
+  createDecisionReversed(input: DecisionReversedInput!): DecisionReversed
+  updateDecisionReversed(id: ID!, input: DecisionReversedUpdate!): DecisionReversed
+  deleteDecisionReversed(id: ID!): Boolean
+  createPlanCreated(input: PlanCreatedInput!): PlanCreated
+  updatePlanCreated(id: ID!, input: PlanCreatedUpdate!): PlanCreated
+  deletePlanCreated(id: ID!): Boolean
+  createPlanStarted(input: PlanStartedInput!): PlanStarted
+  updatePlanStarted(id: ID!, input: PlanStartedUpdate!): PlanStarted
+  deletePlanStarted(id: ID!): Boolean
+  createPlanCompleted(input: PlanCompletedInput!): PlanCompleted
+  updatePlanCompleted(id: ID!, input: PlanCompletedUpdate!): PlanCompleted
+  deletePlanCompleted(id: ID!): Boolean
+  createPlanFailed(input: PlanFailedInput!): PlanFailed
+  updatePlanFailed(id: ID!, input: PlanFailedUpdate!): PlanFailed
+  deletePlanFailed(id: ID!): Boolean
+  createMemoryEncoded(input: MemoryEncodedInput!): MemoryEncoded
+  updateMemoryEncoded(id: ID!, input: MemoryEncodedUpdate!): MemoryEncoded
+  deleteMemoryEncoded(id: ID!): Boolean
+  createMemoryRetrieved(input: MemoryRetrievedInput!): MemoryRetrieved
+  updateMemoryRetrieved(id: ID!, input: MemoryRetrievedUpdate!): MemoryRetrieved
+  deleteMemoryRetrieved(id: ID!): Boolean
+  createMemoryConsolidated(input: MemoryConsolidatedInput!): MemoryConsolidated
+  updateMemoryConsolidated(id: ID!, input: MemoryConsolidatedUpdate!): MemoryConsolidated
+  deleteMemoryConsolidated(id: ID!): Boolean
+  createMemoryEvicted(input: MemoryEvictedInput!): MemoryEvicted
+  updateMemoryEvicted(id: ID!, input: MemoryEvictedUpdate!): MemoryEvicted
+  deleteMemoryEvicted(id: ID!): Boolean
+  createLearningStarted(input: LearningStartedInput!): LearningStarted
+  updateLearningStarted(id: ID!, input: LearningStartedUpdate!): LearningStarted
+  deleteLearningStarted(id: ID!): Boolean
+  createLearningCompleted(input: LearningCompletedInput!): LearningCompleted
+  updateLearningCompleted(id: ID!, input: LearningCompletedUpdate!): LearningCompleted
+  deleteLearningCompleted(id: ID!): Boolean
+  createLearningFailed(input: LearningFailedInput!): LearningFailed
+  updateLearningFailed(id: ID!, input: LearningFailedUpdate!): LearningFailed
+  deleteLearningFailed(id: ID!): Boolean
+  createAdaptationTriggered(input: AdaptationTriggeredInput!): AdaptationTriggered
+  updateAdaptationTriggered(id: ID!, input: AdaptationTriggeredUpdate!): AdaptationTriggered
+  deleteAdaptationTriggered(id: ID!): Boolean
+  createAdaptationCompleted(input: AdaptationCompletedInput!): AdaptationCompleted
+  updateAdaptationCompleted(id: ID!, input: AdaptationCompletedUpdate!): AdaptationCompleted
+  deleteAdaptationCompleted(id: ID!): Boolean
+  createAdaptationFailed(input: AdaptationFailedInput!): AdaptationFailed
+  updateAdaptationFailed(id: ID!, input: AdaptationFailedUpdate!): AdaptationFailed
+  deleteAdaptationFailed(id: ID!): Boolean
+  createMetaReasoningCreated(input: MetaReasoningCreatedInput!): MetaReasoningCreated
+  updateMetaReasoningCreated(id: ID!, input: MetaReasoningCreatedUpdate!): MetaReasoningCreated
+  deleteMetaReasoningCreated(id: ID!): Boolean
+  createMetaReasoningCompleted(input: MetaReasoningCompletedInput!): MetaReasoningCompleted
+  updateMetaReasoningCompleted(id: ID!, input: MetaReasoningCompletedUpdate!): MetaReasoningCompleted
+  deleteMetaReasoningCompleted(id: ID!): Boolean
+  createSelfEvaluationCreated(input: SelfEvaluationCreatedInput!): SelfEvaluationCreated
+  updateSelfEvaluationCreated(id: ID!, input: SelfEvaluationCreatedUpdate!): SelfEvaluationCreated
+  deleteSelfEvaluationCreated(id: ID!): Boolean
+  createSelfEvaluationCompleted(input: SelfEvaluationCompletedInput!): SelfEvaluationCompleted
+  updateSelfEvaluationCompleted(id: ID!, input: SelfEvaluationCompletedUpdate!): SelfEvaluationCompleted
+  deleteSelfEvaluationCompleted(id: ID!): Boolean
+  createGraphCreated(input: GraphCreatedInput!): GraphCreated
+  updateGraphCreated(id: ID!, input: GraphCreatedUpdate!): GraphCreated
+  deleteGraphCreated(id: ID!): Boolean
+  createGraphUpdated(input: GraphUpdatedInput!): GraphUpdated
+  updateGraphUpdated(id: ID!, input: GraphUpdatedUpdate!): GraphUpdated
+  deleteGraphUpdated(id: ID!): Boolean
+  createNodeCreated(input: NodeCreatedInput!): NodeCreated
+  updateNodeCreated(id: ID!, input: NodeCreatedUpdate!): NodeCreated
+  deleteNodeCreated(id: ID!): Boolean
+  createEdgeCreated(input: EdgeCreatedInput!): EdgeCreated
+  updateEdgeCreated(id: ID!, input: EdgeCreatedUpdate!): EdgeCreated
+  deleteEdgeCreated(id: ID!): Boolean
+  createStateTransitioned(input: StateTransitionedInput!): StateTransitioned
+  updateStateTransitioned(id: ID!, input: StateTransitionedUpdate!): StateTransitioned
+  deleteStateTransitioned(id: ID!): Boolean
+  createMetricCollected(input: MetricCollectedInput!): MetricCollected
+  updateMetricCollected(id: ID!, input: MetricCollectedUpdate!): MetricCollected
+  deleteMetricCollected(id: ID!): Boolean
+  createMetricThresholdBreached(input: MetricThresholdBreachedInput!): MetricThresholdBreached
+  updateMetricThresholdBreached(id: ID!, input: MetricThresholdBreachedUpdate!): MetricThresholdBreached
+  deleteMetricThresholdBreached(id: ID!): Boolean
+  createGuaranteeViolated(input: GuaranteeViolatedInput!): GuaranteeViolated
+  updateGuaranteeViolated(id: ID!, input: GuaranteeViolatedUpdate!): GuaranteeViolated
+  deleteGuaranteeViolated(id: ID!): Boolean
+  createObserving(input: ObservingInput!): Observing
+  updateObserving(id: ID!, input: ObservingUpdate!): Observing
+  deleteObserving(id: ID!): Boolean
+  createObserved(input: ObservedInput!): Observed
+  updateObserved(id: ID!, input: ObservedUpdate!): Observed
+  deleteObserved(id: ID!): Boolean
+  createPerceiving(input: PerceivingInput!): Perceiving
+  updatePerceiving(id: ID!, input: PerceivingUpdate!): Perceiving
+  deletePerceiving(id: ID!): Boolean
+  createPerceived(input: PerceivedInput!): Perceived
+  updatePerceived(id: ID!, input: PerceivedUpdate!): Perceived
+  deletePerceived(id: ID!): Boolean
+  createEvidencing(input: EvidencingInput!): Evidencing
+  updateEvidencing(id: ID!, input: EvidencingUpdate!): Evidencing
+  deleteEvidencing(id: ID!): Boolean
+  createEvidenced(input: EvidencedInput!): Evidenced
+  updateEvidenced(id: ID!, input: EvidencedUpdate!): Evidenced
+  deleteEvidenced(id: ID!): Boolean
+  createConfiding(input: ConfidingInput!): Confiding
+  updateConfiding(id: ID!, input: ConfidingUpdate!): Confiding
+  deleteConfiding(id: ID!): Boolean
+  createConfided(input: ConfidedInput!): Confided
+  updateConfided(id: ID!, input: ConfidedUpdate!): Confided
+  deleteConfided(id: ID!): Boolean
+  createKnowing(input: KnowingInput!): Knowing
+  updateKnowing(id: ID!, input: KnowingUpdate!): Knowing
+  deleteKnowing(id: ID!): Boolean
+  createKnown(input: KnownInput!): Known
+  updateKnown(id: ID!, input: KnownUpdate!): Known
+  deleteKnown(id: ID!): Boolean
+  createBelieving(input: BelievingInput!): Believing
+  updateBelieving(id: ID!, input: BelievingUpdate!): Believing
+  deleteBelieving(id: ID!): Boolean
+  createBelieved(input: BelievedInput!): Believed
+  updateBelieved(id: ID!, input: BelievedUpdate!): Believed
+  deleteBelieved(id: ID!): Boolean
+  createHypothesizing(input: HypothesizingInput!): Hypothesizing
+  updateHypothesizing(id: ID!, input: HypothesizingUpdate!): Hypothesizing
+  deleteHypothesizing(id: ID!): Boolean
+  createHypothesized(input: HypothesizedInput!): Hypothesized
+  updateHypothesized(id: ID!, input: HypothesizedUpdate!): Hypothesized
+  deleteHypothesized(id: ID!): Boolean
+  createReasoned(input: ReasonedInput!): Reasoned
+  updateReasoned(id: ID!, input: ReasonedUpdate!): Reasoned
+  deleteReasoned(id: ID!): Boolean
+  createDeciding(input: DecidingInput!): Deciding
+  updateDeciding(id: ID!, input: DecidingUpdate!): Deciding
+  deleteDeciding(id: ID!): Boolean
+  createDecided(input: DecidedInput!): Decided
+  updateDecided(id: ID!, input: DecidedUpdate!): Decided
+  deleteDecided(id: ID!): Boolean
+  createPlanning(input: PlanningInput!): Planning
+  updatePlanning(id: ID!, input: PlanningUpdate!): Planning
+  deletePlanning(id: ID!): Boolean
+  createPlanned(input: PlannedInput!): Planned
+  updatePlanned(id: ID!, input: PlannedUpdate!): Planned
+  deletePlanned(id: ID!): Boolean
+  createEncoding(input: EncodingInput!): Encoding
+  updateEncoding(id: ID!, input: EncodingUpdate!): Encoding
+  deleteEncoding(id: ID!): Boolean
+  createEncoded(input: EncodedInput!): Encoded
+  updateEncoded(id: ID!, input: EncodedUpdate!): Encoded
+  deleteEncoded(id: ID!): Boolean
+  createRetrieving(input: RetrievingInput!): Retrieving
+  updateRetrieving(id: ID!, input: RetrievingUpdate!): Retrieving
+  deleteRetrieving(id: ID!): Boolean
+  createRetrieved(input: RetrievedInput!): Retrieved
+  updateRetrieved(id: ID!, input: RetrievedUpdate!): Retrieved
+  deleteRetrieved(id: ID!): Boolean
+  createConsolidating(input: ConsolidatingInput!): Consolidating
+  updateConsolidating(id: ID!, input: ConsolidatingUpdate!): Consolidating
+  deleteConsolidating(id: ID!): Boolean
+  createConsolidated(input: ConsolidatedInput!): Consolidated
+  updateConsolidated(id: ID!, input: ConsolidatedUpdate!): Consolidated
+  deleteConsolidated(id: ID!): Boolean
+  createLearned(input: LearnedInput!): Learned
+  updateLearned(id: ID!, input: LearnedUpdate!): Learned
+  deleteLearned(id: ID!): Boolean
+  createAdapting(input: AdaptingInput!): Adapting
+  updateAdapting(id: ID!, input: AdaptingUpdate!): Adapting
+  deleteAdapting(id: ID!): Boolean
+  createAdapted(input: AdaptedInput!): Adapted
+  updateAdapted(id: ID!, input: AdaptedUpdate!): Adapted
+  deleteAdapted(id: ID!): Boolean
+  createReflecting(input: ReflectingInput!): Reflecting
+  updateReflecting(id: ID!, input: ReflectingUpdate!): Reflecting
+  deleteReflecting(id: ID!): Boolean
+  createReflected(input: ReflectedInput!): Reflected
+  updateReflected(id: ID!, input: ReflectedUpdate!): Reflected
+  deleteReflected(id: ID!): Boolean
+  createEvaluating(input: EvaluatingInput!): Evaluating
+  updateEvaluating(id: ID!, input: EvaluatingUpdate!): Evaluating
+  deleteEvaluating(id: ID!): Boolean
+  createEvaluated(input: EvaluatedInput!): Evaluated
+  updateEvaluated(id: ID!, input: EvaluatedUpdate!): Evaluated
+  deleteEvaluated(id: ID!): Boolean
+  createSelfEvaluating(input: SelfEvaluatingInput!): SelfEvaluating
+  updateSelfEvaluating(id: ID!, input: SelfEvaluatingUpdate!): SelfEvaluating
+  deleteSelfEvaluating(id: ID!): Boolean
+  createSelfEvaluated(input: SelfEvaluatedInput!): SelfEvaluated
+  updateSelfEvaluated(id: ID!, input: SelfEvaluatedUpdate!): SelfEvaluated
+  deleteSelfEvaluated(id: ID!): Boolean
+  createObservationGraph(input: ObservationGraphInput!): ObservationGraph
+  updateObservationGraph(id: ID!, input: ObservationGraphUpdate!): ObservationGraph
+  deleteObservationGraph(id: ID!): Boolean
+  createPerceptionGraph(input: PerceptionGraphInput!): PerceptionGraph
+  updatePerceptionGraph(id: ID!, input: PerceptionGraphUpdate!): PerceptionGraph
+  deletePerceptionGraph(id: ID!): Boolean
+  createEvidenceGraph(input: EvidenceGraphInput!): EvidenceGraph
+  updateEvidenceGraph(id: ID!, input: EvidenceGraphUpdate!): EvidenceGraph
+  deleteEvidenceGraph(id: ID!): Boolean
+  createConfidenceGraph(input: ConfidenceGraphInput!): ConfidenceGraph
+  updateConfidenceGraph(id: ID!, input: ConfidenceGraphUpdate!): ConfidenceGraph
+  deleteConfidenceGraph(id: ID!): Boolean
+  createKnowledgeGraph(input: KnowledgeGraphInput!): KnowledgeGraph
+  updateKnowledgeGraph(id: ID!, input: KnowledgeGraphUpdate!): KnowledgeGraph
+  deleteKnowledgeGraph(id: ID!): Boolean
+  createBeliefGraph(input: BeliefGraphInput!): BeliefGraph
+  updateBeliefGraph(id: ID!, input: BeliefGraphUpdate!): BeliefGraph
+  deleteBeliefGraph(id: ID!): Boolean
+  createHypothesisGraph(input: HypothesisGraphInput!): HypothesisGraph
+  updateHypothesisGraph(id: ID!, input: HypothesisGraphUpdate!): HypothesisGraph
+  deleteHypothesisGraph(id: ID!): Boolean
+  createReasoningGraph(input: ReasoningGraphInput!): ReasoningGraph
+  updateReasoningGraph(id: ID!, input: ReasoningGraphUpdate!): ReasoningGraph
+  deleteReasoningGraph(id: ID!): Boolean
+  createDecisionGraph(input: DecisionGraphInput!): DecisionGraph
+  updateDecisionGraph(id: ID!, input: DecisionGraphUpdate!): DecisionGraph
+  deleteDecisionGraph(id: ID!): Boolean
+  createPlanningGraph(input: PlanningGraphInput!): PlanningGraph
+  updatePlanningGraph(id: ID!, input: PlanningGraphUpdate!): PlanningGraph
+  deletePlanningGraph(id: ID!): Boolean
+  createMemoryGraph(input: MemoryGraphInput!): MemoryGraph
+  updateMemoryGraph(id: ID!, input: MemoryGraphUpdate!): MemoryGraph
+  deleteMemoryGraph(id: ID!): Boolean
+  createLearningGraph(input: LearningGraphInput!): LearningGraph
+  updateLearningGraph(id: ID!, input: LearningGraphUpdate!): LearningGraph
+  deleteLearningGraph(id: ID!): Boolean
+  createAdaptationGraph(input: AdaptationGraphInput!): AdaptationGraph
+  updateAdaptationGraph(id: ID!, input: AdaptationGraphUpdate!): AdaptationGraph
+  deleteAdaptationGraph(id: ID!): Boolean
+  createMetaReasoningGraph(input: MetaReasoningGraphInput!): MetaReasoningGraph
+  updateMetaReasoningGraph(id: ID!, input: MetaReasoningGraphUpdate!): MetaReasoningGraph
+  deleteMetaReasoningGraph(id: ID!): Boolean
+  createSelfEvaluationGraph(input: SelfEvaluationGraphInput!): SelfEvaluationGraph
+  updateSelfEvaluationGraph(id: ID!, input: SelfEvaluationGraphUpdate!): SelfEvaluationGraph
+  deleteSelfEvaluationGraph(id: ID!): Boolean
+  createStateMachineGraph(input: StateMachineGraphInput!): StateMachineGraph
+  updateStateMachineGraph(id: ID!, input: StateMachineGraphUpdate!): StateMachineGraph
+  deleteStateMachineGraph(id: ID!): Boolean
+  createMetricGraph(input: MetricGraphInput!): MetricGraph
+  updateMetricGraph(id: ID!, input: MetricGraphUpdate!): MetricGraph
+  deleteMetricGraph(id: ID!): Boolean
+  createMathematicsGraph(input: MathematicsGraphInput!): MathematicsGraph
+  updateMathematicsGraph(id: ID!, input: MathematicsGraphUpdate!): MathematicsGraph
+  deleteMathematicsGraph(id: ID!): Boolean
+  createGuaranteeGraph(input: GuaranteeGraphInput!): GuaranteeGraph
+  updateGuaranteeGraph(id: ID!, input: GuaranteeGraphUpdate!): GuaranteeGraph
+  deleteGuaranteeGraph(id: ID!): Boolean
+  createObservationAlgorithm(input: ObservationAlgorithmInput!): ObservationAlgorithm
+  updateObservationAlgorithm(id: ID!, input: ObservationAlgorithmUpdate!): ObservationAlgorithm
+  deleteObservationAlgorithm(id: ID!): Boolean
+  createPerceptionAlgorithm(input: PerceptionAlgorithmInput!): PerceptionAlgorithm
+  updatePerceptionAlgorithm(id: ID!, input: PerceptionAlgorithmUpdate!): PerceptionAlgorithm
+  deletePerceptionAlgorithm(id: ID!): Boolean
+  createEvidenceAlgorithm(input: EvidenceAlgorithmInput!): EvidenceAlgorithm
+  updateEvidenceAlgorithm(id: ID!, input: EvidenceAlgorithmUpdate!): EvidenceAlgorithm
+  deleteEvidenceAlgorithm(id: ID!): Boolean
+  createConfidenceAlgorithm(input: ConfidenceAlgorithmInput!): ConfidenceAlgorithm
+  updateConfidenceAlgorithm(id: ID!, input: ConfidenceAlgorithmUpdate!): ConfidenceAlgorithm
+  deleteConfidenceAlgorithm(id: ID!): Boolean
+  createKnowledgeAlgorithm(input: KnowledgeAlgorithmInput!): KnowledgeAlgorithm
+  updateKnowledgeAlgorithm(id: ID!, input: KnowledgeAlgorithmUpdate!): KnowledgeAlgorithm
+  deleteKnowledgeAlgorithm(id: ID!): Boolean
+  createBeliefAlgorithm(input: BeliefAlgorithmInput!): BeliefAlgorithm
+  updateBeliefAlgorithm(id: ID!, input: BeliefAlgorithmUpdate!): BeliefAlgorithm
+  deleteBeliefAlgorithm(id: ID!): Boolean
+  createHypothesisAlgorithm(input: HypothesisAlgorithmInput!): HypothesisAlgorithm
+  updateHypothesisAlgorithm(id: ID!, input: HypothesisAlgorithmUpdate!): HypothesisAlgorithm
+  deleteHypothesisAlgorithm(id: ID!): Boolean
+  createReasoningAlgorithm(input: ReasoningAlgorithmInput!): ReasoningAlgorithm
+  updateReasoningAlgorithm(id: ID!, input: ReasoningAlgorithmUpdate!): ReasoningAlgorithm
+  deleteReasoningAlgorithm(id: ID!): Boolean
+  createDecisionAlgorithm(input: DecisionAlgorithmInput!): DecisionAlgorithm
+  updateDecisionAlgorithm(id: ID!, input: DecisionAlgorithmUpdate!): DecisionAlgorithm
+  deleteDecisionAlgorithm(id: ID!): Boolean
+  createPlanningAlgorithm(input: PlanningAlgorithmInput!): PlanningAlgorithm
+  updatePlanningAlgorithm(id: ID!, input: PlanningAlgorithmUpdate!): PlanningAlgorithm
+  deletePlanningAlgorithm(id: ID!): Boolean
+  createMemoryAlgorithm(input: MemoryAlgorithmInput!): MemoryAlgorithm
+  updateMemoryAlgorithm(id: ID!, input: MemoryAlgorithmUpdate!): MemoryAlgorithm
+  deleteMemoryAlgorithm(id: ID!): Boolean
+  createLearningAlgorithm(input: LearningAlgorithmInput!): LearningAlgorithm
+  updateLearningAlgorithm(id: ID!, input: LearningAlgorithmUpdate!): LearningAlgorithm
+  deleteLearningAlgorithm(id: ID!): Boolean
+  createAdaptationAlgorithm(input: AdaptationAlgorithmInput!): AdaptationAlgorithm
+  updateAdaptationAlgorithm(id: ID!, input: AdaptationAlgorithmUpdate!): AdaptationAlgorithm
+  deleteAdaptationAlgorithm(id: ID!): Boolean
+  createMetaReasoningAlgorithm(input: MetaReasoningAlgorithmInput!): MetaReasoningAlgorithm
+  updateMetaReasoningAlgorithm(id: ID!, input: MetaReasoningAlgorithmUpdate!): MetaReasoningAlgorithm
+  deleteMetaReasoningAlgorithm(id: ID!): Boolean
+  createSelfEvaluationAlgorithm(input: SelfEvaluationAlgorithmInput!): SelfEvaluationAlgorithm
+  updateSelfEvaluationAlgorithm(id: ID!, input: SelfEvaluationAlgorithmUpdate!): SelfEvaluationAlgorithm
+  deleteSelfEvaluationAlgorithm(id: ID!): Boolean
+  createSingleSourceOfTruth(input: SingleSourceOfTruthInput!): SingleSourceOfTruth
+  updateSingleSourceOfTruth(id: ID!, input: SingleSourceOfTruthUpdate!): SingleSourceOfTruth
+  deleteSingleSourceOfTruth(id: ID!): Boolean
+  createUniqueOwnership(input: UniqueOwnershipInput!): UniqueOwnership
+  updateUniqueOwnership(id: ID!, input: UniqueOwnershipUpdate!): UniqueOwnership
+  deleteUniqueOwnership(id: ID!): Boolean
+  createAcyclicDependencies(input: AcyclicDependenciesInput!): AcyclicDependencies
+  updateAcyclicDependencies(id: ID!, input: AcyclicDependenciesUpdate!): AcyclicDependencies
+  deleteAcyclicDependencies(id: ID!): Boolean
+  createExplicitContracts(input: ExplicitContractsInput!): ExplicitContracts
+  updateExplicitContracts(id: ID!, input: ExplicitContractsUpdate!): ExplicitContracts
+  deleteExplicitContracts(id: ID!): Boolean
+  createSemanticVersioning(input: SemanticVersioningInput!): SemanticVersioning
+  updateSemanticVersioning(id: ID!, input: SemanticVersioningUpdate!): SemanticVersioning
+  deleteSemanticVersioning(id: ID!): Boolean
+  createGlobalUniqueness(input: GlobalUniquenessInput!): GlobalUniqueness
+  updateGlobalUniqueness(id: ID!, input: GlobalUniquenessUpdate!): GlobalUniqueness
+  deleteGlobalUniqueness(id: ID!): Boolean
+  createDeterministicExecution(input: DeterministicExecutionInput!): DeterministicExecution
+  updateDeterministicExecution(id: ID!, input: DeterministicExecutionUpdate!): DeterministicExecution
+  deleteDeterministicExecution(id: ID!): Boolean
+  createTraceability(input: TraceabilityInput!): Traceability
+  updateTraceability(id: ID!, input: TraceabilityUpdate!): Traceability
+  deleteTraceability(id: ID!): Boolean
+  createObservationDeterminism(input: ObservationDeterminismInput!): ObservationDeterminism
+  updateObservationDeterminism(id: ID!, input: ObservationDeterminismUpdate!): ObservationDeterminism
+  deleteObservationDeterminism(id: ID!): Boolean
+  createPerceptionConsistency(input: PerceptionConsistencyInput!): PerceptionConsistency
+  updatePerceptionConsistency(id: ID!, input: PerceptionConsistencyUpdate!): PerceptionConsistency
+  deletePerceptionConsistency(id: ID!): Boolean
+  createEvidenceValidity(input: EvidenceValidityInput!): EvidenceValidity
+  updateEvidenceValidity(id: ID!, input: EvidenceValidityUpdate!): EvidenceValidity
+  deleteEvidenceValidity(id: ID!): Boolean
+  createConfidenceCoherence(input: ConfidenceCoherenceInput!): ConfidenceCoherence
+  updateConfidenceCoherence(id: ID!, input: ConfidenceCoherenceUpdate!): ConfidenceCoherence
+  deleteConfidenceCoherence(id: ID!): Boolean
+  createKnowledgeConsistency(input: KnowledgeConsistencyInput!): KnowledgeConsistency
+  updateKnowledgeConsistency(id: ID!, input: KnowledgeConsistencyUpdate!): KnowledgeConsistency
+  deleteKnowledgeConsistency(id: ID!): Boolean
+  createBeliefCoherence(input: BeliefCoherenceInput!): BeliefCoherence
+  updateBeliefCoherence(id: ID!, input: BeliefCoherenceUpdate!): BeliefCoherence
+  deleteBeliefCoherence(id: ID!): Boolean
+  createHypothesisTestability(input: HypothesisTestabilityInput!): HypothesisTestability
+  updateHypothesisTestability(id: ID!, input: HypothesisTestabilityUpdate!): HypothesisTestability
+  deleteHypothesisTestability(id: ID!): Boolean
+  createReasoningSoundness(input: ReasoningSoundnessInput!): ReasoningSoundness
+  updateReasoningSoundness(id: ID!, input: ReasoningSoundnessUpdate!): ReasoningSoundness
+  deleteReasoningSoundness(id: ID!): Boolean
+  createDecisionOptimality(input: DecisionOptimalityInput!): DecisionOptimality
+  updateDecisionOptimality(id: ID!, input: DecisionOptimalityUpdate!): DecisionOptimality
+  deleteDecisionOptimality(id: ID!): Boolean
+  createPlanFeasibility(input: PlanFeasibilityInput!): PlanFeasibility
+  updatePlanFeasibility(id: ID!, input: PlanFeasibilityUpdate!): PlanFeasibility
+  deletePlanFeasibility(id: ID!): Boolean
+  createMemoryPersistence(input: MemoryPersistenceInput!): MemoryPersistence
+  updateMemoryPersistence(id: ID!, input: MemoryPersistenceUpdate!): MemoryPersistence
+  deleteMemoryPersistence(id: ID!): Boolean
+  createLearningEffectiveness(input: LearningEffectivenessInput!): LearningEffectiveness
+  updateLearningEffectiveness(id: ID!, input: LearningEffectivenessUpdate!): LearningEffectiveness
+  deleteLearningEffectiveness(id: ID!): Boolean
+  createAdaptationStability(input: AdaptationStabilityInput!): AdaptationStability
+  updateAdaptationStability(id: ID!, input: AdaptationStabilityUpdate!): AdaptationStability
+  deleteAdaptationStability(id: ID!): Boolean
+  createMetaReasoningAccuracy(input: MetaReasoningAccuracyInput!): MetaReasoningAccuracy
+  updateMetaReasoningAccuracy(id: ID!, input: MetaReasoningAccuracyUpdate!): MetaReasoningAccuracy
+  deleteMetaReasoningAccuracy(id: ID!): Boolean
+  createSelfEvaluationHonesty(input: SelfEvaluationHonestyInput!): SelfEvaluationHonesty
+  updateSelfEvaluationHonesty(id: ID!, input: SelfEvaluationHonestyUpdate!): SelfEvaluationHonesty
+  deleteSelfEvaluationHonesty(id: ID!): Boolean
+  createCOSCoreDeterminism(input: COSCoreDeterminismInput!): COSCoreDeterminism
+  updateCOSCoreDeterminism(id: ID!, input: COSCoreDeterminismUpdate!): COSCoreDeterminism
+  deleteCOSCoreDeterminism(id: ID!): Boolean
+  createObjectiveCoherence(input: ObjectiveCoherenceInput!): ObjectiveCoherence
+  updateObjectiveCoherence(id: ID!, input: ObjectiveCoherenceUpdate!): ObjectiveCoherence
+  deleteObjectiveCoherence(id: ID!): Boolean
+  createArchitectureLayering(input: ArchitectureLayeringInput!): ArchitectureLayering
+  updateArchitectureLayering(id: ID!, input: ArchitectureLayeringUpdate!): ArchitectureLayering
+  deleteArchitectureLayering(id: ID!): Boolean
+  createCognitiveCycleCompleteness(input: CognitiveCycleCompletenessInput!): CognitiveCycleCompleteness
+  updateCognitiveCycleCompleteness(id: ID!, input: CognitiveCycleCompletenessUpdate!): CognitiveCycleCompleteness
+  deleteCognitiveCycleCompleteness(id: ID!): Boolean
+  createRuntimeLoopDeterminism(input: RuntimeLoopDeterminismInput!): RuntimeLoopDeterminism
+  updateRuntimeLoopDeterminism(id: ID!, input: RuntimeLoopDeterminismUpdate!): RuntimeLoopDeterminism
+  deleteRuntimeLoopDeterminism(id: ID!): Boolean
+  createBytecodeFidelity(input: BytecodeFidelityInput!): BytecodeFidelity
+  updateBytecodeFidelity(id: ID!, input: BytecodeFidelityUpdate!): BytecodeFidelity
+  deleteBytecodeFidelity(id: ID!): Boolean
+  createInstructionIsolation(input: InstructionIsolationInput!): InstructionIsolation
+  updateInstructionIsolation(id: ID!, input: InstructionIsolationUpdate!): InstructionIsolation
+  deleteInstructionIsolation(id: ID!): Boolean
+  createMemoryConsistency(input: MemoryConsistencyInput!): MemoryConsistency
+  updateMemoryConsistency(id: ID!, input: MemoryConsistencyUpdate!): MemoryConsistency
+  deleteMemoryConsistency(id: ID!): Boolean
+  createTraceCompleteness(input: TraceCompletenessInput!): TraceCompleteness
+  updateTraceCompleteness(id: ID!, input: TraceCompletenessUpdate!): TraceCompleteness
+  deleteTraceCompleteness(id: ID!): Boolean
+  createLLMAbstraction(input: LLMAbstractionInput!): LLMAbstraction
+  updateLLMAbstraction(id: ID!, input: LLMAbstractionUpdate!): LLMAbstraction
+  deleteLLMAbstraction(id: ID!): Boolean
+  createNoDuplicateDefinitions(input: NoDuplicateDefinitionsInput!): NoDuplicateDefinitions
+  updateNoDuplicateDefinitions(id: ID!, input: NoDuplicateDefinitionsUpdate!): NoDuplicateDefinitions
+  deleteNoDuplicateDefinitions(id: ID!): Boolean
+  createUniqueOwnershipEnforcement(input: UniqueOwnershipEnforcementInput!): UniqueOwnershipEnforcement
+  updateUniqueOwnershipEnforcement(id: ID!, input: UniqueOwnershipEnforcementUpdate!): UniqueOwnershipEnforcement
+  deleteUniqueOwnershipEnforcement(id: ID!): Boolean
+  createDependencyValidation(input: DependencyValidationInput!): DependencyValidation
+  updateDependencyValidation(id: ID!, input: DependencyValidationUpdate!): DependencyValidation
+  deleteDependencyValidation(id: ID!): Boolean
+  createContractCompliance(input: ContractComplianceInput!): ContractCompliance
+  updateContractCompliance(id: ID!, input: ContractComplianceUpdate!): ContractCompliance
+  deleteContractCompliance(id: ID!): Boolean
+  createVersionCompatibility(input: VersionCompatibilityInput!): VersionCompatibility
+  updateVersionCompatibility(id: ID!, input: VersionCompatibilityUpdate!): VersionCompatibility
+  deleteVersionCompatibility(id: ID!): Boolean
+  createObservationValidation(input: ObservationValidationInput!): ObservationValidation
+  updateObservationValidation(id: ID!, input: ObservationValidationUpdate!): ObservationValidation
+  deleteObservationValidation(id: ID!): Boolean
+  createPerceptionInterpretation(input: PerceptionInterpretationInput!): PerceptionInterpretation
+  updatePerceptionInterpretation(id: ID!, input: PerceptionInterpretationUpdate!): PerceptionInterpretation
+  deletePerceptionInterpretation(id: ID!): Boolean
+  createEvidenceEvaluation(input: EvidenceEvaluationInput!): EvidenceEvaluation
+  updateEvidenceEvaluation(id: ID!, input: EvidenceEvaluationUpdate!): EvidenceEvaluation
+  deleteEvidenceEvaluation(id: ID!): Boolean
+  createConfidenceCalculation(input: ConfidenceCalculationInput!): ConfidenceCalculation
+  updateConfidenceCalculation(id: ID!, input: ConfidenceCalculationUpdate!): ConfidenceCalculation
+  deleteConfidenceCalculation(id: ID!): Boolean
+  createKnowledgeAcquisition(input: KnowledgeAcquisitionInput!): KnowledgeAcquisition
+  updateKnowledgeAcquisition(id: ID!, input: KnowledgeAcquisitionUpdate!): KnowledgeAcquisition
+  deleteKnowledgeAcquisition(id: ID!): Boolean
+  createCOSObjectiveAlignment(input: COSObjectiveAlignmentInput!): COSObjectiveAlignment
+  updateCOSObjectiveAlignment(id: ID!, input: COSObjectiveAlignmentUpdate!): COSObjectiveAlignment
+  deleteCOSObjectiveAlignment(id: ID!): Boolean
+  createArchitectureCompliance(input: ArchitectureComplianceInput!): ArchitectureCompliance
+  updateArchitectureCompliance(id: ID!, input: ArchitectureComplianceUpdate!): ArchitectureCompliance
+  deleteArchitectureCompliance(id: ID!): Boolean
+  createCognitiveCycleExecution(input: CognitiveCycleExecutionInput!): CognitiveCycleExecution
+  updateCognitiveCycleExecution(id: ID!, input: CognitiveCycleExecutionUpdate!): CognitiveCycleExecution
+  deleteCognitiveCycleExecution(id: ID!): Boolean
+  createRuntimeLoopExecution(input: RuntimeLoopExecutionInput!): RuntimeLoopExecution
+  updateRuntimeLoopExecution(id: ID!, input: RuntimeLoopExecutionUpdate!): RuntimeLoopExecution
+  deleteRuntimeLoopExecution(id: ID!): Boolean
+  createObservationCognitiveRule(input: ObservationCognitiveRuleInput!): ObservationCognitiveRule
+  updateObservationCognitiveRule(id: ID!, input: ObservationCognitiveRuleUpdate!): ObservationCognitiveRule
+  deleteObservationCognitiveRule(id: ID!): Boolean
+  createPerceptionCognitiveRule(input: PerceptionCognitiveRuleInput!): PerceptionCognitiveRule
+  updatePerceptionCognitiveRule(id: ID!, input: PerceptionCognitiveRuleUpdate!): PerceptionCognitiveRule
+  deletePerceptionCognitiveRule(id: ID!): Boolean
+  createEvidenceCognitiveRule(input: EvidenceCognitiveRuleInput!): EvidenceCognitiveRule
+  updateEvidenceCognitiveRule(id: ID!, input: EvidenceCognitiveRuleUpdate!): EvidenceCognitiveRule
+  deleteEvidenceCognitiveRule(id: ID!): Boolean
+  createConfidenceCognitiveRule(input: ConfidenceCognitiveRuleInput!): ConfidenceCognitiveRule
+  updateConfidenceCognitiveRule(id: ID!, input: ConfidenceCognitiveRuleUpdate!): ConfidenceCognitiveRule
+  deleteConfidenceCognitiveRule(id: ID!): Boolean
+  createKnowledgeCognitiveRule(input: KnowledgeCognitiveRuleInput!): KnowledgeCognitiveRule
+  updateKnowledgeCognitiveRule(id: ID!, input: KnowledgeCognitiveRuleUpdate!): KnowledgeCognitiveRule
+  deleteKnowledgeCognitiveRule(id: ID!): Boolean
+  createCOSCognitiveRule(input: COSCognitiveRuleInput!): COSCognitiveRule
+  updateCOSCognitiveRule(id: ID!, input: COSCognitiveRuleUpdate!): COSCognitiveRule
+  deleteCOSCognitiveRule(id: ID!): Boolean
+  createObjectiveCognitiveRule(input: ObjectiveCognitiveRuleInput!): ObjectiveCognitiveRule
+  updateObjectiveCognitiveRule(id: ID!, input: ObjectiveCognitiveRuleUpdate!): ObjectiveCognitiveRule
+  deleteObjectiveCognitiveRule(id: ID!): Boolean
+  createCognitiveCycleCognitiveRule(input: CognitiveCycleCognitiveRuleInput!): CognitiveCycleCognitiveRule
+  updateCognitiveCycleCognitiveRule(id: ID!, input: CognitiveCycleCognitiveRuleUpdate!): CognitiveCycleCognitiveRule
+  deleteCognitiveCycleCognitiveRule(id: ID!): Boolean
+  createNoDuplicateDefinitionsViolation(input: NoDuplicateDefinitionsViolationInput!): NoDuplicateDefinitionsViolation
+  updateNoDuplicateDefinitionsViolation(id: ID!, input: NoDuplicateDefinitionsViolationUpdate!): NoDuplicateDefinitionsViolation
+  deleteNoDuplicateDefinitionsViolation(id: ID!): Boolean
+  createMultipleOwnershipViolation(input: MultipleOwnershipViolationInput!): MultipleOwnershipViolation
+  updateMultipleOwnershipViolation(id: ID!, input: MultipleOwnershipViolationUpdate!): MultipleOwnershipViolation
+  deleteMultipleOwnershipViolation(id: ID!): Boolean
+  createCyclicDependencyViolation(input: CyclicDependencyViolationInput!): CyclicDependencyViolation
+  updateCyclicDependencyViolation(id: ID!, input: CyclicDependencyViolationUpdate!): CyclicDependencyViolation
+  deleteCyclicDependencyViolation(id: ID!): Boolean
+  createImplicitContractViolation(input: ImplicitContractViolationInput!): ImplicitContractViolation
+  updateImplicitContractViolation(id: ID!, input: ImplicitContractViolationUpdate!): ImplicitContractViolation
+  deleteImplicitContractViolation(id: ID!): Boolean
+  createObservationViolation(input: ObservationViolationInput!): ObservationViolation
+  updateObservationViolation(id: ID!, input: ObservationViolationUpdate!): ObservationViolation
+  deleteObservationViolation(id: ID!): Boolean
+  createPerceptionViolation(input: PerceptionViolationInput!): PerceptionViolation
+  updatePerceptionViolation(id: ID!, input: PerceptionViolationUpdate!): PerceptionViolation
+  deletePerceptionViolation(id: ID!): Boolean
+  createEvidenceViolation(input: EvidenceViolationInput!): EvidenceViolation
+  updateEvidenceViolation(id: ID!, input: EvidenceViolationUpdate!): EvidenceViolation
+  deleteEvidenceViolation(id: ID!): Boolean
+  createConfidenceViolation(input: ConfidenceViolationInput!): ConfidenceViolation
+  updateConfidenceViolation(id: ID!, input: ConfidenceViolationUpdate!): ConfidenceViolation
+  deleteConfidenceViolation(id: ID!): Boolean
+  createKnowledgeViolation(input: KnowledgeViolationInput!): KnowledgeViolation
+  updateKnowledgeViolation(id: ID!, input: KnowledgeViolationUpdate!): KnowledgeViolation
+  deleteKnowledgeViolation(id: ID!): Boolean
+  createCOSViolation(input: COSViolationInput!): COSViolation
+  updateCOSViolation(id: ID!, input: COSViolationUpdate!): COSViolation
+  deleteCOSViolation(id: ID!): Boolean
+  createObjectiveViolation(input: ObjectiveViolationInput!): ObjectiveViolation
+  updateObjectiveViolation(id: ID!, input: ObjectiveViolationUpdate!): ObjectiveViolation
+  deleteObjectiveViolation(id: ID!): Boolean
+  createArchitectureViolation(input: ArchitectureViolationInput!): ArchitectureViolation
+  updateArchitectureViolation(id: ID!, input: ArchitectureViolationUpdate!): ArchitectureViolation
+  deleteArchitectureViolation(id: ID!): Boolean
+  createCognitiveCycleViolation(input: CognitiveCycleViolationInput!): CognitiveCycleViolation
+  updateCognitiveCycleViolation(id: ID!, input: CognitiveCycleViolationUpdate!): CognitiveCycleViolation
+  deleteCognitiveCycleViolation(id: ID!): Boolean
+  createObservationType(input: ObservationTypeInput!): ObservationType
+  updateObservationType(id: ID!, input: ObservationTypeUpdate!): ObservationType
+  deleteObservationType(id: ID!): Boolean
+  createPerceptionType(input: PerceptionTypeInput!): PerceptionType
+  updatePerceptionType(id: ID!, input: PerceptionTypeUpdate!): PerceptionType
+  deletePerceptionType(id: ID!): Boolean
+  createEvidenceType(input: EvidenceTypeInput!): EvidenceType
+  updateEvidenceType(id: ID!, input: EvidenceTypeUpdate!): EvidenceType
+  deleteEvidenceType(id: ID!): Boolean
+  createObservationStruct(input: ObservationStructInput!): ObservationStruct
+  updateObservationStruct(id: ID!, input: ObservationStructUpdate!): ObservationStruct
+  deleteObservationStruct(id: ID!): Boolean
+  createPerceptionStruct(input: PerceptionStructInput!): PerceptionStruct
+  updatePerceptionStruct(id: ID!, input: PerceptionStructUpdate!): PerceptionStruct
+  deletePerceptionStruct(id: ID!): Boolean
+  createEvidenceStruct(input: EvidenceStructInput!): EvidenceStruct
+  updateEvidenceStruct(id: ID!, input: EvidenceStructUpdate!): EvidenceStruct
+  deleteEvidenceStruct(id: ID!): Boolean
+}
+
+input ObservationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveStateMachineInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveStateMachineUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveMetricInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveMetricUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveMathematicsInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveMathematicsUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveGuaranteeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveGuaranteeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input NodeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input NodeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EdgeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EdgeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ContextInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ContextUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SessionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SessionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConversationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConversationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input QuestionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input QuestionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AnswerInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AnswerUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input StrategyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input StrategyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CapabilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CapabilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PolicyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PolicyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CommandInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CommandUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input QueryInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input QueryUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input FeatureFlagInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input FeatureFlagUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ArtifactInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ArtifactUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ExecutionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ExecutionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BudgetInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BudgetUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input VersionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input VersionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PackageInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PackageUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Object ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Object ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Event ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Event ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Runtime ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Runtime ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Scheduling ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Scheduling ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Memory ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Memory ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Graph ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Graph ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Debugging ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Debugging ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Profiling ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Profiling ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Tracing ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Tracing ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input Security ContractInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input Security ContractUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationArchivedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationArchivedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionArchivedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionArchivedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceArchivedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceArchivedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceThresholdBreachedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceThresholdBreachedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeAcquiredInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeAcquiredUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeArchivedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeArchivedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefRevisedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefRevisedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisValidatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisValidatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisRejectedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisRejectedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningStartedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningStartedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningFailedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningFailedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionMadeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionMadeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionExecutedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionExecutedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionReversedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionReversedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanStartedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanStartedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanFailedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanFailedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryEncodedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryEncodedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryRetrievedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryRetrievedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryConsolidatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryConsolidatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryEvictedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryEvictedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningStartedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningStartedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningFailedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningFailedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationTriggeredInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationTriggeredUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationFailedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationFailedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationCompletedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationCompletedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input GraphCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input GraphCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input GraphUpdatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input GraphUpdatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input NodeCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input NodeCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EdgeCreatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EdgeCreatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input StateTransitionedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input StateTransitionedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetricCollectedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetricCollectedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetricThresholdBreachedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetricThresholdBreachedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input GuaranteeViolatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input GuaranteeViolatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceivingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceivingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceivedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceivedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidencingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidencingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidencedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidencedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnownInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnownUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BelievingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BelievingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BelievedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BelievedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesizingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesizingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesizedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesizedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasonedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasonedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecidingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecidingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecidedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecidedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanningInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanningUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlannedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlannedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EncodingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EncodingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EncodedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EncodedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input RetrievingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input RetrievingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input RetrievedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input RetrievedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConsolidatingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConsolidatingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConsolidatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConsolidatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearnedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearnedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReflectingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReflectingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReflectedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReflectedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvaluatingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvaluatingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvaluatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvaluatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluatingInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluatingUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluatedInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluatedUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanningGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanningGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input StateMachineGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input StateMachineGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetricGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetricGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MathematicsGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MathematicsGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input GuaranteeGraphInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input GuaranteeGraphUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanningAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanningAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationAlgorithmInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationAlgorithmUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SingleSourceOfTruthInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SingleSourceOfTruthUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input UniqueOwnershipInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input UniqueOwnershipUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AcyclicDependenciesInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AcyclicDependenciesUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ExplicitContractsInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ExplicitContractsUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SemanticVersioningInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SemanticVersioningUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input GlobalUniquenessInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input GlobalUniquenessUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DeterministicExecutionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DeterministicExecutionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input TraceabilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input TraceabilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationDeterminismInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationDeterminismUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionConsistencyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionConsistencyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceValidityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceValidityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceCoherenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceCoherenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeConsistencyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeConsistencyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BeliefCoherenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BeliefCoherenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input HypothesisTestabilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input HypothesisTestabilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ReasoningSoundnessInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ReasoningSoundnessUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DecisionOptimalityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DecisionOptimalityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PlanFeasibilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PlanFeasibilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryPersistenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryPersistenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LearningEffectivenessInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LearningEffectivenessUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input AdaptationStabilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input AdaptationStabilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MetaReasoningAccuracyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MetaReasoningAccuracyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input SelfEvaluationHonestyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input SelfEvaluationHonestyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input COSCoreDeterminismInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input COSCoreDeterminismUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObjectiveCoherenceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObjectiveCoherenceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ArchitectureLayeringInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ArchitectureLayeringUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveCycleCompletenessInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveCycleCompletenessUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input RuntimeLoopDeterminismInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input RuntimeLoopDeterminismUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input BytecodeFidelityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input BytecodeFidelityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input InstructionIsolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input InstructionIsolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MemoryConsistencyInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MemoryConsistencyUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input TraceCompletenessInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input TraceCompletenessUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input LLMAbstractionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input LLMAbstractionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input NoDuplicateDefinitionsInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input NoDuplicateDefinitionsUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input UniqueOwnershipEnforcementInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input UniqueOwnershipEnforcementUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input DependencyValidationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input DependencyValidationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ContractComplianceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ContractComplianceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input VersionCompatibilityInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input VersionCompatibilityUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationValidationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationValidationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionInterpretationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionInterpretationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceEvaluationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceEvaluationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceCalculationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceCalculationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeAcquisitionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeAcquisitionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input COSObjectiveAlignmentInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input COSObjectiveAlignmentUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ArchitectureComplianceInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ArchitectureComplianceUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveCycleExecutionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveCycleExecutionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input RuntimeLoopExecutionInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input RuntimeLoopExecutionUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input COSCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input COSCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObjectiveCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObjectiveCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveCycleCognitiveRuleInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveCycleCognitiveRuleUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input NoDuplicateDefinitionsViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input NoDuplicateDefinitionsViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input MultipleOwnershipViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input MultipleOwnershipViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CyclicDependencyViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CyclicDependencyViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ImplicitContractViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ImplicitContractViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ConfidenceViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ConfidenceViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input KnowledgeViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input KnowledgeViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input COSViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input COSViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObjectiveViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObjectiveViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ArchitectureViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ArchitectureViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input CognitiveCycleViolationInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input CognitiveCycleViolationUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationTypeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationTypeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionTypeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionTypeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceTypeInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceTypeUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input ObservationStructInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input ObservationStructUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input PerceptionStructInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input PerceptionStructUpdate {
+  name: String
+  owner: String
+  version: String
+}
+
+input EvidenceStructInput {
+  name: String!
+  owner: String
+  version: String
+}
+
+input EvidenceStructUpdate {
+  name: String
+  owner: String
+  version: String
+}
+

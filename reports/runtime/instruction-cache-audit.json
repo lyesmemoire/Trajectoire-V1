@@ -1,0 +1,139 @@
+{
+  "component": "instruction-cache",
+  "file": "compiler/cvm/instruction-cache.ts",
+  "auditDate": "2026-07-27T00:00:00Z",
+  "metrics": {
+    "lines": {
+      "total": 263,
+      "code": 263,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 3"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 3"
+    },
+    "functions": {
+      "total": 18,
+      "public": 14,
+      "private": 4,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "constructor",
+        "get",
+        "put",
+        "has",
+        "remove",
+        "clear",
+        "prefetch",
+        "prefetchRange",
+        "getStatistics",
+        "getSize",
+        "getMaxSize",
+        "setMaxSize",
+        "getAllEntries",
+        "getHotEntries",
+        "validate",
+        "getUtilization"
+      ],
+      "private": [
+        "initializeStatistics",
+        "evictIfNeeded",
+        "updateHitRate"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 15,
+      "estimated": "Based on branching statements and loops"
+    },
+    "conditions": {
+      "total": 12,
+      "details": [
+        "Line 57: if (entry)",
+        "Line 92: if (this.cache.size <= this.maxSize)",
+        "Line 101: if (entry.lastAccess < oldestAccess)",
+        "Line 107: if (oldestAddress !== null)",
+        "Line 143: if (this.cache.has(address))",
+        "Line 151: try-catch in prefetch",
+        "Line 162: while (address < end)",
+        "Line 165: try-catch in prefetchRange",
+        "Line 186: ternary operator in updateHitRate",
+        "Line 233: if (entry.address !== address)",
+        "Line 237: if (entry.accessCount < 0)",
+        "Line 241: if (entry.lastAccess < 0)",
+        "Line 246: if (this.cache.size > this.maxSize)"
+      ]
+    },
+    "interfaces": [
+      "CacheEntry",
+      "CacheStatistics"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "InstructionTable",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      },
+      {
+        "name": "Instruction",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingInstructionCache": [],
+    "usedByInstructionCache": [
+      "InstructionTable",
+      "Instruction"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Cache Pattern with LRU Eviction",
+    "responsibilities": [
+      "Instruction caching",
+      "LRU eviction policy",
+      "Cache statistics tracking",
+      "Prefetching support",
+      "Cache validation"
+    ],
+    "keyFeatures": [
+      "LRU (Least Recently Used) eviction",
+      "Cache hit/miss tracking",
+      "Hit rate calculation",
+      "Prefetching support",
+      "Hot entries detection",
+      "Cache validation",
+      "Utilization tracking"
+    ]
+  },
+  "algorithm": {
+    "evictionPolicy": "LRU (Least Recently Used)",
+    "implementation": "Tracks lastAccess counter and evicts entry with oldest access when cache is full",
+    "complexity": {
+      "get": "O(1)",
+      "put": "O(n) due to LRU eviction scan",
+      "evictIfNeeded": "O(n) - scans all entries to find oldest"
+    }
+  },
+  "potentialComplexity": {
+    "reasons": [
+      "LRU eviction requires scanning all entries (O(n))",
+      "Multiple conditional branches",
+      "Try-catch blocks for error handling",
+      "Loop in prefetchRange",
+      "Validation logic with multiple checks"
+    ],
+    "riskLevel": "Medium"
+  }
+}

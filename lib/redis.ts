@@ -58,7 +58,7 @@ export async function getCached<T>(
 }
 
 // Helper pour invalider le cache
-export async function invalidateCache(key: string): Promise<void> {
+export async function invalidateCache(key: _string): Promise<void> {
   const redis = getRedisClient();
   if (redis) {
     await redis.del(key).catch((err) => console.error("[REDIS_ERROR]", err));

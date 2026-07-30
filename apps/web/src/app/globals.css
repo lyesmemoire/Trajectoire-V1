@@ -2,68 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════
-   BASE — Reset et fondations
-   ═══════════════════════════════════════════════════════ */
-
 @layer base {
-  :root {
-    /* ===== Couleurs sémantiques exposées comme variables CSS ===== */
-    --color-success: #1A7F4B;
-    --color-warning: #B8860B;
-    --color-danger: #B23A3A;
-    --color-on-brand: #FFFFFF;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 100px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
   body {
-    background-color: #FFFFFF;
-    color: #0A0A0A;
-    font-size: 16px;
-    line-height: 1.6;
+    @apply bg-ivoire-50 text-ink-900 font-sans antialiased;
   }
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
+  h1, h2, h3, h4 {
+    @apply font-serif tracking-tight;
   }
 
-  /* Sections avec id : décalées du header fixe */
-  section[id] {
-    scroll-margin-top: 100px;
-  }
-
-  /* Sélection texte */
   ::selection {
-    background-color: rgba(26, 60, 52, 0.15);
-    color: #1A3C34;
+    background-color: theme('colors.bronze.100');
+    color: theme('colors.ink.900');
   }
 
-  /* Focus visible : accessibilité */
-  :focus-visible {
-    outline: 2px solid #1A3C34;
-    outline-offset: 3px;
-    border-radius: 4px;
+  /* Scrollbar discrète et premium */
+  ::-webkit-scrollbar {
+    width: 10px;
   }
-
-  /* Reduce motion */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.ivoire.50');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.ivoire.300');
+    border-radius: 999px;
   }
 }
 

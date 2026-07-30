@@ -4,7 +4,6 @@
  */
 
 import {
-  MetricType,
   MetricValue,
   ImprovementProposal,
   SelfMonitoringReport,

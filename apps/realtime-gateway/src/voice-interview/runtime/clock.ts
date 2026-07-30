@@ -21,10 +21,7 @@ export class SystemClock implements Clock {
     if (ms <= 0) return Promise.resolve();
 
     return new Promise((resolve, reject) => {
-      let timeoutId: NodeJS.Timeout;
-      
       const onAbort = () => {
-        clearTimeout(timeoutId);
         const err = new Error(signal!.reason ?? "Aborted");
         err.name = "AbortError";
         reject(err);
@@ -34,12 +31,19 @@ export class SystemClock implements Clock {
         signal.addEventListener("abort", onAbort, { once: true });
       }
 
-      timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         if (signal) {
           signal.removeEventListener("abort", onAbort);
         }
         resolve();
       }, ms);
+
+      if (signal) {
+        signal.addEventListener("abort", () => {
+          clearTimeout(timeoutId);
+          reject(new Error(signal!.reason ?? "Aborted"));
+        }, { once: true });
+      }
     });
   }
 }

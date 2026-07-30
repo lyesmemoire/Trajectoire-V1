@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "signatureAlgorithm": "Ed25519",
+  "timestamp": "2026-07-29T12:07:10.153Z",
+  "hashSigned": "4b0bd414dab21fa55575b96110f9c58d641fbb0a6ba6836cf1eec9d6c0be9091",
+  "signature": "LteA5RDNMYvDECovLX2v3lbRXb/hqy5J8YNzRcQhSSRzyicVG5gC1QWMhC3vEA9Knawy1R504Hh4AndwsjYxDA==",
+  "fileSigned": "snapshot.json"
+}

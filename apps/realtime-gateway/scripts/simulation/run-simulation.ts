@@ -8,7 +8,7 @@ if (!fs.existsSync(resultsDir)) {
   fs.mkdirSync(resultsDir, { recursive: true });
 }
 
-async function runProfile(profile: any) {
+async function runProfile(profile: unknown) {
   const context = {
     job_summary: profile.jobOffer,
     key_requirements: ["Scalability", "Leadership", "Technical depth"],
@@ -97,7 +97,7 @@ async function main() {
   const profiles = JSON.parse(fs.readFileSync(profilesPath, "utf-8"));
   console.log(`Starting DIRECT ENGINE simulation for ${profiles.length} profiles...`);
 
-  const results: any[] = [];
+  const results: unknown[] = [];
 
   for (const profile of profiles) {
     console.log(`Simulating profile: ${profile.profileId}`);
@@ -105,7 +105,7 @@ async function main() {
       const record = await runProfile(profile);
       results.push(record);
       console.log(`  -> Score: ${record.finalExecutiveScore.toFixed(1)} | Integrity: ${record.integrityRiskIndex.toFixed(2)} | Max Pressure: ${record.maxPressureLevel}`);
-    } catch (e) {
+    } catch (error) {
       console.error(`Error simulating ${profile.profileId}`, e);
     }
   }

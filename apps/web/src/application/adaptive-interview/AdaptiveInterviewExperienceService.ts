@@ -13,7 +13,6 @@ import {
   defaultAdaptiveInterviewConfig,
 } from "./interfaces/IAdaptiveInterviewExperience";
 import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
-import { decisionPolicyEngine } from "../adaptive-intelligence/DecisionPolicyEngine";
 import { feedbackLearningEngine } from "../adaptive-intelligence/FeedbackLearningEngine";
 
 // ============================================================================
@@ -622,28 +621,28 @@ export class AdaptiveInterviewExperienceService {
     actions.forEach(action => {
       switch (action.type) {
         case "personality":
-          state.personality = action.newValue;
+          state.personality = action.newValue as any;
           break;
         case "level":
-          state.level = action.newValue;
+          state.level = action.newValue as any;
           break;
         case "speed":
-          state.speed = action.newValue;
+          state.speed = action.newValue as any;
           break;
         case "interruption":
-          state.interruptions = action.newValue;
+          state.interruptions = action.newValue as any;
           break;
         case "empathy":
-          state.empathy = action.newValue;
+          state.empathy = action.newValue as any;
           break;
         case "aggressiveness":
-          state.aggressiveness = action.newValue;
+          state.aggressiveness = action.newValue as any;
           break;
         case "traps":
-          state.traps = action.newValue;
+          state.traps = action.newValue as any;
           break;
         case "tone":
-          state.tone = action.newValue;
+          state.tone = action.newValue as any;
           break;
       }
     });

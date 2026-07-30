@@ -1,0 +1,241 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mc:/Trajectoire[39m
+
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFetch[2m > [22mshould fetch instruction at program counter[32m 4[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFetch[2m > [22mshould increment program counter after fetch[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFetch[2m > [22mshould handle fetch from different positions[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFetch[2m > [22mshould fetch multiple instructions sequentially[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDecode[2m > [22mshould decode fetched instruction[32m 1[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDecode[2m > [22mshould handle decode errors gracefully[32m 9[2mms[22m[39m
+[31m   → expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDecode[2m > [22mshould decode instruction metadata[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mExecute[2m > [22mshould execute decoded instruction[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mExecute[2m > [22mshould update context on execution[32m 1[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mExecute[2m > [22mshould handle execution errors[32m 2[2mms[22m[39m
+[31m   → expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mExecute[2m > [22mshould track execution statistics[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCommit[2m > [22mshould commit execution results[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCommit[2m > [22mshould update statistics after commit[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCommit[2m > [22mshould handle branch commit[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFlush[2m > [22mshould clear fetch cache on reset[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFlush[2m > [22mshould reset statistics on flush[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mFlush[2m > [22mshould reset context on flush[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mHazards[2m > [22mshould handle data hazards[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mHazards[2m > [22mshould handle control hazards[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mHazards[2m > [22mshould handle structural hazards[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDependency[2m > [22mshould handle instruction dependencies[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDependency[2m > [22mshould maintain execution order[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStall[2m > [22mshould handle pipeline stall on halt[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStall[2m > [22mshould not execute when halted[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStall[2m > [22mshould resume after reset[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Prediction[2m > [22mshould track branch taken statistics[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Prediction[2m > [22mshould track branches not taken[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Prediction[2m > [22mshould track total branches[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mReset[2m > [22mshould reset pipeline state[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mReset[2m > [22mshould reset context[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mReset[2m > [22mshould clear fetch cache[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mReset[2m > [22mshould stop running on reset[32m 0[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRecovery[2m > [22mshould recover from errors[32m 2[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRecovery[2m > [22mshould track error statistics[32m 3[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRecovery[2m > [22mshould set error context on failure[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould track instructions executed[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould track cycles[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould track calls[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould track returns[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould track errors[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStatistics[2m > [22mshould return statistics copy[32m 2[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCache Management[2m > [22mshould enable instruction cache[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCache Management[2m > [22mshould disable instruction cache[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCache Management[2m > [22mshould set cache size[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mCache Management[2m > [22mshould get cache statistics[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBytecode Management[2m > [22mshould set bytecode[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBytecode Management[2m > [22mshould get bytecode[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBytecode Management[2m > [22mshould reset on bytecode change[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mContext Management[2m > [22mshould get context[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mContext Management[2m > [22mshould use context for execution[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mPipeline Units[2m > [22mshould get fetch unit[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mPipeline Units[2m > [22mshould get decode unit[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mPipeline Units[2m > [22mshould get execute unit[32m 0[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould run single cycle[32m 1[2mms[22m[39m
+[31m   → expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould run for N cycles[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould run until halt[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould stop pipeline[32m 0[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould step through execution[32m 6[2mms[22m[39m
+[31m   → expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mValidation[2m > [22mshould validate valid state[32m 1[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mValidation[2m > [22mshould detect negative program counter[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mValidation[2m > [22mshould detect program counter exceeding bytecode[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mValidation[2m > [22mshould include context validation errors[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStress Tests[2m > [22mshould handle many cycles[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStress Tests[2m > [22mshould handle rapid start-stop[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStress Tests[2m > [22mshould handle rapid bytecode changes[32m 0[2mms[22m[39m
+ [32m✓[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mStress Tests[2m > [22mshould maintain performance over many cycles[32m 0[2mms[22m[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track branch taken when result.branchTaken is true[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track branch not taken when result.branchTaken is false[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track call instructions[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track return instructions[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould handle execution error with no error message[32m 0[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould execute loop iterations in run() when not halted[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould execute loop iterations in runCycles() when not halted[32m 0[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track branch taken when result.branchTaken is true[32m 0[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track branch not taken when result.branchTaken is false[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track call instructions[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track return instructions[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+ [31m×[39m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould handle execution error with no error message[32m 1[2mms[22m[39m
+[31m   → fetchResult is not defined[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m17 failed[39m[22m[2m | [22m[1m[32m61 passed[39m[22m[90m (78)[39m
+[2m   Start at [22m 15:28:00
+[2m   Duration [22m 1.08s[2m (transform 249ms, setup 0ms, import 385ms, tests 65ms, environment 0ms)[22m
+
+JSON report written to C:/Trajectoire/reports/cli/tests/vitest-results.json
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 17 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mDecode[2m > [22mshould handle decode errors gracefully
+[31m[1mAssertionError[22m: expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+
+Expected: [32m"Unknown opcode"[39m
+Received: [31m"fetchResult is not defined"[39m
+
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m89:38[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mExecute[2m > [22mshould handle execution errors
+[31m[1mAssertionError[22m: expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+
+Expected: [32m"Unknown opcode"[39m
+Received: [31m"fetchResult is not defined"[39m
+
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m134:38[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRecovery[2m > [22mshould recover from errors
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m465:38[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould run single cycle
+[31m[1mAssertionError[22m: expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+
+Expected: [32m"Unknown opcode"[39m
+Received: [31m"fetchResult is not defined"[39m
+
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m685:38[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mRun Modes[2m > [22mshould step through execution
+[31m[1mAssertionError[22m: expected 'fetchResult is not defined' to contain 'Unknown opcode'[39m
+
+Expected: [32m"Unknown opcode"[39m
+Received: [31m"fetchResult is not defined"[39m
+
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m717:38[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track branch taken when result.branchTaken is true
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m836:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track branch not taken when result.branchTaken is false
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m876:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track call instructions
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m916:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould track return instructions
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m957:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mBranch Statistics Coverage[2m > [22mshould handle execution error with no error message
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m998:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould execute loop iterations in run() when not halted
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m ExecutionPipeline.run compiler/cvm/execution-pipeline.ts:[2m106:12[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1046:34[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould execute loop iterations in runCycles() when not halted
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m ExecutionPipeline.runCycles compiler/cvm/execution-pipeline.ts:[2m117:12[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1090:34[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track branch taken when result.branchTaken is true
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1129:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track branch not taken when result.branchTaken is false
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1168:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track call instructions
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1207:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould track return instructions
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1246:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/vm/advanced/execution-pipeline.test.ts[2m > [22mExecution Pipeline - Priority 5[2m > [22mLoop Execution Coverage[2m > [22mshould handle execution error with no error message
+[31m[1mReferenceError[22m: fetchResult is not defined[39m
+[90m [2m❯[22m ExecutionPipeline.cycle compiler/cvm/execution-pipeline.ts:[2m65:42[22m[39m
+[90m [2m❯[22m tests/vm/advanced/execution-pipeline.test.ts:[2m1286:20[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯[22m[39m
+

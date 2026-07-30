@@ -54,10 +54,7 @@ function isOscillating(tones: number[]): boolean {
  * Tire l'UX vers l'attracteur de l'émotion courante quand la dérive est forte,
  * et amortit si oscillation détectée. Déterministe.
  */
-export function applyAntiDrift(
-  ux: PerceptionUX,
-  state: AntiDriftState,
-): { ux: PerceptionUX; state: AntiDriftState } {
+export function applyAntiDrift(ux: PerceptionUX, state: AntiDriftState, ): { ux: PerceptionUX; state: AntiDriftState } {
   const attractor = ATTRACTORS[ux.emotion] ?? ATTRACTORS.neutral;
 
   // Distance à l'attracteur (sur le ton, dimension la plus visible).

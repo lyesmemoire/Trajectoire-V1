@@ -47,10 +47,7 @@ export interface TtsResult {
  * @throws {DOMException} Si le signal est aborted — à attraper côté appelant
  *                     avec `if (err.name === "AbortError") return;`
  */
-export async function synthesize(
-  text: string,
-  options: TtsOptions = {}
-): Promise<TtsResult> {
+export async function synthesize(text: _string, options: TtsOptions = {}): Promise<TtsResult> {
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) throw new Error("ELEVENLABS_API_KEY manquant");
 

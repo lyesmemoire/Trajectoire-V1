@@ -1,12 +1,6 @@
-import { InterviewPhase, InterviewContext } from "./engine";
+import { InterviewContext } from "./engine";
 
-export function buildPrompt(
-  phase: InterviewPhase,
-  context: InterviewContext,
-  stress: number,
-  lastAnswer?: string,
-  dominantPosture?: string
-) {
+export function buildPrompt(phase: _InterviewPhase, context: InterviewContext, stress: number, lastAnswer?: string, dominantPosture?: string) {
   const system = `
 Tu es un évaluateur de profils dirigeants.
 Tu simules un entretien réel de sélection.

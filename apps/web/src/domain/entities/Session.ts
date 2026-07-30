@@ -24,6 +24,8 @@ export interface SessionProps {
   version?: number;
 }
 
+// Canonical Reference: COS-OBJ-001 (blueprint.runtime.session)
+// Owner: COS Team
 export class Session {
   public readonly id: string;
   public readonly userId: string;
@@ -60,7 +62,7 @@ export class Session {
       throw new AppError("User ID is required", ErrorCode.VALIDATION_ERROR, 400);
     }
     if (!props.jobTitle || props.jobTitle.trim().length === 0) {
-      throw new AppError("Job title is required", ErrorCode.VALIDATION_ERROR, 400);
+      throw new AppError("any title is required", ErrorCode.VALIDATION_ERROR, 400);
     }
     if (!props.level || props.level.trim().length === 0) {
       throw new AppError("Level is required", ErrorCode.VALIDATION_ERROR, 400);

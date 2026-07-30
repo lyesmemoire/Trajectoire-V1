@@ -1,0 +1,21 @@
+{
+  "artifacts": [
+    {
+      "digest": "sha256:b386131c256f5419eafab8ee0392a8f62995c2b5ed6a9be458030a0f44ac62be",
+      "file": "certification/runs/788bc00c-20260729T205934Z/snapshot-build/reports/mutation-report.json",
+      "sizeBytes": 16918,
+      "type": "mutation"
+    }
+  ],
+  "buildTimestamp": "2026-07-29T14:52:19.000Z",
+  "generatedAt": "2026-07-29T21:07:07.454Z",
+  "gitCommit": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactCount": 1
+  },
+  "qualificationId": "TRAJECTOIRE-Q1.0-2026-686d4ef3",
+  "qualificationProfile": "Q1.0",
+  "releaseVersion": "1.0.0",
+  "schemaVersion": "1.0.0"
+}

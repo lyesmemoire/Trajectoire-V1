@@ -1,0 +1,34 @@
+{
+  "matrix": [
+    {
+      "element": "Coverage",
+      "primarySource": "coverage-final.json",
+      "labRecalculation": "OUI",
+      "concordance": "OUI"
+    },
+    {
+      "element": "Mutation",
+      "primarySource": "vitest-results-M*.json",
+      "labRecalculation": "OUI",
+      "concordance": "OUI"
+    },
+    {
+      "element": "Régression",
+      "primarySource": "vitest-results-R*.json",
+      "labRecalculation": "OUI",
+      "concordance": "NON"
+    },
+    {
+      "element": "Manifest",
+      "primarySource": "manifest.json",
+      "labRecalculation": "OUI",
+      "concordance": "NON"
+    },
+    {
+      "element": "Certification",
+      "primarySource": "certification.json",
+      "labRecalculation": "OUI",
+      "concordance": "NON"
+    }
+  ]
+}

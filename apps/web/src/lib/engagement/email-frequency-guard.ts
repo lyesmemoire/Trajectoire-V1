@@ -13,9 +13,7 @@ export type FrequencyGuardOutput = {
 /**
  * Empêche toute sur-sollicitation (MAX 1 email tous les 10 jours).
  */
-export function checkEmailFrequency(
-  input: FrequencyGuardInput,
-): FrequencyGuardOutput {
+export function checkEmailFrequency(input: FrequencyGuardInput, ): FrequencyGuardOutput {
   if (!input.lastRecoveryEmailAt) {
     return { canSend: true };
   }

@@ -28,10 +28,7 @@ function clamp(n: number): number {
   return Math.max(0, Math.min(100, n));
 }
 
-export function updateHiddenEval(
-  state: HiddenEval,
-  signal: HiddenSignal,
-): HiddenEval {
+export function updateHiddenEval(state: HiddenEval, signal: HiddenSignal, ): HiddenEval {
   let { coherenceScore, bluffScore, stabilityScore, growthScore } = state;
   if (signal.contradiction) coherenceScore -= 15;
   if (signal.bluff) bluffScore += 20;

@@ -33,10 +33,7 @@ Réponds uniquement en JSON avec cette structure:
 REPONSE À ANALYSER:
 `;
 
-export async function analyzeAnswer(
-  answer: string,
-  question: string,
-): Promise<AnswerAnalysis> {
+export async function analyzeAnswer(answer: string, question: string, ): Promise<AnswerAnalysis> {
   try {
     const { text } = await generateText({
       model: mistralModel,

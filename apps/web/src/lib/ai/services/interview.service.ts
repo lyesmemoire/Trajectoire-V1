@@ -18,6 +18,7 @@ export interface InterviewContext {
   candidateName?: string;
   sessionId?: string;
   userId?: string;
+  signal?: AbortSignal;
 }
 
 export interface ConversationMessage {
@@ -61,6 +62,7 @@ export class InterviewService {
             { role: "user", content: userPrompt },
           ],
           temperature: 0.7,
+          signal: context.signal,
         });
 
         return response.content;
@@ -125,6 +127,7 @@ ${lastMessages}`;
           model: AI_MODELS.INTERVIEW,
           messages,
           temperature: 0.7,
+          signal: input.context.signal,
         });
 
         return response.content;
@@ -149,7 +152,8 @@ ${lastMessages}`;
   public static async generateSummary(
     messages: ConversationMessage[],
     sessionId?: string,
-    userId?: string
+    userId?: string,
+    signal?: AbortSignal
   ): Promise<string> {
     const client = AIClient.getInstance();
     const actualSessionId = sessionId || "default";
@@ -172,6 +176,7 @@ ${lastMessages}`;
             { role: "user", content: conversation },
           ],
           temperature: 0.3,
+          signal,
         });
 
         // Validate with Zod

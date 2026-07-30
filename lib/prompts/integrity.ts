@@ -5,7 +5,7 @@ export interface PromptMetadata {
   version: string;
   engine: string;
   fragments: string[];
-  config: any;
+  config: unknown;
 }
 
 /**

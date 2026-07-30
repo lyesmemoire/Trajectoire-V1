@@ -2,7 +2,7 @@ export interface Snapshot {
   tenantId: string;
   sessionId: string;
   lastSequence: number;
-  state: any;
+  state: unknown;
 }
 
 export interface SessionSnapshotStore {

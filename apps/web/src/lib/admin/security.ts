@@ -21,7 +21,7 @@ export async function requireAdmin() {
  * Helper optionnel pour envelopper les routes API d'administration
  * et attraper l'erreur `FORBIDDEN_ADMIN_ACCESS` pour renvoyer une 403.
  */
-export function handleAdminError(error: unknown) {
+export function handleAdminError(error: any) {
   if (error instanceof Error && error.message === "FORBIDDEN_ADMIN_ACCESS") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -38,12 +38,7 @@ import { AuditService } from "@/lib/db/audit.service";
  * @param targetId L'ID de l'utilisateur ou entité cible de l'action
  * @param metadata Métadonnées optionnelles (ex: montant de crédits, raison)
  */
-export async function logAdminAction(
-  adminId: string,
-  action: string,
-  targetId: string,
-  metadata?: Record<string, any>
-) {
+export async function logAdminAction(adminId: string, action: string, targetId: string, metadata?: Record<string, unknown>) {
   try {
     await AuditService.createLog({
       adminId,

@@ -5,7 +5,6 @@
 
 import {
   EvolutionPriority,
-  EvolutionType,
   ProductAnalysis,
   EvolutionItem,
   ProductRoadmap,

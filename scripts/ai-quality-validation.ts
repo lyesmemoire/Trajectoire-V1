@@ -4,8 +4,6 @@
  */
 
 import { regressionSuite } from "../apps/web/src/application/ai-quality/RegressionSuite";
-import { qualityMetricsEngine } from "../apps/web/src/application/ai-quality/QualityMetricsEngine";
-import { goldenDataset } from "../apps/web/src/application/ai-quality/GoldenDataset";
 
 // ============================================================================
 // VALIDATION CONFIGURATION
@@ -32,8 +30,8 @@ interface ValidationResult {
   scoreDelta: number;
   passed: boolean;
   failures: string[];
-  metrics: any;
-  criteria: any;
+  metrics: unknown;
+  criteria: unknown;
   timestamp: Date;
 }
 

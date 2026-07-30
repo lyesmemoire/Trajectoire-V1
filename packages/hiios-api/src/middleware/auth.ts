@@ -43,22 +43,22 @@ export const requireAuth = createMiddleware(async (c: Context, next: Next) => {
 
     await next();
 
-  } catch {
+  } catch (error) {
     return c.json({ error: "Unauthorized" }, 401);
   }
 });
 
-function decodeJWT(token: string): any | null {
+function decodeJWT(token: _string): unknown | null {
   try {
     const parts   = token.split(".");
     if (parts.length !== 3) return null;
     const payload = JSON.parse(atob(parts[1]));
     return payload;
-  } catch {
+  } catch (error) {
     return null;
   }
 }
 
-function isExpired(payload: any): boolean {
+function isExpired(payload: unknown): boolean {
   return payload.exp && payload.exp < Math.floor(Date.now() / 1000);
 }

@@ -80,7 +80,7 @@ export class SessionManager {
   createSession(input: CreateSessionInput = {}): VoiceSession {
     this.sweep();
     const now = this.clock();
-    const stateInput: any = {};
+    const stateInput: unknown = {};
     if (input.jobGap !== undefined) stateInput.jobGap = input.jobGap;
     if (input.initialTopic !== undefined) stateInput.initialTopic = input.initialTopic;
     if (input.interviewerStyle !== undefined) stateInput.interviewerStyle = input.interviewerStyle;
@@ -209,9 +209,9 @@ export class SessionManager {
   }
 
   // --- V3 Support ---
-  private v3Sessions = new Map<string, any>();
+  private v3Sessions = new Map<string, unknown>();
 
-  createV3(input: any) {
+  createV3(input: unknown) {
     this.sweep();
     const session = {
       ...input,
@@ -231,12 +231,7 @@ export class SessionManager {
 // ── Singleton Instance pour gateway.ts ──────────────────────────────────
 const defaultManager = new SessionManager();
 
-export function createVoiceSession(
-  sessionId: string,
-  userId: string,
-  ws: any,
-  config: any
-): VoiceSession {
+export function createVoiceSession(sessionId: string, _userId: string, ws: unknown, _config: unknown): VoiceSession {
   // Utiliser l'ID externe du gateway comme clé de session
   const session = defaultManager.createSession({ id: sessionId, initialTopic: "Intro" });
   
@@ -265,7 +260,7 @@ export function getVoiceSession(sessionId: string): VoiceSession | undefined {
   return defaultManager.getSession(sessionId);
 }
 
-export function removeVoiceSession(sessionId: string, reason?: string): boolean {
+export function removeVoiceSession(sessionId: string, _reason?: string): boolean {
   return defaultManager.deleteSession(sessionId);
 }
 

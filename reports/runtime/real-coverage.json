@@ -1,0 +1,307 @@
+{
+  "cvm": {
+    "branch-predictor": {
+      "file": "compiler\\cvm\\branch-predictor.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "debugger-hooks": {
+      "file": "compiler\\cvm\\debugger-hooks.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "exception-handler": {
+      "file": "compiler\\cvm\\exception-handler.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "execution-context": {
+      "file": "compiler\\cvm\\execution-context.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "execution-pipeline": {
+      "file": "compiler\\cvm\\execution-pipeline.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "frame-manager": {
+      "file": "compiler\\cvm\\frame-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "garbage-collector": {
+      "file": "compiler\\cvm\\garbage-collector.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "instruction-cache": {
+      "file": "compiler\\cvm\\instruction-cache.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "instruction-decode": {
+      "file": "compiler\\cvm\\instruction-decode.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "instruction-execute": {
+      "file": "compiler\\cvm\\instruction-execute.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "instruction-fetch": {
+      "file": "compiler\\cvm\\instruction-fetch.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "interrupt-manager": {
+      "file": "compiler\\cvm\\interrupt-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "memory-manager": {
+      "file": "compiler\\cvm\\memory-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "microcode-engine": {
+      "file": "compiler\\cvm\\microcode-engine.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "profiler-hooks": {
+      "file": "compiler\\cvm\\profiler-hooks.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "register-file": {
+      "file": "compiler\\cvm\\register-file.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "rollback-manager": {
+      "file": "compiler\\cvm\\rollback-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "scheduler": {
+      "file": "compiler\\cvm\\scheduler.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cvm\\snapshot-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "thread-manager": {
+      "file": "compiler\\cvm\\thread-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "trace-hooks": {
+      "file": "compiler\\cvm\\trace-hooks.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    }
+  },
+  "cpr": {
+    "api-gateway": {
+      "file": "compiler\\cpr\\api-gateway.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "autoscaler": {
+      "file": "compiler\\cpr\\autoscaler.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "cluster-manager": {
+      "file": "compiler\\cpr\\cluster-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "consensus-engine": {
+      "file": "compiler\\cpr\\consensus-engine.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-debugger": {
+      "file": "compiler\\cpr\\distributed-debugger.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-locks": {
+      "file": "compiler\\cpr\\distributed-locks.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-memory": {
+      "file": "compiler\\cpr\\distributed-memory.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-profiler": {
+      "file": "compiler\\cpr\\distributed-profiler.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-scheduler": {
+      "file": "compiler\\cpr\\distributed-scheduler.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "distributed-trace": {
+      "file": "compiler\\cpr\\distributed-trace.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "execution-coordinator": {
+      "file": "compiler\\cpr\\execution-coordinator.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "governance": {
+      "file": "compiler\\cpr\\governance.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "knowledge-fabric": {
+      "file": "compiler\\cpr\\knowledge-fabric.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "leader-election": {
+      "file": "compiler\\cpr\\leader-election.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "provider-manager": {
+      "file": "compiler\\cpr\\provider-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "recovery-manager": {
+      "file": "compiler\\cpr\\recovery-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "replay-manager": {
+      "file": "compiler\\cpr\\replay-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "runtime-kernel": {
+      "file": "compiler\\cpr\\runtime-kernel.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "runtime-manager": {
+      "file": "compiler\\cpr\\runtime-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "security": {
+      "file": "compiler\\cpr\\security.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cpr\\snapshot-manager.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "telemetry": {
+      "file": "compiler\\cpr\\telemetry.ts",
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    }
+  }
+}

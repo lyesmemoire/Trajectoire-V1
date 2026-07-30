@@ -36,11 +36,7 @@ function clamp01(n: number): number {
  * Met à jour la mémoire pour un tour : décroissance globale + renforcement
  * du fait observé. `turn` = index courant.
  */
-export function updateMemory(
-  state: MemoryState,
-  turn: number,
-  update?: MemoryUpdate,
-): MemoryState {
+export function updateMemory(state: MemoryState, turn: number, update?: MemoryUpdate, ): MemoryState {
   const facts: Record<string, MemoryFact> = {};
   // Décroissance de tous les faits existants.
   for (const [k, f] of Object.entries(state.facts)) {

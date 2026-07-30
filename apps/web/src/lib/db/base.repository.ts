@@ -1,7 +1,7 @@
-// @ts-nocheck - Supabase generic type inference issues with repository pattern
+// @ts-ignore - Supabase generic type inference issues with repository pattern
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export class BaseRepository<TTable extends Record<string, any>> {
+export class BaseRepository<TTable extends Record<string, unknown>> {
   constructor(
     protected readonly db: SupabaseClient<any, any, any>,
     protected readonly table: string
@@ -43,6 +43,7 @@ export class BaseRepository<TTable extends Record<string, any>> {
   async insert<T = TTable["Insert"]>(payload: T) {
     const { data, error } = await this.db
       .from(this.table)
+      // @ts-ignore - Supabase generic type inference issues
       .insert(payload)
       .select()
       .single();
@@ -54,6 +55,7 @@ export class BaseRepository<TTable extends Record<string, any>> {
   async update<T = Partial<TTable["Update"]>>(id: string, payload: T) {
     const { data, error } = await this.db
       .from(this.table)
+      // @ts-ignore - Supabase generic type inference issues
       .update(payload)
       .eq("id", id)
       .select()

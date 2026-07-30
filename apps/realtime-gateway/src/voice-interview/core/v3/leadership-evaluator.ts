@@ -21,10 +21,7 @@ const LeadershipSchema = z.object({
  * Evaluates the candidate's strategic thinking, conflict resolution, and impact
  * mimicking an Executive Committee Member. Used primarily in Phase 4 of the interview.
  */
-export async function evaluateLeadership(
-  strategicQuestion: string,
-  transcriptChunk: string
-): Promise<LeadershipEvaluation> {
+export async function evaluateLeadership(strategicQuestion: string, transcriptChunk: string): Promise<LeadershipEvaluation> {
   const systemPrompt = `You are an Executive Committee Member conducting the final phase of a strategic interview.
 
 You must evaluate:

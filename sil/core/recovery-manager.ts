@@ -81,10 +81,10 @@ export class RecoveryManager {
     return true;
   }
 
-  private computeHash(events: any[]): string {
+  private computeHash(events: unknown[]): string {
     // In a real system, we'd hash the events. 
     // For this simple validation, we just return a stable value or stringify.
-    const crypto = require("crypto");
+    import crypto from 'crypto';
     return crypto.createHash("sha256").update(JSON.stringify(events)).digest("hex");
   }
 }

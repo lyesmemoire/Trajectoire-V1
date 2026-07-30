@@ -1,0 +1,222 @@
+{
+  "timestamp": "2026-07-25T21:19:11.429Z",
+  "iterations": 20,
+  "warmup": 10,
+  "results": [
+    {
+      "name": "Compiler",
+      "iterations": 20,
+      "duration": 254,
+      "avgMs": 12.7,
+      "opsPerSec": 78.74015748031496,
+      "samples": [
+        16,
+        16,
+        15,
+        3,
+        16,
+        16,
+        9,
+        15,
+        6,
+        16,
+        15,
+        16,
+        13,
+        3,
+        16,
+        16,
+        15,
+        16,
+        9,
+        7
+      ],
+      "statistics": {
+        "min": 3,
+        "max": 16,
+        "mean": 12.7,
+        "median": 15,
+        "p95": 16,
+        "p99": 16,
+        "stdDev": 4.539823785126466,
+        "confidenceInterval95": {
+          "lower": 10.710334500475017,
+          "upper": 14.689665499524981
+        }
+      }
+    },
+    {
+      "name": "Runtime",
+      "iterations": 20,
+      "duration": 182,
+      "avgMs": 9.1,
+      "opsPerSec": 109.89010989010988,
+      "samples": [
+        15,
+        10,
+        7,
+        1,
+        15,
+        2,
+        5,
+        7,
+        5,
+        3,
+        7,
+        15,
+        7,
+        16,
+        15,
+        3,
+        16,
+        16,
+        2,
+        15
+      ],
+      "statistics": {
+        "min": 1,
+        "max": 16,
+        "mean": 9.1,
+        "median": 7,
+        "p95": 16,
+        "p99": 16,
+        "stdDev": 5.52177507691141,
+        "confidenceInterval95": {
+          "lower": 6.679975372026144,
+          "upper": 11.520024627973855
+        }
+      }
+    },
+    {
+      "name": "Memory",
+      "iterations": 20,
+      "duration": 209,
+      "avgMs": 10.45,
+      "opsPerSec": 95.69377990430623,
+      "samples": [
+        14,
+        14,
+        0,
+        15,
+        16,
+        16,
+        2,
+        15,
+        1,
+        16,
+        1,
+        15,
+        2,
+        15,
+        15,
+        16,
+        3,
+        16,
+        1,
+        16
+      ],
+      "statistics": {
+        "min": 0,
+        "max": 16,
+        "mean": 10.45,
+        "median": 15,
+        "p95": 16,
+        "p99": 16,
+        "stdDev": 6.666895829394665,
+        "confidenceInterval95": {
+          "lower": 7.528104074406482,
+          "upper": 13.371895925593517
+        }
+      }
+    },
+    {
+      "name": "Scheduler",
+      "iterations": 20,
+      "duration": 248,
+      "avgMs": 12.4,
+      "opsPerSec": 80.64516129032258,
+      "samples": [
+        15,
+        1,
+        15,
+        18,
+        16,
+        16,
+        2,
+        15,
+        16,
+        2,
+        16,
+        16,
+        1,
+        16,
+        17,
+        16,
+        17,
+        16,
+        2,
+        15
+      ],
+      "statistics": {
+        "min": 1,
+        "max": 18,
+        "mean": 12.4,
+        "median": 16,
+        "p95": 18,
+        "p99": 18,
+        "stdDev": 6.280127387243033,
+        "confidenceInterval95": {
+          "lower": 9.64761281793422,
+          "upper": 15.15238718206578
+        }
+      }
+    },
+    {
+      "name": "Providers",
+      "iterations": 20,
+      "duration": 273,
+      "avgMs": 13.65,
+      "opsPerSec": 73.26007326007327,
+      "samples": [
+        5,
+        11,
+        17,
+        17,
+        16,
+        17,
+        16,
+        2,
+        15,
+        17,
+        16,
+        17,
+        17,
+        3,
+        14,
+        16,
+        17,
+        16,
+        16,
+        8
+      ],
+      "statistics": {
+        "min": 2,
+        "max": 17,
+        "mean": 13.65,
+        "median": 16,
+        "p95": 17,
+        "p99": 17,
+        "stdDev": 4.881342028581894,
+        "confidenceInterval95": {
+          "lower": 11.510657530922177,
+          "upper": 15.789342469077823
+        }
+      }
+    }
+  ],
+  "summary": {
+    "totalDuration": 1599,
+    "avgDuration": 233.2,
+    "totalOpsPerSec": 438.2292818251269
+  }
+}

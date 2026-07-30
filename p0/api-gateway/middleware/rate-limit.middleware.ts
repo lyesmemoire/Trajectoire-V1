@@ -1,12 +1,12 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyReply } from "fastify";
 
-export async function rateLimitMiddleware(req: FastifyRequest, reply: FastifyReply) {
+export async function rateLimitMiddleware(req: _FastifyRequest, _reply: FastifyReply) {
   // Mock rate limiter
   // In production, would use Redis to track requests per tenant/user
-  const tenant = (req as any).tenant;
+  const tenant = (req as unknown).tenant;
   if (!tenant) return;
 
-  // Example check
+  
   const limits = {
     free: 100,
     pro: 1000,

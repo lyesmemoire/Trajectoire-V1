@@ -3,7 +3,7 @@
 // SOURCE : Adapté depuis /api/product/upload (legacy n'a pas cette route)
 // RAISON : Séparation des responsabilités upload / analyze
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { logger } from '@/lib/logger'
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
   try {
     formData = await request.formData()
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { error: 'Requête multipart invalide' },
       { status: 400 }
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
       // TXT et DOCX : lecture directe
       extractedText = await file.text()
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.error({
       userId: user.id,
       fileType: file.type,
@@ -151,7 +151,7 @@ async function extractPDF(file: File): Promise<string> {
     if (result.text && result.text.trim().length > 10) {
       return result.text
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.warn({
       message: err instanceof Error ? err.message : 'Unknown',
       event: 'CV upload — pdf-parse failed, trying pdfjs-dist'
@@ -181,7 +181,7 @@ async function extractPDF(file: File): Promise<string> {
 
     return textParts.join('\n')
 
-  } catch (err) {
+  } catch (err: any) {
     logger.error({
       message: err instanceof Error ? err.message : 'Unknown',
       event: 'CV upload — pdfjs-dist failed'

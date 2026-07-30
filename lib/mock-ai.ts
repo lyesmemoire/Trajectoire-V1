@@ -4,7 +4,7 @@
 
 // ── Latence simulée pour UX réaliste ─────────────────────
 
-export function simulateDelay(ms = 1200): Promise<void> {
+export function simulateDelay(ms = _1200): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -127,11 +127,7 @@ export async function mockOptimize(cv: string, job: string) {
 
 // ── Mock Interview Analyze ───────────────────────────────
 
-export async function mockInterviewAnalyze(
-  questions: string[],
-  answers: string[],
-  jobTitle?: string,
-) {
+export async function mockInterviewAnalyze(questions: string[], answers: string[], _jobTitle?: string, ) {
   await simulateDelay(2000);
 
   const avgLength =

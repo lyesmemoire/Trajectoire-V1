@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "CERTIFICATION_REPORT",
+  "metadata": {
+    "id": "CERT-execution-pipeline-20260729T210655Z-788bc00c",
+    "createdAt": "2026-07-29T21:06:55.994Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false,
+    "pipelineVersion": "1.0.0"
+  },
+  "provenance": {
+    "command": "node certification/report.cjs",
+    "script": "certification/report.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T21:06:50.918Z",
+    "completedAt": "2026-07-29T21:06:55.994Z",
+    "durationMs": 5076,
+    "exitCode": 0
+  },
+  "prerequisites": {
+    "gitClean": false,
+    "allTestsPass": false,
+    "buildSuccessful": false,
+    "environmentCaptured": true,
+    "allSchemasValid": true
+  },
+  "coverage": {
+    "artifactRef": "coverage-report.json",
+    "metrics": {},
+    "pass": false,
+    "level": "INSUFFICIENT_EVIDENCE"
+  },
+  "mutation": {
+    "artifactRef": "mutation-report.json",
+    "metrics": {
+      "total": 12,
+      "killed": 12,
+      "survived": 0,
+      "invalid": 0,
+      "timeout": 0,
+      "mutationScore": 100
+    },
+    "pass": true,
+    "level": "GOLD"
+  },
+  "regression": {
+    "artifactRef": "regression-report.json",
+    "metrics": {
+      "total": 60,
+      "detected": 54,
+      "missed": 4,
+      "buildErrors": 0,
+      "timeouts": 2,
+      "detectionRate": 90
+    },
+    "pass": true,
+    "level": "SILVER"
+  },
+  "security": {
+    "artifactRef": "security-summary.json",
+    "metrics": {
+      "sbom": "PASS",
+      "dependencyIntegrity": "PASS",
+      "cve": "PASS",
+      "licenses": "PASS",
+      "secretScan": "PASS",
+      "provenance": "PASS",
+      "reproducibility": "PASS",
+      "securityScore": 100,
+      "overallScore": 100,
+      "qualityScore": 100,
+      "integrityScore": 100,
+      "reproducibilityScore": 100,
+      "supplyChainScore": 100
+    },
+    "pass": true,
+    "level": "GOLD"
+  },
+  "decision": {
+    "level": "INSUFFICIENT_EVIDENCE",
+    "allPrerequisitesMet": false,
+    "allEvidencePresent": false,
+    "allHashesValid": true,
+    "noContradictions": true,
+    "reasoning": [
+      "COVERAGE: PREUVE INSUFFISANTE — coverage-report.json absent",
+      "Mutation score: 100% → GOLD",
+      "Mutation level: GOLD",
+      "Regression detection: 90% → SILVER",
+      "Regression missed: 4",
+      "Regression level: SILVER",
+      "Security Score: 100",
+      "Supply Chain Score: 100",
+      "Reproducibility Score: 100",
+      "Overall Security Level: GOLD",
+      "Prerequisites failed: gitClean, allTestsPass, buildSuccessful"
+    ]
+  },
+  "manifest": {
+    "manifestId": "N/A",
+    "manifestSha256": "N/A"
+  },
+  "content": {
+    "level": "INSUFFICIENT_EVIDENCE",
+    "reasoning": [
+      "COVERAGE: PREUVE INSUFFISANTE — coverage-report.json absent",
+      "Mutation score: 100% → GOLD",
+      "Mutation level: GOLD",
+      "Regression detection: 90% → SILVER",
+      "Regression missed: 4",
+      "Regression level: SILVER",
+      "Security Score: 100",
+      "Supply Chain Score: 100",
+      "Reproducibility Score: 100",
+      "Overall Security Level: GOLD",
+      "Prerequisites failed: gitClean, allTestsPass, buildSuccessful"
+    ]
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "mutation-report.json",
+      "sha256": "b386131c256f5419eafab8ee0392a8f62995c2b5ed6a9be458030a0f44ac62be"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "regression-report.json",
+      "sha256": "dbeb544ff9fd1a69fa1726e12a1b3b6bc475b25b0ce86a55d50ef9c1394528f3"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "security-summary.json",
+      "sha256": "b01260ad2ee790a07f8676d787b0c560393b3dbe32f8cbfdffbc1f77ff73982a"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "0a0fdffbeccfd0b52edaec581b5d8944314cd842d74d25b5d89cb3398e57c2e5",
+    "algorithm": "sha256"
+  }
+}

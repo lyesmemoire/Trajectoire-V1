@@ -27,10 +27,7 @@ const BluffSchema = z.object({
  * Detects bluffing patterns such as buzzwords, generic statements, evasion,
  * and theoretical definitions instead of lived experience.
  */
-export async function evaluateBluff(
-  question: string,
-  transcriptChunk: string
-): Promise<BluffEvaluation> {
+export async function evaluateBluff(question: string, transcriptChunk: string): Promise<BluffEvaluation> {
   const systemPrompt = `You are a bluff detection engine used in executive-level interviews.
 
 Your task is to detect whether the candidate's answer contains:

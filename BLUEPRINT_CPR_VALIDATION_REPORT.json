@@ -1,0 +1,199 @@
+{
+  "summary": {
+    "totalComponents": 38,
+    "okCount": 38,
+    "missingCount": 0
+  },
+  "validationResults": [
+    {
+      "component": "Cluster Manager",
+      "status": "OK",
+      "file": "cluster-manager.ts"
+    },
+    {
+      "component": "Runtime Manager",
+      "status": "OK",
+      "file": "runtime-manager.ts"
+    },
+    {
+      "component": "Provider Manager",
+      "status": "OK",
+      "file": "provider-manager.ts"
+    },
+    {
+      "component": "Execution Coordinator",
+      "status": "OK",
+      "file": "execution-coordinator.ts"
+    },
+    {
+      "component": "Distributed Scheduler",
+      "status": "OK",
+      "file": "distributed-scheduler.ts"
+    },
+    {
+      "component": "Distributed Memory",
+      "status": "OK",
+      "file": "distributed-memory.ts"
+    },
+    {
+      "component": "Knowledge Fabric",
+      "status": "OK",
+      "file": "knowledge-fabric.ts"
+    },
+    {
+      "component": "Consensus Engine",
+      "status": "OK",
+      "file": "consensus-engine.ts"
+    },
+    {
+      "component": "Leader Election",
+      "status": "OK",
+      "file": "leader-election.ts"
+    },
+    {
+      "component": "Distributed Locks",
+      "status": "OK",
+      "file": "distributed-locks.ts"
+    },
+    {
+      "component": "Snapshot Manager",
+      "status": "OK",
+      "file": "snapshot-manager.ts"
+    },
+    {
+      "component": "Replay Manager",
+      "status": "OK",
+      "file": "replay-manager.ts"
+    },
+    {
+      "component": "Recovery Manager",
+      "status": "OK",
+      "file": "recovery-manager.ts"
+    },
+    {
+      "component": "Autoscaler",
+      "status": "OK",
+      "file": "autoscaler.ts"
+    },
+    {
+      "component": "Telemetry",
+      "status": "OK",
+      "file": "telemetry.ts"
+    },
+    {
+      "component": "Distributed Trace",
+      "status": "OK",
+      "file": "distributed-trace.ts"
+    },
+    {
+      "component": "Distributed Profiler",
+      "status": "OK",
+      "file": "distributed-profiler.ts"
+    },
+    {
+      "component": "Distributed Debugger",
+      "status": "OK",
+      "file": "distributed-debugger.ts"
+    },
+    {
+      "component": "Security",
+      "status": "OK",
+      "file": "security.ts"
+    },
+    {
+      "component": "Governance",
+      "status": "OK",
+      "file": "governance.ts"
+    },
+    {
+      "component": "API Gateway",
+      "status": "OK",
+      "file": "api-gateway.ts"
+    },
+    {
+      "component": "Runtime Kernel",
+      "status": "OK",
+      "file": "runtime-kernel.ts"
+    },
+    {
+      "component": "Provider Pool",
+      "status": "OK",
+      "file": "provider-manager.ts"
+    },
+    {
+      "component": "Cluster",
+      "status": "OK",
+      "file": "cluster-manager.ts"
+    },
+    {
+      "component": "Consensus",
+      "status": "OK",
+      "file": "consensus-engine.ts"
+    },
+    {
+      "component": "Leader Election",
+      "status": "OK",
+      "file": "leader-election.ts"
+    },
+    {
+      "component": "Distributed Memory",
+      "status": "OK",
+      "file": "distributed-memory.ts"
+    },
+    {
+      "component": "Distributed Locks",
+      "status": "OK",
+      "file": "distributed-locks.ts"
+    },
+    {
+      "component": "Autoscaler",
+      "status": "OK",
+      "file": "autoscaler.ts"
+    },
+    {
+      "component": "Scheduler",
+      "status": "OK",
+      "file": "distributed-scheduler.ts"
+    },
+    {
+      "component": "Execution Coordinator",
+      "status": "OK",
+      "file": "execution-coordinator.ts"
+    },
+    {
+      "component": "Recovery",
+      "status": "OK",
+      "file": "recovery-manager.ts"
+    },
+    {
+      "component": "Replay",
+      "status": "OK",
+      "file": "replay-manager.ts"
+    },
+    {
+      "component": "Tracing",
+      "status": "OK",
+      "file": "distributed-trace.ts"
+    },
+    {
+      "component": "Telemetry",
+      "status": "OK",
+      "file": "telemetry.ts"
+    },
+    {
+      "component": "Security",
+      "status": "OK",
+      "file": "security.ts"
+    },
+    {
+      "component": "Governance",
+      "status": "OK",
+      "file": "governance.ts"
+    },
+    {
+      "component": "API Gateway",
+      "status": "OK",
+      "file": "api-gateway.ts"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ export class ErrorHandler {
    * @param logger - Logger instance
    * @returns NextResponse
    */
-  static handle(error: unknown, logger?: ILogger): ReturnType<typeof ApiResponseBuilder.fromError> {
+  static handle(error: any, logger?: ILogger): ReturnType<typeof ApiResponseBuilder.fromError> {
     // Log the error
     if (logger) {
       if (error instanceof AppError) {
@@ -49,14 +49,14 @@ export class ErrorHandler {
    * @param logger - Logger instance
    * @returns Wrapped function
    */
-  static asyncHandler<T extends (...args: unknown[]) => Promise<unknown>>(
+  static asyncHandler<T extends (...args: any[]) => Promise<any>>(
     fn: T,
     logger?: ILogger
   ): (...args: Parameters<T>) => Promise<ReturnType<typeof ApiResponseBuilder.fromError>> {
     return async (...args: Parameters<T>) => {
       try {
         const result = await fn(...args);
-        return result as any;
+        return result  as any;
       } catch (error) {
         return this.handle(error, logger);
       }
@@ -68,7 +68,7 @@ export class ErrorHandler {
    * @param error - Error to check
    * @returns Whether error is operational
    */
-  static isOperationalError(error: unknown): boolean {
+  static isOperationalError(error: any): boolean {
     return error instanceof AppError && error.isOperational;
   }
 }

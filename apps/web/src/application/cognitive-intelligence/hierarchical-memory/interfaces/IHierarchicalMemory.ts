@@ -32,7 +32,7 @@ export type MemoryType =
 export interface MemoryEntry {
   id: string;
   type: MemoryType;
-  content: unknown;
+  content: any;
   metadata: Record<string, unknown>;
   importance: number; // 0-1
   accessCount: number;

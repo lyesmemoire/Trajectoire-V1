@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "rules": {
+    "allowPrerelease": false,
+    "allowGitDependencies": false,
+    "allowLocalDependencies": false,
+    "allowHttpRegistries": false,
+    "requireLockfile": true
+  }
+}

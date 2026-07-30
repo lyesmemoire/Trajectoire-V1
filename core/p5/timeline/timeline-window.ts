@@ -8,11 +8,7 @@ import { Tick, Timeline } from "./timeline-contract.js";
  * - Returns an empty array if no entries match the range.
  * - Pure function — no side effects.
  */
-export function timelineWindow(
-  timeline: Timeline,
-  fromTick: Tick,
-  toTick: Tick,
-): Timeline {
+export function timelineWindow(timeline: Timeline, fromTick: Tick, toTick: Tick, ): Timeline {
   return {
     entries: timeline.entries.filter(
       (entry) => entry.tick >= fromTick && entry.tick <= toTick,

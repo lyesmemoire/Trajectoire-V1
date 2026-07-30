@@ -3,10 +3,7 @@ import { track } from "../analytics";
 /**
  * Tracks sharing events for the Identity Distribution Engine.
  */
-export function trackShareEvent(
-  type: "linkedin" | "twitter" | "copy",
-  cardType: string,
-) {
+export function trackShareEvent(type: "linkedin" | "twitter" | "copy", cardType: string, ) {
   track("share_event", {
     method: type,
     card_type: cardType,

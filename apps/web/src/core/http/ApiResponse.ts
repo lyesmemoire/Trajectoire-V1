@@ -26,7 +26,7 @@ export interface ApiErrorResponse {
   error: {
     code: string;
     message: string;
-    details?: unknown;
+    details?: any;
   };
   meta?: ApiResponseMeta;
 }
@@ -83,7 +83,7 @@ export class ApiResponseBuilder {
    * @param error - Generic error
    * @returns NextResponse
    */
-  static fromError(error: unknown): NextResponse<ApiErrorResponse> {
+  static fromError(error: any): NextResponse<ApiErrorResponse> {
     if (error instanceof AppError) {
       return this.error(error);
     }
@@ -91,7 +91,7 @@ export class ApiResponseBuilder {
     // Handle generic errors
     const appError = new AppError(
       error instanceof Error ? error.message : "An unexpected error occurred",
-      "INTERNAL_ERROR" as any,
+      "INTERNAL_ERROR"  as any,
       500,
       true
     );
@@ -122,8 +122,8 @@ export class ApiResponseBuilder {
    * @param details - Additional error details
    * @returns NextResponse
    */
-  static badRequest(message: string, details?: unknown): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "VALIDATION_ERROR" as any, 400, true, details as any);
+  static badRequest(message: string, details?: any): NextResponse<ApiErrorResponse> {
+    const error = new AppError(message, "VALIDATION_ERROR"  as any, 400, true, details  as any);
     return this.error(error);
   }
 
@@ -133,7 +133,7 @@ export class ApiResponseBuilder {
    * @returns NextResponse
    */
   static unauthorized(message: string = "Unauthorized"): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "UNAUTHORIZED" as any, 401, true);
+    const error = new AppError(message, "UNAUTHORIZED"  as any, 401, true);
     return this.error(error);
   }
 
@@ -143,7 +143,7 @@ export class ApiResponseBuilder {
    * @returns NextResponse
    */
   static forbidden(message: string = "Forbidden"): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "FORBIDDEN" as any, 403, true);
+    const error = new AppError(message, "FORBIDDEN"  as any, 403, true);
     return this.error(error);
   }
 
@@ -153,7 +153,7 @@ export class ApiResponseBuilder {
    * @returns NextResponse
    */
   static notFound(message: string = "Resource not found"): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "NOT_FOUND" as any, 404, true);
+    const error = new AppError(message, "NOT_FOUND"  as any, 404, true);
     return this.error(error);
   }
 
@@ -163,7 +163,7 @@ export class ApiResponseBuilder {
    * @returns NextResponse
    */
   static conflict(message: string): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "CONFLICT" as any, 409, true);
+    const error = new AppError(message, "CONFLICT"  as any, 409, true);
     return this.error(error);
   }
 
@@ -174,7 +174,7 @@ export class ApiResponseBuilder {
    * @returns NextResponse
    */
   static rateLimitExceeded(message: string = "Rate limit exceeded", retryAfter?: number): NextResponse<ApiErrorResponse> {
-    const error = new AppError(message, "RATE_LIMIT_EXCEEDED" as any, 429, true);
+    const error = new AppError(message, "RATE_LIMIT_EXCEEDED"  as any, 429, true);
     const response = this.error(error);
 
     if (retryAfter) {

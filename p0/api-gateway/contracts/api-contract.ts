@@ -1,10 +1,10 @@
 export type P0Event =
   | { type: "session.created"; sessionId: string; tenantId: string }
-  | { type: "runtime.command"; sessionId: string; msg: any }
+  | { type: "runtime.command"; sessionId: string; msg: unknown }
   | { type: "evaluation.job"; sessionId: string };
 
 // Temporary mock for event publishing (will be wired to Redis/Kafka in P0.3)
-export async function publishEvent(type: P0Event["type"], payload: any): Promise<void> {
+export async function publishEvent(type: P0Event["type"], payload: unknown): Promise<void> {
   console.log(`[EventBus MOCK] ${type}`, payload);
 }
 
@@ -13,6 +13,6 @@ export async function saveSessionRecord(record: { sessionId: string; tenantId: s
   console.log(`[Storage MOCK] Saving session`, record);
 }
 
-export async function getSession(sessionId: string): Promise<any> {
+export async function getSession(sessionId: string): Promise<unknown> {
   return { sessionId, status: "ACTIVE" };
 }

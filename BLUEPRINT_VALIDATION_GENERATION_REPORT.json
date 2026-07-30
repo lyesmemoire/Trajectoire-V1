@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "totalComponentsGenerated": 5
+  },
+  "generatedComponents": [
+    "c:\\Trajectoire\\packages\\blueprint-validation\\document-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-validation\\compilation-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-validation\\integration-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-validation\\usage-validator.ts",
+    "c:\\Trajectoire\\packages\\blueprint-validation\\pipeline.ts"
+  ]
+}

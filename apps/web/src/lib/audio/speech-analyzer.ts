@@ -107,7 +107,7 @@ export class SpeechAnalyzer {
   async initialize(): Promise<void> {
     if (typeof window === "undefined") return;
     this.audioContext = new (
-      window.AudioContext || (window as any).webkitAudioContext
+      window.AudioContext || (window  as any).webkitAudioContext
     )();
     this.analyserNode = this.audioContext.createAnalyser();
     this.analyserNode.fftSize = 2048;

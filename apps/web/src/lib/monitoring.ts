@@ -11,11 +11,7 @@ interface LogEntry {
   environment: string;
 }
 
-function log(
-  level: LogLevel,
-  message: string,
-  context?: Record<string, unknown>,
-) {
+function log(level: LogLevel, message: string, context?: Record<string, unknown>, ) {
   const entry: LogEntry = {
     level,
     message,
@@ -46,16 +42,12 @@ export const logger = {
 };
 
 // Tracker d'événements critiques business
-export function trackBusinessEvent(
-  event:
+export function trackBusinessEvent(event:
     | "signup"
     | "cv_upload"
     | "ats_run"
     | "credit_purchase"
     | "optimize"
-    | "interview",
-  userId: string,
-  metadata?: Record<string, unknown>,
-) {
+    | "interview", userId: string, metadata?: Record<string, unknown>, ) {
   logger.info(`BUSINESS_EVENT:${event}`, { userId, ...metadata });
 }

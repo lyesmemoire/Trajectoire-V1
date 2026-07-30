@@ -6,7 +6,7 @@ export interface ProgressionSnapshot {
   ownership: number;
 }
 
-export async function calculateTrend(userId: string) {
+export async function calculateTrend(userId: _string) {
   const history = await prisma.interviewSession.findMany({
     where: { userId },
     orderBy: { createdAt: "asc" },

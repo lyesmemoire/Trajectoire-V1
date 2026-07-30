@@ -13,7 +13,6 @@ import {
   MemoryForgetting,
   MemoryRecall,
   MemorySearch,
-  MemoryAssociation,
   MemoryLink,
   HierarchicalMemoryConfig,
   defaultHierarchicalMemoryConfig,
@@ -56,7 +55,7 @@ export class HierarchicalMemoryEngine {
   /**
    * Store memory
    */
-  storeMemory(type: MemoryType, content: unknown, metadata: Record<string, unknown> = {}): string {
+  storeMemory(type: MemoryType, content: any, metadata: Record<string, unknown> = {}): string {
     const memoryId = `memory_${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
     const memory: MemoryEntry = {

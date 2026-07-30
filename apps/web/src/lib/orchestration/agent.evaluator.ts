@@ -1,4 +1,3 @@
-import { EvaluationContext } from "@/domain/orchestration.contract";
 import { TraceContext } from "./trace.context";
 import { FraudKernelEngine } from "@/lib/fraud/fraud-kernel.engine";
 import { FraudKernel } from "@/lib/fraud/fraud-kernel";
@@ -23,7 +22,7 @@ const fraudKernelEngine = new FraudKernelEngine(
  * Evaluates the context through all agents, produces a global SystemDecision,
  * and traces the entire causal graph.
  */
-export function evaluateSystemContext(ctx: EvaluationContext, trace: TraceContext) {
+export function evaluateSystemContext(ctx: any, trace: TraceContext) {
   const eventNode = trace.graph.addNode({
     type: "event",
     input: ctx,
@@ -72,5 +71,4 @@ export function evaluateSystemContext(ctx: EvaluationContext, trace: TraceContex
     reason: decision.explanationGraph.join(" | ")
   }) };
 }
-
 

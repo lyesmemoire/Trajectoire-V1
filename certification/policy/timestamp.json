@@ -1,0 +1,11 @@
+{
+  "timestampPolicy": {
+    "schemaVersion": "1.0",
+    "profile": "trajectoire-timestamp-v1",
+    "minimumTrustedProviders": 1,
+    "minimumTransparencyProviders": 0,
+    "acceptedProviders": ["mock", "rfc3161", "rekor"],
+    "allowMockProviders": true,
+    "requireVerifiedEvidence": true
+  }
+}

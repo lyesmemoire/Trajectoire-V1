@@ -60,13 +60,13 @@ export function useMicrophoneManager() {
 
       // Initialize AudioContext to monitor state (Running/Suspended)
       const AudioContextClass =
-        window.AudioContext || (window as any).webkitAudioContext;
+        window.AudioContext || (window  as any).webkitAudioContext;
       audioContextRef.current = new AudioContextClass();
 
       setStatus("granted");
       return stream;
-    } catch (err) {
-      logError("[Mic Manager] Permission error", err);
+    } catch (error) {
+      logError("[Mic Manager] Permission error", error);
       setStatus("denied");
       return null;
     }

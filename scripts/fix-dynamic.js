@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from 'fs';
 
 const routes = [
   "app/api/admin/threat-intel/route.ts",
@@ -22,7 +22,7 @@ for (const r of routes) {
     } else {
       console.log("SKIP:", r);
     }
-  } catch (e) {
+  } catch {
     console.log("ERROR:", r, e.message);
   }
 }

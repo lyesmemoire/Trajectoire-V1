@@ -1,0 +1,250 @@
+{
+  "reportType": "Compiler Module Coverage Report",
+  "generatedAt": "2026-07-26T00:30:00.000Z",
+  "testFramework": "Vitest",
+  "coverageProvider": "v8",
+  "summary": {
+    "totalTestFiles": 7,
+    "totalTests": 219,
+    "passedTests": 219,
+    "failedTests": 0,
+    "overallCoverage": {
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    }
+  },
+  "modules": {
+    "compiler/lexer": {
+      "file": "compiler/lexer/lexer.ts",
+      "coverage": {
+        "statements": 99.08,
+        "branches": 94.73,
+        "functions": 100,
+        "lines": 99.08
+      },
+      "testFile": "tests/compiler/lexer/lexer.test.ts",
+      "testCount": 94,
+      "status": "EXCELLENT",
+      "uncoveredLines": [132, 144]
+    },
+    "compiler/parser": {
+      "file": "compiler/parser/parser.ts",
+      "coverage": {
+        "statements": 45.04,
+        "branches": 25.86,
+        "functions": 44.44,
+        "lines": 45.04
+      },
+      "testFile": "tests/compiler/parser/parser.test.ts",
+      "testCount": 31,
+      "status": "NEEDS_IMPROVEMENT",
+      "uncoveredLines": [221, 246, 247, 314, 315, 316, 317, 318, 319, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 361, 362, 363, 383, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 716]
+    },
+    "compiler/ast": {
+      "file": "compiler/ast/",
+      "components": [
+        {
+          "name": "symbol-table",
+          "file": "compiler/ast/symbol-table.ts",
+          "testFile": "tests/compiler/ast/symbol-table.test.ts",
+          "testCount": 12,
+          "status": "NEEDS_COVERAGE_DATA"
+        },
+        {
+          "name": "diagnostics",
+          "file": "compiler/ast/diagnostics.ts",
+          "testFile": "tests/compiler/ast/diagnostics.test.ts",
+          "testCount": 45,
+          "status": "NEEDS_COVERAGE_DATA"
+        }
+      ]
+    },
+    "compiler/cir": {
+      "file": "compiler/cir/ir-generator.ts",
+      "testFile": "tests/compiler/cir/ir-generator.test.ts",
+      "testCount": 15,
+      "status": "NEEDS_COVERAGE_DATA"
+    },
+    "compiler/bytecode": {
+      "file": "compiler/bytecode/bytecode-generator.ts",
+      "testFile": "tests/compiler/bytecode/bytecode-generator.test.ts",
+      "testCount": 19,
+      "status": "NEEDS_COVERAGE_DATA"
+    },
+    "compiler/optimizer": {
+      "file": "compiler/optimizer/",
+      "components": [
+        "constant-folding.ts",
+        "dead-code-elimination.ts",
+        "graph-simplification.ts",
+        "inlining.ts",
+        "instruction-fusion.ts",
+        "loop-optimization.ts",
+        "memory-optimization.ts",
+        "pipeline.ts",
+        "ssa.ts"
+      ],
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "status": "NO_TESTS"
+    },
+    "compiler/packager": {
+      "file": "compiler/packager/package-builder.ts",
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "status": "NO_TESTS"
+    },
+    "compiler/passes": {
+      "file": "compiler/passes/optimization-pass-manager.ts",
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "status": "NO_TESTS"
+    },
+    "compiler/semantic": {
+      "file": "compiler/semantic/",
+      "components": [
+        "index.ts",
+        "semantic-analyzer.ts"
+      ],
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "status": "NO_TESTS"
+    },
+    "compiler/type-system": {
+      "file": "compiler/type-system/",
+      "components": [
+        "index.ts",
+        "type-checker.ts"
+      ],
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "status": "NO_TESTS"
+    }
+  },
+  "testBreakdown": {
+    "lexer": {
+      "file": "tests/compiler/lexer/lexer.test.ts",
+      "testCount": 94,
+      "categories": [
+        "Initialization",
+        "Basic tokenization",
+        "Keywords",
+        "Literals",
+        "Operators",
+        "Delimiters",
+        "Whitespace",
+        "Comments",
+        "Complex expressions",
+        "Edge cases"
+      ]
+    },
+    "parser": {
+      "file": "tests/compiler/parser/parser.test.ts",
+      "testCount": 31,
+      "categories": [
+        "Initialization",
+        "Module parsing",
+        "Import parsing",
+        "Export parsing",
+        "Function parsing",
+        "Expression parsing",
+        "Statement parsing",
+        "Edge cases"
+      ]
+    },
+    "ast": {
+      "symbol-table": {
+        "file": "tests/compiler/ast/symbol-table.test.ts",
+        "testCount": 12,
+        "categories": [
+          "Initialization",
+          "Scope management",
+          "Reset",
+          "Edge cases"
+        ]
+      },
+      "diagnostics": {
+        "file": "tests/compiler/ast/diagnostics.test.ts",
+        "testCount": 45,
+        "categories": [
+          "Initialization",
+          "Adding diagnostics",
+          "Retrieving diagnostics",
+          "Error checking",
+          "Report generation",
+          "Clearing diagnostics",
+          "Formatting diagnostics",
+          "Diagnostic categories",
+          "Diagnostic severity",
+          "Edge cases"
+        ]
+      }
+    },
+    "cir": {
+      "file": "tests/compiler/cir/ir-generator.test.ts",
+      "testCount": 15,
+      "categories": [
+        "Initialization",
+        "Function generation",
+        "Basic block generation",
+        "Multiple functions",
+        "Edge cases"
+      ]
+    },
+    "bytecode": {
+      "file": "tests/compiler/bytecode/bytecode-generator.test.ts",
+      "testCount": 19,
+      "categories": [
+        "Initialization",
+        "Opcode mapping",
+        "Function generation",
+        "Multiple functions",
+        "Constant pool",
+        "Binary serialization",
+        "Edge cases"
+      ]
+    }
+  },
+  "recommendations": [
+    "Increase parser coverage from 45.04% to at least 80% by adding tests for uncovered parsing paths",
+    "Add tests for optimizer modules (constant-folding, dead-code-elimination, etc.)",
+    "Add tests for semantic analyzer and type checker modules",
+    "Add tests for packager module",
+    "Add tests for optimization pass manager",
+    "Improve AST symbol-table tests to cover more symbol management functionality",
+    "Add tests for CIR modules beyond IR generator (CFG builder, graph builder, optimizer, etc.)",
+    "Add tests for bytecode verifier module"
+  ],
+  "certificationStatus": {
+    "target": "95% coverage for Enterprise certification",
+    "currentOverall": "Insufficient data for full compiler module",
+    "lexerStatus": "PASSED (99.08% coverage)",
+    "parserStatus": "FAILED (45.04% coverage - below 95% target)",
+    "astStatus": "NEEDS_DATA",
+    "cirStatus": "NEEDS_DATA",
+    "bytecodeStatus": "NEEDS_DATA",
+    "overallStatus": "IN_PROGRESS"
+  }
+}

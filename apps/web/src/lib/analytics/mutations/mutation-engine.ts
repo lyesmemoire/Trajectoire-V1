@@ -15,10 +15,7 @@ export interface UserMutation {
 /**
  * Simule l'extraction d'une mutation narrative à partir d'une série de sessions.
  */
-export function extractNarrativeMutation(
-  user: any,
-  sessions: any[],
-): UserMutation {
+export function extractNarrativeMutation(user: any, sessions: any[], ): UserMutation {
   const lastSession = sessions[sessions.length - 1];
   const previousSession = sessions[sessions.length - 2];
 

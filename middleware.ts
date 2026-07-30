@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 import { updateSession } from "@/lib/supabase/middleware";
 import {
   getOrCreateRequestId,

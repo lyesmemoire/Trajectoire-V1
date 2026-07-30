@@ -20,7 +20,7 @@ export class SILClient implements SILPublicAPI {
   async publish(event: IncomingSILEvent): Promise<void> {
     try {
       await this.kafkaPublisher.simulateConsume(event);
-    } catch (e) {
+    } catch (error) {
       console.error(`[SILClient] Failed to publish event: ${e}`);
       throw e;
     }
@@ -57,7 +57,7 @@ export class SILClient implements SILPublicAPI {
       return { sessionId: query.sessionId, report: null, status: "PENDING" };
     }
 
-    const p7State: any = state.runtimeContext.p7State;
+    const p7State: unknown = state.runtimeContext.p7State;
     if (!p7State || !p7State.reportId) {
        return { sessionId: query.sessionId, report: null, status: "PENDING" };
     }

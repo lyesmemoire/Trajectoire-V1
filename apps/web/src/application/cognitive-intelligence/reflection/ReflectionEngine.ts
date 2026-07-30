@@ -16,7 +16,6 @@ import {
   ReflectionConfig,
   defaultReflectionConfig,
 } from "./interfaces/IReflectionEngine";
-import { reasoningEngine } from "../reasoning/ReasoningEngine";
 
 // ============================================================================
 // REFLECTION ENGINE CLASS

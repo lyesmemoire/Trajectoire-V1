@@ -21,15 +21,7 @@ export interface SignedEvent<T = unknown> {
  * Compute the canonical hash of an event's content (excludes signature).
  * This is the hash that enters the chain.
  */
-export function computeEventHash(
-  eventId: string,
-  tenantDid: string,
-  sessionId: string,
-  timestamp: number,
-  type: string,
-  payload: unknown,
-  previousEventHash: string
-): string {
+export function computeEventHash(eventId: string, tenantDid: string, sessionId: string, timestamp: number, type: string, payload: unknown, previousEventHash: string): string {
   const canonical = JSON.stringify({
     eventId,
     tenantDid,
@@ -104,11 +96,7 @@ export function createSignedEvent<T>(
  * 2. Verify signature against public key → must be valid
  * 3. Verify chain link → event.previousEventHash must match expected
  */
-export function verifySignedEvent(
-  event: SignedEvent,
-  publicKeyHex: string,
-  expectedPreviousHash?: string
-): { valid: boolean; reason?: string } {
+export function verifySignedEvent(event: SignedEvent, publicKeyHex: string, expectedPreviousHash?: string): { valid: boolean; reason?: string } {
   // 1. Recompute hash
   const recomputedHash = computeEventHash(
     event.eventId,

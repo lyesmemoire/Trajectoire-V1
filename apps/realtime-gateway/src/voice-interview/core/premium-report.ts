@@ -7,11 +7,7 @@ export interface PremiumReport {
   recruiterVerdict: string;
 }
 
-export async function generatePremiumReport(
-  transcript: string,
-  structuredScore: StructuredScore,
-  role: string,
-  llm: (prompt: string) => Promise<string>,
+export async function generatePremiumReport(transcript: string, structuredScore: StructuredScore, role: string, llm: (prompt: string) => Promise<string>,
 ): Promise<PremiumReport> {
   const prompt = `
 Tu es un recruteur senior expert.

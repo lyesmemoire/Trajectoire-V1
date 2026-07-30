@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react"
+import { motion } from "framer-motion"
 import {
   ShieldAlert,
   ChevronRight,
-} from "lucide-react";
+} from "lucide-react"
 
 const PLAYGROUND_SCENARIOS = [
   {
@@ -26,10 +26,10 @@ const PLAYGROUND_SCENARIOS = [
     status: "Maîtrise Calme",
     color: "#06B6D4",
   },
-];
+]
 
 export function MiniPressureTest() {
-  const [active, setActive] = useState<null | number>(null);
+  const [active, setActive] = useState<null | number>(null)
 
   return (
     <section className="py-40 px-6 bg-[#050816] relative overflow-hidden">
@@ -39,7 +39,7 @@ export function MiniPressureTest() {
             Vivez un <span className="text-[#EF4444]">choc psychologique</span>{" "}
             immédiat.
           </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto italic">
+          <p className="text-ink-500 font-medium max-w-xl mx-auto italic">
             Testez vos réflexes face à Victor (Recruteur High-Stakes).
           </p>
         </div>
@@ -49,20 +49,20 @@ export function MiniPressureTest() {
             {!active && active !== 0 ? (
               <div className="space-y-10">
                 <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10 text-center relative overflow-hidden">
-                  <h3 className="text-2xl font-bold text-slate-300 italic">
+                  <h3 className="text-2xl font-bold text-ink-300 italic">
                     "Parlez-moi d'une réussite majeure dont vous êtes fier."
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <button
                     onClick={() => setActive(0)}
-                    className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-rose-500/10 hover:border-rose-500 transition-all font-black uppercase text-xs tracking-widest text-slate-400 hover:text-rose-500"
+                    className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-brick-500/10 hover:border-brick-500 transition-all font-black uppercase text-xs tracking-widest text-ink-400 hover:text-brick-500"
                   >
                     Réponse Vague
                   </button>
                   <button
                     onClick={() => setActive(1)}
-                    className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-emerald-500/10 hover:border-emerald-500 transition-all font-black uppercase text-xs tracking-widest text-slate-400 hover:text-emerald-500"
+                    className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-forest-500/10 hover:border-forest-500 transition-all font-black uppercase text-xs tracking-widest text-ink-400 hover:text-forest-500"
                   >
                     Réponse Précise
                   </button>
@@ -76,7 +76,7 @@ export function MiniPressureTest() {
               >
                 <div className="flex justify-end">
                   <div
-                    className={`p-6 rounded-[2rem] rounded-tr-none max-w-[85%] border ${active === 0 ? "bg-slate-800 border-white/5 opacity-50" : "bg-[#7C3AED] border-white/20 shadow-2xl"}`}
+                    className={`p-6 rounded-[2rem] rounded-tr-none max-w-[85%] border ${active === 0 ? "bg-ink-800 border-white/5 opacity-50" : "bg-[#7C3AED] border-white/20 shadow-2xl"}`}
                   >
                     <p className="text-sm font-bold text-white italic leading-relaxed">
                       "{PLAYGROUND_SCENARIOS[active]?.user}"
@@ -84,18 +84,18 @@ export function MiniPressureTest() {
                   </div>
                 </div>
                 <div className="flex gap-5 items-start">
-                  <div className="w-12 h-12 rounded-2xl bg-rose-600 flex items-center justify-center text-white shadow-lg">
+                  <div className="w-12 h-12 rounded-2xl bg-brick-600 flex items-center justify-center text-white shadow-lg">
                     <ShieldAlert className="w-6 h-6" />
                   </div>
                   <div className="bg-white/[0.03] border border-white/[0.05] p-7 rounded-[2rem] rounded-tl-none max-w-[85%]">
-                    <p className="text-sm font-black text-slate-300 leading-relaxed italic">
+                    <p className="text-sm font-black text-ink-300 leading-relaxed italic">
                       "{PLAYGROUND_SCENARIOS[active]?.ai}"
                     </p>
                   </div>
                 </div>
                 <div className="pt-10 border-t border-white/[0.05] flex flex-col md:flex-row items-center justify-between gap-8">
                   <div className="flex-1 w-full space-y-2">
-                    <div className="flex justify-between text-[10px] font-black uppercase text-slate-500 tracking-widest">
+                    <div className="flex justify-between text-[10px] font-black uppercase text-ink-500 tracking-widest">
                       <span>Niveau de Tension</span>
                       <span>{PLAYGROUND_SCENARIOS[active]?.pressure}%</span>
                     </div>
@@ -116,13 +116,13 @@ export function MiniPressureTest() {
                   <div className="flex items-center gap-4 shrink-0">
                     <button
                       onClick={() => setActive(null)}
-                      className="text-xs font-black text-slate-500 uppercase tracking-widest hover:text-white transition-colors"
+                      className="text-xs font-black text-ink-500 uppercase tracking-widest hover:text-white transition-colors"
                     >
                       Réessayer
                     </button>
                     <a
                       href="/onboarding"
-                      className="h-14 px-8 rounded-2xl bg-blue-600 text-white font-black flex items-center gap-2 hover:bg-blue-700 shadow-xl shadow-blue-500/20"
+                      className="h-14 px-8 rounded-2xl bg-bronze-600 text-white font-black flex items-center gap-2 hover:bg-bronze-700 shadow-xl shadow-bronze-500/20"
                     >
                       Réclamer mon Profile DNA{" "}
                       <ChevronRight className="w-4 h-4" />
@@ -135,5 +135,5 @@ export function MiniPressureTest() {
         </div>
       </div>
     </section>
-  );
+  )
 }

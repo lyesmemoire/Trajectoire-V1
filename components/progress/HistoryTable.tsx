@@ -4,7 +4,7 @@ interface HistoryTableProps {
   history: InterviewSessionSummary[];
 }
 
-export function HistoryTable({ history }: HistoryTableProps) {
+export function HistoryTable({ history }: _HistoryTableProps) {
   if (!history || history.length === 0) {
     return null;
   }

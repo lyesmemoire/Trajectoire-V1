@@ -1,0 +1,28 @@
+{
+  "signaturePolicy": {
+    "profile": "trajectoire-signature-v2",
+    "envelope": "DSSE",
+    "environment": "development",
+    "requiredSignatures": [
+      {
+        "provider": "local-ed25519",
+        "minCount": 1
+      }
+    ],
+    "optionalSignatures": [
+      {
+        "provider": "cosign-keyless"
+      },
+      {
+        "provider": "aws-kms"
+      },
+      {
+        "provider": "gpg"
+      }
+    ],
+    "verificationPolicy": {
+      "requireTransparencyLog": false,
+      "allowMockProviders": true
+    }
+  }
+}

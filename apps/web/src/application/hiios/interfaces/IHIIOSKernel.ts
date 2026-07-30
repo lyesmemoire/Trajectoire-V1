@@ -1,3 +1,4 @@
+
 /**
  * IHIIOSKernel - Interfaces pour le Kernel de HIIOS v4.0
  * Layer 0 : Noyau central du moteur cognitif
@@ -41,6 +42,8 @@ export interface BiasCheck {
   penalty?: number;
 }
 
+// Canonical Reference: BCM-OBJ-003 (blueprint.cognitive.evidence)
+// Owner: Chief Cognitive Architect
 export interface Evidence {
   id: string;
   turn: number;
@@ -66,6 +69,8 @@ export enum HypothesisStatus {
   CONFIRMED = "CONFIRMED",
   INFIRMED = "INFIRMED",
   SUSPENDED = "SUSPENDED",
+// Canonical Reference: BCM-OBJ-007 (blueprint.cognitive.hypothesis)
+// Owner: Chief Cognitive Architect
 }
 
 export interface Hypothesis {
@@ -162,6 +167,8 @@ export function getConfidenceLevel(confidence: number): ConfidenceLevel {
   return ConfidenceLevel.VERY_HIGH;
 }
 
+// Canonical Reference: COS-OBJ-003 (blueprint.runtime.question)
+// Owner: COS Team
 // ============================================================================
 // QUESTION TYPES
 // ============================================================================
@@ -203,6 +210,8 @@ export interface SkillGraph {
 // TIMELINE TYPES
 // ============================================================================
 
+// Canonical Reference: BCM-OBJ-001 (blueprint.cognitive.observation)
+// Owner: Chief Cognitive Architect
 export interface Observation {
   id: string;
   type: string;
@@ -369,6 +378,8 @@ export enum DecisionType {
 
 export enum DecisionConfidence {
   VERY_LOW = "VERY_LOW",
+// Canonical Reference: BCM-OBJ-009 (blueprint.cognitive.decision)
+// Owner: Chief Cognitive Architect
   LOW = "LOW",
   MODERATE = "MODERATE",
   HIGH = "HIGH",

@@ -1,0 +1,43 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "auditor": "Independent Validation Audit",
+  "reproducibilityIndex": {
+    "overall": "PREUVE INSUFFISANTE",
+    "score": 0,
+    "calculation": "PREUVE INSUFFISANTE - Impossible de calculer l'indice de reproductibilité",
+    "reason": "Les fichiers de preuve sont inaccessibles (gitignore) et les mutations n'ont pas été rejouées"
+  },
+  "categoryScores": {
+    "coverage": {
+      "score": "PREUVE INSUFFISANTE",
+      "status": "NON REPRODUCTIBLE",
+      "reason": "Fichier coverage-final.json bloqué par .gitignore, impossible de comparer byte à byte"
+    },
+    "mutation": {
+      "score": "PREUVE INSUFFISANTE",
+      "status": "NON REPRODUCTIBLE",
+      "reason": "Mutations non rejouées indépendamment"
+    },
+    "regression": {
+      "score": 0,
+      "status": "NON REPRODUCTIBLE",
+      "reason": "Résultats différents entre rapport officiel et exécution indépendante (R5, R10, R19: MISSED vs BUILD ERROR)"
+    }
+  },
+  "evidenceAccessibility": {
+    "coverageFinalJson": {
+      "accessible": false,
+      "reason": "Bloqué par .gitignore (reports/cli/coverage/)"
+    },
+    "mutationResults": {
+      "accessible": true,
+      "reason": "mutation-summary.json accessible mais mutations non rejouées"
+    },
+    "regressionResults": {
+      "accessible": true,
+      "reason": "regression-stable-results.json accessible mais résultats différents"
+    }
+  },
+  "conclusion": "PREUVE INSUFFISANTE - Les artefacts officiels ne sont pas reproductibles car les fichiers de preuve sont inaccessibles et les résultats de régression sont différents"
+}

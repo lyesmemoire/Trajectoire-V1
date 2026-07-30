@@ -4,7 +4,7 @@
  * Handles business logic for session creation and lifecycle
  */
 
-import { Session, SessionProps } from "@/domain/entities";
+import { Session } from "@/domain/entities";
 import { CreateSessionSchema } from "@/validation";
 import { SessionRepository } from "@/infrastructure/repositories";
 import { IRateLimiter, IQuotaService, IAuditService, ILogger } from "@/core/interfaces";
@@ -100,7 +100,7 @@ export class SimulationService {
     });
 
     // Persist session
-    const persistedSession = await this.sessionRepository.create(session.toPersistence());
+    const persistedSession = await this.sessionRepository.create(session.toPersistence() as any);
 
     // Increment quota
     await this.quotaService.incrementQuota(command.userId, "simulations");
@@ -154,7 +154,7 @@ export class SimulationService {
 
     session.complete();
 
-    await this.sessionRepository.update(sessionId, session.toPersistence());
+    await this.sessionRepository.update(sessionId, session.toPersistence() as any);
 
     await this.auditService.log({
       userId,
@@ -174,7 +174,7 @@ export class SimulationService {
 
     session.cancel();
 
-    await this.sessionRepository.update(sessionId, session.toPersistence());
+    await this.sessionRepository.update(sessionId, session.toPersistence() as any);
 
     await this.auditService.log({
       userId,

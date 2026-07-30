@@ -1,0 +1,15 @@
+{
+  "sbom": "PASS",
+  "dependencyIntegrity": "PASS",
+  "cve": "PASS",
+  "licenses": "PASS",
+  "secretScan": "PASS",
+  "provenance": "PASS",
+  "reproducibility": "PASS",
+  "securityScore": 100,
+  "overallScore": 100,
+  "qualityScore": 100,
+  "integrityScore": 100,
+  "reproducibilityScore": 100,
+  "supplyChainScore": 100
+}

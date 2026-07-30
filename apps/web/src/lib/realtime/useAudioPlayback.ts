@@ -35,13 +35,13 @@ export function useAudioPlayback() {
   // Track all active audio buffer sources for proper interruption handling.
   const activeSourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
 
-  // Fade configuration – 32 samples at 16kHz ≈ 2 ms.
+  // Fade configuration - 32 samples at 16kHz ~ 2 ms.
   const FADE_SAMPLES = 32;
-  // Simple linear fade‑in/out for a Float32Array buffer.
+  // Simple linear fade-in/out for a Float32Array buffer.
   const applyFade = (buffer: Float32Array): Float32Array => {
     const len = buffer.length;
     const fadeLen = Math.min(FADE_SAMPLES, len);
-    // Fade‑in
+    // Fade-in
     for (let i = 0; i < fadeLen; i++) {
       buffer[i] = (buffer[i] ?? 0) * (i / fadeLen);
     }
@@ -54,7 +54,7 @@ export function useAudioPlayback() {
   // Ensure a single AudioContext throughout the component lifecycle.
   useEffect(() => {
     audioCtxRef.current = new (
-      window.AudioContext || (window as any).webkitAudioContext
+      window.AudioContext || (window  as any).webkitAudioContext
     )({
       sampleRate: SAMPLE_RATE,
     });

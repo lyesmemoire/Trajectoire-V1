@@ -33,9 +33,7 @@ export interface EscalationControllerInput {
  * Acts as an adaptive escalation controller during the interview, deciding 
  * the next rhetorical tactic based on the candidate's real-time scores.
  */
-export async function determineEscalation(
-  input: EscalationControllerInput
-): Promise<EscalationDecision> {
+export async function determineEscalation(input: _EscalationControllerInput): Promise<EscalationDecision> {
   const systemPrompt = `You are an adaptive escalation controller in an executive interview.
 
 Based on evaluation scores, decide whether to:

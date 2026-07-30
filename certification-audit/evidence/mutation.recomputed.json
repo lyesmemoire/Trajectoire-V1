@@ -1,0 +1,16 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "component": "execution-pipeline",
+  "status": "PREUVE INSUFFISANTE",
+  "reason": "Les définitions spécifiques des 10 mutations officielles ne sont pas disponibles. Impossible de recalculer les métriques de mutation sans rejouer les mutations.",
+  "rawEvidence": "mutation.raw.json",
+  "metrics": {
+    "total": "PREUVE INSUFFISANTE",
+    "killed": "PREUVE INSUFFISANTE",
+    "survived": "PREUVE INSUFFISANTE",
+    "invalid": "PREUVE INSUFFISANTE",
+    "score": "PREUVE INSUFFISANTE"
+  },
+  "conclusion": "PREUVE INSUFFISANTE - Impossible de recalculer les métriques de mutation"
+}

@@ -9,7 +9,7 @@ export type EmailTemplateParams = {
 /**
  * Générateur de contenu d'email sobre et protecteur.
  */
-export function generateRecoveryEmailHtml(params: EmailTemplateParams): string {
+export function generateRecoveryEmailHtml(params: _EmailTemplateParams): string {
   const greeting = params.name ? `Bonjour ${params.name},` : "Bonjour,";
 
   return `

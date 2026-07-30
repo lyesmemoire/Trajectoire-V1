@@ -4,28 +4,28 @@
  * Instead of waiting 20 seconds for the full response, stream tokens as they arrive
  */
 
-import { OpenAI } from "openai";
+import { OpenAI } from "openai"
 
 export interface StreamingOptions {
-  model?: string;
-  temperature?: number;
-  maxTokens?: number;
-  onToken?: (token: string) => void;
-  onComplete?: (fullResponse: string) => void;
-  onError?: (error: Error) => void;
+  model?: string
+  temperature?: number
+  maxTokens?: number
+  onToken?: (token: string) => void
+  onComplete?: (fullResponse: string) => void
+  onError?: (error: Error) => void
 }
 
 export interface StreamingResult {
-  fullResponse: string;
-  tokenCount: number;
-  duration: number;
+  fullResponse: string
+  tokenCount: number
+  duration: number
 }
 
 export class AIStreamingService {
-  private openai: OpenAI;
+  private openai: OpenAI
 
   constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey });
+    this.openai = new OpenAI({ apiKey })
   }
 
   /**
@@ -45,11 +45,11 @@ export class AIStreamingService {
       onToken,
       onComplete,
       onError,
-    } = options;
+    } = options
 
-    const startTime = Date.now();
-    let fullResponse = "";
-    let tokenCount = 0;
+    const startTime = Date.now()
+    let fullResponse = ""
+    let tokenCount = 0
 
     try {
       const stream = await this.openai.chat.completions.create({
@@ -58,39 +58,39 @@ export class AIStreamingService {
         temperature,
         max_tokens: maxTokens,
         stream: true,
-      });
+      })
 
       for await (const chunk of stream) {
-        const token = chunk.choices[0]?.delta?.content || "";
+        const token = chunk.choices[0]?.delta?.content || ""
         
         if (token) {
-          fullResponse += token;
-          tokenCount++;
+          fullResponse += token
+          tokenCount++
           
           // Call token callback if provided
           if (onToken) {
-            onToken(token);
+            onToken(token)
           }
         }
       }
 
-      const duration = Date.now() - startTime;
+      const duration = Date.now() - startTime
 
       // Call complete callback if provided
       if (onComplete) {
-        onComplete(fullResponse);
+        onComplete(fullResponse)
       }
 
       return {
         fullResponse,
         tokenCount,
         duration,
-      };
+      }
     } catch (error) {
       if (onError) {
-        onError(error as Error);
+        onError(error as Error)
       }
-      throw error;
+      throw error
     }
   }
 
@@ -108,15 +108,15 @@ export class AIStreamingService {
     const result = await this.streamResponse(messages, {
       ...options,
       onToken: (token: string) => {
-        writableStream.write(token);
+        writableStream.write(token)
         if (options.onToken) {
-          options.onToken(token);
+          options.onToken(token)
         }
       },
-    });
+    })
 
-    writableStream.end();
-    return result;
+    writableStream.end()
+    return result
   }
 
   /**
@@ -129,8 +129,9 @@ export class AIStreamingService {
     messages: Array<{ role: "user" | "assistant" | "system"; content: string }>,
     options: StreamingOptions = {}
   ): Promise<Response> {
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this; // Capture context
 
     const stream = new ReadableStream({
@@ -139,23 +140,23 @@ export class AIStreamingService {
           const result = await self.streamResponse(messages, {
             ...options,
             onToken: (token: string) => {
-              controller.enqueue(encoder.encode(token));
+              controller.enqueue(encoder.encode(token))
             },
-          });
+          })
 
-          controller.close();
+          controller.close()
           
           if (options.onComplete) {
-            options.onComplete(result.fullResponse);
+            options.onComplete(result.fullResponse)
           }
         } catch (error) {
-          controller.error(error);
+          controller.error(error)
           if (options.onError) {
-            options.onError(error as Error);
+            options.onError(error as Error)
           }
         }
       },
-    });
+    })
 
     return new Response(stream, {
       headers: {
@@ -163,7 +164,7 @@ export class AIStreamingService {
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
       },
-    });
+    })
   }
 }
 
@@ -175,6 +176,6 @@ export async function createStreamingResponse(
   apiKey: string,
   options?: StreamingOptions
 ): Promise<Response> {
-  const service = new AIStreamingService(apiKey);
-  return service.streamToWebResponse(messages, options);
+  const service = new AIStreamingService(apiKey)
+  return service.streamToWebResponse(messages, options)
 }

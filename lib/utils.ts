@@ -11,10 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 /**
  * Formats a date to French locale
  */
-export function formatDate(
-  date: string | Date,
-  options?: Intl.DateTimeFormatOptions,
-): string {
+export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions, ): string {
   return new Intl.DateTimeFormat("fr-FR", {
     year: "numeric",
     month: "long",
@@ -81,7 +78,7 @@ export function generateId(): string {
 /**
  * Debounces a function
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => any>(
   func: T,
   wait: number,
 ): (...args: Parameters<T>) => void {

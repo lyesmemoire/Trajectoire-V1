@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-07-26T18:35:00Z",
+  "vm_components": {
+    "compiler/cbs": {
+      "statements": 95.31,
+      "branches": 91.67,
+      "functions": 100,
+      "lines": 95.24
+    },
+    "compiler/cvm": {
+      "statements": 89.96,
+      "branches": 84.38,
+      "functions": 100,
+      "lines": 89.69
+    },
+    "tests/vm": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  },
+  "overall_coverage": {
+    "statements": 95.14,
+    "branches": 88.02,
+    "functions": 100,
+    "lines": 92.47
+  },
+  "test_files": 35,
+  "total_tests": 1408,
+  "passed_tests": 1408,
+  "failed_tests": 0,
+  "coverage_threshold_met": true,
+  "meets_95_percent_threshold": true
+}

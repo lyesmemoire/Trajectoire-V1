@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "totalFilesGenerated": 4,
+    "totalContracts": 6
+  },
+  "generatedFiles": [
+    "c:\\Trajectoire\\compiler\\cli\\blueprint-cli.ts",
+    "c:\\Trajectoire\\packages\\blueprint-sdk\\src\\index.ts",
+    "c:\\Trajectoire\\schemas\\blueprint-schema.json",
+    "c:\\Trajectoire\\api\\openapi.yaml"
+  ],
+  "contracts": [
+    "billing",
+    "decision-graph",
+    "fraud-kernel",
+    "interview",
+    "orchestration",
+    "user"
+  ]
+}

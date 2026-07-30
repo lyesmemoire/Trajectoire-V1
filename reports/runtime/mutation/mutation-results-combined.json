@@ -1,0 +1,500 @@
+[
+  {
+    "id": 1,
+    "line": 74,
+    "description": "+=2 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 2,
+    "line": 75,
+    "description": "+=2 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 3,
+    "line": 78,
+    "description": "+=2 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 4,
+    "line": 80,
+    "description": "+=2 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 5,
+    "line": 84,
+    "description": "+=2 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 6,
+    "line": 88,
+    "description": "+=2 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 7,
+    "line": 92,
+    "description": "+=2 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 8,
+    "line": 77,
+    "description": "invert branchTaken",
+    "status": "INVALID"
+  },
+  {
+    "id": 9,
+    "line": 79,
+    "description": "!== instead of ===",
+    "status": "INVALID"
+  },
+  {
+    "id": 10,
+    "line": 83,
+    "description": "invert isCall",
+    "status": "INVALID"
+  },
+  {
+    "id": 11,
+    "line": 87,
+    "description": "invert isReturn",
+    "status": "INVALID"
+  },
+  {
+    "id": 12,
+    "line": 43,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 13,
+    "line": 44,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 14,
+    "line": 45,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 15,
+    "line": 46,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 16,
+    "line": 47,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 17,
+    "line": 48,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 18,
+    "line": 49,
+    "description": "0 → 1",
+    "status": "INVALID"
+  },
+  {
+    "id": 19,
+    "line": 234,
+    "description": "< → <=",
+    "status": "INVALID"
+  },
+  {
+    "id": 20,
+    "line": 239,
+    "description": ">= → >",
+    "status": "KILLED"
+  },
+  {
+    "id": 21,
+    "line": 244,
+    "description": "=== → !==",
+    "status": "INVALID"
+  },
+  {
+    "id": 22,
+    "line": 144,
+    "description": "+1 to instructionsExecuted in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 23,
+    "line": 144,
+    "description": "+1 to cycles in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 24,
+    "line": 144,
+    "description": "+1 to branchesTaken in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 25,
+    "line": 144,
+    "description": "+1 to errors in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 26,
+    "line": 116,
+    "description": "< → <=",
+    "status": "KILLED"
+  },
+  {
+    "id": 27,
+    "line": 116,
+    "description": "i = 0 → i = 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 28,
+    "line": 105,
+    "description": "&& → ||",
+    "status": "INVALID"
+  },
+  {
+    "id": 29,
+    "line": 116,
+    "description": "&& → ||",
+    "status": "INVALID"
+  },
+  {
+    "id": 30,
+    "line": 28,
+    "description": "false → true",
+    "status": "INVALID"
+  },
+  {
+    "id": 31,
+    "line": 103,
+    "description": "true → false",
+    "status": "INVALID"
+  },
+  {
+    "id": 32,
+    "line": 137,
+    "description": "false → true",
+    "status": "KILLED"
+  },
+  {
+    "id": 33,
+    "line": 74,
+    "description": "+=3 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 34,
+    "line": 75,
+    "description": "+=3 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 35,
+    "line": 78,
+    "description": "+=3 instead of ++",
+    "status": "INVALID"
+  },
+  {
+    "id": 36,
+    "line": 151,
+    "description": "return decode instead of fetch",
+    "status": "INVALID"
+  },
+  {
+    "id": 37,
+    "line": 151,
+    "description": "return execute instead of fetch",
+    "status": "INVALID"
+  },
+  {
+    "id": 38,
+    "line": 158,
+    "description": "return fetch instead of decode",
+    "status": "INVALID"
+  },
+  {
+    "id": 39,
+    "line": 158,
+    "description": "return execute instead of decode",
+    "status": "INVALID"
+  },
+  {
+    "id": 40,
+    "line": 165,
+    "description": "return fetch instead of execute",
+    "status": "INVALID"
+  },
+  {
+    "id": 41,
+    "line": 165,
+    "description": "return decode instead of execute",
+    "status": "INVALID"
+  },
+  {
+    "id": 42,
+    "line": 172,
+    "description": "return null instead of context",
+    "status": "INVALID"
+  },
+  {
+    "id": 43,
+    "line": 179,
+    "description": "remove setBytecode call",
+    "status": "INVALID"
+  },
+  {
+    "id": 44,
+    "line": 180,
+    "description": "remove reset call",
+    "status": "KILLED"
+  },
+  {
+    "id": 45,
+    "line": 187,
+    "description": "return empty array",
+    "status": "INVALID"
+  },
+  {
+    "id": 46,
+    "line": 208,
+    "description": "remove enableCache call",
+    "status": "KILLED"
+  },
+  {
+    "id": 47,
+    "line": 215,
+    "description": "remove disableCache call",
+    "status": "KILLED"
+  },
+  {
+    "id": 48,
+    "line": 222,
+    "description": "remove setCacheSize call",
+    "status": "KILLED"
+  },
+  {
+    "id": 49,
+    "line": 222,
+    "description": "size * 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 50,
+    "line": 222,
+    "description": "size + 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 51,
+    "line": 201,
+    "description": "return null",
+    "status": "KILLED"
+  },
+  {
+    "id": 52,
+    "line": 201,
+    "description": "return empty stats",
+    "status": "KILLED"
+  },
+  {
+    "id": 53,
+    "line": 134,
+    "description": "remove context.reset",
+    "status": "INVALID"
+  },
+  {
+    "id": 54,
+    "line": 135,
+    "description": "remove clearCache",
+    "status": "KILLED"
+  },
+  {
+    "id": 55,
+    "line": 136,
+    "description": "remove statistics reset",
+    "status": "KILLED"
+  },
+  {
+    "id": 56,
+    "line": 127,
+    "description": "remove stop",
+    "status": "KILLED"
+  },
+  {
+    "id": 57,
+    "line": 194,
+    "description": "return null instead of cycle",
+    "status": "KILLED"
+  },
+  {
+    "id": 58,
+    "line": 74,
+    "description": "+=4 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 59,
+    "line": 74,
+    "description": "+=5 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 60,
+    "line": 75,
+    "description": "+=4 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 61,
+    "line": 75,
+    "description": "+=5 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 62,
+    "line": 116,
+    "description": "i < n → i < n - 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 63,
+    "line": 116,
+    "description": "i < n → i < n + 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 64,
+    "line": 116,
+    "description": "i = 0 → i = 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 65,
+    "line": 116,
+    "description": "i++ → i += 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 66,
+    "line": 144,
+    "description": "+2 to instructionsExecuted in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 67,
+    "line": 144,
+    "description": "+2 to cycles in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 68,
+    "line": 144,
+    "description": "+1 to branchesNotTaken in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 69,
+    "line": 144,
+    "description": "+1 to calls in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 70,
+    "line": 144,
+    "description": "+1 to returns in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 71,
+    "line": 222,
+    "description": "size * 3",
+    "status": "KILLED"
+  },
+  {
+    "id": 72,
+    "line": 222,
+    "description": "size + 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 73,
+    "line": 222,
+    "description": "size - 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 74,
+    "line": 134,
+    "description": "remove context.reset",
+    "status": "INVALID"
+  },
+  {
+    "id": 75,
+    "line": 135,
+    "description": "remove clearCache",
+    "status": "KILLED"
+  },
+  {
+    "id": 76,
+    "line": 136,
+    "description": "remove statistics reset",
+    "status": "KILLED"
+  },
+  {
+    "id": 77,
+    "line": 127,
+    "description": "remove stop",
+    "status": "KILLED"
+  },
+  {
+    "id": 78,
+    "line": 201,
+    "description": "return stats with hits=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 79,
+    "line": 201,
+    "description": "return stats with misses=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 80,
+    "line": 201,
+    "description": "return stats with hits=1, misses=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 81,
+    "line": 194,
+    "description": "return undefined instead of cycle",
+    "status": "INVALID"
+  },
+  {
+    "id": 82,
+    "line": 43,
+    "description": "0 → 2",
+    "status": "INVALID"
+  },
+  {
+    "id": 83,
+    "line": 44,
+    "description": "0 → 2",
+    "status": "INVALID"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "description": "Baseline de Référence (SBOM v1) - Gel d'Audit",
+  "date": "2026-07-29T00:00:00Z",
+  "tools": {
+    "node": "v22.x LTS (Alpine)",
+    "pnpm": "9.1.x",
+    "cdxgen": "^10.0.0",
+    "json-canonicalize": "^1.0.6",
+    "ajv": "^8.17.1"
+  },
+  "schemas": {
+    "cycloneDx": "1.5",
+    "spdx": "2.3"
+  },
+  "artifactsExpected": [
+    "manifest.json",
+    "manifest.sig.json",
+    "sbom-cyclonedx.json",
+    "sbom-cyclonedx.sig.json",
+    "sbom-spdx.json",
+    "sbom-spdx.sig.json",
+    "lab-verification-report.txt",
+    "determinism-test-report.txt"
+  ],
+  "note": "Les rapports et SBOMs générés par le pipeline CI lors du premier run post-gel devront être copiés dans ce répertoire pour servir de référence immuable d'audit."
+}

@@ -1,0 +1,50 @@
+{
+  "component": "instruction-fetch",
+  "file": "compiler/cvm/instruction-fetch.ts",
+  "auditDate": "2026-07-27T00:35:00Z",
+  "objectives": {
+    "statements": {
+      "target": ">=95%",
+      "current": "100.00%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "target": ">=97%",
+      "current": "96.00%",
+      "status": "FAILED",
+      "gap": "1.00%"
+    },
+    "functions": {
+      "target": "100%",
+      "current": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "target": ">=95%",
+      "current": "100.00%",
+      "status": "PASSED"
+    }
+  },
+  "gaps": {
+    "statements": [],
+    "branches": [
+      {
+        "line": 124,
+        "condition": "if (firstKey !== undefined)",
+        "uncovered": "else branch (firstKey === undefined)",
+        "hits": "[1,0]",
+        "function": "evictIfNeeded",
+        "reason": "Cache.keys().next().value returns undefined when cache is empty",
+        "testRequired": true
+      }
+    ],
+    "functions": [],
+    "lines": []
+  },
+  "summary": {
+    "totalGaps": 1,
+    "type": "Branch coverage gap",
+    "blocking": true,
+    "blockingCriteria": "Branch coverage is 96.00%, below target of 97%"
+  }
+}

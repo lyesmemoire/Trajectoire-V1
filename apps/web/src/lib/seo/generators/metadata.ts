@@ -1,11 +1,8 @@
 import { Metadata } from "next";
-import { Job } from "../data/jobs";
+import { Job } from '../data/jobs';
 import { Company } from "../data/companies";
 
-export function generateInterviewMetadata(
-  job: Job,
-  company: Company,
-): Metadata {
+export function generateInterviewMetadata(job: any, company: Company, ): Metadata {
   const title = `Questions Entretien ${job.title} ${company.name} | Guide Complet 2024`;
   const description = `Préparez votre entretien ${job.title} chez ${company.name} : 10 questions types, exemples de réponses, conseils d'experts. Taux de réussite +67%.`;
 
@@ -53,7 +50,7 @@ export function generateInterviewMetadata(
   };
 }
 
-export function generateCVTemplateMetadata(job: Job): Metadata {
+export function generateCVTemplateMetadata(job: any): Metadata {
   const title = `CV Template ${job.title} | Modèle Optimisé ATS 2024`;
   const description = `Téléchargez notre template CV ${job.title} optimisé pour les systèmes ATS. Format moderne, mots-clés pertinents, taux de réponse +3x.`;
 

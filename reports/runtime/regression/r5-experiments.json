@@ -1,0 +1,38 @@
+[
+  {
+    "experiment": "EXP 1",
+    "description": "Code original → nouveau test",
+    "expected": "PASS",
+    "actual": "PASS",
+    "exit_code": 0,
+    "assertion": null,
+    "duration": 6068
+  },
+  {
+    "experiment": "EXP 2",
+    "description": "Mutation supprimer stop() → nouveau test",
+    "expected": "FAIL",
+    "actual": "FAIL",
+    "exit_code": 1,
+    "assertion": "expected true to be false // Object.is equality\u001b[39m",
+    "duration": 5702
+  },
+  {
+    "experiment": "EXP 3",
+    "description": "Mutation stop() vide → nouveau test",
+    "expected": "FAIL",
+    "actual": "FAIL",
+    "exit_code": 1,
+    "assertion": "Test failed",
+    "duration": 5510
+  },
+  {
+    "experiment": "EXP 4",
+    "description": "Mutation stop() inverse running → nouveau test",
+    "expected": "FAIL",
+    "actual": "FAIL",
+    "exit_code": 1,
+    "assertion": "expected true to be false // Object.is equality\u001b[39m",
+    "duration": 5802
+  }
+]

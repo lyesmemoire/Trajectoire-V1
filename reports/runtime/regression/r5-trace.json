@@ -1,0 +1,267 @@
+{
+  "phase": "PHASE 2 - Traçage complet d'exécution",
+  "description": "Traçage de l'exécution réelle pour stop()",
+  "traces": [
+    {
+      "cas": "Cas 1: pipeline.run() → stop() → fin",
+      "steps": [
+        {
+          "operation": "Initialisation",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        },
+        {
+          "operation": "pipeline.run()",
+          "pc": 0,
+          "halted": false,
+          "running": true,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "run() met running à true avant la boucle"
+        },
+        {
+          "operation": "while (!halted && running)",
+          "pc": "variable",
+          "halted": false,
+          "running": true,
+          "condition": "true → exécute cycle()"
+        },
+        {
+          "operation": "cycle() exécuté",
+          "pc": "incrémenté",
+          "halted": false,
+          "running": true,
+          "statistics": {
+            "instructionsExecuted": 1,
+            "cycles": 1,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        },
+        {
+          "operation": "stop() appelé",
+          "pc": "inchangé",
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 1,
+            "cycles": 1,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "stop() met running à false"
+        },
+        {
+          "operation": "while (!halted && running)",
+          "pc": "inchangé",
+          "halted": false,
+          "running": false,
+          "condition": "false → boucle s'arrête"
+        },
+        {
+          "operation": "fin de run()",
+          "pc": "inchangé",
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 1,
+            "cycles": 1,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        }
+      ]
+    },
+    {
+      "cas": "Cas 2: pipeline.runCycles() → stop() → fin",
+      "steps": [
+        {
+          "operation": "Initialisation",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        },
+        {
+          "operation": "pipeline.runCycles(10)",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "runCycles() ne modifie PAS running"
+        },
+        {
+          "operation": "for (i=0; i<10 && !halted && running)",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "condition": "false → aucun cycle exécuté"
+        },
+        {
+          "operation": "stop() appelé",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "stop() met running à false (déjà false)"
+        },
+        {
+          "operation": "fin de runCycles()",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        }
+      ]
+    },
+    {
+      "cas": "Cas 3: cycle() → stop() → fin",
+      "steps": [
+        {
+          "operation": "Initialisation",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        },
+        {
+          "operation": "pipeline.cycle()",
+          "pc": 0,
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 0,
+            "cycles": 0,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "cycle() ne vérifie PAS running, exécute quand même si halted=false"
+        },
+        {
+          "operation": "cycle() exécuté (halted=false)",
+          "pc": "incrémenté",
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 1,
+            "cycles": 1,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          }
+        },
+        {
+          "operation": "stop() appelé",
+          "pc": "inchangé",
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 1,
+            "cycles": 1,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "stop() met running à false (déjà false)"
+        },
+        {
+          "operation": "cycle() appelé après stop()",
+          "pc": "incrémenté",
+          "halted": false,
+          "running": false,
+          "statistics": {
+            "instructionsExecuted": 2,
+            "cycles": 2,
+            "branchesTaken": 0,
+            "branchesNotTaken": 0,
+            "calls": 0,
+            "returns": 0,
+            "errors": 0
+          },
+          "note": "cycle() ne vérifie PAS running, continue d'exécuter"
+        }
+      ]
+    }
+  ],
+  "conclusions": [
+    "run() met running à true avant d'exécuter des cycles",
+    "runCycles() ne met PAS running à true",
+    "cycle() ne vérifie PAS running, seulement halted",
+    "stop() met running à false",
+    "Après stop(), cycle() continue d'exécuter si halted=false",
+    "Après stop(), run() et runCycles() s'arrêtent car ils vérifient running"
+  ]
+}

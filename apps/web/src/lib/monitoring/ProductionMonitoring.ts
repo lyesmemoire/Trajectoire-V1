@@ -46,7 +46,7 @@ export class SentryService {
   /**
    * Capture exception
    */
-  captureException(error: Error, context?: Record<string, any>): void {
+  captureException(error: Error, context?: Record<string, unknown>): void {
     if (!this.initialized) return;
     
     // Sentry.captureException(error, { extra: context });
@@ -128,7 +128,7 @@ export class OpenTelemetryService {
   /**
    * Record a metric
    */
-  recordMetric(name: string, value: number, attributes?: Record<string, any>): void {
+  recordMetric(name: string, value: number, attributes?: Record<string, unknown>): void {
     if (!this.initialized) return;
     
     // const meter = opentelemetry.metrics.getMeter("trajectoire");
@@ -141,7 +141,7 @@ export class OpenTelemetryService {
   /**
    * Record a histogram
    */
-  recordHistogram(name: string, value: number, attributes?: Record<string, any>): void {
+  recordHistogram(name: string, value: number, attributes?: Record<string, unknown>): void {
     if (!this.initialized) return;
     
     // const meter = opentelemetry.metrics.getMeter("trajectoire");
@@ -229,8 +229,8 @@ export class MetricsCollector {
   /**
    * Get all metrics
    */
-  getAllMetrics(): Record<string, any> {
-    const result: Record<string, any> = {};
+  getAllMetrics(): Record<string, unknown> {
+    const result: Record<string, unknown> = {};
     
     for (const [name] of this.metrics) {
       result[name] = this.getStats(name);

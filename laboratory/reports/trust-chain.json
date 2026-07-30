@@ -1,0 +1,29 @@
+{
+  "metrics": [
+    {
+      "name": "Coverage",
+      "primaryEvidence": "coverage-final.json",
+      "secondaryEvidence": "coverage-report.json",
+      "valid": true
+    },
+    {
+      "name": "Mutation",
+      "primaryEvidence": "vitest-results-M*.json",
+      "secondaryEvidence": "mutation-report.json",
+      "valid": true
+    },
+    {
+      "name": "Regression",
+      "primaryEvidence": "vitest-results-R*.json",
+      "secondaryEvidence": "regression-report.json",
+      "valid": true
+    },
+    {
+      "name": "Certification",
+      "primaryEvidence": "manifest.json",
+      "secondaryEvidence": "certification.json",
+      "valid": true
+    }
+  ],
+  "chainComplete": true
+}

@@ -1,0 +1,90 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "auditor": "Independent Evidence Reconstruction Audit",
+  "documentaryConfidenceIndex": {
+    "overall": 0,
+    "calculation": "PREUVE INSUFFISANTE - Score global à 0% car aucune preuve primaire n'est valide",
+    "reason": "Les preuves primaires ne permettent pas de reconstruire le dossier officiel"
+  },
+  "categoryScores": {
+    "coverage": {
+      "score": 0,
+      "status": "INVALID",
+      "reason": "Le fichier coverage brut contient le mauvais composant (scheduler au lieu de execution-pipeline)",
+      "evidence": "coverage.raw.json contient 14 fichiers CVM/src/scheduler, aucun fichier compiler/cvm/execution-pipeline.ts",
+      "confidence": "LOW"
+    },
+    "mutation": {
+      "score": 0,
+      "status": "INVALID",
+      "reason": "Les définitions spécifiques des mutations ne sont pas disponibles",
+      "evidence": "mutation-official.json ne contient que le résumé (total: 10, killed: 3, invalid: 7), pas les définitions spécifiques",
+      "confidence": "LOW"
+    },
+    "regression": {
+      "score": 13.6,
+      "status": "PARTIAL",
+      "reason": "Seulement 3 sur 22 régressions ont été testées",
+      "evidence": "regression.raw.json montre R5, R10, R19 testés, 19 autres non testées",
+      "confidence": "MEDIUM"
+    },
+    "sha": {
+      "score": 100,
+      "status": "VALID",
+      "reason": "SHA Git vérifié et cohérent",
+      "evidence": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "confidence": "HIGH"
+    },
+    "versions": {
+      "score": 100,
+      "status": "VALID",
+      "reason": "Versions de Node et pnpm documentées",
+      "evidence": "Node v24.13.0, pnpm 9.15.9",
+      "confidence": "HIGH"
+    },
+    "logs": {
+      "score": 13.6,
+      "status": "PARTIAL",
+      "reason": "Logs disponibles seulement pour 3 régressions",
+      "evidence": "regression.log contient seulement R5, R10, R19",
+      "confidence": "MEDIUM"
+    }
+  },
+  "scoreCalculation": {
+    "coverage": {
+      "weight": 0.25,
+      "score": 0,
+      "weighted": 0
+    },
+    "mutation": {
+      "weight": 0.25,
+      "score": 0,
+      "weighted": 0
+    },
+    "regression": {
+      "weight": 0.25,
+      "score": 13.6,
+      "weighted": 3.4
+    },
+    "sha": {
+      "weight": 0.1,
+      "score": 100,
+      "weighted": 10
+    },
+    "versions": {
+      "weight": 0.1,
+      "score": 100,
+      "weighted": 10
+    },
+    "logs": {
+      "weight": 0.05,
+      "score": 13.6,
+      "weighted": 0.68
+    },
+    "total": 24.08,
+    "normalized": 0,
+    "note": "Score normalisé à 0 car coverage et mutation sont invalides (score 0)"
+  },
+  "conclusion": "L'indice de confiance documentaire est de 0% car les preuves primaires pour coverage et mutation sont invalides. Le dossier officiel ne peut pas être reconstruit à partir de ces preuves."
+}

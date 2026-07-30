@@ -4,8 +4,7 @@
  * Tracks: average interview time, abandonment, completion rate, time spent
  */
 
-import { z } from "zod";
-import { analyticsService, EventType, AnalyticsContext } from "./AnalyticsService";
+import { analyticsService, EventType } from "./AnalyticsService";
 
 // Interview Data
 export interface InterviewData {

@@ -1,0 +1,457 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "MUTATION_REPORT",
+  "metadata": {
+    "id": "MUT-execution-pipeline-20260729T180619Z",
+    "createdAt": "2026-07-29T18:06:19.589Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false
+  },
+  "provenance": {
+    "command": "node certification/mutation.cjs",
+    "script": "certification/mutation.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T18:05:39.422Z",
+    "completedAt": "2026-07-29T18:06:19.589Z",
+    "durationMs": 40167,
+    "exitCode": 0
+  },
+  "content": {
+    "summary": {
+      "total": 12,
+      "killed": 12,
+      "survived": 0,
+      "invalid": 0,
+      "timeout": 0,
+      "mutationScore": 100
+    },
+    "mutations": [
+      {
+        "id": "AST-MUT-03d02f907b162c94",
+        "description": "true -> false",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "true",
+        "mutated": "false",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute loop iterations in run() when not halted"
+        ],
+        "durationMs": 3665,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:42.944Z",
+        "completedAt": "2026-07-29T18:05:46.609Z"
+      },
+      {
+        "id": "AST-MUT-070de91e4b59395d",
+        "description": "Operator FirstBinaryOperator to >=",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "this.context.getProgramCounter() < 0",
+        "mutated": "this.context.getProgramCounter() >= 0",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state"
+        ],
+        "durationMs": 3010,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:46.610Z",
+        "completedAt": "2026-07-29T18:05:49.620Z"
+      },
+      {
+        "id": "AST-MUT-1236d2bdfcc84f69",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should reset statistics on flush",
+          "should not execute when halted",
+          "should reset pipeline state",
+          "should reset on bytecode change",
+          "should run until halt",
+          "should stop pipeline",
+          "should handle rapid start-stop",
+          "should prevent runCycles from executing after reset",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)",
+          "should reset statistics to zero after reset()",
+          "should reset statistics when setBytecode is called"
+        ],
+        "durationMs": 3060,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:49.622Z",
+        "completedAt": "2026-07-29T18:05:52.682Z"
+      },
+      {
+        "id": "AST-MUT-202a1299ed1fc32b",
+        "description": "Operator EqualsEqualsEqualsToken to !==",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "errors.length === 0",
+        "mutated": "errors.length !== 0",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state",
+          "should detect negative program counter",
+          "should detect program counter exceeding bytecode",
+          "should include \"Program counter is negative\" in errors for PC < 0",
+          "should report valid=true when PC < 0 check is disabled (force false kills this)"
+        ],
+        "durationMs": 3346,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:52.683Z",
+        "completedAt": "2026-07-29T18:05:56.029Z"
+      },
+      {
+        "id": "AST-MUT-38d92de671166b18",
+        "description": "Operator EqualsEqualsEqualsToken to !==",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "result.branchTaken === false",
+        "mutated": "result.branchTaken !== false",
+        "status": "KILLED",
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)"
+        ],
+        "durationMs": 2971,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:56.031Z",
+        "completedAt": "2026-07-29T18:05:59.002Z"
+      },
+      {
+        "id": "AST-MUT-648687dc1faf646e",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should track branch not taken when result.branchTaken is false",
+          "should track branch not taken when result.branchTaken is false",
+          "should NOT increment branchesNotTaken when branchTaken is true (force true kills this)"
+        ],
+        "durationMs": 3140,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:05:59.003Z",
+        "completedAt": "2026-07-29T18:06:02.143Z"
+      },
+      {
+        "id": "AST-MUT-91f8e2b7aed4657d",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should set running to false when stop() is called",
+          "should prevent runCycles() from executing cycles when running is false",
+          "should stop pipeline"
+        ],
+        "durationMs": 3068,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:02.145Z",
+        "completedAt": "2026-07-29T18:06:05.213Z"
+      },
+      {
+        "id": "AST-MUT-d34a02cddd093be0",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should validate valid state"
+        ],
+        "durationMs": 2875,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:05.215Z",
+        "completedAt": "2026-07-29T18:06:08.090Z"
+      },
+      {
+        "id": "AST-MUT-e13f2cd6ad385f61",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should set running to false after reset, even if it was true",
+          "should prevent runCycles from executing after reset",
+          "should set running to false after reset()"
+        ],
+        "durationMs": 3139,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:08.091Z",
+        "completedAt": "2026-07-29T18:06:11.230Z"
+      },
+      {
+        "id": "AST-MUT-e553ba9125541b1b",
+        "description": "false -> true",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "false",
+        "mutated": "true",
+        "status": "KILLED",
+        "failedTests": [
+          "should run for N cycles",
+          "should handle many cycles",
+          "should maintain performance over many cycles"
+        ],
+        "durationMs": 2810,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:11.231Z",
+        "completedAt": "2026-07-29T18:06:14.041Z"
+      },
+      {
+        "id": "AST-MUT-f2acf880f59a9d5a",
+        "description": "Number 0 -> 1",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "0",
+        "mutated": "1",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)"
+        ],
+        "durationMs": 2721,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:14.042Z",
+        "completedAt": "2026-07-29T18:06:16.763Z"
+      },
+      {
+        "id": "AST-MUT-fdb5b9d0b40d6444",
+        "description": "Operator FirstBinaryOperator to >=",
+        "file": "execution-pipeline.ts",
+        "line": -1,
+        "type": "AST",
+        "original": "i < n",
+        "mutated": "i >= n",
+        "status": "KILLED",
+        "failedTests": [
+          "should execute loop iterations in runCycles() when not halted",
+          "should execute exactly N cycles when runCycles(N) is called",
+          "should execute exactly 1 cycle for runCycles(1)"
+        ],
+        "durationMs": 2823,
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "startedAt": "2026-07-29T18:06:16.764Z",
+        "completedAt": "2026-07-29T18:06:19.587Z"
+      }
+    ],
+    "catalogSha256": "7564e1d7ad4b35d52c7e12a6474b6e5fc54c81520576bb6f3789d977cd6adb4d"
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-03d02f907b162c94.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-03d02f907b162c94.json",
+      "sha256": "83c97ced504e8bd14abe65b12f536e4dda7b9800667c3923f30cbefd336dc954"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-03d02f907b162c94.stdout.log",
+      "sha256": "547da760486cf27997368613e05a3488a475a614d496a7adc5d87870939de914"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-070de91e4b59395d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-070de91e4b59395d.json",
+      "sha256": "7e20b5bba2da7bca7cdfba4c073947cd8e757a804d48faddc6dc0912b1d1e336"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-070de91e4b59395d.stdout.log",
+      "sha256": "ca1d34d961af788a62a33bd916c29c86444aa6bf703ad426d37d4eac7469ae2a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-1236d2bdfcc84f69.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-1236d2bdfcc84f69.json",
+      "sha256": "9db40195057c5aabc5d0963b028e9d930409312d84f3886b2149d6a642398c38"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-1236d2bdfcc84f69.stdout.log",
+      "sha256": "9f511c7bcf2e1fe3101b31abd1f4155d4c1823c4b7f378eac83b8f4b835e08ae"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-202a1299ed1fc32b.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-202a1299ed1fc32b.json",
+      "sha256": "d207f40ca1c96098e4d08ba172689864aa71702df84b7b1715f53944bdceb092"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-202a1299ed1fc32b.stdout.log",
+      "sha256": "e203feea0b2738eeb99b6659d0b413eb014525e5f407b5623d444a5351bc5028"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-38d92de671166b18.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-38d92de671166b18.json",
+      "sha256": "09dcd3a1de6841e7051289536885979abd292080ef02fb72a90dad16ef1153ec"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-38d92de671166b18.stdout.log",
+      "sha256": "e03d4fdc317ab5befc886f6f8ae28a161a253ce02b7568e744600b14c62ee436"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-648687dc1faf646e.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-648687dc1faf646e.json",
+      "sha256": "0cab50fc24731a8a6d8d51510e95cdf4eff0b0da95d59670325d5eec98b811e4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-648687dc1faf646e.stdout.log",
+      "sha256": "c1f38036b699a9483f56edd7a434c8730209b1ee8c21dfc683d21afac40d2375"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-91f8e2b7aed4657d.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-91f8e2b7aed4657d.json",
+      "sha256": "e46b57ee86fe51025de23d3f4b87825438d161c08622c094b045dc278424410a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-91f8e2b7aed4657d.stdout.log",
+      "sha256": "9e94d6ed57d588a1285640d49339130db973abd14fbe2f43723878d7afffc97c"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-d34a02cddd093be0.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-d34a02cddd093be0.json",
+      "sha256": "5d4049ad621a1802af490471c811f2c81813274bb45ac1840782977c322df151"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-d34a02cddd093be0.stdout.log",
+      "sha256": "f930b8037732048f3739daa803b9569854dd786d3151bc5ab3041810bec1c2f3"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e13f2cd6ad385f61.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-e13f2cd6ad385f61.json",
+      "sha256": "c1b0417018636f4f9664a5d50e3b70b2401a0fc5ac92439dc547707d5359562e"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e13f2cd6ad385f61.stdout.log",
+      "sha256": "41299c2d992aaa409b93073535b26edc738e91f3b5ed6457b141ad090885d5ee"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e553ba9125541b1b.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-e553ba9125541b1b.json",
+      "sha256": "e984e2830759c7029f6abb7f2759258de47465c8341187996904cb8616fd3b87"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-e553ba9125541b1b.stdout.log",
+      "sha256": "6bd2504147d7da37d7aca12955e2f6d628c63c887f0f09973f41a156422f37f5"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-f2acf880f59a9d5a.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-f2acf880f59a9d5a.json",
+      "sha256": "be928bb5f04822701a8d13b0e8b1572fa099524aa76893d6ec8902ef8b897df4"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-f2acf880f59a9d5a.stdout.log",
+      "sha256": "221ce9d92b0b3b747bc85384e1b7c6bff1ee45308ed416eb6ae0da33ce640c7a"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-fdb5b9d0b40d6444.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/vitest-results-MAST-MUT-fdb5b9d0b40d6444.json",
+      "sha256": "312af1f0b1ed6be4de2c124b12cdc4332f44a1bf000517f70bd2527f89b917b2"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "logs/05-mutation-AST-MUT-fdb5b9d0b40d6444.stdout.log",
+      "sha256": "bb89e2a28a65ffc46f5b4deb5ae2e399c0b016866627c6fb0ed522b216d6d190"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "117e971154f1b8f0a8d175c71c20b4f2bfcc2bd10fbfadfff6e61e5a5889ae5e",
+    "algorithm": "sha256"
+  }
+}

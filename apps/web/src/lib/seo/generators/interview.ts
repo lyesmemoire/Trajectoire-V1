@@ -1,4 +1,3 @@
-import { Job } from "../data/jobs";
 import { Company } from "../data/companies";
 import { questionTemplates } from "../data/questions";
 
@@ -18,10 +17,7 @@ export interface InterviewPageContent {
   ctaText: string;
 }
 
-export function generateInterviewContent(
-  job: Job,
-  company: Company,
-): InterviewPageContent {
+export function generateInterviewContent(job: any, company: Company, ): InterviewPageContent {
   // Sélection de 10 questions pertinentes
   const relevantQuestions = questionTemplates
     .filter((q) => q.level === job.level || q.level === "mid")

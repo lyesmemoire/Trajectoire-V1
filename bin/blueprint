@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+/**
+ * Blueprint V3 Enterprise CLI
+ * Executable entry point
+ */
+
+import { main } from '../src/cli/core/index.js';
+
+main(process.argv).catch((error) => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});

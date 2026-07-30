@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "totalComponentsGenerated": 9
+  },
+  "generatedComponents": [
+    "c:\\Trajectoire\\packages\\blueprint-pm\\registry.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\installer.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\dependency-resolver.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\semver.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\signing.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\verification.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\cache.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\publisher.ts",
+    "c:\\Trajectoire\\packages\\blueprint-pm\\cli.ts"
+  ]
+}

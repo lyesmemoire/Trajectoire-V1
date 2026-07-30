@@ -1,0 +1,35 @@
+{
+  "phase1": {
+    "script": "certification/mutation.cjs",
+    "commandExecuted": "npx vitest run tests/vm/advanced/execution-pipeline.test.ts --no-coverage --reporter=verbose --no-threads"
+  },
+  "phase2": {
+    "mutationId": "M3",
+    "description": "Trivial mutation: change running to true",
+    "file": "compiler/cvm/execution-pipeline.ts",
+    "line": 28,
+    "original": "private running: boolean = false;",
+    "mutated": "private running: boolean = true;"
+  },
+  "phase3_4": {
+    "command": "pnpm cert:mutation",
+    "exitCode": 0,
+    "durationSeconds": 7.85,
+    "stdout": "[MUTATION] Loading mutation definitions...\n[MUTATION] 3 mutations to test\n[MUTATION] M1: Change initial instructionsExecuted to 1\n[MUTATION]   Status: KILLED (1426ms)\n[MUTATION] M2: Change initial cycles to 1\n[MUTATION]   Status: KILLED (1277ms)\n[MUTATION] M3: Trivial mutation: change running to true\n[MUTATION]   Status: KILLED (1180ms)\n\n[MUTATION] === Summary ===\n[MUTATION] Total: 3, Killed: 3, Survived: 0, Invalid: 0, Timeout: 0\n[MUTATION] Score: 100%",
+    "stderr": ""
+  },
+  "phase5": {
+    "testsExecuted": false,
+    "vitestResult": "Vitest n'a exécuté aucun test. Le processus s'est terminé par une erreur fatale 'CACError: Unknown option `--threads`' dès l'analyse de la ligne de commande."
+  },
+  "phase6": {
+    "actualTestsExecuted": 0,
+    "announcedTestsKilled": 3
+  },
+  "phase7": {
+    "killedJustification": "La mutation est classée 'KILLED' uniquement parce que la commande Vitest échoue (exit code 1) à cause d'une option de ligne de commande invalide (--no-threads), et non suite à l'échec d'un test unitaire légitime."
+  },
+  "phase8": {
+    "conclusion": "B. Mutation faussement détectée"
+  }
+}

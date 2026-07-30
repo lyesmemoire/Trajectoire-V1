@@ -1,0 +1,293 @@
+{
+  "runDir": "C:\\Trajectoire\\certification\\runs\\788bc00c-20260729T195815Z",
+  "verifiedAt": "2026-07-29T20:05:11.271Z",
+  "component": "execution-pipeline",
+  "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+  "checks": [
+    {
+      "id": "V-01",
+      "name": "Manifest schema valid",
+      "status": "PASS"
+    },
+    {
+      "id": "V-02",
+      "name": "Git SHA exists",
+      "status": "PASS"
+    },
+    {
+      "id": "V-03",
+      "name": "All source file hashes match",
+      "status": "PASS"
+    },
+    {
+      "id": "V-04",
+      "name": "All test file hashes match",
+      "status": "PASS"
+    },
+    {
+      "id": "V-05",
+      "name": "All artifact hashes match",
+      "status": "PASS"
+    },
+    {
+      "id": "V-06",
+      "name": "All evidence hashes match",
+      "status": "PASS"
+    },
+    {
+      "id": "V-07",
+      "name": "Log spot check valid",
+      "status": "PASS"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: audit-cve.dsse.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: audit-cve.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: dependency-integrity.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: licenses.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: provenance.dsse.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: reproducible-build.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: sbom-cyclonedx.dsse.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: sbom-cyclonedx.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: sbom-spdx.dsse.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: sbom-spdx.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: secret-scan.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-08",
+      "name": "Schema: security-summary.json",
+      "status": "FAIL",
+      "detail": "Missing content field"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: audit-cve.dsse.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: audit-cve.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: dependency-integrity.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: licenses.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: provenance.dsse.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: reproducible-build.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: sbom-cyclonedx.dsse.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: sbom-cyclonedx.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: sbom-spdx.dsse.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: sbom-spdx.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: secret-scan.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-09",
+      "name": "EvidenceRefs: security-summary.json",
+      "status": "FAIL",
+      "detail": "No evidence references"
+    },
+    {
+      "id": "V-10",
+      "name": "Certification decision: REJECTED",
+      "status": "PASS"
+    },
+    {
+      "id": "V-11",
+      "name": "Manifest self-hash valid",
+      "status": "PASS"
+    },
+    {
+      "id": "V-13",
+      "name": "Signature Validation",
+      "status": "FAIL",
+      "detail": "signature.json not found"
+    },
+    {
+      "id": "S-06",
+      "name": "Les deux SBOM (CycloneDX et SPDX) sont présents",
+      "status": "PASS"
+    },
+    {
+      "id": "S-07",
+      "name": "Schéma CycloneDX valide (AJV)",
+      "status": "PASS"
+    },
+    {
+      "id": "S-08",
+      "name": "SPDX Schema",
+      "status": "FAIL",
+      "detail": "must have required property 'spdxVersion'"
+    },
+    {
+      "id": "S-10",
+      "name": "Duplication",
+      "status": "FAIL",
+      "detail": "Composants dupliqués détectés"
+    },
+    {
+      "id": "S-13",
+      "name": "Tous les composants référencés (2045 trouvés)",
+      "status": "PASS"
+    },
+    {
+      "id": "V-16",
+      "name": "CVE Audit report valid",
+      "status": "PASS"
+    },
+    {
+      "id": "V-17",
+      "name": "Security policy respected (0 critical/high)",
+      "status": "PASS"
+    },
+    {
+      "id": "V-18",
+      "name": "Licenses compliant (0 blocked)",
+      "status": "PASS"
+    },
+    {
+      "id": "V-19",
+      "name": "Dependency integrity valid (strict policy)",
+      "status": "PASS"
+    },
+    {
+      "id": "V-21",
+      "name": "Secret scan clear (0 leaks)",
+      "status": "PASS"
+    },
+    {
+      "id": "V-22",
+      "name": "Build Provenance",
+      "status": "FAIL",
+      "detail": "Provenance missing or invalid"
+    },
+    {
+      "id": "V-23",
+      "name": "Reproducible build verified",
+      "status": "PASS"
+    },
+    {
+      "id": "V-24",
+      "name": "In-toto",
+      "status": "FAIL",
+      "detail": "Not valid in-toto format"
+    },
+    {
+      "id": "V-25",
+      "name": "Artifact Signatures",
+      "status": "FAIL",
+      "detail": "Missing individual signatures"
+    },
+    {
+      "id": "V-20",
+      "name": "Security Artifacts",
+      "status": "FAIL",
+      "detail": "Some artifacts missing"
+    },
+    {
+      "id": "V-12",
+      "name": "No verification failures in manifest",
+      "status": "PASS"
+    }
+  ],
+  "totalChecks": 50,
+  "passed": 19,
+  "failed": 31,
+  "verdict": "REJECTED"
+}

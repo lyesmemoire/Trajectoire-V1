@@ -8,7 +8,7 @@ import { VoiceEventType } from './fsm.engine';
 // Define the shape of a VoiceEvent (payload only, no socket)
 export interface VoiceEvent {
   type: VoiceEventType;
-  payload?: any; // event‑specific data (e.g., audio chunk buffer)
+  payload?: unknown; // event‑specific data (e.g., audio chunk buffer)
 }
 
 
@@ -17,7 +17,7 @@ export interface VoiceEvent {
 // by the gateway when a client first connects.
 // ---------------------------------------------------------------------------
 function getSocket(session: InterviewSession): Socket | undefined {
-  return (session as any).socket as Socket | undefined;
+  return (session as unknown).socket as Socket | undefined;
 }
 
 // ---------------------------------------------------------------------------
@@ -65,7 +65,7 @@ export const handlers: Record<
       return;
     }
     // Transition to THINKING is handled by the FSM engine; here we start LLM.
-    const llmResponse = (session as any).llm.generateResponse(finalText);
+    const llmResponse = (session as unknown).llm.generateResponse(finalText);
     // Stream tokens back to client and optionally store them for later TTS.
     for await (const token of llmResponse) {
       socket?.emit('llm_token', { token });
@@ -90,12 +90,12 @@ export const handlers: Record<
       return;
     }
     // Push to playback queue (stateless buffer) and emit to the client.
-    const queue = (session as any).playbackQueue as PlaybackQueue;
+    const queue = (session as unknown).playbackQueue as PlaybackQueue;
     if (!queue) {
       // Lazy creation of a per‑session playback queue.
-      (session as any).playbackQueue = new PlaybackQueue();
+      (session as unknown).playbackQueue = new PlaybackQueue();
     }
-    (session as any).playbackQueue.enqueue(audioChunk);
+    (session as unknown).playbackQueue.enqueue(audioChunk);
     socket?.emit('audio', audioChunk);
     logger.debug('Enqueued and emitted TTS chunk');
   },
@@ -106,7 +106,7 @@ export const handlers: Record<
     session.asrAbort?.abort();
     session.ttsAbort?.abort();
     // Clear playback queue if present.
-    const queue = (session as any).playbackQueue as PlaybackQueue | undefined;
+    const queue = (session as unknown).playbackQueue as PlaybackQueue | undefined;
     queue?.clear();
     // Reset socket state – send a special interrupt notification.
     const socket = getSocket(session);
@@ -119,10 +119,10 @@ export const handlers: Record<
     // Cleanup resources.
     session.asrAbort?.abort();
     session.ttsAbort?.abort();
-    const queue = (session as any).playbackQueue as PlaybackQueue | undefined;
+    const queue = (session as unknown).playbackQueue as PlaybackQueue | undefined;
     queue?.clear();
     // Remove socket reference.
-    delete (session as any).socket;
+    delete (session as unknown).socket;
     logger.log(`Session ${session.sessionId} disconnected and cleaned up`);
   },
 };

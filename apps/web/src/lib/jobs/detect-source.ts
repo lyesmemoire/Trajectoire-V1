@@ -23,7 +23,7 @@ export function detectJobSource(input: string): JobSourceType {
 
     // If it's a valid URL but not from a known job board, we still treat it as potentially scrapable or as text
     return "RAW_TEXT";
-  } catch (e) {
+  } catch {
     // If not a URL, it's raw text if it has a minimum length
     return trimmed.length > 20 ? "RAW_TEXT" : "INVALID";
   }

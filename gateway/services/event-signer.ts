@@ -13,7 +13,7 @@ export class EventSigner {
     sessionId: string,
     eventId: string,
     type: string,
-    payload: any,
+    payload: unknown,
     timestamp: number
   ): string {
     const secret = this.tenantSecrets.get(tenantId);

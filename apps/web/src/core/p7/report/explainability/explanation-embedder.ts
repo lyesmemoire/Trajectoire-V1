@@ -1,5 +1,8 @@
-import { ExplanationGraph, ExplanationNode, ExplanationEdge } from "../../explainability/explanation-contract.js";
+
+import { ExplanationNode, ExplanationEdge } from "../../explainability/explanation-contract.js";
 import { EmbeddedExplanationGraph } from "../report-contract.js";
+import { ExplanationGraph } from "../../explainability/explanation-contract.js";
+
 
 export function buildExplanationEmbedding(graph: ExplanationGraph): EmbeddedExplanationGraph {
   const nodes: ExplanationNode[] = [];

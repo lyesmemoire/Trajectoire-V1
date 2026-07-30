@@ -232,7 +232,7 @@ export class RegressionSuite {
         scenario.id,
         turns
       );
-    } catch (error) {
+    } catch {
       // No golden conversation available
       goldenComparison = null;
     }
@@ -536,13 +536,13 @@ export class RegressionSuite {
     // Check golden dataset comparisons
     if (config.compareWithGolden) {
       results.forEach(result => {
-        if (result.goldenComparison && !result.goldenComparison.passed) {
+        if ((result as any).goldenComparison && !(result as any).goldenComparison.passed) {
           failures.push({
             scenarioId: result.scenarioId,
-            reason: `Golden dataset comparison failed: similarity ${result.goldenComparison.similarity.toFixed(2)} below threshold ${result.goldenComparison.threshold}`,
-            expected: result.goldenComparison.threshold,
-            actual: result.goldenComparison.similarity,
-            threshold: result.goldenComparison.threshold,
+            reason: `Golden dataset comparison failed: similarity ${(result as any).goldenComparison.similarity.toFixed(2)} below threshold ${(result as any).goldenComparison.threshold}`,
+            expected: (result as any).goldenComparison.threshold,
+            actual: (result as any).goldenComparison.similarity,
+            threshold: (result as any).goldenComparison.threshold,
           });
         }
       });

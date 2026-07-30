@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { Activity } from "lucide-react";
+import { motion } from "framer-motion"
+import { Activity } from "lucide-react"
 
 export function PressureMeterV2({ level }: { level: number }) {
-  const isHigh = level > 75;
+  const isHigh = level > 75
 
   return (
     <div className="space-y-4 w-full">
       <div className="flex justify-between items-end">
         <div className="flex items-center gap-2">
           <Activity
-            className={`w-4 h-4 ${isHigh ? "text-red-500 animate-pulse" : "text-cyan-400"}`}
+            className={`w-4 h-4 ${isHigh ? "text-brick-500 animate-pulse" : "text-forest-400"}`}
           />
-          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">
+          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-ink-500">
             Tension Biométrique
           </span>
         </div>
@@ -22,7 +22,7 @@ export function PressureMeterV2({ level }: { level: number }) {
             key={level}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={`text-2xl font-black tabular-nums ${isHigh ? "text-red-500" : "text-white"}`}
+            className={`text-2xl font-black tabular-nums ${isHigh ? "text-brick-500" : "text-white"}`}
           >
             {level}%
           </motion.span>
@@ -43,8 +43,8 @@ export function PressureMeterV2({ level }: { level: number }) {
         {/* Dynamic Segments */}
         <div className="flex gap-0.5 w-full h-3 relative z-10">
           {[...Array(40)].map((_, i) => {
-            const threshold = (i / 40) * 100;
-            const active = level >= threshold;
+            const threshold = (i / 40) * 100
+            const active = level >= threshold
             return (
               <motion.div
                 key={i}
@@ -62,14 +62,14 @@ export function PressureMeterV2({ level }: { level: number }) {
                 transition={{ duration: 0.3, repeat: isHigh ? Infinity : 0 }}
                 className="flex-1 rounded-sm"
               />
-            );
+            )
           })}
         </div>
 
         {/* High Pressure Alert Glow */}
         {isHigh && (
           <motion.div
-            className="absolute inset-0 bg-red-500/10 shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]"
+            className="absolute inset-0 bg-brick-500/10 shadow-[inset_0_0_20px_rgba(185,28,28,0.2)]"
             animate={{ opacity: [0, 1, 0] }}
             transition={{ duration: 1, repeat: Infinity }}
           />
@@ -78,7 +78,7 @@ export function PressureMeterV2({ level }: { level: number }) {
 
       <div className="flex justify-between">
         <p
-          className={`text-[8px] font-black uppercase tracking-widest ${isHigh ? "text-red-400" : "text-slate-600"}`}
+          className={`text-[8px] font-black uppercase tracking-widest ${isHigh ? "text-brick-400" : "text-ink-600"}`}
         >
           {isHigh
             ? "Critique : Signal de panique détecté"
@@ -88,11 +88,11 @@ export function PressureMeterV2({ level }: { level: number }) {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-1 h-1 rounded-full ${isHigh ? "bg-red-500 animate-ping" : "bg-slate-800"}`}
+              className={`w-1 h-1 rounded-full ${isHigh ? "bg-brick-500 animate-ping" : "bg-ink-800"}`}
             />
           ))}
         </div>
       </div>
     </div>
-  );
+  )
 }

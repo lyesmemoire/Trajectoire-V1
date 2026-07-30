@@ -1,4 +1,4 @@
-import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract";
+import { AgentOpinion } from "@/domain/orchestration.contract";
 
 /**
  * Interview Agent
@@ -7,7 +7,7 @@ import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract
  * Nature: probabiliste
  * Autorité: faible sur système global
  */
-export function evaluateInterview(ctx: EvaluationContext): AgentOpinion {
+export function evaluateInterview(ctx: _EvaluationContext): AgentOpinion {
   const score = ctx.interviewScore ?? 0.5;
   const confidence = ctx.interviewConfidence ?? 0.8;
   

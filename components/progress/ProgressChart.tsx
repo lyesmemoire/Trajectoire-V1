@@ -20,10 +20,7 @@ interface ProgressChartProps {
 }
 
 export function ProgressChart({
-  data,
-  title,
-  color = "#3B82F6",
-}: ProgressChartProps) {
+  data, title, color = "#3B82F6", _}: ProgressChartProps) {
   if (!data || data.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50/50">

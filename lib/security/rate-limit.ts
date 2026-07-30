@@ -24,7 +24,7 @@ export const createRateLimiter = (limit: number, period: string) => {
 
   return new Ratelimit({
     redis,
-    limiter: Ratelimit.slidingWindow(limit, period as any),
+    limiter: Ratelimit.slidingWindow(limit, period as unknown),
   });
 };
 

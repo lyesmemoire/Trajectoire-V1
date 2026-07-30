@@ -1,10 +1,7 @@
 import prisma from "@/lib/prisma";
 import { determineArchetype, ScoreProfile } from "./archetype-engine";
 
-export async function updateArchetypeEvolution(
-  userId: string,
-  latestScores: ScoreProfile,
-) {
+export async function updateArchetypeEvolution(userId: string, latestScores: ScoreProfile, ) {
   const currentArchetype = determineArchetype(latestScores);
 
   const profile = await prisma.careerProfile.findUnique({
@@ -14,7 +11,7 @@ export async function updateArchetypeEvolution(
   if (!profile) return;
 
   // On stocke l'historique dans un champ JSON "careerDNA"
-  const history = (profile.careerDNA as any)?.archetypeHistory || [];
+  const history = (profile.careerDNA  as any)?.archetypeHistory || [];
   const previousArchetype =
     history.length > 0 ? history[history.length - 1].type : null;
 
@@ -30,7 +27,7 @@ export async function updateArchetypeEvolution(
     where: { userId },
     data: {
       careerDNA: {
-        ...(profile.careerDNA as any),
+        ...(profile.careerDNA  as any),
         currentArchetype,
         previousArchetype,
         archetypeHistory: updatedHistory,

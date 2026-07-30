@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { ShieldAlert, Activity } from "lucide-react";
+import { motion } from "framer-motion"
+import { ShieldAlert, Activity } from "lucide-react"
 
 export function PressureDemo() {
   return (
@@ -18,7 +18,7 @@ export function PressureDemo() {
             <ShieldAlert className="w-6 h-6" />
           </div>
           <div className="bg-[#0B1023] rounded-[1.75rem] rounded-tl-none p-6 border border-white/[0.05] shadow-xl">
-            <p className="text-sm font-bold text-slate-200 leading-relaxed">
+            <p className="text-sm font-bold text-ink-200 leading-relaxed">
               "Vous parlez d'amélioration... C'est un concept abstrait.
               Donnez-moi l'impact exact sur la productivité de votre équipe."
             </p>
@@ -38,7 +38,7 @@ export function PressureDemo() {
               Time-to-Market de 24% et libéré 15h/semaine par développeur."
             </p>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-white font-black text-[10px] flex-shrink-0 border border-white/10">
+          <div className="w-12 h-12 rounded-2xl bg-ink-800 flex items-center justify-center text-white font-black text-[10px] flex-shrink-0 border border-white/10">
             MOI
           </div>
         </motion.div>
@@ -59,7 +59,7 @@ export function PressureDemo() {
                 Behavioral Cockpit Active
               </span>
             </div>
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+            <span className="text-[10px] font-black text-ink-500 uppercase tracking-widest">
               Model: Mistral-Large-v2
             </span>
           </div>
@@ -67,7 +67,7 @@ export function PressureDemo() {
           <div className="space-y-6">
             <div className="space-y-3">
               <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                <span className="text-slate-400">Tension Psychologique</span>
+                <span className="text-ink-400">Tension Psychologique</span>
                 <span className="text-[#EF4444] animate-pulse">84%</span>
               </div>
               <div className="h-2 bg-white/5 rounded-full overflow-hidden">
@@ -82,7 +82,7 @@ export function PressureDemo() {
 
             <div className="grid grid-cols-2 gap-5 pt-2">
               <div className="p-4 bg-white/[0.02] rounded-2xl border border-white/5 flex flex-col items-center justify-center space-y-1">
-                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                <p className="text-[9px] font-black text-ink-500 uppercase tracking-widest">
                   Evolution
                 </p>
                 <p className="text-sm font-black text-[#22C55E]">
@@ -90,7 +90,7 @@ export function PressureDemo() {
                 </p>
               </div>
               <div className="p-4 bg-white/[0.02] rounded-2xl border border-white/5 flex flex-col items-center justify-center space-y-1">
-                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                <p className="text-[9px] font-black text-ink-500 uppercase tracking-widest">
                   Career DNA
                 </p>
                 <p className="text-sm font-black text-[#7C3AED]">
@@ -112,7 +112,7 @@ export function PressureDemo() {
           🎯
         </div>
         <div className="space-y-0.5">
-          <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+          <p className="text-[9px] font-black text-ink-500 uppercase tracking-widest">
             Score de Clarté
           </p>
           <p className="text-lg font-black text-white">91/100</p>
@@ -136,11 +136,11 @@ export function PressureDemo() {
           🎙️
         </div>
         <div className="space-y-0.5">
-          <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+          <p className="text-[9px] font-black text-ink-500 uppercase tracking-widest">
             Débit Vocal
           </p>
           <p className="text-lg font-black text-white">
-            128 <span className="text-xs text-slate-500">wpm</span>
+            128 <span className="text-xs text-ink-500">wpm</span>
           </p>
           <p className="text-[9px] font-bold text-[#22C55E] uppercase">
             Zone Idéale ✓
@@ -148,5 +148,5 @@ export function PressureDemo() {
         </div>
       </motion.div>
     </div>
-  );
+  )
 }

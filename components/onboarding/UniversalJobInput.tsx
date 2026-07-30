@@ -18,7 +18,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export function UniversalJobInput({ onContentReady, isLoading }: Props) {
+export function UniversalJobInput({ onContentReady, _isLoading }: Props) {
   const [input, setInput] = useState("");
   const [sourceType, setSourceType] = useState<JobSourceType>("INVALID");
   const [isFocused, setIsFocused] = useState(false);

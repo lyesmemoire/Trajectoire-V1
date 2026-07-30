@@ -11,12 +11,6 @@ import {
   defaultAdaptiveFeedbackConfig,
 } from "./interfaces/IAdaptiveFeedbackExperience";
 import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
-import { decisionPolicyEngine } from "../adaptive-intelligence/DecisionPolicyEngine";
-import { strategyEngine } from "../adaptive-intelligence/StrategyEngine";
-import { planningEngine } from "../adaptive-intelligence/PlanningEngine";
-import { roiEngine } from "../adaptive-intelligence/ROIEngine";
-import { impactSimulationEngine } from "../adaptive-intelligence/ImpactSimulationEngine";
-import { feedbackLearningEngine } from "../adaptive-intelligence/FeedbackLearningEngine";
 
 // ============================================================================
 // ADAPTIVE FEEDBACK EXPERIENCE SERVICE CLASS

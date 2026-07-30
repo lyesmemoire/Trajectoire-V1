@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   XAxis,
@@ -8,35 +8,32 @@ import {
   ResponsiveContainer,
   Area,
   AreaChart,
-} from "recharts";
+} from "recharts"
 
 interface ProgressChartProps {
   data: {
-    date: string;
-    score: number;
-  }[];
-  title: string;
-  color?: string;
+    date: string
+    score: number
+  }[]
+  title: string
+  color?: string
 }
 
 export function ProgressChart({
-  data,
-  title,
-  color = "#3B82F6",
-}: ProgressChartProps) {
+  data, title, color = "#A67C3D" }: ProgressChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50/50">
-        <p className="text-sm font-medium text-slate-400">
+      <div className="flex h-64 items-center justify-center rounded-2xl border border-ivoire-200 bg-ivoire-50/50">
+        <p className="text-sm font-medium text-ink-400">
           Pas assez de données pour l'analyse.
         </p>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="flex h-80 w-full flex-col rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-      <h3 className="mb-6 text-sm font-black text-slate-900 uppercase tracking-wider">
+    <div className="flex h-80 w-full flex-col rounded-3xl border border-ivoire-200 bg-white/70 backdrop-blur-xl p-6 shadow-premium">
+      <h3 className="mb-6 text-sm font-serif font-black text-ink-900 uppercase tracking-wider">
         {title}
       </h3>
       <div className="flex-1">
@@ -54,25 +51,25 @@ export function ProgressChart({
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke="#f1f5f9"
+              stroke="#E7E2DB"
             />
             <XAxis
               dataKey="date"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 10, fontWeight: 700 }}
+              tick={{ fill: "#A8A29E", fontSize: 10, fontWeight: 700 }}
               dy={10}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#94a3b8", fontSize: 10, fontWeight: 700 }}
+              tick={{ fill: "#A8A29E", fontSize: 10, fontWeight: 700 }}
               domain={[0, 100]}
             />
             <Tooltip
               contentStyle={{
                 borderRadius: "16px",
-                border: "1px solid #f1f5f9",
+                border: "1px solid #E7E2DB",
                 boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
                 fontSize: "12px",
                 fontWeight: "bold",
@@ -93,5 +90,5 @@ export function ProgressChart({
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  )
 }

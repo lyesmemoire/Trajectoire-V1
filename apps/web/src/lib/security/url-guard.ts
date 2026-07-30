@@ -68,7 +68,7 @@ export async function validateJobUrl(inputUrl: string | undefined): Promise<bool
     }
 
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

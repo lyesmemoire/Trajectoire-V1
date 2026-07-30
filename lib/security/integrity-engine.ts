@@ -11,7 +11,7 @@ export interface IntegritySignals {
   unnaturalSpeed: boolean;
 }
 
-export function computeAuthenticityScore(signals: IntegritySignals): number {
+export function computeAuthenticityScore(signals: _IntegritySignals): number {
   let score = 1.0;
 
   if (signals.headlessDetection) score -= 0.5;

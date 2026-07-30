@@ -1,0 +1,106 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "auditor": "Independent Validation Audit",
+  "differences": [
+    {
+      "category": "Coverage",
+      "metric": "Statements",
+      "official": "90.48%",
+      "recalculated": "PREUVE INSUFFISANTE - fichier coverage-final.json inaccessible (gitignore)",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Le fichier coverage-final.json est bloqué par .gitignore, impossible de comparer byte à byte",
+      "impact": "CRITICAL - Impossible de vérifier la reproductibilité du coverage"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Branches",
+      "official": "73.91%",
+      "recalculated": "PREUVE INSUFFISANTE - fichier coverage-final.json inaccessible (gitignore)",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Le fichier coverage-final.json est bloqué par .gitignore, impossible de comparer byte à byte",
+      "impact": "CRITICAL - Impossible de vérifier la reproductibilité du coverage"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Functions",
+      "official": "100.00%",
+      "recalculated": "PREUVE INSUFFISANTE - fichier coverage-final.json inaccessible (gitignore)",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Le fichier coverage-final.json est bloqué par .gitignore, impossible de comparer byte à byte",
+      "impact": "CRITICAL - Impossible de vérifier la reproductibilité du coverage"
+    },
+    {
+      "category": "Coverage",
+      "metric": "Lines",
+      "official": "90.48%",
+      "recalculated": "PREUVE INSUFFISANTE - fichier coverage-final.json inaccessible (gitignore)",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Le fichier coverage-final.json est bloqué par .gitignore, impossible de comparer byte à byte",
+      "impact": "CRITICAL - Impossible de vérifier la reproductibilité du coverage"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Total",
+      "official": 10,
+      "recalculated": "PREUVE INSUFFISANTE - mutations non rejouées",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Les mutations n'ont pas été rejouées indépendamment. Seul le test de régression a été exécuté.",
+      "impact": "HIGH - Impossible de vérifier la reproductibilité des mutations"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Killed",
+      "official": 3,
+      "recalculated": "PREUVE INSUFFISANTE - mutations non rejouées",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Les mutations n'ont pas été rejouées indépendamment",
+      "impact": "HIGH - Impossible de vérifier la reproductibilité des mutations"
+    },
+    {
+      "category": "Mutation",
+      "metric": "Invalid",
+      "official": 7,
+      "recalculated": "PREUVE INSUFFISANTE - mutations non rejouées",
+      "difference": "PREUVE INSUFFISANTE",
+      "cause": "Les mutations n'ont pas été rejouées indépendamment",
+      "impact": "HIGH - Impossible de vérifier la reproductibilité des mutations"
+    },
+    {
+      "category": "Regression",
+      "metric": "R5 status",
+      "official": "REGRESSION MISSED",
+      "recalculated": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "cause": "Le script test-regression-detection.cjs montre BUILD ERROR pour R5, alors que le rapport officiel montre REGRESSION MISSED",
+      "impact": "CRITICAL - Incohérence dans les résultats de régression"
+    },
+    {
+      "category": "Regression",
+      "metric": "R10 status",
+      "official": "REGRESSION MISSED",
+      "recalculated": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "cause": "Le script test-regression-detection.cjs montre BUILD ERROR pour R10, alors que le rapport officiel montre REGRESSION MISSED",
+      "impact": "CRITICAL - Incohérence dans les résultats de régression"
+    },
+    {
+      "category": "Regression",
+      "metric": "R19 status",
+      "official": "REGRESSION MISSED",
+      "recalculated": "BUILD ERROR",
+      "difference": "DIFFÉRENT",
+      "cause": "Le script test-regression-detection.cjs montre BUILD ERROR pour R19, alors que le rapport officiel montre REGRESSION MISSED",
+      "impact": "CRITICAL - Incohérence dans les résultats de régression"
+    }
+  ],
+  "summary": {
+    "totalDifferences": 10,
+    "critical": 7,
+    "high": 3,
+    "medium": 0,
+    "low": 0,
+    "preuveInsuffisante": 7,
+    "differencesVerifiees": 3
+  }
+}

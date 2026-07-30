@@ -1,4 +1,4 @@
-export interface InterruptionSignals {
+export interface PressureSignal {
   verbosity: number; // Longueur de la réponse (0-100)
   specificity: number; // Densité de faits/chiffres (0-100)
   fillerDensity: number; // Fréquence des "euh", "donc", etc. (0-100)

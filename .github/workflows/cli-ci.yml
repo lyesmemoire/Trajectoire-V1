@@ -1,0 +1,161 @@
+name: CLI CI Matrix
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run CLI tests
+        run: pnpm vitest run tests/cli --reporter=verbose
+      
+      - name: Run CLI unit tests
+        run: pnpm vitest run tests/cli/unit --coverage
+      
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '20.x'
+        with:
+          name: coverage-report
+          path: reports/cli/coverage/
+          retention-days: 7
+
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build project
+        run: pnpm build
+
+  benchmark:
+    name: Benchmark on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run benchmarks
+        run: npx tsx bin/blueprint benchmark --iterations 10
+
+  doctor:
+    name: Doctor on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run doctor
+        run: npx tsx bin/blueprint doctor
+
+  summary:
+    name: Cross-platform Summary
+    runs-on: ubuntu-latest
+    needs: [test, build, benchmark, doctor]
+    if: always()
+    
+    steps:
+      - name: Check test results
+        run: |
+          echo "Test job status: ${{ needs.test.result }}"
+          echo "Build job status: ${{ needs.build.result }}"
+          echo "Benchmark job status: ${{ needs.benchmark.result }}"
+          echo "Doctor job status: ${{ needs.doctor.result }}"
+          
+          if [ "${{ needs.test.result }}" != "success" ] || \
+             [ "${{ needs.build.result }}" != "success" ] || \
+             [ "${{ needs.benchmark.result }}" != "success" ] || \
+             [ "${{ needs.doctor.result }}" != "success" ]; then
+            echo "Some jobs failed"
+            exit 1
+          fi
+          
+          echo "All jobs passed successfully"

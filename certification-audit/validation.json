@@ -1,0 +1,98 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "gitBranch": "main",
+  "auditor": "Independent Validation Audit",
+  "validationStatus": "FAILED",
+  "phases": {
+    "phase1_gitIntegrity": {
+      "status": "PASSED",
+      "sha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+      "gitDiffCompiler": "empty",
+      "gitDiffTests": "empty",
+      "gitStatus": "clean (untracked files only)"
+    },
+    "phase2_coverageRecalculation": {
+      "status": "FAILED",
+      "reason": "Fichier coverage-final.json bloqué par .gitignore, impossible de comparer byte à byte",
+      "officialMetrics": {
+        "statements": "90.48%",
+        "branches": "73.91%",
+        "functions": "100.00%",
+        "lines": "90.48%"
+      },
+      "recalculatedMetrics": "PREUVE INSUFFISANTE"
+    },
+    "phase3_mutationReplay": {
+      "status": "FAILED",
+      "reason": "Mutations non rejouées indépendamment",
+      "officialMetrics": {
+        "total": 10,
+        "killed": 3,
+        "survived": 0,
+        "invalid": 7,
+        "score": 100
+      },
+      "recalculatedMetrics": "PREUVE INSUFFISANTE"
+    },
+    "phase4_regressionReplay": {
+      "status": "FAILED",
+      "reason": "Résultats différents entre rapport officiel et exécution indépendante",
+      "officialMetrics": {
+        "total": 22,
+        "detected": 19,
+        "missed": 2,
+        "buildErrors": 1
+      },
+      "recalculatedMetrics": {
+        "R5": "BUILD ERROR",
+        "R10": "BUILD ERROR",
+        "R19": "BUILD ERROR"
+      },
+      "differences": [
+        {"id": "R5", "official": "REGRESSION MISSED", "recalculated": "BUILD ERROR"},
+        {"id": "R10", "official": "REGRESSION MISSED", "recalculated": "BUILD ERROR"},
+        {"id": "R19", "official": "REGRESSION MISSED", "recalculated": "BUILD ERROR"}
+      ]
+    },
+    "phase5_comparison": {
+      "status": "FAILED",
+      "totalDifferences": 10,
+      "critical": 7,
+      "high": 3,
+      "preuveInsuffisante": 7,
+      "differencesVerifiees": 3
+    },
+    "phase6_reproducibilityIndex": {
+      "status": "FAILED",
+      "overallScore": 0,
+      "reason": "PREUVE INSUFFISANTE - Impossible de calculer l'indice de reproductibilité"
+    }
+  },
+  "criticalIssues": [
+    {
+      "id": "COVERAGE_001",
+      "severity": "CRITICAL",
+      "description": "Fichier coverage-final.json bloqué par .gitignore",
+      "impact": "Impossible de vérifier la reproductibilité du coverage"
+    },
+    {
+      "id": "MUTATION_001",
+      "severity": "HIGH",
+      "description": "Mutations non rejouées indépendamment",
+      "impact": "Impossible de vérifier la reproductibilité des mutations"
+    },
+    {
+      "id": "REGRESSION_001",
+      "severity": "CRITICAL",
+      "description": "Résultats de régression différents (MISSED vs BUILD ERROR)",
+      "impact": "Incohérence dans les résultats de régression"
+    }
+  ],
+  "finalDecision": {
+    "question": "Les artefacts officiels sont-ils parfaitement reproductibles ?",
+    "answer": "NON",
+    "justification": "Les artefacts officiels ne sont pas reproductibles car : (1) Le fichier coverage-final.json est bloqué par .gitignore, (2) Les mutations n'ont pas été rejouées indépendamment, (3) Les résultats de régression sont différents entre le rapport officiel et l'exécution indépendante (R5, R10, R19: MISSED vs BUILD ERROR)"
+  }
+}

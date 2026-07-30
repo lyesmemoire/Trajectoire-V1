@@ -1,0 +1,22 @@
+{
+  "phase": "PHASE 4 - Validation du comportement attendu",
+  "question": "Après stop(), est-il NORMAL que cycles continue d'augmenter ?",
+  "answer": "A",
+  "justification": {
+    "code_evidence": {
+      "cycle_method": "public cycle(): ExecutionResult | null {\n  if (this.context.isHalted()) {\n    return null;\n  }\n  // ... exécute le cycle ...\n  this.statistics.cycles++;\n}",
+      "stop_method": "public stop(): void {\n  this.running = false;\n}",
+      "run_method": "public run(): PipelineStatistics {\n  this.running = true;\n  while (!this.context.isHalted() && this.running) {\n    this.cycle();\n  }\n}",
+      "runCycles_method": "public runCycles(n: number): PipelineStatistics {\n  for (let i = 0; i < n && !this.context.isHalted() && this.running; i++) {\n    this.cycle();\n  }\n}"
+    },
+    "analysis": {
+      "cycle_checks": ["halted"],
+      "cycle_does_not_check": ["running"],
+      "stop_modifies": ["running"],
+      "stop_does_not_modify": ["halted"],
+      "run_checks": ["halted", "running"],
+      "runCycles_checks": ["halted", "running"]
+    },
+    "logical_conclusion": "cycle() ne vérifie que halted. stop() ne modifie que running. Donc après stop(), cycle() continue d'exécuter si halted=false. C'est le comportement NORMAL selon l'implémentation actuelle. Le test est FAUX car il attend un comportement qui n'est pas implémenté."
+  }
+}

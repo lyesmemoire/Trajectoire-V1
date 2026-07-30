@@ -1,0 +1,70 @@
+{
+  "sprint": 1,
+  "lot": 1,
+  "component": "execution-context",
+  "file": "compiler/cvm/execution-context.ts",
+  "objectives": {
+    "statements": "≥ 95%",
+    "branches": "≥ 97%",
+    "functions": "100%",
+    "lines": "≥ 95%"
+  },
+  "coverage": {
+    "before": {
+      "statements": "85% (estimé)",
+      "branches": "70% (estimé)",
+      "functions": "90% (estimé)",
+      "lines": "82% (estimé)"
+    },
+    "after": {
+      "statements": "100.00% (53/53)",
+      "branches": "100.00% (10/10)",
+      "functions": "100.00% (21/21)",
+      "lines": "100.00% (53/53)",
+      "source": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+      "uncoveredLines": []
+    }
+  },
+  "tests": {
+    "before": 45,
+    "new": 2,
+    "after": 47
+  },
+  "newTests": [
+    "should return 0 for non-existent register",
+    "should increment program counter by negative delta"
+  ],
+  "branchesCovered": [
+    "getRegister() when register not in map (|| 0 branch)",
+    "incrementProgramCounter() with negative delta"
+  ],
+  "linesCovered": [
+    "Line 73: return this.registers.get(register) || 0",
+    "Line 100: incrementProgramCounter(delta: number = 1)"
+  ],
+  "functionsCovered": [
+    "initializeRegisters() - covered via constructor and reset()"
+  ],
+  "deadCodeRemoved": 0,
+  "debtRemaining": 0,
+  "validation": {
+    "pnpmTest": "PASSED - 47/47 tests",
+    "pnpmTestCoverage": "PASSED - 100% coverage achieved",
+    "regressions": "NONE",
+    "typescriptErrors": "NONE",
+    "lintingErrors": "NONE"
+  },
+  "certification": {
+    "status": "CERTIFIED",
+    "date": "2026-07-26",
+    "criteriaMet": [
+      "Statements ≥ 95%: ACHIEVED (100%)",
+      "Branches ≥ 97%: ACHIEVED (100%)",
+      "Functions = 100%: ACHIEVED (100%)",
+      "Lines ≥ 95%: ACHIEVED (100%)",
+      "All tests pass: ACHIEVED",
+      "No TypeScript errors: ACHIEVED",
+      "No linting errors: ACHIEVED"
+    ]
+  }
+}

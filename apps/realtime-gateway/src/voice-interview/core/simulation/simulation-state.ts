@@ -45,9 +45,7 @@ export interface SimulationState {
   turn: number;
 }
 
-export function createSimulationState(
-  previousSessions: PreviousSession[] = [],
-): SimulationState {
+export function createSimulationState(previousSessions: PreviousSession[] = [], ): SimulationState {
   return {
     pressure: createPressureState(),
     memory: createMemoryState(),
@@ -70,10 +68,7 @@ export interface SimulationSignal {
   memoryUpdate?: MemoryUpdate;
 }
 
-export function updateSimulation(
-  state: SimulationState,
-  signal: SimulationSignal,
-): SimulationState {
+export function updateSimulation(state: SimulationState, signal: SimulationSignal, ): SimulationState {
   const turn = state.turn + 1;
 
   const pressure = updatePressure(state.pressure, {

@@ -1,0 +1,83 @@
+{
+  "payload": "eyJfdHlwZSI6Imh0dHBzOi8vaW4tdG90by5pby9TdGF0ZW1lbnQvdjEiLCJwcmVkaWNhdGUiOnsicHJvZmlsZSI6InRyYWplY3RvaXJlLXRpbWVzdGFtcC12MSIsInNjaGVtYVZlcnNpb24iOiIxLjAiLCJ0cmFuc3BhcmVuY3kiOlt7ImVudHJ5VVVJRCI6IjY5ZDI2OTEyLWI1MGUtM2FlZS1mYzdiLTMxODU5YTVhMDdiYyIsImV2aWRlbmNlSWQiOiJ1cm46dHJhamVjdG9pcmU6dGltZXN0YW1wOnJla29yOnYxOjI5NGE1YTljIiwiaW5jbHVzaW9uUHJvb2YiOnsiaGFzaGVzIjpbXSwicm9vdEhhc2giOiIyOGJjZDNjMDIyZTFiZGMzZDJiNmVjMzc3N2NkMzU5MzgyN2EyOThiM2E3NmZlYzQxMTJkNjY2YTJiNzdhMGNiIiwidHJlZVNpemUiOjEwMDB9LCJpbnRlZ3JhdGVkVGltZSI6IjIwMjYtMDctMjlUMTQ6NTI6MTkuMDAwWiIsImxvZ0lEIjoibW9jay1sb2ctaWQtMDAxIiwibG9nSW5kZXgiOjM4NzE2LCJwcm92aWRlciI6Im1vY2siLCJzdGF0dXMiOiJjb2xsZWN0ZWQiLCJ0eXBlIjoidHJhbnNwYXJlbmN5In1dLCJ0cnVzdGVkVGltZSI6W3siZXZpZGVuY2UiOnsidG9rZW5CYXNlNjQiOiJUVTlEUzE5U1JrTXpNVFl4WDFSUFMwVk9YekUxWW1KaVpHVXdPVEF3TWpSaVlUVmhOREV5WVdJNE5HWXdNbVZoWkRVMk9XUmhOemRpTW1FM1lqWmtNRFJqTjJObVltVXhObVZrTlRjd05tRmxZbVk9In0sImV2aWRlbmNlSWQiOiJ1cm46dHJhamVjdG9pcmU6dGltZXN0YW1wOnJmYzMxNjE6djE6NzRhM2ZkYmEiLCJnZW5lcmF0ZWRBdCI6IjIwMjYtMDctMjlUMTQ6NTI6MTkuMDAwWiIsInByb3ZpZGVyIjoibW9jayIsInN0YXR1cyI6ImNvbGxlY3RlZCIsInN1YmplY3QiOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwiZGlnZXN0IjoiMTViYmJkZTA5MDAyNGJhNWE0MTJhYjg0ZjAyZWFkNTY5ZGE3N2IyYTdiNmQwNGM3Y2ZiZTE2ZWQ1NzA2YWViZiJ9LCJ0eXBlIjoidHJ1c3RlZC10aW1lIn1dfSwicHJlZGljYXRlVHlwZSI6Imh0dHBzOi8vdHJhamVjdG9pcmUuYWkvcHJlZGljYXRlL3RpbWVzdGFtcC92MSIsInN1YmplY3QiOlt7ImRpZ2VzdCI6eyJzaGEyNTYiOiIxNWJiYmRlMDkwMDI0YmE1YTQxMmFiODRmMDJlYWQ1NjlkYTc3YjJhN2I2ZDA0YzdjZmJlMTZlZDU3MDZhZWJmIn0sIm5hbWUiOiJtYW5pZmVzdC5kc3NlLmpzb24ifV19",
+  "payloadType": "application/vnd.in-toto+json",
+  "signatures": [
+    {
+      "keyid": "urn:trajectoire:keys:ed25519:v1",
+      "metadata": {
+        "algorithm": "Ed25519",
+        "execution": {
+          "mode": "production"
+        },
+        "keyId": "urn:trajectoire:keys:ed25519:v1",
+        "provider": "local-ed25519",
+        "supports": {
+          "certificateChain": false,
+          "dsse": true,
+          "keyless": false,
+          "transparencyLog": false
+        }
+      },
+      "sig": "cxOtdj300SiJdnXnCmevRTyVgh1VL4j6tpBZsSgdbyodE8QkwtKW858MW4FnwOJgy2LdVq828LkM0Wj3J8/hDw=="
+    },
+    {
+      "keyid": "https://sigstore.dev/rekor/mock",
+      "metadata": {
+        "algorithm": "ECDSA-P256",
+        "certificate": "-----BEGIN CERTIFICATE-----\nMOCK_FULCIO_CERT\n-----END CERTIFICATE-----",
+        "execution": {
+          "mode": "mock"
+        },
+        "provider": "cosign-keyless",
+        "supports": {
+          "certificateChain": true,
+          "dsse": true,
+          "keyless": true,
+          "transparencyLog": true
+        },
+        "transparencyLog": {
+          "entryUUID": "778a4a34-e160-4938-8286-dc88ca8ad7dd",
+          "provider": "Rekor"
+        }
+      },
+      "sig": "Oco+N9sVR6wlPMWwx2NTc2DO1qbdPDokUZ9n1vc7mj5+NUQuBX/F5RIsi9dfoRKmC9R07to4eEMMq+RD8vUqHQ=="
+    },
+    {
+      "keyid": "arn:aws:kms:eu-west-3:123456789012:key/mock-kms-key",
+      "metadata": {
+        "algorithm": "RSASSA_PSS_SHA_256",
+        "execution": {
+          "mode": "mock"
+        },
+        "keyId": "arn:aws:kms:eu-west-3:123456789012:key/mock-kms-key",
+        "provider": "aws-kms",
+        "supports": {
+          "certificateChain": false,
+          "dsse": true,
+          "keyless": false,
+          "transparencyLog": false
+        }
+      },
+      "sig": "fjRYSmKotGHEkTblPxzUecqLI64zv+sSHA06iTUoSOfeybAf/YveX2oVEZ8KkgHYblhmjyJCoDl37n2BpqqAVnTgR2LUgnZNHuu/XMBjD3XDVyqYx4a48LFKWIbFz3+cg0mLKDxuHOAP9+X+5t0f5KVUGJ6ezHQ6mEmyvmXi2+zJwLz4+gTrNEREuIVtoXGM44dF/nPKAadamPk5bq6ZHmgZ4b+CS5kp1pFLFbZpJ5LYTgXI/9cRM4FdgUIUxfgHmtIXFAzAGIp92zRgJR7CvUGlcKW/vlxfRac7wXlh2QKgLD8HCtEDAsHF0WJ4Mq2KvELr3G0NkzDRgWI2+bsWvw=="
+    },
+    {
+      "keyid": "mock-gpg-fingerprint",
+      "metadata": {
+        "algorithm": "RSA",
+        "assuranceLevel": "LOWER_ASSURANCE_NO_TRANSPARENCY",
+        "execution": {
+          "mode": "mock"
+        },
+        "keyId": "mock-gpg-fingerprint",
+        "provider": "gpg",
+        "supports": {
+          "certificateChain": false,
+          "dsse": true,
+          "keyless": false,
+          "transparencyLog": false
+        }
+      },
+      "sig": "IudQOLBkIv656NVk4ZLNRZo6e6KpD/2oT8vXDHL1IDOInv/Cb+6ZKWUovpRC8tgRmo/osaY/UFJLFtvB1t6qIMoqzaJLJ0ge4wLNJkqvspLnUx9vcN82KCoJLTcHD0D6wmfR3M8B5nIkQ5BcXxyMO9UHaJQRHBoVs8VLNd80wSY="
+    }
+  ]
+}

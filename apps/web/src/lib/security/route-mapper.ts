@@ -16,10 +16,7 @@ const INTERNAL_TO_VIRTUAL = {
  * Resolves a virtual public path to its internal equivalent.
  * Supports both static aliases and session-signed aliases.
  */
-export function resolveInternalPath(
-  publicPath: string,
-  userId?: string,
-): string | null {
+export function resolveInternalPath(publicPath: string, userId?: string, ): string | null {
   // 1. Check static aliases
   const staticEntry = Object.entries(INTERNAL_TO_VIRTUAL).find(
     ([_, v]) => publicPath === v || publicPath.startsWith(`${v}/`),
@@ -51,7 +48,7 @@ export function resolveInternalPath(
  * Returns the public-facing URL for an internal path.
  */
 export function getPublicUrl(internalPath: string, userId?: string): string {
-  const staticAlias = (INTERNAL_TO_VIRTUAL as any)[internalPath];
+  const staticAlias = (INTERNAL_TO_VIRTUAL  as any)[internalPath];
   if (staticAlias) return staticAlias;
 
   if (internalPath.startsWith("/dashboard/interview/session") && userId) {

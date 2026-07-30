@@ -4,7 +4,7 @@
 // ACCÈS : Interne uniquement (vérification x-internal-request)
 // RETOUR : { hasAccess: boolean, status: string, plan: string | null }
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { checkUserSubscription } from '@/lib/subscription/check-subscription'
 

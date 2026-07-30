@@ -1,0 +1,161 @@
+{
+  "timestamp": "2026-07-26T18:35:00Z",
+  "demo_tests": {
+    "hello_world": {
+      "test_file": "hello-world.test.ts",
+      "total_tests": 4,
+      "passed_tests": 4,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Stack-based Hello World",
+        "Memory-based Hello World",
+        "Register-based Hello World",
+        "Integrated VM Hello World"
+      ]
+    },
+    "factorial": {
+      "test_file": "factorial.test.ts",
+      "total_tests": 6,
+      "passed_tests": 6,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Stack-based Factorial",
+        "Register-based Factorial",
+        "Recursive Factorial Simulation"
+      ]
+    },
+    "fibonacci": {
+      "test_file": "fibonacci.test.ts",
+      "total_tests": 6,
+      "passed_tests": 6,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Stack-based Fibonacci",
+        "Register-based Fibonacci",
+        "Iterative Fibonacci with Stack",
+        "Memory-based Fibonacci"
+      ]
+    },
+    "memory_stress": {
+      "test_file": "memory-stress.test.ts",
+      "total_tests": 22,
+      "passed_tests": 22,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Stack Stress",
+        "Heap Stress",
+        "Garbage Collection Stress",
+        "Integrated Memory Stress",
+        "Performance Under Load"
+      ]
+    },
+    "multithreading": {
+      "test_file": "multithreading.test.ts",
+      "total_tests": 35,
+      "passed_tests": 35,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Thread Creation",
+        "Thread Execution",
+        "Thread Synchronization",
+        "Thread Scheduling",
+        "Thread States",
+        "Thread Communication",
+        "Thread Pooling",
+        "Thread Safety",
+        "Thread Statistics",
+        "Scheduling Policies"
+      ]
+    },
+    "snapshot": {
+      "test_file": "snapshot.test.ts",
+      "total_tests": 23,
+      "passed_tests": 23,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Basic Snapshot",
+        "State Preservation",
+        "Snapshot Comparison",
+        "Snapshot Management",
+        "Snapshot Options",
+        "Snapshot Export/Import",
+        "Snapshot Statistics",
+        "Snapshot Validation",
+        "Snapshot Use Cases",
+        "Snapshot Performance"
+      ]
+    },
+    "rollback": {
+      "test_file": "rollback.test.ts",
+      "total_tests": 28,
+      "passed_tests": 28,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Basic Rollback",
+        "Memory Rollback",
+        "Multiple Snapshots",
+        "Current Snapshot",
+        "Heap Rollback",
+        "Rollback Use Cases",
+        "Rollback Statistics",
+        "Auto Snapshot",
+        "Rollback Validation",
+        "Rollback Performance",
+        "Max Snapshots",
+        "Rollback Methods",
+        "Rollback Edge Cases"
+      ]
+    },
+    "interrupt": {
+      "test_file": "interrupt.test.ts",
+      "total_tests": 21,
+      "passed_tests": 21,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Basic Interrupt",
+        "Nested Interrupts",
+        "Priority Interrupts",
+        "Interrupt Masking",
+        "Interrupt Storm",
+        "Interrupt Handlers",
+        "Interrupt Statistics",
+        "Interrupt Use Cases",
+        "Interrupt Performance",
+        "Interrupt Edge Cases"
+      ]
+    },
+    "garbage_collector": {
+      "test_file": "garbage-collector.test.ts",
+      "total_tests": 21,
+      "passed_tests": 21,
+      "failed_tests": 0,
+      "status": "all_passed",
+      "test_categories": [
+        "Basic GC",
+        "Memory Allocation",
+        "Circular References",
+        "Memory Pressure",
+        "GC Performance",
+        "GC Generations",
+        "GC Use Cases",
+        "GC Validation",
+        "GC Configuration",
+        "GC Edge Cases",
+        "GC Integration"
+      ]
+    }
+  },
+  "total_demo_tests": 166,
+  "total_passed": 166,
+  "total_failed": 0,
+  "demo_success_rate": 100,
+  "all_demos_passed": true
+}

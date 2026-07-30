@@ -3,10 +3,7 @@ export type ReturnIntent = "reflection" | "repair" | "growth" | "unknown";
 /**
  * Détecte la motivation psychologique d'un utilisateur à revenir.
  */
-export function detectReturnIntent(
-  sessionData: any,
-  engagementLogs: any[],
-): ReturnIntent {
+export function detectReturnIntent(sessionData: any, engagementLogs: any[], ): ReturnIntent {
   // 1. Cas "Reflection" : Replay ouvert plusieurs fois, lecture longue
   const replayRewatches = engagementLogs.filter(
     (l) => l.event === "moment_rewatched",

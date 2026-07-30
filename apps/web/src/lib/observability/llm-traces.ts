@@ -22,7 +22,6 @@ export async function logLLMTrace(trace: LLMTrace) {
     { userId: trace.userId, sessionId: trace.sessionId, latencyMs: trace.latencyMs }
   );
 
-  // Example storage logic (if table exists)
   /*
   await prisma.aIUsageStats.create({
     data: {

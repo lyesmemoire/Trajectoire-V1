@@ -20,7 +20,7 @@ export interface TurnTrace {
   events: {
     type: string;
     timestamp: number;
-    payload?: unknown;
+    payload?: any;
   }[];
   derived: {
     latencyMs: number;

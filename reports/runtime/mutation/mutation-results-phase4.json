@@ -1,0 +1,158 @@
+[
+  {
+    "id": 58,
+    "line": 74,
+    "description": "+=4 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 59,
+    "line": 74,
+    "description": "+=5 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 60,
+    "line": 75,
+    "description": "+=4 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 61,
+    "line": 75,
+    "description": "+=5 instead of ++",
+    "status": "KILLED"
+  },
+  {
+    "id": 62,
+    "line": 116,
+    "description": "i < n → i < n - 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 63,
+    "line": 116,
+    "description": "i < n → i < n + 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 64,
+    "line": 116,
+    "description": "i = 0 → i = 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 65,
+    "line": 116,
+    "description": "i++ → i += 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 66,
+    "line": 144,
+    "description": "+2 to instructionsExecuted in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 67,
+    "line": 144,
+    "description": "+2 to cycles in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 68,
+    "line": 144,
+    "description": "+1 to branchesNotTaken in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 69,
+    "line": 144,
+    "description": "+1 to calls in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 70,
+    "line": 144,
+    "description": "+1 to returns in return",
+    "status": "INVALID"
+  },
+  {
+    "id": 71,
+    "line": 222,
+    "description": "size * 3",
+    "status": "KILLED"
+  },
+  {
+    "id": 72,
+    "line": 222,
+    "description": "size + 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 73,
+    "line": 222,
+    "description": "size - 1",
+    "status": "KILLED"
+  },
+  {
+    "id": 74,
+    "line": 134,
+    "description": "remove context.reset",
+    "status": "INVALID"
+  },
+  {
+    "id": 75,
+    "line": 135,
+    "description": "remove clearCache",
+    "status": "KILLED"
+  },
+  {
+    "id": 76,
+    "line": 136,
+    "description": "remove statistics reset",
+    "status": "KILLED"
+  },
+  {
+    "id": 77,
+    "line": 127,
+    "description": "remove stop",
+    "status": "KILLED"
+  },
+  {
+    "id": 78,
+    "line": 201,
+    "description": "return stats with hits=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 79,
+    "line": 201,
+    "description": "return stats with misses=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 80,
+    "line": 201,
+    "description": "return stats with hits=1, misses=1",
+    "status": "KILLED"
+  },
+  {
+    "id": 81,
+    "line": 194,
+    "description": "return undefined instead of cycle",
+    "status": "INVALID"
+  },
+  {
+    "id": 82,
+    "line": 43,
+    "description": "0 → 2",
+    "status": "INVALID"
+  },
+  {
+    "id": 83,
+    "line": 44,
+    "description": "0 → 2",
+    "status": "INVALID"
+  }
+]

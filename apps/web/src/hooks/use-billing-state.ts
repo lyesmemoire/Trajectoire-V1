@@ -31,8 +31,8 @@ export function useBillingState(userId: string): BillingState {
             });
           }
         }
-      } catch (err) {
-        console.error("Failed to fetch billing state", err);
+      } catch (error) {
+        console.error("Failed to fetch billing state", error);
       }
     };
 

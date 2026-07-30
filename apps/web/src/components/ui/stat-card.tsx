@@ -1,41 +1,35 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface StatCardProps {
-  value: string | number;
-  label: string;
-  icon?: React.ReactNode;
-  trend?: { value: number; isPositive: boolean };
-  color?: "blue" | "green" | "amber" | "violet" | "slate";
-  className?: string;
+  value: string | number
+  label: string
+  icon?: React.ReactNode
+  trend?: { value: number; isPositive: boolean }
+  color?: "blue" | "green" | "amber" | "violet" | "slate"
+  className?: string
 }
 
 export function StatCard({
-  value,
-  label,
-  icon,
-  trend,
-  color = "blue",
-  className,
-}: StatCardProps) {
+  value, label, icon, trend, color = "blue", className }: StatCardProps) {
   const colors = {
-    blue: "bg-blue-50 border-blue-200 text-blue-600",
-    green: "bg-green-50 border-green-200 text-green-600",
-    amber: "bg-amber-50 border-amber-200 text-amber-600",
-    violet: "bg-violet-50 border-violet-200 text-violet-600",
-    slate: "bg-slate-50 border-slate-200 text-slate-600",
-  };
+    blue: "bg-ivoire-50 border-ivoire-200 text-ink-600",
+    green: "bg-forest-50 border-forest-100 text-forest-600",
+    amber: "bg-terracotta-50 border-terracotta-100 text-terracotta-600",
+    violet: "bg-ivoire-50 border-ivoire-200 text-ink-600",
+    slate: "bg-ivoire-50 border-ivoire-200 text-ink-600",
+  }
 
   return (
     <div
       className={cn(
-        "p-6 rounded-2xl border bg-white shadow-soft-sm",
+        "p-6 rounded-2xl border bg-white/70 backdrop-blur-xl shadow-premium",
         className,
       )}
     >
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-3xl font-black text-slate-900">{value}</div>
-          <div className="text-sm font-semibold text-slate-500 mt-1">
+          <div className="text-3xl font-serif font-black text-ink-900">{value}</div>
+          <div className="text-sm font-semibold text-ink-400 mt-1">
             {label}
           </div>
         </div>
@@ -54,7 +48,7 @@ export function StatCard({
         <div
           className={cn(
             "mt-3 flex items-center gap-1 text-sm font-bold",
-            trend.isPositive ? "text-green-600" : "text-red-600",
+            trend.isPositive ? "text-forest-600" : "text-brick-600",
           )}
         >
           <svg
@@ -75,5 +69,5 @@ export function StatCard({
         </div>
       )}
     </div>
-  );
+  )
 }

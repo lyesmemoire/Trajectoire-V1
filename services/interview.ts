@@ -88,10 +88,7 @@ export function validateFeedback(raw: unknown): InterviewFeedback {
  * Calcule les statistiques d'un ensemble de réponses.
  * Utilisé côté UI pour le feedback de progression.
  */
-export function computeAnswerStats(
-  questions: InterviewQuestion[],
-  answers: InterviewAnswer[],
-): {
+export function computeAnswerStats(questions: InterviewQuestion[], answers: InterviewAnswer[], ): {
   totalQuestions: number;
   answeredCount: number;
   skippedCount: number;

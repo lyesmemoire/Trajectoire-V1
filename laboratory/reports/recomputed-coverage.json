@@ -1,0 +1,19 @@
+{
+  "statements": 100,
+  "branches": 100,
+  "functions": 100,
+  "rawMetrics": {
+    "statements": {
+      "total": 63,
+      "covered": 63
+    },
+    "branches": {
+      "total": 23,
+      "covered": 23
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20
+    }
+  }
+}

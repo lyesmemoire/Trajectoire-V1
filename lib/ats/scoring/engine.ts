@@ -2,10 +2,7 @@
  * Calcul déterministe du score de compétences.
  * 40% du score final ATS.
  */
-export function calculateSkillScore(
-  required: string[],
-  candidate: string[],
-): { score: number; matched: string[]; missing: string[] } {
+export function calculateSkillScore(required: string[], candidate: string[], ): { score: number; matched: string[]; missing: string[] } {
   if (!required.length) return { score: 100, matched: [], missing: [] };
 
   const matched = required.filter((skill) => candidate.includes(skill));

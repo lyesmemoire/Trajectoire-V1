@@ -17,11 +17,7 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
-export function normalizeScores(
-  candidates: { candidateId: string; rawScore: number }[],
-  mean: number,
-  stdDev: number,
-): NormalizedScore[] {
+export function normalizeScores(candidates: { candidateId: string; rawScore: number }[], mean: number, stdDev: number, ): NormalizedScore[] {
   // Sort by rawScore descending for percentile calculation (stable)
   const sorted = [...candidates].sort((a, b) => {
     if (b.rawScore !== a.rawScore) return b.rawScore - a.rawScore;

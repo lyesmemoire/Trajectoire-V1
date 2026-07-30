@@ -1,0 +1,81 @@
+{
+  "component": "thread-manager",
+  "file": "compiler/cvm/thread-manager.ts",
+  "testFile": "tests/vm/advanced/thread-manager.test.ts",
+  "coverageDate": "2026-07-26T23:50:00Z",
+  "coverageSource": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+  "provider": "Vitest with V8 coverage",
+  "metrics": {
+    "statements": {
+      "total": 90,
+      "covered": 88,
+      "uncovered": 2,
+      "percentage": "97.78",
+      "target": "≥95%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "total": 50,
+      "covered": 46,
+      "uncovered": 4,
+      "percentage": "92.00",
+      "target": "≥97%",
+      "status": "NOT_PASSED",
+      "gap": "5.00%"
+    },
+    "functions": {
+      "total": 29,
+      "covered": 29,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "100%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "total": 90,
+      "covered": 88,
+      "uncovered": 2,
+      "percentage": "97.78",
+      "target": "≥95%",
+      "status": "PASSED"
+    }
+  },
+  "uncoveredLines": [
+    264,
+    269
+  ],
+  "uncoveredBranches": {
+    "total": 4,
+    "details": []
+  },
+  "testSummary": {
+    "total": 61,
+    "passed": 61,
+    "failed": 0,
+    "passRate": "100%"
+  },
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "97.78%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "92.00%",
+      "status": "NOT_PASSED"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "97.78%",
+      "status": "PASSED"
+    }
+  },
+  "overallStatus": "NOT_CERTIFIED",
+  "blockingCriteria": "Branches coverage (92.00%) below target (97%)"
+}

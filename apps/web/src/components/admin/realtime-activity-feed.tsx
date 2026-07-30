@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { User, Mic2, FileText, CreditCard, Sparkles } from "lucide-react";
+import { motion } from "framer-motion"
+import { User, Mic2, FileText, CreditCard, Sparkles } from "lucide-react"
 
 const EVENTS = [
   {
@@ -38,7 +38,7 @@ const EVENTS = [
     detail: "Passage au Plan Pro",
     time: "12m",
     icon: <CreditCard className="w-3 h-3" />,
-    color: "amber",
+    color: "terracotta",
   },
   {
     id: "5",
@@ -49,7 +49,7 @@ const EVENTS = [
     icon: <Sparkles className="w-3 h-3" />,
     color: "indigo",
   },
-];
+]
 
 export function RealtimeActivityFeed() {
   return (
@@ -60,7 +60,7 @@ export function RealtimeActivityFeed() {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-white hover:shadow-sm transition-all group"
+          className="flex items-center justify-between p-4 bg-ivoire-50 rounded-2xl border border-ivoire-100 hover:bg-white hover:shadow-premium transition-all group"
         >
           <div className="flex items-center gap-4 min-w-0">
             <div
@@ -69,19 +69,19 @@ export function RealtimeActivityFeed() {
               {event.icon}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-black text-slate-900 truncate">
+              <p className="text-sm font-black text-ink-900 truncate">
                 {event.user}
               </p>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-ink-500 font-medium">
                 {event.detail}
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex-shrink-0 ml-4">
+          <span className="text-[10px] font-black text-ink-400 uppercase tracking-widest flex-shrink-0 ml-4">
             {event.time}
           </span>
         </motion.div>
       ))}
     </div>
-  );
+  )
 }

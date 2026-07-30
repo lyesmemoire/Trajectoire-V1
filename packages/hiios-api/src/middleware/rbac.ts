@@ -39,7 +39,7 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
   ],
 };
 
-export function requirePermission(permission: string) {
+export function requirePermission(permission: _string) {
   return createMiddleware(async (c: Context, next: Next) => {
     const user = c.get("user");
     if (!user) {

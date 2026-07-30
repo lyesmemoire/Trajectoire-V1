@@ -15,7 +15,7 @@ export interface ClaimFocus {
 }
 
 export interface InterviewStateV3 {
-  context: any;
+  context: unknown;
   targetRole?: string;
   turnCount: number;
   history: Array<{ role: "assistant" | "user", content: string }>;
@@ -29,10 +29,10 @@ export interface InterviewStateV3 {
   maxPressureLevel?: number;
   errorOccurred?: boolean;
   timeoutOccurred?: boolean;
-  phase1Scores?: any;
-  phase2Scores?: any;
-  phase3Scores?: any;
-  phase4Scores?: any;
+  phase1Scores?: unknown;
+  phase2Scores?: unknown;
+  phase3Scores?: unknown;
+  phase4Scores?: unknown;
   lastQuestion: string;
   lastAction?: string;
   avgTech: number;
@@ -47,7 +47,7 @@ export interface InterviewStateV3 {
   pressureTimeline: number[];
 }
 
-export function initInterviewV3(input: { context: any, targetRole?: string }) {
+export function initInterviewV3(input: { context: unknown, targetRole?: string }) {
   const question = `Bonjour, je suis le Directeur des Ressources Humaines. Présentez-moi votre trajectoire en 2 minutes.`;
   const state: InterviewStateV3 = {
     context: input.context,
@@ -71,7 +71,7 @@ export function initInterviewV3(input: { context: any, targetRole?: string }) {
   return { state, question };
 }
 
-function selectRelevantClaim(state: InterviewStateV3, context: any) {
+function selectRelevantClaim(state: InterviewStateV3, context: unknown) {
   const weakClaims = state.flaggedWeakZones.filter(c => c.timesTested < 2);
   if (weakClaims.length > 0 && weakClaims[0]) {
     const claim = weakClaims[0];
@@ -104,13 +104,7 @@ interface ComputeRiskInputs {
 }
 
 function computeIntegrityRisk({
-  previousRisk,
-  consistencyGapScore,
-  bluffScore,
-  technicalDepthScore,
-  quantificationDepthScore,
-  careerMaturityScore,
-  cvClaimImpactLevel
+  previousRisk, consistencyGapScore, bluffScore, technicalDepthScore, quantificationDepthScore, careerMaturityScore, cvClaimImpactLevel
 }: ComputeRiskInputs) {
   const ConsistencyRisk = consistencyGapScore / 10;
   const BluffRisk = bluffScore / 10;

@@ -36,9 +36,7 @@ const STYLE_COLORS: Record<
 };
 
 export default function CVPreviewSVG({
-  template,
-  className,
-}: CVPreviewSVGProps) {
+  template, className, _}: CVPreviewSVGProps) {
   const colors = (STYLE_COLORS[template.id] || STYLE_COLORS["modern-red"]) as Colors;
   if (template.style === "minimal")
     return <MinimalPreview colors={colors} className={className} />;
@@ -52,9 +50,7 @@ export default function CVPreviewSVG({
 type Colors = { primary: string; text: string; bg: string; accent: string };
 
 function ModernPreview({
-  colors,
-  className,
-}: {
+  colors, className, _}: {
   colors: Colors;
   className?: string;
 }) {
@@ -305,9 +301,7 @@ function ModernPreview({
 }
 
 function ExecutivePreview({
-  colors,
-  className,
-}: {
+  colors, className, _}: {
   colors: Colors;
   className?: string;
 }) {
@@ -540,9 +534,7 @@ function ExecutivePreview({
 }
 
 function MinimalPreview({
-  colors,
-  className,
-}: {
+  colors, className, _}: {
   colors: Colors;
   className?: string;
 }) {
@@ -715,9 +707,7 @@ function MinimalPreview({
 }
 
 function CreativePreview({
-  colors,
-  className,
-}: {
+  colors, className, _}: {
   colors: Colors;
   className?: string;
 }) {

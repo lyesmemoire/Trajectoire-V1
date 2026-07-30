@@ -60,7 +60,7 @@ export function FinalCTA() {
   );
 }
 
-function ShieldCheckIcon(props: any) {
+function ShieldCheckIcon(props: _unknown) {
   return (
     <svg
       {...props}

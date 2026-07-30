@@ -19,7 +19,7 @@ export interface UIElement {
   color: "blue" | "green" | "yellow" | "red" | "purple" | "orange" | "gray";
   priority: number; // 0-100
   visible: boolean;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 export const UIElementSchema = z.object({

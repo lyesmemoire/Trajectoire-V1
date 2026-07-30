@@ -67,9 +67,7 @@ export function buildInterviewReport(turns: AnsweredTurn[]): InterviewReport {
   return { communication, technicalDepth, problemSolving, leadership, confidence, cultureFit, overall };
 }
 
-export function buildHiringRecommendation(
-  turns: AnsweredTurn[],
-): HiringRecommendation {
+export function buildHiringRecommendation(turns: AnsweredTurn[], ): HiringRecommendation {
   const report = buildInterviewReport(turns);
 
   const strengths: string[] = [];

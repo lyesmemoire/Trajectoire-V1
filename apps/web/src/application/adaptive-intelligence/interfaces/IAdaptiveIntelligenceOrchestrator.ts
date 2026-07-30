@@ -374,7 +374,7 @@ export interface OrchestratorAction {
   type: ActionType;
   engine: EngineType;
   priority: number;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   dependencies: string[];
   expectedDuration: number;
   estimatedValue: number;

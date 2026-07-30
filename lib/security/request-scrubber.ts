@@ -1,7 +1,7 @@
 /**
  * Prevents internal identifiers and sensitive data from leaking into client-side logs or analytics.
  */
-export function scrubPayload(data: any): any {
+export function scrubPayload(data: unknown): unknown {
   if (!data) return data;
 
   const sensitiveKeys = [
@@ -17,7 +17,7 @@ export function scrubPayload(data: any): any {
 
   const scrubbed = JSON.parse(JSON.stringify(data));
 
-  const recurse = (obj: any) => {
+  const recurse = (obj: unknown) => {
     for (const key in obj) {
       if (sensitiveKeys.includes(key.toLowerCase())) {
         obj[key] = "[REDACTED]";

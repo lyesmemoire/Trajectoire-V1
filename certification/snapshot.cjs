@@ -90,16 +90,47 @@ function generateSnapshot(runDir) {
   fs.writeFileSync(snapshotJsonPath, canonicalize(snapshot));
   
   // Sign the snapshot.json
-  // Temporarily copy sign.cjs to runDir context for simplicity or just run logic
   const sigResult = signFile(snapshotJsonPath, snapshotDir);
   
-  // Create TAR
-  // Using tar command to create a deterministic archive if possible
+  // Create TAR using 'tar' npm package for deterministic archive
   const tarPath = path.join(ROOT, 'certification-snapshot.tar');
   try {
-    // Standard tar for deterministic output (requires GNU tar typically, Alpine might need tweaking)
-    // We try to make it as deterministic as possible
-    execSync(`tar -cf ${tarPath} -C ${snapshotDir} .`, { stdio: 'ignore' });
+    const tar = require('tar');
+    const { getNormalizedTarMetadata } = require('./deterministic.cjs');
+    const tarOpts = getNormalizedTarMetadata();
+    
+    // tar.c parameters:
+    // portable: true removes OS-specific extensions
+    // mtime: forces modification time
+    // sort: ensures order is strictly lexical
+    // prefix: allows storing files inside a base folder
+    // filter: can be used to override per-file stat
+    tar.c(
+      {
+        file: tarPath,
+        cwd: snapshotDir,
+        portable: true,
+        gzip: false,
+        sync: true, // synchronous creation
+        mtime: tarOpts.mtime,
+        // Override stat for all files to normalize uid/gid/mode
+        filter: (path, stat) => {
+          stat.uid = tarOpts.uid;
+          stat.gid = tarOpts.gid;
+          stat.uname = tarOpts.uname;
+          stat.gname = tarOpts.gname;
+          if (stat.isDirectory()) {
+            stat.mode = tarOpts.dirMode;
+          } else {
+            stat.mode = tarOpts.mode;
+          }
+          return true;
+        },
+        // Sort entries natively supported by tar package when portable is used, but we can enforce it:
+        jobs: 1, // deterministic order
+      },
+      ['.']
+    );
     console.log(`  ✅ [SNAPSHOT] Archive générée avec succès : ${tarPath}`);
   } catch (e) {
     console.warn(`  ⚠️ [SNAPSHOT] Erreur lors de la création de l'archive tar : ${e.message}`);

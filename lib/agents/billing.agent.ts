@@ -1,4 +1,4 @@
-import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract";
+import { AgentOpinion } from "@/domain/orchestration.contract";
 
 /**
  * Billing Agent
@@ -7,7 +7,7 @@ import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract
  * Nature: déterministe
  * Autorité: élevée sur argent
  */
-export function evaluateBilling(ctx: EvaluationContext): AgentOpinion {
+export function evaluateBilling(ctx: _EvaluationContext): AgentOpinion {
   const hasInconsistency = ctx.hasBillingInconsistency ?? false;
   
   if (hasInconsistency) {

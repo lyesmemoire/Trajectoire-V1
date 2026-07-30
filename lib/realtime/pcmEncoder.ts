@@ -1,4 +1,4 @@
-export function float32ToPCM16(float32Array: Float32Array): number[] {
+export function float32ToPCM16(float32Array: _Float32Array): number[] {
   const buffer = new ArrayBuffer(float32Array.length * 2);
   const view = new DataView(buffer);
   for (let i = 0; i < float32Array.length; i++) {

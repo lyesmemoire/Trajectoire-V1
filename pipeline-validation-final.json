@@ -1,0 +1,38 @@
+{
+  "phase1_2_3_4": {
+    "action": "Exécution initiale complète du pipeline via 'pnpm cert:full' sur un dépôt vierge.",
+    "command": "pnpm cert:full",
+    "exitCode": 0,
+    "stdout": "Pipeline exécute toutes les étapes (0 à 10). La décision finale est REJECTED.",
+    "stderr": "Erreurs de build (tsc) et erreurs de test (CACError: Unknown option '--threads')."
+  },
+  "phase5": {
+    "coverage": "Échoue à l'exécution de vitest, puis signale une PREUVE INSUFFISANTE car le fichier local copié statiquement n'existe pas dans un dépôt vierge.",
+    "mutation": "Atteint un score de 100% (faussement) car l'erreur '--no-threads' fait crasher vitest inconditionnellement, assimilé à 'KILLED'.",
+    "regression": "Atteint un score de 100% (faussement) pour la même raison (crash de vitest assimilé à 'REGRESSION_DETECTED').",
+    "manifest": "Calcule correctement les empreintes des fichiers présents.",
+    "verification": "La vérification a posteriori réussit car les fichiers produits par les scripts frauduleux sont cohérents cryptographiquement."
+  },
+  "phase6": {
+    "action": "Rejeu après suppression",
+    "result": "Les hachages SHA256 des manifestes diffèrent entre deux exécutions consécutives à cause de l'inclusion des timestamps (createdAt) et identifiants aléatoires (manifestId)."
+  },
+  "phase7": {
+    "action": "Falsification d'artefact",
+    "result": "Le script 'verify.cjs' détecte efficacement une altération d'un fichier (ex: modification d'une métrique dans coverage-report.json) et lève une erreur V-05 Hash mismatch."
+  },
+  "phase8": {
+    "action": "Modification du code source",
+    "result": "La décision finale et les métriques (mutation, régression) restent strictement identiques. Puisque le pipeline s'appuie sur le crash d'un outil CLI et des fichiers statiques copiés pour calculer ses scores, le code métier n'est en réalité jamais évalué."
+  },
+  "phase9": {
+    "reproductible": false,
+    "deterministe": false,
+    "falsifiable": true,
+    "auditable": true,
+    "independant": false
+  },
+  "phase10": {
+    "conclusion": "B. Pipeline invalide"
+  }
+}

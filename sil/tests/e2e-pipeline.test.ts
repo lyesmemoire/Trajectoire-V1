@@ -40,10 +40,7 @@ class FailingP7Evaluator implements P7EvaluatorClient {
 describe("SIL Phase 2-C — End-to-End Integration", () => {
 
   // ── Helper ──────────────────────────────────────────────────────
-  const setup = (
-    traceProvider?: RuntimeTraceProvider,
-    p7?: P7EvaluatorClient,
-  ) => {
+  const setup = (traceProvider?: RuntimeTraceProvider, p7?: P7EvaluatorClient, ) => {
     const store = new MemoryEventStore();
     const router = new EventRouter();
     const registry = new MemorySessionRegistry();

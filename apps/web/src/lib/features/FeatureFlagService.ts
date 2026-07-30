@@ -16,6 +16,8 @@ const FeatureFlagSchema = z.object({
   targetEnvironments: z.array(z.string()).optional(), // Specific environments
 });
 
+// Canonical Reference: COS-OBJ-010 (blueprint.runtime.featureflag)
+// Owner: COS Team
 export type FeatureFlag = z.infer<typeof FeatureFlagSchema>;
 
 // Available feature flags

@@ -64,10 +64,7 @@ export interface Contradiction {
  * Compare une réponse orale aux faits du CV et renvoie une contradiction si écart.
  * Déterministe ; ne renvoie qu'au plus une contradiction (la plus parlante).
  */
-export function detectContradiction(
-  facts: CandidateFacts,
-  transcript: string,
-): Contradiction | null {
+export function detectContradiction(facts: CandidateFacts, transcript: string, ): Contradiction | null {
   const t = (transcript ?? "").toLowerCase();
 
   // Écart d'années sur une compétence présente dans le CV.

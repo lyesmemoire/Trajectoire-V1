@@ -241,10 +241,12 @@ export const CertificationSchema = z.object({
 // KNOWLEDGE GRAPH
 // ============================================================================
 
+// Canonical Reference: BCM-GRAPH-005 (blueprint.graph.knowledge)
+// Owner: Chief Cognitive Architect
 export interface KnowledgeGraph {
   nodes: {
     skills: Map<string, Skill>;
-    jobs: Map<string, Job>;
+    jobs: Map<string, any>;
     companies: Map<string, Company>;
     industries: Map<string, Industry>;
     certifications: Map<string, Certification>;

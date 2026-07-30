@@ -1,0 +1,12 @@
+{
+  "confidenceIndex": "44.67%",
+  "sampleConfidence": "23.33%",
+  "familyDiversity": "60%",
+  "criticalityDiversity": "75%",
+  "sampleSize": 7,
+  "requiredSampleSize": 30,
+  "sampleAdequate": false,
+  "realInvalidRate": "32.5%",
+  "maxRealInvalidRateForGold": "20%",
+  "realInvalidRateAdequate": false
+}

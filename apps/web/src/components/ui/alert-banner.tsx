@@ -1,36 +1,32 @@
 interface AlertBannerProps {
-  type: "success" | "error" | "warning" | "info";
-  title: string;
-  message?: string;
-  onDismiss?: () => void;
+  type: "success" | "error" | "warning" | "info"
+  title: string
+  message?: string
+  onDismiss?: () => void
 }
 
 const ALERT_STYLES = {
   success: {
-    container: "bg-emerald-50 border-emerald-200 text-emerald-800",
+    container: "bg-forest-50 border-forest-100 text-forest-600",
     icon: "✅",
   },
   error: {
-    container: "bg-red-50 border-red-200 text-red-800",
+    container: "bg-brick-50 border-brick-100 text-brick-600",
     icon: "❌",
   },
   warning: {
-    container: "bg-amber-50 border-amber-200 text-amber-800",
+    container: "bg-terracotta-50 border-terracotta-100 text-terracotta-600",
     icon: "⚠️",
   },
   info: {
-    container: "bg-blue-50 border-blue-200 text-blue-800",
+    container: "bg-ivoire-100 border-ivoire-200 text-ink-600",
     icon: "ℹ️",
   },
-};
+}
 
 export function AlertBanner({
-  type,
-  title,
-  message,
-  onDismiss,
-}: AlertBannerProps) {
-  const styles = ALERT_STYLES[type];
+  type, title, message, onDismiss }: AlertBannerProps) {
+  const styles = ALERT_STYLES[type]
 
   return (
     <div
@@ -51,5 +47,5 @@ export function AlertBanner({
         </button>
       )}
     </div>
-  );
+  )
 }

@@ -73,10 +73,7 @@ export const questionTemplates: QuestionTemplate[] = [
   },
 ];
 
-export function getQuestionsForJob(
-  jobCategory: string,
-  level: string,
-): QuestionTemplate[] {
+export function getQuestionsForJob(_jobCategory: string, level: string, ): QuestionTemplate[] {
   return questionTemplates.filter(
     (q) => q.level === level || q.level === "mid", // Mid-level questions sont universelles
   );

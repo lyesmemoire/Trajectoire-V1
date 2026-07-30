@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { TrendingUp, UserMinus, RotateCcw, EyeOff } from "lucide-react";
+import { TrendingUp, UserMinus, RotateCcw, EyeOff } from "lucide-react"
 
 interface Props {
   data: {
-    returnHealth: number;
-    highRiskUsers: number;
-    recoveryRate: number;
-    replayFatigue: number;
-  };
+    returnHealth: number
+    highRiskUsers: number
+    recoveryRate: number
+    replayFatigue: number
+  }
 }
 
 export function PredictiveOverviewCards({ data }: Props) {
@@ -17,27 +17,27 @@ export function PredictiveOverviewCards({ data }: Props) {
       title: "Predicted Return Health",
       value: `${data.returnHealth}%`,
       icon: TrendingUp,
-      color: "text-blue-500",
+      color: "text-bronze-500",
     },
     {
       title: "High-Risk Users",
       value: data.highRiskUsers,
       icon: UserMinus,
-      color: "text-rose-500",
+      color: "text-brick-500",
     },
     {
       title: "Recovery Return Rate",
       value: `${data.recoveryRate}%`,
       icon: RotateCcw,
-      color: "text-emerald-500",
+      color: "text-forest-500",
     },
     {
       title: "Replay Fatigue",
       value: `${data.replayFatigue}%`,
       icon: EyeOff,
-      color: "text-amber-500",
+      color: "text-terracotta-500",
     },
-  ];
+  ]
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -51,12 +51,12 @@ export function PredictiveOverviewCards({ data }: Props) {
           </div>
           <div>
             <p className="text-4xl font-black text-white">{card.value}</p>
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">
+            <p className="text-[10px] font-black text-ink-500 uppercase tracking-widest mt-1">
               {card.title}
             </p>
           </div>
         </div>
       ))}
     </div>
-  );
+  )
 }

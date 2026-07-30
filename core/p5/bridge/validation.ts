@@ -1,4 +1,4 @@
-import { GovernorDecision, ValidationResult } from "./normalization-contract.js";
+import { ValidationResult } from "./normalization-contract.js";
 
 /**
  * Validates a GovernorDecision before it enters the normalization pipeline.
@@ -10,7 +10,7 @@ import { GovernorDecision, ValidationResult } from "./normalization-contract.js"
  *
  * This is a pure function — no Date.now(), no Math.random(), no side effects.
  */
-export function validateDecision(decision: GovernorDecision): ValidationResult {
+export function validateDecision(decision: _GovernorDecision): ValidationResult {
   const reasons: string[] = [];
 
   if (decision.trustDelta !== undefined) {

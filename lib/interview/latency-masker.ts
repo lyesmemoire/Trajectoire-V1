@@ -16,6 +16,6 @@ export function getRandomLatencyPhrase() {
 /**
  * Détermine si on doit afficher une animation de "Victor réfléchit".
  */
-export function shouldShowThinkingState(latencyMs: number): boolean {
+export function shouldShowThinkingState(latencyMs: _number): boolean {
   return latencyMs > 1500;
 }

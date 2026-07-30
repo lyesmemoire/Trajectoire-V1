@@ -56,6 +56,7 @@ export function validateUploadedFile(file: File): { valid: boolean; error?: stri
   }
 
   // Vérifier le nom du fichier (pas de caractères suspects)
+  // eslint-disable-next-line no-control-regex
   if (/[<>:"/\\|?*\x00-\x1F]/.test(file.name)) {
     return {
       valid: false,
@@ -78,6 +79,7 @@ export function validateFileName(name: string): { valid: boolean; error?: string
     return { valid: false, error: "Nom de fichier trop long" };
   }
 
+  // eslint-disable-next-line no-control-regex
   if (/[<>:"/\\|?*\x00-\x1F]/.test(name)) {
     return { valid: false, error: "Nom de fichier invalide" };
   }
@@ -98,6 +100,7 @@ export function validateFileName(name: string): { valid: boolean; error?: string
  */
 export function sanitizeFileName(name: string): string {
   return name
+    // eslint-disable-next-line no-control-regex
     .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
     .replace(/\.{2,}/g, ".")
     .trim();

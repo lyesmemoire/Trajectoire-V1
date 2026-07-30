@@ -63,7 +63,7 @@ export interface CoachingTrigger {
   severity: "low" | "medium" | "high";
   value: number;
   threshold: number;
-  context: Record<string, any>;
+  context: Record<string, unknown>;
   timestamp: Date;
 }
 

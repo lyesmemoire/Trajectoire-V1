@@ -920,7 +920,7 @@ export class LearningEngine {
 
   private runEquityCheck(
     targetId  : string,
-    outcomes  : CandidateOutcome[],
+    outcomes  : any[],
     delta     : number,
   ): EquityCheckResult {
     const dimensions: EquityDimension[] = [];
@@ -1227,7 +1227,7 @@ export class LearningEngine {
     );
   }
 
-  private groupByField<T extends Record<string, any>>(
+  private groupByField<T extends Record<string, unknown>>(
     items : T[],
     field : keyof T,
   ): Record<string, T[]> {

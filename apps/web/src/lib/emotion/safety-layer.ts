@@ -21,10 +21,7 @@ const FORBIDDEN_TONES = [
 /**
  * Validates Victor's response before it reaches the user.
  */
-export function validateAiResponse(
-  response: string,
-  pressureLevel: number,
-): SafetyCheck {
+export function validateAiResponse(response: string, pressureLevel: number, ): SafetyCheck {
   // 1. Check for toxic vocabulary
   if (FORBIDDEN_TONES.some((pattern) => pattern.test(response))) {
     return {

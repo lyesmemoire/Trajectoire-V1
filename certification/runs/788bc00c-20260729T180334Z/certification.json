@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactType": "CERTIFICATION_REPORT",
+  "metadata": {
+    "id": "CERT-execution-pipeline-20260729T181122Z-788bc00c",
+    "createdAt": "2026-07-29T18:11:22.067Z",
+    "component": "execution-pipeline",
+    "sourceFile": "compiler/cvm/execution-pipeline.ts",
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "gitBranch": "develop-v2",
+    "gitClean": false,
+    "pipelineVersion": "1.0.0"
+  },
+  "provenance": {
+    "command": "node certification/report.cjs",
+    "script": "certification/report.cjs",
+    "environment": {
+      "nodeVersion": "v24.13.0",
+      "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+      "typescriptVersion": "5.9.3"
+    },
+    "startedAt": "2026-07-29T18:11:18.075Z",
+    "completedAt": "2026-07-29T18:11:22.067Z",
+    "durationMs": 3992,
+    "exitCode": 0
+  },
+  "prerequisites": {
+    "gitClean": false,
+    "allTestsPass": true,
+    "buildSuccessful": true,
+    "environmentCaptured": true,
+    "allSchemasValid": true
+  },
+  "coverage": {
+    "artifactRef": "coverage-report.json",
+    "metrics": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "details": {
+        "statementsTotal": 63,
+        "statementsCovered": 63,
+        "branchesTotal": 23,
+        "branchesCovered": 23,
+        "functionsTotal": 20,
+        "functionsCovered": 20,
+        "linesTotal": 82,
+        "linesCovered": 82
+      }
+    },
+    "pass": true,
+    "level": "GOLD"
+  },
+  "mutation": {
+    "artifactRef": "mutation-report.json",
+    "metrics": {
+      "total": 12,
+      "killed": 12,
+      "survived": 0,
+      "invalid": 0,
+      "timeout": 0,
+      "mutationScore": 100
+    },
+    "pass": true,
+    "level": "GOLD"
+  },
+  "regression": {
+    "artifactRef": "regression-report.json",
+    "metrics": {
+      "total": 60,
+      "detected": 54,
+      "missed": 4,
+      "buildErrors": 0,
+      "timeouts": 2,
+      "detectionRate": 90
+    },
+    "pass": true,
+    "level": "SILVER"
+  },
+  "security": {
+    "artifactRef": "security-summary.json",
+    "metrics": {
+      "sbom": "PASS",
+      "dependencyIntegrity": "PASS",
+      "cve": "PASS",
+      "licenses": "PASS",
+      "secretScan": "PASS",
+      "provenance": "PASS",
+      "reproducibility": "PASS",
+      "securityScore": 100,
+      "overallScore": 100,
+      "qualityScore": 100,
+      "integrityScore": 100,
+      "reproducibilityScore": 100,
+      "supplyChainScore": 100
+    },
+    "pass": true,
+    "level": "GOLD"
+  },
+  "decision": {
+    "level": "REJECTED",
+    "allPrerequisitesMet": false,
+    "allEvidencePresent": true,
+    "allHashesValid": true,
+    "noContradictions": true,
+    "reasoning": [
+      "Coverage statements: 100% → GOLD",
+      "Coverage branches: 100% → GOLD",
+      "Coverage functions: 100% → GOLD",
+      "Coverage level: GOLD",
+      "Mutation score: 100% → GOLD",
+      "Mutation level: GOLD",
+      "Regression detection: 90% → SILVER",
+      "Regression missed: 4",
+      "Regression level: SILVER",
+      "Security Score: 100",
+      "Supply Chain Score: 100",
+      "Reproducibility Score: 100",
+      "Overall Security Level: GOLD",
+      "Prerequisites failed: gitClean"
+    ]
+  },
+  "manifest": {
+    "manifestId": "N/A",
+    "manifestSha256": "N/A"
+  },
+  "content": {
+    "level": "REJECTED",
+    "reasoning": [
+      "Coverage statements: 100% → GOLD",
+      "Coverage branches: 100% → GOLD",
+      "Coverage functions: 100% → GOLD",
+      "Coverage level: GOLD",
+      "Mutation score: 100% → GOLD",
+      "Mutation level: GOLD",
+      "Regression detection: 90% → SILVER",
+      "Regression missed: 4",
+      "Regression level: SILVER",
+      "Security Score: 100",
+      "Supply Chain Score: 100",
+      "Reproducibility Score: 100",
+      "Overall Security Level: GOLD",
+      "Prerequisites failed: gitClean"
+    ]
+  },
+  "evidenceRefs": [
+    {
+      "type": "PRIMARY",
+      "file": "coverage-report.json",
+      "sha256": "3213f3f8e1c92368e4dd79d1afd72f47bd07414601aa6145f371dadce45560ee"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "mutation-report.json",
+      "sha256": "b003ce0167e2f2af80705feff5f435767fbc1196a9882d4ae9c601d9f9f00660"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "regression-report.json",
+      "sha256": "a1f3f63e5e181431f16afbd1e12e1690c3f22d2f2321cb44bc4997b32c14a0fd"
+    },
+    {
+      "type": "PRIMARY",
+      "file": "security-summary.json",
+      "sha256": "b01260ad2ee790a07f8676d787b0c560393b3dbe32f8cbfdffbc1f77ff73982a"
+    }
+  ],
+  "integrity": {
+    "contentSha256": "d8f0e858b7b3314dc942c5488298700119645c0fb513646f7bccb4970eebcaeb",
+    "algorithm": "sha256"
+  }
+}

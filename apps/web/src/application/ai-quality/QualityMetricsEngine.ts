@@ -7,7 +7,6 @@ import {
   QualityMetrics,
   CriteriaScores,
   EvaluationHistory,
-  ConversationTurn,
 } from "./interfaces/IEvaluationPlatform";
 
 // ============================================================================

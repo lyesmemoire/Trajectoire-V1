@@ -1,7 +1,9 @@
+import { ReportSummary } from "../report-contract.js";
+
 import { CandidateEvaluation } from "../../evaluation-contract.js";
 import { ExplanationGraph } from "../../explainability/explanation-contract.js";
 import { GlobalRankingEntry } from "../../ranking/ranking-contract.js";
-import { ReportSummary, Verdict } from "../report-contract.js";
+import { Verdict } from "../report-contract.js";
 
 export function buildSummary(
   evaluation: CandidateEvaluation,

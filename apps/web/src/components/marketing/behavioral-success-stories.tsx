@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Zap } from "lucide-react";
+import { Zap } from "lucide-react"
 
 const STORIES = [
   {
@@ -17,7 +17,7 @@ const STORIES = [
     after: "Affirmation des choix d'architecture. Storytelling impactant.",
     avatar: "S",
   },
-];
+]
 
 export function BehavioralSuccessStories() {
   return (
@@ -26,9 +26,9 @@ export function BehavioralSuccessStories() {
         <div className="text-center space-y-6">
           <h2 className="text-4xl lg:text-7xl font-black text-white leading-tight tracking-tight">
             De la justification <br />{" "}
-            <span className="text-blue-500 italic">à l'affirmation.</span>
+            <span className="text-bronze-500 italic">à l'affirmation.</span>
           </h2>
-          <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto">
+          <p className="text-ink-400 text-xl font-medium max-w-2xl mx-auto">
             Étudiez les mutations comportementales de ceux qui ont déjà dominé
             l'arène.
           </p>
@@ -42,31 +42,31 @@ export function BehavioralSuccessStories() {
             >
               <div className="relative z-10 space-y-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center font-black text-white">
+                  <div className="w-12 h-12 rounded-2xl bg-bronze-600 flex items-center justify-center font-black text-white">
                     {s.avatar}
                   </div>
-                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                  <p className="text-xs font-black text-ink-500 uppercase tracking-widest">
                     {s.role}
                   </p>
                 </div>
 
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <p className="text-[10px] font-black text-slate-500 uppercase">
+                    <p className="text-[10px] font-black text-ink-500 uppercase">
                       Avant la mutation
                     </p>
-                    <p className="text-sm font-medium text-slate-400 italic">
+                    <p className="text-sm font-medium text-ink-400 italic">
                       "{s.before}"
                     </p>
                   </div>
-                  <div className="p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
-                    <p className="text-[10px] font-black text-blue-400 uppercase mb-2 flex items-center gap-2">
+                  <div className="p-6 bg-bronze-500/10 border border-bronze-500/20 rounded-2xl">
+                    <p className="text-[10px] font-black text-bronze-400 uppercase mb-2 flex items-center gap-2">
                       <Zap className="w-3 h-3" /> Turning Point
                     </p>
                     <p className="text-sm font-bold text-white">"{s.moment}"</p>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-[10px] font-black text-emerald-500 uppercase">
+                    <p className="text-[10px] font-black text-forest-500 uppercase">
                       Après l'entraînement
                     </p>
                     <p className="text-sm font-black text-white">{s.after}</p>
@@ -78,5 +78,5 @@ export function BehavioralSuccessStories() {
         </div>
       </div>
     </section>
-  );
+  )
 }

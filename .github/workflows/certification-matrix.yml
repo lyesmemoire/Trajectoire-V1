@@ -1,0 +1,126 @@
+name: Industrial Certification Matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  certification:
+    name: Certify (${{ matrix.os }} / Node ${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [20, 22]
+    
+    env:
+      TZ: UTC
+      LANG: C
+      LC_ALL: C
+      LANGUAGE: C
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          
+      - name: Export Deterministic Git Timestamp
+        shell: bash
+        run: |
+          EPOCH=$(git log -1 --format=%ct)
+          echo "SOURCE_DATE_EPOCH=$EPOCH" >> $GITHUB_ENV
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Setup Python (Lab B)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' # Version stable figée
+          
+      - name: Install pnpm
+        run: npm install -g pnpm@9.15.9
+        
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run certification pipeline (Run 1)
+        run: node certification/certify.cjs
+        
+      - name: Backup Run 1
+        shell: bash
+        run: |
+          LATEST_RUN=$(ls -td certification/runs/*/ | head -1)
+          cp -r "$LATEST_RUN" certification/run1
+          
+      - name: Run certification pipeline (Run 2)
+        run: node certification/certify.cjs
+        
+      - name: Backup Run 2
+        shell: bash
+        run: |
+          LATEST_RUN=$(ls -td certification/runs/*/ | head -1)
+          cp -r "$LATEST_RUN" certification/run2
+          
+      - name: Local Determinism Check (Run 1 vs Run 2)
+        shell: bash
+        run: |
+          HASH1=$(sha256sum certification/run1/release-evidence-v1.0.0.dsse.json | awk '{print $1}')
+          HASH2=$(sha256sum certification/run2/release-evidence-v1.0.0.dsse.json | awk '{print $1}')
+          if [ "$HASH1" != "$HASH2" ]; then
+            echo "❌ INTERNAL ENTROPY DETECTED: Run 1 and Run 2 on the same runner differ."
+            echo "Run 1: $HASH1"
+            echo "Run 2: $HASH2"
+            exit 1
+          fi
+          echo "✅ Internal Determinism Verified (Run 1 == Run 2): $HASH1"
+        
+      - name: Run independent verification (Self-check on Run 2)
+        shell: bash
+        run: |
+          node certification/verify.cjs "certification/run2"
+          
+      - name: Export Artifacts for Reproducibility Check
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-${{ matrix.os }}-node${{ matrix.node-version }}
+          # On exporte Run 2 comme preuve finale pour ce runner
+          path: certification/run2/
+          retention-days: 7
+
+  reproducibility-check:
+    name: Reproductibilité Stricte (Convergence Inter-OS)
+    needs: certification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Download all certification artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          
+      - name: Vérifier la reproductibilité
+        run: node certification/reproducibility-check.cjs all-artifacts
+        
+      - name: Upload Reproducibility Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reproducibility-report
+          path: reproducibility-report.json
+          retention-days: 30

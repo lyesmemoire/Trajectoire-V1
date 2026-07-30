@@ -1,0 +1,24 @@
+{
+  "total": 12,
+  "killed": 12,
+  "survived": 0,
+  "invalid": 0,
+  "validTotal": 12,
+  "mutationScore": 100,
+  "coveredFamilies": [
+    ""
+  ],
+  "uncoveredFamilies": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+  ],
+  "certification": "BRONZE"
+}

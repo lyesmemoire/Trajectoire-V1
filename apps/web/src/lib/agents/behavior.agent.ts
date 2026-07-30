@@ -1,4 +1,4 @@
-import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract";
+import { AgentOpinion } from "@/domain/orchestration.contract";
 
 /**
  * Behavior Agent
@@ -7,7 +7,7 @@ import { AgentOpinion, EvaluationContext } from "@/domain/orchestration.contract
  * Nature: temporel
  * Autorité: moyenne (influence globale)
  */
-export function evaluateBehavior(ctx: EvaluationContext): AgentOpinion {
+export function evaluateBehavior(ctx: any): AgentOpinion {
   const driftScore = ctx.driftScore ?? 0.0;
   const stabilityScore = ctx.stabilityScore ?? 1.0;
   

@@ -23,7 +23,7 @@ export interface HomeCard {
     action: string;
     priority: "primary" | "secondary";
   };
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 export const HomeCardSchema = z.object({

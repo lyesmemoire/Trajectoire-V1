@@ -6,7 +6,7 @@ type Mode = "normal" | "guard" | "replay" | "stress" | "circuit" | "pressure";
 
 type Result = {
   mode: Mode;
-  data: any;
+  data: unknown;
 };
 
 function runHarness(mode: Mode): Result {
@@ -46,7 +46,7 @@ async function main() {
       const metricsFile = `metrics-${mode}.txt`;
       fs.writeFileSync(metricsFile, rawMetrics);
       console.log(`🪙 Metrics snapshot saved → ${metricsFile}`);
-    } catch (e) {
+    } catch {
       console.warn(`⚠️ Could not fetch metrics after mode ${mode}:`, e);
     }
   }
@@ -55,7 +55,7 @@ async function main() {
   const memReport = "memory-leak-report.json";
   if (fs.existsSync(memReport)) {
     const memData = JSON.parse(fs.readFileSync(memReport, "utf-8"));
-    results.push({ mode: "memory" as any, data: memData });
+    results.push({ mode: "memory" as unknown, data: memData });
   }
 
   fs.writeFileSync("certification-summary.json", JSON.stringify(results, null, 2));

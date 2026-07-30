@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 type Particle = {
-  x: number;
-  y: number;
-  opacity: number;
-  duration: number;
-};
+  x: number
+  y: number
+  opacity: number
+  duration: number
+}
 
 export function CinematicBackground() {
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([])
 
   useEffect(() => {
     const generated = [...Array(20)].map(() => ({
@@ -19,10 +19,10 @@ export function CinematicBackground() {
       y: Math.random() * 100,
       opacity: Math.random() * 0.5,
       duration: 10 + Math.random() * 20,
-    }));
+    }))
 
-    setParticles(generated);
-  }, []);
+    setParticles(generated)
+  }, [])
 
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -47,5 +47,5 @@ export function CinematicBackground() {
         />
       ))}
     </div>
-  );
+  )
 }

@@ -4,10 +4,7 @@ import { createHash } from "crypto";
  * Injects subtle variations in the AI's behavior to prevent easy model fingerprinting.
  * This acts as a "Behavioral Watermark".
  */
-export function injectBehavioralVariance(
-  basePrompt: string,
-  sessionId: string,
-): string {
+export function injectBehavioralVariance(basePrompt: string, sessionId: string, ): string {
   // Use session ID to generate a stable but unique seed for this interview
   const seed = createHash("md5").update(sessionId).digest("hex");
   const variantIndex = parseInt(seed.substring(0, 2), 16) % 3;

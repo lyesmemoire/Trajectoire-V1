@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export async function requireCVEditor(userId: string) {
+export async function requireCVEditor(userId: _string) {
   const supabase = await createSupabaseServerClient();
 
   const { data, error } = await supabase

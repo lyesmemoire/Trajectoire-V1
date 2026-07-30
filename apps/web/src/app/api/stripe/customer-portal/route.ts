@@ -3,7 +3,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 import Stripe                        from "stripe";
 import { getStrictUser }             from "@/lib/auth/session-logic";
 import { prisma }                    from "@/lib/prisma";
@@ -14,7 +14,7 @@ let stripeClient: Stripe | null = null;
 function getStripe(): Stripe {
   if (!stripeClient) {
     stripeClient = new Stripe(envServer.STRIPE_SECRET_KEY ?? "", {
-      apiVersion: "2025-05-28.basil" as any,
+      apiVersion: "2025-08-27.basil" as Stripe.LatestApiVersion,
     });
   }
   return stripeClient;
@@ -80,9 +80,9 @@ export async function POST(_request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
 
-  } catch (err) {
-    logError("[CUSTOMER_PORTAL_ERROR]", err);
-    const message = err instanceof Error ? err.message : "Erreur inconnue";
+  } catch (error) {
+    logError("[CUSTOMER_PORTAL_ERROR]", error);
+    const message = error instanceof Error ? error.message : "Erreur inconnue";
     return NextResponse.json(
       { error: `Impossible d'ouvrir le portail : ${message}` },
       { status: 500 }

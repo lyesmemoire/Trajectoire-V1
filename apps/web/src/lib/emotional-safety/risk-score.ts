@@ -17,7 +17,7 @@ export interface RiskScoreInput {
   inactivityDays: number;
 }
 
-export interface RiskScoreOutput {
+export interface RiskScoreInput {
   riskLevel: RiskLevel;
   probableCause: ProbableCause;
   recommendedTone: RecommendedTone;
@@ -27,7 +27,7 @@ export interface RiskScoreOutput {
 /**
  * Moteur de calcul déterministe du risque comportemental.
  */
-export function calculateRiskScore(input: RiskScoreInput): RiskScoreOutput {
+export function calculateRiskScore(input: RiskScoreInput): any {
   let score = 0;
   let probableCause: ProbableCause = "fatigue";
   let recommendedTone: RecommendedTone = "neutral";

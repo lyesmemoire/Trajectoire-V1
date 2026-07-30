@@ -31,10 +31,7 @@ Analyse la réponse du candidat sur ces dimensions (0-100) :
 
 Réponds uniquement en JSON.`;
 
-export async function analyzeAnswer(
-  answer: string,
-  question: string,
-): Promise<AnswerAnalysis> {
+export async function analyzeAnswer(answer: string, question: string, ): Promise<AnswerAnalysis> {
   try {
     const { text } = await generateText({
       model: mistralModel,

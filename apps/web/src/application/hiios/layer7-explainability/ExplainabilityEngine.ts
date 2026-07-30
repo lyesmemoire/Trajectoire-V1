@@ -11,7 +11,6 @@ import {
   Decision,
   BiasEvent,
   Contradiction,
-  Skill,
 } from "../interfaces/IHIIOSKernel";
 import { logInfo } from "@/lib/logger/Logger";
 
@@ -162,6 +161,8 @@ export interface HypothesisMap {
   formatted_output: string;
 }
 
+// Canonical Reference: BCM-GRAPH-004 (blueprint.graph.confidence)
+// Owner: Chief Cognitive Architect
 export interface ConfidenceGraph {
   title: string;
   generated_at: Date;
@@ -678,7 +679,7 @@ export class ExplainabilityEngine {
   }
 
   private explainWhyThisDecision(candidate: Candidate, query: ExplainQuery): ExplainResponse {
-    const decision = this.getCurrentDecision(candidate);
+    const decision: any = this.getCurrentDecision(candidate);
     const strongSignals = this.extractStrongSignals(candidate);
     const weakSignals = this.extractWeakSignals(candidate);
     const riskMatrix = this.calculateRiskMatrix(candidate);
@@ -873,7 +874,7 @@ export class ExplainabilityEngine {
   }
 
   private explainWhatWouldChangeDecision(candidate: Candidate, query: ExplainQuery): ExplainResponse {
-    const currentDecision = this.getCurrentDecision(candidate);
+    const currentDecision: any = this.getCurrentDecision(candidate);
     const criticalHyps = candidate.currentInterview.activeHypotheses.filter(h => Math.abs(h.posterior - 0.50) < 0.15);
     const openQ = candidate.history.openQuestions.slice(0, 3);
 
@@ -916,7 +917,7 @@ export class ExplainabilityEngine {
   // ──────────────────────────────────────────────────────────
 
   generateEvidenceMap(candidate: Candidate): EvidenceMap {
-    const allEv = candidate.currentInterview.evidenceStore;
+    const allEv: any[] = candidate.currentInterview.evidenceStore;
     return {
       title: 'EVIDENCE MAP · TRAJECTOIRE',
       generated_at: new Date(),
@@ -960,7 +961,7 @@ export class ExplainabilityEngine {
   }
 
   generateContradictionReport(candidate: Candidate): ContradictionReport {
-    const contradictions = candidate.currentInterview.contradictionLog;
+    const contradictions: any[] = candidate.currentInterview.contradictionLog;
     return {
       title: 'CONTRADICTION REPORT · TRAJECTOIRE',
       generated_at: new Date(),
@@ -1025,7 +1026,7 @@ export class ExplainabilityEngine {
     return lines.join('\n');
   }
 
-  private formatEvidenceMap(evidences: Evidence[]): string {
+  private formatEvidenceMap(evidences: any[]): string {
     const lines: string[] = [];
     lines.push(`╔${'═'.repeat(74)}╗`);
     lines.push(`║  EVIDENCE MAP · TRAJECTOIRE${' '.repeat(46)}║`);
@@ -1126,7 +1127,7 @@ export class ExplainabilityEngine {
     return this.truncate(text.replace(/\s+/g, ' ').trim(), width).padEnd(width) + '║';
   }
 
-  private groupBy<T extends Record<string, any>>(items: T[], key: keyof T): Record<string, T[]> {
+  private groupBy<T extends Record<string, unknown>>(items: T[], key: keyof T): Record<string, T[]> {
     return items.reduce((acc, item) => {
       const k = String(item[key]);
       acc[k] = acc[k] ?? [];
@@ -1135,7 +1136,7 @@ export class ExplainabilityEngine {
     }, {} as Record<string, T[]>);
   }
 
-  private countByType(evidences: Evidence[]): string {
+  private countByType(evidences: any[]): string {
     const counts = this.groupBy(evidences, 'type');
     return Object.entries(counts).map(([type, evs]) => `${type}: ${evs.length}`).join(' · ');
   }

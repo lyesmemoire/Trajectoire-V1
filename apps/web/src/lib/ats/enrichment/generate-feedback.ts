@@ -7,11 +7,7 @@ Explique pourquoi le score est élevé ou bas.
 Sois précis, mentionne les technos clés manquantes.
 Format: 2-3 phrases percutantes.`;
 
-export async function generateATSFeedback(
-  matched: string[],
-  missing: string[],
-  score: number,
-): Promise<string> {
+export async function generateATSFeedback(matched: string[], missing: string[], score: number, ): Promise<string> {
   try {
     const { text } = await generateText({
       model: mistralSmallModel,

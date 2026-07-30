@@ -5,9 +5,7 @@ import type { RoleType } from "./role-weights.js";
 import { getUserPlan } from "../billing/usage-service.js";
 import { generatePremiumReport } from "./premium-report.js";
 
-export async function finalizeInterview(
-  sessionId: string,
-  log: (event: string, fields: Record<string, unknown>) => void,
+export async function finalizeInterview(sessionId: string, log: (event: string, _fields: Record<string, _unknown>) => void,
 ): Promise<void> {
   try {
     const record = await interviewRepository.get(sessionId);
@@ -55,7 +53,7 @@ export async function finalizeInterview(
       overall: finalScore.overall,
       roleUsed: role,
     });
-  } catch (err) {
+  } catch (error) {
     log("interview_scoring_error", { sessionId, error: String(err) });
   }
 }

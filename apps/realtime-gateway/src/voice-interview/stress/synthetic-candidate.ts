@@ -45,11 +45,7 @@ function pick(arr: string[], rng: SeededRng): string {
 }
 
 /** Réponse pour un tour donné. Déterministe via (seed, turn). */
-export function syntheticAnswer(
-  archetype: Archetype,
-  seed: number,
-  turn: number,
-): string {
+export function syntheticAnswer(archetype: Archetype, seed: number, turn: number, ): string {
   const rng = new SeededRng(seed * 1000 + turn);
   switch (archetype) {
     case "strong":

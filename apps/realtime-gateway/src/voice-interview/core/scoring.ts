@@ -15,9 +15,7 @@ export interface StructuredScore {
   summary: string;
 }
 
-export async function scoreStructuredInterview(
-  transcript: string,
-  llm: (prompt: string) => Promise<string>,
+export async function scoreStructuredInterview(transcript: string, llm: (prompt: string) => Promise<string>,
 ): Promise<StructuredScore> {
   const prompt = `
 Tu es un recruteur senior.

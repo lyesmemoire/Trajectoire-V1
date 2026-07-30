@@ -267,7 +267,7 @@ export class LLMResponseParser {
 
   // ── Helpers ────────────────────────────────
 
-  private extractJSON(raw: string): any | null {
+  private extractJSON(raw: string): unknown | null {
     // Chercher le premier objet JSON dans le texte
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return null;
@@ -280,7 +280,7 @@ export class LLMResponseParser {
   }
 
   private parseEvidences(
-    evidences: any[],
+    evidences: unknown[],
     errors:   ParseError[],
     warnings: ParseWarning[]
   ): ParsedEvidence[] {
@@ -302,7 +302,7 @@ export class LLMResponseParser {
     });
   }
 
-  private normalizeEvidenceLevel(level: any, warnings: ParseWarning[]): EvidenceLevel {
+  private normalizeEvidenceLevel(level: unknown, warnings: ParseWarning[]): EvidenceLevel {
     const levelMap: Record<string, EvidenceLevel> = {
       "L1": EvidenceLevel.L1_DIRECT_OBSERVED,
       "L2": EvidenceLevel.L2_INDIRECT_STRONG,
@@ -328,7 +328,7 @@ export class LLMResponseParser {
     return EvidenceLevel.L4_WEAK_SIGNAL;
   }
 
-  private parsePatterns(patterns: any[], warnings: ParseWarning[]): ParsedPattern[] {
+  private parsePatterns(patterns: unknown[], warnings: ParseWarning[]): ParsedPattern[] {
     return patterns.map(p => ({
       name:        p.name ?? "unknown",
       description: p.description ?? "",
@@ -337,14 +337,14 @@ export class LLMResponseParser {
     }));
   }
 
-  private parseContradictions(contradictions: any[], warnings: ParseWarning[]): ParsedContradiction[] {
+  private parseContradictions(contradictions: unknown[], warnings: ParseWarning[]): ParsedContradiction[] {
     return contradictions.map(c => ({
       description: c.description ?? "",
       severity:    this.normalizeSeverity(c.severity, warnings),
     }));
   }
 
-  private parseSkillAssessments(assessments: any[], warnings: ParseWarning[]): ParsedSkillAssessment[] {
+  private parseSkillAssessments(assessments: unknown[], warnings: ParseWarning[]): ParsedSkillAssessment[] {
     return assessments.map(a => ({
       skillId:         a.skillId ?? "unknown",
       confidenceScore: Math.max(0, Math.min(1, Number(a.confidenceScore) ?? 0.5)),
@@ -352,28 +352,28 @@ export class LLMResponseParser {
     }));
   }
 
-  private normalizeQuality(quality: any): "HIGH" | "MEDIUM" | "LOW" {
+  private normalizeQuality(quality: unknown): "HIGH" | "MEDIUM" | "LOW" {
     if (quality === "HIGH" || quality === "MEDIUM" || quality === "LOW") {
       return quality;
     }
     return "MEDIUM";
   }
 
-  private normalizeValence(valence: any, warnings: ParseWarning[]): "POSITIVE" | "NEGATIVE" | "NEUTRAL" | "COMPLEX" {
+  private normalizeValence(valence: unknown, warnings: ParseWarning[]): "POSITIVE" | "NEGATIVE" | "NEUTRAL" | "COMPLEX" {
     const valid = ["POSITIVE", "NEGATIVE", "NEUTRAL", "COMPLEX"];
     if (valid.includes(valence)) return valence;
     warnings.push({ field: "pattern.valence", message: `Valence invalide : ${valence}` });
     return "NEUTRAL";
   }
 
-  private normalizeCertainty(certainty: any, warnings: ParseWarning[]): "STRONG" | "MODERATE" | "SPECULATIVE" {
+  private normalizeCertainty(certainty: unknown, warnings: ParseWarning[]): "STRONG" | "MODERATE" | "SPECULATIVE" {
     const valid = ["STRONG", "MODERATE", "SPECULATIVE"];
     if (valid.includes(certainty)) return certainty;
     warnings.push({ field: "pattern.certainty", message: `Certainty invalide : ${certainty}` });
     return "MODERATE";
   }
 
-  private normalizeSeverity(severity: any, warnings: ParseWarning[]): "CRITICAL" | "MAJOR" | "MINOR" {
+  private normalizeSeverity(severity: unknown, warnings: ParseWarning[]): "CRITICAL" | "MAJOR" | "MINOR" {
     const valid = ["CRITICAL", "MAJOR", "MINOR"];
     if (valid.includes(severity)) return severity;
     warnings.push({ field: "contradiction.severity", message: `Severity invalide : ${severity}` });

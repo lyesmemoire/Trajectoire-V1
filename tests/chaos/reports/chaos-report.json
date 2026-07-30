@@ -1,0 +1,169 @@
+{
+  "chaosScore": 100,
+  "executedScenarios": 10,
+  "passed": 10,
+  "failed": 0,
+  "recovered": 10,
+  "orphanTransactions": 0,
+  "duplicateCredits": 0,
+  "memoryLeaks": 0,
+  "resourceLeaks": 0,
+  "unexpectedExceptions": 0,
+  "details": {
+    "schemaVersion": "1.0",
+    "campaign": "qualification-chaos-v1",
+    "campaignVersion": "1.1.0",
+    "seed": 884488,
+    "gitCommit": "development",
+    "sourceDateEpoch": null,
+    "timestamp": "2026-07-30T09:53:39.516Z",
+    "summary": {
+      "scenariosExecuted": 10,
+      "faultsInjected": 5,
+      "oracleViolations": 0,
+      "passed": true
+    },
+    "results": [
+      {
+        "scenarioId": "kill-server",
+        "faults": [
+          "fault-kill"
+        ],
+        "oracles": [
+          {
+            "name": "ConsistencyOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "llm-timeout",
+        "faults": [
+          "fault-llm-timeout"
+        ],
+        "oracles": [
+          {
+            "name": "CreditOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "network-loss",
+        "faults": [
+          "fault-network-drop"
+        ],
+        "oracles": [
+          {
+            "name": "RecoveryOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "browser-crash",
+        "faults": [],
+        "oracles": [
+          {
+            "name": "RecoveryOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "duplicate-request",
+        "faults": [],
+        "oracles": [
+          {
+            "name": "CreditOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "stripe-double",
+        "faults": [],
+        "oracles": [
+          {
+            "name": "CreditOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "ws-disconnect",
+        "faults": [],
+        "oracles": [
+          {
+            "name": "RecoveryOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "upload-interrupted",
+        "faults": [
+          "fault-network-drop"
+        ],
+        "oracles": [
+          {
+            "name": "TransactionOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "db-unavailable",
+        "faults": [
+          "fault-db-unavailable"
+        ],
+        "oracles": [
+          {
+            "name": "TransactionOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      },
+      {
+        "scenarioId": "queue-stopped",
+        "faults": [],
+        "oracles": [
+          {
+            "name": "RecoveryOracle",
+            "status": "PASS"
+          }
+        ],
+        "recoveries": [],
+        "cleanupVerified": true,
+        "reproducible": true
+      }
+    ]
+  }
+}

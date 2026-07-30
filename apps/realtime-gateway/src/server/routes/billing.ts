@@ -1,10 +1,10 @@
 import { envServer } from "../../../../../lib/env.server.js";
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import Stripe from "stripe";
 import { verifyVoiceToken } from "../auth.js";
 import { createClient } from "@supabase/supabase-js";
 
-export async function registerBillingRoutes(app: FastifyInstance) {
+export async function registerBillingRoutes(app: _FastifyInstance) {
   const stripe = new Stripe(envServer.STRIPE_SECRET_KEY, {
     apiVersion: "2025-08-27.basil",
   });
@@ -108,7 +108,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
             sig,
             envServer.STRIPE_WEBHOOK_SECRET,
           );
-        } catch (err: any) {
+        } catch (err: unknown) {
           return reply.status(400).send(`Webhook Error: ${err.message}`);
         }
 
@@ -136,7 +136,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
               stripe_customer_id: subscription.customer as string,
               stripe_subscription_id: subscription.id,
               subscription_status: subscription.status,
-              current_period_end: new Date((subscription as any).current_period_end * 1000).toISOString(),
+              current_period_end: new Date((subscription as unknown).current_period_end * 1000).toISOString(),
               plan: subscription.status === "active" ? "pro" : "free",
             })
             .eq("user_id", userId);
@@ -151,8 +151,8 @@ export async function registerBillingRoutes(app: FastifyInstance) {
         }
 
         async function handleInvoicePaid(invoice: Stripe.Invoice) {
-          if (!(invoice as any).subscription) return;
-          const subscription = await stripe.subscriptions.retrieve((invoice as any).subscription as string);
+          if (!(invoice as unknown).subscription) return;
+          const subscription = await stripe.subscriptions.retrieve((invoice as unknown).subscription as string);
           const customerId = subscription.customer as string;
 
           const { data: user } = await supabase
@@ -207,7 +207,7 @@ export async function registerBillingRoutes(app: FastifyInstance) {
               break;
           }
           return reply.status(200).send({ received: true });
-        } catch (err: any) {
+        } catch (err: unknown) {
           console.error("🔥 Stripe webhook processing error:", err);
           return reply.status(500).send("Webhook handler failed");
         }

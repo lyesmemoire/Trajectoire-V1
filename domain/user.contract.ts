@@ -174,10 +174,7 @@ function normalizePlan(raw: string | null | undefined): UserPlan {
  *   - On plan conflict: profiles.plan WINS (authoritative)
  *   - referral fields → Prisma User
  */
-export function mergeUserSources(
-  prismaUser: PrismaUserRow,
-  profile: SupabaseProfileRow,
-): CanonicalUser {
+export function mergeUserSources(prismaUser: PrismaUserRow, profile: SupabaseProfileRow, ): CanonicalUser {
   // Sanity check: IDs must match
   if (prismaUser.id !== profile.id) {
     throw new UserContractError(

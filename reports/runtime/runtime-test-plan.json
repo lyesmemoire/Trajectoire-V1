@@ -1,0 +1,585 @@
+{
+  "auditDate": "2026-07-26",
+  "auditPhase": "Phase 2 - Plan de campagne",
+  "testEstimates": {
+    "cvm": {
+      "execution-context": {
+        "estimatedTests": 80,
+        "testFiles": 1,
+        "targetCoverage": "96%",
+        "difficulty": "Moyenne",
+        "existingTests": 40,
+        "additionalTests": 40,
+        "estimatedEffort": "3 jours"
+      },
+      "memory-manager": {
+        "estimatedTests": 120,
+        "testFiles": 1,
+        "targetCoverage": "98%",
+        "difficulty": "Haute",
+        "existingTests": 50,
+        "additionalTests": 70,
+        "estimatedEffort": "5 jours"
+      },
+      "thread-manager": {
+        "estimatedTests": 80,
+        "testFiles": 1,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 70,
+        "additionalTests": 10,
+        "estimatedEffort": "4 jours"
+      },
+      "execution-pipeline": {
+        "estimatedTests": 90,
+        "testFiles": 1,
+        "targetCoverage": "96%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 90,
+        "estimatedEffort": "4 jours"
+      },
+      "instruction-fetch": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 35,
+        "additionalTests": 25,
+        "estimatedEffort": "3 jours"
+      },
+      "instruction-decode": {
+        "estimatedTests": 50,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 30,
+        "additionalTests": 20,
+        "estimatedEffort": "2 jours"
+      },
+      "instruction-execute": {
+        "estimatedTests": 150,
+        "testFiles": 2,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 45,
+        "additionalTests": 105,
+        "estimatedEffort": "7 jours"
+      },
+      "instruction-cache": {
+        "estimatedTests": 40,
+        "testFiles": 1,
+        "targetCoverage": "94%",
+        "difficulty": "Faible",
+        "existingTests": 25,
+        "additionalTests": 15,
+        "estimatedEffort": "2 jours"
+      },
+      "exception-handler": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 30,
+        "additionalTests": 30,
+        "estimatedEffort": "3 jours"
+      },
+      "interrupt-manager": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "96%",
+        "difficulty": "Haute",
+        "existingTests": 80,
+        "additionalTests": -20,
+        "estimatedEffort": "2 jours"
+      },
+      "rollback-manager": {
+        "estimatedTests": 90,
+        "testFiles": 1,
+        "targetCoverage": "98%",
+        "difficulty": "Haute",
+        "existingTests": 40,
+        "additionalTests": 50,
+        "estimatedEffort": "5 jours"
+      },
+      "garbage-collector": {
+        "estimatedTests": 120,
+        "testFiles": 2,
+        "targetCoverage": "96%",
+        "difficulty": "Haute",
+        "existingTests": 60,
+        "additionalTests": 60,
+        "estimatedEffort": "6 jours"
+      }
+    },
+    "cpr": {
+      "cluster-manager": {
+        "estimatedTests": 130,
+        "testFiles": 2,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 130,
+        "estimatedEffort": "7 jours"
+      },
+      "runtime-manager": {
+        "estimatedTests": 80,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 80,
+        "estimatedEffort": "4 jours"
+      },
+      "runtime-kernel": {
+        "estimatedTests": 140,
+        "testFiles": 2,
+        "targetCoverage": "98%",
+        "difficulty": "Élevée",
+        "existingTests": 0,
+        "additionalTests": 140,
+        "estimatedEffort": "8 jours"
+      },
+      "distributed-scheduler": {
+        "estimatedTests": 100,
+        "testFiles": 2,
+        "targetCoverage": "96%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 100,
+        "estimatedEffort": "6 jours"
+      },
+      "provider-manager": {
+        "estimatedTests": 70,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 70,
+        "estimatedEffort": "4 jours"
+      },
+      "execution-coordinator": {
+        "estimatedTests": 90,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 90,
+        "estimatedEffort": "5 jours"
+      },
+      "consensus-engine": {
+        "estimatedTests": 160,
+        "testFiles": 3,
+        "targetCoverage": "98%",
+        "difficulty": "Élevée",
+        "existingTests": 0,
+        "additionalTests": 160,
+        "estimatedEffort": "10 jours"
+      },
+      "leader-election": {
+        "estimatedTests": 100,
+        "testFiles": 2,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 100,
+        "estimatedEffort": "6 jours"
+      },
+      "distributed-memory": {
+        "estimatedTests": 120,
+        "testFiles": 2,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 120,
+        "estimatedEffort": "7 jours"
+      },
+      "distributed-locks": {
+        "estimatedTests": 80,
+        "testFiles": 1,
+        "targetCoverage": "96%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 80,
+        "estimatedEffort": "5 jours"
+      },
+      "snapshot-manager": {
+        "estimatedTests": 70,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 70,
+        "estimatedEffort": "4 jours"
+      },
+      "recovery-manager": {
+        "estimatedTests": 130,
+        "testFiles": 2,
+        "targetCoverage": "98%",
+        "difficulty": "Élevée",
+        "existingTests": 0,
+        "additionalTests": 130,
+        "estimatedEffort": "8 jours"
+      },
+      "replay-manager": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "93%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      },
+      "distributed-trace": {
+        "estimatedTests": 70,
+        "testFiles": 1,
+        "targetCoverage": "93%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 70,
+        "estimatedEffort": "4 jours"
+      },
+      "distributed-profiler": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "92%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      },
+      "distributed-debugger": {
+        "estimatedTests": 70,
+        "testFiles": 1,
+        "targetCoverage": "93%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 70,
+        "estimatedEffort": "4 jours"
+      },
+      "telemetry": {
+        "estimatedTests": 50,
+        "testFiles": 1,
+        "targetCoverage": "92%",
+        "difficulty": "Faible",
+        "existingTests": 0,
+        "additionalTests": 50,
+        "estimatedEffort": "2 jours"
+      },
+      "security": {
+        "estimatedTests": 100,
+        "testFiles": 2,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 100,
+        "estimatedEffort": "6 jours"
+      },
+      "governance": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "93%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      },
+      "knowledge-fabric": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "90%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      },
+      "autoscaler": {
+        "estimatedTests": 50,
+        "testFiles": 1,
+        "targetCoverage": "90%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 50,
+        "estimatedEffort": "3 jours"
+      },
+      "api-gateway": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "90%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      }
+    },
+    "memory": {
+      "cognitive-memory-manager": {
+        "estimatedTests": 150,
+        "testFiles": 2,
+        "targetCoverage": "98%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 150,
+        "estimatedEffort": "8 jours"
+      },
+      "memory-block": {
+        "estimatedTests": 60,
+        "testFiles": 1,
+        "targetCoverage": "97%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 60,
+        "estimatedEffort": "3 jours"
+      },
+      "memory-quota": {
+        "estimatedTests": 50,
+        "testFiles": 1,
+        "targetCoverage": "95%",
+        "difficulty": "Moyenne",
+        "existingTests": 0,
+        "additionalTests": 50,
+        "estimatedEffort": "2 jours"
+      },
+      "specialized-memory-manager": {
+        "estimatedTests": 100,
+        "testFiles": 1,
+        "targetCoverage": "97%",
+        "difficulty": "Haute",
+        "existingTests": 0,
+        "additionalTests": 100,
+        "estimatedEffort": "5 jours"
+      },
+      "types": {
+        "estimatedTests": 0,
+        "testFiles": 0,
+        "targetCoverage": "N/A",
+        "difficulty": "N/A",
+        "existingTests": 0,
+        "additionalTests": 0,
+        "estimatedEffort": "0 jours"
+      }
+    }
+  },
+  "campaignLots": {
+    "lot1": {
+      "name": "Memory Core",
+      "description": "Composants fondamentaux de gestion mémoire",
+      "components": [
+        "cognitive-memory-manager",
+        "memory-block",
+        "memory-quota",
+        "specialized-memory-manager"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 360,
+      "testFiles": 5,
+      "estimatedEffort": "18 jours",
+      "dependencies": []
+    },
+    "lot2": {
+      "name": "Execution Core",
+      "description": "Contexte d'exécution et pipeline",
+      "components": [
+        "execution-context",
+        "execution-pipeline"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 170,
+      "testFiles": 2,
+      "estimatedEffort": "7 jours",
+      "dependencies": ["lot1"]
+    },
+    "lot3": {
+      "name": "Instruction Pipeline",
+      "description": "Fetch, Decode, Execute et Cache",
+      "components": [
+        "instruction-fetch",
+        "instruction-decode",
+        "instruction-execute",
+        "instruction-cache"
+      ],
+      "priority": "HIGH",
+      "estimatedTests": 300,
+      "testFiles": 5,
+      "estimatedEffort": "14 jours",
+      "dependencies": ["lot2"]
+    },
+    "lot4": {
+      "name": "Concurrency & Interrupts",
+      "description": "Gestion des threads et interruptions",
+      "components": [
+        "thread-manager",
+        "interrupt-manager",
+        "exception-handler"
+      ],
+      "priority": "HIGH",
+      "estimatedTests": 200,
+      "testFiles": 3,
+      "estimatedEffort": "9 jours",
+      "dependencies": ["lot2"]
+    },
+    "lot5": {
+      "name": "Memory Management CVM",
+      "description": "Gestion mémoire CVM et GC",
+      "components": [
+        "memory-manager",
+        "garbage-collector",
+        "rollback-manager"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 330,
+      "testFiles": 5,
+      "estimatedEffort": "16 jours",
+      "dependencies": ["lot1", "lot2"]
+    },
+    "lot6": {
+      "name": "Cluster Core",
+      "description": "Gestion de cluster et runtime",
+      "components": [
+        "cluster-manager",
+        "runtime-manager",
+        "runtime-kernel"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 350,
+      "testFiles": 5,
+      "estimatedEffort": "19 jours",
+      "dependencies": []
+    },
+    "lot7": {
+      "name": "Distributed Consensus",
+      "description": "Consensus et élection de leader",
+      "components": [
+        "consensus-engine",
+        "leader-election"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 260,
+      "testFiles": 5,
+      "estimatedEffort": "16 jours",
+      "dependencies": ["lot6"]
+    },
+    "lot8": {
+      "name": "Distributed Execution",
+      "description": "Orchestration distribuée",
+      "components": [
+        "distributed-scheduler",
+        "execution-coordinator",
+        "provider-manager"
+      ],
+      "priority": "HIGH",
+      "estimatedTests": 260,
+      "testFiles": 5,
+      "estimatedEffort": "15 jours",
+      "dependencies": ["lot6", "lot7"]
+    },
+    "lot9": {
+      "name": "Distributed Memory & Locks",
+      "description": "Mémoire et verrous distribués",
+      "components": [
+        "distributed-memory",
+        "distributed-locks"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 200,
+      "testFiles": 3,
+      "estimatedEffort": "12 jours",
+      "dependencies": ["lot6", "lot7"]
+    },
+    "lot10": {
+      "name": "Recovery & Snapshots",
+      "description": "Récupération et snapshots",
+      "components": [
+        "recovery-manager",
+        "snapshot-manager",
+        "rollback-manager"
+      ],
+      "priority": "CRITICAL",
+      "estimatedTests": 270,
+      "testFiles": 4,
+      "estimatedEffort": "17 jours",
+      "dependencies": ["lot6", "lot9"]
+    },
+    "lot11": {
+      "name": "Observability",
+      "description": "Télémétrie, tracing, profiling, debugging",
+      "components": [
+        "telemetry",
+        "distributed-trace",
+        "distributed-profiler",
+        "distributed-debugger"
+      ],
+      "priority": "MEDIUM",
+      "estimatedTests": 250,
+      "testFiles": 4,
+      "estimatedEffort": "13 jours",
+      "dependencies": ["lot6"]
+    },
+    "lot12": {
+      "name": "Replay & Analysis",
+      "description": "Replay et analyse d'exécution",
+      "components": [
+        "replay-manager"
+      ],
+      "priority": "MEDIUM",
+      "estimatedTests": 60,
+      "testFiles": 1,
+      "estimatedEffort": "3 jours",
+      "dependencies": ["lot6", "lot11"]
+    },
+    "lot13": {
+      "name": "Security & Governance",
+      "description": "Sécurité et gouvernance",
+      "components": [
+        "security",
+        "governance"
+      ],
+      "priority": "HIGH",
+      "estimatedTests": 160,
+      "testFiles": 3,
+      "estimatedEffort": "9 jours",
+      "dependencies": ["lot6"]
+    },
+    "lot14": {
+      "name": "Knowledge & Intelligence",
+      "description": "Knowledge fabric",
+      "components": [
+        "knowledge-fabric"
+      ],
+      "priority": "LOW",
+      "estimatedTests": 60,
+      "testFiles": 1,
+      "estimatedEffort": "3 jours",
+      "dependencies": ["lot6"]
+    },
+    "lot15": {
+      "name": "Infrastructure",
+      "description": "Autoscaler et API Gateway",
+      "components": [
+        "autoscaler",
+        "api-gateway"
+      ],
+      "priority": "LOW",
+      "estimatedTests": 110,
+      "testFiles": 2,
+      "estimatedEffort": "6 jours",
+      "dependencies": ["lot6"]
+    }
+  },
+  "summary": {
+    "totalLots": 15,
+    "totalEstimatedTests": 2730,
+    "totalTestFiles": 40,
+    "totalEstimatedEffort": "177 jours",
+    "criticalLots": 7,
+    "highLots": 4,
+    "mediumLots": 2,
+    "lowLots": 2,
+    "parallelizableLots": [
+      ["lot1", "lot6"],
+      ["lot3", "lot4"],
+      ["lot11", "lot13", "lot14", "lot15"]
+    ],
+    "criticalPathEffort": "95 jours"
+  }
+}

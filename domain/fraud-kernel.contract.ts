@@ -9,7 +9,7 @@ export interface FraudSignal {
 
   severity: number // 0 → 1
   confidence: number // 0 → 1
-  metadata: Record<string, any>
+  metadata: Record<string, unknown>
 }
 
 export interface FraudAssessment {

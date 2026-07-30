@@ -1,4 +1,4 @@
-import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
+import { ExplainedScore } from "./explanation-contract.js";
 
 /**
  * Score Explainer — Template-based text generation
@@ -6,7 +6,7 @@ import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
  * Transforms an ExplanationGraph into human-readable ExplainedScore.
  * Zero LLM. Pure deterministic template system.
  */
-export function explainScore(graph: ExplanationGraph): ExplainedScore {
+export function explainScore(graph: _ExplanationGraph): ExplainedScore {
   const lines: string[] = [];
   lines.push(`Score ${graph.aggregated.finalScore.toFixed(1)} because:`);
 

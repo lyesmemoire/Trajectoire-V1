@@ -3,7 +3,7 @@
 // Route publique (authentifiée) pour récupérer le statut d'abonnement
 // Utilisée par le hook useSubscription côté client
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { checkUserSubscription } from '@/lib/subscription/check-subscription'
 

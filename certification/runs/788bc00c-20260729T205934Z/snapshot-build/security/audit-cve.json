@@ -1,0 +1,1 @@
+{"certificationDecision":"PASS","databaseSnapshot":{"note":"CVE databases are NOT deterministic over time. This snapshot represents the state of vulnerabilities at the exact time of execution.","pnpmVersion":"9.15.9","timestamp":"2026-07-29T21:00:34.853Z"},"findings":[]}

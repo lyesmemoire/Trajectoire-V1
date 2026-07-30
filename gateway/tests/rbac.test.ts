@@ -9,7 +9,7 @@ describe("Gateway Phase 2-H.3 — Role-Based Access Control", () => {
     authz = new MockAuthorizationService();
   });
 
-  function createPrincipal(roles: any[]): Principal {
+  function createPrincipal(roles: unknown[]): Principal {
     return {
       subjectId: "u1",
       tenantDid: "did:X",

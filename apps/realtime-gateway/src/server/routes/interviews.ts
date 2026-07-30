@@ -5,7 +5,7 @@ const GatewayEnvSchema = z.object({
 });
 const gatewayEnv = GatewayEnvSchema.parse(process.env);
 import { z } from "zod";
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { verifyVoiceToken } from "../auth.js";
 import { interviewRepository } from "../../voice-interview/persistence/singleton.js";
 
@@ -13,7 +13,7 @@ interface Params {
   sessionId: string;
 }
 
-export async function registerInterviewRoutes(app: FastifyInstance) {
+export async function registerInterviewRoutes(app: _FastifyInstance) {
   app.get(
     "/api/interviews/:sessionId",
     async (
@@ -67,7 +67,7 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
     const records = await interviewRepository.listByUser(user.userId);
 
     const summary = records.map((r) => {
-      const s = r.score as any;
+      const s = r.score as unknown;
       return {
         sessionId: r.sessionId,
         startedAt: r.startedAt,
@@ -130,7 +130,7 @@ export async function registerInterviewRoutes(app: FastifyInstance) {
       // Fetch ATS Munitions
       let munitionContext = "";
       if (atsReportId) {
-        const { data: atsReport } = await supabase
+        const { _data: atsReport } = await supabase
           .from("premium_ats_reports")
           .select("munition_pack, overall_score")
           .eq("id", atsReportId)
@@ -186,7 +186,7 @@ Generate the Interview Context to drive the upcoming technical and behavioral de
       );
 
       // Store in DB using the correct schema
-      const { data: sessionData, error: sessionError } = await supabase
+      const { _data: sessionData, _error: sessionError } = await supabase
         .from("interview_sessions")
         .insert({
           user_id: user.userId,

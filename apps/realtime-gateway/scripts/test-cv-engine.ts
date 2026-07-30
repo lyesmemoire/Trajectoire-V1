@@ -178,7 +178,7 @@ async function testEngine() {
         }
       }
 
-    } catch (err) {
+    } catch (error) {
       console.error(`❌ FAILED on [${name}]:`, (err as Error).message);
     }
   }

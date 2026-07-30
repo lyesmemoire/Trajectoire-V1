@@ -4,8 +4,6 @@
  * Independent analytics architecture (not relying solely on Google Analytics)
  */
 
-import { z } from "zod";
-
 // Event Types
 export enum EventType {
   PAGE_VIEW = "page_view",
@@ -40,7 +38,7 @@ export interface AnalyticsEvent {
   eventType: EventType;
   priority: EventPriority;
   timestamp: Date;
-  properties: Record<string, any>;
+  properties: Record<string, unknown>;
   metadata: {
     userAgent?: string;
     referrer?: string;
@@ -55,7 +53,7 @@ export interface AnalyticsEvent {
 export interface AnalyticsContext {
   userId: string;
   sessionId: string;
-  properties: Record<string, any>;
+  properties: Record<string, unknown>;
 }
 
 // Analytics Config
@@ -96,7 +94,7 @@ export class AnalyticsService {
   track(
     eventType: EventType,
     context: AnalyticsContext,
-    properties: Record<string, any> = {},
+    properties: Record<string, unknown> = {},
     priority: EventPriority = EventPriority.MEDIUM
   ): void {
     if (!this.config.enabled) return;
@@ -132,7 +130,7 @@ export class AnalyticsService {
   trackPageView(
     context: AnalyticsContext,
     pageName: string,
-    properties: Record<string, any> = {}
+    properties: Record<string, unknown> = {}
   ): void {
     this.track(EventType.PAGE_VIEW, context, {
       pageName,
@@ -146,7 +144,7 @@ export class AnalyticsService {
   trackFeatureUsage(
     context: AnalyticsContext,
     featureName: string,
-    properties: Record<string, any> = {}
+    properties: Record<string, unknown> = {}
   ): void {
     this.track(EventType.FEATURE_USAGE, context, {
       featureName,
@@ -160,7 +158,7 @@ export class AnalyticsService {
   trackError(
     context: AnalyticsContext,
     error: Error,
-    properties: Record<string, any> = {}
+    properties: Record<string, unknown> = {}
   ): void {
     this.track(EventType.ERROR, context, {
       errorMessage: error.message,
@@ -175,7 +173,7 @@ export class AnalyticsService {
   trackGoal(
     context: AnalyticsContext,
     goalName: string,
-    properties: Record<string, any> = {}
+    properties: Record<string, unknown> = {}
   ): void {
     this.track(EventType.GOAL_ACHIEVED, context, {
       goalName,

@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-07-25T20:57:10.703Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "results": [],
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "passRate": "NaN%"
+  }
+}

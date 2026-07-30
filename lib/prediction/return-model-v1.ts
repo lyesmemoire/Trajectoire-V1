@@ -26,7 +26,7 @@ export interface ReturnPrediction {
   rawScore: number;
 }
 
-export function computeReturnScore(input: ReturnScoreInput): ReturnPrediction {
+export function computeReturnScore(input: _ReturnScoreInput): ReturnPrediction {
   // 1. Positive Signals (Value & Retention)
   const recoverySignal =
     input.behavior.claraRecoveries * 2 +

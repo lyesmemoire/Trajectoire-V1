@@ -29,7 +29,7 @@ function validateJobUrl(inputUrl) {
     if (forbiddenHosts.some((h) => hostname.includes(h))) return false;
     if (url.protocol === "file:") return false;
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

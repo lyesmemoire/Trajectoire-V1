@@ -18,7 +18,7 @@ export interface OptimizationInsight {
   impact: number; // 0-1
   effort: number; // 0-1
   priority: number; // 0-100
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   detectedAt: Date;
 }
 

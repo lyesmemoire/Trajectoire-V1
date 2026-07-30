@@ -75,9 +75,9 @@ bus.on("transcript", async (msg) => {
       },
       abortController.signal,
     );
-  } catch (err) {
+  } catch (error) {
     // If aborted, simply silence; otherwise forward error
-    if ((err as any).name === "AbortError") {
+    if ((err as unknown).name === "AbortError") {
       bus.emit("ai_error", { sessionId, error: "aborted" });
     } else {
       bus.emit("ai_error", { sessionId, error: (err as Error).message });

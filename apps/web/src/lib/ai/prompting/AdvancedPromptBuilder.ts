@@ -7,7 +7,7 @@
 import { z } from "zod";
 import { RecruiterPersona, RecruiterPersonaType } from "@/domain/valueObjects/RecruiterPersona";
 import { DifficultyLevelVO, DifficultyLevel } from "@/domain/valueObjects/DifficultyLevel";
-import { InterviewPhase } from "@/domain/entities/ConversationState";
+import { ConversationPhase } from '@/domain/entities/ConversationState';
 import { PersonalInfo, EmotionalState } from "@/domain/entities/ConversationState";
 
 // Prompt Layer Types
@@ -39,7 +39,7 @@ export type PromptLayerContent = z.infer<typeof PromptLayerContentSchema>;
 export interface PromptBuildContext {
   persona?: RecruiterPersonaType;
   difficulty?: DifficultyLevel;
-  phase?: InterviewPhase;
+  phase?: any;
   personalInfo?: PersonalInfo;
   emotionalState?: EmotionalState;
   jobTitle?: string;
@@ -104,7 +104,7 @@ export class AdvancedPromptBuilder {
       layers.push(this.buildCompanyContextLayer(context));
     }
 
-    // Layer 5: Job Description
+    // Layer 5: any Description
     if (context.jobDescription) {
       layers.push(this.buildJobDescriptionLayer(context));
     }
@@ -230,7 +230,7 @@ Team size: Medium-sized team with collaborative environment`,
   }
 
   /**
-   * Build Job Description Layer
+   * Build any Description Layer
    */
   private buildJobDescriptionLayer(context: PromptBuildContext): PromptLayerContent {
     return {
@@ -288,7 +288,7 @@ Career path: Growth opportunities within the organization`,
    */
   private buildCurrentStateLayer(context: PromptBuildContext): PromptLayerContent {
     const stateInfo = [
-      `Current phase: ${context.phase || InterviewPhase.INTRODUCTION}`,
+      `Current phase: ${context.phase || ConversationPhase.INTRODUCTION}`,
       `Current topic: ${context.currentTopic || "Introduction"}`,
       `Evaluated competencies: ${context.evaluatedCompetencies?.join(", ") || "None"}`,
       `Target competencies: ${context.targetCompetencies?.join(", ") || "All"}`,

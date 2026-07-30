@@ -4,8 +4,6 @@
  * Tracks: signup -> dashboard -> simulation -> report
  */
 
-import { z } from "zod";
-
 // Funnel Step
 export interface FunnelStep {
   name: string;

@@ -1,4 +1,5 @@
-"use client";
+
+"use client"
 
 import {
   LineChart,
@@ -8,19 +9,19 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
+} from "recharts"
 
 const MOCK_DATA = [
   { name: "Session 1", pressure: 40, recovery: 20, engagement: 80 },
   { name: "Session 2", pressure: 60, recovery: 50, engagement: 75 },
   { name: "Session 3", pressure: 85, recovery: 40, engagement: 90 },
   { name: "Session 4", pressure: 50, recovery: 80, engagement: 85 },
-];
+]
 
 export function PredictiveTimeline() {
   return (
     <div className="bg-[#0B1023] rounded-[2.5rem] border border-white/[0.08] p-10 shadow-2xl h-full flex flex-col">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-10">
+      <h3 className="text-sm font-black text-ink-400 uppercase tracking-widest mb-10">
         Predictive Emotional Timeline
       </h3>
       <div className="flex-1 min-h-[300px]">
@@ -71,16 +72,16 @@ export function PredictiveTimeline() {
         </ResponsiveContainer>
       </div>
       <div className="flex justify-center gap-6 mt-6">
-        <div className="flex items-center gap-2 text-[10px] font-black text-rose-500 uppercase">
-          <div className="w-2 h-2 rounded-full bg-rose-500" /> Tension
+        <div className="flex items-center gap-2 text-[10px] font-black text-brick-500 uppercase">
+          <div className="w-2 h-2 rounded-full bg-brick-500" /> Tension
         </div>
-        <div className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase">
-          <div className="w-2 h-2 rounded-full bg-emerald-500" /> Recovery
+        <div className="flex items-center gap-2 text-[10px] font-black text-forest-500 uppercase">
+          <div className="w-2 h-2 rounded-full bg-forest-500" /> Recovery
         </div>
-        <div className="flex items-center gap-2 text-[10px] font-black text-blue-500 uppercase">
-          <div className="w-2 h-2 rounded-full bg-blue-500" /> Engagement
+        <div className="flex items-center gap-2 text-[10px] font-black text-bronze-500 uppercase">
+          <div className="w-2 h-2 rounded-full bg-bronze-500" /> Engagement
         </div>
       </div>
     </div>
-  );
+  )
 }

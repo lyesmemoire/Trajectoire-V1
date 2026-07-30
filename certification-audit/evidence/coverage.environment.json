@@ -1,0 +1,14 @@
+{
+  "nodeVersion": "v24.13.0",
+  "pnpmVersion": "9.15.9",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitBranch": "main",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "os": "Windows",
+  "testFiles": [
+    "tests/vm/advanced/execution-pipeline.test.ts",
+    "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts"
+  ],
+  "component": "execution-pipeline",
+  "sourceFile": "compiler/cvm/execution-pipeline.ts"
+}

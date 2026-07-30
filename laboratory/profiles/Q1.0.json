@@ -1,0 +1,11 @@
+{
+  "protocolVersion": "qualification-protocol-2.0",
+  "expectedLaboratories": [
+    "lab-a-node",
+    "lab-b-python"
+  ],
+  "quorum": {
+    "required": 2,
+    "total": 2
+  }
+}

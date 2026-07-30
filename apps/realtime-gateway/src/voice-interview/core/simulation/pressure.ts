@@ -35,10 +35,7 @@ function rhythmFor(level: number): PressureRhythm {
   return "interrupted";
 }
 
-export function updatePressure(
-  state: PressureState,
-  signal: PressureSignal,
-): PressureState {
+export function updatePressure(state: PressureState, signal: PressureSignal, ): PressureState {
   let level = state.level;
   if (signal.weakAnswer) level += 15;
   if (signal.strongAnswer) level -= 10;

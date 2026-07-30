@@ -1,5 +1,4 @@
 import {
-  InterruptionSignals,
   InterruptionDecision,
   InterruptionType,
 } from "../types/pressure.types";
@@ -8,11 +7,7 @@ import { PersonaConfig } from "../personas/persona-config";
 /**
  * Analyse les signaux comportementaux pour décider si une interruption est nécessaire.
  */
-export function evaluateInterruption(
-  signals: InterruptionSignals,
-  currentPressure: number,
-  persona: PersonaConfig,
-): InterruptionDecision {
+export function evaluateInterruption(signals: _InterruptionSignals, currentPressure: number, persona: PersonaConfig, ): InterruptionDecision {
   // 1. Calcul du score d'agacement (Impatience Score)
   // Plus le ramblingScore est haut et la spécificité est basse, plus l'IA "s'impatiente"
   let impatienceScore =
@@ -57,10 +52,7 @@ export function evaluateInterruption(
 /**
  * Formate le texte de l'interruption selon le style du persona.
  */
-export function getInterruptionPhrase(
-  type: InterruptionType,
-  persona: PersonaConfig,
-): string {
+export function getInterruptionPhrase(type: InterruptionType, persona: PersonaConfig, ): string {
   const styles: Record<string, Record<InterruptionType, string[]>> = {
     stress: {
       clarify: [

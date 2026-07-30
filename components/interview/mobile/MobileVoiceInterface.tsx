@@ -23,11 +23,7 @@ interface Props {
 }
 
 export function MobileVoiceInterface({
-  status,
-  isSilent,
-  isRecording,
-  onRetry,
-}: Props) {
+  status, isSilent, isRecording, onRetry, _}: Props) {
   return (
     <div className="fixed bottom-0 left-0 w-full bg-slate-900/90 backdrop-blur-2xl border-t border-white/10 p-6 pb-10 z-50 rounded-t-[2.5rem]">
       <div className="max-w-md mx-auto flex flex-col items-center space-y-6">

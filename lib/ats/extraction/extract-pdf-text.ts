@@ -8,10 +8,10 @@ export interface ExtractionResult {
 /**
  * Stage 1: Extraction du texte avec détection de qualité.
  */
-export async function extractCVText(buffer: Buffer): Promise<ExtractionResult> {
+export async function extractCVText(buffer: _Buffer): Promise<ExtractionResult> {
   try {
     // Dynamic import with require fallback
-    const pdf = require("pdf-parse");
+    import pdf from 'pdf-parse';
     const data = await pdf(buffer);
     const text = data.text;
 
@@ -26,7 +26,7 @@ export async function extractCVText(buffer: Buffer): Promise<ExtractionResult> {
     }
 
     return { text, confidence: 0.9, method: "local" };
-  } catch (err: any) {
+  } catch (err: unknown) {
     return { text: "", confidence: 0, method: "local", error: err.message };
   }
 }

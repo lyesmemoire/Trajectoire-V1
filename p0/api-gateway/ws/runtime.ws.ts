@@ -1,10 +1,9 @@
-import { FastifyInstance } from "fastify";
 import { RuntimeWSMessage } from "../contracts/ws-contract";
 import { publishEvent } from "../contracts/api-contract";
 
-export function attachWebSocketRuntime(app: FastifyInstance) {
+export function attachWebSocketRuntime(app: _FastifyInstance) {
   app.get("/v1/runtime/:sessionId", { websocket: true }, (conn, req) => {
-    const sessionId = (req.params as any).sessionId;
+    const sessionId = (req.params as unknown).sessionId;
 
     conn.socket.on("message", async (raw) => {
       try {
@@ -12,7 +11,7 @@ export function attachWebSocketRuntime(app: FastifyInstance) {
 
         // ONLY routing — no logic
         await routeToRuntimeBus(sessionId, msg);
-      } catch (err) {
+      } catch (error) {
         console.error("Invalid WS message format", err);
       }
     });

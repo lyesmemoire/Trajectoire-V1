@@ -25,10 +25,7 @@ const TechDirectorSchema = z.object({
  * Evaluates the candidate's technical depth, architectural thinking, and pragmatism
  * mimicking a Business/Technical Director. Used primarily in Phase 2 of the interview.
  */
-export async function evaluateTechDirector(
-  technicalQuestion: string,
-  transcriptChunk: string
-): Promise<TechDirectorEvaluation> {
+export async function evaluateTechDirector(technicalQuestion: string, transcriptChunk: string): Promise<TechDirectorEvaluation> {
   const systemPrompt = `You are a Business/Technical Director conducting a deep technical interview.
 
 You must evaluate:

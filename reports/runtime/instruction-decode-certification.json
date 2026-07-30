@@ -1,0 +1,87 @@
+{
+  "component": "instruction-decode",
+  "file": "compiler/cvm/instruction-decode.ts",
+  "certificationDate": "2026-07-27T00:55:00Z",
+  "status": "CERTIFIED",
+  "metrics": {
+    "before": {
+      "statements": {
+        "total": 36,
+        "covered": 34,
+        "percentage": "94.44"
+      },
+      "branches": {
+        "total": 14,
+        "covered": 13,
+        "percentage": "92.86"
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 36,
+        "covered": 34,
+        "percentage": "94.44"
+      }
+    },
+    "after": {
+      "statements": {
+        "total": 36,
+        "covered": 36,
+        "percentage": "100.00"
+      },
+      "branches": {
+        "total": 14,
+        "covered": 14,
+        "percentage": "100.00"
+      },
+      "functions": {
+        "total": 11,
+        "covered": 11,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 36,
+        "covered": 36,
+        "percentage": "100.00"
+      }
+    },
+    "objectives": {
+      "statements": ">=95%",
+      "branches": ">=97%",
+      "functions": "100%",
+      "lines": ">=95%"
+    }
+  },
+  "summary": {
+    "testsAdded": 2,
+    "totalTests": 29,
+    "branchesFixed": 0,
+    "branchesRemoved": 0,
+    "branchesTypeA": 1,
+    "branchesTypeB": 0,
+    "branchesTypeC": 0,
+    "filesModified": 1,
+    "refactoringRequired": false,
+    "refactoringType": null,
+    "refactoringDescription": null
+  },
+  "validation": {
+    "tests": "PASSED (29/29)",
+    "build": "PASSED",
+    "typescript": "PASSED",
+    "coverage": "PASSED (100% on all metrics)"
+  },
+  "artifacts": [
+    "reports/runtime/instruction-decode-audit.json",
+    "reports/runtime/instruction-decode-current-coverage.json",
+    "reports/runtime/instruction-decode-gap-analysis.json",
+    "reports/runtime/instruction-decode-branch-analysis.md",
+    "reports/runtime/instruction-decode-architectural-analysis.md",
+    "reports/runtime/instruction-decode-decision.md",
+    "reports/runtime/instruction-decode-certification.json",
+    "INSTRUCTIONDECODE_ENTERPRISE_CERTIFICATION.md"
+  ]
+}

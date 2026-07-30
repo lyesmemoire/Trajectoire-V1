@@ -14,11 +14,7 @@ export interface ShareCardData {
 /**
  * Generates data for a social media sharing card (LinkedIn/Twitter).
  */
-export function generateShareData(
-  name: string,
-  archetype: CareerArchetype,
-  percentile: number,
-): ShareCardData {
+export function generateShareData(name: string, archetype: CareerArchetype, percentile: number, ): ShareCardData {
   const meta = ARCHETYPES_META[archetype];
 
   return {

@@ -1,0 +1,115 @@
+{
+  "campaignId": "pbt-2026-07-29-44feb280",
+  "fastCheckVersion": "^4.8.0",
+  "seed": 123456789,
+  "numRuns": 500,
+  "timestamp": "2026-07-29T17:59:07.630Z",
+  "gitCommit": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+  "sourceDateEpoch": "1785347947",
+  "status": "PASS",
+  "catalog": {
+    "catalogVersion": "1.0",
+    "properties": [
+      {
+        "id": "P-005",
+        "version": "1.1",
+        "criticality": "High",
+        "component": "ExecutionPipeline",
+        "title": "Cycle d'exécution invariant"
+      },
+      {
+        "id": "P-006",
+        "version": "1.1",
+        "criticality": "High",
+        "component": "ExecutionPipeline",
+        "title": "Absence d'exception inattendue"
+      },
+      {
+        "id": "P-007",
+        "version": "1.1",
+        "criticality": "Medium",
+        "component": "ExecutionPipeline",
+        "title": "Déterminisme avec snapshots"
+      },
+      {
+        "id": "P-008",
+        "version": "1.0",
+        "criticality": "Medium",
+        "component": "ExecutionPipeline",
+        "title": "Gestion des erreurs déterministe"
+      },
+      {
+        "id": "P-009",
+        "version": "1.0",
+        "criticality": "High",
+        "component": "ExecutionPipeline",
+        "title": "Intégrité du PC et de la stack"
+      },
+      {
+        "id": "P-010",
+        "version": "1.0",
+        "criticality": "High",
+        "component": "ExecutionContext",
+        "title": "Isolation lors d'un Reset"
+      },
+      {
+        "id": "P-011",
+        "version": "1.0",
+        "criticality": "High",
+        "component": "ExecutionContext",
+        "title": "Validation des tailles mémoire"
+      },
+      {
+        "id": "P-012",
+        "version": "1.0",
+        "criticality": "Medium",
+        "component": "ExecutionContext",
+        "title": "Stabilité des snapshots en l'absence de modifications"
+      },
+      {
+        "id": "P-013",
+        "version": "1.0",
+        "criticality": "Medium",
+        "component": "ExecutionContext",
+        "title": "Isolation des données lors du snapshot"
+      }
+    ]
+  },
+  "propertyQualification": {
+    "status": "PASS",
+    "propertiesExecuted": 9,
+    "propertiesExpected": 9,
+    "generatorCoverage": 57.4,
+    "coverageCorrelation": 0,
+    "counterExamples": 0,
+    "confidence": "High"
+  },
+  "shrinking": {
+    "counterExamples": 0,
+    "averageSteps": 0,
+    "maxSteps": 0
+  },
+  "generatorStats": {
+    "validInstructions": 57.4,
+    "invalidInstructions": 42.6,
+    "branchInstructions": 11.9,
+    "memoryInstructions": 4.2,
+    "arithmeticInstructions": 27.4,
+    "stackInstructions": 12.3,
+    "systemInstructions": 1.6,
+    "haltInstructions": 1.6,
+    "operandSizes": {
+      "8 bits": 0,
+      "16 bits": 0,
+      "32 bits": 23.9,
+      "64 bits": 5
+    },
+    "programLengths": {
+      "1-8": 31.1,
+      "9-32": 56.1,
+      "33-128": 12.8,
+      "128+": 0
+    }
+  },
+  "failures": []
+}

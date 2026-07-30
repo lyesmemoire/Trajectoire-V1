@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0",
+  "campaignId": "quick-chaos-v1",
+  "campaignVersion": "1.0.0",
+  "seed": 112233,
+  "scenarios": [
+    "disk-full"
+  ]
+}

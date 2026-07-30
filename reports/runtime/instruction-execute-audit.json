@@ -1,0 +1,213 @@
+{
+  "component": "instruction-execute",
+  "file": "compiler/cvm/instruction-execute.ts",
+  "auditDate": "2026-07-27T01:20:00Z",
+  "metrics": {
+    "lines": {
+      "total": 420,
+      "code": 420,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "functions": {
+      "total": 30,
+      "public": 4,
+      "private": 26,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "constructor",
+        "execute",
+        "setContext",
+        "getContext"
+      ],
+      "private": [
+        "executeAdd",
+        "executeSub",
+        "executeMul",
+        "executeDiv",
+        "executeMod",
+        "executeNeg",
+        "executeAnd",
+        "executeOr",
+        "executeXor",
+        "executeNot",
+        "executeShl",
+        "executeShr",
+        "executePush",
+        "executePop",
+        "executeDup",
+        "executeSwap",
+        "executeJmp",
+        "executeJz",
+        "executeJnz",
+        "executeCall",
+        "executeRet",
+        "executeLoad",
+        "executeStore",
+        "bytesToInt",
+        "intToBytes"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 30,
+      "estimated": "Based on switch statement and conditional branches"
+    },
+    "conditions": {
+      "total": 6,
+      "details": [
+        "Line 30: switch (decoded.opcode)",
+        "Line 146: if (b === 0)",
+        "Line 162: if (b === 0)",
+        "Line 299: if (value === 0)",
+        "Line 315: if (value !== 0)",
+        "Line 347: if (!frame)"
+      ]
+    },
+    "interfaces": [
+      "ExecutionResult"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "ExecutionContext",
+        "path": "./execution-context",
+        "type": "import"
+      },
+      {
+        "name": "DecodedInstruction",
+        "path": "./instruction-decode",
+        "type": "import"
+      },
+      {
+        "name": "Opcode",
+        "path": "../cbs/opcode-table",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingInstructionExecute": [
+      "ExecutionPipeline"
+    ],
+    "usedByInstructionExecute": [
+      "ExecutionContext",
+      "InstructionDecode"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Strategy Pattern (via switch statement)",
+    "responsibilities": [
+      "Instruction execution",
+      "Stack operations",
+      "Arithmetic operations",
+      "Bitwise operations",
+      "Control flow operations",
+      "Memory operations",
+      "Error handling"
+    ],
+    "keyFeatures": [
+      "Opcode-based dispatch",
+      "Error handling with try-catch",
+      "Division/modulo by zero checks",
+      "Branch detection",
+      "Return value handling"
+    ]
+  },
+  "invariants": {
+    "preconditions": {
+      "execute": "decoded instruction must be valid",
+      "executeDiv": "stack must have at least 2 elements",
+      "executeMod": "stack must have at least 2 elements"
+    },
+    "postconditions": {
+      "execute": "returns ExecutionResult",
+      "executeDiv": "returns error if division by zero",
+      "executeMod": "returns error if modulo by zero"
+    },
+    "invariants": [
+      "Stack operations assume sufficient stack depth",
+      "Memory operations assume valid addresses",
+      "Control flow operations update program counter"
+    ]
+  },
+  "api": {
+    "public": [
+      {
+        "name": "constructor",
+        "params": ["context: ExecutionContext"],
+        "returns": "InstructionExecute"
+      },
+      {
+        "name": "execute",
+        "params": ["decoded: DecodedInstruction"],
+        "returns": "ExecutionResult"
+      },
+      {
+        "name": "setContext",
+        "params": ["context: ExecutionContext"],
+        "returns": "void"
+      },
+      {
+        "name": "getContext",
+        "params": [],
+        "returns": "ExecutionContext"
+      }
+    ]
+  },
+  "callGraph": {
+    "execute": {
+      "calls": ["executeAdd", "executeSub", "executeMul", "executeDiv", "executeMod", "executeNeg", "executeAnd", "executeOr", "executeXor", "executeNot", "executeShl", "executeShr", "executePush", "executePop", "executeDup", "executeSwap", "executeJmp", "executeJz", "executeJnz", "executeCall", "executeRet", "executeLoad", "executeStore"],
+      "calledBy": ["ExecutionPipeline.cycle"]
+    },
+    "executeDiv": {
+      "calls": ["context.getStack", "stack.pop", "stack.push"],
+      "calledBy": ["execute"]
+    },
+    "executeMod": {
+      "calls": ["context.getStack", "stack.pop", "stack.push"],
+      "calledBy": ["execute"]
+    },
+    "executeJz": {
+      "calls": ["context.getStack", "stack.pop", "context.setProgramCounter"],
+      "calledBy": ["execute"]
+    },
+    "executeJnz": {
+      "calls": ["context.getStack", "stack.pop", "context.setProgramCounter"],
+      "calledBy": ["execute"]
+    },
+    "executeRet": {
+      "calls": ["context.getStack", "stack.pop", "context.getCallFrames", "callFrames.popFrame", "context.setProgramCounter", "stack.push"],
+      "calledBy": ["execute"]
+    },
+    "executeLoad": {
+      "calls": ["context.getHeap", "heap.read", "bytesToInt", "context.getStack", "stack.push"],
+      "calledBy": ["execute"]
+    },
+    "executeStore": {
+      "calls": ["context.getStack", "stack.pop", "context.getHeap", "intToBytes", "heap.write"],
+      "calledBy": ["execute"]
+    }
+  },
+  "criticalPaths": [
+    "execute() - main dispatch",
+    "executeDiv() - division by zero check",
+    "executeMod() - modulo by zero check",
+    "executeRet() - frame validation"
+  ],
+  "internalState": {
+    "context": "ExecutionContext - the execution context"
+  }
+}

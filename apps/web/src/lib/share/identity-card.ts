@@ -24,12 +24,7 @@ export interface IdentityCardData {
 /**
  * Prepares data for the Identity Distribution Engine.
  */
-export function generateIdentityCardData(
-  archetype: CareerArchetype,
-  percentile: number,
-  sessionData: any,
-  previousArchetype?: CareerArchetype,
-): IdentityCardData {
+export function generateIdentityCardData(archetype: CareerArchetype, percentile: number, sessionData: any, previousArchetype?: CareerArchetype, ): any {
   const meta = ARCHETYPES_META[archetype];
 
   // Custom viral titles based on archetype

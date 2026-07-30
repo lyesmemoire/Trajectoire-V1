@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-07-25T20:51:30.992Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "examples": [
+    {
+      "command": "npx tsx bin/blueprint --help",
+      "description": "Display help information",
+      "exitCode": 0,
+      "duration": 2945,
+      "stdout": "Usage: blueprint [options] [command]\n\nBlueprint V3 Enterprise - Cognitive Platform CLI\n\nOptions:\n  -V, --version        output the version number\n  -v, --verbose        Enable verbose output\n  -q, --quiet          Suppress output\n  --json               Output in JSON format\n  -c, --config <path>  Path to configuration file\n  -h, --help           display help for command\n\nCommands:\n  init [options]       Initialize a new Blueprint project\n  compile [options]    Compile Blueprint DSL to bytecode\n  build [options]      Build a Blueprint package\n  run [options]        Run a Blueprint program\n  graph [options]      Generate dependency/knowledge/runtime graphs\n  trace [options]      Enable runtime tracing\n  debug [options]      Attach debugger to running program\n  benchmark [options]  Run all benchmarks\n  doctor [options]     Check system health and configuration\n  completion [shell]   Generate shell completion script\n  help [command]       display help for command",
+      "stderr": "",
+      "success": true,
+      "timestamp": "2026-07-25T20:51:17.322Z"
+    },
+    {
+      "command": "npx tsx bin/blueprint --version",
+      "description": "Display version information",
+      "exitCode": 0,
+      "duration": 3765,
+      "stdout": "1.0.0",
+      "stderr": "",
+      "success": true,
+      "timestamp": "2026-07-25T20:51:20.268Z"
+    },
+    {
+      "command": "npx tsx bin/blueprint doctor",
+      "description": "Check system health",
+      "exitCode": 0,
+      "duration": 3606,
+      "stdout": "[20:51:27] \u001b[32mINFO\u001b[39m: \u001b[36mRunning health checks...\u001b[39m\n[20:51:27] \u001b[32mINFO\u001b[39m: \u001b[36mHealth checks completed: 6 healthy, 7 warning, 0 critical\u001b[39m\n[20:51:27] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Doctor completed in 3ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+      "stderr": "",
+      "success": true,
+      "timestamp": "2026-07-25T20:51:24.034Z"
+    },
+    {
+      "command": "npx tsx bin/blueprint doctor --json",
+      "description": "Check system health with JSON output",
+      "exitCode": 0,
+      "duration": 3351,
+      "stdout": "[20:51:30] \u001b[32mINFO\u001b[39m: \u001b[36mRunning health checks...\u001b[39m\n[20:51:30] \u001b[32mINFO\u001b[39m: \u001b[36mHealth checks completed: 6 healthy, 7 warning, 0 critical\u001b[39m\n[20:51:30] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Doctor completed in 2ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+      "stderr": "",
+      "success": true,
+      "timestamp": "2026-07-25T20:51:27.641Z"
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "passRate": "100.00%"
+  }
+}

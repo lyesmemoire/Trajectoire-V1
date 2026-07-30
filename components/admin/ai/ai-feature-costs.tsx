@@ -11,7 +11,7 @@ import {
   Cell,
 } from "recharts";
 
-export function AIFeatureCosts({ logs }: { logs: any[] }) {
+export function AIFeatureCosts({ logs }: { logs: unknown[] }) {
   const dataMap: Record<string, number> = {};
   logs.forEach((l) => {
     dataMap[l.feature] = (dataMap[l.feature] || 0) + l.costUsd;

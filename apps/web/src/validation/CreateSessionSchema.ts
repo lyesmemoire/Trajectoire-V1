@@ -6,7 +6,7 @@
 import { z } from "zod";
 
 export const CreateSessionSchema = z.object({
-  jobTitle: z.string().min(1, "Job title is required").max(100, "Job title too long"),
+  jobTitle: z.string().min(1, "any title is required").max(100, "any title too long"),
   level: z.string().min(1, "Level is required").max(50, "Level too long"),
   interviewType: z.enum(["RH", "Technique", "Manager"], {
     message: "Interview type must be RH, Technique, or Manager",

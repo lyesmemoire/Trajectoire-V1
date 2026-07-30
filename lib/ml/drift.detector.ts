@@ -1,9 +1,6 @@
 import { InterviewAnalyticsProjection } from "@/domain/interview.contract";
 
-export function detectDrift(
-  current: InterviewAnalyticsProjection,
-  previous: InterviewAnalyticsProjection[]
-): { driftScore: number; anomaly: boolean } {
+export function detectDrift(current: InterviewAnalyticsProjection, previous: InterviewAnalyticsProjection[]): { driftScore: number; anomaly: boolean } {
   if (!previous || previous.length === 0) {
     return { driftScore: 0, anomaly: false };
   }

@@ -88,12 +88,7 @@ export interface PipelineInitInput extends InitV2Input {
 }
 
 /** Extrait la décision V2 sous la forme du contrat (sans coupler V2). */
-function toV2Decision(
-  question: string,
-  r: NextV2Result,
-  isTechnical: boolean,
-  previousScore?: number,
-): V2Decision {
+function toV2Decision(question: string, r: NextV2Result, isTechnical: boolean, previousScore?: number, ): V2Decision {
   return {
     question,
     evaluationScore: r.evaluationScore,
@@ -123,10 +118,7 @@ export function initInterviewPipeline(input: PipelineInitInput): {
  * Exécute UN tour : V2 décide, la simulation se met à jour, la sortie est façonnée.
  * V2 reste totalement inconscient de la simulation.
  */
-export function runInterviewPipeline(
-  state: PipelineState,
-  transcript: string,
-): PipelineTurn {
+export function runInterviewPipeline(state: PipelineState, transcript: string, ): PipelineTurn {
   // 1) V2 décide (pur).
   const v2 = nextV2Step(state.v2, transcript);
 

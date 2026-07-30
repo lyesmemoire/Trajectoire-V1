@@ -1,0 +1,131 @@
+{
+  "component": "execution-pipeline",
+  "sha": "3e22378",
+  "evidenceIndex": {
+    "coverage": {
+      "file": "reports/runtime/execution-pipeline-current-coverage.json",
+      "status": "FAILED",
+      "metrics": {
+        "statements": "90.48%",
+        "branches": "73.91%",
+        "functions": "100.00%",
+        "lines": "90.48%"
+      },
+      "criteria": {
+        "statements": "≥95%",
+        "branches": "≥97%",
+        "functions": "100%",
+        "lines": "≥95%"
+      }
+    },
+    "mutation": {
+      "summary": "reports/runtime/mutation/mutation-summary.json",
+      "results": "reports/runtime/mutation/mutation-results-combined.json",
+      "status": "WARNING",
+      "metrics": {
+        "total": 10,
+        "killed": 3,
+        "survived": 0,
+        "invalid": 7,
+        "score": 100
+      }
+    },
+    "regression": {
+      "results": "reports/runtime/regression/regression-results.json",
+      "stableResults": "reports/runtime/regression/regression-stable-results.json",
+      "summary": "reports/runtime/regression/regression-summary.json",
+      "status": "FAILED",
+      "inconsistency": true,
+      "metrics": {
+        "total": 22,
+        "results_detected": 0,
+        "results_missed": 0,
+        "results_buildErrors": 22,
+        "stable_detected": 19,
+        "stable_missed": 2,
+        "stable_buildErrors": 1
+      }
+    },
+    "rootCause": {
+      "analysis": "reports/runtime/regression/root-cause-analysis.md",
+      "r5Analysis": "reports/runtime/regression/root-cause-r5.md",
+      "r5Decision": "reports/runtime/regression/r5-final-decision.json",
+      "r5Trace": "reports/runtime/regression/r5-trace.json",
+      "r5Proof": "reports/runtime/regression/r5-proof.json",
+      "r5Experiments": "reports/runtime/regression/r5-experiments.json",
+      "status": "WARNING"
+    },
+    "tests": {
+      "mainTest": "tests/vm/advanced/execution-pipeline.test.ts",
+      "r5MinimalTest": "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts",
+      "status": "PASSED",
+      "metrics": {
+        "totalTests": 80,
+        "passed": 80,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "robustness": {
+      "evidence": "reports/runtime/regression/r5-final-decision.json",
+      "status": "PASSED",
+      "metrics": {
+        "executions": 20,
+        "consistency": "100%"
+      }
+    }
+  },
+  "evidenceFiles": [
+    "reports/runtime/execution-pipeline-current-coverage.json",
+    "reports/runtime/mutation/mutation-summary.json",
+    "reports/runtime/mutation/mutation-results-combined.json",
+    "reports/runtime/regression/regression-results.json",
+    "reports/runtime/regression/regression-stable-results.json",
+    "reports/runtime/regression/regression-summary.json",
+    "reports/runtime/regression/root-cause-analysis.md",
+    "reports/runtime/regression/root-cause-r5.md",
+    "reports/runtime/regression/r5-final-decision.json",
+    "reports/runtime/regression/r5-trace.json",
+    "reports/runtime/regression/r5-proof.json",
+    "reports/runtime/regression/r5-experiments.json",
+    "tests/vm/advanced/execution-pipeline.test.ts",
+    "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts"
+  ],
+  "criticalIssues": [
+    {
+      "id": "COVERAGE_001",
+      "severity": "CRITICAL",
+      "category": "Coverage",
+      "description": "Statements coverage 90.48% below Enterprise threshold 95%",
+      "evidence": "reports/runtime/execution-pipeline-current-coverage.json"
+    },
+    {
+      "id": "COVERAGE_002",
+      "severity": "CRITICAL",
+      "category": "Coverage",
+      "description": "Branches coverage 73.91% below Enterprise threshold 97%",
+      "evidence": "reports/runtime/execution-pipeline-current-coverage.json"
+    },
+    {
+      "id": "REGRESSION_001",
+      "severity": "CRITICAL",
+      "category": "Regression",
+      "description": "Inconsistent regression results between regression-results.json and regression-stable-results.json",
+      "evidence": ["reports/runtime/regression/regression-results.json", "reports/runtime/regression/regression-stable-results.json"]
+    },
+    {
+      "id": "MUTATION_001",
+      "severity": "HIGH",
+      "category": "Mutation",
+      "description": "70% of mutations are INVALID (7 out of 10), score not representative",
+      "evidence": "reports/runtime/mutation/mutation-summary.json"
+    },
+    {
+      "id": "ROOT_CAUSE_001",
+      "severity": "HIGH",
+      "category": "Root Cause",
+      "description": "R5 analysis concludes code is correct and test is wrong, contradicting 100% detection requirement",
+      "evidence": "reports/runtime/regression/root-cause-r5.md"
+    }
+  ]
+}

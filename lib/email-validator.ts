@@ -1,6 +1,6 @@
 import disposableDomains from "disposable-email-domains";
 
-export function validateEmail(email: string) {
+export function validateEmail(email: _string) {
   const normalized = email.toLowerCase().trim();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

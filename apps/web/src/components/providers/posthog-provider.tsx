@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { useEffect, Suspense } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import posthog from "posthog-js";
-import { POSTHOG_KEY, POSTHOG_HOST } from "@/lib/posthog";
+import { useEffect, Suspense } from "react"
+import { usePathname, useSearchParams } from "next/navigation"
+import posthog from "posthog-js"
+import { POSTHOG_KEY, POSTHOG_HOST } from "@/lib/posthog"
 
 // Composant interne séparé pour useSearchParams (requiert Suspense)
 function PostHogPageTracker() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
-    if (!POSTHOG_KEY) return;
+    if (!POSTHOG_KEY) return
     // Capture automatique des changements de page (SPA routing)
     posthog.capture("$pageview", {
       $current_url: window.location.href,
-    });
-  }, [pathname, searchParams]);
+    })
+  }, [pathname, searchParams])
 
-  return null;
+  return null
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (!POSTHOG_KEY) return;
+    if (!POSTHOG_KEY) return
 
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
@@ -36,11 +36,11 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       // Charger en différé pour ne pas bloquer le rendu
       loaded: (ph) => {
         if (process.env.NODE_ENV === "development") {
-          ph.opt_out_capturing();
+          ph.opt_out_capturing()
         }
       },
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <>
@@ -49,5 +49,5 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       </Suspense>
       {children}
     </>
-  );
+  )
 }

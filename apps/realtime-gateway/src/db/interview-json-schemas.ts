@@ -5,11 +5,15 @@ export const QuestionSchema = z.object({
   text: z.string(),
   category: z.string().optional(),
 });
+// Canonical Reference: COS-OBJ-003 (blueprint.runtime.question)
+// Owner: COS Team
 export type Question = z.infer<typeof QuestionSchema>;
 
 export const AnswerSchema = z.object({
   question_id: z.string(),
   transcript: z.string(),
+// Canonical Reference: COS-OBJ-004 (blueprint.runtime.answer)
+// Owner: COS Team
   duration_s: z.number().optional(),
 });
 export type Answer = z.infer<typeof AnswerSchema>;

@@ -2,7 +2,7 @@ import { stableSerialize } from "../../../src/interview/runtime/utils/hash";
 
 describe("sparse array drift", () => {
   test("sparse array drift should be rejected or normalized", () => {
-    const arr: any[] = [];
+    const arr: unknown[] = [];
     arr[5] = 1; // sparse array
     const serialized = stableSerialize(arr);
     // Expect deterministic handling (e.g., missing indices become null)
@@ -29,7 +29,7 @@ describe("unsupported type rejection", () => {
       new Uint8Array([1, 2, 3]),
     ];
     for (const v of cases) {
-      expect(() => stableSerialize(v as any)).toThrow();
+      expect(() => stableSerialize(v as unknown)).toThrow();
     }
   });
 });

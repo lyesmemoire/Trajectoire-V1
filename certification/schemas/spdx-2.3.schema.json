@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://spdx.org/schema/spdx-2.3.schema.json",
+  "type": "object",
+  "title": "SPDX SBOM schema placeholder",
+  "properties": {
+    "spdxVersion": {
+      "type": "string"
+    }
+  },
+  "required": ["spdxVersion"]
+}

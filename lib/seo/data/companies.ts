@@ -8,7 +8,7 @@ export interface Company {
   description: string;
 }
 
-export const companies: Company[] = [
+export const companies: Compunknown[] = [
   // GAFAM
   {
     id: "google",

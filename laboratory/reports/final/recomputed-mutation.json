@@ -1,0 +1,35 @@
+{
+  "lab": {
+    "total": 3,
+    "killed": 3,
+    "survived": 0,
+    "invalid": 0,
+    "mutations": [
+      {
+        "id": "M1",
+        "status": "KILLED",
+        "duration": 3333
+      },
+      {
+        "id": "M2",
+        "status": "KILLED",
+        "duration": 2893
+      },
+      {
+        "id": "M3",
+        "status": "KILLED",
+        "duration": 2916
+      }
+    ],
+    "mutationScore": 100
+  },
+  "pipeline": {
+    "total": 3,
+    "killed": 3,
+    "survived": 0,
+    "invalid": 0,
+    "timeout": 0,
+    "mutationScore": 100
+  },
+  "match": true
+}

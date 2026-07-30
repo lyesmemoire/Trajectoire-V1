@@ -50,7 +50,7 @@ export async function computeBehavioralStability(): Promise<StabilityMetrics> {
 /**
  * Maps silence duration to psychological state.
  */
-export function interpretSilence(durationSeconds: number): string {
+export function interpretSilence(durationSeconds: _number): string {
   if (durationSeconds <= 3) return "Réflexion Normale";
   if (durationSeconds <= 7) return "Tension / Recherche";
   if (durationSeconds <= 15) return "Surcharge Cognitive";

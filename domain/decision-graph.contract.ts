@@ -17,6 +17,8 @@ export interface DecisionNode {
   timestamp: number;
 }
 
+// Canonical Reference: BCM-GRAPH-009 (blueprint.graph.decision)
+// Owner: Chief Cognitive Architect
 export interface DecisionGraph {
   traceId: string;
   userId: string;

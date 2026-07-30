@@ -1,0 +1,117 @@
+{
+  "component": "execution-pipeline",
+  "file": "compiler/cvm/execution-pipeline.ts",
+  "sha": "3e22378",
+  "certificationDate": "2026-07-27",
+  "auditor": "Independent Certification Committee",
+  "decision": "A",
+  "decisionLabel": "CERTIFICATION REFUSÉE",
+  "question": "Un auditeur externe, n'ayant jamais vu ce projet, accorderait-il la certification Enterprise à execution-pipeline uniquement sur la base des preuves fournies ?",
+  "answer": "NON",
+  "phases": {
+    "phase1_integrity": {
+      "status": "PASSED",
+      "sha": "3e22378",
+      "gitDiffCompiler": "empty",
+      "runtimeFilesModified": false
+    },
+    "phase2_coverage": {
+      "status": "FAILED",
+      "criteria": {
+        "statements": {"required": "≥95%", "achieved": "90.48%", "status": "FAILED"},
+        "branches": {"required": "≥97%", "achieved": "73.91%", "status": "FAILED"},
+        "functions": {"required": "100%", "achieved": "100.00%", "status": "PASSED"},
+        "lines": {"required": "≥95%", "achieved": "90.48%", "status": "FAILED"}
+      },
+      "uncoveredLines": [78, 80, 84, 88, 106, 117],
+      "uncoveredBranches": 6,
+      "evidence": "reports/runtime/execution-pipeline-current-coverage.json"
+    },
+    "phase3_mutation": {
+      "status": "WARNING",
+      "total": 10,
+      "killed": 3,
+      "survived": 0,
+      "invalid": 7,
+      "mutationScore": 100,
+      "certification": "GOLD",
+      "issue": "70% of mutations are INVALID (7 out of 10). Score based on only 3 valid mutations is not representative.",
+      "evidence": "reports/runtime/mutation/mutation-summary.json"
+    },
+    "phase4_regression": {
+      "status": "FAILED",
+      "inconsistency": {
+        "regressionResults": {
+          "total": 22,
+          "detected": 0,
+          "missed": 0,
+          "buildErrors": 22,
+          "detectionRate": 0,
+          "certification": "FAILED"
+        },
+        "regressionStableResults": {
+          "total": 22,
+          "detected": 19,
+          "missed": 2,
+          "buildErrors": 1,
+          "detectionRate": 86.36
+        }
+      },
+      "issue": "Two regression result files are contradictory. Cannot determine correct result without reproduction.",
+      "evidence": ["reports/runtime/regression/regression-results.json", "reports/runtime/regression/regression-stable-results.json"]
+    },
+    "phase5_rootCause": {
+      "status": "WARNING",
+      "analyses": ["root-cause-analysis.md", "root-cause-r5.md", "r5-final-decision.json"],
+      "issue": "R5 analysis concludes 'code is correct, test is wrong'. This contradicts Enterprise certification requirement (100% detection).",
+      "evidence": "reports/runtime/regression/"
+    },
+    "phase6_tests": {
+      "status": "PASSED",
+      "executionPipelineTest": {"passed": 78, "skipped": 0, "only": 0, "retry": 0, "flaky": false},
+      "executionPipelineR5MinimalTest": {"passed": 2, "skipped": 0, "only": 0, "retry": 0, "flaky": false},
+      "total": 80,
+      "evidence": "vitest execution"
+    },
+    "phase7_robustness": {
+      "status": "PASSED",
+      "executions": 20,
+      "results": "identical",
+      "exitCode": 0,
+      "averageDuration": 400,
+      "evidence": "reports/runtime/regression/r5-final-decision.json"
+    },
+    "phase8_criticalAudit": {
+      "status": "FAILED",
+      "rejectionReasons": [
+        {
+          "category": "Coverage",
+          "reason": "Insufficient coverage below Enterprise criteria",
+          "details": "Statements 90.48% < 95%, Branches 73.91% < 97%, Lines 90.48% < 95%"
+        },
+        {
+          "category": "Regression",
+          "reason": "Inconsistent regression results",
+          "details": "regression-results.json shows 22 BUILD ERROR, regression-stable-results.json shows 19 DETECTED"
+        },
+        {
+          "category": "Mutation",
+          "reason": "Non-representative mutation score",
+          "details": "70% INVALID mutations (7 out of 10), score based on only 3 valid mutations"
+        },
+        {
+          "category": "Root Cause",
+          "reason": "Contradictory root cause conclusion",
+          "details": "R5 analysis concludes code is correct, test is wrong - contradicts 100% detection requirement"
+        }
+      ]
+    }
+  },
+  "conclusion": "An external auditor would NOT grant Enterprise certification to execution-pipeline based on the provided evidence due to: (1) Insufficient code coverage below Enterprise criteria, (2) Inconsistent regression results between two official files, (3) Non-representative mutation score based on small sample, (4) Root cause analysis concluding some regressions cannot be detected by valid tests.",
+  "requiredActions": [
+    "Increase coverage to ≥95% (statements, lines) and ≥97% (branches)",
+    "Resolve inconsistency between regression result files",
+    "Increase number of valid mutations for representative score",
+    "Review regression detection approach for R5, R10, R19"
+  ]
+}

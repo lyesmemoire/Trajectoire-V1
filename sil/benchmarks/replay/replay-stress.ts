@@ -60,7 +60,7 @@ async function run() {
   console.log(`  Seeded ${SESSION_COUNT * EVENTS_PER_SESSION} events across ${SESSION_COUNT} sessions`);
 
   // Replay all sessions and measure
-  const query = new DefaultEventQueryService(store as any);
+  const query = new DefaultEventQueryService(store as unknown);
   // We don't have real P7/Trace mocks here, so we'll just measure event retrieval + ordering
   const latencies: number[] = [];
   let divergences = 0;

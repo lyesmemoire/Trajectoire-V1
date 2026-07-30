@@ -44,10 +44,7 @@ function calculateCost(prompt: number, completion: number): number {
   );
 }
 
-export async function generateText(
-  prompt: string,
-  maxTokens = 1000,
-): Promise<AIResponse<string>> {
+export async function generateText(prompt: string, maxTokens = 1000, ): Promise<AIResponse<string>> {
   const openai = getOpenAIClient();
 
   const res = await openai.chat.completions.create({

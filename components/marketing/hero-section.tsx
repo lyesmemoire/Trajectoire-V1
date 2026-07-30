@@ -16,7 +16,7 @@ export function HeroSection() {
     WowTracker.start();
   }, []);
 
-  const handleAction = (type: string) => {
+  const handleAction = (_type: string) => {
     // Si l'utilisateur clique sur la démo ou le CTA, on peut considérer ça comme un signal d'engagement
     // Mais le vrai "Wow" sera le doute recruteur
   };

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-07-25T12:37:00Z",
+  "command": "pnpm build",
+  "exit_code": 1,
+  "total_errors": 1,
+  "errors": [
+    {
+      "file": "./src/components/audio/MicrophoneCheck.tsx",
+      "line": 27,
+      "column": 32,
+      "code": "TS",
+      "message": "Object is of type 'unknown'",
+      "category": "Browser",
+      "dependency": "window.webkitAudioContext",
+      "proposed_fix": "Change (window as unknown).webkitAudioContext to (window as any).webkitAudioContext"
+    }
+  ]
+}

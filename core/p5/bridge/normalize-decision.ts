@@ -1,5 +1,4 @@
 import { P5Event } from "../execution-contract.js";
-import { GovernorDecision } from "./normalization-contract.js";
 
 /**
  * Transforms a GovernorDecision into a deterministic, ordered list of P5Events.
@@ -10,7 +9,7 @@ import { GovernorDecision } from "./normalization-contract.js";
  * Only present (defined) fields produce events.
  * This is a pure function — no RNG, no clock, no side effects (B4).
  */
-export function normalizeDecision(decision: GovernorDecision): P5Event[] {
+export function normalizeDecision(decision: _GovernorDecision): P5Event[] {
   const events: P5Event[] = [];
 
   if (decision.trustDelta !== undefined) {

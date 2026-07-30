@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 interface DashboardLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const navItems = [
@@ -16,35 +16,35 @@ const navItems = [
   { href: "/dashboard/optimize", icon: "✨", label: "Optimiser" },
   { href: "/dashboard/upload", icon: "📁", label: "Upload" },
   { href: "/dashboard/progress", icon: "📈", label: "Progression" },
-];
+]
 
 const secondaryItems = [
   { href: "/dashboard/credits", icon: "💳", label: "Crédits" },
-];
+]
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const pathname = usePathname();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname()
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const isActive = (href: string, exact?: boolean) => {
-    if (exact) return pathname === href;
-    return pathname.startsWith(href);
-  };
+    if (exact) return pathname === href
+    return pathname.startsWith(href)
+  }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-ivoire-50">
       {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-ivoire-200">
         <div className="h-16 px-4 lg:px-6 flex items-center justify-between">
           {/* Logo & Menu Toggle */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-lg hover:bg-slate-100 lg:hidden"
+              className="p-2 rounded-lg hover:bg-ivoire-100 lg:hidden"
               aria-label="Toggle menu"
             >
               <svg
-                className="w-6 h-6 text-slate-600"
+                className="w-6 h-6 text-ink-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -59,7 +59,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </button>
 
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white font-black text-sm">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center text-white font-black text-sm">
                 ✦
               </div>
               <span className="font-black tracking-tight hidden sm:block">
@@ -77,8 +77,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   "px-4 py-2 rounded-lg font-semibold text-sm transition-colors",
                   isActive(item.href, item.exact)
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-slate-600 hover:bg-slate-100",
+                    ? "bg-ivoire-50 text-ink-900"
+                    : "text-ink-600 hover:bg-ivoire-100",
                 )}
               >
                 <span className="mr-2">{item.icon}</span>
@@ -89,24 +89,24 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 border border-green-200">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-green-700 font-bold">2</span>
-              <span className="text-sm text-slate-600 hidden sm:inline">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest-50 border border-forest-200">
+              <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
+              <span className="text-forest-700 font-bold">2</span>
+              <span className="text-sm text-ink-600 hidden sm:inline">
                 crédits
               </span>
             </div>
 
             <Link
               href="/dashboard/credits"
-              className="hidden sm:block px-4 py-2 bg-violet-600 text-white font-bold rounded-full text-sm hover:bg-violet-700 transition-colors"
+              className="hidden sm:block px-4 py-2 bg-ink-900 text-white font-bold rounded-full text-sm hover:bg-ink-800 transition-colors"
             >
               Acheter
             </Link>
 
             {/* User Menu */}
             <div className="relative">
-              <button className="w-9 h-9 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-white font-bold text-sm">
+              <button className="w-9 h-9 rounded-full bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center text-white font-bold text-sm">
                 JD
               </button>
             </div>
@@ -129,13 +129,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         />
         <aside className="absolute left-0 top-0 bottom-0 w-72 bg-white shadow-2xl p-4 transform transition-transform">
           <div className="flex items-center justify-between mb-6">
-            <span className="font-bold text-lg text-slate-900">Menu</span>
+            <span className="font-bold text-lg text-ink-900">Menu</span>
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-100"
+              className="p-2 rounded-lg hover:bg-ivoire-100"
             >
               <svg
-                className="w-5 h-5 text-slate-600"
+                className="w-5 h-5 text-ink-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -159,8 +159,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors",
                   isActive(item.href, item.exact)
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-slate-600 hover:bg-slate-100",
+                    ? "bg-ivoire-50 text-ink-900"
+                    : "text-ink-600 hover:bg-ivoire-100",
                 )}
               >
                 <span className="text-xl">{item.icon}</span>
@@ -168,7 +168,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </Link>
             ))}
 
-            <div className="my-4 border-t border-slate-200" />
+            <div className="my-4 border-t border-ivoire-200" />
 
             {secondaryItems.map((item) => (
               <Link
@@ -178,8 +178,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors",
                   isActive(item.href)
-                    ? "bg-violet-50 text-violet-600"
-                    : "text-slate-600 hover:bg-slate-100",
+                    ? "bg-ivoire-50 text-ink-600"
+                    : "text-ink-600 hover:bg-ivoire-100",
                 )}
               >
                 <span className="text-xl">{item.icon}</span>
@@ -187,11 +187,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </Link>
             ))}
 
-            <div className="my-4 border-t border-slate-200" />
+            <div className="my-4 border-t border-ivoire-200" />
 
             <Link
               href="/auth/login"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-500 hover:bg-slate-100 transition-colors"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-ink-500 hover:bg-ivoire-100 transition-colors"
             >
               <span className="text-xl">🚪</span>
               Déconnexion
@@ -203,5 +203,5 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <main className="p-4 lg:p-6">{children}</main>
     </div>
-  );
+  )
 }

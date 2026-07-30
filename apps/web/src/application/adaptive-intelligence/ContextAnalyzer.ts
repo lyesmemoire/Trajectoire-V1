@@ -10,12 +10,6 @@ import {
   UserNeeds,
   UserOpportunities,
   UserRisks,
-  UserProfile,
-  UserHistory,
-  UserGoals,
-  UserScores,
-  UserWeaknesses,
-  ContextualFactors,
 } from "./interfaces/IAdaptiveIntelligenceOrchestrator";
 
 // ============================================================================

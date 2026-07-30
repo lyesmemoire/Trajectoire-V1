@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * CvUpload — Upload PDF -> texte (P2).
@@ -7,57 +7,56 @@
  * puis injecte le texte via onExtract().
  */
 
-import { useRef, useState } from "react";
-import { colors } from "./styles";
+import { useRef, useState } from "react"
+import { colors } from "./styles"
 
-type Status = "idle" | "reading" | "done" | "error";
+type Status = "idle" | "reading" | "done" | "error"
 
 export function CvUpload({
-  onExtract,
-}: {
-  onExtract: (text: string, meta?: { pages: number }) => void;
+  onExtract }: {
+  onExtract: (text: string, _meta?: { pages: number }) => void
 }) {
-  const [status, setStatus] = useState<Status>("idle");
-  const [message, setMessage] = useState<string>("");
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<Status>("idle")
+  const [message, setMessage] = useState<string>("")
+  const [dragOver, setDragOver] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   async function handleFile(file: File) {
-    setStatus("reading");
-    setMessage("Lecture du CV…");
+    setStatus("reading")
+    setMessage("Lecture du CV…")
 
-    const form = new FormData();
-    form.append("file", file);
+    const form = new FormData()
+    form.append("file", file)
 
     try {
       const res = await fetch("/api/cv/upload", {
         method: "POST",
         body: form,
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
 
       if (!res.ok || !data.extractedText) {
-        setStatus("error");
-        setMessage(data?.error ?? "Échec de l'extraction.");
-        return;
+        setStatus("error")
+        setMessage(data?.error ?? "Échec de l'extraction.")
+        return
       }
 
-      setStatus("done");
+      setStatus("done")
       setMessage(
         `Extraction réussie — ${data.textLength ?? "?"} caractères extraits.`,
-      );
-      onExtract(data.extractedText);
-    } catch {
-      setStatus("error");
-      setMessage("Impossible de contacter le serveur.");
+      )
+      onExtract(data.extractedText)
+    } catch (error) {
+      setStatus("error")
+      setMessage("Impossible de contacter le serveur.")
     }
   }
 
   function onDrop(e: React.DragEvent) {
-    e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) handleFile(file);
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) handleFile(file)
   }
 
   const borderColor =
@@ -67,7 +66,7 @@ export function CvUpload({
         ? colors.good
         : dragOver
           ? colors.brand
-          : "#cbd5e1";
+          : "#cbd5e1"
 
   return (
     <div>
@@ -76,11 +75,11 @@ export function CvUpload({
         tabIndex={0}
         onClick={() => inputRef.current?.click()}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
+          if (e.key === "Enter" || e.key === " ") inputRef.current?.click()
         }}
         onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
+          e.preventDefault()
+          setDragOver(true)
         }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
@@ -107,8 +106,8 @@ export function CvUpload({
           accept="application/pdf"
           style={{ display: "none" }}
           onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleFile(file);
+            const file = e.target.files?.[0]
+            if (file) handleFile(file)
           }}
         />
       </div>
@@ -135,5 +134,5 @@ export function CvUpload({
         🔒 On ne stocke pas ton CV — analyse locale du contenu uniquement.
       </p>
     </div>
-  );
+  )
 }

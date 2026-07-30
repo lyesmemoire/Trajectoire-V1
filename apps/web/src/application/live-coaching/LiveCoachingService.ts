@@ -4,15 +4,12 @@
  */
 
 import {
-  CoachingType,
   LiveCoachingMessage,
   CoachingTrigger,
   CoachingSessionState,
   LiveCoachingConfig,
   defaultLiveCoachingConfig,
 } from "./interfaces/ILiveCoaching";
-import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
-import { adaptiveInterviewExperienceService } from "../adaptive-interview/AdaptiveInterviewExperienceService";
 
 // ============================================================================
 // LIVE COACHING SERVICE CLASS

@@ -1,4 +1,4 @@
-import { analyzeAnswer, AnswerAnalysis } from "../behavior/answer-analysis";
+import { analyzeAnswer } from "../behavior/answer-analysis";
 import { chooseStrategy, FollowUpIntent } from "./followup-strategy";
 import { InterviewState } from "./interview-state-machine";
 import { getPersonaConfig } from "../personas/persona-config";
@@ -9,12 +9,7 @@ import prisma from "@/lib/prisma";
 /**
  * Orchestrateur v2 avec Honeypot de Confiance intégré.
  */
-export async function orchestrateInterviewStep(
-  sessionId: string,
-  userAnswer: string,
-  currentQuestion: string,
-  metrics: any, // { silenceDuration, wordCount, consecutiveHesitations }
-): Promise<any> {
+export async function orchestrateInterviewStep(sessionId: string, userAnswer: string, currentQuestion: string, metrics: any): Promise<any> {
   const session = await prisma.interviewSession.findUnique({
     where: { id: sessionId },
   });
@@ -34,11 +29,11 @@ export async function orchestrateInterviewStep(
     strategy = "supportive";
   } else {
     // Standard logic if not in recovery
-    const analysis: AnswerAnalysis = await analyzeAnswer(
+    const analysis: any = await analyzeAnswer(
       userAnswer,
       currentQuestion,
     );
-    pressure = Math.min(100, pressure + 5); // Example increment
+    pressure = Math.min(100, pressure + 5); 
     const followup: FollowUpIntent = chooseStrategy(analysis, pressure);
     strategy = followup.strategy;
   }
@@ -47,7 +42,7 @@ export async function orchestrateInterviewStep(
   const nextQuestion = await generateRecruiterPrompt({
     persona: activePersona,
     state: session.currentState as InterviewState,
-    analysis: { clarity: 50, specificity: 50, confidence: 50 } as any, // Simplified for brevity
+    analysis: { clarity: 50, specificity: 50, confidence: 50 }  as any, // Simplified for brevity
     strategy,
     userAnswer,
   });

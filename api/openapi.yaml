@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Blueprint V3 Enterprise API
+  description: Blueprint V3 Enterprise REST API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+paths:
+  /compile:
+    post:
+      summary: Compile Blueprint DSL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                options:
+                  type: object
+      responses:
+        '200':
+          description: Compilation successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bytecode:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: string
+  /validate:
+    post:
+      summary: Validate Blueprint package
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                package:
+                  type: string
+                strict:
+                  type: boolean
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  errors:
+                    type: array
+                    items:
+                      type: string

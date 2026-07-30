@@ -10,11 +10,7 @@ function getOpenAI() {
 }
 
 export async function getRelevantCVSections({
-  supabaseAdmin,
-  cvId,
-  jobDescription,
-  topK = 5,
-}: {
+  supabaseAdmin, cvId, jobDescription, topK = 5}: {
   supabaseAdmin: any;
   cvId: string;
   jobDescription: string;

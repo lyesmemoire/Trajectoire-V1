@@ -12,7 +12,7 @@ export interface ScoreProfile {
 /**
  * Moteur de détermination d'archétype basé sur les scores.
  */
-export function determineArchetype(scores: ScoreProfile): CareerArchetype {
+export function determineArchetype(scores: _ScoreProfile): CareerArchetype {
   // 1. Détection Overexplainer
   if (scores.verbosity > 75 && scores.clarity < 60) {
     return "overexplainer";
@@ -55,10 +55,7 @@ export function determineArchetype(scores: ScoreProfile): CareerArchetype {
 /**
  * Calcule l'évolution narrative.
  */
-export function generateEvolutionNarrative(
-  prev: CareerArchetype,
-  current: CareerArchetype,
-): string {
+export function generateEvolutionNarrative(prev: CareerArchetype, current: CareerArchetype, ): string {
   if (prev === current)
     return "Vous stabilisez votre identité professionnelle actuelle.";
 

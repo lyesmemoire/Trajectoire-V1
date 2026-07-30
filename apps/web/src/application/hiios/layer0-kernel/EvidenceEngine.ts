@@ -9,7 +9,6 @@ import {
   EvidenceType,
   EvidenceReliability,
   EvidenceDirection,
-  BiasCheck,
 } from "../interfaces/IHIIOSKernel";
 
 // Poids maximum par type de preuve
@@ -35,6 +34,8 @@ export interface EvidenceStore {
 // EVIDENCE GRAPH — Types
 // ──────────────────────────────────────────────────────────
 
+// Canonical Reference: BCM-GRAPH-003 (blueprint.graph.evidence)
+// Owner: Chief Cognitive Architect
 export interface EvidenceGraph {
   nodes: EvidenceGraphNode[];
   edges: EvidenceGraphEdge[];

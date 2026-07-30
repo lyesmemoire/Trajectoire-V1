@@ -1,6 +1,5 @@
 import { MindState } from "../execution-contract.js";
 import { reduceMind } from "../reduceMind.js";
-import { MindSnapshot } from "../snapshot/snapshot-contract.js";
 import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
 import { EventJournal } from "./journal-contract.js";
 
@@ -15,7 +14,7 @@ import { EventJournal } from "./journal-contract.js";
  * - J4: Two identical replays produce deepEqual results.
  * - Pure function — no RNG, no Clock, no I/O.
  */
-export function replay(snapshot: MindSnapshot, journal: EventJournal): MindState {
+export function replay(snapshot: _MindSnapshot, journal: EventJournal): MindState {
   const initial = restoreSnapshot(snapshot);
 
   return journal.entries.reduce(

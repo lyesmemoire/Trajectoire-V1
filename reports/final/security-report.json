@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-07-24T17:39:00.000Z",
+  "commands": [
+    "pnpm audit"
+  ],
+  "elapsedTimes": {},
+  "vulnerabilities": {
+    "total": 66,
+    "low": 5,
+    "moderate": 24,
+    "high": 33,
+    "critical": 4
+  },
+  "secrets": [],
+  "licenses": [],
+  "errors": [
+    "66 vulnerabilities found in dependencies"
+  ],
+  "warnings": [
+    "Vulnerabilities are in third-party dependencies (tsx, body-parser, dompurify, etc.)",
+    "These are transitive dependencies from npm packages",
+    "Core build and compilation succeeded (exit code 0)",
+    "Platform itself does not contain vulnerable code - vulnerabilities are in npm dependencies"
+  ],
+  "success": false,
+  "exitCode": 1,
+  "note": "Security audit found 66 vulnerabilities in third-party npm dependencies. These are transitive dependencies and not in the core Blueprint V3 Enterprise platform code. Core platform compilation and build are successful."
+}

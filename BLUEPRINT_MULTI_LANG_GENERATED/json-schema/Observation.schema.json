@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blueprint.enterprise/schemas/BCM-OBJ-001.json",
+  "description": "Canonical schema for undefined",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Canonical ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Object name"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owner"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "owner"
+  ],
+  "additionalProperties": true,
+  "_metadata": {
+    "canonicalId": "BCM-OBJ-001",
+    "uuid": "600e8400-e29b-41d4-a716-446655440200",
+    "semanticId": "blueprint.cognitive.observation",
+    "owner": "Chief Cognitive Architect",
+    "layer": "BCM",
+    "type": "object",
+    "generatedBy": "Blueprint Multi-Language Generator"
+  }
+}

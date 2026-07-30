@@ -43,9 +43,9 @@ export class ReplayCoordinator {
     // The previous ReplayEngine already does this using traceProvider and p7.
     // Let's assume this executes the replay and returns the final hash.
     
-    return events.reduce((state, event) => {
+    return events.reduce((_state, _event) => {
       // P6/P7 simulation hook
-      return state;
-    }, "simulated-hash-or-actual-replay-hash" as any);
+      return _state;
+    }, "simulated-hash-or-actual-replay-hash");
   }
 }

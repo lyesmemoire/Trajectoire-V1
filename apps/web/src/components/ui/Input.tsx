@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
 import {
   forwardRef,
   InputHTMLAttributes,
   TextareaHTMLAttributes,
   useState,
-} from "react";
-import { cn } from "@/lib/utils";
+} from "react"
+import { cn } from "@/lib/utils"
 
 // ============================================
 // TEXT INPUT
 // ============================================
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  hint?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  label?: string
+  error?: string
+  hint?: string
+  leftIcon?: React.ReactNode
+  rightIcon?: React.ReactNode
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -25,20 +25,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     { className, label, error, hint, leftIcon, rightIcon, type, ...props },
     ref,
   ) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const isPassword = type === "password";
+    const [showPassword, setShowPassword] = useState(false)
+    const isPassword = type === "password"
 
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-bold text-slate-700 mb-2">
+          <label className="block text-sm font-bold text-ink-700 mb-2">
             {label}
           </label>
         )}
 
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-400">
               {leftIcon}
             </div>
           )}
@@ -48,10 +48,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             type={isPassword && showPassword ? "text" : type}
             className={cn(
               "w-full px-4 py-3 rounded-xl border bg-white transition-all duration-200",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500",
+              "focus:outline-none focus:ring-2 focus:ring-ink-400/20 focus:border-ink-400",
               error
-                ? "border-red-300 focus:ring-red-500/30 focus:border-red-500"
-                : "border-slate-200",
+                ? "border-brick-600 focus:ring-brick-400/20 focus:border-brick-600"
+                : "border-ivoire-300",
               leftIcon && "pl-12",
               (rightIcon || isPassword) && "pr-12",
               className,
@@ -63,7 +63,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-400 hover:text-ink-600"
             >
               {showPassword ? (
                 <svg
@@ -104,34 +104,34 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
 
           {rightIcon && !isPassword && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-400">
               {rightIcon}
             </div>
           )}
         </div>
 
         {error && (
-          <p className="mt-2 text-sm text-red-600 font-medium">{error}</p>
+          <p className="mt-2 text-sm text-brick-600 font-medium">{error}</p>
         )}
 
         {hint && !error && (
-          <p className="mt-2 text-sm text-slate-500">{hint}</p>
+          <p className="mt-2 text-sm text-ink-500">{hint}</p>
         )}
       </div>
-    );
+    )
   },
-);
+)
 
-Input.displayName = "Input";
+Input.displayName = "Input"
 
 // ============================================
 // TEXTAREA
 // ============================================
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  error?: string;
-  hint?: string;
+  label?: string
+  error?: string
+  hint?: string
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -139,7 +139,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-bold text-slate-700 mb-2">
+          <label className="block text-sm font-bold text-ink-700 mb-2">
             {label}
           </label>
         )}
@@ -148,47 +148,47 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           className={cn(
             "w-full px-4 py-3 rounded-xl border bg-white transition-all duration-200 resize-none",
-            "focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500",
+            "focus:outline-none focus:ring-2 focus:ring-ink-400/20 focus:border-ink-400",
             error
-              ? "border-red-300 focus:ring-red-500/30 focus:border-red-500"
-              : "border-slate-200",
+              ? "border-brick-600 focus:ring-brick-400/20 focus:border-brick-600"
+              : "border-ivoire-300",
             className,
           )}
           {...props}
         />
 
         {error && (
-          <p className="mt-2 text-sm text-red-600 font-medium">{error}</p>
+          <p className="mt-2 text-sm text-brick-600 font-medium">{error}</p>
         )}
 
         {hint && !error && (
-          <p className="mt-2 text-sm text-slate-500">{hint}</p>
+          <p className="mt-2 text-sm text-ink-500">{hint}</p>
         )}
       </div>
-    );
+    )
   },
-);
+)
 
-Textarea.displayName = "Textarea";
+Textarea.displayName = "Textarea"
 
 // ============================================
 // SELECT
 // ============================================
 
 interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
+  value: string
+  label: string
+  disabled?: boolean
 }
 
 interface SelectProps extends Omit<
   InputHTMLAttributes<HTMLSelectElement>,
   "children"
 > {
-  label?: string;
-  error?: string;
-  options: SelectOption[];
-  placeholder?: string;
+  label?: string
+  error?: string
+  options: SelectOption[]
+  placeholder?: string
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
@@ -196,7 +196,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-bold text-slate-700 mb-2">
+          <label className="block text-sm font-bold text-ink-700 mb-2">
             {label}
           </label>
         )}
@@ -206,8 +206,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             className={cn(
               "w-full px-4 py-3 rounded-xl border bg-white transition-all duration-200 appearance-none cursor-pointer",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500",
-              error ? "border-red-300" : "border-slate-200",
+              "focus:outline-none focus:ring-2 focus:ring-ink-400/20 focus:border-ink-400",
+              error ? "border-brick-600" : "border-ivoire-300",
               className,
             )}
             {...props}
@@ -228,7 +228,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
 
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-ink-400">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -246,14 +246,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         </div>
 
         {error && (
-          <p className="mt-2 text-sm text-red-600 font-medium">{error}</p>
+          <p className="mt-2 text-sm text-brick-600 font-medium">{error}</p>
         )}
       </div>
-    );
+    )
   },
-);
+)
 
-Select.displayName = "Select";
+Select.displayName = "Select"
 
 // ============================================
 // CHECKBOX & RADIO
@@ -263,7 +263,7 @@ interface CheckboxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   "type"
 > {
-  label: string;
+  label: string
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -274,27 +274,27 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           ref={ref}
           type="checkbox"
           className={cn(
-            "w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500/30",
+            "w-5 h-5 rounded border-ivoire-300 text-ink-600 focus:ring-ink-400/20",
             "cursor-pointer transition-colors",
             className,
           )}
           {...props}
         />
-        <span className="text-slate-700 font-medium group-hover:text-slate-900 transition-colors">
+        <span className="text-ink-700 font-medium group-hover:text-ink-900 transition-colors">
           {label}
         </span>
       </label>
-    );
+    )
   },
-);
+)
 
-Checkbox.displayName = "Checkbox";
+Checkbox.displayName = "Checkbox"
 
 interface RadioProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   "type"
 > {
-  label: string;
+  label: string
 }
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
@@ -305,18 +305,18 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           ref={ref}
           type="radio"
           className={cn(
-            "w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500/30",
+            "w-5 h-5 border-ivoire-300 text-ink-600 focus:ring-ink-400/20",
             "cursor-pointer transition-colors",
             className,
           )}
           {...props}
         />
-        <span className="text-slate-700 font-medium group-hover:text-slate-900 transition-colors">
+        <span className="text-ink-700 font-medium group-hover:text-ink-900 transition-colors">
           {label}
         </span>
       </label>
-    );
+    )
   },
-);
+)
 
-Radio.displayName = "Radio";
+Radio.displayName = "Radio"

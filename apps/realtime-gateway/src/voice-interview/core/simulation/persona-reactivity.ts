@@ -35,11 +35,7 @@ function clamp01(n: number): number {
  * Détermine le mode + les traits selon les signaux ET l'évaluation invisible.
  * Priorité : contradiction/bluff (agressif) > technique fort > réponses faibles.
  */
-export function updatePersona(
-  state: ReactivePersona,
-  signal: ReactivitySignal,
-  hidden: HiddenEval,
-): ReactivePersona {
+export function updatePersona(state: ReactivePersona, signal: ReactivitySignal, hidden: HiddenEval, ): ReactivePersona {
   let mode: ReactiveMode = state.mode;
   let aggression = state.aggression;
   let curiosity = state.curiosity;

@@ -181,6 +181,32 @@ const EnvServerSchema = z.object({
     .string()
     .optional(),
 
+  // ── Sentry ────────────────────────────────────────────────────────────────
+  SENTRY_DSN: z
+    .string()
+    .url()
+    .optional(),
+
+  SENTRY_AUTH_TOKEN: z
+    .string()
+    .min(1)
+    .optional(),
+
+  SENTRY_ORG: z
+    .string()
+    .min(1)
+    .optional(),
+
+  SENTRY_PROJECT: z
+    .string()
+    .min(1)
+    .optional(),
+
+  LOG_LEVEL: z
+    .string()
+    .optional()
+    .default("info"),
+
 });
 
 // ── Validation au démarrage ────────────────────────────────────────────────────

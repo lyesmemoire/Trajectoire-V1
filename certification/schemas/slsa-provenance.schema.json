@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SLSA v1.0 Provenance",
+  "type": "object",
+  "required": ["buildDefinition", "runDetails"],
+  "properties": {
+    "buildDefinition": {
+      "type": "object",
+      "required": ["buildType", "externalParameters"],
+      "properties": {
+        "buildType": { "type": "string" },
+        "externalParameters": { "type": "object" },
+        "internalParameters": { "type": "object" },
+        "resolvedDependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": { "type": "string" },
+              "digest": { "type": "object" },
+              "name": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "runDetails": {
+      "type": "object",
+      "required": ["builder"],
+      "properties": {
+        "builder": {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": { "type": "string" },
+            "version": { "type": "string" },
+            "builderDependencies": {
+              "type": "array",
+              "items": { "type": "object" }
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "invocationId": { "type": "string" },
+            "startedOn": { "type": "string", "format": "date-time" },
+            "finishedOn": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,11 +2,7 @@
 /**
  * Sends a weekly summary email with behavioral insights.
  */
-export async function sendWeeklyBehavioralInsights(
-  userId: string,
-  email: string,
-  insights: any[],
-) {
+export async function sendWeeklyBehavioralInsights(_userId: string, _email: string, insights: unknown[], ) {
   const html = `
         <h1>Votre semaine sur StudioEntretien</h1>
         <p>Vous avez fait des progrès notables cette semaine.</p>

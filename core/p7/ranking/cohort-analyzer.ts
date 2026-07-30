@@ -34,7 +34,7 @@ export function computeCohortStats(scores: number[]): CohortStats {
  * - max - min > 80 → "high_dispersion_cohort"
  * - otherwise     → "normal_cohort"
  */
-export function labelCohort(stats: CohortStats): CohortLabel {
+export function labelCohort(stats: _CohortStats): CohortLabel {
   if (stats.stdDev < 5) return "low_variance_cohort";
   if (stats.max - stats.min > 80) return "high_dispersion_cohort";
   return "normal_cohort";

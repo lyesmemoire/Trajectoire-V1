@@ -207,10 +207,7 @@ export function getCreditCost(action: CreditAction): number {
 /**
  * Checks whether a transaction is expired (past timeout threshold).
  */
-export function isTransactionExpired(
-  tx: CreditTransaction,
-  thresholdMinutes: number = 10,
-): boolean {
+export function isTransactionExpired(tx: CreditTransaction, thresholdMinutes: number = 10, ): boolean {
   const created = new Date(tx.created_at).getTime();
   const now = Date.now();
   return tx.state === "reserved" && now - created > thresholdMinutes * 60 * 1000;

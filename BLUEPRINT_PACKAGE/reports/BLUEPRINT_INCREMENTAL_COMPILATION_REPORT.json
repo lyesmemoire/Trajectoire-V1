@@ -1,0 +1,2316 @@
+{
+  "timestamp": "2026-07-24T09:41:14.723Z",
+  "summary": {
+    "changedFiles": 0,
+    "impactedSymbols": 36,
+    "recompiledFiles": 324
+  },
+  "impactedSymbols": [
+    "BCM-OBJ-001",
+    "BCM-OBJ-002",
+    "BCM-OBJ-003",
+    "BCM-OBJ-004",
+    "BCM-OBJ-005",
+    "BCM-OBJ-006",
+    "BCM-OBJ-007",
+    "BCM-STATE-015",
+    "BCM-OBJ-009",
+    "BCM-OBJ-010",
+    "BCM-OBJ-011",
+    "BCM-STATE-027",
+    "BCM-OBJ-013",
+    "BCM-OBJ-021",
+    "BCM-OBJ-022",
+    "BCM-OBJ-023",
+    "COS-OBJ-001",
+    "COS-OBJ-002",
+    "COS-OBJ-003",
+    "COS-OBJ-004",
+    "COS-OBJ-005",
+    "COS-OBJ-006",
+    "COS-OBJ-007",
+    "COS-OBJ-008",
+    "COS-OBJ-009",
+    "COS-OBJ-010",
+    "COS-OBJ-011",
+    "CVM-OBJ-001",
+    "CVM-OBJ-002",
+    "BEA-OBJ-001",
+    "BEA-OBJ-002",
+    "BCM-GRAPH-003",
+    "BCM-GRAPH-004",
+    "BCM-GRAPH-005",
+    "BCM-GRAPH-009",
+    "BEA-INV-008"
+  ],
+  "recompiledFiles": [
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Observation.ts",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Observation.rs",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Observation.go",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Observation.java",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Observation.kt",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Observation.cs",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Observation.schema.json",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Observation.yaml",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Observation.md",
+      {
+        "symbolId": "BCM-OBJ-001",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Perception.ts",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Perception.rs",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Perception.go",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Perception.java",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Perception.kt",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Perception.cs",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Perception.schema.json",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Perception.yaml",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Perception.md",
+      {
+        "symbolId": "BCM-OBJ-002",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Evidence.ts",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Evidence.rs",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Evidence.go",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Evidence.java",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Evidence.kt",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Evidence.cs",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Evidence.schema.json",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Evidence.yaml",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Evidence.md",
+      {
+        "symbolId": "BCM-OBJ-003",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Confidence.ts",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Confidence.rs",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Confidence.go",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Confidence.java",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Confidence.kt",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Confidence.cs",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Confidence.schema.json",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Confidence.yaml",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Confidence.md",
+      {
+        "symbolId": "BCM-OBJ-004",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Knowledge.ts",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Knowledge.rs",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Knowledge.go",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Knowledge.java",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Knowledge.kt",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Knowledge.cs",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Knowledge.schema.json",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Knowledge.yaml",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Knowledge.md",
+      {
+        "symbolId": "BCM-OBJ-005",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Belief.ts",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Belief.rs",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Belief.go",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Belief.java",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Belief.kt",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Belief.cs",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Belief.schema.json",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Belief.yaml",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Belief.md",
+      {
+        "symbolId": "BCM-OBJ-006",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Hypothesis.ts",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Hypothesis.rs",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Hypothesis.go",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Hypothesis.java",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Hypothesis.kt",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Hypothesis.cs",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Hypothesis.schema.json",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Hypothesis.yaml",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Hypothesis.md",
+      {
+        "symbolId": "BCM-OBJ-007",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Reasoning.ts",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Reasoning.rs",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Reasoning.go",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Reasoning.java",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Reasoning.kt",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Reasoning.cs",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Reasoning.schema.json",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Reasoning.yaml",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Reasoning.md",
+      {
+        "symbolId": "BCM-STATE-015",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Decision.ts",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Decision.rs",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Decision.go",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Decision.java",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Decision.kt",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Decision.cs",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Decision.schema.json",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Decision.yaml",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Decision.md",
+      {
+        "symbolId": "BCM-OBJ-009",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Plan.ts",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Plan.rs",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Plan.go",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Plan.java",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Plan.kt",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Plan.cs",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Plan.schema.json",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Plan.yaml",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Plan.md",
+      {
+        "symbolId": "BCM-OBJ-010",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Memory.ts",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Memory.rs",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Memory.go",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Memory.java",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Memory.kt",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Memory.cs",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Memory.schema.json",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Memory.yaml",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Memory.md",
+      {
+        "symbolId": "BCM-OBJ-011",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Learning.ts",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Learning.rs",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Learning.go",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Learning.java",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Learning.kt",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Learning.cs",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Learning.schema.json",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Learning.yaml",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Learning.md",
+      {
+        "symbolId": "BCM-STATE-027",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Adaptation.ts",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Adaptation.rs",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Adaptation.go",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Adaptation.java",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Adaptation.kt",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Adaptation.cs",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Adaptation.schema.json",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Adaptation.yaml",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Adaptation.md",
+      {
+        "symbolId": "BCM-OBJ-013",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Node.ts",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Node.rs",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Node.go",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Node.java",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Node.kt",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Node.cs",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Node.schema.json",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Node.yaml",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Node.md",
+      {
+        "symbolId": "BCM-OBJ-021",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Edge.ts",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Edge.rs",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Edge.go",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Edge.java",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Edge.kt",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Edge.cs",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Edge.schema.json",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Edge.yaml",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Edge.md",
+      {
+        "symbolId": "BCM-OBJ-022",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Context.ts",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Context.rs",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Context.go",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Context.java",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Context.kt",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Context.cs",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Context.schema.json",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Context.yaml",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Context.md",
+      {
+        "symbolId": "BCM-OBJ-023",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Session.ts",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Session.rs",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Session.go",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Session.java",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Session.kt",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Session.cs",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Session.schema.json",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Session.yaml",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Session.md",
+      {
+        "symbolId": "COS-OBJ-001",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Conversation.ts",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Conversation.rs",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Conversation.go",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Conversation.java",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Conversation.kt",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Conversation.cs",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Conversation.schema.json",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Conversation.yaml",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Conversation.md",
+      {
+        "symbolId": "COS-OBJ-002",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Question.ts",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Question.rs",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Question.go",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Question.java",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Question.kt",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Question.cs",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Question.schema.json",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Question.yaml",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Question.md",
+      {
+        "symbolId": "COS-OBJ-003",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Answer.ts",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Answer.rs",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Answer.go",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Answer.java",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Answer.kt",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Answer.cs",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Answer.schema.json",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Answer.yaml",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Answer.md",
+      {
+        "symbolId": "COS-OBJ-004",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Strategy.ts",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Strategy.rs",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Strategy.go",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Strategy.java",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Strategy.kt",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Strategy.cs",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Strategy.schema.json",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Strategy.yaml",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Strategy.md",
+      {
+        "symbolId": "COS-OBJ-005",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Capability.ts",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Capability.rs",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Capability.go",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Capability.java",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Capability.kt",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Capability.cs",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Capability.schema.json",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Capability.yaml",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Capability.md",
+      {
+        "symbolId": "COS-OBJ-006",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Policy.ts",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Policy.rs",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Policy.go",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Policy.java",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Policy.kt",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Policy.cs",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Policy.schema.json",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Policy.yaml",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Policy.md",
+      {
+        "symbolId": "COS-OBJ-007",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Command.ts",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Command.rs",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Command.go",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Command.java",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Command.kt",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Command.cs",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Command.schema.json",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Command.yaml",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Command.md",
+      {
+        "symbolId": "COS-OBJ-008",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Query.ts",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Query.rs",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Query.go",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Query.java",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Query.kt",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Query.cs",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Query.schema.json",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Query.yaml",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Query.md",
+      {
+        "symbolId": "COS-OBJ-009",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\FeatureFlag.ts",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\FeatureFlag.rs",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\FeatureFlag.go",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\FeatureFlag.java",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\FeatureFlag.kt",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\FeatureFlag.cs",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\FeatureFlag.schema.json",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\FeatureFlag.yaml",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\FeatureFlag.md",
+      {
+        "symbolId": "COS-OBJ-010",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Artifact.ts",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Artifact.rs",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Artifact.go",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Artifact.java",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Artifact.kt",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Artifact.cs",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Artifact.schema.json",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Artifact.yaml",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Artifact.md",
+      {
+        "symbolId": "COS-OBJ-011",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Execution.ts",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Execution.rs",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Execution.go",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Execution.java",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Execution.kt",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Execution.cs",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Execution.schema.json",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Execution.yaml",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Execution.md",
+      {
+        "symbolId": "CVM-OBJ-001",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Budget.ts",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Budget.rs",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Budget.go",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Budget.java",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Budget.kt",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Budget.cs",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Budget.schema.json",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Budget.yaml",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Budget.md",
+      {
+        "symbolId": "CVM-OBJ-002",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Version.ts",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Version.rs",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Version.go",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Version.java",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Version.kt",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Version.cs",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Version.schema.json",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Version.yaml",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Version.md",
+      {
+        "symbolId": "BEA-OBJ-001",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Package.ts",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Package.rs",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Package.go",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Package.java",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Package.kt",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Package.cs",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Package.schema.json",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Package.yaml",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Package.md",
+      {
+        "symbolId": "BEA-OBJ-002",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\EvidenceGraph.ts",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\EvidenceGraph.rs",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\EvidenceGraph.go",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\EvidenceGraph.java",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\EvidenceGraph.kt",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\EvidenceGraph.cs",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\EvidenceGraph.schema.json",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\EvidenceGraph.yaml",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\EvidenceGraph.md",
+      {
+        "symbolId": "BCM-GRAPH-003",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\ConfidenceGraph.ts",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\ConfidenceGraph.rs",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\ConfidenceGraph.go",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\ConfidenceGraph.java",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\ConfidenceGraph.kt",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\ConfidenceGraph.cs",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\ConfidenceGraph.schema.json",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\ConfidenceGraph.yaml",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\ConfidenceGraph.md",
+      {
+        "symbolId": "BCM-GRAPH-004",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\KnowledgeGraph.ts",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\KnowledgeGraph.rs",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\KnowledgeGraph.go",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\KnowledgeGraph.java",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\KnowledgeGraph.kt",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\KnowledgeGraph.cs",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\KnowledgeGraph.schema.json",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\KnowledgeGraph.yaml",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\KnowledgeGraph.md",
+      {
+        "symbolId": "BCM-GRAPH-005",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\DecisionGraph.ts",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\DecisionGraph.rs",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\DecisionGraph.go",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\DecisionGraph.java",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\DecisionGraph.kt",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\DecisionGraph.cs",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\DecisionGraph.schema.json",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\DecisionGraph.yaml",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\DecisionGraph.md",
+      {
+        "symbolId": "BCM-GRAPH-009",
+        "language": "Markdown"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\typescript\\Traceability.ts",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "TypeScript"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\rust\\Traceability.rs",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "Rust"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\go\\Traceability.go",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "Go"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\java\\Traceability.java",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "Java"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\kotlin\\Traceability.kt",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "Kotlin"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\csharp\\Traceability.cs",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "C#"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\json-schema\\Traceability.schema.json",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "JSON Schema"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\yaml\\Traceability.yaml",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "YAML"
+      }
+    ],
+    [
+      "C:\\Trajectoire\\BLUEPRINT_INCREMENTAL_GENERATED\\markdown\\Traceability.md",
+      {
+        "symbolId": "BEA-INV-008",
+        "language": "Markdown"
+      }
+    ]
+  ]
+}

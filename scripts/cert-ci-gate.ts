@@ -14,7 +14,7 @@ function loadDiff(): Diff {
 // ------------------------------
 // CI POLICY (SRE GRADE RULESET)
 // ------------------------------
-function evaluate(diff: Diff) {
+function evaluate(diff: _Diff) {
   const failures: string[] = [];
 
   // ❌ HARD FAIL RULES

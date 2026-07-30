@@ -28,7 +28,7 @@ export async function fetchMetricsFromDB(): Promise<Metrics> {
     // Requête 1 : Transactions de crédits (CV + Interviews)
     const supabase = getSupabaseClient();
     const { data, error: txError } = await supabase
-      .from("credit_transactions" as any)
+      .from("credit_transactions" as unknown)
       .select("action, created_at")
       .eq("state", "completed");
 

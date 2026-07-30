@@ -7,9 +7,7 @@ interface CheckItemProps {
 }
 
 export default function CheckItem({
-  children,
-  className = "",
-}: CheckItemProps) {
+  children, className = "", _}: CheckItemProps) {
   return (
     <li
       className={`flex items-center gap-2 text-xs font-bold text-slate-700 ${className}`}

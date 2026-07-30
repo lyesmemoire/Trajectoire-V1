@@ -34,7 +34,7 @@ export function useSpeechAnalysis() {
       mediaRecRef.current = mediaRec;
       startTimeRef.current = Date.now();
       setState("recording");
-    } catch (err) {
+    } catch (error) {
       setError("Erreur microphone");
       setState("error");
     }
@@ -58,7 +58,7 @@ export function useSpeechAnalysis() {
         const analysis = analyzerRef.current!.analyzeTranscript(text, duration);
         setResult(analysis);
         setState("done");
-      } catch (e) {
+      } catch (error) {
         setState("error");
       }
     };

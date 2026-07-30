@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-07-25T13:16:47.709Z",
+  "total_categories": 14,
+  "categories": [
+    {
+      "name": "Duplicates",
+      "count": 170,
+      "percentage": 40.66985645933015
+    },
+    {
+      "name": "Imports",
+      "count": 139,
+      "percentage": 33.25358851674641
+    },
+    {
+      "name": "Properties",
+      "count": 32,
+      "percentage": 7.655502392344498
+    },
+    {
+      "name": "Other",
+      "count": 23,
+      "percentage": 5.502392344497608
+    },
+    {
+      "name": "ObjectLiteral",
+      "count": 14,
+      "percentage": 3.349282296650718
+    },
+    {
+      "name": "Overload",
+      "count": 10,
+      "percentage": 2.3923444976076556
+    },
+    {
+      "name": "Implicit",
+      "count": 7,
+      "percentage": 1.674641148325359
+    },
+    {
+      "name": "Directives",
+      "count": 6,
+      "percentage": 1.4354066985645932
+    },
+    {
+      "name": "TypeUsage",
+      "count": 5,
+      "percentage": 1.1961722488038278
+    },
+    {
+      "name": "Undefined",
+      "count": 4,
+      "percentage": 0.9569377990430622
+    },
+    {
+      "name": "Types",
+      "count": 3,
+      "percentage": 0.7177033492822966
+    },
+    {
+      "name": "Invalid",
+      "count": 3,
+      "percentage": 0.7177033492822966
+    },
+    {
+      "name": "Unknown",
+      "count": 1,
+      "percentage": 0.23923444976076555
+    },
+    {
+      "name": "Import",
+      "count": 1,
+      "percentage": 0.23923444976076555
+    }
+  ]
+}

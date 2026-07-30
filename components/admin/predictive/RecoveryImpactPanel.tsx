@@ -10,7 +10,7 @@ interface Props {
   };
 }
 
-export function RecoveryImpactPanel({ data }: Props) {
+export function RecoveryImpactPanel({ data }: _Props) {
   return (
     <div className="bg-white rounded-[3rem] border border-slate-100 p-10 shadow-sm space-y-10">
       <div className="flex items-center gap-3">

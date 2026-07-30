@@ -1,0 +1,147 @@
+{
+  "timestamp": "2026-07-24T09:55:26.389Z",
+  "summary": {
+    "totalCriteria": 12,
+    "passedCriteria": 7,
+    "failedCriteria": 5,
+    "overallStatus": "FAILED"
+  },
+  "criteria": {
+    "generation": {
+      "name": "100% Generation",
+      "passed": false,
+      "details": {
+        "generationCoverage": 9.06
+      }
+    },
+    "duplication": {
+      "name": "0 Duplication",
+      "passed": false,
+      "details": {
+        "duplicates": 744
+      }
+    },
+    "drift": {
+      "name": "0 Drift",
+      "passed": true,
+      "details": {
+        "driftsDetected": 0
+      }
+    },
+    "manualContract": {
+      "name": "0 Manual Contract",
+      "passed": false,
+      "details": {
+        "manualContracts": 1
+      }
+    },
+    "manualInterface": {
+      "name": "0 Manual Interface",
+      "passed": false,
+      "details": {
+        "manualInterfaces": 1458
+      }
+    },
+    "manualSchema": {
+      "name": "0 Manual Schema",
+      "passed": true,
+      "details": {
+        "manualSchemas": 0
+      }
+    },
+    "duplicateEvent": {
+      "name": "0 Duplicate Event",
+      "passed": true,
+      "details": {
+        "duplicateEvents": 0
+      }
+    },
+    "duplicateState": {
+      "name": "0 Duplicate State",
+      "passed": true,
+      "details": {
+        "duplicateStates": 0
+      }
+    },
+    "cycle": {
+      "name": "0 Cycle",
+      "passed": false,
+      "details": {
+        "cycles": 51
+      }
+    },
+    "multipleOwnership": {
+      "name": "0 Multiple Ownership",
+      "passed": true,
+      "details": {
+        "multipleOwnership": 0
+      }
+    },
+    "brokenReference": {
+      "name": "0 Broken Reference",
+      "passed": true,
+      "details": {
+        "brokenReferences": 0
+      }
+    },
+    "directModification": {
+      "name": "0 Direct Modification",
+      "passed": true,
+      "details": {
+        "violationsDetected": 0
+      }
+    }
+  },
+  "violations": [
+    {
+      "criterion": "generation",
+      "message": "Generation coverage is 9.06%, expected >= 95%",
+      "severity": "error"
+    },
+    {
+      "criterion": "duplication",
+      "message": "Found 744 duplicate symbols",
+      "severity": "error"
+    },
+    {
+      "criterion": "manualContract",
+      "message": "Found 1 manual contracts",
+      "severity": "error"
+    },
+    {
+      "criterion": "manualInterface",
+      "message": "Found 1458 manual interfaces",
+      "severity": "error"
+    },
+    {
+      "criterion": "cycle",
+      "message": "Found 51 cycles in dependency graph",
+      "severity": "error"
+    },
+    {
+      "criterion": "generation",
+      "message": "Generation coverage is 9.06%, expected >= 95%",
+      "severity": "error"
+    },
+    {
+      "criterion": "duplication",
+      "message": "Found 744 duplicate symbols",
+      "severity": "error"
+    },
+    {
+      "criterion": "manualContract",
+      "message": "Found 1 manual contracts",
+      "severity": "error"
+    },
+    {
+      "criterion": "manualInterface",
+      "message": "Found 1458 manual interfaces",
+      "severity": "error"
+    },
+    {
+      "criterion": "cycle",
+      "message": "Found 51 cycles in dependency graph",
+      "severity": "error"
+    }
+  ]
+}

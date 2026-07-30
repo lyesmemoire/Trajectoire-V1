@@ -1,0 +1,122 @@
+[
+  {
+    "id": "D1",
+    "mutation": "Supprimer stop()",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "G1",
+    "mutation": "while(true) avec arrêt après 100 cycles",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "J1",
+    "mutation": "Transformer reset() en fonction vide",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "A1",
+    "mutation": "Supprimer fetch()",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "A2",
+    "mutation": "Supprimer decode()",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "A3",
+    "mutation": "Supprimer execute()",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "B1",
+    "mutation": "Permuter decode avant fetch",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "C1",
+    "mutation": "validate() → return true",
+    "detectorTest": "",
+    "assertion": "[PARSE_ERROR] Invalid Character ``",
+    "expected": "N/A",
+    "obtained": "[PARSE_ERROR] Invalid Character ``",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "E1",
+    "mutation": "Forcer isHalted=true au démarrage",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "F1",
+    "mutation": "Remplacer throw par return",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "H1",
+    "mutation": "Retourner {} au lieu des statistiques",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  },
+  {
+    "id": "I1",
+    "mutation": "Toujours retourner 0 pour tous les compteurs",
+    "detectorTest": "",
+    "assertion": "",
+    "expected": "",
+    "obtained": "",
+    "status": "KILLED",
+    "reason": "Tests échouent"
+  }
+]

@@ -72,7 +72,7 @@ export default function MarketChart() {
           />
         ))}
         <div className="relative z-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-red-400">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brick-400">
             Marché
           </p>
           <p className="text-2xl font-black text-white">€50B</p>
@@ -82,7 +82,7 @@ export default function MarketChart() {
         {segments.map((seg) => (
           <div key={seg.label} className="flex items-start gap-4">
             <div
-              className="mt-1 h-4 w-4 shrink-0 rounded-full border border-red-600/50"
+              className="mt-1 h-4 w-4 shrink-0 rounded-full border border-brick-600/50"
               style={{ background: seg.color }}
             />
             <div>
@@ -90,7 +90,7 @@ export default function MarketChart() {
                 <span className="text-xl font-black text-white">
                   {seg.value}
                 </span>
-                <span className="text-sm font-bold text-red-400">
+                <span className="text-sm font-bold text-brick-400">
                   {seg.label}
                 </span>
               </div>

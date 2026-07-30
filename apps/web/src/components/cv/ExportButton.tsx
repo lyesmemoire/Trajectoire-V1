@@ -1,86 +1,86 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Download, Loader2, Eye, FileText, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { CVData, ExportOptions } from "@/lib/pdf/types";
-import { PDFPreviewModal } from "./PDFPreviewModal";
+import { useState } from "react"
+import { Download, Loader2, Eye, FileText, CheckCircle2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { CVData, ExportOptions } from "@/lib/pdf/types"
+import { PDFPreviewModal } from "./PDFPreviewModal"
 
 interface ExportButtonProps {
-  cvData: CVData;
-  disabled?: boolean;
+  cvData: CVData
+  disabled?: boolean
 }
 
 export function ExportButton({ cvData, disabled }: ExportButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
   const [selectedColor, setSelectedColor] =
-    useState<ExportOptions["colorScheme"]>("blue");
+    useState<ExportOptions["colorScheme"]>("blue")
 
   const handleExport = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const options: ExportOptions = {
       template: "modern",
       colorScheme: selectedColor,
       fontSize: "normal",
-    };
+    }
 
     try {
       const response = await fetch("/api/cv/export", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cvData, options }),
-      });
+      })
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Erreur lors de la génération");
+        const error = await response.json()
+        throw new Error(error.error || "Erreur lors de la génération")
       }
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      const safeName = cvData.personalInfo.name.replace(/\s+/g, "_");
-      a.download = `CV_${safeName}_${new Date().getFullYear()}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      const safeName = cvData.personalInfo.name.replace(/\s+/g, "_")
+      a.download = `CV_${safeName}_${new Date().getFullYear()}.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
     } catch (error) {
-      console.error(error);
-      alert("Impossible de générer le PDF. Veuillez réessayer.");
+      console.error(error)
+      alert("Impossible de générer le PDF. Veuillez réessayer.")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const colorOptions: Array<{
-    id: ExportOptions["colorScheme"];
-    color: string;
+    id: ExportOptions["colorScheme"]
+    color: string
   }> = [
-    { id: "blue", color: "bg-blue-600" },
-    { id: "green", color: "bg-emerald-600" },
-    { id: "purple", color: "bg-violet-600" },
-    { id: "dark", color: "bg-slate-900" },
-  ];
+    { id: "blue", color: "bg-bronze-600" },
+    { id: "green", color: "bg-forest-600" },
+    { id: "purple", color: "bg-ink-900" },
+    { id: "dark", color: "bg-ink-900" },
+  ]
 
   return (
-    <div className="flex flex-col gap-6 p-8 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl">
+    <div className="flex flex-col gap-6 p-8 bg-white rounded-[2.5rem] border border-ivoire-100 shadow-xl">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+        <div className="w-10 h-10 bg-bronze-50 rounded-xl flex items-center justify-center text-bronze-600">
           <FileText className="w-5 h-5" />
         </div>
         <div>
-          <h4 className="text-lg font-black text-slate-900">
+          <h4 className="text-lg font-black text-ink-900">
             Finalisez votre CV
           </h4>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+          <p className="text-xs font-bold text-ink-400 uppercase tracking-widest">
             Format PDF · Optimisé ATS
           </p>
         </div>
       </div>
 
       <div className="space-y-3">
-        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+        <label className="text-[10px] font-black text-ink-400 uppercase tracking-widest">
           Couleur d'accent
         </label>
         <div className="flex gap-3">
@@ -90,7 +90,7 @@ export function ExportButton({ cvData, disabled }: ExportButtonProps) {
               onClick={() => setSelectedColor(opt.id)}
               className={`w-8 h-8 rounded-full border-4 transition-all ${
                 selectedColor === opt.id
-                  ? "border-slate-200 scale-110"
+                  ? "border-ivoire-200 scale-110"
                   : "border-transparent opacity-60 hover:opacity-100"
               } ${opt.color}`}
             />
@@ -101,7 +101,7 @@ export function ExportButton({ cvData, disabled }: ExportButtonProps) {
       <div className="flex flex-col sm:flex-row gap-3">
         <Button
           onClick={() => setShowPreview(true)}
-          variant="outline"
+          variant="secondary"
           className="flex-1 rounded-2xl h-14 font-black"
           disabled={disabled || isLoading}
         >
@@ -110,7 +110,7 @@ export function ExportButton({ cvData, disabled }: ExportButtonProps) {
         <Button
           onClick={handleExport}
           variant="primary"
-          className="flex-1 rounded-2xl h-14 font-black shadow-blue-500/20"
+          className="flex-1 rounded-2xl h-14 font-black shadow-bronze-500/20"
           disabled={disabled || isLoading}
         >
           {isLoading ? (
@@ -122,7 +122,7 @@ export function ExportButton({ cvData, disabled }: ExportButtonProps) {
         </Button>
       </div>
 
-      <div className="pt-4 border-t border-slate-50 flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest">
+      <div className="pt-4 border-t border-ivoire-50 flex items-center gap-2 text-[10px] font-black text-forest-500 uppercase tracking-widest">
         <CheckCircle2 className="w-3.5 h-3.5" /> Garanti lisible par tous les
         ATS
       </div>
@@ -138,11 +138,11 @@ export function ExportButton({ cvData, disabled }: ExportButtonProps) {
           isOpen={showPreview}
           onClose={() => setShowPreview(false)}
           onExport={() => {
-            setShowPreview(false);
-            handleExport();
+            setShowPreview(false)
+            handleExport()
           }}
         />
       )}
     </div>
-  );
+  )
 }

@@ -34,7 +34,7 @@ if (thresholdIdx !== -1) {
   }
   try {
     threshold = JSON.parse(jsonStr);
-  } catch (e) {
+  } catch (error) {
     console.error("Failed to parse threshold JSON:", e);
     process.exit(2);
   }
@@ -49,8 +49,8 @@ const resolve = (p: string) => path.resolve(process.cwd(), p);
 const oldRaw = fs.readFileSync(resolve(oldPathInput), "utf-8");
 const newRaw = fs.readFileSync(resolve(newPathInput), "utf-8");
 
-const oldTrace = JSON.parse(oldRaw) as any[]; // TickTrace[]
-const newTrace = JSON.parse(newRaw) as any[]; // TickTrace[]
+const oldTrace = JSON.parse(oldRaw) as unknown[]; // TickTrace[]
+const newTrace = JSON.parse(newRaw) as unknown[]; // TickTrace[]
 
 // ------------------------------------------------------------
 // Compute diffs and context

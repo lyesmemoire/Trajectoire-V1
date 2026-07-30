@@ -21,43 +21,43 @@ function runPipeline(clockStart = 0) {
   const clock = new SimpleDeterministicClock(clockStart);
 
   // fixed empty signal registry (extend as needed)
-  const signals = {} as any;
+  const signals = {} as unknown;
 
   // mock context – only includes clock and signals for selectors
-  const baseContext = { clock, signals } as any;
+  const baseContext = { clock, signals } as unknown;
 
   // Run selectors in deterministic order
   const topicResult = selectTopic(
     baseContext,
-    { nodes: [{ id: "t1", saturationScore: 0 }] } as any,
-    {} as any,
-    { explorationFactor: 0 } as any,
+    { nodes: [{ id: "t1", saturationScore: 0 }] } as unknown,
+    {} as unknown,
+    { explorationFactor: 0 } as unknown,
   );
-  const difficultyResult = (selectDifficulty as any)(
+  const difficultyResult = (selectDifficulty as unknown)(
     baseContext,
-    {} as any,
-    {} as any,
-    {} as any,
+    {} as unknown,
+    {} as unknown,
+    {} as unknown,
   );
-  const objectiveResult = (selectObjective as any)(
+  const objectiveResult = (selectObjective as unknown)(
     baseContext,
-    {} as any,
-    {} as any,
-    {} as any,
+    {} as unknown,
+    {} as unknown,
+    {} as unknown,
   );
 
   // Assemble a simple final state from selector outputs
   const finalState = {
-    selectedTopicId: (topicResult.value as any).selectedTopicId,
+    selectedTopicId: (topicResult.value as unknown).selectedTopicId,
     topicConfidence: topicResult.confidence,
-    difficulty: (difficultyResult.value as any).difficulty,
-    objective: (objectiveResult.value as any).objective,
+    difficulty: (difficultyResult.value as unknown).difficulty,
+    objective: (objectiveResult.value as unknown).objective,
     // include deterministic clock timestamp for completeness
     timestamp: clock.now,
   } as const;
 
   // Compute deterministic hashes
-  const stateHash = computeRuntimeStateHash(finalState as any);
+  const stateHash = computeRuntimeStateHash(finalState as unknown);
   const pipelineReplayChecksum = hashObjectStable({
     topicResult,
     difficultyResult,

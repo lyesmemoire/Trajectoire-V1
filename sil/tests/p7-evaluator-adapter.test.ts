@@ -125,7 +125,7 @@ describe("SIL Phase 2-C — Real P7 Evaluator Adapter", () => {
     await expect(
       client.evaluate({
         sessionId: "session-fail",
-        runtimeTrace: null as any,
+        runtimeTrace: null as never,
       })
     ).rejects.toThrowError("P7_EVALUATION_FAILED");
   });

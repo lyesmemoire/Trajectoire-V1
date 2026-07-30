@@ -18,7 +18,6 @@ function main() {
   // NOTE: This is just illustrative; in production you would launch nodes with desired modes.
   // Here we manually mutate the internal array for simplicity.
   if (manager.getNodeCount() > 0) {
-    // @ts-ignore – accessing private field for demo purposes
     manager["nodes"][0].node = new (require("../src/bft/ByzantineNode").ByzantineNode)("node-1", "faulty");
   }
 

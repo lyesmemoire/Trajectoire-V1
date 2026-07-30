@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "description": "instructionsExecuted++ → += 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 2,
+    "description": "cycles++ → += 2",
+    "status": "KILLED"
+  },
+  {
+    "id": 3,
+    "description": "Inverser condition halted",
+    "status": "INVALID"
+  },
+  {
+    "id": 4,
+    "description": "> → >=",
+    "status": "INVALID"
+  },
+  {
+    "id": 5,
+    "description": ">= → >",
+    "status": "KILLED"
+  },
+  {
+    "id": 6,
+    "description": "=== → !==",
+    "status": "INVALID"
+  },
+  {
+    "id": 7,
+    "description": "return false → true (stop)",
+    "status": "INVALID"
+  },
+  {
+    "id": 8,
+    "description": "return true → false (run)",
+    "status": "INVALID"
+  },
+  {
+    "id": 9,
+    "description": "Supprimer throw",
+    "status": "INVALID"
+  },
+  {
+    "id": 10,
+    "description": "Supprimer return",
+    "status": "INVALID"
+  }
+]

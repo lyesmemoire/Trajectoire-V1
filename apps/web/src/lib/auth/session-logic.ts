@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { envServer } from "@/lib/env.server";
+import { logger } from "@/lib/logger";
 
 /**
  * Source de vérité absolue pour l'identité utilisateur côté serveur.
@@ -35,7 +36,7 @@ export async function getStrictUser() {
     .single();
 
   if (profileError) {
-    console.error("[Auth] Profile fetch error:", profileError);
+    logger.error({ err: profileError, userId: user.id, component: "session-logic" }, "Profile fetch error");
   }
 
   const adminRoles = ["ADMIN_SUPPORT", "ADMIN_PRODUCT", "ADMIN_FOUNDER"];

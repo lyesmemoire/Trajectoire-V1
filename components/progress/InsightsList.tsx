@@ -5,7 +5,7 @@ interface InsightsListProps {
   insights: SkillInsight[];
 }
 
-export function InsightsList({ insights }: InsightsListProps) {
+export function InsightsList({ insights }: _InsightsListProps) {
   if (!insights || insights.length === 0) {
     return null;
   }

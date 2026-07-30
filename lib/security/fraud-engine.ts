@@ -3,10 +3,7 @@ import { createSupabaseServiceClient } from "@/lib/supabase-server";
 const isProduction = process.env.NODE_ENV === "production";
 
 export async function evaluateFraud({
-  userId,
-  ip,
-  fingerprint,
-}: {
+  userId, ip, fingerprint, _}: {
   userId: string;
   ip: string;
   fingerprint?: string;
@@ -39,7 +36,7 @@ export async function evaluateFraud({
         risk += 30;
         flags.push("high_ip_fraud_score");
       }
-    } catch (e) {
+    } catch (error) {
       console.error("IPQS Error", e);
     }
   }
@@ -49,7 +46,7 @@ export async function evaluateFraud({
   ----------------------------- */
 
   if (fingerprint) {
-    const { data: existing } = await supabaseAdmin
+    const { _data: existing } = await supabaseAdmin
       .from("user_devices")
       .select("id")
       .eq("fingerprint", fingerprint);
@@ -64,7 +61,7 @@ export async function evaluateFraud({
      ✅ 3. IP registration spike
   ----------------------------- */
 
-  const { data: ipData } = await supabaseAdmin
+  const { _data: ipData } = await supabaseAdmin
     .from("ip_activity")
     .select("*")
     .eq("ip_address", ip)

@@ -1,6 +1,4 @@
-import { InterviewStyle } from "./interview-style";
-
-export function getQuestionsForStyle(style: InterviewStyle) {
+export function getQuestionsForStyle(style: any) {
   switch (style) {
     case "VISION_ARBITRAGE":
       return [

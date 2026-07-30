@@ -4,7 +4,6 @@
  */
 
 import {
-  NodeStatus,
   NodeType,
   ExecutionNode,
   ExecutionEdge,
@@ -369,7 +368,7 @@ export class GlobalExecutionGraph {
   /**
    * Execute node
    */
-  private async executeNode(graph: ExecutionGraph, nodeId: string, context: Record<string, unknown>): Promise<unknown> {
+  private async executeNode(graph: ExecutionGraph, nodeId: string, context: Record<string, unknown>): Promise<any> {
     const node = graph.nodes.get(nodeId);
     if (!node) {
       throw new Error(`Node ${nodeId} not found`);

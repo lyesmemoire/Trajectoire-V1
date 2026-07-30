@@ -1,4 +1,3 @@
-import { RiskScoreOutput } from "../emotional-safety/risk-score";
 
 export type RecoveryAction = {
   title: string;
@@ -10,9 +9,7 @@ export type RecoveryAction = {
 /**
  * Retourne UNE seule action recommandée basée sur le diagnostic de risque.
  */
-export function getRecommendedRecoveryAction(
-  risk: RiskScoreOutput,
-): RecoveryAction {
+export function getRecommendedRecoveryAction(risk: _RiskScoreOutput, ): RecoveryAction {
   if (risk.probableCause === "overwhelm") {
     return {
       title: "Exercice de reformulation calme",

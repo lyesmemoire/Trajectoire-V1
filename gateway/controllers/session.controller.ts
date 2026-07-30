@@ -1,10 +1,9 @@
 import { Request, Response, Router } from "express";
-import { SILPublicAPI } from "../../sil/contracts/public-api";
 import { EventSigner } from "../services/event-signer";
 import { IncomingSILEvent } from "../../sil/contracts/sil-events";
 import * as crypto from "crypto";
 
-export function createSessionController(silClient: SILPublicAPI, signer: EventSigner): Router {
+export function createSessionController(silClient: _SILPublicAPI, signer: EventSigner): Router {
   const router = Router();
 
   router.post("/", async (req: Request, res: Response) => {
@@ -33,7 +32,7 @@ export function createSessionController(silClient: SILPublicAPI, signer: EventSi
       await silClient.publish(event);
 
       res.status(201).json({ sessionId, state: "STARTING" });
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(500).json({ error: err.message });
     }
   });
@@ -63,7 +62,7 @@ export function createSessionController(silClient: SILPublicAPI, signer: EventSi
       await silClient.publish(event);
 
       res.status(200).json({ sessionId, state: "RUNNING" });
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(500).json({ error: err.message });
     }
   });

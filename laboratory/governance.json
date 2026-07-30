@@ -1,0 +1,36 @@
+{
+  "governanceVersion": "1.0",
+  "profiles": {
+    "A": {
+      "name": "Audit A - Structural",
+      "description": "Validation structurelle et cryptographique uniquement. Aucun rejeu dynamique.",
+      "replays": []
+    },
+    "B": {
+      "name": "Audit B - Deterministic Replay",
+      "description": "Rejeu des composants strictement déterministes.",
+      "replays": ["pbt", "fuzzing", "chaos"]
+    },
+    "C": {
+      "name": "Audit C - Full Qualification",
+      "description": "Rejeu complet de la chaîne, y compris recompilation.",
+      "replays": ["compile", "unit", "mutation", "pbt", "fuzzing", "chaos"]
+    },
+    "Q1.0": {
+      "id": "Q1.0",
+      "name": "Qualification Q1.0 - Official Certification",
+      "description": "Profil figé pour la certification officielle V1.0. Ne doit jamais être modifié. Toute évolution nécessite un nouveau profil (Q1.1, Q2.0, etc.).",
+      "schemaVersion": "1.0",
+      "governanceVersion": "1.0",
+      "immutable": true,
+      "replays": ["compile", "unit", "mutation", "pbt", "fuzzing", "chaos"],
+      "requirements": {
+        "environmentStrictMatch": true,
+        "seedReplay": true,
+        "commitLocked": true,
+        "sourceDateEpochRequired": true
+      }
+    }
+  },
+  "defaultProfile": "B"
+}

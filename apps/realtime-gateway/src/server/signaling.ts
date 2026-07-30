@@ -5,7 +5,7 @@ import { SessionManager } from "../sessions/manager.js";
 import { logger } from "../telemetry/logger.js";
 import { bus } from "../events/bus.js";
 
-function rawToString(raw: any): string {
+function rawToString(raw: unknown): string {
   if (typeof raw === "string") return raw;
   // ws RawData can be Buffer | ArrayBuffer | Buffer[] | string
   if (Buffer.isBuffer(raw)) return raw.toString("utf8");
@@ -16,21 +16,21 @@ function rawToString(raw: any): string {
 }
 
 export async function registerSignaling(app: FastifyInstance) {
-  app.get("/api/signal", { websocket: true }, (connection: any) => {
+  app.get("/api/signal", { websocket: true }, (connection: unknown) => {
     // @fastify/websocket: selon versions/config, `connection` peut être le socket
     // ou un wrapper { socket }. On supporte les deux.
     const socket = (connection?.socket ?? connection) as WebSocket;
 
-    if (!socket || typeof (socket as any).on !== "function") {
+    if (!socket || typeof (socket as unknown).on !== "function") {
       logger.error({ connection }, "Invalid websocket connection object");
       return;
     }
 
     let initialized = false;
-    let aiChunkListener: any;
-    let aiDoneListener: any;
-    let aiErrorListener: any;
-    let transcriptListener: any;
+    let aiChunkListener: unknown;
+    let aiDoneListener: unknown;
+    let aiErrorListener: unknown;
+    let transcriptListener: unknown;
 
     socket.on("error", (err) => {
       logger.error({ err }, "Signal socket error");
@@ -61,7 +61,7 @@ export async function registerSignaling(app: FastifyInstance) {
           SessionManager.instance.touch(sessionId);
 
           // Transcript forwarding
-          transcriptListener = (evt: any) => {
+          transcriptListener = (evt: unknown) => {
             if (evt.sessionId === sessionId) {
               socket.send(JSON.stringify({ type: "transcript", payload: evt }));
             }
@@ -69,7 +69,7 @@ export async function registerSignaling(app: FastifyInstance) {
           bus.on("transcript", transcriptListener);
 
           // AI chunk forwarding
-          aiChunkListener = (aiMsg: any) => {
+          aiChunkListener = (aiMsg: unknown) => {
             if (aiMsg.sessionId === sessionId) {
               socket.send(
                 JSON.stringify({ type: "ai_text", payload: aiMsg.payload }),
@@ -78,14 +78,14 @@ export async function registerSignaling(app: FastifyInstance) {
           };
           bus.on("ai_chunk", aiChunkListener);
 
-          aiDoneListener = (aiMsg: any) => {
+          aiDoneListener = (aiMsg: unknown) => {
             if (aiMsg.sessionId === sessionId) {
               socket.send(JSON.stringify({ type: "ai_done" }));
             }
           };
           bus.on("ai_done", aiDoneListener);
 
-          aiErrorListener = (aiMsg: any) => {
+          aiErrorListener = (aiMsg: unknown) => {
             if (aiMsg.sessionId === sessionId) {
               socket.send(
                 JSON.stringify({ type: "ai_error", payload: aiMsg.error }),
@@ -135,7 +135,7 @@ export async function registerSignaling(app: FastifyInstance) {
           default:
             logger.warn({ type }, "Unknown signaling message");
         }
-      } catch (err) {
+      } catch (error) {
         logger.error({ err }, "Signal socket message handler failed");
       }
     });

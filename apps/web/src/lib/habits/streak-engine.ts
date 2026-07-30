@@ -14,7 +14,7 @@ export async function updateStreak(userId: string): Promise<StreakInfo> {
   if (!profile)
     return { currentStreak: 0, lastActivityDate: "", isActive: false };
 
-  const dna = (profile.careerDNA as any) || {};
+  const dna = (profile.careerDNA  as any) || {};
   const lastDate = dna.lastActivityDate ? new Date(dna.lastActivityDate) : null;
   const today = new Date();
 

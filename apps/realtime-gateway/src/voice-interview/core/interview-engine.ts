@@ -38,10 +38,7 @@ const MAX_TURNS = 8;
  * Calcule l'étape suivante de l'entretien à partir de l'état courant et du
  * transcript de la réponse de l'utilisateur. Déterministe.
  */
-export function nextStep(
-  state: InterviewState,
-  transcript: string,
-): NextStepResult {
+export function nextStep(state: InterviewState, transcript: string, ): NextStepResult {
   const evaluation = evaluateTranscript(transcript, state.jobGap);
 
   // Détermine l'intention pédagogique.

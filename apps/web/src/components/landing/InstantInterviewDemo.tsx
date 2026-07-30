@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react"
+import { motion } from "framer-motion"
 import {
   ShieldAlert,
   ArrowRight,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function InstantInterviewDemo() {
-  const [active, setActive] = useState<null | "vague" | "structured">(null);
+  const [active, setActive] = useState<null | "vague" | "structured">(null)
 
   const scenarios = {
     vague: {
@@ -25,7 +25,7 @@ export function InstantInterviewDemo() {
       pressure: 45,
       status: "Clarté validée",
     },
-  };
+  }
 
   return (
     <section className="py-32 px-6 bg-[#050816]">
@@ -34,7 +34,7 @@ export function InstantInterviewDemo() {
           <h2 className="text-3xl lg:text-5xl font-black text-white">
             Vivez le choc psychologique.
           </h2>
-          <p className="text-slate-500 font-medium italic">
+          <p className="text-ink-500 font-medium italic">
             Victor (Recruteur High-Stakes) réagit à votre comportement.
           </p>
         </div>
@@ -43,7 +43,7 @@ export function InstantInterviewDemo() {
           <div className="p-8 md:p-12 space-y-10">
             {/* Question */}
             <div className="bg-white/5 border border-white/10 rounded-[2rem] p-10 text-center relative overflow-hidden">
-              <h3 className="text-2xl font-bold text-slate-300 italic">
+              <h3 className="text-2xl font-bold text-ink-300 italic">
                 "Parlez-moi d'un échec professionnel."
               </h3>
             </div>
@@ -52,13 +52,13 @@ export function InstantInterviewDemo() {
               <div className="grid md:grid-cols-2 gap-4">
                 <button
                   onClick={() => setActive("vague")}
-                  className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-rose-500/10 hover:border-rose-500 transition-all font-black uppercase text-xs tracking-widest text-slate-400 hover:text-rose-500"
+                  className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-brick-500/10 hover:border-brick-500 transition-all font-black uppercase text-xs tracking-widest text-ink-400 hover:text-brick-500"
                 >
                   Réponse Vague
                 </button>
                 <button
                   onClick={() => setActive("structured")}
-                  className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-emerald-500/10 hover:border-emerald-500 transition-all font-black uppercase text-xs tracking-widest text-slate-400 hover:text-emerald-500"
+                  className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.08] text-center hover:bg-forest-500/10 hover:border-forest-500 transition-all font-black uppercase text-xs tracking-widest text-ink-400 hover:text-forest-500"
                 >
                   Réponse Structurée
                 </button>
@@ -71,7 +71,7 @@ export function InstantInterviewDemo() {
               >
                 <div className="flex justify-end">
                   <div
-                    className={`p-6 rounded-[2rem] rounded-tr-none max-w-[85%] border ${active === "vague" ? "bg-slate-800 border-white/5 opacity-50" : "bg-[#7C3AED] border-white/20"}`}
+                    className={`p-6 rounded-[2rem] rounded-tr-none max-w-[85%] border ${active === "vague" ? "bg-ink-800 border-white/5 opacity-50" : "bg-[#7C3AED] border-white/20"}`}
                   >
                     <p className="text-sm font-bold text-white italic">
                       "{scenarios[active].user}"
@@ -79,11 +79,11 @@ export function InstantInterviewDemo() {
                   </div>
                 </div>
                 <div className="flex gap-5 items-start">
-                  <div className="w-12 h-12 rounded-2xl bg-rose-600 flex items-center justify-center text-white">
+                  <div className="w-12 h-12 rounded-2xl bg-brick-600 flex items-center justify-center text-white">
                     <ShieldAlert className="w-6 h-6" />
                   </div>
                   <div className="bg-white/[0.03] border border-white/[0.05] p-7 rounded-[2rem] rounded-tl-none max-w-[85%]">
-                    <p className="text-sm font-black text-slate-300 leading-relaxed italic">
+                    <p className="text-sm font-black text-ink-300 leading-relaxed italic">
                       "{scenarios[active].ai}"
                     </p>
                   </div>
@@ -97,20 +97,19 @@ export function InstantInterviewDemo() {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${scenarios[active].pressure}%` }}
-                        className={`h-full ${active === "vague" ? "bg-rose-500" : "bg-emerald-500"}`}
+                        className={`h-full ${active === "vague" ? "bg-brick-500" : "bg-forest-500"}`}
                       />
                     </div>
                   </div>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="h-16 px-10 rounded-2xl bg-white text-slate-950 hover:bg-slate-200 font-black"
-                  >
-                    <Link href="/onboarding">
+                  <Link href="/onboarding">
+                    <Button
+                      size="lg"
+                      className="h-16 px-10 rounded-2xl bg-white text-ink-950 hover:bg-ivoire-200 font-black"
+                    >
                       Démarrer le Test Complet{" "}
                       <ArrowRight className="ml-2 w-5" />
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 </div>
               </motion.div>
             )}
@@ -118,5 +117,5 @@ export function InstantInterviewDemo() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -57,7 +57,7 @@ async function main() {
   const runId = uuidv4();
   const timestamp = Date.now();
   const modeList: Mode[] = ["normal", "guard", "replay", "stress", "circuit", "pressure"];
-  const modesResult: Record<Mode, ModeResult> = {} as any;
+  const modesResult: Record<Mode, ModeResult> = {} as unknown;
   let aggregatedMetricsRaw = "";
   let aggregatedMetricsParsed: Record<string, number> = {};
 
@@ -68,11 +68,11 @@ async function main() {
       stdio: ["ignore", "pipe", "pipe"],
     });
     const stdout = proc.stdout?.toString().trim() ?? "";
-    const exitCode = proc.status ?? (proc.error as any)?.code ?? 1;
-    let parsed: any = {};
+    const exitCode = proc.status ?? (proc.error as unknown)?.code ?? 1;
+    let parsed: unknown = {};
     try {
       parsed = JSON.parse(stdout);
-    } catch (e) {
+    } catch (error) {
       console.error(`Failed to parse harness output for mode ${mode}:`, e);
     }
     modesResult[mode] = {
@@ -90,7 +90,7 @@ async function main() {
       aggregatedMetricsRaw = raw;
       // Merge parsed metrics (later runs may overwrite earlier counters, which is fine for cumulative view)
       aggregatedMetricsParsed = { ...aggregatedMetricsParsed, ...parsedMetrics };
-    } catch (e) {
+    } catch (error) {
       console.warn(`Unable to fetch metrics after mode ${mode}:`, e);
     }
   }

@@ -1,63 +1,53 @@
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { forwardRef } from 'react'
+import type { ButtonHTMLAttributes } from 'react'
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'premium' | 'link' | 'danger'
+type ButtonSize = 'sm' | 'md' | 'lg'
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant
+  size?: ButtonSize
 }
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
-  {
-    variants: {
-      variant: {
-        default:
-          "bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-900/10",
-        primary:
-          "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/25",
-        destructive:
-          "bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-500/25",
-        outline:
-          "border-2 border-slate-200 bg-transparent hover:bg-slate-50 hover:border-slate-300 text-slate-700",
-        secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
-        ghost: "hover:bg-slate-100 text-slate-600 hover:text-slate-900",
-        link: "text-blue-600 underline-offset-4 hover:underline px-0",
-      },
-      size: {
-        default: "h-12 px-6 py-2",
-        sm: "h-9 rounded-xl px-4",
-        lg: "h-14 rounded-[1.25rem] px-10 text-base font-black",
-        icon: "h-12 w-12",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  },
-);
-
-export interface ButtonProps
-  extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
+const variantStyles: Record<ButtonVariant, string> = {
+  primary:
+    'bg-ink-900 text-ivoire-50 hover:bg-ink-800 shadow-premium hover:shadow-premium-lg',
+  secondary:
+    'bg-white text-ink-900 border border-ivoire-300 hover:border-ink-900',
+  ghost:
+    'bg-transparent text-ink-600 hover:text-ink-900 hover:bg-ivoire-100',
+  premium:
+    'bg-bronze-600 text-white hover:bg-bronze-700 shadow-premium hover:shadow-premium-lg',
+  link:
+    'bg-transparent text-ink-900 underline-offset-4 hover:underline p-0 h-auto',
+  danger:
+    'bg-brick-600 text-white hover:bg-brick-700 shadow-premium hover:shadow-premium-lg',
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+const sizeStyles: Record<ButtonSize, string> = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-sm',
+  lg: 'px-8 py-4 text-base',
+}
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant = 'primary', size = 'md', className = '', ...props }, ref) => {
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref as any}
-        {...props as any}
+      <button
+        ref={ref}
+        className={`
+          inline-flex items-center justify-center gap-2
+          rounded-full font-medium tracking-wide
+          transition-all duration-300 ease-premium
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-ink-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
+          disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none
+          ${variantStyles[variant]}
+          ${variant !== 'link' ? sizeStyles[size] : ''}
+          ${className}
+        `}
+        {...props}
       />
-    );
-  },
-);
-Button.displayName = "Button";
-
-export { Button, buttonVariants };
+    )
+  }
+)
+Button.displayName = 'Button'

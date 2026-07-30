@@ -10,11 +10,7 @@ import {
   HomeIntelligenceConfig,
   defaultHomeIntelligenceConfig,
 } from "./interfaces/IHomeIntelligence";
-import { adaptiveIntelligenceOrchestrator } from "../adaptive-intelligence/AdaptiveIntelligenceOrchestrator";
 import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
-import { decisionPolicyEngine } from "../adaptive-intelligence/DecisionPolicyEngine";
-import { strategyEngine } from "../adaptive-intelligence/StrategyEngine";
-import { planningEngine } from "../adaptive-intelligence/PlanningEngine";
 
 // ============================================================================
 // HOME INTELLIGENCE SERVICE CLASS
@@ -473,7 +469,7 @@ export class HomeIntelligenceService {
       return {
         text: cardWithCTA.cta.text,
         action: cardWithCTA.cta.action,
-        recommendedDuration: cardWithCTA.metadata.estimatedDuration,
+        recommendedDuration: cardWithCTA.metadata.estimatedDuration as any,
       };
     }
 

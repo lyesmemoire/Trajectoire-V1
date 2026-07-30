@@ -75,7 +75,7 @@ describe("Phase 2-F: Cross-Tenant Replay Isolation", () => {
     // This simulates a broken storage adapter or corrupted DB, testing RecoveryManager's defense-in-depth.
     checkpointRepo.load = async (tId: string, sId: string) => {
       // Intentionally return Tenant A's checkpoint
-      return (checkpointRepo as any).adapter.loadRecord("checkpoints", "tenant-A", sId);
+      return (checkpointRepo as unknown as { adapter: { loadRecord: (collection: string, tenantId: string, sId: string) => Promise<unknown> } }).adapter.loadRecord("checkpoints", "tenant-A", sId);
     };
 
     await expect(recoveryManager.recover("tenant-B", sessionId)).rejects.toThrow("RECOVERY_FAILED: Tenant mismatch");

@@ -1,0 +1,176 @@
+{
+  "help": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "--help"
+    ],
+    "exitCode": 0,
+    "duration": 3467,
+    "stdout": "Usage: blueprint [options] [command]\n\nBlueprint V3 Enterprise - Cognitive Platform CLI\n\nOptions:\n  -V, --version        output the version number\n  -v, --verbose        Enable verbose output\n  -q, --quiet          Suppress output\n  --json               Output in JSON format\n  -c, --config <path>  Path to configuration file\n  -h, --help           display help for command\n\nCommands:\n  init [options]       Initialize a new Blueprint project\n  compile [options]    Compile Blueprint DSL to bytecode\n  build [options]      Build a Blueprint package\n  run [options]        Run a Blueprint program\n  graph [options]      Generate dependency/knowledge/runtime graphs\n  trace [options]      Enable runtime tracing\n  debug [options]      Attach debugger to running program\n  benchmark [options]  Run all benchmarks\n  doctor [options]     Check system health and configuration\n  completion [shell]   Generate shell completion script\n  help [command]       display help for command",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:22.249Z"
+  },
+  "version": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "--version"
+    ],
+    "exitCode": 0,
+    "duration": 4250,
+    "stdout": "1.0.0",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:25.722Z"
+  },
+  "doctor": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "doctor"
+    ],
+    "exitCode": 0,
+    "duration": 3503,
+    "stdout": "[20:55:33] \u001b[32mINFO\u001b[39m: \u001b[36mRunning health checks...\u001b[39m\n[20:55:33] \u001b[32mINFO\u001b[39m: \u001b[36mHealth checks completed: 6 healthy, 7 warning, 0 critical\u001b[39m\n[20:55:33] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Doctor completed in 2ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:29.978Z"
+  },
+  "init": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "init",
+      "--name",
+      "evidence-test",
+      "--directory",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248",
+      "--force"
+    ],
+    "exitCode": 0,
+    "duration": 3381,
+    "stdout": "[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36mInitializing Blueprint project: evidence-test\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36mTarget directory: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36mCreating directory structure...\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[17%] Created directory: src\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[33%] Created directory: src/contracts\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[50%] Created directory: src/modules\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[67%] Created directory: tests\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[83%] Created directory: artifacts\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m[100%] Created directory: config\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36mCreating configuration files...\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Created blueprint.config.json\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Created sample contract\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Created README.md\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Project initialized successfully in 12ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m\nNext steps:\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m  cd evidence-test\u001b[39m\n[20:55:36] \u001b[32mINFO\u001b[39m: \u001b[36m  blueprint compile src/contracts/SampleContract.bp\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:33.485Z"
+  },
+  "compile": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "compile",
+      "--input",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\src\\contracts\\SampleContract.bp",
+      "--output",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\artifacts\\SampleContract.bpp"
+    ],
+    "exitCode": 0,
+    "duration": 2716,
+    "stdout": "[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36mCompiling: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\src\\contracts\\SampleContract.bp\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Read 237 bytes from C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\src\\contracts\\SampleContract.bp\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36mRunning compilation pipeline...\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[9%] Lexing\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[18%] Parsing\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[27%] Semantic Analysis\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[36%] Type Checking\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[45%] Constraint Solving\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[55%] Symbol Table Building\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[64%] Reference Resolution\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[73%] Optimization\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[82%] IR Generation\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[91%] Bytecode Generation\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m[100%] Bytecode Verification\u001b[39m\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Output written to: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\artifacts\\SampleContract.bpp\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:39] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Compilation completed in 198ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:36.882Z"
+  },
+  "graph": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "graph",
+      "--type",
+      "dependency",
+      "--format",
+      "json",
+      "--output",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\graph.json"
+    ],
+    "exitCode": 0,
+    "duration": 3291,
+    "stdout": "[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36mGenerating dependency graph...\u001b[39m\n[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36mFormat: json\u001b[39m\n[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36mAnalyzing dependencies...\u001b[39m\n[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36mBuilding graph structure...\u001b[39m\n[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Graph generated in 137ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:42] \u001b[32mINFO\u001b[39m: \u001b[36mOutput: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\graph.json\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:39.607Z"
+  },
+  "trace": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "trace",
+      "--duration",
+      "50",
+      "--output",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\trace.json"
+    ],
+    "exitCode": 0,
+    "duration": 4770,
+    "stdout": "[20:55:45] \u001b[32mINFO\u001b[39m: \u001b[36mStarting runtime tracing...\u001b[39m\n[20:55:45] \u001b[32mINFO\u001b[39m: \u001b[36mDuration: 50ms\u001b[39m\n[20:55:45] \u001b[32mINFO\u001b[39m: \u001b[36mAttaching to runtime...\u001b[39m\n[20:55:45] \u001b[32mINFO\u001b[39m: \u001b[36mCollecting events...\u001b[39m\n[20:55:46] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Trace completed in 1130ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:46] \u001b[32mINFO\u001b[39m: \u001b[36mEvents captured: 10\u001b[39m\n[20:55:46] \u001b[32mINFO\u001b[39m: \u001b[36mOutput: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\trace.json\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:42.914Z"
+  },
+  "debug": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "debug",
+      "--port",
+      "9230"
+    ],
+    "exitCode": 0,
+    "duration": 2919,
+    "stdout": "[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mStarting debugger...\u001b[39m\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mHost: localhost\u001b[39m\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mPort: 9230\u001b[39m\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mStarting debug session...\u001b[39m\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Debug session started\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Debugger ready in 108ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mDebug server listening on localhost:9230\u001b[39m\n[20:55:50] \u001b[32mINFO\u001b[39m: \u001b[36mPress Ctrl+C to stop debugging\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:47.701Z"
+  },
+  "run": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "run",
+      "--package",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\artifacts\\SampleContract.bpp"
+    ],
+    "exitCode": 0,
+    "duration": 2950,
+    "stdout": "[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mRunning package: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\artifacts\\SampleContract.bpp\u001b[39m\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mEntry point: default\u001b[39m\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Loaded package (396 bytes)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mInitializing runtime...\u001b[39m\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mLoading bytecode...\u001b[39m\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mExecuting program...\u001b[39m\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Execution completed in 210ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:53] \u001b[32mINFO\u001b[39m: \u001b[36mExit code: 0\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:50.624Z"
+  },
+  "build": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "build",
+      "--input",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248",
+      "--output",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\dist"
+    ],
+    "exitCode": 0,
+    "duration": 2784,
+    "stdout": "[20:55:55] \u001b[32mINFO\u001b[39m: \u001b[36mBuilding from: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\u001b[39m\n[20:55:55] \u001b[32mINFO\u001b[39m: \u001b[36mOutput directory: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\dist\u001b[39m\n[20:55:55] \u001b[32mINFO\u001b[39m: \u001b[36mScanning for Blueprint files...\u001b[39m\n[20:55:55] \u001b[33mWARN\u001b[39m: \u001b[36mNo Blueprint files found\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:53.577Z"
+  },
+  "benchmark": {
+    "command": "npx",
+    "args": [
+      "tsx",
+      "bin/blueprint",
+      "benchmark",
+      "--iterations",
+      "5",
+      "--output",
+      "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\benchmark.json"
+    ],
+    "exitCode": 0,
+    "duration": 3726,
+    "stdout": "[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning benchmarks...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mIterations: 5\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mWarmup: 10\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning Compiler benchmark...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Compiler: 82ms (60.98 ops/sec)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m  Statistics: min=15.00ms, max=17.00ms, mean=16.40ms, p95=17.00ms\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning Runtime benchmark...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Runtime: 83ms (60.24 ops/sec)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m  Statistics: min=15.00ms, max=17.00ms, mean=16.60ms, p95=17.00ms\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning Memory benchmark...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Memory: 83ms (60.24 ops/sec)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m  Statistics: min=15.00ms, max=20.00ms, mean=16.60ms, p95=20.00ms\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning Scheduler benchmark...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Scheduler: 83ms (60.24 ops/sec)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m  Statistics: min=16.00ms, max=17.00ms, mean=16.60ms, p95=17.00ms\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mRunning Providers benchmark...\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Providers: 82ms (60.98 ops/sec)\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m  Statistics: min=15.00ms, max=17.00ms, mean=16.40ms, p95=17.00ms\u001b[39m\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Benchmarks completed in 813ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:55:59] \u001b[32mINFO\u001b[39m: \u001b[36mReport: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785012922248\\benchmark.json\u001b[39m",
+    "stderr": "",
+    "timestamp": "2026-07-25T20:55:56.367Z"
+  }
+}

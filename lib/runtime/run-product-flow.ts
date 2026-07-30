@@ -32,7 +32,7 @@ export interface RunProductFlowOptions {
 }
 
 /** Nettoie/normalise une entrée texte (retire les caractères NUL). */
-function sanitizeText(text: unknown): string {
+function sanitizeText(text: _unknown): string {
   if (typeof text !== "string") return "";
   return text.split("\u0000").join("").trim();
 }
@@ -42,10 +42,7 @@ function sanitizeText(text: unknown): string {
  * Importé dynamiquement pour ne pas coupler le flux de base à un provider.
  * Toute erreur (réseau, clé absente, timeout) est avalée → fallback déterministe.
  */
-async function tryEnrich(
-  cvText: string,
-  jobText: string,
-): Promise<LlmFeedback | null> {
+async function tryEnrich(cvText: string, jobText: string, ): Promise<LlmFeedback | null> {
   try {
     const mod = await import("@/lib/local-ats");
     if (typeof mod.generateFeedback !== "function") return null;
@@ -57,10 +54,7 @@ async function tryEnrich(
   }
 }
 
-export async function runProductFlow(
-  input: ProductInput,
-  options: RunProductFlowOptions = {},
-): Promise<ProductOutput> {
+export async function runProductFlow(input: ProductInput, options: RunProductFlowOptions = {}, ): Promise<ProductOutput> {
   const enableEnrichment = options.enableEnrichment ?? true;
 
   // 1 & 2 — parse / normalisation des entrées.

@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { IdentityCardData } from "@/lib/share/identity-card";
-import { Sparkles, Zap, Shield, Share2 } from "lucide-react";
+import { motion } from "framer-motion"
+import { IdentityCardData } from '@/lib/share/identity-card'
+import { Sparkles, Zap, Shield, Share2 } from "lucide-react"
 
-export function CareerDNACard({ data }: { data: IdentityCardData }) {
+export function CareerDNACard({ data }: { data: any }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative w-full max-w-[400px] aspect-[4/5] bg-slate-950 rounded-[3rem] p-10 overflow-hidden shadow-2xl border border-white/10"
+      className="group relative w-full max-w-[400px] aspect-[4/5] bg-ink-900 rounded-[3rem] p-10 overflow-hidden shadow-premium-lg border border-ivoire-200/20"
     >
       {/* Background Effects */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-bronze-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-ink-600/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
 
       {/* Grid Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -41,15 +41,15 @@ export function CareerDNACard({ data }: { data: IdentityCardData }) {
         {/* Header */}
         <div className="flex justify-between items-start">
           <div className="space-y-1">
-            <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.2em]">
+            <p className="text-[10px] font-black text-bronze-400 uppercase tracking-[0.2em]">
               Career DNA
             </p>
-            <p className="text-[10px] font-bold text-slate-500">
+            <p className="text-[10px] font-bold text-ink-500">
               studioentretien.fr
             </p>
           </div>
-          <div className="w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-blue-400" />
+          <div className="w-10 h-10 bg-ivoire-50/10 rounded-xl border border-ivoire-200/20 flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-bronze-400" />
           </div>
         </div>
 
@@ -58,42 +58,42 @@ export function CareerDNACard({ data }: { data: IdentityCardData }) {
           <motion.div
             animate={{ scale: [1, 1.05, 1], rotate: [0, 2, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="w-24 h-24 bg-white/5 rounded-[2.5rem] border border-white/10 flex items-center justify-center text-5xl shadow-inner backdrop-blur-md"
+            className="w-24 h-24 bg-ivoire-50/10 rounded-[2.5rem] border border-ivoire-200/20 flex items-center justify-center text-5xl shadow-inner backdrop-blur-md"
           >
             {data.icon}
           </motion.div>
 
           <div className="space-y-2">
-            <h3 className="text-3xl font-black text-white leading-tight tracking-tight">
+            <h3 className="text-3xl font-serif font-black text-ivoire-50 leading-tight tracking-tight">
               {data.label}
             </h3>
-            <p className="text-sm font-bold text-blue-400/80 italic">
+            <p className="text-sm font-bold text-bronze-400/80 italic">
               "{data.viralTitle}"
             </p>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-2">
-            <span className="text-xs font-black text-white uppercase tracking-widest">
+          <div className="bg-ivoire-50/10 border border-ivoire-200/20 rounded-2xl px-6 py-2">
+            <span className="text-xs font-black text-ivoire-50 uppercase tracking-widest">
               Top {data.percentile}% Mondial
             </span>
           </div>
         </div>
 
         {/* Stats Footer */}
-        <div className="pt-8 border-t border-white/10 grid grid-cols-2 gap-4">
+        <div className="pt-8 border-t border-ivoire-200/20 grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <p className="text-[8px] font-black text-slate-500 uppercase tracking-wider flex items-center gap-1">
-              <Shield className="w-2.5 h-2.5 text-blue-500" /> Résilience
+            <p className="text-[8px] font-black text-ink-500 uppercase tracking-wider flex items-center gap-1">
+              <Shield className="w-2.5 h-2.5 text-forest-500" /> Résilience
             </p>
-            <p className="text-xl font-black text-white">
+            <p className="text-xl font-serif font-black text-ivoire-50">
               {data.stats.stressResilience}%
             </p>
           </div>
           <div className="space-y-1">
-            <p className="text-[8px] font-black text-slate-500 uppercase tracking-wider flex items-center gap-1">
-              <Zap className="w-2.5 h-2.5 text-amber-500" /> Interruptions
+            <p className="text-[8px] font-black text-ink-500 uppercase tracking-wider flex items-center gap-1">
+              <Zap className="w-2.5 h-2.5 text-terracotta-500" /> Interruptions
             </p>
-            <p className="text-xl font-black text-white">
+            <p className="text-xl font-serif font-black text-ivoire-50">
               {data.stats.interruptionsHandled}
             </p>
           </div>
@@ -101,15 +101,15 @@ export function CareerDNACard({ data }: { data: IdentityCardData }) {
       </div>
 
       {/* Share UI Overlay (Hover only) */}
-      <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-6 p-10">
-        <Share2 className="w-12 h-12 text-blue-500" />
-        <p className="text-center text-white font-black text-lg">
+      <div className="absolute inset-0 bg-ink-900/80 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center space-y-6 p-10">
+        <Share2 className="w-12 h-12 text-bronze-500" />
+        <p className="text-center text-ivoire-50 font-serif font-black text-lg">
           Partagez votre identité sur LinkedIn
         </p>
-        <button className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black transition-transform active:scale-95">
+        <button className="w-full py-4 bg-bronze-600 hover:bg-bronze-700 text-ivoire-50 rounded-2xl font-black transition-transform active:scale-95">
           Copier la carte
         </button>
       </div>
     </motion.div>
-  );
+  )
 }

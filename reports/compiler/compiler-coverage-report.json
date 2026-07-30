@@ -1,0 +1,23 @@
+{
+    "component":  "Compiler",
+    "enterprise":  true,
+    "timestamp":  "2026-07-26T11:03:50.5758420+01:00",
+    "tests":  {
+                  "diagnostics":  45,
+                  "bytecode":  19,
+                  "parser":  76,
+                  "symbol_table":  12,
+                  "integration":  3,
+                  "total":  264,
+                  "ir":  15,
+                  "lexer":  94
+              },
+    "phase":  "Phase 1",
+    "coverage":  {
+                     "functions":  100,
+                     "lines":  99.47,
+                     "branches":  100,
+                     "statements":  99.47
+                 },
+    "status":  "PASS"
+}

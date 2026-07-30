@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-07-24T17:53:23.400Z",
+  "commands": [],
+  "cycles": 0,
+  "duplicates": 0,
+  "canonicalContracts": [
+    {
+      "name": "billing.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\billing.contract.ts",
+      "valid": true
+    },
+    {
+      "name": "decision-graph.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\decision-graph.contract.ts",
+      "valid": true
+    },
+    {
+      "name": "fraud-kernel.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\fraud-kernel.contract.ts",
+      "valid": true
+    },
+    {
+      "name": "interview.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\interview.contract.ts",
+      "valid": true
+    },
+    {
+      "name": "orchestration.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\orchestration.contract.ts",
+      "valid": true
+    },
+    {
+      "name": "user.contract.ts",
+      "path": "c:\\Trajectoire\\domain\\user.contract.ts",
+      "valid": true
+    }
+  ],
+  "errors": [],
+  "success": true,
+  "exitCode": 0,
+  "totalNodes": 0,
+  "totalEdges": 0,
+  "maxDepth": 0
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "signatureAlgorithm": "Ed25519",
+  "timestamp": "2026-07-29T12:02:35.173Z",
+  "hashSigned": "473b7dda3ddb06840d4edf6155a6d80ec9bb797140d5e1236d1b63e26519a9ad",
+  "signature": "Xb54rMjW+ul/qm8IIITiTF55pFYd7tdqIuPHZcbMxgJY5Jyeq7B4U1ccKtLlM9zypMok2y1/Q0yHTozd/xKdAQ==",
+  "fileSigned": "sbom-cyclonedx.json"
+}

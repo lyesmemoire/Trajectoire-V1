@@ -1,0 +1,146 @@
+{
+  "Observation": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.456Z"
+  },
+  "Perception": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.467Z"
+  },
+  "Evidence": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.476Z"
+  },
+  "Confidence": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.487Z"
+  },
+  "Knowledge": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.495Z"
+  },
+  "Belief": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.506Z"
+  },
+  "Hypothesis": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.515Z"
+  },
+  "Reasoning": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.524Z"
+  },
+  "Decision": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.533Z"
+  },
+  "Plan": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.543Z"
+  },
+  "Memory": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.552Z"
+  },
+  "Learning": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.563Z"
+  },
+  "Adaptation": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.571Z"
+  },
+  "Node": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.577Z"
+  },
+  "Edge": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.584Z"
+  },
+  "Context": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.591Z"
+  },
+  "Session": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.597Z"
+  },
+  "Conversation": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.603Z"
+  },
+  "Question": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.610Z"
+  },
+  "Answer": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.616Z"
+  },
+  "Strategy": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.622Z"
+  },
+  "Capability": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.630Z"
+  },
+  "Policy": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.637Z"
+  },
+  "Command": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.644Z"
+  },
+  "Query": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.650Z"
+  },
+  "FeatureFlag": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.657Z"
+  },
+  "Artifact": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.663Z"
+  },
+  "Execution": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.670Z"
+  },
+  "Budget": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.677Z"
+  },
+  "Version": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.683Z"
+  },
+  "Package": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.690Z"
+  },
+  "EvidenceGraph": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.695Z"
+  },
+  "ConfidenceGraph": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.700Z"
+  },
+  "KnowledgeGraph": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.705Z"
+  },
+  "DecisionGraph": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.712Z"
+  },
+  "Traceability": {
+    "checksum": "5a48f0adcd54c8f8113578324627eeacb758bed26a51395f557396545c4f61ca",
+    "timestamp": "2026-07-24T09:41:14.721Z"
+  }
+}

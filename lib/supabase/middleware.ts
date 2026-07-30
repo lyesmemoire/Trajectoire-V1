@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 import { createServerClient } from "@supabase/ssr";
 
 /**
@@ -18,7 +18,7 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
+        setAll(cookiesToSet: { name: string; value: string; options: unknown }[]) {
           cookiesToSet.forEach(({ name, value, options }) =>
             request.cookies.set(name, value),
           );
@@ -96,7 +96,7 @@ export async function updateSession(request: NextRequest) {
 
   // Protection Role Admin strict
   if (user && pathname.startsWith("/admin")) {
-    const { data: profile } = await supabase
+    const { _data: profile } = await supabase
       .from("profiles")
       .select("role")
       .eq("id", user.id)

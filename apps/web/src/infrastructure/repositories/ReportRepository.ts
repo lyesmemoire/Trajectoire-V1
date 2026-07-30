@@ -1,3 +1,4 @@
+
 /**
  * ReportRepository
  * Repository for reports table
@@ -65,7 +66,7 @@ export class ReportRepository implements IRepository<Report> {
       );
     }
 
-    return data as unknown as Report;
+    return data  as any as Report;
   }
 
   /**
@@ -101,7 +102,7 @@ export class ReportRepository implements IRepository<Report> {
       );
     }
 
-    return (data as unknown as Report[]) || [];
+    return (data  as any as Report[]) || [];
   }
 
   /**

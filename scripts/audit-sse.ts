@@ -6,16 +6,16 @@ const CONNECTIONS = Number(process.env.SSE_CONNECTIONS) || 10;
 const ABORT_PROBABILITY = Number(process.env.ABORT_PROBABILITY) || 0.3;
 const INTERVAL_MS = 5000;
 
-function logMetrics(stage: string) {
+function logMetrics(stage: _string) {
   const mem = process.memoryUsage();
-  const handles = (process as any)._getActiveHandles?.().length ?? "n/a";
-  const requests = (process as any)._getActiveRequests?.().length ?? "n/a";
+  const handles = (process as unknown)._getActiveHandles?.().length ?? "n/a";
+  const requests = (process as unknown)._getActiveRequests?.().length ?? "n/a";
   console.log(
     `[${new Date().toISOString()}] ${stage} | rss=${(mem.rss / 1e6).toFixed(2)}MB heapUsed=${(mem.heapUsed / 1e6).toFixed(2)}MB handles=${handles} requests=${requests}`,
   );
 }
 
-async function startConnection(id: number) {
+async function startConnection(_id: number) {
   const controller = new AbortController();
   const timeout = setTimeout(
     () => controller.abort(),
@@ -32,7 +32,7 @@ async function startConnection(id: number) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const chunk = Buffer.from(value).toString();
     }
-  } catch (e) {
+  } catch {
     // Expected aborts
   } finally {
     clearTimeout(timeout);

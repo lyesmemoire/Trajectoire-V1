@@ -31,12 +31,12 @@ describe("Phase 2-I: Query Layer Consistency", () => {
     // Test getLastEvent
     const lastEvent = await queryService.getLastEvent(tenantId, sessionId);
     expect(lastEvent).toBeDefined();
-    expect((lastEvent!.payload as any).i).toBe(9);
+    expect((lastEvent!.payload as { i: number }).i).toBe(9);
 
     // Test getEventRange
     const range = await queryService.getEventRange(tenantId, sessionId, 2, 5);
     expect(range.length).toBe(4); // from index 2 to 5 inclusive
-    expect((range[0].payload as any).i).toBe(2);
-    expect((range[3].payload as any).i).toBe(5);
+    expect((range[0].payload as { i: number }).i).toBe(2);
+    expect((range[3].payload as { i: number }).i).toBe(5);
   });
 });

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface TranscriptState {
   transcripts: Array<{ id: number; text: string; isFinal: boolean }>;
-  addTranscript: (msg: any) => void;
+  addTranscript: (msg: unknown) => void;
   clear: () => void;
 }
 

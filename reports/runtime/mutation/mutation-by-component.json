@@ -1,0 +1,11 @@
+{
+  "execution-pipeline": {
+    "component": "execution-pipeline",
+    "totalMutations": 10,
+    "killed": 2,
+    "survived": 0,
+    "invalid": 8,
+    "mutationScore": 100,
+    "certification": "Enterprise Gold"
+  }
+}

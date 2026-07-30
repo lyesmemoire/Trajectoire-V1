@@ -5,10 +5,6 @@
  */
 
 import {
-  Hypothesis,
-  Evidence,
-  Contradiction,
-  BiasEvent,
   Candidate,
   Skill,
   Turn,

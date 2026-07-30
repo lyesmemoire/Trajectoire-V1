@@ -11,8 +11,8 @@ export interface ExtractionResult {
 export async function extractCVText(buffer: Buffer): Promise<ExtractionResult> {
   try {
     // Dynamic import with require fallback
-    const pdf = require("pdf-parse");
-    const data = await pdf(buffer);
+    const pdf = await import('pdf-parse');
+    const data = await pdf.default(buffer);
     const text = data.text;
 
     // Détection de mauvaise extraction (texte trop court ou ratio symboles élevé)

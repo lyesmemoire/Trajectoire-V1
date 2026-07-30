@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 
 /**
  * Retrieve the existing request-id from the incoming request headers or generate a new one.
@@ -18,9 +18,6 @@ export function getOrCreateRequestId(request: NextRequest): string {
  * Attach the request-id to a NextResponse so downstream services (Sentry, audit logs,
  * AI providers) can access it via the `x-request-id` header.
  */
-export function attachRequestId(
-  response: NextResponse,
-  requestId: string,
-): void {
+export function attachRequestId(response: NextResponse, requestId: string, ): void {
   response.headers.set("x-request-id", requestId);
 }

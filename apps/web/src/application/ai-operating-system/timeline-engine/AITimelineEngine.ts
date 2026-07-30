@@ -1,3 +1,4 @@
+;
 /**
  * AI Timeline Engine
  * Complete timeline of all AI decisions and evolutions

@@ -1,7 +1,7 @@
 export interface RawSignal {
   type: string;
   value: number;
-  metadata?: any;
+  metadata?: unknown;
 }
 
 export interface NormalizedSignal {
@@ -14,7 +14,7 @@ export interface NormalizedSignal {
 /**
  * Normalizes and filters incoming behavioral signals.
  */
-export function normalizeSignal(raw: RawSignal): NormalizedSignal {
+export function normalizeSignal(raw: _RawSignal): NormalizedSignal {
   // Logic to clamp values and map to standard keys
   const score = Math.max(0, Math.min(100, raw.value)) / 100;
 
@@ -29,7 +29,7 @@ export function normalizeSignal(raw: RawSignal): NormalizedSignal {
 /**
  * Aggregates a list of signals into a compact summary to save DB space.
  */
-export function compressSignals(signals: NormalizedSignal[]): any {
+export function compressSignals(signals: NormalizedSignal[]): unknown {
   // Simple averaging for the demo
   const summary: Record<string, number> = {};
   signals.forEach((s) => {

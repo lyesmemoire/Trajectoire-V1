@@ -14,7 +14,7 @@ export interface Job {
   keywords: string[];
 }
 
-export const jobs: Job[] = [
+export const jobs: any[] = [
   // Engineering
   {
     id: "frontend-developer",
@@ -233,7 +233,7 @@ export const jobs: Job[] = [
   },
 ];
 
-export function getJobBySlug(slug: string): Job | undefined {
+export function getJobBySlug(slug: string): any | undefined {
   return jobs.find((job) => job.id === slug);
 }
 

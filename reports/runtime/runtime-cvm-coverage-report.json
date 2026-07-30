@@ -1,0 +1,51 @@
+{
+  "module": "Runtime CVM",
+  "timestamp": "2026-07-26T23:03:00Z",
+  "coverage": {
+    "statements": 100.0,
+    "branches": 100.0,
+    "functions": 100.0,
+    "lines": 100.0
+  },
+  "files": [
+    {
+      "name": "execution-context.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    }
+  ],
+  "tests": {
+    "total": 47,
+    "passed": 47,
+    "failed": 0,
+    "skipped": 0
+  },
+  "certification": {
+    "status": "PASSED",
+    "requirements": {
+      "branchCoverage": {
+        "required": 97.0,
+        "achieved": 100.0,
+        "passed": true
+      },
+      "functionCoverage": {
+        "required": 100.0,
+        "achieved": 100.0,
+        "passed": true
+      },
+      "statementCoverage": {
+        "required": 95.0,
+        "achieved": 100.0,
+        "passed": true
+      },
+      "lineCoverage": {
+        "required": 95.0,
+        "achieved": 100.0,
+        "passed": true
+      }
+    }
+  }
+}

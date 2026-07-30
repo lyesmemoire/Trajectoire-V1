@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "https://trajectoire.com/schema/publication/v1",
+  "metadata": {
+    "gitSha": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+    "version": "1.0.0",
+    "publishedAt": "2026-07-29T18:11:26.885Z"
+  },
+  "artifacts": [
+    {
+      "name": "audit-cve.dsse.json",
+      "digest": {
+        "sha256": "28f69eb088d8a2541adee355af4245c567da469e5cc4a0bc62f8716e7e87e551"
+      }
+    },
+    {
+      "name": "audit-cve.json",
+      "digest": {
+        "sha256": "65437eb48baa05b787106131bd9aaf04276317ded125352a991158ff0a70e126"
+      }
+    },
+    {
+      "name": "certification.json",
+      "digest": {
+        "sha256": "7406012f7cc3913c6b12fc53365a9b7b7ceabb6d89d5a9468667c4d9ff6f5ee3"
+      }
+    },
+    {
+      "name": "coverage-report.json",
+      "digest": {
+        "sha256": "3213f3f8e1c92368e4dd79d1afd72f47bd07414601aa6145f371dadce45560ee"
+      }
+    },
+    {
+      "name": "dependency-integrity.json",
+      "digest": {
+        "sha256": "8686f4cc162d4052debf7f7bd5521bf3608902f88bc8f9c315955d38ff6cba43"
+      }
+    },
+    {
+      "name": "licenses.json",
+      "digest": {
+        "sha256": "2c74815e3972e94067e5aacb7c6ccc4ac3e37069ba7e2b3d1c524e3f78874f58"
+      }
+    },
+    {
+      "name": "mutation-report.json",
+      "digest": {
+        "sha256": "b003ce0167e2f2af80705feff5f435767fbc1196a9882d4ae9c601d9f9f00660"
+      }
+    },
+    {
+      "name": "provenance.dsse.json",
+      "digest": {
+        "sha256": "4c43bbe0a05e4a362553beb2b775297b69a626c2c8e01b55a77aa2eb1fe3a8bd"
+      }
+    },
+    {
+      "name": "regression-report.json",
+      "digest": {
+        "sha256": "a1f3f63e5e181431f16afbd1e12e1690c3f22d2f2321cb44bc4997b32c14a0fd"
+      }
+    },
+    {
+      "name": "reproducible-build.json",
+      "digest": {
+        "sha256": "2d52301ede1262d69b4076b19da9b02003cc2de9f8cecab9fd5ac33129124b18"
+      }
+    },
+    {
+      "name": "root-cause-report.json",
+      "digest": {
+        "sha256": "481a84b7cfbfcef292cd64b42e0fa39d6b78e6825baeda27d6fed3af0d21ab93"
+      }
+    },
+    {
+      "name": "sbom-cyclonedx.dsse.json",
+      "digest": {
+        "sha256": "b7f79fc845e809a4ff56627edc933ebdcda03bfd5de67e0aafac563e6bd98f31"
+      }
+    },
+    {
+      "name": "sbom-cyclonedx.json",
+      "digest": {
+        "sha256": "956a85a3623b0722218740213e1a0f7082d9ab166c4c727b669d6584670ff9ca"
+      }
+    },
+    {
+      "name": "sbom-spdx.dsse.json",
+      "digest": {
+        "sha256": "04c18f329340b0c04231e69f83352fa4816cab40f58e981c53d760f5c55b4368"
+      }
+    },
+    {
+      "name": "sbom-spdx.json",
+      "digest": {
+        "sha256": "e2084f43b0d8bcc4c653759a6f8e26b7a73f9e6009500e8a3ba3e704be8196e3"
+      }
+    },
+    {
+      "name": "secret-scan.json",
+      "digest": {
+        "sha256": "3c50dc34d3d932212db9e1d0722ee0cbc4b7b17ffff1fcb8cba23d6709a95b72"
+      }
+    },
+    {
+      "name": "security-summary.json",
+      "digest": {
+        "sha256": "b01260ad2ee790a07f8676d787b0c560393b3dbe32f8cbfdffbc1f77ff73982a"
+      }
+    }
+  ],
+  "provenance": {
+    "uri": "provenance.dsse.json",
+    "digest": {
+      "sha256": "4c43bbe0a05e4a362553beb2b775297b69a626c2c8e01b55a77aa2eb1fe3a8bd"
+    }
+  },
+  "sbom": {
+    "uri": "sbom.json",
+    "digest": {
+      "sha256": "MOCK_SBOM_DIGEST"
+    }
+  }
+}

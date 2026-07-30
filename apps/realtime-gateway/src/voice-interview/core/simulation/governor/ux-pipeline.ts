@@ -38,7 +38,7 @@ export interface GovernorState {
   antiDrift: AntiDriftState;
 }
 
-export function createGovernorState(budgetTotal = 100): GovernorState {
+export function createGovernorState(budgetTotal = _100): GovernorState {
   return {
     budget: createEmotionalBudget(budgetTotal),
     guardrails: createGuardrailState(),
@@ -71,12 +71,7 @@ function scaleUX(ux: PerceptionUX, scale: number): PerceptionUX {
  *  3. garde-fous globaux (bornes dures + anti-saut + anti deux extrêmes)
  *  4. anti-drift (attracteurs + amortissement oscillation)
  */
-export function governUX(
-  baseUX: PerceptionUX,
-  personaMode: ReactiveMode,
-  state: GovernorState,
-  guardrails: GlobalUXGuardrails = DEFAULT_GUARDRAILS,
-): GovernedUX {
+export function governUX(baseUX: PerceptionUX, personaMode: ReactiveMode, state: GovernorState, guardrails: GlobalUXGuardrails = DEFAULT_GUARDRAILS, ): GovernedUX {
   // 1) Budget.
   const cost = costOf({
     interruption: baseUX.interruptionChance,

@@ -1,0 +1,33 @@
+{
+  "type": "dependency",
+  "format": "json",
+  "nodes": [
+    {
+      "id": "A",
+      "label": "Module A"
+    },
+    {
+      "id": "B",
+      "label": "Module B"
+    },
+    {
+      "id": "C",
+      "label": "Module C"
+    }
+  ],
+  "edges": [
+    {
+      "from": "A",
+      "to": "B"
+    },
+    {
+      "from": "B",
+      "to": "C"
+    }
+  ],
+  "metadata": {
+    "generated": "2026-07-25T19:58:10.080Z",
+    "nodeCount": 3,
+    "edgeCount": 2
+  }
+}

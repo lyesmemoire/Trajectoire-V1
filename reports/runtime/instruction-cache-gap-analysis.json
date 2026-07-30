@@ -1,0 +1,214 @@
+{
+  "component": "instruction-cache",
+  "file": "compiler/cvm/instruction-cache.ts",
+  "testFile": "tests/vm/performance/instruction-cache.test.ts",
+  "analysisDate": "2026-07-27T00:00:00Z",
+  "existingTests": {
+    "total": 45,
+    "suites": [
+      "creation",
+      "get",
+      "put",
+      "has",
+      "remove",
+      "clear",
+      "prefetch",
+      "prefetchRange",
+      "statistics",
+      "size management",
+      "entries",
+      "validation",
+      "utilization",
+      "cleanup",
+      "edge cases"
+    ]
+  },
+  "methodsCovered": {
+    "constructor": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should create cache with default size",
+        "should create cache with custom size"
+      ]
+    },
+    "get": {
+      "covered": true,
+      "testCount": 6,
+      "tests": [
+        "should return null for missing address",
+        "should increment misses on cache miss",
+        "should return instruction on cache hit",
+        "should increment hits on cache hit",
+        "should update hit rate",
+        "should update access count",
+        "should update last access time"
+      ]
+    },
+    "put": {
+      "covered": true,
+      "testCount": 5,
+      "tests": [
+        "should add instruction to cache",
+        "should update cache size",
+        "should initialize access count to 1",
+        "should set last access time",
+        "should evict oldest entry when cache is full"
+      ]
+    },
+    "has": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should return false for missing address",
+        "should return true for existing address"
+      ]
+    },
+    "remove": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should remove entry from cache",
+        "should return false for missing address",
+        "should update cache size"
+      ]
+    },
+    "clear": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should clear all entries",
+        "should reset statistics",
+        "should reset access counter"
+      ]
+    },
+    "prefetch": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should prefetch instruction",
+        "should skip if already cached",
+        "should handle decode errors gracefully"
+      ]
+    },
+    "prefetchRange": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should prefetch range of instructions",
+        "should stop on decode error"
+      ]
+    },
+    "getStatistics": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should return copy of statistics",
+        "should calculate hit rate correctly",
+        "should handle zero accesses"
+      ]
+    },
+    "getSize": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get cache size"
+      ]
+    },
+    "getMaxSize": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get max size"
+      ]
+    },
+    "setMaxSize": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should set max size",
+        "should evict when reducing max size"
+      ]
+    },
+    "getAllEntries": {
+      "covered": true,
+      "testCount": 1,
+      "tests": [
+        "should get all entries"
+      ]
+    },
+    "getHotEntries": {
+      "covered": true,
+      "testCount": 2,
+      "tests": [
+        "should get hot entries",
+        "should return empty array for no hot entries"
+      ]
+    },
+    "validate": {
+      "covered": true,
+      "testCount": 5,
+      "tests": [
+        "should validate valid state",
+        "should detect address mismatch",
+        "should detect negative access count",
+        "should detect negative last access",
+        "should detect cache size exceeding maximum"
+      ]
+    },
+    "getUtilization": {
+      "covered": true,
+      "testCount": 3,
+      "tests": [
+        "should get utilization",
+        "should return 0 for empty cache",
+        "should return 1 for full cache"
+      ]
+    }
+  },
+  "methodsNotCovered": [],
+  "privateFunctions": {
+    "initializeStatistics": {
+      "covered": true,
+      "note": "Covered indirectly through constructor and clear tests"
+    },
+    "evictIfNeeded": {
+      "covered": true,
+      "note": "Covered through put tests with cache full scenarios"
+    },
+    "updateHitRate": {
+      "covered": true,
+      "note": "Covered through get statistics tests"
+    }
+  },
+  "coverageGaps": {
+    "potential": [
+      "LRU eviction edge cases (multiple evictions, eviction after read/write)",
+      "Concurrent access scenarios",
+      "Stress testing with large datasets",
+      "Integration with instruction-fetch, instruction-decode",
+      "Cache behavior with maxSize = 1",
+      "Cache behavior with very large maxSize",
+      "Prefetch with valid bytecode to verify actual caching",
+      "Error handling in prefetch with specific error types"
+    ],
+    "notImplemented": []
+  },
+  "testQuality": {
+    "strengths": [
+      "Comprehensive coverage of public API",
+      "Edge cases covered (address 0, large addresses, zero max size)",
+      "Validation logic tested with defensive checks",
+      "Statistics tracking validated",
+      "LRU eviction tested",
+      "Prefetch error handling tested"
+    ],
+    "weaknesses": [
+      "Prefetch tests don't verify actual successful caching (only error handling)",
+      "No stress tests with large datasets",
+      "No concurrent access tests",
+      "Limited integration testing",
+      "LRU eviction not thoroughly tested for complex scenarios"
+    ]
+  }
+}

@@ -9,12 +9,12 @@ export interface StreakInfo {
 /**
  * Updates and returns the user's training streak.
  */
-export async function updateStreak(userId: string): Promise<StreakInfo> {
+export async function updateStreak(userId: _string): Promise<StreakInfo> {
   const profile = await prisma.careerProfile.findUnique({ where: { userId } });
   if (!profile)
     return { currentStreak: 0, lastActivityDate: "", isActive: false };
 
-  const dna = (profile.careerDNA as any) || {};
+  const dna = (profile.careerDNA as unknown) || {};
   const lastDate = dna.lastActivityDate ? new Date(dna.lastActivityDate) : null;
   const today = new Date();
 

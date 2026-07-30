@@ -1,13 +1,13 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface SkeletonProps {
-  className?: string;
+  className?: string
 }
 
 export function Skeleton({ className }: SkeletonProps) {
   return (
-    <div className={cn("animate-pulse bg-slate-200 rounded", className)} />
-  );
+    <div className={cn("animate-pulse bg-ivoire-200 rounded", className)} />
+  )
 }
 
 export function CardSkeleton() {
@@ -26,5 +26,5 @@ export function CardSkeleton() {
         <Skeleton className="h-8 w-20 rounded-full" />
       </div>
     </div>
-  );
+  )
 }

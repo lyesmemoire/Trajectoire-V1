@@ -4,7 +4,6 @@
  */
 
 import {
-  PolicyType,
   PolicySeverity,
   GovernancePolicy,
   PolicyViolation,
@@ -165,7 +164,7 @@ export class AIGovernanceEngine {
   /**
    * Validate decision
    */
-  async validateDecision(decisionId: string, decisionType: string, decision: unknown, userId: string): Promise<GovernanceValidation> {
+  async validateDecision(decisionId: string, decisionType: string, decision: any, userId: string): Promise<GovernanceValidation> {
     const validationId = `validation_${decisionId}_${Date.now()}`;
     const violations: PolicyViolation[] = [];
     const warnings: string[] = [];
@@ -214,7 +213,7 @@ export class AIGovernanceEngine {
   /**
    * Check policy
    */
-  private async checkPolicy(policy: GovernancePolicy, decisionId: string, decisionType: string, decision: unknown, userId: string): Promise<{ violation: PolicyViolation | null; warning: string | null }> {
+  private async checkPolicy(policy: GovernancePolicy, decisionId: string, decisionType: string, decision: any, userId: string): Promise<{ violation: PolicyViolation | null; warning: string | null }> {
     const context = decision as Record<string, unknown>;
     let violation: PolicyViolation | null = null;
     let warning: string | null = null;

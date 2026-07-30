@@ -11,7 +11,7 @@ import type {
  * le contrat de type attendu.
  * Évite les crashs silencieux si l'IA retourne une structure partielle.
  */
-export function validateQuestions(raw: unknown): InterviewQuestion[] {
+export function validateQuestions(raw: any): InterviewQuestion[] {
   if (!Array.isArray(raw)) {
     throw new Error("INVALID_QUESTIONS: Expected array");
   }
@@ -43,7 +43,7 @@ export function validateQuestions(raw: unknown): InterviewQuestion[] {
 /**
  * Valide le feedback retourné par l'IA.
  */
-export function validateFeedback(raw: unknown): InterviewFeedback {
+export function validateFeedback(raw: any): InterviewFeedback {
   if (typeof raw !== "object" || raw === null) {
     throw new Error("INVALID_FEEDBACK: Expected object");
   }
@@ -55,7 +55,7 @@ export function validateFeedback(raw: unknown): InterviewFeedback {
       ? Math.min(100, Math.max(0, Math.round(f["score"])))
       : 50; // Fallback neutre si score invalide
 
-  const toStringArray = (val: unknown, fallback: string[]): string[] => {
+  const toStringArray = (val: any, fallback: string[]): string[] => {
     if (!Array.isArray(val)) return fallback;
     return val
       .filter((item) => typeof item === "string" && item.length > 0)
@@ -88,10 +88,7 @@ export function validateFeedback(raw: unknown): InterviewFeedback {
  * Calcule les statistiques d'un ensemble de réponses.
  * Utilisé côté UI pour le feedback de progression.
  */
-export function computeAnswerStats(
-  questions: InterviewQuestion[],
-  answers: InterviewAnswer[],
-): {
+export function computeAnswerStats(questions: InterviewQuestion[], answers: InterviewAnswer[], ): {
   totalQuestions: number;
   answeredCount: number;
   skippedCount: number;

@@ -1,0 +1,152 @@
+{
+  "component": "execution-pipeline",
+  "file": "compiler/cvm/execution-pipeline.ts",
+  "testFile": "tests/vm/advanced/execution-pipeline.test.ts",
+  "coverageDate": "2026-07-27T00:25:00Z",
+  "coverageSource": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+  "provider": "Vitest with V8 coverage",
+  "metrics": {
+    "statements": {
+      "total": 63,
+      "covered": 57,
+      "uncovered": 6,
+      "percentage": "90.48",
+      "target": "≥95%",
+      "status": "NOT_PASSED",
+      "gap": "4.52%"
+    },
+    "branches": {
+      "total": 23,
+      "covered": 17,
+      "uncovered": 6,
+      "percentage": "73.91",
+      "target": "≥97%",
+      "status": "NOT_PASSED",
+      "gap": "23.09%"
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "100%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "total": 63,
+      "covered": 57,
+      "uncovered": 6,
+      "percentage": "90.48",
+      "target": "≥95%",
+      "status": "NOT_PASSED",
+      "gap": "4.52%"
+    }
+  },
+  "uncoveredLines": [78, 80, 84, 88, 106, 117],
+  "uncoveredBranches": [
+    {
+      "line": 78,
+      "condition": "if (result.branchTaken)",
+      "why": "Branch not covered - result.branchTaken is never true in tests",
+      "howToReach": "Execute a branch instruction that is taken",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for branch taken scenario"
+    },
+    {
+      "line": 80,
+      "condition": "else if (result.branchTaken === false)",
+      "why": "Branch not covered - result.branchTaken is never false in tests",
+      "howToReach": "Execute a branch instruction that is not taken",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for branch not taken scenario"
+    },
+    {
+      "line": 84,
+      "condition": "if (decoded.isCall)",
+      "why": "Branch not covered - decoded.isCall is never true in tests",
+      "howToReach": "Execute a call instruction",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for call instruction"
+    },
+    {
+      "line": 88,
+      "condition": "if (decoded.isReturn)",
+      "why": "Branch not covered - decoded.isReturn is never true in tests",
+      "howToReach": "Execute a return instruction",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for return instruction"
+    },
+    {
+      "line": 106,
+      "condition": "while (!this.context.isHalted() && this.running)",
+      "why": "Branch not covered - loop condition not fully tested",
+      "howToReach": "Test run() method with halt condition",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for halt during run()"
+    },
+    {
+      "line": 117,
+      "condition": "for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+      "why": "Branch not covered - loop condition not fully tested",
+      "howToReach": "Test runCycles() with halt condition",
+      "existingTests": "Need to check existing test file",
+      "missingTests": "Test for halt during runCycles()"
+    }
+  ],
+  "uncoveredStatements": [
+    {
+      "line": 78,
+      "statement": "this.statistics.branchesTaken++",
+      "why": "Statement not covered - branch taken scenario not tested"
+    },
+    {
+      "line": 80,
+      "statement": "this.statistics.branchesNotTaken++",
+      "why": "Statement not covered - branch not taken scenario not tested"
+    },
+    {
+      "line": 84,
+      "statement": "this.statistics.calls++",
+      "why": "Statement not covered - call instruction not tested"
+    },
+    {
+      "line": 88,
+      "statement": "this.statistics.returns++",
+      "why": "Statement not covered - return instruction not tested"
+    },
+    {
+      "line": 106,
+      "statement": "this.cycle()",
+      "why": "Statement not covered - run() loop not fully tested"
+    },
+    {
+      "line": 117,
+      "statement": "this.cycle()",
+      "why": "Statement not covered - runCycles() loop not fully tested"
+    }
+  ],
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "90.48%",
+      "status": "NOT_PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "73.91%",
+      "status": "NOT_PASSED"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "90.48%",
+      "status": "NOT_PASSED"
+    }
+  },
+  "overallStatus": "NOT_CERTIFIED",
+  "blockingCriteria": "Branches coverage (73.91%) and Statements coverage (90.48%) below targets (97% and 95% respectively)"
+}

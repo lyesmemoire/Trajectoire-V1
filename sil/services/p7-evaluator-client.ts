@@ -77,7 +77,7 @@ export class RealP7EvaluatorClient implements P7EvaluatorClient {
         reportHash: report.metadata.deterministicHash,
         evaluationHash,
       };
-    } catch (e: any) {
+    } catch (e: unknown) {
       throw new Error(`P7_EVALUATION_FAILED: ${e.message}`);
     }
   }

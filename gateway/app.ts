@@ -33,10 +33,7 @@ export interface GatewayDependencies {
  */
 export function createGatewayApp(silClient: SILPublicAPI, signer: EventSigner): Express;
 export function createGatewayApp(deps: GatewayDependencies): Express;
-export function createGatewayApp(
-  silClientOrDeps: SILPublicAPI | GatewayDependencies,
-  signerArg?: EventSigner
-): Express {
+export function createGatewayApp(silClientOrDeps: SILPublicAPI | GatewayDependencies, signerArg?: EventSigner): Express {
   const app = express();
   app.use(express.json());
 

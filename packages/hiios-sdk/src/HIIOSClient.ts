@@ -131,11 +131,11 @@ export interface ContradictionResult {
 
 export type StreamEvent =
   | { type: "analysis_started";    data: { message: string } }
-  | { type: "hypotheses_updated";  data: { count: number; summaries: any[] } }
+  | { type: "hypotheses_updated";  data: { count: number; summaries: unknown[] } }
   | { type: "contradiction_detected"; data: { count: number } }
   | { type: "coverage_updated";    data: { score: number; uncoveredCritical: string[] } }
   | { type: "next_question";       data: QuestionResult }
-  | { type: "turn_complete";       data: { turnNumber: number; canDecide: boolean; reasoning: any } }
+  | { type: "turn_complete";       data: { turnNumber: number; canDecide: boolean; reasoning: unknown } }
   | { type: "error";               data: { message: string } };
 
 // ─────────────────────────────────────────────
@@ -168,7 +168,7 @@ export class HIIOSClient {
     return response as InterviewSession;
   }
 
-  async getInterview(sessionId: string): Promise<any> {
+  async getInterview(sessionId: string): Promise<unknown> {
     return this.get(`/interviews/${sessionId}`);
   }
 
@@ -201,7 +201,7 @@ export class HIIOSClient {
     );
 
     if (!response.ok) {
-      const error = await response.json() as any;
+      const error = await response.json() as unknown;
       throw new HIIOSError(error.error ?? "Stream failed", response.status);
     }
 
@@ -224,7 +224,7 @@ export class HIIOSClient {
           if (nextLine?.startsWith("data: ")) {
             try {
               const data = JSON.parse(nextLine.slice(6));
-              onEvent({ type: eventType as any, data });
+              onEvent({ type: eventType as unknown, data });
             } catch { /* skip malformed */ }
           }
         }
@@ -240,8 +240,8 @@ export class HIIOSClient {
     return this.get(`/interviews/${sessionId}/explain`) as Promise<ExplainResult>;
   }
 
-  async getAuditTrail(sessionId: string): Promise<{ auditLog: any[] }> {
-    return this.get(`/interviews/${sessionId}/audit`) as Promise<{ auditLog: any[] }>;
+  async getAuditTrail(sessionId: string): Promise<{ auditLog: unknown[] }> {
+    return this.get(`/interviews/${sessionId}/audit`) as Promise<{ auditLog: unknown[] }>;
   }
 
   // ── HTTP helpers ───────────────────────────
@@ -285,7 +285,7 @@ export class HIIOSClient {
 
     if (!response.ok) {
       throw new HIIOSError(
-        (data as any).error ?? "API error",
+        (data as unknown).error ?? "API error",
         response.status,
         data
       );

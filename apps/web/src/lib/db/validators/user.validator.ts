@@ -32,10 +32,10 @@ export const SupabaseProfileSchema = z.object({
 /**
  * Helper to validate DB row before passing to domain mapper.
  */
-export function validatePrismaUser(data: unknown): PrismaUserRow {
+export function validatePrismaUser(data: any): PrismaUserRow {
   return PrismaUserSchema.parse(data) as PrismaUserRow;
 }
 
-export function validateSupabaseProfile(data: unknown): SupabaseProfileRow {
+export function validateSupabaseProfile(data: any): SupabaseProfileRow {
   return SupabaseProfileSchema.parse(data) as SupabaseProfileRow;
 }

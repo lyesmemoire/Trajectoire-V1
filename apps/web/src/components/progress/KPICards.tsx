@@ -1,15 +1,15 @@
-import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react"
 
 interface KPICardProps {
-  title: string;
-  value: number;
-  diff: number;
+  title: string
+  value: number
+  diff: number
 }
 
 export function KPICard({ title, value, diff }: KPICardProps) {
-  const isPositive = diff > 0;
-  const isNegative = diff < 0;
-  const isNeutral = diff === 0;
+  const isPositive = diff > 0
+  const isNegative = diff < 0
+  const isNeutral = diff === 0
 
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:shadow-md">
@@ -20,10 +20,10 @@ export function KPICard({ title, value, diff }: KPICardProps) {
         <div
           className={`flex items-center text-sm font-semibold ${
             isPositive
-              ? "text-emerald-600"
+              ? "text-forest-600"
               : isNegative
-                ? "text-rose-600"
-                : "text-gray-400"
+                ? "text-brick-600"
+                : "text-ink-400"
           }`}
         >
           {isPositive && <ArrowUpRight className="mr-0.5 h-4 w-4" />}
@@ -33,5 +33,5 @@ export function KPICard({ title, value, diff }: KPICardProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

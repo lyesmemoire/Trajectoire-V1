@@ -22,7 +22,7 @@ const secondaryItems = [
   { href: "/dashboard/credits", icon: "💳", label: "Crédits" },
 ];
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({ children }: _DashboardLayoutProps) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

@@ -1,5 +1,4 @@
-// @ts-nocheck - Multiple type inference issues, not critical for build
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js'
 import { envServer } from "@/lib/env.server";
 import prisma from "@/lib/prisma";
 import { AnalyticsEngine } from "@/lib/analytics/interview.engine";
@@ -9,7 +8,6 @@ import { updateUserBehaviorProfile } from "@/lib/ml/user.behavioral-memory";
 import { detectDrift } from "@/lib/ml/drift.detector";
 import {
   StandardInterviewSession,
-  PremiumInterviewSession,
   InterviewAnalyticsProjection,
 } from "@/domain/interview.contract";
 import { logWarn } from "@/lib/logger/Logger";
@@ -25,7 +23,7 @@ import { logWarn } from "@/lib/logger/Logger";
 export const InterviewService = {
 
   async startStandardSession(userId: string) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
     const { data, error } = await supabase.from("interview_sessions").insert({
       user_id: userId,
       status: "created",
@@ -38,7 +36,7 @@ export const InterviewService = {
   },
 
   async startPremiumSession(userId: string) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
     const { data, error } = await supabase.from("premium_interview_sessions").insert({
       user_id: userId,
       status: "created",
@@ -52,7 +50,7 @@ export const InterviewService = {
   },
 
   async submitAnswer(sessionId: string, answer: string) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
     const { data: session } = await supabase.from("interview_sessions").select("*").eq("id", sessionId).single();
     if (!session) throw new Error("Session not found");
     if (session.status === "completed") throw new Error("Cannot mutate completed session");
@@ -68,7 +66,7 @@ export const InterviewService = {
   },
 
   async appendTranscript(sessionId: string, message: any) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
     const { data: session } = await supabase.from("premium_interview_sessions").select("*").eq("id", sessionId).single();
     if (!session) throw new Error("Session not found");
     if (session.status === "completed") throw new Error("Cannot mutate completed session");
@@ -97,7 +95,7 @@ export const InterviewService = {
    * 9. Mark runtime session as completed
    */
   async completeSession(sessionId: string) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
 
     // ── 1. Lock Session ──
     let isStandard = true;
@@ -115,7 +113,7 @@ export const InterviewService = {
     }
 
     // ── 2. Convert to canonical model ──
-    let canonical: StandardInterviewSession | PremiumInterviewSession;
+    let canonical: StandardInterviewSession | any;
     if (isStandard) {
       canonical = {
         id: session.id,
@@ -153,18 +151,22 @@ export const InterviewService = {
       ? {
           userId: existingProfile.userId,
           trends: {
+            // @ts-ignore - Property exists in DB but not in Prisma type
             confidenceTrend: (existingProfile.confidenceTrend as number[]) || [],
+            // @ts-ignore - Property exists in DB but not in Prisma type
             clarityTrend: (existingProfile.clarityTrend as number[]) || [],
             improvementRate: 0,
           },
+          // @ts-ignore - Property exists in DB but not in Prisma type
           archetypeEvolution: (existingProfile.archetypeHistory as string[]) || [],
+          // @ts-ignore - Property exists in DB but not in Prisma type
           stabilityScore: existingProfile.stabilityScore ?? 1.0,
         }
       : null;
 
     const updatedMemory = updateUserBehaviorProfile(memoryInput, projection);
 
-    const previousProjections = await (prisma as any).interviewAnalyticsProjection.findMany({
+    const previousProjections = await (prisma  as any).interviewAnalytics.findMany({
       where: { userId: session.user_id, sessionId: { not: sessionId } },
       orderBy: { createdAt: "desc" },
       take: 5,
@@ -173,9 +175,9 @@ export const InterviewService = {
     const previousMapped: InterviewAnalyticsProjection[] = previousProjections.map((p: any) => ({
       sessionId: p.sessionId,
       userId: p.userId,
-      behavioralScores: p.behavioralScores as any,
+      behavioralScores: p.behavioralScores  as any,
       archetype: p.archetype,
-      pressureCurve: p.pressureCurve as any,
+      pressureCurve: p.pressureCurve  as any,
       progressionIndex: p.progressionIndex,
       modelVersion: p.modelVersion,
     }));
@@ -254,7 +256,7 @@ export const InterviewService = {
     });
 
     // ── 8. Write InterviewAnalyticsProjection (SOURCE OF TRUTH) ──
-    await (prisma as any).interviewAnalyticsProjection.upsert({
+    await (prisma  as any).interviewAnalytics.upsert({
       where: { sessionId },
       create: {
         sessionId,
@@ -275,7 +277,7 @@ export const InterviewService = {
     });
 
     // ── 9. Write User Behavioral Memory (longitudinal update) ──
-    await (prisma as any).userBehaviorProfile.upsert({
+    await (prisma  as any).userBehaviorProfile.upsert({
       where: { userId: session.user_id },
       create: {
         userId: session.user_id,
@@ -306,17 +308,16 @@ export const InterviewService = {
     }).traceId };
   },
 
-
-
   async getHistory(userId: string) {
-    const supabase = await createServerClient();
+    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
     const { data: std } = await supabase.from("interview_sessions").select("*").eq("user_id", userId);
     const { data: prm } = await supabase.from("premium_interview_sessions").select("*").eq("user_id", userId);
     return [...(std || []), ...(prm || [])];
   },
 
   async getAnalytics(sessionId: string) {
-    return prisma.interviewAnalyticsProjection.findUnique({
+    // @ts-ignore - interviewAnalytics exists in DB but not in Prisma type
+    return (prisma as any).interviewAnalytics.findUnique({
       where: { sessionId },
     });
   },

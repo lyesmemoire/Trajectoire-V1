@@ -43,7 +43,7 @@ const STOP_WORDS = new Set([
 function extractKeywords(text: string): Set<string> {
   const words = text
     .toLowerCase()
-    .replace(/[^a-z0-9\s\-]/g, " ")
+    .replace(/[^a-z0-9\s-]/g, " ")
     .split(/\s+/)
     .filter((w) => w.length > 3 && !STOP_WORDS.has(w) && !/^\d+$/.test(w));
   return new Set(words);
@@ -76,10 +76,7 @@ function generateSuggestions(missing: string[], score: number): string[] {
   return tips;
 }
 
-export function calculateATSScore(
-  cvText: string,
-  jobDescription: string,
-): ATSResult {
+export function calculateATSScore(cvText: string, jobDescription: string, ): ATSResult {
   if (!cvText?.trim() || !jobDescription?.trim()) {
     return {
       score: 0,

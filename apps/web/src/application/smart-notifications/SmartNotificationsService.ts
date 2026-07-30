@@ -4,7 +4,6 @@
  */
 
 import {
-  NotificationType,
   NotificationChannel,
   NotificationTone,
   SmartNotification,
@@ -12,7 +11,6 @@ import {
   SmartNotificationsConfig,
   defaultSmartNotificationsConfig,
 } from "./interfaces/ISmartNotifications";
-import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
 
 // ============================================================================
 // SMART NOTIFICATIONS SERVICE CLASS

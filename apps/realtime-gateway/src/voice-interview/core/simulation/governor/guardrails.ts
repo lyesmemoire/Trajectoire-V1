@@ -49,11 +49,7 @@ function isExtreme(ux: PerceptionUX, g: GlobalUXGuardrails): boolean {
  * Applique les garde-fous : bornes dures, limite de delta de ton, anti deux
  * extrêmes consécutifs. Retourne l'UX corrigée + le nouvel état.
  */
-export function applyGuardrails(
-  ux: PerceptionUX,
-  state: GuardrailState,
-  g: GlobalUXGuardrails = DEFAULT_GUARDRAILS,
-): { ux: PerceptionUX; state: GuardrailState } {
+export function applyGuardrails(ux: PerceptionUX, state: GuardrailState, g: GlobalUXGuardrails = DEFAULT_GUARDRAILS, ): { ux: PerceptionUX; state: GuardrailState } {
   // 1) Bornes dures.
   let out: PerceptionUX = {
     ...ux,

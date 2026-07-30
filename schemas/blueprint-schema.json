@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blueprint.dev/schemas/blueprint.json",
+  "title": "Blueprint V3 Enterprise Schema",
+  "description": "Schema for Blueprint V3 Enterprise contracts",
+  "type": "object",
+  "properties": {},
+  "definitions": {
+    "billing": {
+      "type": "object",
+      "description": "billing contract",
+      "properties": {}
+    },
+    "decision-graph": {
+      "type": "object",
+      "description": "decision-graph contract",
+      "properties": {}
+    },
+    "fraud-kernel": {
+      "type": "object",
+      "description": "fraud-kernel contract",
+      "properties": {}
+    },
+    "interview": {
+      "type": "object",
+      "description": "interview contract",
+      "properties": {}
+    },
+    "orchestration": {
+      "type": "object",
+      "description": "orchestration contract",
+      "properties": {}
+    },
+    "user": {
+      "type": "object",
+      "description": "user contract",
+      "properties": {}
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "component": "instruction-fetch",
+  "file": "compiler/cvm/instruction-fetch.ts",
+  "auditDate": "2026-07-27T00:30:00Z",
+  "metrics": {
+    "lines": {
+      "total": 241,
+      "code": 241,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "functions": {
+      "total": 14,
+      "public": 13,
+      "private": 1,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "constructor",
+        "fetch",
+        "fetchMultiple",
+        "prefetch",
+        "prefetchRange",
+        "clearCache",
+        "getCacheStatistics",
+        "enableCache",
+        "disableCache",
+        "setCacheSize",
+        "setBytecode",
+        "getBytecode",
+        "validateAddress",
+        "getInstructionSize",
+        "getInstructionCount"
+      ],
+      "private": [
+        "evictIfNeeded"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 9,
+      "estimated": "Based on branching statements and loops"
+    },
+    "conditions": {
+      "total": 9,
+      "details": [
+        "Line 39: if (this.cacheEnabled && this.cache.has(address))",
+        "Line 55: if (this.cacheEnabled)",
+        "Line 78: if (!this.cacheEnabled)",
+        "Line 82: if (this.cache.has(address))",
+        "Line 90: try-catch in prefetch()",
+        "Line 101: while (address < end)",
+        "Line 105: try-catch in prefetchRange()",
+        "Line 117: if (this.cache.size <= this.cacheSize)",
+        "Line 124: if (firstKey !== undefined)",
+        "Line 149: ternary operator (total > 0 ? ... : 0)",
+        "Line 209: if (!this.validateAddress(address))",
+        "Line 213: try-catch in getInstructionSize()",
+        "Line 228: while (address < this.bytecode.length)",
+        "Line 230: if (size === 0)"
+      ]
+    },
+    "interfaces": [
+      "FetchResult",
+      "InstructionCacheOptions"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "Instruction",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      },
+      {
+        "name": "InstructionTable",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingInstructionFetch": [
+      "ExecutionPipeline"
+    ],
+    "usedByInstructionFetch": [
+      "InstructionTable"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Cache Pattern (LRU)",
+    "responsibilities": [
+      "Instruction fetching from bytecode",
+      "Cache management",
+      "Prefetching",
+      "Address validation",
+      "Instruction size calculation"
+    ],
+    "keyFeatures": [
+      "LRU cache for instructions",
+      "Prefetch support",
+      "Cache statistics",
+      "Batch fetching",
+      "Address validation"
+    ]
+  },
+  "invariants": {
+    "preconditions": {
+      "fetch": "address must be valid (>= 0 and < bytecode.length)",
+      "prefetch": "cache must be enabled",
+      "setBytecode": "bytecode must be a valid Uint8Array"
+    },
+    "postconditions": {
+      "fetch": "returns FetchResult with instruction, address, and size",
+      "prefetch": "instruction is cached if cache is enabled",
+      "clearCache": "cache is empty and statistics are reset"
+    },
+    "invariants": [
+      "cache.size <= cacheSize (enforced by evictIfNeeded)",
+      "cacheHits >= 0",
+      "cacheMisses >= 0",
+      "hitRate is between 0 and 1"
+    ]
+  },
+  "api": {
+    "public": [
+      {
+        "name": "constructor",
+        "params": ["bytecode: Uint8Array", "options?: InstructionCacheOptions"],
+        "returns": "InstructionFetch"
+      },
+      {
+        "name": "fetch",
+        "params": ["address: number"],
+        "returns": "FetchResult"
+      },
+      {
+        "name": "fetchMultiple",
+        "params": ["addresses: number[]"],
+        "returns": "FetchResult[]"
+      },
+      {
+        "name": "prefetch",
+        "params": ["address: number"],
+        "returns": "void"
+      },
+      {
+        "name": "prefetchRange",
+        "params": ["start: number", "end: number"],
+        "returns": "void"
+      },
+      {
+        "name": "clearCache",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "getCacheStatistics",
+        "params": [],
+        "returns": "{ size, maxSize, hits, misses, hitRate }"
+      },
+      {
+        "name": "enableCache",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "disableCache",
+        "params": [],
+        "returns": "void"
+      },
+      {
+        "name": "setCacheSize",
+        "params": ["size: number"],
+        "returns": "void"
+      },
+      {
+        "name": "setBytecode",
+        "params": ["bytecode: Uint8Array"],
+        "returns": "void"
+      },
+      {
+        "name": "getBytecode",
+        "params": [],
+        "returns": "Uint8Array"
+      },
+      {
+        "name": "validateAddress",
+        "params": ["address: number"],
+        "returns": "boolean"
+      },
+      {
+        "name": "getInstructionSize",
+        "params": ["address: number"],
+        "returns": "number"
+      },
+      {
+        "name": "getInstructionCount",
+        "params": [],
+        "returns": "number"
+      }
+    ]
+  },
+  "callGraph": {
+    "fetch": {
+      "calls": ["InstructionTable.decode", "cache.has", "cache.get", "cache.set", "evictIfNeeded"],
+      "calledBy": ["ExecutionPipeline.cycle", "fetchMultiple"]
+    },
+    "fetchMultiple": {
+      "calls": ["fetch"],
+      "calledBy": []
+    },
+    "prefetch": {
+      "calls": ["cache.has", "InstructionTable.decode", "cache.set", "evictIfNeeded"],
+      "calledBy": ["prefetchRange"]
+    },
+    "prefetchRange": {
+      "calls": ["prefetch", "InstructionTable.decode"],
+      "calledBy": []
+    },
+    "evictIfNeeded": {
+      "calls": ["cache.keys", "cache.delete"],
+      "calledBy": ["fetch", "prefetch", "setCacheSize"]
+    },
+    "clearCache": {
+      "calls": ["cache.clear"],
+      "calledBy": ["disableCache", "setBytecode"]
+    },
+    "getCacheStatistics": {
+      "calls": [],
+      "calledBy": ["ExecutionPipeline.getCacheStatistics"]
+    },
+    "getInstructionSize": {
+      "calls": ["validateAddress", "InstructionTable.decode"],
+      "calledBy": ["getInstructionCount"]
+    },
+    "getInstructionCount": {
+      "calls": ["getInstructionSize"],
+      "calledBy": []
+    }
+  },
+  "criticalPaths": [
+    "fetch() - main execution path",
+    "evictIfNeeded() - cache eviction",
+    "prefetchRange() - prefetch loop"
+  ],
+  "internalState": {
+    "bytecode": "Uint8Array - the bytecode to fetch from",
+    "cache": "Map<number, Instruction> - LRU cache",
+    "cacheSize": "number - maximum cache size",
+    "cacheEnabled": "boolean - whether cache is enabled",
+    "cacheHits": "number - number of cache hits",
+    "cacheMisses": "number - number of cache misses"
+  }
+}

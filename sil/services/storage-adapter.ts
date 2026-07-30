@@ -3,7 +3,7 @@ import { StorageAdapter, StorageTransaction } from "../contracts/storage";
 import { buildTenantKey } from "../utils/tenant-key";
 
 class InMemoryTransaction implements StorageTransaction {
-  public operations: Array<{ collection: string; id: string; record: any }> = [];
+  public operations: Array<{ collection: string; id: string; record: unknown }> = [];
   public status: "PENDING" | "COMMITTED" | "ROLLED_BACK" = "PENDING";
 
   constructor(private commitHandler: (tx: InMemoryTransaction) => Promise<void>) {}
@@ -27,7 +27,7 @@ class InMemoryTransaction implements StorageTransaction {
 
 export class InMemoryStorageAdapter implements StorageAdapter {
   // collection -> tenantId:id -> record
-  private store: Map<string, Map<string, any>> = new Map();
+  private store: Map<string, Map<string, unknown>> = new Map();
 
   async transaction(): Promise<StorageTransaction> {
     return new InMemoryTransaction(async (tx) => {
@@ -74,7 +74,7 @@ export class InMemoryStorageAdapter implements StorageAdapter {
   }
 
   // Helper for tests
-  async _dumpStore(): Promise<Map<string, Map<string, any>>> {
+  async _dumpStore(): Promise<Map<string, Map<string, unknown>>> {
     return this.store;
   }
 

@@ -1,7 +1,6 @@
-import { Job } from "../data/jobs";
 import { Company } from "../data/companies";
 
-export function generateInterviewSchema(job: Job, company: Company) {
+export function generateInterviewSchema(job: _Job, company: Company) {
   return {
     "@context": "https://schema.org",
     "@type": "Article",

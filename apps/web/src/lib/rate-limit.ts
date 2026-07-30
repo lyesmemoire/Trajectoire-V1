@@ -57,10 +57,7 @@ const ACTION_LIMITS: Record<string, { requests: number; window: string }> = {
 /**
  * Rate limit par userId + action (utilisé par les API routes)
  */
-export async function checkRateLimit(
-  userId: string,
-  action: string,
-): Promise<RateLimitResult> {
+export async function checkRateLimit(userId: string, action: string, ): Promise<RateLimitResult> {
   const r = getRedis();
   const isProduction = process.env.NODE_ENV === "production";
   if (!r) return { blocked: isProduction, headers: {} };
@@ -92,9 +89,7 @@ export async function checkRateLimit(
 /**
  * Rate limit par IP (utilisé par le middleware)
  */
-export async function enforceRateLimit(
-  request: NextRequest,
-): Promise<RateLimitResult> {
+export async function enforceRateLimit(request: NextRequest, ): Promise<RateLimitResult> {
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     request.headers.get("x-real-ip") ??

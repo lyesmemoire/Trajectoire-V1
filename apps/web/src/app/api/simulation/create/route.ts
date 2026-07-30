@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { Container, ServiceTokens } from "@/infrastructure/di";
 import { initializeContainer } from "@/infrastructure/di/bootstrap";
@@ -66,13 +66,26 @@ export async function POST(request: NextRequest) {
         user.id,
         "simulation_create",
         validatedData,
-        () => simulationService.createSimulation({
-          userId: user.id,
-          jobTitle: validatedData.jobTitle,
-          level: validatedData.level,
-          interviewType: validatedData.interviewType as "RH" | "Technique" | "Manager",
-          duration: validatedData.duration,
-        })
+        async () => {
+          const data = await simulationService.createSimulation({
+            userId: user.id,
+            jobTitle: validatedData.jobTitle,
+            level: validatedData.level,
+            interviewType: validatedData.interviewType as "RH" | "Technique" | "Manager",
+            duration: validatedData.duration,
+          });
+          return { resultRef: data.sessionId, data };
+        },
+        async (resultRef) => {
+          const session = await simulationService.getSession(resultRef, user.id);
+          return {
+            sessionId: session.id,
+            jobTitle: session.jobTitle,
+            level: session.level,
+            interviewType: session.interviewType,
+            durationSeconds: session.durationSeconds,
+          };
+        }
       );
     } else {
       result = await simulationService.createSimulation({

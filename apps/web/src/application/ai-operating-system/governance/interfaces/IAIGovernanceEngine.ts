@@ -127,8 +127,8 @@ export const GovernanceValidationSchema = z.object({
 export interface PolicyCorrection {
   id: string;
   violationId: string;
-  originalDecision: unknown;
-  correctedDecision: unknown;
+  originalDecision: any;
+  correctedDecision: any;
   correctionType: "modify" | "block" | "replace" | "defer";
   reason: string;
   timestamp: Date;

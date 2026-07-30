@@ -1,4 +1,4 @@
-import { StandardInterviewSession, PremiumInterviewSession } from "@/domain/interview.contract";
+import { StandardInterviewSession } from "@/domain/interview.contract";
 
 export interface InterviewFeatures {
   sessionId: string;
@@ -26,9 +26,9 @@ export interface InterviewFeatures {
  * PURE FUNCTION: Transforms a session into ML features deterministically.
  * NO randomness. NO DB access.
  */
-export function buildFeatures(session: StandardInterviewSession | PremiumInterviewSession): InterviewFeatures {
+export function buildFeatures(session: StandardInterviewSession | any): InterviewFeatures {
   const isPremium = "transcript" in session;
-  const elements = isPremium ? (session as PremiumInterviewSession).transcript.length : (session as StandardInterviewSession).answers.length;
+  const elements = isPremium ? (session as any).transcript.length : (session as StandardInterviewSession).answers.length;
 
   // Deterministic mock generation based on session ID length and content length for now
   const seed = session.id.length + elements;

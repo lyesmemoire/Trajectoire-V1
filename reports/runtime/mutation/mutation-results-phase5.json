@@ -1,0 +1,134 @@
+[
+  {
+    "id": "A1",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 64,
+    "mutation": "Supprimer fetch()",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 15250
+  },
+  {
+    "id": "A2",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 68,
+    "mutation": "Supprimer decode()",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11777
+  },
+  {
+    "id": "A3",
+    "family": "A",
+    "file": "execution-pipeline.ts",
+    "line": 71,
+    "mutation": "Supprimer execute()",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11747
+  },
+  {
+    "id": "B1",
+    "family": "B",
+    "file": "execution-pipeline.ts",
+    "line": 64,
+    "mutation": "Permuter decode avant fetch",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11717
+  },
+  {
+    "id": "C1",
+    "family": "C",
+    "file": "execution-pipeline.ts",
+    "line": 228,
+    "mutation": "validate() → return true",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11898
+  },
+  {
+    "id": "D1",
+    "family": "D",
+    "file": "execution-pipeline.ts",
+    "line": 127,
+    "mutation": "Supprimer stop()",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 12516
+  },
+  {
+    "id": "E1",
+    "family": "E",
+    "file": "execution-pipeline.ts",
+    "line": 31,
+    "mutation": "Forcer isHalted=true au démarrage",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 12852
+  },
+  {
+    "id": "F1",
+    "family": "F",
+    "file": "execution-pipeline.ts",
+    "line": 93,
+    "mutation": "Remplacer throw par return",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11280
+  },
+  {
+    "id": "G1",
+    "family": "G",
+    "file": "execution-pipeline.ts",
+    "line": 105,
+    "mutation": "while(true) avec arrêt après 100 cycles",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 11264
+  },
+  {
+    "id": "H1",
+    "family": "H",
+    "file": "execution-pipeline.ts",
+    "line": 144,
+    "mutation": "Retourner {} au lieu des statistiques",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 11885
+  },
+  {
+    "id": "I1",
+    "family": "I",
+    "file": "execution-pipeline.ts",
+    "line": 144,
+    "mutation": "Toujours retourner 0 pour tous les compteurs",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "INVALID",
+    "duration": 12131
+  },
+  {
+    "id": "J1",
+    "family": "J",
+    "file": "execution-pipeline.ts",
+    "line": 133,
+    "mutation": "Transformer reset() en fonction vide",
+    "compilationOk": true,
+    "testsOk": false,
+    "status": "KILLED",
+    "duration": 11267
+  }
+]

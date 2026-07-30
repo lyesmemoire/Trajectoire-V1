@@ -40,11 +40,7 @@ export const QUOTA_CONFIGS: Record<string, Record<QuotaType, QuotaConfig>> = {
  * Vérifie si l'utilisateur a atteint son quota
  * Utilise le cache mémoire pour optimiser les requêtes fréquentes
  */
-export async function checkQuota(
-  userId: string,
-  quotaType: QuotaType,
-  plan: string = "free"
-): Promise<{ allowed: boolean; remaining: number; resetTime: Date }> {
+export async function checkQuota(userId: string, quotaType: QuotaType, plan: string = "free"): Promise<{ allowed: boolean; remaining: number; resetTime: Date }> {
   const cache = getCache();
   const cacheKey = CacheKeys.userQuota(userId, quotaType);
   
@@ -126,11 +122,7 @@ export async function checkQuota(
  * Incrémente l'utilisation du quota
  * Invalide le cache après incrémentation
  */
-export async function incrementQuota(
-  userId: string,
-  quotaType: QuotaType,
-  amount: number = 1
-): Promise<void> {
+export async function incrementQuota(userId: string, quotaType: QuotaType, amount: number = 1): Promise<void> {
   const cache = getCache();
   const cacheKey = CacheKeys.userQuota(userId, quotaType);
   

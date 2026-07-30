@@ -1,3 +1,4 @@
+
 export type TemplateStyle = "modern" | "executive" | "minimal" | "creative";
 export type TemplateColor = "red" | "navy" | "black" | "slate";
 

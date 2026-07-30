@@ -4,7 +4,7 @@
  * Handles message sending and AI responses
  */
 
-import { Message, MessageProps } from "@/domain/entities";
+import { Message } from "@/domain/entities";
 import { SendMessageSchema } from "@/validation";
 import { SessionRepository, MessageRepository } from "@/infrastructure/repositories";
 import { IRateLimiter, IQuotaService, IAuditService, ILogger, IAIProvider } from "@/core/interfaces";
@@ -131,7 +131,7 @@ export class ConversationService {
       content: command.content,
     });
 
-    const persistedUserMessage = await this.messageRepository.create(userMessage.toPersistence());
+    const persistedUserMessage = await this.messageRepository.create(userMessage.toPersistence() as any);
 
     // Get conversation history
     const messages = await this.messageRepository.getBySessionId(command.sessionId);
@@ -156,6 +156,7 @@ export class ConversationService {
           interviewType: sessionData.interview_type,
           sessionId: command.sessionId,
           userId: command.userId,
+          signal: controller.signal,
         },
         lastMessages: conversationHistory,
       });
@@ -181,7 +182,7 @@ export class ConversationService {
       content: aiResponse,
     });
 
-    await this.messageRepository.create(aiMessage.toPersistence());
+    await this.messageRepository.create(aiMessage.toPersistence() as any);
 
     // Increment quota (only after successful AI generation)
     await this.quotaService.incrementQuota(command.userId, "messages");

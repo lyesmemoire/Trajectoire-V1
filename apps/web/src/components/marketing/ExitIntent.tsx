@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { X, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+import { useState, useEffect } from "react"
+import { X, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
 
 export function ExitIntent() {
-  const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
+  const [show, setShow] = useState(false)
+  const [email, setEmail] = useState("")
+  const [done, setDone] = useState(false)
 
   useEffect(() => {
-    if (sessionStorage.getItem("exitShown")) return;
+    if (sessionStorage.getItem("exitShown")) return
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY > 20) return;
-      setShow(true);
-      sessionStorage.setItem("exitShown", "1");
-    };
-    document.addEventListener("mouseleave", handleMouseLeave);
-    return () => document.removeEventListener("mouseleave", handleMouseLeave);
-  }, []);
+      if (e.clientY > 20) return
+      setShow(true)
+      sessionStorage.setItem("exitShown", "1")
+    }
+    document.addEventListener("mouseleave", handleMouseLeave)
+    return () => document.removeEventListener("mouseleave", handleMouseLeave)
+  }, [])
 
-  if (!show) return null;
+  if (!show) return null
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -36,7 +36,7 @@ export function ExitIntent() {
 
         <button
           onClick={() => setShow(false)}
-          className="absolute top-8 right-8 p-3 hover:bg-white/5 rounded-2xl transition-colors text-slate-500 hover:text-white"
+          className="absolute top-8 right-8 p-3 hover:bg-white/5 rounded-2xl transition-colors text-ink-500 hover:text-white"
         >
           <X className="w-6 h-6" />
         </button>
@@ -50,7 +50,7 @@ export function ExitIntent() {
               <h2 className="text-4xl font-black text-white leading-tight tracking-tight">
                 Attendez !
               </h2>
-              <p className="text-slate-400 font-medium text-lg leading-relaxed">
+              <p className="text-ink-400 font-medium text-lg leading-relaxed">
                 Recevez gratuitement notre guide <br />
                 <span className="text-[#06B6D4] font-black italic">
                   "Maîtriser la Haute Pression"
@@ -59,9 +59,9 @@ export function ExitIntent() {
             </div>
             <form
               onSubmit={(e) => {
-                e.preventDefault();
-                setDone(true);
-                toast.success("Guide envoyé !");
+                e.preventDefault()
+                setDone(true)
+                toast.success("Guide envoyé !")
               }}
               className="space-y-5"
             >
@@ -81,7 +81,7 @@ export function ExitIntent() {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </form>
-            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest">
+            <p className="text-[10px] font-black text-ink-600 uppercase tracking-widest">
               50 Questions + Réponses modèles incluses
             </p>
           </div>
@@ -92,13 +92,13 @@ export function ExitIntent() {
               <h3 className="text-3xl font-black text-white tracking-tight">
                 C'est dans votre boîte !
               </h3>
-              <p className="text-slate-400 font-medium text-lg">
+              <p className="text-ink-400 font-medium text-lg">
                 Le guide arrive dans quelques secondes. <br />
                 Préparez-vous à la mutation.
               </p>
             </div>
             <Button
-              className="w-full h-16 bg-white text-[#050816] font-black rounded-2xl text-lg hover:bg-slate-200 transition-transform active:scale-95"
+              className="w-full h-16 bg-white text-[#050816] font-black rounded-2xl text-lg hover:bg-ivoire-200 transition-transform active:scale-95"
               onClick={() => setShow(false)}
             >
               Lancer mon Test Gratuit
@@ -107,5 +107,5 @@ export function ExitIntent() {
         )}
       </div>
     </div>
-  );
+  )
 }

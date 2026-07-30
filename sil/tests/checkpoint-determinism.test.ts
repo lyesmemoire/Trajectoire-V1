@@ -93,8 +93,8 @@ describe("SIL Phase 2-D — Checkpoint Determinism", () => {
     
     // Validate we can hash the entire state predictably (removing timestamps inside)
     // Actually our test mock creates a simple state. Let's compare state objects minus timestamps.
-    const stateAStr = JSON.stringify(checkpointA!.state);
-    const stateBStr = JSON.stringify(checkpointB!.state);
+    const _stateAStr = JSON.stringify(checkpointA!.state);
+    const _stateBStr = JSON.stringify(checkpointB!.state);
     
     // Note: The loop might inject Date.now() in events if we don't fix it. 
     // In our simplified mock, some timestamps might vary.

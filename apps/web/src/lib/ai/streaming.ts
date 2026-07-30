@@ -1,6 +1,4 @@
-export async function streamFromGPT4o(
-  prompt: string,
-  onToken: (token: string) => void,
+export async function streamFromGPT4o(prompt: string, onToken: (token: string) => void,
   signal?: AbortSignal
 ) {
   const res = await fetch("/api/interview/stream", {
@@ -33,7 +31,7 @@ export async function streamFromGPT4o(
         try {
           const { content } = JSON.parse(data);
           if (content) onToken(content);
-        } catch (_) {}
+        } catch {}
       }
     }
   }

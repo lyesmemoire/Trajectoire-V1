@@ -37,9 +37,9 @@ export interface IncomingSILEvent {
   signature: string;
 
   // Type-specific payload
-  payload?: any;
+  payload?: unknown;
   error?: FailureType;
-  details?: any;
+  details?: unknown;
 }
 
 export interface SILEvent extends IncomingSILEvent {

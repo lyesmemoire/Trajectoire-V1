@@ -10,7 +10,7 @@ interface Props {
   };
 }
 
-export function ReturnSegmentDistribution({ data }: Props) {
+export function ReturnSegmentDistribution({ data }: _Props) {
   const chartData = [
     { name: "HIGH", value: data.high, color: "#3B82F6" },
     { name: "MEDIUM", value: data.medium, color: "#F59E0B" },

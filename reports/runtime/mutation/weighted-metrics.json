@@ -1,0 +1,28 @@
+{
+  "totalMutations": 40,
+  "killed": 7,
+  "survived": 0,
+  "invalid": 33,
+  "validMutations": 7,
+  "realInvalid": 0,
+  "expectedInvalid": 20,
+  "testIssue": 13,
+  "realInvalidRate": 32.5,
+  "weightedMutationScore": 100,
+  "adjustedWeightedScore": 100,
+  "confidenceIndex": 44.67,
+  "sampleConfidence": 23.33,
+  "familyDiversity": 60,
+  "criticalityDiversity": 75,
+  "certification": "SILVER",
+  "certificationReasons": [
+    "Échantillon insuffisant: 7 mutations valides < 30 requis",
+    "Taux d'INVALID réels trop élevé: 32.5% > 20% requis",
+    "Familles non couvertes: E, F, I, J",
+    "Niveaux de criticité non couverts: MAJOR"
+  ],
+  "totalWeight": 147,
+  "killedWeight": 18,
+  "survivedWeight": 0,
+  "invalidWeight": 129
+}

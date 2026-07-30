@@ -7,7 +7,7 @@ export type RecruiterPersona =
   | "technical_lead"
   | "aggressive_recruiter";
 
-export type InterviewPhase =
+export type PremiumInterviewPhase =
   | "intro"
   | "cv_deep_dive"
   | "technical_case"
@@ -22,7 +22,7 @@ export interface PremiumInterviewSession {
   company?: string;
   persona: RecruiterPersona;
   difficulty: "normal" | "hard" | "elite";
-  phase: InterviewPhase;
+  phase: PremiumInterviewPhase;
   stressLevel: number;
   technicalScore: number;
   coherenceScore: number;

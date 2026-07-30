@@ -9,10 +9,7 @@ export interface PilotCommandResult {
   finished?: boolean;
 }
 
-export function handlePilotCommand(
-  action: PilotAction,
-  lastQuestion: string
-): PilotCommandResult {
+export function handlePilotCommand(action: PilotAction, lastQuestion: string): PilotCommandResult {
   if (action in pilotCommandsCount) {
     pilotCommandsCount[action as keyof typeof pilotCommandsCount]++;
   }

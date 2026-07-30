@@ -1,0 +1,102 @@
+{
+  "component": "thread-manager",
+  "file": "compiler/cvm/thread-manager.ts",
+  "testFile": "tests/vm/advanced/thread-manager.test.ts",
+  "certificationDate": "2026-07-26T23:55:00Z",
+  "sprint": 3,
+  "lot": 1,
+  "status": "CERTIFIED",
+  "coverageSource": "coverage-final.json (reports/cli/coverage/coverage-final.json)",
+  "provider": "Vitest with V8 coverage",
+  "metrics": {
+    "statements": {
+      "total": 90,
+      "covered": 90,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "≥95%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "total": 50,
+      "covered": 50,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "≥97%",
+      "status": "PASSED"
+    },
+    "functions": {
+      "total": 29,
+      "covered": 29,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "100%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "total": 90,
+      "covered": 90,
+      "uncovered": 0,
+      "percentage": "100.00",
+      "target": "≥95%",
+      "status": "PASSED"
+    }
+  },
+  "uncoveredLines": [],
+  "uncoveredBranches": [],
+  "testSummary": {
+    "total": 58,
+    "passed": 58,
+    "failed": 0,
+    "passRate": "100%",
+    "newTests": 3
+  },
+  "newTests": [
+    "should create thread manager with default options",
+    "should handle set state for non-existent thread gracefully",
+    "should detect current thread not in threads map",
+    "should detect thread ID mismatch",
+    "should validate when current thread exists in threads map",
+    "should validate when thread IDs match map keys"
+  ],
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "allTestsPass": {
+      "required": "100%",
+      "achieved": "100%",
+      "status": "PASSED"
+    },
+    "coverageTraceable": {
+      "required": true,
+      "achieved": true,
+      "status": "PASSED"
+    }
+  },
+  "regressionTests": {
+    "pnpmTest": "PASSED - 58/58 tests",
+    "pnpmBuild": "PASSED",
+    "pnpmTsc": "PASSED",
+    "pnpmLint": "SKIPPED - Existing ESLint configuration issue (not related to changes)"
+  },
+  "overallStatus": "CERTIFIED",
+  "notes": "All criteria met. 100% coverage achieved across all metrics. No uncovered branches or lines remaining."
+}

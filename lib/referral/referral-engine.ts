@@ -35,7 +35,7 @@ async function applyReferralReward(userId: string) {
 
   if (!profile) return;
 
-  // Example: Every 3 referrals unlock an "Elite" Persona
+  
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { referralCount: true },

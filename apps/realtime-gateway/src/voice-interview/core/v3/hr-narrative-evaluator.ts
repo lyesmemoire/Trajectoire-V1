@@ -25,10 +25,7 @@ const HRNarrativeSchema = z.object({
  * Evaluates the candidate's narrative structure, clarity, and career progression
  * mimicking a Strategic HR Director. Used primarily in Phase 1 of the interview.
  */
-export async function evaluateHRNarrative(
-  phase1Question: string,
-  transcriptChunk: string
-): Promise<HRNarrativeEvaluation> {
+export async function evaluateHRNarrative(phase1Question: string, transcriptChunk: string): Promise<HRNarrativeEvaluation> {
   const systemPrompt = `You are a strategic HR Director evaluating executive-level candidates.
 
 You must evaluate the following response based on:

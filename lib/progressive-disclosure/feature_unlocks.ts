@@ -20,9 +20,6 @@ export function getVisibleFeatures(sessionCount: number): string[] {
   return base;
 }
 
-export function isFeatureLocked(
-  featureId: string,
-  sessionCount: number,
-): boolean {
+export function isFeatureLocked(featureId: string, sessionCount: number, ): boolean {
   return !getVisibleFeatures(sessionCount).includes(featureId);
 }

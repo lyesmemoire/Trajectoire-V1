@@ -8,12 +8,12 @@ export interface RuntimeEvent {
   id: string;
   type: RuntimeEventType;
   timestamp: number;
-  payload: Record<string, any>;
+  payload: Record<string, unknown>;
 }
 
 export interface RoutedEvent extends RuntimeEvent {
   route: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 export type MiddlewareContext = {

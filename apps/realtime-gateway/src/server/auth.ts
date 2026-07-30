@@ -11,7 +11,7 @@ const supabase = createClient(
   envServer.SUPABASE_SERVICE_ROLE_KEY
 );
 
-export async function verifyVoiceToken(token?: string): Promise<VoiceTokenPayload | null> {
+export async function verifyVoiceToken(token?: _string): Promise<VoiceTokenPayload | null> {
   if (!token) return null;
 
   try {

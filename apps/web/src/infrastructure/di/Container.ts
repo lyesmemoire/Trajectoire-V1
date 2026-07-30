@@ -16,7 +16,7 @@ interface ServiceRegistration<T> {
 }
 
 export class Container {
-  private static registrations = new Map<string, ServiceRegistration<unknown>>();
+  private static registrations = new Map<string, ServiceRegistration<any>>();
 
   /**
    * Register a service

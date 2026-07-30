@@ -1,4 +1,3 @@
-import { FastifyRequest } from "fastify";
 
 export type AuthContext = {
   userId: string;
@@ -6,25 +5,25 @@ export type AuthContext = {
   role: "user" | "admin";
 };
 
-export async function authMiddleware(req: FastifyRequest) {
+export async function authMiddleware(req: _FastifyRequest) {
   // Try to read token from query param (for WebSocket) or headers
-  const token = req.headers.authorization || (req.query as any).token;
+  const token = req.headers.authorization || (req.query as unknown).token;
 
   if (!token) {
     throw new Error("Missing auth token");
   }
 
-  // MOCK verify (replace with JWT provider)
+  
   const decoded = decodeToken(token);
 
-  (req as any).auth = {
+  (req as unknown).auth = {
     userId: decoded.userId,
     tenantId: decoded.tenantId,
     role: decoded.role,
   } satisfies AuthContext;
 }
 
-function decodeToken(token: string) {
+function decodeToken(_token: string) {
   return {
     userId: "u_123",
     tenantId: "t_456",

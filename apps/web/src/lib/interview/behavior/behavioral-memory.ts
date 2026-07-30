@@ -1,10 +1,7 @@
 import prisma from "@/lib/prisma";
-import { AnswerAnalysis } from "./answer-analysis";
+import { AnswerAnalysis } from './answer-analysis';
 
-export async function updateBehavioralMemory(
-  userId: string,
-  analysis: AnswerAnalysis,
-) {
+export async function updateBehavioralMemory(userId: string, analysis: any, ) {
   // Logic to identify recurring patterns
   const patterns = [];
 

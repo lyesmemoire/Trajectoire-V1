@@ -81,7 +81,7 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
 
     try {
       msg = JSON.parse(raw.toString());
-    } catch {
+    } catch (error) {
       socket.send(JSON.stringify({ type: "error", code: "INVALID_JSON" }));
       return;
     }
@@ -116,7 +116,7 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
         });
 
         socket.send(JSON.stringify({ type: "auth_ok", sessionId }));
-      } catch (err) {
+      } catch (error) {
         app.log.error({ err }, "Auth failed");
         socket.send(JSON.stringify({ type: "error", code: "AUTH_FAILED" }));
         socket.close();
@@ -147,7 +147,7 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
             isFinal: true,
           });
         }
-      } catch (err) {
+      } catch (error) {
         app.log.error({ err, sessionId }, "Transcript processing error");
         socket.send(
           JSON.stringify({ type: "error", code: "PROCESSING_ERROR" })
@@ -175,7 +175,7 @@ const HOST = envServer.HOST ?? "0.0.0.0";
 try {
   await app.listen({ port: PORT, host: HOST });
   app.log.info(`Realtime Gateway listening on ${HOST}:${PORT}`);
-} catch (err) {
+} catch (error) {
   app.log.error(err);
   process.exit(1);
 }
@@ -184,7 +184,7 @@ try {
 // Graceful shutdown
 // ────────────────────────────────────────────────────────────────────────────
 
-async function shutdown(signal: string): Promise<void> {
+async function shutdown(signal: _string): Promise<void> {
   app.log.info(`Received ${signal}, shutting down`);
   await app.close();
   process.exit(0);

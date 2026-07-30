@@ -4,7 +4,6 @@
  */
 
 import {
-  ReasoningStage,
   ReasoningStep,
   ReasoningTrace,
   ReasoningRequest,
@@ -12,7 +11,6 @@ import {
   ReasoningConfig,
   defaultReasoningConfig,
 } from "./interfaces/IReasoningEngine";
-import { worldModelEngine } from "../world-model/WorldModelEngine";
 
 // ============================================================================
 // REASONING ENGINE CLASS

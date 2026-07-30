@@ -1,0 +1,295 @@
+{
+  "auditProfile": "trajectoire-laboratory-v1",
+  "auditVersion": "1.0",
+  "result": "FAIL",
+  "summary": {
+    "artifacts": 13,
+    "verified": 7,
+    "relationships": 4,
+    "graphValid": true,
+    "orphans": 5,
+    "drift": "NONE"
+  },
+  "controls": [
+    {
+      "id": "L-001",
+      "status": "PASS",
+      "details": "Snapshot trouvé (v1.0)"
+    },
+    {
+      "id": "L-006",
+      "status": "PASS",
+      "details": "Le graphe est acyclique"
+    },
+    {
+      "id": "L-023",
+      "status": "PASS",
+      "details": "DSSE Schema valide"
+    },
+    {
+      "id": "L-003",
+      "status": "PASS",
+      "details": "PayloadType est bien application/vnd.in-toto+json"
+    },
+    {
+      "id": "L-024",
+      "status": "PASS",
+      "details": "Profil trajectoire-provenance-v1 autorisé et compatible"
+    },
+    {
+      "id": "L-025",
+      "status": "PASS",
+      "details": "Tous les artefacts exigés sont présents et référencés"
+    },
+    {
+      "id": "L-002",
+      "status": "PASS",
+      "details": "Format DSSE valide"
+    },
+    {
+      "id": "L-013",
+      "status": "PASS",
+      "details": "Signature présente"
+    },
+    {
+      "id": "L-022",
+      "status": "PASS",
+      "details": "Statut de la clé valide (active/test)"
+    },
+    {
+      "id": "L-021",
+      "status": "PASS",
+      "details": "Mode d'exécution (production) conforme à la politique"
+    },
+    {
+      "id": "L-014",
+      "status": "PASS",
+      "details": "Signature valide pour local-ed25519"
+    },
+    {
+      "id": "L-016",
+      "status": "PASS",
+      "details": "Clé autorisée par la politique"
+    },
+    {
+      "id": "L-015",
+      "status": "PASS",
+      "details": "Certificat valide (si applicable)"
+    },
+    {
+      "id": "L-017",
+      "status": "PASS",
+      "details": "Bundle Sigstore cohérent (si applicable)"
+    },
+    {
+      "id": "L-018",
+      "status": "PASS",
+      "details": "Algorithme autorisé"
+    },
+    {
+      "id": "L-019",
+      "status": "PASS",
+      "details": "DSSE bien formée"
+    },
+    {
+      "id": "L-020",
+      "status": "PASS",
+      "details": "Payload DSSE correspond au digest attendu"
+    },
+    {
+      "id": "L-022",
+      "status": "PASS",
+      "details": "Vérification de registre bypassée (Keyless/Mock)"
+    },
+    {
+      "id": "L-021",
+      "status": "PASS",
+      "details": "Mode d'exécution (mock) conforme à la politique"
+    },
+    {
+      "id": "L-014",
+      "status": "PASS",
+      "details": "Signature valide pour cosign-keyless"
+    },
+    {
+      "id": "L-016",
+      "status": "PASS",
+      "details": "Clé autorisée par la politique"
+    },
+    {
+      "id": "L-015",
+      "status": "PASS",
+      "details": "Certificat valide (si applicable)"
+    },
+    {
+      "id": "L-017",
+      "status": "PASS",
+      "details": "Bundle Sigstore cohérent (si applicable)"
+    },
+    {
+      "id": "L-018",
+      "status": "PASS",
+      "details": "Algorithme autorisé"
+    },
+    {
+      "id": "L-019",
+      "status": "PASS",
+      "details": "DSSE bien formée"
+    },
+    {
+      "id": "L-020",
+      "status": "PASS",
+      "details": "Payload DSSE correspond au digest attendu"
+    },
+    {
+      "id": "L-022",
+      "status": "PASS",
+      "details": "Vérification de registre bypassée (Keyless/Mock)"
+    },
+    {
+      "id": "L-021",
+      "status": "PASS",
+      "details": "Mode d'exécution (mock) conforme à la politique"
+    },
+    {
+      "id": "L-014",
+      "status": "PASS",
+      "details": "Signature valide pour aws-kms"
+    },
+    {
+      "id": "L-016",
+      "status": "PASS",
+      "details": "Clé autorisée par la politique"
+    },
+    {
+      "id": "L-015",
+      "status": "PASS",
+      "details": "Certificat valide (si applicable)"
+    },
+    {
+      "id": "L-017",
+      "status": "PASS",
+      "details": "Bundle Sigstore cohérent (si applicable)"
+    },
+    {
+      "id": "L-018",
+      "status": "PASS",
+      "details": "Algorithme autorisé"
+    },
+    {
+      "id": "L-019",
+      "status": "PASS",
+      "details": "DSSE bien formée"
+    },
+    {
+      "id": "L-020",
+      "status": "PASS",
+      "details": "Payload DSSE correspond au digest attendu"
+    },
+    {
+      "id": "L-022",
+      "status": "PASS",
+      "details": "Vérification de registre bypassée (Keyless/Mock)"
+    },
+    {
+      "id": "L-021",
+      "status": "PASS",
+      "details": "Mode d'exécution (mock) conforme à la politique"
+    },
+    {
+      "id": "L-014",
+      "status": "PASS",
+      "details": "Signature valide pour gpg"
+    },
+    {
+      "id": "L-016",
+      "status": "PASS",
+      "details": "Clé autorisée par la politique"
+    },
+    {
+      "id": "L-015",
+      "status": "PASS",
+      "details": "Certificat valide (si applicable)"
+    },
+    {
+      "id": "L-017",
+      "status": "PASS",
+      "details": "Bundle Sigstore cohérent (si applicable)"
+    },
+    {
+      "id": "L-018",
+      "status": "PASS",
+      "details": "Algorithme autorisé"
+    },
+    {
+      "id": "L-019",
+      "status": "PASS",
+      "details": "DSSE bien formée"
+    },
+    {
+      "id": "L-020",
+      "status": "PASS",
+      "details": "Payload DSSE correspond au digest attendu"
+    },
+    {
+      "id": "L-032",
+      "status": "PASS",
+      "details": "Build Reproductible : le payload du manifeste est strictement canonique (RFC 8785)"
+    },
+    {
+      "id": "L-030",
+      "status": "PASS",
+      "details": "Timestamp Subject Integrity vérifié"
+    },
+    {
+      "id": "L-026",
+      "status": "PASS",
+      "details": "Timestamp provider accepté par la politique"
+    },
+    {
+      "id": "L-027",
+      "status": "PASS",
+      "details": "Validation cryptographique RFC3161 vérifiée"
+    },
+    {
+      "id": "L-028",
+      "status": "PASS",
+      "details": "Validation du bundle de transparence (Rekor ou équivalent) vérifiée"
+    },
+    {
+      "id": "L-029",
+      "status": "PASS",
+      "details": "Cohérence chronologique globale vérifiée"
+    },
+    {
+      "id": "L-031",
+      "status": "PASS",
+      "details": "Timestamp Evidence Completeness vérifié"
+    },
+    {
+      "id": "L-011",
+      "status": "PASS",
+      "details": "Preuves Runtime conformes à la politique d'herméticité"
+    },
+    {
+      "id": "L-012",
+      "status": "PASS",
+      "details": "Configuration du builder authentifiée"
+    },
+    {
+      "id": "L-007",
+      "status": "FAIL",
+      "details": "5 artefact(s) orphelin(s) détecté(s) !"
+    },
+    {
+      "id": "L-004",
+      "status": "PASS",
+      "details": "Tous les digests correspondent physiquement"
+    },
+    {
+      "id": "L-009",
+      "status": "PASS",
+      "details": "Preuves déterministes validées"
+    }
+  ]
+}

@@ -52,7 +52,7 @@ const criteria = [
 function Check({ value }: { value: boolean }) {
   return (
     <span
-      className={`text-lg font-bold ${value ? "text-green-400" : "text-gray-700"}`}
+      className={`text-lg font-bold ${value ? "text-forest-400" : "text-ink-700"}`}
       aria-label={value ? "Oui" : "Non"}
     >
       {value ? "✓" : "✗"}
@@ -62,21 +62,21 @@ function Check({ value }: { value: boolean }) {
 
 export default function CompetitionTable() {
   return (
-    <div className="overflow-x-auto rounded-xl border border-red-900/30">
+    <div className="overflow-x-auto rounded-xl border border-brick-900/30">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-red-900/30 bg-black/60">
+          <tr className="border-b border-brick-900/30 bg-black/60">
             <th className="px-4 py-3 text-left font-semibold text-gray-400">
               Critère
             </th>
             {competitors.map((c) => (
               <th
                 key={c.name}
-                className={`px-4 py-3 text-center font-semibold ${c.us ? "text-red-400" : "text-gray-500"}`}
+                className={`px-4 py-3 text-center font-semibold ${c.us ? "text-brick-400" : "text-ink-500"}`}
               >
                 {c.us ? (
                   <span className="flex flex-col items-center gap-1">
-                    <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs text-white">
+                    <span className="rounded-full bg-brick-600 px-2 py-0.5 text-xs text-white">
                       Nous
                     </span>
                     <span className="text-xs">{c.name}</span>
@@ -92,7 +92,7 @@ export default function CompetitionTable() {
           {criteria.map((row, i) => (
             <tr
               key={row.label}
-              className={`border-b border-red-900/20 ${i % 2 === 0 ? "bg-black/30" : "bg-black/10"}`}
+              className={`border-b border-brick-900/20 ${i % 2 === 0 ? "bg-black/30" : "bg-black/10"}`}
             >
               <td className="px-4 py-3 text-gray-300">{row.label}</td>
               <td className="px-4 py-3 text-center">

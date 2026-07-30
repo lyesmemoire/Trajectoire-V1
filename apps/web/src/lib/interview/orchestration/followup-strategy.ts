@@ -1,5 +1,3 @@
-import { AnswerAnalysis } from "../behavior/answer-analysis";
-
 export type FollowUpStrategy =
   | "clarification"
   | "pressure"
@@ -13,10 +11,7 @@ export interface FollowUpIntent {
   reason: string;
 }
 
-export function chooseStrategy(
-  analysis: AnswerAnalysis,
-  pressureLevel: number,
-): FollowUpIntent {
+export function chooseStrategy(analysis: any, pressureLevel: number, ): FollowUpIntent {
   // 1. Détection de besoin de clarification (Vague)
   if (analysis.specificity < 45) {
     return {

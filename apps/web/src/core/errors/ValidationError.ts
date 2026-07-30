@@ -8,7 +8,7 @@ import { AppError, ErrorCode } from "./AppError";
 export interface ValidationErrorField {
   field: string;
   message: string;
-  value?: unknown;
+  value?: any;
 }
 
 export class ValidationError extends AppError {

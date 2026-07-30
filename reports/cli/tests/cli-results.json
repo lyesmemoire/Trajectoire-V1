@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-07-25T20:56:00.132Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "commands": [
+    {
+      "command": "help",
+      "exitCode": 0,
+      "duration": 3467,
+      "success": true
+    },
+    {
+      "command": "version",
+      "exitCode": 0,
+      "duration": 4250,
+      "success": true
+    },
+    {
+      "command": "doctor",
+      "exitCode": 0,
+      "duration": 3503,
+      "success": true
+    },
+    {
+      "command": "init",
+      "exitCode": 0,
+      "duration": 3381,
+      "success": true
+    },
+    {
+      "command": "compile",
+      "exitCode": 0,
+      "duration": 2716,
+      "success": true
+    },
+    {
+      "command": "graph",
+      "exitCode": 0,
+      "duration": 3291,
+      "success": true
+    },
+    {
+      "command": "trace",
+      "exitCode": 0,
+      "duration": 4770,
+      "success": true
+    },
+    {
+      "command": "debug",
+      "exitCode": 0,
+      "duration": 2919,
+      "success": true
+    },
+    {
+      "command": "run",
+      "exitCode": 0,
+      "duration": 2950,
+      "success": true
+    },
+    {
+      "command": "build",
+      "exitCode": 0,
+      "duration": 2784,
+      "success": true
+    },
+    {
+      "command": "benchmark",
+      "exitCode": 0,
+      "duration": 3726,
+      "success": true
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "signatureProfile": "trajectoire-crypto-v2",
+  "signatureType": "DSSE",
+  "qualification": {
+    "level": "architecture-qualified",
+    "productionReady": false
+  },
+  "timestamps": {
+    "applicationTimestamp": "2026-07-29T13:41:46.001Z",
+    "trustedTimestamp": null,
+    "verificationTimestamp": "2026-07-29T13:50:08.856Z"
+  },
+  "summary": {
+    "required": 1,
+    "requiredSatisfied": true,
+    "present": 4,
+    "valid": 4,
+    "policyCompliant": true
+  },
+  "signatures": [
+    {
+      "provider": "local-ed25519",
+      "algorithm": "Ed25519",
+      "keyId": "urn:trajectoire:keys:ed25519:v1",
+      "policyCompliance": {
+        "providerAllowed": true,
+        "algorithmAllowed": true
+      },
+      "verification": {
+        "payloadDigest": "MOCK_DIGEST",
+        "signatureValid": true,
+        "chainValid": true
+      },
+      "supports": {
+        "dsse": true,
+        "keyless": false,
+        "transparencyLog": false,
+        "certificateChain": false
+      },
+      "execution": {
+        "mode": "production"
+      }
+    },
+    {
+      "provider": "cosign-keyless",
+      "algorithm": "ECDSA-P256",
+      "keyId": "https://sigstore.dev/rekor/mock",
+      "policyCompliance": {
+        "providerAllowed": true,
+        "algorithmAllowed": true
+      },
+      "verification": {
+        "payloadDigest": "MOCK_DIGEST",
+        "signatureValid": true,
+        "chainValid": true,
+        "certificateValid": true
+      },
+      "transparencyLog": {
+        "provider": "Rekor",
+        "entryUUID": "2326ea9b-dcdc-4eec-bec6-dbf6fc1355f7"
+      },
+      "certificate": "-----BEGIN CERTIFICATE-----\nMOCK_FULCIO_CERT\n-----END CERTIFICATE-----",
+      "supports": {
+        "dsse": true,
+        "keyless": true,
+        "transparencyLog": true,
+        "certificateChain": true
+      },
+      "execution": {
+        "mode": "mock"
+      }
+    },
+    {
+      "provider": "aws-kms",
+      "algorithm": "RSASSA_PSS_SHA_256",
+      "keyId": "arn:aws:kms:eu-west-3:123456789012:key/mock-kms-key",
+      "policyCompliance": {
+        "providerAllowed": true,
+        "algorithmAllowed": true
+      },
+      "verification": {
+        "payloadDigest": "MOCK_DIGEST",
+        "signatureValid": true,
+        "chainValid": true
+      },
+      "supports": {
+        "dsse": true,
+        "keyless": false,
+        "transparencyLog": false,
+        "certificateChain": false
+      },
+      "execution": {
+        "mode": "mock"
+      }
+    },
+    {
+      "provider": "gpg",
+      "algorithm": "RSA",
+      "keyId": "mock-gpg-fingerprint",
+      "policyCompliance": {
+        "providerAllowed": true,
+        "algorithmAllowed": true
+      },
+      "verification": {
+        "payloadDigest": "MOCK_DIGEST",
+        "signatureValid": true,
+        "chainValid": true
+      },
+      "supports": {
+        "dsse": true,
+        "keyless": false,
+        "transparencyLog": false,
+        "certificateChain": false
+      },
+      "execution": {
+        "mode": "mock"
+      }
+    }
+  ],
+  "verified": true
+}

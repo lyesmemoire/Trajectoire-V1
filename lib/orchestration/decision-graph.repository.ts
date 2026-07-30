@@ -8,7 +8,7 @@ export class DecisionGraphRepository {
         traceId: graph.traceId,
         userId: graph.userId,
         sessionId: graph.sessionId,
-        graph: JSON.stringify(graph) as any,
+        graph: JSON.stringify(graph) as unknown,
         status: graph.finalDecision.status,
         globalScore: graph.finalDecision.globalScore,
       },
@@ -22,6 +22,6 @@ export class DecisionGraphRepository {
 
     if (!row) return null;
 
-    return typeof row.graph === "string" ? JSON.parse(row.graph) : row.graph as any;
+    return typeof row.graph === "string" ? JSON.parse(row.graph) : row.graph as unknown;
   }
 }

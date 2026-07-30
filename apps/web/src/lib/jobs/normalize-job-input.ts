@@ -21,7 +21,7 @@ export function normalizeJobInput(input: string): string {
 
     url.search = searchParams.toString();
     cleaned = url.toString();
-  } catch (e) {
+  } catch {
     // Ce n'est pas une URL, on traite le texte
     // Nettoyage des espaces multiples et retours à la ligne excessifs
     cleaned = cleaned.replace(/\s+/g, " ");

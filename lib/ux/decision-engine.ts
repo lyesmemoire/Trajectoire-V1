@@ -16,7 +16,7 @@ export interface RecommendedAction {
  * Moteur de décision pour supprimer la fatigue décisionnelle.
  * Retourne UNE SEULE priorité et UNE SEULE action recommandée.
  */
-export function calculateNextStep(userStats: any): {
+export function calculateNextStep(userStats: _unknown): {
   priority: string;
   action: RecommendedAction;
 } {

@@ -1,31 +1,32 @@
-"use client";
+"use client"
 
-import { TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react"
 
 interface Props {
-  title: string;
-  value: string | number;
-  trend: string;
-  icon: React.ReactNode;
+  title: string
+  value: string | number
+  trend: string
+  icon: React.ReactNode
+  _icon?: React.ReactNode
 }
 
 export function KPICard({ title, value, trend, icon }: Props) {
   return (
-    <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-all">
+    <div className="bg-white rounded-3xl border border-ivoire-100 p-6 shadow-sm hover:shadow-md transition-all">
       <div className="flex justify-between items-start mb-4">
-        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
+        <div className="w-10 h-10 rounded-xl bg-ivoire-50 flex items-center justify-center text-ink-400">
           {icon}
         </div>
-        <div className="flex items-center gap-1 text-[10px] font-black text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+        <div className="flex items-center gap-1 text-[10px] font-black text-forest-500 bg-forest-50 px-2 py-0.5 rounded-md border border-forest-100">
           <TrendingUp className="w-2 h-2" /> {trend}
         </div>
       </div>
       <div>
-        <p className="text-3xl font-black text-slate-900">{value}</p>
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">
+        <p className="text-3xl font-black text-ink-900">{value}</p>
+        <p className="text-[10px] font-black text-ink-400 uppercase tracking-widest mt-1">
           {title}
         </p>
       </div>
     </div>
-  );
+  )
 }

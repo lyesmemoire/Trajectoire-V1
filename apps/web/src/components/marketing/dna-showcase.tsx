@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { ARCHETYPES_META } from "@/lib/archetypes/career-archetypes";
-import { ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion"
+import { ARCHETYPES_META } from "@/lib/archetypes/career-archetypes"
+import { ShieldCheck } from "lucide-react"
 
 export function DNAShowcase() {
   const sampleArchetypes = [
     "strategic_leader",
     "analytical_operator",
     "confident_performer",
-  ];
+  ]
 
   return (
     <section className="py-40 px-6 bg-[#050816] relative overflow-hidden">
@@ -23,7 +23,7 @@ export function DNAShowcase() {
               révélé par la donnée.
             </span>
           </h2>
-          <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+          <p className="text-ink-400 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
             Chaque interruption et chaque rebond alimente un algorithme de
             classification comportementale unique.
           </p>
@@ -31,7 +31,7 @@ export function DNAShowcase() {
 
         <div className="grid md:grid-cols-3 gap-10">
           {sampleArchetypes.map((id, i) => {
-            const meta = ARCHETYPES_META[id as keyof typeof ARCHETYPES_META];
+            const meta = ARCHETYPES_META[id as keyof typeof ARCHETYPES_META]
             return (
               <motion.div
                 key={id}
@@ -42,7 +42,7 @@ export function DNAShowcase() {
                 <div
                   className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-10 transition-all duration-700 group-hover:opacity-30 ${
                     i === 0
-                      ? "bg-blue-600"
+                      ? "bg-bronze-600"
                       : i === 1
                         ? "bg-[#7C3AED]"
                         : "bg-[#06B6D4]"
@@ -70,7 +70,7 @@ export function DNAShowcase() {
                   </div>
 
                   <div className="pt-8 space-y-4 text-left w-full border-t border-white/[0.05]">
-                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                    <p className="text-[9px] font-black text-ink-500 uppercase tracking-widest">
                       Capacités Détectées
                     </p>
                     <div className="flex flex-wrap gap-3">
@@ -80,7 +80,7 @@ export function DNAShowcase() {
                           className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-xl border border-white/[0.05]"
                         >
                           <ShieldCheck className="w-3 h-3 text-[#06B6D4]" />
-                          <span className="text-[10px] font-bold text-slate-300">
+                          <span className="text-[10px] font-bold text-ink-300">
                             {s}
                           </span>
                         </div>
@@ -96,12 +96,12 @@ export function DNAShowcase() {
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                 />
               </motion.div>
-            );
+            )
           })}
         </div>
 
         <div className="flex flex-col items-center gap-6 pt-12">
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">
+          <p className="text-[10px] font-black text-ink-500 uppercase tracking-[0.4em]">
             8 Archétypes Persistants à Découvrir
           </p>
           <div className="flex gap-2">
@@ -112,5 +112,5 @@ export function DNAShowcase() {
         </div>
       </div>
     </section>
-  );
+  )
 }

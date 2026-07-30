@@ -14,7 +14,7 @@ export interface AdaptiveReportSection {
   type: "summary" | "strengths" | "weaknesses" | "progression" | "comparison" | "evolution" | "priorities" | "risks" | "objectives" | "action_plan";
   title: string;
   content: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   generatedBy: string[];
   confidence: number;
   priority: number;

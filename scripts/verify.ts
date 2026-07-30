@@ -1,8 +1,28 @@
 // scripts/verify.ts
-import { verifyInvariant } from "@verifier/invariant";
-import type { TickTrace } from "@common/trace";
+import type { TickTrace } from "../src/common/trace";
 import * as fs from "fs";
 import * as path from "path";
+
+/**
+ * Simple invariant verification - checks for split-brain by ensuring
+ * no tick has more than one leader
+ */
+function verifyInvariant(trace: TickTrace[]): boolean {
+  const leaderMap = new Map<number, string>();
+  
+  for (const event of trace) {
+    if (event.isLeader) {
+      const existingLeader = leaderMap.get(event.tickId);
+      if (existingLeader && existingLeader !== event.nodeId) {
+        // Split-brain detected: same tick has different leaders
+        return false;
+      }
+      leaderMap.set(event.tickId, event.nodeId);
+    }
+  }
+  
+  return true;
+}
 
 /**
  * Reads the entire stdin stream as a string.
@@ -25,8 +45,8 @@ async function main() {
     const filePath = path.resolve(process.cwd(), args[0]);
     try {
       raw = fs.readFileSync(filePath, "utf-8");
-    } catch (err) {
-      console.error(`Failed to read trace file at ${filePath}:`, err);
+    } catch (error) {
+      console.error(`Failed to read trace file at ${filePath}:`, error);
       process.exit(2);
     }
   } else {
@@ -37,8 +57,8 @@ async function main() {
         console.error("No trace data received from stdin");
         process.exit(2);
       }
-    } catch (err) {
-      console.error("Error reading from stdin:", err);
+    } catch (error) {
+      console.error("Error reading from stdin:", error);
       process.exit(2);
     }
   }
@@ -46,8 +66,8 @@ async function main() {
   let trace: TickTrace[];
   try {
     trace = JSON.parse(raw) as TickTrace[];
-  } catch (err) {
-    console.error("Trace data is not valid JSON:", err);
+  } catch (error) {
+    console.error("Trace data is not valid JSON:", error);
     process.exit(2);
   }
 

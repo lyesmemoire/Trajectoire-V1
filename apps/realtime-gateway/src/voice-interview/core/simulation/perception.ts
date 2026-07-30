@@ -40,6 +40,8 @@ import type { AnswerSignals } from "../v2/answer-signals.js";
 import type { BluffSignals } from "../v2/bluff-detector.js";
 
 /** Résultat consolidé de la perception d'un tour. */
+// Canonical Reference: BCM-OBJ-002 (blueprint.cognitive.perception)
+// Owner: Chief Cognitive Architect
 export interface Perception {
   signals: AnswerSignals;
   bluff: BluffSignals;
@@ -50,10 +52,7 @@ export interface Perception {
  * Perçoit une réponse en un seul appel (signaux + bluff + contradiction).
  * Pure agrégation des fonctions existantes → comportement identique.
  */
-export function perceive(
-  transcript: string,
-  facts: CandidateFacts,
-): Perception {
+export function perceive(transcript: _string, facts: CandidateFacts, ): Perception {
   const signals = extractSignals(transcript);
   const bluff = detectBluff(transcript, signals);
   const contradiction = detectContradiction(facts, transcript) ?? undefined;

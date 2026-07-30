@@ -13,10 +13,10 @@ import {
 
 interface Props {
   data: { time: number; level: number }[];
-  events: any[];
+  events: unknown[];
 }
 
-export function PressureGraph({ data, events }: Props) {
+export function PressureGraph({ data, _events }: Props) {
   const formatTime = (time: number) => {
     const m = Math.floor(time / 60);
     const s = time % 60;

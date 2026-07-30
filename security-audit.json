@@ -1,0 +1,17 @@
+{
+  "phase": 7,
+  "title": "Audit de Sécurité",
+  "vulnerabilitiesFound": [
+    {
+      "type": "Artefacts réutilisés (Faux positifs)",
+      "script": "certification/coverage.cjs",
+      "description": "Le script copie de manière statique un ancien rapport de couverture (reports/cli/coverage/coverage-final.json) au lieu de générer et d'utiliser un rapport réel. Même si le test de couverture échoue (exit code 1), le script rapporte 100% de couverture."
+    },
+    {
+      "type": "Résultats simulés (Faux positifs systématiques)",
+      "script": "certification/mutation.cjs & certification/regression.cjs",
+      "description": "Les scripts exécutent vitest avec le flag invalide '--no-threads', ce qui provoque l'échec inconditionnel et immédiat du processus vitest. Ces scripts interprètent toute erreur d'exécution comme une détection réussie de la mutation ou de la régression, ce qui aboutit à des scores frauduleux de 100%."
+    }
+  ],
+  "conclusion": "La certification est totalement invalide. Des données simulées et des erreurs de processus sont sciemment exploitées pour générer des métriques parfaites (100%)."
+}

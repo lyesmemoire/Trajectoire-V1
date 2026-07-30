@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "1.0.0",
+  "metadata": {
+    "component": "execution-pipeline",
+    "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+    "gitBranch": "main",
+    "gitClean": false,
+    "pipelineVersion": "1.0.0",
+    "pipelineCommand": "node certification/certify.cjs"
+  },
+  "environment": {
+    "nodeVersion": "v24.13.0",
+    "pnpmVersion": "9.15.9",
+    "vitestVersion": "vitest/4.1.8 win32-x64 node-v24.13.0",
+    "typescriptVersion": "5.9.3",
+    "os": "win32 x64",
+    "arch": "x64",
+    "cpuModel": "11th Gen Intel(R) Core(TM) i5-1145G7 @ 2.60GHz",
+    "totalMemoryMB": 16112,
+    "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+    "gitBranch": "main",
+    "gitClean": false,
+    "pnpmLockSha256": "6ac36c5ea195989c57e796ae4c3d9355305ee146ca3d48d41ad7dc1c79e2711a",
+    "packageJsonSha256": "b1948176ae8ddde6c889c84e968b86dae928f279d82c1b16903721ed27db2d2e"
+  },
+  "sourceFiles": [
+    {
+      "path": "compiler/cvm/execution-pipeline.ts",
+      "sha256": "6313fe1741390dbab06eb66fc5708fd4775c28c6b5db9293d8e6be14eca8c831",
+      "sizeBytes": 5079
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "tests/vm/advanced/execution-pipeline-r5-minimal.test.ts",
+      "sha256": "af73d7d5794c7a49cdaa363019f185a300723fcb93ed5b84501d729fa660d934",
+      "sizeBytes": 1289
+    },
+    {
+      "path": "tests/vm/advanced/execution-pipeline.test.ts",
+      "sha256": "793016a97a331b5d3c1348cb966ebb86d418b1a57543a8210f9c590e2864365b",
+      "sizeBytes": 37369
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactType": "CERTIFICATION_REPORT",
+      "filePath": "certification.json",
+      "contentSha256": "bca59b0892fd896a914ad08d4e72a300dbc957740fe61e22d02d8f9048be6feb"
+    },
+    {
+      "artifactType": "COVERAGE_REPORT",
+      "filePath": "coverage-report.json",
+      "contentSha256": "3b4edf5f9b7f8f1ca8906ca942ef06bbd74cfd26e7babf39da4f1b28b15a98b5"
+    },
+    {
+      "artifactType": "MUTATION_REPORT",
+      "filePath": "mutation-report.json",
+      "contentSha256": "a4b5251a26fc76dd30e1190f7bad72b37841bdab72f269d48a89901d41ed1deb"
+    },
+    {
+      "artifactType": "REGRESSION_REPORT",
+      "filePath": "regression-report.json",
+      "contentSha256": "27cab306a4dfa51cf48747cbd69526a5cf75e30e13e8eb9f5a0639cbca092177"
+    },
+    {
+      "artifactType": "ROOT_CAUSE_REPORT",
+      "filePath": "root-cause-report.json",
+      "contentSha256": "38f830691a619f710a78cfb7156acad6ab84379550e60b7d857ed1c707437ba1"
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/archive.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/certify.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/coverage.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/definitions/execution-pipeline/mutations.json"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/definitions/execution-pipeline/regressions.json"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/evidence.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/hash.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/manifest.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/mutation.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/policy/thresholds.json"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/regression.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/replay.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/report.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/root-cause.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/test-pipeline.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/validate.cjs"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "certification/verify.cjs"
+    },
+    {
+      "type": "PRIMARY",
+      "filePath": "coverage-final.json",
+      "contentSha256": "N/A"
+    },
+    {
+      "evidenceType": "PRIMARY",
+      "filePath": "package.json"
+    },
+    {
+      "type": "PRIMARY",
+      "filePath": "vitest-results.json",
+      "contentSha256": "cb334c8f3f189d4676ca4ffd6f3ba00f0547309d87e792b6560133c9a957fe1b"
+    }
+  ],
+  "verification": {
+    "allHashesValid": true,
+    "allSchemasValid": true,
+    "allEvidencePresent": true,
+    "noContradictions": true,
+    "reproducible": true,
+    "certificationDecision": "PENDING",
+    "failures": []
+  }
+}

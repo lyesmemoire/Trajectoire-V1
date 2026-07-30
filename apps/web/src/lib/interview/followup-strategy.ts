@@ -10,10 +10,7 @@ export interface FollowUpIntent {
   reason: string;
 }
 
-export function chooseStrategy(
-  analysis: any,
-  personaPressure: number,
-): FollowUpIntent {
+export function chooseStrategy(analysis: any, personaPressure: number, ): FollowUpIntent {
   // 1. Si la réponse est trop vague, demander clarification
   if (analysis.specificity < 40) {
     return {

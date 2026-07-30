@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   AreaChart,
@@ -9,22 +9,22 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-} from "recharts";
+} from "recharts"
 
 interface Props {
-  data: { time: number; level: number }[];
-  events: any[];
+  data: { time: number; level: number }[]
+  events: any[]
 }
 
 export function PressureGraph({ data, events }: Props) {
   const formatTime = (time: number) => {
-    const m = Math.floor(time / 60);
-    const s = time % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
+    const m = Math.floor(time / 60)
+    const s = time % 60
+    return `${m}:${s.toString().padStart(2, "0")}`
+  }
 
   return (
-    <div className="h-64 w-full bg-slate-900 rounded-[2rem] p-6 shadow-2xl relative overflow-hidden">
+    <div className="h-64 w-full bg-ink-900 rounded-[2rem] p-6 shadow-premium-lg relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         <svg width="100%" height="100%">
           <defs>
@@ -48,19 +48,19 @@ export function PressureGraph({ data, events }: Props) {
 
       <div className="relative z-10 h-full flex flex-col">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xs font-black text-blue-400 uppercase tracking-widest">
+          <h3 className="text-xs font-black text-ink-400 uppercase tracking-widest">
             Courbe de Tension Psychologique
           </h3>
           <div className="flex gap-4">
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-blue-500" />
-              <span className="text-[10px] font-bold text-slate-400">
+              <div className="w-2 h-2 rounded-full bg-ink-500" />
+              <span className="text-[10px] font-bold text-ink-400">
                 Pression
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              <span className="text-[10px] font-bold text-slate-400">
+              <div className="w-2 h-2 rounded-full bg-brick-500 animate-pulse" />
+              <span className="text-[10px] font-bold text-ink-400">
                 Peaks
               </span>
             </div>
@@ -72,37 +72,37 @@ export function PressureGraph({ data, events }: Props) {
             <AreaChart data={data}>
               <defs>
                 <linearGradient id="colorPressure" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#A67C3D" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#A67C3D" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
                 vertical={false}
-                stroke="#1e293b"
+                stroke="#57534E"
               />
               <XAxis
                 dataKey="time"
                 tickFormatter={formatTime}
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "#475569", fontSize: 10, fontWeight: 700 }}
+                tick={{ fill: "#A8A29E", fontSize: 10, fontWeight: 700 }}
               />
               <YAxis hide domain={[0, 100]} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#0f172a",
-                  border: "1px solid #1e293b",
+                  backgroundColor: "#1C1917",
+                  border: "1px solid #57534E",
                   borderRadius: "12px",
                 }}
-                itemStyle={{ color: "#3b82f6", fontWeight: "bold" }}
-                labelStyle={{ color: "#64748b" }}
+                itemStyle={{ color: "#A67C3D", fontWeight: "bold" }}
+                labelStyle={{ color: "#A8A29E" }}
                 labelFormatter={(label) => formatTime(Number(label))}
               />
               <Area
                 type="monotone"
                 dataKey="level"
-                stroke="#3B82F6"
+                stroke="#A67C3D"
                 strokeWidth={3}
                 fillOpacity={1}
                 fill="url(#colorPressure)"
@@ -111,7 +111,7 @@ export function PressureGraph({ data, events }: Props) {
                 <ReferenceLine
                   key={i}
                   x={evt.timestamp}
-                  stroke={evt.type === "interruption" ? "#F43F5E" : "#8B5CF6"}
+                  stroke={evt.type === "interruption" ? "#9B2C2C" : "#A67C3D"}
                   strokeDasharray="3 3"
                 />
               ))}
@@ -120,5 +120,5 @@ export function PressureGraph({ data, events }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

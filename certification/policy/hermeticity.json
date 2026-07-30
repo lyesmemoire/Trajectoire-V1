@@ -1,0 +1,25 @@
+{
+  "profile": "trajectoire-hermetic-v1",
+  "version": "1.0",
+  "constraints": {
+    "network": "none",
+    "rootFilesystem": "read-only",
+    "tmpfs": ["/tmp"],
+    "user": "node",
+    "capabilitiesDrop": ["ALL"],
+    "noNewPrivileges": true,
+    "privileged": false,
+    "allowPrivilegeEscalation": false,
+    "seccomp": "trajectoire-seccomp-v1"
+  },
+  "phases": {
+    "build": {
+      "network": "allowed",
+      "description": "pnpm install (requires internet to fetch dependencies)"
+    },
+    "run": {
+      "network": "none",
+      "description": "certification pipeline execution"
+    }
+  }
+}

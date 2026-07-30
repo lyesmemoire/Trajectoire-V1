@@ -3,7 +3,7 @@ import { RankingEngine } from "../ranking/ranking-engine.js";
 import { computeCohortStats, labelCohort } from "../ranking/cohort-analyzer.js";
 import { CandidateEvaluation } from "../evaluation-contract.js";
 
-function buildEval(sessionId: string, score: number, stabilityScore = 50): CandidateEvaluation {
+function buildEval(sessionId: _string, score: number, stabilityScore = 50): CandidateEvaluation {
   return {
     sessionId,
     score,

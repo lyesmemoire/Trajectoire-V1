@@ -1,0 +1,743 @@
+﻿{
+  "auditDate": "2026-07-27T07:58:35.890Z",
+  "totalComponents": 22,
+  "certifiedCount": 9,
+  "remainingCount": 13,
+  "components": [
+    {
+      "name": "branch-predictor",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "debugger-hooks",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "exception-handler",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "execution-context",
+      "certified": true,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "execution-pipeline",
+      "certified": true,
+      "dependencies": [
+        "execution-context",
+        "instruction-fetch",
+        "instruction-decode",
+        "instruction-execute"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "frame-manager",
+      "certified": false,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "garbage-collector",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "index",
+      "certified": false,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "instruction-cache",
+      "certified": true,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "instruction-decode",
+      "certified": true,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "instruction-execute",
+      "certified": true,
+      "dependencies": [
+        "execution-context",
+        "instruction-decode"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "instruction-fetch",
+      "certified": true,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "interrupt-manager",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "memory-manager",
+      "certified": true,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "microcode-engine",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "profiler-hooks",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "register-file",
+      "certified": false,
+      "dependencies": [],
+      "inDegree": 0
+    },
+    {
+      "name": "rollback-manager",
+      "certified": true,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "scheduler",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "snapshot-manager",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "thread-manager",
+      "certified": true,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    },
+    {
+      "name": "trace-hooks",
+      "certified": false,
+      "dependencies": [
+        "execution-context"
+      ],
+      "inDegree": 0
+    }
+  ],
+  "dependencyGraph": {
+    "branch-predictor": [
+      "execution-context"
+    ],
+    "debugger-hooks": [
+      "execution-context"
+    ],
+    "exception-handler": [
+      "execution-context"
+    ],
+    "execution-context": [],
+    "execution-pipeline": [
+      "execution-context",
+      "instruction-fetch",
+      "instruction-decode",
+      "instruction-execute"
+    ],
+    "frame-manager": [],
+    "garbage-collector": [
+      "execution-context"
+    ],
+    "index": [],
+    "instruction-cache": [],
+    "instruction-decode": [],
+    "instruction-execute": [
+      "execution-context",
+      "instruction-decode"
+    ],
+    "instruction-fetch": [],
+    "interrupt-manager": [
+      "execution-context"
+    ],
+    "memory-manager": [
+      "execution-context"
+    ],
+    "microcode-engine": [
+      "execution-context"
+    ],
+    "profiler-hooks": [
+      "execution-context"
+    ],
+    "register-file": [],
+    "rollback-manager": [
+      "execution-context"
+    ],
+    "scheduler": [
+      "execution-context"
+    ],
+    "snapshot-manager": [
+      "execution-context"
+    ],
+    "thread-manager": [
+      "execution-context"
+    ],
+    "trace-hooks": [
+      "execution-context"
+    ]
+  },
+  "callGraph": {
+    "branch-predictor": {
+      "class": "BranchPredictor",
+      "methods": [
+        "predict",
+        "update",
+        "getConfidence",
+        "getStatistics",
+        "clearHistory",
+        "getHistory",
+        "setSaturationCounter",
+        "getSaturationCounter",
+        "validate",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "debugger-hooks": {
+      "class": "DebuggerHooks",
+      "methods": [
+        "shouldPause",
+        "setBreakpoint",
+        "removeBreakpoint",
+        "enableBreakpoint",
+        "disableBreakpoint",
+        "getBreakpoint",
+        "getAllBreakpoints",
+        "clearBreakpoints",
+        "setWatchpoint",
+        "removeWatchpoint",
+        "enableWatchpoint",
+        "disableWatchpoint",
+        "getWatchpoint",
+        "getAllWatchpoints",
+        "clearWatchpoints",
+        "checkWatchpointRead",
+        "checkWatchpointWrite",
+        "pause",
+        "resume",
+        "stepInto",
+        "stepOver",
+        "stepOut",
+        "getState",
+        "isPaused",
+        "getCurrentBreakpoint",
+        "getCurrentWatchpoint",
+        "clear",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "exception-handler": {
+      "class": "ExceptionHandler",
+      "methods": [
+        "throw",
+        "getCurrentException",
+        "clearException",
+        "addHandler",
+        "removeHandler",
+        "getExceptionTable",
+        "setExceptionTable",
+        "isInExceptionHandler",
+        "exitExceptionHandler",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "execution-context": {
+      "class": "ExecutionContext",
+      "methods": [
+        "getStack",
+        "getHeap",
+        "getCallFrames",
+        "getRegister",
+        "setRegister",
+        "getProgramCounter",
+        "setProgramCounter",
+        "incrementProgramCounter",
+        "isHalted",
+        "halt",
+        "resume",
+        "getError",
+        "setError",
+        "clearError",
+        "reset",
+        "getSnapshot",
+        "restoreSnapshot",
+        "validate",
+        "getStatistics"
+      ]
+    },
+    "execution-pipeline": {
+      "class": "ExecutionPipeline",
+      "methods": [
+        "cycle",
+        "run",
+        "runCycles",
+        "stop",
+        "reset",
+        "getStatistics",
+        "getFetch",
+        "getDecode",
+        "getExecute",
+        "getContext",
+        "setBytecode",
+        "getBytecode",
+        "step",
+        "getCacheStatistics",
+        "enableCache",
+        "disableCache",
+        "setCacheSize",
+        "validate"
+      ]
+    },
+    "frame-manager": {
+      "class": "FrameManager",
+      "methods": [
+        "createFrame",
+        "popFrame",
+        "getCurrentFrame",
+        "getFrame",
+        "getFrameById",
+        "getAllFrames",
+        "getFrameCount",
+        "setParameter",
+        "getParameter",
+        "setLocal",
+        "getLocal",
+        "getLocalFromChain",
+        "getStackTrace",
+        "clear",
+        "validate",
+        "getStatistics",
+        "setMaxFrames",
+        "setFrameSize",
+        "getStack",
+        "getCallFrames"
+      ]
+    },
+    "garbage-collector": {
+      "class": "GarbageCollector",
+      "methods": [
+        "collect",
+        "shouldRun",
+        "getStatistics",
+        "resetStatistics",
+        "enable",
+        "disable",
+        "isEnabled",
+        "setThreshold",
+        "getThreshold",
+        "setAlgorithm",
+        "getAlgorithm",
+        "validate",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "instruction-cache": {
+      "class": "InstructionCache",
+      "methods": [
+        "get",
+        "put",
+        "has",
+        "remove",
+        "clear",
+        "prefetch",
+        "prefetchRange",
+        "getStatistics",
+        "getSize",
+        "getMaxSize",
+        "setMaxSize",
+        "getAllEntries",
+        "getHotEntries",
+        "validate",
+        "getUtilization"
+      ]
+    },
+    "instruction-decode": {
+      "class": "InstructionDecode",
+      "methods": [
+        "decode",
+        "decodeMultiple",
+        "validate",
+        "getSize",
+        "getOperandTypes",
+        "format",
+        "formatMultiple"
+      ]
+    },
+    "instruction-execute": {
+      "class": "InstructionExecute",
+      "methods": [
+        "execute",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "instruction-fetch": {
+      "class": "InstructionFetch",
+      "methods": [
+        "fetch",
+        "fetchMultiple",
+        "prefetch",
+        "prefetchRange",
+        "clearCache",
+        "getCacheStatistics",
+        "enableCache",
+        "disableCache",
+        "setCacheSize",
+        "setBytecode",
+        "getBytecode",
+        "validateAddress",
+        "getInstructionSize",
+        "getInstructionCount"
+      ]
+    },
+    "interrupt-manager": {
+      "class": "InterruptManager",
+      "methods": [
+        "raise",
+        "hasPendingInterrupt",
+        "getNextInterrupt",
+        "processNextInterrupt",
+        "returnFromInterrupt",
+        "getCurrentInterrupt",
+        "enableInterrupts",
+        "disableInterrupts",
+        "areInterruptsEnabled",
+        "setHandler",
+        "getHandler",
+        "enableHandler",
+        "disableHandler",
+        "clearPending",
+        "getPendingCount",
+        "getPendingInterrupts",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "memory-manager": {
+      "class": "MemoryManager",
+      "methods": [
+        "allocate",
+        "free",
+        "read",
+        "write",
+        "getAllocationSize",
+        "isAllocated",
+        "getAllocations",
+        "clearAllocations",
+        "createHandle",
+        "getHandleAddress",
+        "releaseHandle",
+        "getHandles",
+        "clearHandles",
+        "getStatistics",
+        "getHeapStatistics",
+        "getStackStatistics",
+        "enableProtection",
+        "disableProtection",
+        "isProtectionEnabled",
+        "enableTracking",
+        "disableTracking",
+        "isTrackingEnabled",
+        "setMaxMemory",
+        "getMaxMemory",
+        "checkMemoryLimit",
+        "validate",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "microcode-engine": {
+      "class": "MicrocodeEngine",
+      "methods": [
+        "execute",
+        "getMicrocodeSequence",
+        "addMicrocodeSequence",
+        "removeMicrocodeSequence",
+        "getAllSequences",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "profiler-hooks": {
+      "class": "ProfilerHooks",
+      "methods": [
+        "enable",
+        "disable",
+        "isEnabled",
+        "beforeInstruction",
+        "afterInstruction",
+        "getStatistics",
+        "getInstructionCount",
+        "getAllInstructionCounts",
+        "getInstructionTimes",
+        "clear",
+        "reset",
+        "export",
+        "import",
+        "validate",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "register-file": {
+      "class": "RegisterFile",
+      "methods": [
+        "get",
+        "set",
+        "getMultiple",
+        "setMultiple",
+        "isDirty",
+        "getDirtyRegisters",
+        "clearDirty",
+        "clearAllDirty",
+        "getAll",
+        "reset",
+        "getGeneralPurpose",
+        "getSpecialPurpose",
+        "getCallerSaved",
+        "getCalleeSaved",
+        "saveCalleeSaved",
+        "restoreCalleeSaved",
+        "validate",
+        "getStatistics"
+      ]
+    },
+    "rollback-manager": {
+      "class": "RollbackManager",
+      "methods": [
+        "createSnapshot",
+        "restoreSnapshot",
+        "deleteSnapshot",
+        "getSnapshot",
+        "getCurrentSnapshot",
+        "getAllSnapshots",
+        "clearSnapshots",
+        "autoSnapshot",
+        "rollback",
+        "rollbackTo",
+        "getSnapshotCount",
+        "getMaxSnapshots",
+        "setMaxSnapshots",
+        "enableAutoSnapshot",
+        "disableAutoSnapshot",
+        "isAutoSnapshotEnabled",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "scheduler": {
+      "class": "Scheduler",
+      "methods": [
+        "schedule",
+        "getNextReady",
+        "markComplete",
+        "getScheduled",
+        "getAllScheduled",
+        "getReadyQueue",
+        "clear",
+        "advanceCycle",
+        "getCurrentCycle",
+        "isReorderingEnabled",
+        "enableReordering",
+        "disableReordering",
+        "isSpeculationEnabled",
+        "enableSpeculation",
+        "disableSpeculation",
+        "getWindowSize",
+        "setWindowSize",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "snapshot-manager": {
+      "class": "SnapshotManager",
+      "methods": [
+        "createSnapshot",
+        "getSnapshot",
+        "getAllSnapshots",
+        "deleteSnapshot",
+        "clearSnapshots",
+        "compareSnapshots",
+        "getSnapshotCount",
+        "getSnapshotByTimestamp",
+        "getSnapshotsInRange",
+        "exportSnapshots",
+        "importSnapshots",
+        "validate",
+        "getStatistics",
+        "setContext",
+        "getContext"
+      ]
+    },
+    "thread-manager": {
+      "class": "ThreadManager",
+      "methods": [
+        "createThread",
+        "getThread",
+        "getCurrentThread",
+        "setThreadState",
+        "schedule",
+        "yield",
+        "block",
+        "unblock",
+        "terminate",
+        "deleteThread",
+        "getAllThreads",
+        "getThreadsByState",
+        "getThreadCount",
+        "clear",
+        "setSchedulingPolicy",
+        "getSchedulingPolicy",
+        "setDefaultQuantum",
+        "getDefaultQuantum",
+        "validate",
+        "getStatistics"
+      ]
+    },
+    "trace-hooks": {
+      "class": "TraceHooks",
+      "methods": [
+        "enable",
+        "disable",
+        "isEnabled",
+        "beforeInstruction",
+        "afterInstruction",
+        "onBranchTaken",
+        "onBranchNotTaken",
+        "onCall",
+        "onReturn",
+        "onException",
+        "onInterrupt",
+        "onMemoryRead",
+        "onMemoryWrite",
+        "getEvents",
+        "getEventsByType",
+        "getEventsInRange",
+        "clear",
+        "export",
+        "import",
+        "getEventCount",
+        "getStatistics",
+        "setOptions",
+        "getOptions",
+        "validate",
+        "setContext",
+        "getContext"
+      ]
+    }
+  },
+  "topologicalOrder": [
+    "execution-context",
+    "frame-manager",
+    "index",
+    "instruction-cache",
+    "instruction-decode",
+    "instruction-fetch",
+    "register-file",
+    "branch-predictor",
+    "debugger-hooks",
+    "exception-handler",
+    "garbage-collector",
+    "interrupt-manager",
+    "memory-manager",
+    "microcode-engine",
+    "profiler-hooks",
+    "rollback-manager",
+    "scheduler",
+    "snapshot-manager",
+    "thread-manager",
+    "trace-hooks",
+    "instruction-execute",
+    "execution-pipeline"
+  ],
+  "remainingComponents": [
+    "branch-predictor",
+    "debugger-hooks",
+    "exception-handler",
+    "frame-manager",
+    "garbage-collector",
+    "index",
+    "interrupt-manager",
+    "microcode-engine",
+    "profiler-hooks",
+    "register-file",
+    "scheduler",
+    "snapshot-manager",
+    "trace-hooks"
+  ],
+  "dependenciesToNonCertified": {},
+  "cycles": [],
+  "synchronizationPoints": [
+    "execution-context",
+    "garbage-collector",
+    "rollback-manager",
+    "snapshot-manager",
+    "thread-manager"
+  ]
+}

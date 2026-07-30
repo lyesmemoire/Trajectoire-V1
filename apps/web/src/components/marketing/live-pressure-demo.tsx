@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle, ChevronRight, Activity } from "lucide-react";
-import { PressureMeterV2 } from "../pressure/pressure-meter-v2";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { AlertCircle, ChevronRight, Activity } from "lucide-react"
+import { PressureMeterV2 } from "../pressure/pressure-meter-v2"
 
 const PLAYGROUND_SCENARIOS = [
   {
@@ -24,10 +24,10 @@ const PLAYGROUND_SCENARIOS = [
     status: "Exposition Maîtrisée",
     color: "#06B6D4",
   },
-];
+]
 
 export function LivePressureDemo() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0)
 
   return (
     <section className="py-60 px-6 relative">
@@ -39,7 +39,7 @@ export function LivePressureDemo() {
             <div className="space-y-12 text-left">
               <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
                 <Activity className="w-3 h-3 text-[#7C3AED]" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-ink-400">
                   Interaction Temps Réel
                 </span>
               </div>
@@ -49,7 +49,7 @@ export function LivePressureDemo() {
                 <span className="text-[#EF4444]">confrontation.</span>
               </h2>
 
-              <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-lg">
+              <p className="text-xl text-ink-400 font-medium leading-relaxed max-w-lg">
                 StudioEntretien est le seul système qui interrompt votre réponse
                 pour tester votre précision sous tension.
               </p>
@@ -62,14 +62,14 @@ export function LivePressureDemo() {
                     className={`group flex items-center justify-between p-6 rounded-[1.5rem] border-2 transition-all duration-500 ${
                       active === i
                         ? "border-[#7C3AED] bg-[#7C3AED]/10 text-white shadow-[0_0_30px_rgba(124,58,237,0.2)]"
-                        : "border-white/[0.05] bg-white/[0.02] text-slate-500 hover:border-white/10"
+                        : "border-white/[0.05] bg-white/[0.02] text-ink-500 hover:border-white/10"
                     }`}
                   >
                     <span className="text-xs font-black uppercase tracking-widest">
                       {s.label}
                     </span>
                     <ChevronRight
-                      className={`w-4 h-4 transition-transform ${active === i ? "translate-x-1 text-[#7C3AED]" : "text-slate-700"}`}
+                      className={`w-4 h-4 transition-transform ${active === i ? "translate-x-1 text-[#7C3AED]" : "text-ink-700"}`}
                     />
                   </button>
                 ))}
@@ -88,7 +88,7 @@ export function LivePressureDemo() {
               className="bg-[#050816]/90 backdrop-blur-3xl rounded-[4rem] border border-white/[0.08] p-1 shadow-2xl relative"
             >
               {active === 0 && (
-                <div className="absolute inset-0 bg-red-500/5 rounded-[4rem] animate-pulse pointer-events-none" />
+                <div className="absolute inset-0 bg-brick-500/5 rounded-[4rem] animate-pulse pointer-events-none" />
               )}
 
               <div className="bg-[#0B1023] rounded-[3.8rem] p-10 md:p-14 space-y-12 min-h-[480px] flex flex-col justify-center border border-white/[0.03]">
@@ -105,7 +105,7 @@ export function LivePressureDemo() {
                       <div
                         className={`p-6 rounded-[2rem] rounded-tr-none max-w-[85%] border shadow-2xl ${
                           active === 0
-                            ? "bg-slate-800 border-white/5 opacity-50"
+                            ? "bg-ink-800 border-white/5 opacity-50"
                             : "bg-[#7C3AED] border-white/20"
                         }`}
                       >
@@ -121,7 +121,7 @@ export function LivePressureDemo() {
                         <AlertCircle className="w-7 h-7" />
                       </div>
                       <div className="bg-white/[0.03] border border-white/[0.05] p-7 rounded-[2rem] rounded-tl-none max-w-[85%] backdrop-blur-md">
-                        <p className="text-sm font-black text-slate-300 leading-relaxed">
+                        <p className="text-sm font-black text-ink-300 leading-relaxed">
                           "{PLAYGROUND_SCENARIOS[active]?.ai}"
                         </p>
                       </div>
@@ -141,5 +141,5 @@ export function LivePressureDemo() {
         </div>
       </div>
     </section>
-  );
+  )
 }

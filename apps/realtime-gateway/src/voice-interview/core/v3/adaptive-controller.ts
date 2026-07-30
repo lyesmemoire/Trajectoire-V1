@@ -90,9 +90,7 @@ const AdaptiveControllerSchema = z.object({
  * It analyzes accumulated evaluation signals, detects weakness patterns,
  * decides the escalation strategy, and generates the next interview move.
  */
-export async function determineAdaptiveNextMove(
-  input: AdaptiveControllerInput
-): Promise<AdaptiveControllerOutput> {
+export async function determineAdaptiveNextMove(input: _AdaptiveControllerInput): Promise<AdaptiveControllerOutput> {
   const systemPrompt = `You are conducting a structured executive-level interview.
 
 You alternate naturally between:

@@ -1,0 +1,202 @@
+{
+  "component": "instruction-decode",
+  "file": "compiler/cvm/instruction-decode.ts",
+  "auditDate": "2026-07-27T00:45:00Z",
+  "metrics": {
+    "lines": {
+      "total": 126,
+      "code": 126,
+      "blank": 0,
+      "comments": 0
+    },
+    "statements": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "branches": {
+      "estimated": 0,
+      "note": "Will be extracted from coverage-final.json in PHASE 2"
+    },
+    "functions": {
+      "total": 7,
+      "public": 7,
+      "private": 0,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "decode",
+        "decodeMultiple",
+        "validate",
+        "getSize",
+        "getOperandTypes",
+        "format",
+        "formatMultiple"
+      ],
+      "private": []
+    },
+    "complexity": {
+      "cyclomatic": 3,
+      "estimated": "Based on branching statements"
+    },
+    "conditions": {
+      "total": 6,
+      "details": [
+        "Line 29: if (!opcodeInfo)",
+        "Line 60: if (!opcodeInfo)",
+        "Line 66: if (!encoding)",
+        "Line 71: if (instruction.operands.length !== encoding.operandTypes.length)",
+        "Line 78: ternary operator (errors.length === 0)",
+        "Line 95: ternary operator (encoding ? ... : [])",
+        "Line 105: if (!opcodeInfo)",
+        "Line 111: if (instruction.operands.length > 0)"
+      ]
+    },
+    "interfaces": [
+      "DecodedInstruction"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "Instruction",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      },
+      {
+        "name": "InstructionTable",
+        "path": "../cbs/instruction-table",
+        "type": "import"
+      },
+      {
+        "name": "Opcode",
+        "path": "../cbs/opcode-table",
+        "type": "import"
+      },
+      {
+        "name": "OpcodeTable",
+        "path": "../cbs/opcode-table",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingInstructionDecode": [
+      "ExecutionPipeline"
+    ],
+    "usedByInstructionDecode": [
+      "InstructionTable",
+      "OpcodeTable"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Decoder Pattern",
+    "responsibilities": [
+      "Instruction decoding",
+      "Opcode validation",
+      "Operand validation",
+      "Instruction formatting",
+      "Size calculation"
+    ],
+    "keyFeatures": [
+      "Opcode lookup",
+      "Operand validation",
+      "Batch decoding",
+      "Debug formatting"
+    ]
+  },
+  "invariants": {
+    "preconditions": {
+      "decode": "instruction must have a valid opcode",
+      "validate": "instruction must have an opcode",
+      "getSize": "instruction must have a valid opcode"
+    },
+    "postconditions": {
+      "decode": "returns DecodedInstruction with opcode info",
+      "validate": "returns validation result with errors if any",
+      "format": "returns formatted string representation"
+    },
+    "invariants": [
+      "DecodedInstruction always contains opcode info if opcode is valid",
+      "Validation returns valid=false if errors exist"
+    ]
+  },
+  "api": {
+    "public": [
+      {
+        "name": "decode",
+        "params": ["instruction: Instruction"],
+        "returns": "DecodedInstruction"
+      },
+      {
+        "name": "decodeMultiple",
+        "params": ["instructions: Instruction[]"],
+        "returns": "DecodedInstruction[]"
+      },
+      {
+        "name": "validate",
+        "params": ["instruction: Instruction"],
+        "returns": "{ valid: boolean; errors: string[] }"
+      },
+      {
+        "name": "getSize",
+        "params": ["instruction: Instruction"],
+        "returns": "number"
+      },
+      {
+        "name": "getOperandTypes",
+        "params": ["instruction: Instruction"],
+        "returns": "string[]"
+      },
+      {
+        "name": "format",
+        "params": ["instruction: Instruction"],
+        "returns": "string"
+      },
+      {
+        "name": "formatMultiple",
+        "params": ["instructions: Instruction[]"],
+        "returns": "string[]"
+      }
+    ]
+  },
+  "callGraph": {
+    "decode": {
+      "calls": ["OpcodeTable.getInfo"],
+      "calledBy": ["ExecutionPipeline.cycle", "decodeMultiple"]
+    },
+    "decodeMultiple": {
+      "calls": ["decode"],
+      "calledBy": []
+    },
+    "validate": {
+      "calls": ["OpcodeTable.getInfo", "InstructionTable.getEncoding"],
+      "calledBy": []
+    },
+    "getSize": {
+      "calls": ["InstructionTable.getSize"],
+      "calledBy": []
+    },
+    "getOperandTypes": {
+      "calls": ["InstructionTable.getEncoding"],
+      "calledBy": []
+    },
+    "format": {
+      "calls": ["OpcodeTable.getInfo"],
+      "calledBy": ["formatMultiple"]
+    },
+    "formatMultiple": {
+      "calls": ["format"],
+      "calledBy": []
+    }
+  },
+  "criticalPaths": [
+    "decode() - main decoding path",
+    "validate() - validation path"
+  ],
+  "internalState": {
+    "note": "InstructionDecode is stateless - no internal state"
+  }
+}

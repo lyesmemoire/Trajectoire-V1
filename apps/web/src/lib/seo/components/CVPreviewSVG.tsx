@@ -1,8 +1,8 @@
-import { CVTemplate } from "@/lib/seo/data/templates";
+import { CVTemplate } from "@/lib/seo/data/templates"
 
 interface CVPreviewSVGProps {
-  template: CVTemplate;
-  className?: string;
+  template: CVTemplate
+  className?: string
 }
 
 const STYLE_COLORS: Record<
@@ -33,30 +33,26 @@ const STYLE_COLORS: Record<
     bg: "#f8fafc",
     accent: "#e2e8f0",
   },
-};
-
-export default function CVPreviewSVG({
-  template,
-  className,
-}: CVPreviewSVGProps) {
-  const colors = (STYLE_COLORS[template.id] || STYLE_COLORS["modern-red"]) as Colors;
-  if (template.style === "minimal")
-    return <MinimalPreview colors={colors} className={className} />;
-  if (template.style === "executive")
-    return <ExecutivePreview colors={colors} className={className} />;
-  if (template.style === "creative")
-    return <CreativePreview colors={colors} className={className} />;
-  return <ModernPreview colors={colors} className={className} />;
 }
 
-type Colors = { primary: string; text: string; bg: string; accent: string };
+export default function CVPreviewSVG({
+  template, className }: CVPreviewSVGProps) {
+  const colors = (STYLE_COLORS[template.id] || STYLE_COLORS["modern-red"]) as Colors
+  if (template.style === "minimal")
+    return <MinimalPreview colors={colors} className={className} />
+  if (template.style === "executive")
+    return <ExecutivePreview colors={colors} className={className} />
+  if (template.style === "creative")
+    return <CreativePreview colors={colors} className={className} />
+  return <ModernPreview colors={colors} className={className} />
+}
+
+type Colors = { primary: string; text: string; bg: string; accent: string }
 
 function ModernPreview({
-  colors,
-  className,
-}: {
-  colors: Colors;
-  className?: string;
+  colors, className}: {
+  colors: Colors
+  className?: string
 }) {
   return (
     <svg
@@ -301,15 +297,13 @@ function ModernPreview({
         opacity={0.1}
       />
     </svg>
-  );
+  )
 }
 
 function ExecutivePreview({
-  colors,
-  className,
-}: {
-  colors: Colors;
-  className?: string;
+  colors, className}: {
+  colors: Colors
+  className?: string
 }) {
   return (
     <svg
@@ -536,15 +530,13 @@ function ExecutivePreview({
         97
       </text>
     </svg>
-  );
+  )
 }
 
 function MinimalPreview({
-  colors,
-  className,
-}: {
-  colors: Colors;
-  className?: string;
+  colors, className}: {
+  colors: Colors
+  className?: string
 }) {
   return (
     <svg
@@ -711,15 +703,13 @@ function MinimalPreview({
         ATS 99/100
       </text>
     </svg>
-  );
+  )
 }
 
 function CreativePreview({
-  colors,
-  className,
-}: {
-  colors: Colors;
-  className?: string;
+  colors, className}: {
+  colors: Colors
+  className?: string
 }) {
   return (
     <svg
@@ -944,5 +934,5 @@ function CreativePreview({
         opacity={0.1}
       />
     </svg>
-  );
+  )
 }

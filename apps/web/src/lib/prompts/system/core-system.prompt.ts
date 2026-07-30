@@ -12,8 +12,6 @@ export const SYSTEM_PROMPTS = {
   COACHING_V1: `Analyse la performance en utilisant la méthode STAR. Sois constructif mais exigeant.`,
 };
 
-export function getSystemPrompt(
-  version: keyof typeof SYSTEM_PROMPTS = "CORE_V1",
-) {
+export function getSystemPrompt(version: keyof typeof SYSTEM_PROMPTS = "CORE_V1", ) {
   return SYSTEM_PROMPTS[version];
 }

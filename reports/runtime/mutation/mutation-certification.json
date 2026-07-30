@@ -1,0 +1,25 @@
+{
+  "component": "execution-pipeline",
+  "certification": "SILVER",
+  "weightedMutationScore": "100%",
+  "validMutations": 7,
+  "requiredValidMutationsForGold": 30,
+  "realInvalidRate": "32.5%",
+  "maxRealInvalidRateForGold": "20%",
+  "expectedInvalid": 20,
+  "testIssue": 13,
+  "reasons": [
+    "Échantillon insuffisant: 7 mutations valides < 30 requis",
+    "Taux d'INVALID réels trop élevé: 32.5% > 20% requis",
+    "Familles non couvertes: E, F, I, J",
+    "Niveaux de criticité non couverts: MAJOR"
+  ],
+  "criteriaMet": {
+    "score": true,
+    "sampleSize": false,
+    "realInvalidRate": false,
+    "noCriticalSurvivors": true,
+    "familyCoverage": false,
+    "criticalityCoverage": false
+  }
+}

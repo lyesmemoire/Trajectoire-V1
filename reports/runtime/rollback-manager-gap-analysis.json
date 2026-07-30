@@ -1,0 +1,82 @@
+{
+  "component": "rollback-manager",
+  "file": "compiler/cvm/rollback-manager.ts",
+  "auditDate": "2026-07-27T01:05:00Z",
+  "objectives": {
+    "statements": {
+      "target": ">=95%",
+      "current": "93.51%",
+      "status": "FAILED",
+      "gap": "1.49%"
+    },
+    "branches": {
+      "target": ">=97%",
+      "current": "100.00%",
+      "status": "PASSED"
+    },
+    "functions": {
+      "target": "100%",
+      "current": "91.30%",
+      "status": "FAILED",
+      "gap": "8.70%"
+    },
+    "lines": {
+      "target": ">=95%",
+      "current": "93.51%",
+      "status": "FAILED",
+      "gap": "1.49%"
+    }
+  },
+  "gaps": {
+    "statements": [
+      {
+        "line": 88,
+        "description": "Call frame creation in restoreSnapshot",
+        "hits": 0,
+        "function": "restoreSnapshot",
+        "reason": "No test covers call frame restoration"
+      },
+      {
+        "line": 129,
+        "description": "Snapshot copy in getAllSnapshots",
+        "hits": 0,
+        "function": "getAllSnapshots",
+        "reason": "No test covers getAllSnapshots"
+      },
+      {
+        "line": 164,
+        "description": "Snapshot deletion in evictIfNeeded",
+        "hits": 0,
+        "function": "evictIfNeeded",
+        "reason": "No test covers snapshot eviction when oldestId is not null"
+      },
+      {
+        "line": 249,
+        "description": "Snapshot ID mismatch validation",
+        "hits": 0,
+        "function": "validate",
+        "reason": "No test covers snapshot ID mismatch validation"
+      }
+    ],
+    "branches": [],
+    "functions": [
+      {
+        "function": "getAllSnapshots",
+        "covered": false,
+        "reason": "Not called in any test"
+      },
+      {
+        "function": "evictIfNeeded",
+        "covered": false,
+        "reason": "Not directly tested (only called internally)"
+      }
+    ],
+    "lines": [88, 129, 164, 249]
+  },
+  "summary": {
+    "totalGaps": 6,
+    "type": "Statement and function coverage gaps",
+    "blocking": true,
+    "blockingCriteria": "Statements 93.51% < 95%, Functions 91.30% < 100%"
+  }
+}

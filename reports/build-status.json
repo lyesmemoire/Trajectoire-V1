@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-07-25T14:52:00",
+  "build_status": "FAILED",
+  "exit_code": 1,
+  "total_errors": 1,
+  "error_categories": {
+    "duplicate_identifiers": 1,
+    "missing_modules": 0,
+    "property_errors": 0,
+    "expected_errors": 0,
+    "other": 0
+  },
+  "current_error": {
+    "file": "./src/core/p5/integration/governor-adapter.ts",
+    "line": 1,
+    "message": "Duplicate identifier 'GovernorDecision'",
+    "type": "Type error"
+  },
+  "progress": {
+    "total_corrections_made": 12,
+    "files_modified": 12,
+    "errors_fixed": 11,
+    "errors_remaining": 1
+  },
+  "next_steps": [
+    "Fix duplicate GovernorDecision import in governor-adapter.ts",
+    "Run build again to check for remaining errors",
+    "Continue iterative fixes until build succeeds"
+  ]
+}

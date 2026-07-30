@@ -8,9 +8,7 @@ export interface MunitionSelectionContext {
   currentTurnNumber: number;
 }
 
-export function selectNextMunition(
-  ctx: MunitionSelectionContext
-): PressureMunition | null {
+export function selectNextMunition(ctx: _MunitionSelectionContext): PressureMunition | null {
   const { state, currentPhase, currentTurnNumber } = ctx;
   
   if (!isPressurePhase(currentPhase)) return null;
@@ -44,11 +42,7 @@ export function selectNextMunition(
   return null;
 }
 
-function scoreMunition(
-  munition: PressureMunition, 
-  state: InterviewState, 
-  currentTurn: number
-): number {
+function scoreMunition(munition: PressureMunition, state: InterviewState, _currentTurn: number): number {
   let score = munition.severity * 10;
   
   const usage = state.munitionsUsage[munition.id];

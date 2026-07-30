@@ -22,11 +22,7 @@ const DEFAULT_EXTRACTORS: SignalExtractor[] = [
   new StabilityExtractor(),
 ];
 
-export function mapTraceToExplanation(
-  trace: RuntimeTrace,
-  evaluation: CandidateEvaluation,
-  extractors: SignalExtractor[] = DEFAULT_EXTRACTORS,
-): ExplanationGraph {
+export function mapTraceToExplanation(trace: RuntimeTrace, evaluation: CandidateEvaluation, extractors: SignalExtractor[] = DEFAULT_EXTRACTORS, ): ExplanationGraph {
   // 1. Re-extract signals (deterministic — same trace → same signals)
   const allSignals: Signal[] = [];
   for (const extractor of extractors) {
@@ -59,10 +55,7 @@ export function mapTraceToExplanation(
 /**
  * Convenience: full pipeline from trace + evaluation → ExplainedScore
  */
-export function explainFromTrace(
-  trace: RuntimeTrace,
-  evaluation: CandidateEvaluation,
-): ExplainedScore {
+export function explainFromTrace(trace: RuntimeTrace, evaluation: CandidateEvaluation, ): ExplainedScore {
   const graph = mapTraceToExplanation(trace, evaluation);
   return explainScore(graph);
 }

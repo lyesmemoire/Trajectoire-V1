@@ -33,10 +33,7 @@ function clamp01(n: number): number {
   return Math.max(0, Math.min(1, n));
 }
 
-export function detectBluff(
-  transcript: string,
-  signals: AnswerSignals,
-): BluffSignals {
+export function detectBluff(transcript: string, signals: AnswerSignals, ): BluffSignals {
   const text = (transcript ?? "").toLowerCase();
   const words = text.split(/\s+/).filter(Boolean);
   const len = Math.max(1, words.length);
@@ -77,11 +74,7 @@ export interface CredibilityScore {
  * Agrège la crédibilité sur l'ensemble des tours.
  * @param contradictionCount nombre de contradictions détectées (CV ↔ réponses)
  */
-export function buildCredibilityScore(
-  signalsList: AnswerSignals[],
-  bluffList: BluffSignals[],
-  contradictionCount: number,
-): CredibilityScore {
+export function buildCredibilityScore(signalsList: AnswerSignals[], bluffList: BluffSignals[], contradictionCount: number, ): CredibilityScore {
   const n = Math.max(1, signalsList.length);
   const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
 

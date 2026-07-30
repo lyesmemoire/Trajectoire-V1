@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+import {  PrismaClient  } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function runStressTest(concurrentUsers) {
@@ -14,7 +14,7 @@ async function runStressTest(concurrentUsers) {
 
   const start = Date.now();
 
-  const tasks = Array.from({ length: concurrentUsers }).map(async (_, i) => {
+  const tasks = Array.from({ length: concurrentUsers }).map(async () => {
     const taskStart = Date.now();
     try {
       // Use a model we know exists in schema.prisma
@@ -35,7 +35,7 @@ async function runStressTest(concurrentUsers) {
       });
 
       results.success++;
-    } catch (e) {
+    } catch (error) {
       // console.error(`❌ Request failed:`, e.message);
       results.failures++;
     } finally {

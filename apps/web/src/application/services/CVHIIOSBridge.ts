@@ -14,10 +14,7 @@ import {
   EvidenceType,
   EvidenceReliability,
   EvidenceDirection,
-  Hypothesis,
-  HypothesisStatus,
 } from '@/application/hiios/interfaces/IHIIOSKernel'
-import type { Hypothesis as HypothesisType } from '@/application/hiios/layer0-kernel/HypothesisEngine'
 
 // Schéma CV (identique à l'API CV analyze)
 const CvAnalysisSchema = z.object({

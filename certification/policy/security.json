@@ -1,0 +1,13 @@
+{
+  "securityPolicy": {
+    "version": "1.0"
+  },
+  "failOn": {
+    "critical": 1,
+    "high": 1
+  },
+  "warnOn": {
+    "moderate": 5
+  },
+  "allowList": []
+}

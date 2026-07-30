@@ -36,10 +36,7 @@ export interface PremiumATSAnalysis {
 /**
  * Orchestrateur ATS Premium focalisé sur le "Recruiter Doubt".
  */
-export async function processPremiumATSAnalysis(
-  cvBuffer: Buffer,
-  jobDescription: string,
-): Promise<PremiumATSAnalysis> {
+export async function processPremiumATSAnalysis(cvBuffer: _Buffer, jobDescription: string, ): Promise<PremiumATSAnalysis> {
   // 1. Extraction (Invisible sophistication)
   const extraction = await extractCVText(cvBuffer);
 
@@ -126,7 +123,7 @@ async function extractAdvancedCVProfile(text: string) {
   return object;
 }
 
-async function simulateRecruiterFeedback(cv: any, job: any, score: number) {
+async function simulateRecruiterFeedback(_cv: unknown, _job: unknown, score: number) {
   const { object } = await generateObject({
     model: mistralModel,
     schema: RecruiterFeedbackSchema,

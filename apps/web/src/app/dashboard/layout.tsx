@@ -3,5 +3,5 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-surface-muted">
       <main className="p-6 lg:p-8">{children}</main>
     </div>
-  );
+  )
 }

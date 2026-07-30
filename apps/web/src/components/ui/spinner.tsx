@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface SpinnerProps {
-  size?: "sm" | "md" | "lg";
-  className?: string;
+  size?: "sm" | "md" | "lg"
+  className?: string
 }
 
 export function Spinner({ size = "md", className }: SpinnerProps) {
@@ -12,11 +12,11 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
     sm: "w-4 h-4",
     md: "w-8 h-8",
     lg: "w-12 h-12",
-  };
+  }
 
   return (
     <svg
-      className={cn("animate-spin text-blue-600", sizes[size], className)}
+      className={cn("animate-spin text-ink-400", sizes[size], className)}
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -34,20 +34,20 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
       />
     </svg>
-  );
+  )
 }
 
 interface PageLoaderProps {
-  message?: string;
+  message?: string
 }
 
 export function PageLoader({ message = "Chargement..." }: PageLoaderProps) {
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center flex-col">
-      <div className="w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center">
+    <div className="min-h-screen bg-ivoire-50 flex items-center justify-center flex-col">
+      <div className="w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center">
         <Spinner size="lg" className="text-white" />
       </div>
-      <p className="text-slate-600 font-medium">{message}</p>
+      <p className="text-ink-600 font-medium">{message}</p>
     </div>
-  );
+  )
 }

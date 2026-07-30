@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-07-24T18:06:48.056Z",
+  "commands": [
+    "pnpm tsx scripts/runtime-harness.ts"
+  ],
+  "elapsedTimes": {
+    "runtime": 1433
+  },
+  "executionLogs": [
+    "Running scenario: undefined\n[HARNESS] wrote 2 TickTrace events → C:\\Trajectoire\\artifacts\\trace-test-run-1784916409426.json\n"
+  ],
+  "errors": [],
+  "success": true,
+  "exitCode": 0,
+  "artifactsGenerated": true
+}

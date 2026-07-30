@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blueprint.enterprise/schemas/BCM-OBJ-005.json",
+  "title": "Knowledge",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "owner"
+  ],
+  "_metadata": {
+    "canonicalId": "BCM-OBJ-005",
+    "owner": "Chief Cognitive Architect",
+    "layer": "UNKNOWN",
+    "generatedBy": "Blueprint Incremental Compiler"
+  }
+}

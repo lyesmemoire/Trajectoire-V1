@@ -116,7 +116,7 @@ export class LLMRouter {
           const fallbackResponse = await this.fallback.generate(request);
           this.recordCall(sessionId, this.fallback, fallbackResponse, true);
           return fallbackResponse;
-        } catch (fallbackError) {
+        } catch (error) {
           this.recordCall(sessionId, this.fallback, null, false, String(fallbackError));
         }
       }

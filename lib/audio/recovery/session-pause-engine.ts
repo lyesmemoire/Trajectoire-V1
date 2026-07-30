@@ -2,7 +2,7 @@
  * Gère la mise en pause automatique de la session lors d'événements système.
  */
 export function initializeSessionPauseEngine(callbacks: {
-  onPause: (reason: string) => void;
+  onPause: (reason: _string) => void;
   onResume: () => void;
 }) {
   const handleVisibilityChange = () => {

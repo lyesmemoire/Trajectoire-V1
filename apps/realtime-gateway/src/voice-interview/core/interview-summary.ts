@@ -15,9 +15,7 @@ export interface InterviewSummary {
   recommendation: string;
 }
 
-export function buildInterviewSummary(
-  history: VoiceTurnRecord[],
-): InterviewSummary {
+export function buildInterviewSummary(history: VoiceTurnRecord[], ): InterviewSummary {
   const scored = history.filter((h) => typeof h.score === "number");
   const overallScore =
     scored.length > 0

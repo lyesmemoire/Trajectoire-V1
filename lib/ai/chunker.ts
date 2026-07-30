@@ -3,11 +3,7 @@
  * Tries to maintain a max length of 800-1000 characters per chunk.
  * Removes chunks that are too short (less than 50 chars).
  */
-export function chunkText(
-  text: string,
-  maxLength = 1000,
-  minLength = 50,
-): string[] {
+export function chunkText(text: string, maxLength = 1000, minLength = 50, ): string[] {
   if (!text) return [];
 
   // Split by double newline (or more) to get natural paragraph breaks

@@ -48,7 +48,7 @@ async function runStressTest(concurrentUsers: number) {
       // We simulate the internal orchestrator logic directly to stress the DB and AI logic
       // Note: Real API would hit Mistral, here we mock the DB contention part
 
-      const session = {
+      const _session = {
         id,
         userId: testUserId,
         persona: "faang",
@@ -72,7 +72,7 @@ async function runStressTest(concurrentUsers: number) {
       ]);
 
       results.success++;
-    } catch (e) {
+    } catch (error) {
       console.error(`❌ Session ${id} failed:`, e);
       results.failures++;
     } finally {

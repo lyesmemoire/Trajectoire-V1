@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-07-25T12:37:00Z",
+  "command": "pnpm tsc --noEmit",
+  "exit_code": 0,
+  "total_errors": 0,
+  "categories": {
+    "Props": 0,
+    "Unknown": 0,
+    "Missing Imports": 0,
+    "Prisma": 0,
+    "React": 0,
+    "Next.js": 0,
+    "Stripe": 0,
+    "Browser": 0,
+    "Node": 0,
+    "ESM": 0,
+    "Generics": 0,
+    "Nullability": 0,
+    "Inference": 0,
+    "Interfaces": 0,
+    "Contracts": 0
+  }
+}

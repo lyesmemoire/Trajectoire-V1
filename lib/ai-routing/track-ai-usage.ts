@@ -16,7 +16,7 @@ export interface TrackAIUsageInput {
 /**
  * Persists AI usage logs for cost analysis and observability.
  */
-export async function trackAIUsage(input: TrackAIUsageInput) {
+export async function trackAIUsage(input: _TrackAIUsageInput) {
   try {
     return await prisma.aIUsageLog.create({
       data: {

@@ -1,0 +1,39 @@
+{
+  "phase1": {
+    "script": "certification/coverage.cjs",
+    "commandExecuted": "npx vitest run tests/vm/advanced/execution-pipeline.test.ts tests/vm/advanced/execution-pipeline-r5-minimal.test.ts --coverage --reporter=verbose --reporter=json --outputFile=C:/Trajectoire/certification/runs/manual/vitest-results.json --no-threads",
+    "vitestOptions": ["--coverage", "--reporter=verbose", "--reporter=json", "--outputFile=...", "--no-threads"],
+    "filesRead": ["reports/cli/coverage/coverage-final.json"],
+    "filesWritten": ["logs/03-coverage.stdout.log", "logs/03-coverage.stderr.log", "coverage-report.json"]
+  },
+  "phase3": {
+    "command": "pnpm cert:coverage",
+    "exitCode": 0,
+    "durationSeconds": 5.57,
+    "stdout": "[COVERAGE] Running vitest with coverage...\n[COVERAGE] Command: npx vitest run tests/vm/advanced/execution-pipeline.test.ts tests/vm/advanced/execution-pipeline-r5-minimal.test.ts --coverage --reporter=verbose --reporter=json --outputFile=C:/Trajectoire/certification/runs/manual/vitest-results.json --no-threads\n[COVERAGE] ERROR: coverage-final.json not found at C:\\Trajectoire\\reports\\cli\\coverage\\coverage-final.json"
+  },
+  "phase4": {
+    "vitestSuccess": false,
+    "errorDetails": {
+      "message": "CACError: Unknown option `--threads`",
+      "stack": "at Command.checkUnknownOptions (file:///C:/Trajectoire/node_modules/.pnpm/vitest@4.1.8_.../node_modules/vitest/dist/chunks/cac.C9xsMMkH.js:406:17)\n    at CAC.runMatchedCommand (...)\n    at CAC.parse (...)",
+      "errorCode": 1,
+      "line": "node_modules/vitest/dist/chunks/cac.C9xsMMkH.js:406"
+    }
+  },
+  "phase5": {
+    "fileAccessBehavior": "Le script copie un fichier existant statique.",
+    "isGeneratedDynamically": false
+  },
+  "phase6": {
+    "sha256Before": "0B8B62DB97709A7894DDE3007711A75B714AB8935E575B3A382A34E3DCDDE15B",
+    "sha256After": "Fichier inexistant (Non généré par Vitest)"
+  },
+  "phase7": {
+    "pipelineWorks": false,
+    "details": "Après suppression du dossier de couverture préexistant, le script échoue à trouver le fichier source statique à copier. Il s'arrête avec une erreur 'coverage-final.json not found' et ne produit pas d'artefact de couverture."
+  },
+  "phase8": {
+    "conclusion": "B. Coverage copié"
+  }
+}

@@ -21,7 +21,7 @@ export interface ReplaySimplified {
  * Moteur de simplification radicale du Replay (v1.0).
  * Transforme un rapport complexe en une récompense psychologique de 20 secondes.
  */
-export function generateSimplifiedReplay(session: any): ReplaySimplified {
+export function generateSimplifiedReplay(session: _unknown): ReplaySimplified {
   const analysis = session.analysis || {};
 
   // 1. Headline de progression

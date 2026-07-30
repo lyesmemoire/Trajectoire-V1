@@ -184,7 +184,7 @@ export async function callLlmStrict<T>(
         }, { signal: options?.signal }),
         timeoutPromise
       ]);
-    } catch (err) {
+    } catch (error) {
       if (err instanceof Error && err.message === "LLM_TIMEOUT") {
         console.error(`[llm-strict] Timeout exceeded (15s) for model ${model}`);
         throw new Error("Evaluation temporarily unavailable"); // Let it bubble up to WS

@@ -51,11 +51,11 @@ async function runAudit() {
   // Profiles usually start with 2 free credits (hardcoded in DB triggers).
   // So Ledger Sum + (Total Users * 2) should equal Profiles Sum roughly.
   
-  const { data: usageSum, error: uError } = await supabase.rpc("get_total_credit_usage");
+  const { _data: usageSum, error: uError } = await supabase.rpc("get_total_credit_usage");
   
   if (uError) {
     // Custom RPC might not exist, fallback to JS accumulation
-    const { data: usages, error: uListError } = await supabase
+    const { _data: usages, error: uListError } = await supabase
       .from("credit_usage")
       .select("credits_spent");
       

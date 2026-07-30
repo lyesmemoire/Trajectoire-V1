@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-07-25T20:50:39.971Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "snapshots": [
+    {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "bin/blueprint",
+        "--help"
+      ],
+      "expectedExitCode": 0,
+      "stdoutLength": 973,
+      "stderrLength": 0
+    },
+    {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "bin/blueprint",
+        "--version"
+      ],
+      "expectedExitCode": 0,
+      "stdoutLength": 5,
+      "stderrLength": 0
+    },
+    {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "bin/blueprint",
+        "doctor"
+      ],
+      "expectedExitCode": 0,
+      "stdoutLength": 247,
+      "stderrLength": 0
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "success": 3,
+    "failed": 0
+  }
+}

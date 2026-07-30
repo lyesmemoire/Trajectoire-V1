@@ -32,11 +32,7 @@ export const RATE_LIMITS = {
 /**
  * Vérifie si une requête est autorisée selon le rate limit (Supabase)
  */
-export async function checkRateLimit(
-  identifier: string,
-  limit: number,
-  windowMs: number
-): Promise<RateLimitResult> {
+export async function checkRateLimit(identifier: string, limit: number, windowMs: number): Promise<RateLimitResult> {
   const supabase = await createClient();
   const now = new Date();
   const windowStart = new Date(now.getTime() - windowMs);

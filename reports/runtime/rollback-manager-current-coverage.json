@@ -1,0 +1,31 @@
+{
+  "file": "C:\\Trajectoire\\compiler\\cvm\\rollback-manager.ts",
+  "metrics": {
+    "statements": {
+      "total": 77,
+      "covered": 72,
+      "percentage": "93.51"
+    },
+    "branches": {
+      "total": 34,
+      "covered": 31,
+      "percentage": "91.18"
+    },
+    "functions": {
+      "total": 23,
+      "covered": 21,
+      "percentage": "91.30"
+    },
+    "lines": {
+      "total": 77,
+      "covered": 72,
+      "percentage": "93.51"
+    }
+  },
+  "uncoveredLines": [
+    88,
+    129,
+    164,
+    249
+  ]
+}

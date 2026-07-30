@@ -1,0 +1,9 @@
+{
+  "total": 22,
+  "detected": 0,
+  "missed": 0,
+  "buildErrors": 22,
+  "detectionRate": 0,
+  "missedCritical": 0,
+  "certification": "FAILED"
+}

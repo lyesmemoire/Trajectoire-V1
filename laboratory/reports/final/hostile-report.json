@@ -1,0 +1,45 @@
+{
+  "attacks": [
+    {
+      "attack": "Modification coverage-report.json (statements → 0)",
+      "detected": true,
+      "exitCode": 1
+    },
+    {
+      "attack": "Modification manifest.json (hash altéré)",
+      "detected": true,
+      "exitCode": 1
+    },
+    {
+      "attack": "Modification certification.json (certified → true)",
+      "detected": true,
+      "exitCode": 1
+    },
+    {
+      "attack": "Suppression coverage-final.json",
+      "detected": true,
+      "exitCode": 1
+    },
+    {
+      "attack": "Suppression vitest-results.json",
+      "detected": true,
+      "exitCode": 1
+    },
+    {
+      "attack": "Suppression dossier logs/",
+      "detected": false,
+      "exitCode": null
+    },
+    {
+      "attack": "Création faux artefact (fake-cert.json)",
+      "detected": false,
+      "exitCode": null
+    },
+    {
+      "attack": "Inversion mutation-report.json (contenu vide)",
+      "detected": true,
+      "exitCode": 1
+    }
+  ],
+  "allDetected": false
+}

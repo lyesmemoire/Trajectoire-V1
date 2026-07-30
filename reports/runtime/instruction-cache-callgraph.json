@@ -1,0 +1,232 @@
+{
+  "component": "instruction-cache",
+  "file": "compiler/cvm/instruction-cache.ts",
+  "analysisDate": "2026-07-27T00:20:00Z",
+  "phase": "1 - Call Graph Reconstruction",
+  "callGraph": {
+    "updateHitRate": {
+      "callers": [
+        {
+          "method": "get",
+          "line": 61,
+          "condition": "after hit (entry exists)",
+          "preconditions": [
+            "entry !== null",
+            "this.statistics.hits incremented"
+          ],
+          "postconditions": [
+            "this.statistics.hitRate updated"
+          ]
+        },
+        {
+          "method": "get",
+          "line": 66,
+          "condition": "after miss (entry does not exist)",
+          "preconditions": [
+            "entry === null",
+            "this.statistics.misses incremented"
+          ],
+          "postconditions": [
+            "this.statistics.hitRate updated"
+          ]
+        }
+      ],
+      "totalCallers": 2,
+      "allCallersInternal": true,
+      "note": "updateHitRate() is ONLY called from get() method"
+    },
+    "evictIfNeeded": {
+      "callers": [
+        {
+          "method": "put",
+          "line": 85,
+          "condition": "after inserting new entry",
+          "preconditions": [
+            "entry created and inserted",
+            "this.cache.size updated"
+          ],
+          "postconditions": [
+            "cache may be evicted if size > maxSize"
+          ]
+        },
+        {
+          "method": "setMaxSize",
+          "line": 213,
+          "condition": "after changing max size",
+          "preconditions": [
+            "this.maxSize updated",
+            "this.statistics.maxSize updated"
+          ],
+          "postconditions": [
+            "cache may be evicted if size > new maxSize"
+          ]
+        }
+      ],
+      "totalCallers": 2,
+      "allCallersInternal": true,
+      "note": "evictIfNeeded() is ONLY called from put() and setMaxSize() methods"
+    },
+    "get": {
+      "callers": [
+        {
+          "type": "external",
+          "note": "Public method, can be called from anywhere"
+        }
+      ],
+      "isPublic": true,
+      "internalCalls": [
+        {
+          "method": "updateHitRate",
+          "line": 61,
+          "condition": "on hit"
+        },
+        {
+          "method": "updateHitRate",
+          "line": 66,
+          "condition": "on miss"
+        }
+      ]
+    },
+    "put": {
+      "callers": [
+        {
+          "method": "prefetch",
+          "line": 150,
+          "condition": "after successful decode"
+        },
+        {
+          "type": "external",
+          "note": "Public method, can be called from anywhere"
+        }
+      ],
+      "isPublic": true,
+      "internalCalls": [
+        {
+          "method": "evictIfNeeded",
+          "line": 85,
+          "condition": "after insertion"
+        }
+      ]
+    },
+    "prefetch": {
+      "callers": [
+        {
+          "method": "prefetchRange",
+          "line": 163,
+          "condition": "in loop"
+        },
+        {
+          "type": "external",
+          "note": "Public method, can be called from anywhere"
+        }
+      ],
+      "isPublic": true,
+      "internalCalls": [
+        {
+          "method": "put",
+          "line": 150,
+          "condition": "if decode succeeds"
+        }
+      ]
+    },
+    "prefetchRange": {
+      "callers": [
+        {
+          "type": "external",
+          "note": "Public method, can be called from anywhere"
+        }
+      ],
+      "isPublic": true,
+      "internalCalls": [
+        {
+          "method": "prefetch",
+          "line": 163,
+          "condition": "in while loop"
+        }
+      ]
+    },
+    "setMaxSize": {
+      "callers": [
+        {
+          "type": "external",
+          "note": "Public method, can be called from anywhere"
+        }
+      ],
+      "isPublic": true,
+      "internalCalls": [
+        {
+          "method": "evictIfNeeded",
+          "line": 213,
+          "condition": "after updating maxSize"
+        }
+      ]
+    }
+  },
+  "callOrderAnalysis": {
+    "updateHitRate_call_chain": {
+      "path": "external -> get() -> updateHitRate()",
+      "preconditions": [
+        "get() is called",
+        "Either hit or miss occurs",
+        "this.statistics.hits OR this.statistics.misses is incremented BEFORE updateHitRate() is called"
+      ],
+      "invariant": "updateHitRate() is ALWAYS called after incrementing hits OR misses"
+    },
+    "evictIfNeeded_call_chain": {
+      "path1": "external -> put() -> evictIfNeeded()",
+      "path2": "external -> setMaxSize() -> evictIfNeeded()",
+      "preconditions_for_put": [
+        "put() is called",
+        "Entry is inserted into cache",
+        "this.cache.size is updated BEFORE evictIfNeeded() is called"
+      ],
+      "preconditions_for_setMaxSize": [
+        "setMaxSize() is called",
+        "this.maxSize is updated BEFORE evictIfNeeded() is called"
+      ],
+      "invariant": "evictIfNeeded() is ONLY called when cache has at least one entry (for put) or when maxSize is changed"
+    }
+  },
+  "criticalObservations": {
+    "updateHitRate": {
+      "observation": "updateHitRate() is ONLY called from get() method",
+      "implication": "The ONLY way to call updateHitRate() is through get()",
+      "precondition_chain": [
+        "get() must be called",
+        "Line 58: this.statistics.hits++ OR Line 65: this.statistics.misses++",
+        "THEN Line 61 or 66: updateHitRate() is called"
+      ],
+      "critical_invariant": "When updateHitRate() is called, at least one of hits or misses has been incremented"
+    },
+    "evictIfNeeded": {
+      "observation": "evictIfNeeded() is ONLY called from put() and setMaxSize()",
+      "implication": "The ONLY ways to call evictIfNeeded() are through put() or setMaxSize()",
+      "precondition_chain_for_put": [
+        "put() must be called",
+        "Line 82: this.cache.set(address, entry)",
+        "Line 83: this.statistics.size = this.cache.size",
+        "THEN Line 85: evictIfNeeded() is called"
+      ],
+      "precondition_chain_for_setMaxSize": [
+        "setMaxSize() must be called",
+        "Line 211: this.maxSize = size",
+        "Line 212: this.statistics.maxSize = size",
+        "THEN Line 213: evictIfNeeded() is called"
+      ],
+      "critical_invariant": "When evictIfNeeded() is called from put(), cache.size >= 1 (entry just inserted). When called from setMaxSize(), cache.size may be 0 or more."
+    }
+  },
+  "summary": {
+    "updateHitRate_callers": ["get()"],
+    "evictIfNeeded_callers": ["put()", "setMaxSize()"],
+    "get_callers": ["external"],
+    "put_callers": ["prefetch()", "external"],
+    "key_findings": [
+      "updateHitRate() is ONLY called from get()",
+      "evictIfNeeded() is ONLY called from put() and setMaxSize()",
+      "get() ALWAYS increments hits OR misses before calling updateHitRate()",
+      "put() ALWAYS inserts an entry before calling evictIfNeeded()",
+      "setMaxSize() may call evictIfNeeded() with empty cache"
+    ]
+  }
+}

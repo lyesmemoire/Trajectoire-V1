@@ -1,0 +1,285 @@
+{
+  "lab": {
+    "total": 22,
+    "detected": 15,
+    "missed": 6,
+    "invalid": 1,
+    "regressions": [
+      {
+        "id": "R1",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3121
+      },
+      {
+        "id": "R2",
+        "status": "REGRESSION_DETECTED",
+        "duration": 2791
+      },
+      {
+        "id": "R3",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3628
+      },
+      {
+        "id": "R4",
+        "status": "REGRESSION_MISSED",
+        "duration": 2873
+      },
+      {
+        "id": "R5",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3235
+      },
+      {
+        "id": "R6",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3407
+      },
+      {
+        "id": "R7",
+        "status": "REGRESSION_DETECTED",
+        "duration": 2829
+      },
+      {
+        "id": "R8",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3216
+      },
+      {
+        "id": "R9",
+        "status": "REGRESSION_DETECTED",
+        "duration": 2991
+      },
+      {
+        "id": "R10",
+        "status": "REGRESSION_MISSED",
+        "duration": 4058
+      },
+      {
+        "id": "R11",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3074
+      },
+      {
+        "id": "R12",
+        "status": "REGRESSION_MISSED",
+        "duration": 2693
+      },
+      {
+        "id": "R13",
+        "status": "REGRESSION_MISSED",
+        "duration": 3155
+      },
+      {
+        "id": "R14",
+        "status": "REGRESSION_DETECTED",
+        "duration": 2717
+      },
+      {
+        "id": "R15",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3644
+      },
+      {
+        "id": "R16",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3161
+      },
+      {
+        "id": "R17",
+        "status": "TIMEOUT",
+        "duration": 30016
+      },
+      {
+        "id": "R18",
+        "status": "REGRESSION_DETECTED",
+        "duration": 3986
+      },
+      {
+        "id": "R19",
+        "status": "REGRESSION_MISSED",
+        "duration": 3439
+      },
+      {
+        "id": "R20",
+        "status": "REGRESSION_DETECTED",
+        "duration": 4025
+      },
+      {
+        "id": "R21",
+        "status": "REGRESSION_DETECTED",
+        "duration": 4263
+      },
+      {
+        "id": "R22",
+        "status": "REGRESSION_MISSED",
+        "duration": 4074
+      }
+    ],
+    "detectionRate": 71
+  },
+  "pipeline": {
+    "total": 22,
+    "detected": 14,
+    "missed": 3,
+    "buildErrors": 4,
+    "timeouts": 1,
+    "detectionRate": 63.64
+  },
+  "comparison": [
+    {
+      "id": "R1",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R2",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R3",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R4",
+      "ancienneValeur": "BUILD_ERROR",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Correction du bug de regression.cjs qui se basait sur exitCode"
+    },
+    {
+      "id": "R5",
+      "ancienneValeur": "REGRESSION_MISSED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Correction du bug de regression.cjs qui se basait sur exitCode"
+    },
+    {
+      "id": "R6",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R7",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R8",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R9",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R10",
+      "ancienneValeur": "REGRESSION_MISSED",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R11",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R12",
+      "ancienneValeur": "BUILD_ERROR",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Correction du bug de regression.cjs qui se basait sur exitCode"
+    },
+    {
+      "id": "R13",
+      "ancienneValeur": "BUILD_ERROR",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Correction du bug de regression.cjs qui se basait sur exitCode"
+    },
+    {
+      "id": "R14",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R15",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R16",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R17",
+      "ancienneValeur": "TIMEOUT",
+      "nouvelleValeur": "TIMEOUT",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R18",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R19",
+      "ancienneValeur": "REGRESSION_MISSED",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R20",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R21",
+      "ancienneValeur": "REGRESSION_DETECTED",
+      "nouvelleValeur": "REGRESSION_DETECTED",
+      "preuveBrute": [],
+      "justification": "Identique"
+    },
+    {
+      "id": "R22",
+      "ancienneValeur": "BUILD_ERROR",
+      "nouvelleValeur": "REGRESSION_MISSED",
+      "preuveBrute": [],
+      "justification": "Correction du bug de regression.cjs qui se basait sur exitCode"
+    }
+  ]
+}

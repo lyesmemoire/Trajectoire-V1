@@ -1,5 +1,4 @@
-export function buildMunitionContext(
-  munitionPack: {
+export function buildMunitionContext(munitionPack: {
     munitions: Array<{
       suggestedQuestion: string;
       evidence?:         string;
@@ -9,9 +8,7 @@ export function buildMunitionContext(
       riskLevel:  string;
       overallATS: number;
     };
-  },
-  overallScore: number
-): string {
+  }, overallScore: _number): string {
   const top = munitionPack.munitions?.[0];
   if (!top) return "";
 

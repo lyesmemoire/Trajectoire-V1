@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-07-24T17:52:54.780Z",
+  "commands": [],
+  "elapsedTimes": {},
+  "workflows": [
+    {
+      "name": "ci-cd.yml",
+      "path": "c:\\Trajectoire\\.github\\workflows\\ci-cd.yml",
+      "valid": true,
+      "content": "name: CI/CD Pipeline\n\non:\n  push:\n    branches: [main, develop]\n  pull_request:\n    branches: [main, develop]\n\nenv:\n  NODE_VERSION: '18'\n  PNPM_VERSION: '8'\n\njobs:\n  # Lint\n  lint:\n    name: Lint\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout code\n        uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: ${{ env.NODE_VERSION }}\n\n      - name: Install pnpm\n        uses: pnpm/action-setup@v2\n        with:\n..."
+    },
+    {
+      "name": "ci.yml",
+      "path": "c:\\Trajectoire\\.github\\workflows\\ci.yml",
+      "valid": true,
+      "content": "jobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - uses: actions/setup-node@v4\n      with:\n        node-version: '20'\n    - name: Install dependencies\n      run: npm ci\n    - name: Build\n      run: npm run build\n    - name: Type-check API\n      run: npm run type-check:tests:api\n    - name: Type-check Gateway\n      run: npm run type-check:tests:gateway\n    - name: Run lint\n      run: npm run lint\n      env:\n        CI: true\n    - name: Run tests\n      run: n..."
+    },
+    {
+      "name": "ai-quality-validation.yml",
+      "path": "c:\\Trajectoire\\.github\\workflows\\ai-quality-validation.yml",
+      "valid": true,
+      "content": "name: AI Quality Validation\n\non:\n  pull_request:\n    branches: [ main, develop ]\n  push:\n    branches: [ main, develop ]\n\njobs:\n  validate:\n    runs-on: ubuntu-latest\n    \n    steps:\n      - name: Checkout code\n        uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: '20'\n          cache: 'npm'\n\n      - name: Install dependencies\n        run: |\n          cd apps/web\n          npm ci\n\n      - name: TypeScript compilat..."
+    }
+  ],
+  "errors": [],
+  "success": true,
+  "exitCode": 0
+}

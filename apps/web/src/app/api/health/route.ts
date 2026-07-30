@@ -7,7 +7,6 @@
  */
 
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 
 // Application version (should be managed by CI/CD)
 const APP_VERSION = process.env.APP_VERSION || "1.0.0";

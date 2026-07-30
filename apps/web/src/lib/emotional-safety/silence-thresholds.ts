@@ -49,7 +49,7 @@ export function getSilenceThresholds(level: SeniorityLevel): SilenceThresholds {
 
 /**
  * Source de vérité du niveau: 
- * Actuellement résolu via l'analyse du titre du poste (CV analysis / Job details).
+ * Actuellement résolu via l'analyse du titre du poste (CV analysis / any details).
  * Default = mid jusqu'à l'étape Career DNA.
  */
 export function inferSeniority(session: {

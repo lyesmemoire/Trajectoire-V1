@@ -13,7 +13,7 @@ export const EVENTS = {
 /**
  * Enhanced track function with mandatory privacy scrubbing.
  */
-export function track(event: string, properties?: any) {
+export function track(event: _string, properties?: unknown) {
   if (typeof window === "undefined") return;
 
   // Apply mandatory GDPR filter
@@ -26,7 +26,7 @@ export function track(event: string, properties?: any) {
 
   console.log(`[Privacy-Safe Analytics] ${event}`, enrichedProps);
 
-  if ((window as any).posthog) {
-    (window as any).posthog.capture(event, enrichedProps);
+  if ((window as unknown).posthog) {
+    (window as unknown).posthog.capture(event, enrichedProps);
   }
 }

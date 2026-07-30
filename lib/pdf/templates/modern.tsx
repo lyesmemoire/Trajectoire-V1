@@ -578,7 +578,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                   </Text>
                 </View>
                 <View style={styles.sectionDivider} />
-                {data.experience.map((exp: any, i: number) => (
+                {data.experience.map((exp: unknown, i: number) => (
                   <View
                     key={i}
                     style={
@@ -600,7 +600,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                         <Text style={styles.expLocation}>· {exp.location}</Text>
                       )}
                     </View>
-                    {exp.achievements.map((achievement: any, j: number) => (
+                    {exp.achievements.map((achievement: unknown, j: number) => (
                       <View key={j} style={styles.expBullet}>
                         <Text style={styles.expBulletArrow}>▸</Text>
                         <Text style={styles.expBulletText}>{achievement}</Text>
@@ -618,7 +618,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                   <Text style={styles.sectionTitle}>Formation</Text>
                 </View>
                 <View style={styles.sectionDivider} />
-                {data.education.map((edu: any, i: number) => (
+                {data.education.map((edu: unknown, i: number) => (
                   <View key={i} style={styles.eduItem}>
                     <View style={styles.eduAccent} />
                     <View style={styles.eduContent}>
@@ -643,7 +643,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                 <Text style={styles.sideSectionTitle}>Compétences</Text>
                 <Text style={styles.skillGroupLabel}>Techniques</Text>
                 <View style={styles.skillPillsRow}>
-                  {data.skills.technical.map((skill: any, i: number) => (
+                  {data.skills.technical.map((skill: unknown, i: number) => (
                     <View key={i} style={styles.skillPill}>
                       <Text style={styles.skillPillText}>{skill}</Text>
                     </View>
@@ -653,11 +653,11 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                   <>
                     <Text style={styles.skillGroupLabel}>Savoir-être</Text>
                     <View style={styles.skillPillsRow}>
-                      {data.skills.soft.map((skill: any, i: number) => (
+                      {data.skills.soft.map((skill: unknown, i: number) => (
                         <View
                           key={i}
                           style={{
-                            ...(styles.skillPill as any),
+                            ...(styles.skillPill as unknown),
                             backgroundColor: c.secondary,
                             borderColor: "transparent",
                           }}
@@ -674,7 +674,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
             {hasLanguages && (
               <View style={styles.sideSection}>
                 <Text style={styles.sideSectionTitle}>Langues</Text>
-                {data.skills.languages.map((langEntry: any, i: number) => {
+                {data.skills.languages.map((langEntry: unknown, i: number) => {
                   const { name, level } = parseLangEntry(langEntry);
                   const barWidth = getLangBarWidth(langEntry);
                   return (
@@ -700,7 +700,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
             {hasCertifications && (
               <View style={styles.sideSection}>
                 <Text style={styles.sideSectionTitle}>Certifications</Text>
-                {data.certifications!.map((cert: any, i: number) => (
+                {data.certifications!.map((cert: unknown, i: number) => (
                   <View key={i} style={styles.certItem}>
                     <Text style={styles.certName}>{cert.name}</Text>
                     <Text style={styles.certIssuer}>{cert.issuer}</Text>

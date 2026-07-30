@@ -15,7 +15,7 @@ interface BehaviorEventInput {
   userId: string;
   sessionId: string;
   type: BehaviorEventType;
-  payload?: any;
+  payload?: unknown;
   metadata?: {
     latencyMs?: number;
   };

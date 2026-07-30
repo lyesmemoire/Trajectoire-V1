@@ -1,9 +1,11 @@
+import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
+
 import { RuntimeTrace } from "../trace-contract.js";
 import { CandidateEvaluation } from "../evaluation-contract.js";
 import { Signal, SignalExtractor } from "../scoring-engine/scoring-contract.js";
 import { TrustExtractor } from "../scoring-engine/extractors/trust-extractor.js";
 import { StabilityExtractor } from "../scoring-engine/extractors/stability-extractor.js";
-import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
+
 import { buildEvidence } from "./evidence-builder.js";
 import { buildSignalNodes, buildScoreComponentNodes, buildExplanationGraph } from "./dag-builder.js";
 import { explainScore } from "./score-explainer.js";
@@ -22,11 +24,7 @@ const DEFAULT_EXTRACTORS: SignalExtractor[] = [
   new StabilityExtractor(),
 ];
 
-export function mapTraceToExplanation(
-  trace: RuntimeTrace,
-  evaluation: CandidateEvaluation,
-  extractors: SignalExtractor[] = DEFAULT_EXTRACTORS,
-): ExplanationGraph {
+export function mapTraceToExplanation(trace: RuntimeTrace, evaluation: CandidateEvaluation, extractors: SignalExtractor[] = DEFAULT_EXTRACTORS, ): ExplanationGraph {
   // 1. Re-extract signals (deterministic — same trace → same signals)
   const allSignals: Signal[] = [];
   for (const extractor of extractors) {
@@ -59,10 +57,7 @@ export function mapTraceToExplanation(
 /**
  * Convenience: full pipeline from trace + evaluation → ExplainedScore
  */
-export function explainFromTrace(
-  trace: RuntimeTrace,
-  evaluation: CandidateEvaluation,
-): ExplainedScore {
+export function explainFromTrace(trace: RuntimeTrace, evaluation: CandidateEvaluation, ): ExplainedScore {
   const graph = mapTraceToExplanation(trace, evaluation);
   return explainScore(graph);
 }

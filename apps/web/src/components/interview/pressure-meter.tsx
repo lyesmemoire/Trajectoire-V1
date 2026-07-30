@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Zap } from "lucide-react";
+import { Zap } from "lucide-react"
 
 interface Props {
   level: number;           // 0-100
@@ -27,14 +27,14 @@ export function PressureMeter({ level, insufficient = false }: Props) {
           Données insuffisantes
         </p>
       </div>
-    );
+    )
   }
 
   const getColor = (val: number) => {
-    if (val > 75) return "bg-[var(--warning)]";
-    if (val > 45) return "bg-[var(--primary)]";
-    return "bg-[var(--primary)]";
-  };
+    if (val > 75) return "bg-[var(--warning)]"
+    if (val > 45) return "bg-[var(--primary)]"
+    return "bg-[var(--primary)]"
+  }
 
   return (
     <div className="flex flex-col gap-2 w-full max-w-[200px]">
@@ -55,5 +55,5 @@ export function PressureMeter({ level, insufficient = false }: Props) {
         />
       </div>
     </div>
-  );
+  )
 }

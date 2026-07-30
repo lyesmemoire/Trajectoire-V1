@@ -12,7 +12,7 @@ interface Props {
   to: CareerArchetype;
 }
 
-export function EvolutionCard({ from, to }: Props) {
+export function EvolutionCard({ from, _to }: Props) {
   const fromMeta = ARCHETYPES_META[from];
   const toMeta = ARCHETYPES_META[to];
 

@@ -86,7 +86,7 @@ export interface InitV2Input {
   cvText?: string;
 }
 
-export function initInterviewV2(input: InitV2Input): {
+export function initInterviewV2(input: _InitV2Input): {
   state: InterviewStateV2;
   question: string;
 } {
@@ -132,10 +132,7 @@ export interface NextV2Result {
 }
 
 /** Calcule l'étape suivante à partir du transcript de la réponse. */
-export function nextV2Step(
-  state: InterviewStateV2,
-  transcript: string,
-): NextV2Result {
+export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV2Result {
   // 0) Détection d'intention (interception des commandes de pilotage)
   const intent = detectIntent(transcript);
   const pilotAction = extractPilotAction(intent);
@@ -309,12 +306,7 @@ function selectQuestion(state: InterviewStateV2): string {
 }
 
 /** Relance contextuelle (Bloc 5) : cible la faiblesse STAR / le sujet. */
-function buildFollowup(
-  state: InterviewStateV2,
-  transcript: string,
-  _score: number,
-  signals: AnswerSignals,
-): string {
+function buildFollowup(state: InterviewStateV2, transcript: string, _score: number, signals: AnswerSignals, ): string {
   void transcript;
   const p = state.persona;
   if (signals.quantifiedResults < 1)
@@ -338,12 +330,7 @@ function recordAsked(state: InterviewStateV2, question: string): InterviewStateV
   };
 }
 
-function updateMemory(
-  memory: InterviewMemory,
-  transcript: string,
-  score: number,
-  signals: AnswerSignals,
-): InterviewMemory {
+function updateMemory(memory: InterviewMemory, transcript: string, score: number, signals: AnswerSignals, ): InterviewMemory {
   const detectedStrengths = [...memory.detectedStrengths];
   const detectedWeaknesses = [...memory.detectedWeaknesses];
   if (score >= 75 && !detectedStrengths.includes("réponse structurée"))

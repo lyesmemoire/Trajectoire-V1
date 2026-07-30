@@ -53,20 +53,20 @@ export const CreditOperationSchema = z.object({
 /**
  * Helper to validate usage DB row.
  */
-export function validateCreditUsage(data: unknown): CreditUsageRecord {
+export function validateCreditUsage(data: any): CreditUsageRecord {
   return CreditUsageSchema.parse(data) as CreditUsageRecord;
 }
 
 /**
  * Helper to validate transaction DB row.
  */
-export function validateCreditTransaction(data: unknown): CreditTransaction {
+export function validateCreditTransaction(data: any): CreditTransaction {
   return CreditTransactionSchema.parse(data) as CreditTransaction;
 }
 
 /**
  * Helper to validate API payload for credit operations.
  */
-export function validateCreditOperationPayload(data: unknown): CreditOperation {
+export function validateCreditOperationPayload(data: any): CreditOperation {
   return CreditOperationSchema.parse(data) as CreditOperation;
 }

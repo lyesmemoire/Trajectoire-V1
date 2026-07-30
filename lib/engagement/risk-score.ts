@@ -3,7 +3,7 @@
  */
 export type RiskLevel = "low" | "medium" | "high" | "critical";
 
-export function calculateRiskLevel(score: number): RiskLevel {
+export function calculateRiskLevel(score: _number): RiskLevel {
   if (score >= 80) return "critical";
   if (score >= 60) return "high";
   if (score >= 30) return "medium";

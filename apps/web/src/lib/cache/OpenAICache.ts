@@ -5,7 +5,7 @@
  */
 
 import crypto from "crypto";
-import { getCache, TTL } from "./MemoryCache";
+import { getCache } from "./MemoryCache";
 
 export interface CachedAIResponse {
   response: string;
@@ -69,12 +69,7 @@ export function getCachedAIResponse(params: CacheKeyParams): CachedAIResponse | 
  * @param model - Model used for the response
  * @param tokensUsed - Number of tokens used (optional)
  */
-export function setCachedAIResponse(
-  params: CacheKeyParams,
-  response: string,
-  model: string,
-  tokensUsed?: number
-): void {
+export function setCachedAIResponse(params: CacheKeyParams, response: string, model: string, tokensUsed?: number): void {
   const cache = getCache();
   const cacheKey = `openai:${generateCacheKey(params)}`;
   

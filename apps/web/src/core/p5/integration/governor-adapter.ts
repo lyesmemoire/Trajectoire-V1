@@ -1,8 +1,8 @@
 import { P5Event } from "../execution-contract.js";
+import { RuntimeDecision, ExecutionResult } from "./integration-contract.js";
 import { normalizeDecision } from "../bridge/normalize-decision.js";
 import { validateDecision } from "../bridge/validation.js";
 import { GovernorDecision } from "../bridge/normalization-contract.js";
-import { RuntimeDecision } from "./integration-contract.js";
 
 /**
  * Result of adapting a RuntimeDecision into P5Events.
@@ -31,7 +31,6 @@ export function adaptDecision(decision: RuntimeDecision): AdaptResult {
   if (decision.emotion !== undefined) govDecision.emotion = decision.emotion;
 
   const validation = validateDecision(govDecision);
-
 
   if (!validation.valid) {
     return { events: [], valid: false, reasons: validation.reasons };

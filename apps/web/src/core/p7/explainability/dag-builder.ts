@@ -1,10 +1,5 @@
-import {
-  SignalNode,
-  EvidenceNode,
-  ScoreComponentNode,
-  AggregatedScoreNode,
-  ExplanationGraph,
-} from "./explanation-contract.js";
+import { SignalNode, EvidenceNode, ScoreComponentNode, AggregatedScoreNode, ExplanationGraph,  } from "./explanation-contract.js";
+
 import { Signal } from "../scoring-engine/scoring-contract.js";
 import { CompetencyScore } from "../evaluation-contract.js";
 import { P7_WEIGHTS } from "../scoring-engine/scoring-contract.js";

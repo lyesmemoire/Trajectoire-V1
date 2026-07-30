@@ -105,10 +105,7 @@ const SCHEMA_DESCRIPTION = `
 
 // ─── Main Function ─────────────────────────────────────────────
 
-export async function generateCvDiagnostic(
-  structuredCv: StructuredCV,
-  targetRole: string
-): Promise<FinalCabinetCvReport> {
+export async function generateCvDiagnostic(structuredCv: _StructuredCV, targetRole: string): Promise<FinalCabinetCvReport> {
   const userPrompt = `
 Evaluate this candidate for the role of: ${targetRole}
 

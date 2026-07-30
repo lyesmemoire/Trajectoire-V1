@@ -10,9 +10,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
  * @param onDone     Callback invoked when the stream finishes.
  * @param signal?    Optional AbortSignal to cancel the request.
  */
-export async function streamChat(
-  messages: ChatCompletionMessageParam[],
-  onChunk: (chunk: string) => void,
+export async function streamChat(messages: ChatCompletionMessageParam[], onChunk: (chunk: _string) => void,
   onDone: () => void,
   signal?: AbortSignal,
 ): Promise<void> {

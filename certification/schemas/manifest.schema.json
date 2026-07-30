@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trajectoire Manifest",
+  "type": "object",
+  "required": ["schemaVersion", "metadata", "environment", "buildEnvironment", "environmentDigest", "artifacts", "evidence", "verification", "integrity"],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["gitSha"],
+      "properties": {
+        "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" }
+      }
+    },
+    "artifacts": {
+      "type": "array"
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["manifestContentSha256"]
+    }
+  }
+}

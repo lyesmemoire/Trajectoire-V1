@@ -48,11 +48,11 @@ export function bootstrapContainer(): void {
 
       return new SimulationService(
         sessionRepository,
-        rateLimiter as any,
-        quotaService as any,
-        auditService as any,
-        logger as any,
-        transactionManager as any
+        rateLimiter  as any,
+        quotaService  as any,
+        auditService  as any,
+        logger  as any,
+        transactionManager  as any
       );
     },
     "transient"
@@ -72,11 +72,11 @@ export function bootstrapContainer(): void {
       return new ConversationService(
         sessionRepository,
         messageRepository,
-        rateLimiter as any,
-        quotaService as any,
-        auditService as any,
-        logger as any,
-        aiProvider as any
+        rateLimiter  as any,
+        quotaService  as any,
+        auditService  as any,
+        logger  as any,
+        aiProvider  as any
       );
     },
     "transient"
@@ -97,10 +97,10 @@ export function bootstrapContainer(): void {
         sessionRepository,
         reportRepository,
         messageRepository,
-        rateLimiter as any,
-        quotaService as any,
-        auditService as any,
-        logger as any
+        rateLimiter  as any,
+        quotaService  as any,
+        auditService  as any,
+        logger  as any
       );
     },
     "transient"
@@ -121,8 +121,8 @@ export function bootstrapContainer(): void {
         reportRepository,
         messageRepository,
         profileRepository,
-        auditService as any,
-        logger as any
+        auditService  as any,
+        logger  as any
       );
     },
     "transient"

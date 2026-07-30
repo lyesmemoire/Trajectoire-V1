@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { ShieldAlert, Zap, Target } from "lucide-react";
+import { motion } from "framer-motion"
+import { ShieldAlert, Zap, Target } from "lucide-react"
 
 export function WhyPressureMattersSection() {
   return (
@@ -10,17 +10,17 @@ export function WhyPressureMattersSection() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="inline-flex items-center gap-2 px-3 py-1 bg-rose-500/10 text-rose-500 rounded-lg text-[10px] font-black uppercase tracking-widest border border-rose-500/20"
+          className="inline-flex items-center gap-2 px-3 py-1 bg-brick-500/10 text-brick-500 rounded-lg text-[10px] font-black uppercase tracking-widest border border-brick-500/20"
         >
           <ShieldAlert className="w-3 h-3" /> Philosophie d'Entraînement
         </motion.div>
 
         <h2 className="text-4xl lg:text-7xl font-black text-white leading-[0.95] tracking-tighter">
           L'aisance n'est pas le talent. <br />
-          <span className="text-slate-600">La résilience l'est.</span>
+          <span className="text-ink-600">La résilience l'est.</span>
         </h2>
 
-        <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto">
+        <p className="text-xl text-ink-400 font-medium leading-relaxed max-w-2xl mx-auto">
           Les entretiens faciles ne révèlent rien de votre potentiel. Votre
           valeur réelle n'apparaît qu'au moment où vous perdez le contrôle.
           StudioEntretien est conçu pour ces secondes critiques.
@@ -48,11 +48,11 @@ export function WhyPressureMattersSection() {
               key={i}
               className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.05] text-left space-y-4"
             >
-              <div className="text-blue-500">{item.icon}</div>
+              <div className="text-bronze-500">{item.icon}</div>
               <h3 className="font-black text-white uppercase tracking-widest text-xs">
                 {item.title}
               </h3>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed">
+              <p className="text-sm text-ink-500 font-medium leading-relaxed">
                 {item.desc}
               </p>
             </div>
@@ -60,5 +60,5 @@ export function WhyPressureMattersSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

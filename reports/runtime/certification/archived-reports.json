@@ -1,0 +1,269 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "archivedReports": {
+    "coverage": [
+      {
+        "path": "reports/runtime/coverage/coverage-final.json",
+        "reason": "Contains scheduler coverage, not execution-pipeline specific",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/coverage-analysis.json",
+        "reason": "Analysis file, not primary coverage report",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/real-coverage.json",
+        "reason": "Unclear origin, not component-specific",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/runtime-coverage-report.json",
+        "reason": "Runtime-wide report, not execution-pipeline specific",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/runtime-cvm-coverage-report.json",
+        "reason": "Runtime-wide report, not execution-pipeline specific",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/instruction-cache-current-coverage.json",
+        "reason": "Different component (instruction-cache)",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/instruction-decode-current-coverage.json",
+        "reason": "Different component (instruction-decode)",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/instruction-execute-current-coverage.json",
+        "reason": "Different component (instruction-execute)",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/instruction-fetch-current-coverage.json",
+        "reason": "Different component (instruction-fetch)",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/rollback-manager-current-coverage.json",
+        "reason": "Different component (rollback-manager)",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/thread-manager-current-coverage.json",
+        "reason": "Different component (thread-manager)",
+        "status": "ARCHIVED"
+      }
+    ],
+    "mutation": [
+      {
+        "path": "reports/runtime/mutation/mutation-by-category.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-by-component.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-by-criticality.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-by-function.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-certification.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-confidence.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-equivalent.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-final-decision.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-final-verification-summary.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-final-verification.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-invalid-detailed.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-invalid.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-killed.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-proof-final.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-proof.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-reclassification-detail.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-combined.json",
+        "reason": "Combined results, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase2.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase3.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase4.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase5.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase6.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase7-final.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results-phase7.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-results.json",
+        "reason": "Superseded by combined results",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-combined.json",
+        "reason": "Combined summary, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase2.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase3.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase4.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase5.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase6.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase7-final.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-summary-phase7.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-survived.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/mutation-survivors.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/mutation/phase2-mutations.json",
+        "reason": "Phase-specific, superseded",
+        "status": "ARCHIVED"
+      }
+    ],
+    "regression": [
+      {
+        "path": "reports/runtime/regression/regression-results.json",
+        "reason": "Contradictory results with regression-stable-results.json (22 BUILD ERROR vs 19 DETECTED)",
+        "status": "ARCHIVED - CONTRADICTORY"
+      },
+      {
+        "path": "reports/runtime/regression/regression-debug-results.json",
+        "reason": "Debug results, not primary",
+        "status": "ARCHIVED"
+      },
+      {
+        "path": "reports/runtime/regression/regression-by-function.json",
+        "reason": "Derived report, not primary",
+        "status": "ARCHIVED"
+      }
+    ],
+    "rootCause": [
+      {
+        "path": "reports/runtime/regression/root-cause-analysis.md",
+        "reason": "Superseded by detailed R5 analysis",
+        "status": "ARCHIVED"
+      }
+    ]
+  }
+}

@@ -14,10 +14,7 @@ export const setSentryContext = (context: {
   });
 };
 
-export const captureError = (
-  error: Error | unknown,
-  context?: Record<string, any>
-) => {
+export const captureError = (error: Error | unknown, context?: Record<string, _unknown>) => {
   Sentry.captureException(error, {
     tags: {
       component: context?.component || 'unknown',

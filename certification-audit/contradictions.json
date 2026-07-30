@@ -1,0 +1,42 @@
+{
+  "auditDate": "2026-07-27",
+  "gitSha": "3e22378b335391724c31a2167bdfcbf6dd559b1c",
+  "gitDate": "2026-07-25 11:16:57 +0100",
+  "gitBranch": "main",
+  "gitDiffCompiler": "empty",
+  "contradictions": [
+    {
+      "category": "Regression",
+      "reportA": "reports/runtime/regression/regression-results.json",
+      "reportB": "reports/runtime/regression/regression-stable-results.json",
+      "contradiction": "Different detection results",
+      "details": {
+        "reportA": {"total": 22, "detected": 0, "missed": 0, "buildErrors": 22, "detectionRate": 0},
+        "reportB": {"total": 22, "detected": 19, "missed": 2, "buildErrors": 1, "detectionRate": 86.36}
+      },
+      "impact": "CRITICAL - Cannot determine correct result without reproduction"
+    },
+    {
+      "category": "Mutation",
+      "reportA": "reports/runtime/mutation/mutation-summary.json",
+      "reportB": "reports/runtime/mutation/mutation-summary-phase7.json",
+      "contradiction": "Multiple summary files exist",
+      "details": {
+        "reportA": {"total": 10, "killed": 3, "invalid": 7, "score": 100},
+        "reportB": "PREUVE INSUFFISANTE - file not checked"
+      },
+      "impact": "HIGH - Unclear which summary is official"
+    },
+    {
+      "category": "Coverage",
+      "reportA": "reports/runtime/execution-pipeline-current-coverage.json",
+      "reportB": "reports/runtime/coverage/coverage-final.json",
+      "contradiction": "Different coverage files for same component",
+      "details": {
+        "reportA": {"component": "execution-pipeline", "statements": "90.48%", "branches": "73.91%"},
+        "reportB": "PREUVE INSUFFISANTE - file contains scheduler coverage, not execution-pipeline"
+      },
+      "impact": "HIGH - Unclear which coverage is official for execution-pipeline"
+    }
+  ]
+}

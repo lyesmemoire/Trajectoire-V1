@@ -8,7 +8,6 @@ import {
   BiasType,
   Observation,
   Hypothesis,
-  Evidence,
 } from "../interfaces/IHIIOSKernel";
 import { logInfo } from "@/lib/logger/Logger";
 

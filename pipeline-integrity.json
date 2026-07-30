@@ -1,0 +1,17 @@
+{
+  "phase": 2,
+  "title": "Audit du Pipeline - Exécution",
+  "command": "pnpm cert:full",
+  "exitCode": 1,
+  "durationSeconds": 52.8,
+  "decision": "REJECTED",
+  "verificationVerdict": "VERIFIED (12/12)",
+  "observations": {
+    "step1_build": "Échec avec exit code 1 à cause d'erreurs TypeScript dans tests/replay/diffTrace.test.ts.",
+    "step2_tests": "Échec avec exit code 1 à cause de l'utilisation de l'option '--no-threads' qui n'est plus supportée par Vitest v4.",
+    "step3_4_coverage": "Résultats 100% mais utilisation d'une option invalide (--no-threads) qui fait échouer l'exécution, puis le script copie un fichier coverage-final.json pré-existant statique.",
+    "step5_mutation": "100% de score de mutation. Mais l'exécution de vitest échoue inconditionnellement à cause de l'option invalide '--no-threads', ce qui est interprété comme 'mutation KILLED' (faux positifs systématiques).",
+    "step6_regression": "100% de détection. Même cause que la mutation : vitest échoue inconditionnellement, chaque régression est marquée comme 'REGRESSION_DETECTED'."
+  },
+  "conclusion": "L'intégrité de l'exécution est compromise car les métriques sont artificielles ou basées sur des erreurs d'exécution (crash du test runner) plutôt que sur une réelle validation."
+}

@@ -1,0 +1,38 @@
+{
+  "Pipeline": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 5,
+    "total": 5
+  },
+  "Control": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 4,
+    "total": 4
+  },
+  "Validation": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 3,
+    "total": 3
+  },
+  "Error Handling": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 1,
+    "total": 1
+  },
+  "Statistics": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 5,
+    "total": 5
+  },
+  "Branch": {
+    "detected": 0,
+    "missed": 0,
+    "buildErrors": 4,
+    "total": 4
+  }
+}

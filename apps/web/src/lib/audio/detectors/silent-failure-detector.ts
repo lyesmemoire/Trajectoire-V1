@@ -16,7 +16,7 @@ export class SilentFailureDetector {
   }
 
   check(onFailure: () => void) {
-    this.analyser.getByteFrequencyData(this.dataArray as any);
+    this.analyser.getByteFrequencyData(this.dataArray  as any);
     const volume =
       this.dataArray.reduce((a, b) => a + b, 0) / this.dataArray.length;
 

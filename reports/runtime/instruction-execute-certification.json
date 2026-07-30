@@ -1,0 +1,83 @@
+{
+  "component": "instruction-execute",
+  "file": "compiler/cvm/instruction-execute.ts",
+  "certificationDate": "2026-07-27T01:20:00Z",
+  "status": "CERTIFIED",
+  "metrics": {
+    "before": {
+      "statements": {
+        "total": 156,
+        "covered": 156,
+        "percentage": "100.00"
+      },
+      "branches": {
+        "total": 36,
+        "covered": 36,
+        "percentage": "100.00"
+      },
+      "functions": {
+        "total": 29,
+        "covered": 29,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 156,
+        "covered": 156,
+        "percentage": "100.00"
+      }
+    },
+    "after": {
+      "statements": {
+        "total": 156,
+        "covered": 156,
+        "percentage": "100.00"
+      },
+      "branches": {
+        "total": 36,
+        "covered": 36,
+        "percentage": "100.00"
+      },
+      "functions": {
+        "total": 29,
+        "covered": 29,
+        "percentage": "100.00"
+      },
+      "lines": {
+        "total": 156,
+        "covered": 156,
+        "percentage": "100.00"
+      }
+    },
+    "objectives": {
+      "statements": ">=95%",
+      "branches": ">=97%",
+      "functions": "100%",
+      "lines": ">=95%"
+    }
+  },
+  "summary": {
+    "testsAdded": 0,
+    "totalTests": "Existing tests",
+    "branchesFixed": 0,
+    "branchesRemoved": 0,
+    "branchesTypeA": 0,
+    "branchesTypeB": 0,
+    "branchesTypeC": 0,
+    "filesModified": 0,
+    "refactoringRequired": false,
+    "refactoringType": null,
+    "refactoringDescription": null
+  },
+  "validation": {
+    "tests": "PASSED (existing tests)",
+    "build": "PASSED",
+    "typescript": "PASSED",
+    "coverage": "PASSED (100% on all metrics)"
+  },
+  "artifacts": [
+    "reports/runtime/instruction-execute-audit.json",
+    "reports/runtime/instruction-execute-current-coverage.json",
+    "reports/runtime/instruction-execute-certification.json",
+    "INSTRUCTIONEXECUTE_ENTERPRISE_CERTIFICATION.md"
+  ]
+}

@@ -17,7 +17,7 @@ export interface EmotionalBudget {
   };
 }
 
-export function createEmotionalBudget(total = 100): EmotionalBudget {
+export function createEmotionalBudget(total = _100): EmotionalBudget {
   return {
     total,
     spent: 0,
@@ -52,11 +52,7 @@ export function remaining(b: EmotionalBudget): number {
  * Déterministe. Le `scale` (0–1) renvoyé indique combien on peut se permettre
  * d'effet ce tour (1 = plein, <1 = on doit atténuer).
  */
-export function spendBudget(
-  b: EmotionalBudget,
-  cost: number,
-  ux: UXCostInput,
-): { budget: EmotionalBudget; scale: number } {
+export function spendBudget(b: EmotionalBudget, cost: number, ux: UXCostInput, ): { budget: EmotionalBudget; scale: number } {
   const REGEN = 6; // régénération par tour
   const avail = remaining(b) + REGEN;
   const scale = cost <= 0 ? 1 : Math.max(0, Math.min(1, avail / cost));

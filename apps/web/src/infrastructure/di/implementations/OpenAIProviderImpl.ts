@@ -3,7 +3,7 @@
  * Implements IAIProvider interface for OpenAI
  */
 
-import { IAIProvider, ChatMessage, ChatCompletionParams, ChatCompletionResponse, AudioTranscriptionParams, AudioTranscriptionResponse, AudioSpeechParams, AudioSpeechResponse } from "@/core/interfaces";
+import { IAIProvider, ChatCompletionParams, ChatCompletionResponse, AudioTranscriptionParams, AudioTranscriptionResponse, AudioSpeechParams, AudioSpeechResponse } from "@/core/interfaces";
 import { InfrastructureError, ExternalServiceError, TimeoutError } from "@/core/errors";
 import { withTimeout, TIMEOUT_CONFIG } from "@/lib/timeout/withTimeout";
 import { CircuitBreaker, CircuitBreakerDefaults } from "@/lib/resilience/CircuitBreaker";
@@ -115,7 +115,7 @@ export class OpenAIProviderImpl implements IAIProvider {
           const response = await withTimeout(
             this.client.audio.speech.create({
               model: params.model,
-              voice: (params.voice as any) || "alloy",
+              voice: (params.voice  as any) || "alloy",
               input: params.text,
             }),
             TIMEOUT_CONFIG.OPENAI,

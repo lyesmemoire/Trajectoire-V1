@@ -1,0 +1,19 @@
+{
+  "phase": 9,
+  "title": "Audit de la CI",
+  "workflow": ".github/workflows/certification.yml",
+  "triggers": ["push sur main", "tags v*", "pull_request sur main"],
+  "environment": "ubuntu-latest",
+  "reproducibilityLocalVsCI": {
+    "isIdentical": false,
+    "differences": [
+      "L'environnement est ubuntu-latest au lieu de win32 (ce qui est reflété dans l'artefact environment.json).",
+      "Le hachage du manifeste sera différent à cause des horodatages (timestamps) et des métadonnées d'environnement."
+    ],
+    "similarities": [
+      "La décision (REJECTED) et les pourcentages (100% coverage, 100% mutation, 100% regression) seront identiques.",
+      "Les mêmes erreurs fondamentales (faux positifs via --no-threads) se reproduiront à l'identique."
+    ]
+  },
+  "conclusion": "Le pipeline CI produit le même résultat fonctionnel que le pipeline local, mais génère un manifeste cryptographiquement distinct dû au changement d'OS et d'heure."
+}

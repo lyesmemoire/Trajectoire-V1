@@ -9,7 +9,7 @@ import {
   ReplayComparison,
   ConversationTurn,
 } from "./interfaces/IEvaluationPlatform";
-import { evaluationEngine, ConversationEvaluation } from "./EvaluationEngine";
+import { evaluationEngine } from "./EvaluationEngine";
 
 // ============================================================================
 // REPLAY ENGINE CLASS

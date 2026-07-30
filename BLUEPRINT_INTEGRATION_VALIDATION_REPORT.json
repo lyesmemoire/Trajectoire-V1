@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "totalStages": 10,
+    "okCount": 10,
+    "incompleteCount": 0,
+    "missingCount": 0
+  },
+  "validationResults": [
+    {
+      "stage": "Compiler → Package",
+      "status": "OK"
+    },
+    {
+      "stage": "Package → Loader",
+      "status": "OK"
+    },
+    {
+      "stage": "Loader → CVM",
+      "status": "OK"
+    },
+    {
+      "stage": "CVM → CPR",
+      "status": "OK"
+    },
+    {
+      "stage": "LLM Calls",
+      "status": "OK"
+    },
+    {
+      "stage": "Tracing",
+      "status": "OK"
+    },
+    {
+      "stage": "Debugger",
+      "status": "OK"
+    },
+    {
+      "stage": "Profiler",
+      "status": "OK"
+    },
+    {
+      "stage": "Replay",
+      "status": "OK"
+    },
+    {
+      "stage": "Rollback",
+      "status": "OK"
+    }
+  ]
+}

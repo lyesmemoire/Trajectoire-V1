@@ -31,7 +31,7 @@ export const EmotionalStateSchema = z.object({
 export type EmotionalState = z.infer<typeof EmotionalStateSchema>;
 
 // Interview Phase
-export enum InterviewPhase {
+export enum ConversationPhase {
   INTRODUCTION = "introduction",
   GENERAL_QUESTIONS = "general_questions",
   COMPETENCIES = "competencies",
@@ -77,7 +77,7 @@ export const ConversationStateSchema = z.object({
   userId: z.string(),
   personalInfo: PersonalInfoSchema,
   emotionalState: EmotionalStateSchema,
-  currentPhase: z.nativeEnum(InterviewPhase).default(InterviewPhase.INTRODUCTION),
+  currentPhase: z.nativeEnum(ConversationPhase).default(ConversationPhase.INTRODUCTION),
   evaluatedCompetencies: z.record(z.string(), CompetencyEvaluationSchema).default({}),
   startTime: z.date(),
   endTime: z.date().optional(),
@@ -114,7 +114,7 @@ export class ConversationStateEntity {
     return this.state.emotionalState;
   }
 
-  get currentPhase(): InterviewPhase {
+  get currentPhase(): any {
     return this.state.currentPhase;
   }
 
@@ -138,7 +138,7 @@ export class ConversationStateEntity {
     return this.state.messagesCount;
   }
 
-  get memory(): Record<string, any> {
+  get memory(): Record<string, unknown> {
     return this.state.memory;
   }
 
@@ -151,7 +151,7 @@ export class ConversationStateEntity {
     this.state.emotionalState = { ...this.state.emotionalState, ...state };
   }
 
-  setCurrentPhase(phase: InterviewPhase): void {
+  setCurrentPhase(phase: any): void {
     this.state.currentPhase = phase;
   }
 
@@ -228,9 +228,9 @@ export class ConversationStateEntity {
   getPhaseProgress(): number {
     // Simplified logic - in reality this would be more sophisticated
     switch (this.state.currentPhase) {
-      case InterviewPhase.INTRODUCTION:
+      case ConversationPhase.INTRODUCTION:
         return this.state.messagesCount > 2 ? 1 : 0.5;
-      case InterviewPhase.COMPETENCIES:
+      case ConversationPhase.COMPETENCIES:
         return this.getProgress();
       default:
         return 0.5;

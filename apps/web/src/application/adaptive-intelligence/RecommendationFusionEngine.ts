@@ -8,7 +8,6 @@ import {
   FusedRecommendation,
   FusionConfig,
   FusionResult,
-  SimilarityScore,
   defaultFusionConfig,
 } from "./interfaces/IRecommendationFusionEngine";
 

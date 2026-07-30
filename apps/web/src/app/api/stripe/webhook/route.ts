@@ -1,6 +1,6 @@
 // apps/web/src/app/api/stripe/webhook/route.ts
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 import { stripe }                    from "@/lib/stripe";
 import { prisma }                    from "@/lib/prisma";
 import { envServer }                 from "@/lib/env.server";
@@ -12,6 +12,8 @@ const StripeMetadataSchema = z.object({
   user_id:        z.string().uuid(),
   resolved_price: z.string().optional(),
   plan:           z.string().optional(),
+  type:           z.string().optional(), // e.g. "credits_purchase" or "referral_reward"
+  credits:        z.string().optional(), // Amount of credits
 });
 
 export async function POST(req: NextRequest) {
@@ -29,7 +31,7 @@ export async function POST(req: NextRequest) {
       sig,
       envServer.STRIPE_WEBHOOK_SECRET ?? ""
     );
-  } catch {
+  } catch (error) {
     return NextResponse.json({ error: "Signature invalide." }, { status: 400 });
   }
 
@@ -39,7 +41,6 @@ export async function POST(req: NextRequest) {
       // ── Démarrage abonnement via Checkout ─────────────────────────────
       case "checkout.session.completed": {
         const session  = event.data.object as Stripe.Checkout.Session;
-        if (session.mode !== "subscription") break;
 
         const metadata = StripeMetadataSchema.safeParse(session.metadata);
         if (!metadata.success) {
@@ -47,11 +48,35 @@ export async function POST(req: NextRequest) {
           break;
         }
 
-        const { user_id } = metadata.data;
+        const { user_id, type, credits } = metadata.data;
+
+        // Handle one-off credit purchases or rewards
+        if (type === 'credits_purchase' || type === 'referral_reward') {
+           const creditsToAdd = parseInt(credits || '0', 10);
+           
+           if (user_id && creditsToAdd > 0) {
+              const { BillingService } = await import('@/lib/db/billing.service');
+              
+              // refundCredits uses add_credits_atomic and idempotency table (credit_transactions)
+              // If event.id was already processed, it silently returns cached=true
+              const result = await BillingService.refundCredits({
+                 userId: user_id,
+                 amount: creditsToAdd,
+                 action: type as any,
+                 operationId: event.id // Stripe Event ID is the unique idempotency key
+              });
+              
+              if (!result.success && !(result as any).cached) {
+                 logger.error(`[Webhook] Failed to add credits for ${user_id}: ${result.error}`);
+              }
+           }
+        }
+
+        if (session.mode !== "subscription") break;
 
         if (session.subscription) {
           const sub = await stripe.subscriptions.retrieve(session.subscription as string);
-          await upsertSubscriptionAndPlan(user_id, sub);
+          await upsertSubscriptionAndPlan(user_id, sub, event.created);
         }
         break;
       }
@@ -59,6 +84,7 @@ export async function POST(req: NextRequest) {
       // ── Création abonnement ───────────────────────────────────────────
       case "customer.subscription.created":
       // ── Mise à jour abonnement ────────────────────────────────────────
+      // eslint-disable-next-line no-fallthrough
       case "customer.subscription.updated": {
         const sub     = event.data.object as Stripe.Subscription;
         const user_id = sub.metadata?.user_id;
@@ -66,7 +92,7 @@ export async function POST(req: NextRequest) {
           logger.error(`[Webhook] ${event.type} — user_id manquant dans metadata`, { eventType: event.type });
           break;
         }
-        await upsertSubscriptionAndPlan(user_id, sub);
+        await upsertSubscriptionAndPlan(user_id, sub, event.created);
         break;
       }
 
@@ -137,22 +163,27 @@ export async function POST(req: NextRequest) {
       default:
         break;
     }
-  } catch (err) {
+  } catch (error) {
     // Log l'erreur mais retourne 200 pour éviter que Stripe re-tente indéfiniment
     // sur des erreurs applicatives (pas des erreurs réseau)
-    logger.error(`[Webhook] Erreur sur event ${event.type}`, { error: err, eventType: event.type });
+    logger.error(`[Webhook] Erreur sur event ${event.type}`, { error: error, eventType: event.type });
   }
 
   return NextResponse.json({ received: true });
 }
 
 // ── Upsert Subscription + mise à jour User.plan (atomique) ───────────────────
-async function upsertSubscriptionAndPlan(
-  userId: string,
-  sub:    Stripe.Subscription
-): Promise<void> {
+async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscription, eventCreatedTimestamp: number): Promise<void> {
   const plan             = resolvePlanFromSubscription(sub);
   const currentPeriodEnd = new Date((sub as any).current_period_end * 1000);
+  const eventDate        = new Date(eventCreatedTimestamp * 1000);
+
+  const existingSub = await prisma.subscription.findUnique({ where: { userId } });
+  
+  if (existingSub && existingSub.updatedAt > eventDate) {
+    logger.info(`[Webhook] Ignoring stale Stripe event (eventDate: ${eventDate}, existing: ${existingSub.updatedAt})`);
+    return;
+  }
 
   await prisma.$transaction([
     prisma.subscription.upsert({
@@ -164,7 +195,7 @@ async function upsertSubscriptionAndPlan(
         status:           sub.status,
         currentPeriodEnd,
         plan:             plan as any,
-        updatedAt:        new Date(),
+        updatedAt:        eventDate,
       },
       update: {
         stripeCustomerId: sub.customer as string,
@@ -172,7 +203,7 @@ async function upsertSubscriptionAndPlan(
         status:           sub.status,
         currentPeriodEnd,
         plan:             plan as any,
-        updatedAt:        new Date(),
+        updatedAt:        eventDate,
       },
     }),
     prisma.user.update({

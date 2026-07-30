@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { JwtVerifier, AuthenticatedPrincipal } from "../services/auth";
+import { AuthenticatedPrincipal } from "../services/auth";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       principal?: AuthenticatedPrincipal;
@@ -9,7 +10,7 @@ declare global {
   }
 }
 
-export function createAuthMiddleware(verifier: JwtVerifier) {
+export function createAuthMiddleware(verifier: _JwtVerifier) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const authHeader = req.headers.authorization;
@@ -23,7 +24,7 @@ export function createAuthMiddleware(verifier: JwtVerifier) {
       
       req.principal = principal;
       next();
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(401).json({ error: "Authentication failed", details: err.message });
     }
   };

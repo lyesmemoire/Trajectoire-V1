@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://cyclonedx.org/schema/bom-1.5b.schema.json",
+  "type": "object",
+  "title": "CycloneDX SBOM schema placeholder",
+  "properties": {
+    "bomFormat": {
+      "type": "string",
+      "const": "CycloneDX"
+    },
+    "specVersion": {
+      "type": "string"
+    }
+  },
+  "required": ["bomFormat", "specVersion"]
+}

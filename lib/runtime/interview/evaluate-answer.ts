@@ -68,9 +68,7 @@ function hasQuantifiedResult(text: string): boolean {
   );
 }
 
-export function evaluateAnswer(
-  input: EvaluateAnswerInput,
-): EvaluateAnswerResult {
+export function evaluateAnswer(input: EvaluateAnswerInput, ): EvaluateAnswerResult {
   const answer = typeof input.answer === "string" ? input.answer.trim() : "";
   const gap = input.gap?.trim();
   const text = answer.toLowerCase();
@@ -127,13 +125,7 @@ export function evaluateAnswer(
   };
 }
 
-function buildFeedback(
-  score: number,
-  star: EvaluateAnswerResult["star"],
-  gapCovered: boolean,
-  gap: string | undefined,
-  quantified: boolean,
-): AnswerFeedback {
+function buildFeedback(score: number, star: EvaluateAnswerResult["star"], gapCovered: boolean, gap: string | undefined, quantified: boolean, ): AnswerFeedback {
   const positives: string[] = [];
   if (star.situation) positives.push("Tu poses bien le contexte.");
   if (star.action) positives.push("Tes actions sont explicites.");

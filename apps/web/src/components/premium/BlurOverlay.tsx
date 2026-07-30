@@ -3,11 +3,11 @@
 // Composant pour flouter et verrouiller le contenu Premium
 // Affiche un overlay avec CTA vers /pricing
 
-import { ReactNode } from "react";
-import { UpgradeCTA } from "./UpgradeCTA";
+import { ReactNode } from "react"
+import { UpgradeCTA } from "./UpgradeCTA"
 
 interface BlurOverlayProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export function BlurOverlay({ children }: BlurOverlayProps) {
@@ -21,5 +21,5 @@ export function BlurOverlay({ children }: BlurOverlayProps) {
         <UpgradeCTA />
       </div>
     </div>
-  );
+  )
 }

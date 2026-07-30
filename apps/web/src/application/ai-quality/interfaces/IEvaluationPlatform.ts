@@ -233,7 +233,7 @@ export interface ConversationTurn {
   timestamp: Date;
   tokens?: number;
   latency?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export const ConversationTurnSchema = z.object({

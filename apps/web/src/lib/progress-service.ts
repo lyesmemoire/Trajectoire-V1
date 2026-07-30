@@ -41,10 +41,7 @@ export type ProgressData = {
   careerTrajectory: CareerTrajectory | null;
 };
 
-export async function getProgressData(
-  supabase: any,
-  userId: string,
-): Promise<ProgressData | null> {
+export async function getProgressData(supabase: any, userId: string, ): Promise<ProgressData | null> {
   const { data, error } = await supabase
     .from("premium_interview_sessions")
     .select(

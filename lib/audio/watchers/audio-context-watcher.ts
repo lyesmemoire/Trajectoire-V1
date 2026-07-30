@@ -1,9 +1,7 @@
 /**
  * Surveille l'état de l'AudioContext pour détecter les suspensions système (Safari iOS).
  */
-export function createAudioContextWatcher(
-  context: AudioContext,
-  onStateChange: (state: AudioContextState) => void,
+export function createAudioContextWatcher(context: AudioContext, onStateChange: (state: AudioContextState) => void,
 ) {
   const handleStateChange = () => {
     console.log(`[AudioContext Watcher] State: ${context.state}`);
@@ -20,14 +18,12 @@ export function createAudioContextWatcher(
 /**
  * Tente de reprendre l'AudioContext après une suspension (ex: appel entrant).
  */
-export async function resumeAudioContext(
-  context: AudioContext,
-): Promise<boolean> {
+export async function resumeAudioContext(context: AudioContext, ): Promise<boolean> {
   if (context.state === "suspended") {
     try {
       await context.resume();
       return (context.state as AudioContextState) === "running";
-    } catch (e) {
+    } catch (error) {
       console.error("[Audio Recovery] Failed to resume AudioContext", e);
       return false;
     }

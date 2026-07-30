@@ -30,7 +30,7 @@ export function WaitlistForm() {
       });
       if (!res.ok) throw new Error();
       setStep("done");
-    } catch (e) {
+    } catch (error) {
       toast.error("Erreur lors de l'envoi.");
     } finally {
       setLoading(false);

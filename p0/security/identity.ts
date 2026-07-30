@@ -41,10 +41,7 @@ export function generateTenantDID(tenantId: string): TenantIdentity {
  * Create a session identity bound to a tenant DID.
  * The session gets an ephemeral key pair, signed by the tenant.
  */
-export function createSessionIdentity(
-  sessionId: string,
-  tenant: TenantIdentity
-): SessionIdentity {
+export function createSessionIdentity(sessionId: string, tenant: TenantIdentity): SessionIdentity {
   // Generate ephemeral key pair for this session
   const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 
@@ -73,10 +70,7 @@ export function createSessionIdentity(
 /**
  * Verify that a session identity was legitimately issued by the claimed tenant.
  */
-export function verifySessionBinding(
-  session: SessionIdentity,
-  tenantPublicKey: string
-): boolean {
+export function verifySessionBinding(session: SessionIdentity, tenantPublicKey: string): boolean {
   const pubKey = crypto.createPublicKey({
     key: Buffer.from(tenantPublicKey, "hex"),
     format: "der",

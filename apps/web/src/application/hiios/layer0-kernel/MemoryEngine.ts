@@ -5,10 +5,7 @@
 
 import {
   Candidate,
-  CandidateHistory,
-  CurrentInterview,
   Interview,
-  Question,
   Hypothesis,
   Turn,
   Skill,

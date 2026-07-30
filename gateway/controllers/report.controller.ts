@@ -1,10 +1,9 @@
 import { Request, Response, Router } from "express";
-import { SILPublicAPI } from "../../sil/contracts/public-api";
 import { EventSigner } from "../services/event-signer";
 import { IncomingSILEvent } from "../../sil/contracts/sil-events";
 import * as crypto from "crypto";
 
-export function createReportController(silClient: SILPublicAPI, signer: EventSigner): Router {
+export function createReportController(silClient: _SILPublicAPI, signer: EventSigner): Router {
   const router = Router({ mergeParams: true });
 
   router.post("/finish", async (req: Request, res: Response) => {
@@ -32,7 +31,7 @@ export function createReportController(silClient: SILPublicAPI, signer: EventSig
       await silClient.publish(event);
 
       res.status(202).json({ sessionId, status: "FINISHING" });
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(500).json({ error: err.message });
     }
   });
@@ -54,7 +53,7 @@ export function createReportController(silClient: SILPublicAPI, signer: EventSig
       }
 
       res.status(200).json(result.report);
-    } catch (err: any) {
+    } catch (err: unknown) {
       res.status(500).json({ error: err.message });
     }
   });

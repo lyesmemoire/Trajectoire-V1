@@ -2,7 +2,7 @@
  * Estime la charge émotionnelle laissée par une session.
  * Plus le score est élevé, plus le système doit ralentir.
  */
-export function estimateMentalLoad(session: any): number {
+export function estimateMentalLoad(session: _unknown): number {
   let load = 0;
 
   if (session.interruptionCount > 5) load += 30;

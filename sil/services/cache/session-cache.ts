@@ -14,7 +14,7 @@ export class RedisSessionCache {
   async delete(sessionId: string): Promise<void> {
     // In a real redis cache we'd DEL the key.
     // Since our simple adapter doesn't have a delete operation, we overwrite with null,
-    // but our typing `saveRecord<T>` might complain. We can cast as any.
-    await this.adapter.saveRecord<any>("cache_sessions", sessionId, null);
+    // but our typing `saveRecord<T>` might complain. We can cast as unknown.
+    await this.adapter.saveRecord<unknown>("cache_sessions", sessionId, null);
   }
 }

@@ -36,7 +36,7 @@ export class BatchedEventWriter {
 
     try {
       await this.store.bulkInsert(batch);
-    } catch (err) {
+    } catch (error) {
       console.error("[BatchedEventWriter] Flush failed", err);
       // In a production system, implement a DLQ or retry mechanism here
     }

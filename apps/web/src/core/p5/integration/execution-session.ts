@@ -51,11 +51,7 @@ export function createSession(state: MindState, timestamp: number): ExecutionSes
  * - R3: deterministic — same state + same decision → same result.
  * - R4: rollback-safe — invalid decisions leave session untouched.
  */
-export function executeDecision(
-  session: ExecutionSession,
-  decision: RuntimeDecision,
-  timestamp: number,
-): { session: ExecutionSession; result: ExecutionResult | null } {
+export function executeDecision(session: ExecutionSession, decision: RuntimeDecision, timestamp: number, ): { session: ExecutionSession; result: ExecutionResult | null } {
   const adapted = adaptDecision(decision);
 
   if (!adapted.valid) {

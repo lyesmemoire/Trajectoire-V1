@@ -1,0 +1,261 @@
+{
+  "summary": {
+    "totalComponents": 13,
+    "okCount": 13,
+    "missingCount": 0
+  },
+  "components": {
+    "lexer": {
+      "path": "lexer/lexer.ts",
+      "exists": true,
+      "exports": [
+        "TokenType",
+        "Token",
+        "LexerConfig",
+        "Lexer"
+      ]
+    },
+    "parser": {
+      "path": "parser/parser.ts",
+      "exists": true,
+      "exports": [
+        "NodeType",
+        "ASTNode",
+        "ModuleNode",
+        "ImportNode",
+        "ExportNode",
+        "FunctionNode",
+        "ParameterNode",
+        "TypeNode",
+        "BlockNode",
+        "StatementNode",
+        "ExpressionNode",
+        "BinaryExpressionNode",
+        "UnaryExpressionNode",
+        "CallExpressionNode",
+        "MemberExpressionNode",
+        "AssignmentNode",
+        "ReturnNode",
+        "IfNode",
+        "ForNode",
+        "WhileNode",
+        "Parser"
+      ]
+    },
+    "ast": {
+      "path": "ast/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./diagnostics",
+        "* from ./reference-resolver",
+        "* from ./symbol-table"
+      ]
+    },
+    "semantic": {
+      "path": "semantic/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./semantic-analyzer"
+      ]
+    },
+    "typeSystem": {
+      "path": "type-system/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./type-checker"
+      ]
+    },
+    "constraint": {
+      "path": "constraint/constraint-solver.ts",
+      "exists": true,
+      "exports": [
+        "ConstraintType",
+        "Constraint",
+        "ConstraintViolation",
+        "ConstraintSolvingResult",
+        "ConstraintSolver"
+      ]
+    },
+    "cir": {
+      "path": "cir/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./ir-generator",
+        "* from ./ssa-form",
+        "* from ./cfg-builder",
+        "* from ./ir-visitor",
+        "* from ./ir-serializer",
+        "* from ./pass-manager",
+        "* from ./graph-builder",
+        "* from ./region"
+      ]
+    },
+    "cbs": {
+      "path": "cbs/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./opcode-table",
+        "* from ./instruction-table",
+        "* from ./register-table",
+        "* from ./instruction-encoder",
+        "* from ./instruction-decoder",
+        "* from ./binary-serializer",
+        "* from ./package-loader",
+        "* from ./bytecode-validator",
+        "* from ./bytecode-optimizer",
+        "* from ./binary-versioning",
+        "* from ./exception-table",
+        "* from ./memory-addressing",
+        "* from ./call-frames",
+        "* from ./stack",
+        "* from ./heap"
+      ]
+    },
+    "cvm": {
+      "path": "cvm/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./execution-context",
+        "* from ./register-file",
+        "* from ./instruction-fetch",
+        "* from ./instruction-decode",
+        "* from ./instruction-execute",
+        "* from ./execution-pipeline",
+        "* from ./microcode-engine",
+        "* from ./frame-manager",
+        "* from ./exception-handler",
+        "* from ./interrupt-manager",
+        "* from ./scheduler",
+        "* from ./branch-predictor",
+        "* from ./instruction-cache",
+        "* from ./thread-manager",
+        "* from ./garbage-collector",
+        "* from ./memory-manager",
+        "* from ./profiler-hooks",
+        "* from ./trace-hooks",
+        "* from ./debugger-hooks"
+      ]
+    },
+    "cpr": {
+      "path": "cpr/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./cluster-manager",
+        "* from ./runtime-manager",
+        "* from ./provider-manager",
+        "* from ./execution-coordinator",
+        "* from ./distributed-scheduler",
+        "* from ./distributed-memory",
+        "* from ./knowledge-fabric",
+        "* from ./consensus-engine",
+        "* from ./leader-election",
+        "* from ./distributed-locks",
+        "* from ./snapshot-manager",
+        "* from ./replay-manager",
+        "* from ./recovery-manager",
+        "* from ./autoscaler",
+        "* from ./telemetry",
+        "* from ./distributed-trace",
+        "* from ./distributed-profiler",
+        "* from ./distributed-debugger",
+        "* from ./security",
+        "* from ./governance",
+        "* from ./api-gateway",
+        "* from ./runtime-kernel"
+      ]
+    },
+    "bytecode": {
+      "path": "bytecode/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./bytecode-generator",
+        "* from ./bytecode-verifier"
+      ]
+    },
+    "builder": {
+      "path": "builder/index.ts",
+      "exists": true,
+      "exports": [
+        "* from ./build-cache",
+        "* from ./dependency-resolver",
+        "* from ./incremental-compiler"
+      ]
+    },
+    "cli": {
+      "path": "cli/compiler-cli.ts",
+      "exists": true,
+      "exports": [
+        "CompilerOptions",
+        "CompilerResult",
+        "CompilerCLI"
+      ]
+    }
+  },
+  "validationResults": [
+    {
+      "component": "lexer",
+      "status": "OK",
+      "path": "lexer/lexer.ts"
+    },
+    {
+      "component": "parser",
+      "status": "OK",
+      "path": "parser/parser.ts"
+    },
+    {
+      "component": "ast",
+      "status": "OK",
+      "path": "ast/index.ts"
+    },
+    {
+      "component": "semantic",
+      "status": "OK",
+      "path": "semantic/index.ts"
+    },
+    {
+      "component": "typeSystem",
+      "status": "OK",
+      "path": "type-system/index.ts"
+    },
+    {
+      "component": "constraint",
+      "status": "OK",
+      "path": "constraint/constraint-solver.ts"
+    },
+    {
+      "component": "cir",
+      "status": "OK",
+      "path": "cir/index.ts"
+    },
+    {
+      "component": "cbs",
+      "status": "OK",
+      "path": "cbs/index.ts"
+    },
+    {
+      "component": "cvm",
+      "status": "OK",
+      "path": "cvm/index.ts"
+    },
+    {
+      "component": "cpr",
+      "status": "OK",
+      "path": "cpr/index.ts"
+    },
+    {
+      "component": "bytecode",
+      "status": "OK",
+      "path": "bytecode/index.ts"
+    },
+    {
+      "component": "builder",
+      "status": "OK",
+      "path": "builder/index.ts"
+    },
+    {
+      "component": "cli",
+      "status": "OK",
+      "path": "cli/compiler-cli.ts"
+    }
+  ]
+}

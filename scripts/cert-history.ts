@@ -25,8 +25,8 @@ function loadJson<T>(p: string): T {
   return JSON.parse(fs.readFileSync(p, "utf-8")) as T;
 }
 
-const snapshot = loadJson<any>(snapshotPath);
-const evaluation = loadJson<any>(evalPath);
+const snapshot = loadJson<unknown>(snapshotPath);
+const evaluation = loadJson<unknown>(evalPath);
 
 const entry: HistoryEntry = {
   runId: snapshot.runId ?? `run-${Date.now()}`,

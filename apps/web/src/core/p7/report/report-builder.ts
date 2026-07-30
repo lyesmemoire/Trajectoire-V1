@@ -1,4 +1,5 @@
 import { EvaluationReport, ReportInput } from "./report-contract.js";
+
 import { buildSummary } from "./summary/summary-builder.js";
 import { buildExplanationEmbedding } from "./explainability/explanation-embedder.js";
 import { exportJSON } from "./json/json-exporter.js";
@@ -29,7 +30,7 @@ export class ReportBuilder {
     const auditPack = buildAuditPack(input);
 
     // 6. Render PDF
-    const pdf = generatePDF(summary, json);
+    const pdf = generatePDF(summary);
 
     // 7. Compute deterministic hash of the final object representation
     const deterministicHash = crypto.createHash("sha256")

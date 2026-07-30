@@ -85,10 +85,10 @@ async function runRedTeamSuite() {
   const nonce = await RequestHardening.generateNonce(userId);
 
   const payload = "test_data";
-  const signature = "fake-sig"; // Simplified test for nonce consumption
+  const _signature = "fake-sig"; // Simplified test for nonce consumption
 
   // Attempt 1: Correct signature (Simulated via lib check)
-  const attempt1 = await RequestHardening.verifyRequest(
+  const _attempt1 = await RequestHardening.verifyRequest(
     userId,
     "wrong-sig",
     payload,

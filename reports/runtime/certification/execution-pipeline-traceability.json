@@ -1,0 +1,186 @@
+{
+  "component": "execution-pipeline",
+  "sha": "3e22378",
+  "certificationDecision": "A - CERTIFICATION REFUSÉE",
+  "traceabilityMatrix": {
+    "coverage_criteria": {
+      "requirement": "Enterprise certification requires ≥95% statements, ≥97% branches, 100% functions, ≥95% lines",
+      "evidence": "reports/runtime/execution-pipeline-current-coverage.json",
+      "observed": {
+        "statements": "90.48%",
+        "branches": "73.91%",
+        "functions": "100.00%",
+        "lines": "90.48%"
+      },
+      "gap": {
+        "statements": "-4.52%",
+        "branches": "-23.09%",
+        "lines": "-4.52%"
+      },
+      "impact": "CRITICAL - Coverage below Enterprise thresholds",
+      "contributesToRejection": true
+    },
+    "mutation_testing": {
+      "requirement": "Representative mutation score based on valid mutations",
+      "evidence": "reports/runtime/mutation/mutation-summary.json",
+      "observed": {
+        "total": 10,
+        "killed": 3,
+        "survived": 0,
+        "invalid": 7,
+        "score": 100
+      },
+      "issue": "70% INVALID mutations, score based on only 3 valid mutations",
+      "impact": "HIGH - Non-representative sample",
+      "contributesToRejection": true
+    },
+    "regression_testing": {
+      "requirement": "Consistent and reproducible regression results",
+      "evidence": [
+        "reports/runtime/regression/regression-results.json",
+        "reports/runtime/regression/regression-stable-results.json"
+      ],
+      "observed": {
+        "regressionResults": {
+          "detected": 0,
+          "missed": 0,
+          "buildErrors": 22
+        },
+        "regressionStableResults": {
+          "detected": 19,
+          "missed": 2,
+          "buildErrors": 1
+        }
+      },
+      "issue": "Contradictory results between two official files",
+      "impact": "CRITICAL - Cannot determine correct result without reproduction",
+      "contributesToRejection": true
+    },
+    "root cause_analysis": {
+      "requirement": "All regressions must be detectable by valid tests",
+      "evidence": [
+        "reports/runtime/regression/root-cause-analysis.md",
+        "reports/runtime/regression/root-cause-r5.md",
+        "reports/runtime/regression/r5-final-decision.json"
+      ],
+      "observed": {
+        "R5_conclusion": "Code is correct, test is wrong",
+        "R5_decision": "A - Le code est correct. Le test est faux."
+      },
+      "issue": "Conclusion contradicts 100% detection requirement",
+      "impact": "HIGH - Suggests some regressions cannot be detected",
+      "contributesToRejection": true
+    },
+    "test_execution": {
+      "requirement": "All tests pass without skipped, only, retry, or flaky",
+      "evidence": "vitest execution",
+      "observed": {
+        "totalTests": 80,
+        "passed": 80,
+        "failed": 0,
+        "skipped": 0
+      },
+      "impact": "NONE - Tests pass correctly",
+      "contributesToRejection": false
+    },
+    "robustness": {
+      "requirement": "Consistent results across multiple executions",
+      "evidence": "reports/runtime/regression/r5-final-decision.json",
+      "observed": {
+        "executions": 20,
+        "consistency": "100%"
+      },
+      "impact": "NONE - Robustness verified",
+      "contributesToRejection": false
+    },
+    "integrity": {
+      "requirement": "SHA consistent, no runtime files modified",
+      "evidence": "git rev-parse, git diff",
+      "observed": {
+        "sha": "3e22378",
+        "gitDiffCompiler": "empty",
+        "runtimeFilesModified": false
+      },
+      "impact": "NONE - Integrity verified",
+      "contributesToRejection": false
+    }
+  },
+  "rejectionTraceability": {
+    "primaryReason": "Coverage below Enterprise criteria",
+    "supportingReasons": [
+      "Inconsistent regression results",
+      "Non-representative mutation score",
+      "Contradictory root cause conclusion"
+    ],
+    "evidenceChain": [
+      {
+        "step": 1,
+        "check": "Coverage verification",
+        "evidence": "reports/runtime/execution-pipeline-current-coverage.json",
+        "result": "FAILED - Statements 90.48%, Branches 73.91%, Lines 90.48%",
+        "impact": "CRITICAL"
+      },
+      {
+        "step": 2,
+        "check": "Regression result consistency",
+        "evidence": ["regression-results.json", "regression-stable-results.json"],
+        "result": "FAILED - Contradictory results",
+        "impact": "CRITICAL"
+      },
+      {
+        "step": 3,
+        "check": "Mutation score representativeness",
+        "evidence": "mutation-summary.json",
+        "result": "WARNING - 70% INVALID mutations",
+        "impact": "HIGH"
+      },
+      {
+        "step": 4,
+        "check": "Root cause analysis consistency",
+        "evidence": "root-cause-r5.md",
+        "result": "WARNING - Contradicts 100% detection requirement",
+        "impact": "HIGH"
+      }
+    ]
+  },
+  "certificationCriteria": {
+    "enterprise": {
+      "coverage": {
+        "statements": "≥95%",
+        "branches": "≥97%",
+        "functions": "100%",
+        "lines": "≥95%"
+      },
+      "mutation": {
+        "minimumValidMutations": 10,
+        "minimumScore": 80
+      },
+      "regression": {
+        "detectionRate": "≥95%",
+        "consistency": "100%"
+      }
+    },
+    "achieved": {
+      "coverage": {
+        "statements": "90.48%",
+        "branches": "73.91%",
+        "functions": "100.00%",
+        "lines": "90.48%"
+      },
+      "mutation": {
+        "validMutations": 3,
+        "score": 100
+      },
+      "regression": {
+        "detectionRate": "UNKNOWN (inconsistent results)",
+        "consistency": "0%"
+      }
+    }
+  },
+  "finalDecision": {
+    "decision": "A",
+    "label": "CERTIFICATION REFUSÉE",
+    "justification": "Coverage below Enterprise criteria (statements, branches, lines), inconsistent regression results, non-representative mutation score, contradictory root cause conclusion",
+    "externalAuditorAnswer": "NON"
+  }
+}

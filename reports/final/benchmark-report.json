@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-07-24T17:38:36.718Z",
+  "commands": [
+    "pnpm benchmark"
+  ],
+  "elapsedTimes": {},
+  "benchmarks": [
+    " ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command \"benchmark\" not found"
+  ],
+  "errors": [
+    "Benchmarks failed: Command failed: pnpm benchmark",
+    "'benchmark' command not found in package.json"
+  ],
+  "warnings": [
+    "No benchmark script defined in package.json",
+    "Benchmarks were generated in benchmarks/ directory but not integrated into package.json scripts",
+    "Core build and compilation succeeded (exit code 0)"
+  ],
+  "success": false,
+  "exitCode": 1,
+  "note": "Benchmarks were generated in benchmarks/ directory but no npm script exists to run them. Core platform compilation and build are successful."
+}

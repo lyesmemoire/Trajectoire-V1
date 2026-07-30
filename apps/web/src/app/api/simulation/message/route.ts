@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { Container, ServiceTokens } from "@/infrastructure/di";
 import { initializeContainer } from "@/infrastructure/di/bootstrap";
@@ -7,13 +7,15 @@ import { AuthenticationError, ValidationError } from "@/core/errors";
 import { ApiResponseBuilder } from "@/core/http";
 import { SendMessageSchema } from "@/validation";
 import { IdempotencyService } from "@/core/idempotency/IdempotencyService";
+import { BillingService } from "@/lib/db/billing.service";
+
+const ENABLE_SIL_BILLING = process.env.ENABLE_SIL_BILLING === 'true';
+const SIL_MESSAGE_COST = 5; // credits per message
 
 export async function POST(request: NextRequest) {
   try {
-    // Initialize DI container
     initializeContainer();
 
-    // Authenticate user
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -21,21 +23,14 @@ export async function POST(request: NextRequest) {
       return ApiResponseBuilder.unauthorized();
     }
 
-    // Get idempotency key from headers
     const idempotencyKey = request.headers.get("Idempotency-Key");
-    if (!idempotencyKey) {
-      // Idempotency key is optional for now, but recommended
-      // For production, you might want to make it required
-    }
 
-    // Parse form data
     const formData = await request.formData();
     const rawData = {
       sessionId: formData.get("sessionId") as string,
       content: formData.get("content") as string,
     };
 
-    // Validate with Zod
     const validationResult = SendMessageSchema.safeParse(rawData);
     if (!validationResult.success) {
       const fieldErrors = validationResult.error.flatten().fieldErrors;
@@ -51,11 +46,48 @@ export async function POST(request: NextRequest) {
     }
 
     const validatedData = validationResult.data;
-
-    // Resolve service
     const conversationService = await Container.resolve(ServiceTokens.ConversationService) as ConversationService;
 
-    // Execute command with idempotency if key is provided
+    const sendWithBilling = async () => {
+      let txId: string | undefined;
+      const opKey = idempotencyKey || `sil-msg-${user.id}-${validatedData.sessionId}-${Date.now()}`;
+
+      // Reserve
+      if (ENABLE_SIL_BILLING) {
+        const reserve = await BillingService.reserveCredits({
+          userId: user.id,
+          amount: SIL_MESSAGE_COST,
+          action: "sil_message" as any,
+          operationId: opKey,
+        });
+        if (!reserve.success) {
+          throw new Error(`BILLING_ERROR:${reserve.error}`);
+        }
+        txId = reserve.txId;
+      }
+
+      try {
+        const data = await conversationService.sendMessage({
+          userId: user.id,
+          sessionId: validatedData.sessionId,
+          content: validatedData.content,
+        });
+
+        // Commit
+        if (txId) {
+          await BillingService.commitCredits(txId, 0);
+        }
+
+        return data;
+      } catch (err: any) {
+        // Rollback
+        if (txId) {
+          await BillingService.rollbackCredits(txId, err.message || "LLM failure");
+        }
+        throw err;
+      }
+    };
+
     let result;
     if (idempotencyKey) {
       const idempotencyService = new IdempotencyService();
@@ -64,27 +96,28 @@ export async function POST(request: NextRequest) {
         user.id,
         "message_send",
         validatedData,
-        () => conversationService.sendMessage({
-          userId: user.id,
-          sessionId: validatedData.sessionId,
-          content: validatedData.content,
+        async () => {
+          const data = await sendWithBilling();
+          return { resultRef: data.messageId, data };
+        },
+        async (resultRef) => ({
+          messageId: resultRef,
+          aiResponse: "",
+          messageCount: 0,
         })
       );
     } else {
-      result = await conversationService.sendMessage({
-        userId: user.id,
-        sessionId: validatedData.sessionId,
-        content: validatedData.content,
-      });
+      result = await sendWithBilling();
     }
 
-    // Redirect to conversation page
     return NextResponse.redirect(new URL(`/simulation/${validatedData.sessionId}`, request.url));
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof AuthenticationError) {
       return ApiResponseBuilder.unauthorized();
     }
-
+    if (error?.message?.startsWith("BILLING_ERROR:")) {
+      return ApiResponseBuilder.badRequest("Crédits insuffisants");
+    }
     return ApiResponseBuilder.fromError(error);
   }
 }

@@ -6,9 +6,7 @@ interface SectionBadgeProps {
 }
 
 export default function SectionBadge({
-  children,
-  className = "",
-}: SectionBadgeProps) {
+  children, className = "", _}: SectionBadgeProps) {
   return (
     <div
       className={`inline-block bg-blue-50 text-blue-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider ${className}`}

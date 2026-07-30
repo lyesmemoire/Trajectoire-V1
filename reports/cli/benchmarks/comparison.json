@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-07-25T21:19:18.292Z",
+  "baselineTimestamp": "2026-07-25T21:19:17.095Z",
+  "currentTimestamp": "2026-07-25T21:19:11.429Z",
+  "comparisons": [
+    {
+      "name": "Compiler",
+      "current": {
+        "avgMs": 12.7,
+        "opsPerSec": 78.74015748031496,
+        "ciLower": 10.710334500475017,
+        "ciUpper": 14.689665499524981
+      },
+      "baseline": {
+        "avgMs": 11.15,
+        "opsPerSec": 89.68609865470852,
+        "ciLower": 8.939996787332653,
+        "ciUpper": 13.360003212667348
+      },
+      "variation": "13.90%",
+      "status": "REGRESSION",
+      "overlap": true
+    },
+    {
+      "name": "Runtime",
+      "current": {
+        "avgMs": 9.1,
+        "opsPerSec": 109.89010989010988,
+        "ciLower": 6.679975372026144,
+        "ciUpper": 11.520024627973855
+      },
+      "baseline": {
+        "avgMs": 11.55,
+        "opsPerSec": 86.58008658008657,
+        "ciLower": 8.918649814258847,
+        "ciUpper": 14.181350185741154
+      },
+      "variation": "-21.21%",
+      "status": "PASS",
+      "overlap": true
+    },
+    {
+      "name": "Memory",
+      "current": {
+        "avgMs": 10.45,
+        "opsPerSec": 95.69377990430623,
+        "ciLower": 7.528104074406482,
+        "ciUpper": 13.371895925593517
+      },
+      "baseline": {
+        "avgMs": 10.85,
+        "opsPerSec": 92.16589861751153,
+        "ciLower": 7.809550987107332,
+        "ciUpper": 13.890449012892667
+      },
+      "variation": "-3.69%",
+      "status": "PASS",
+      "overlap": true
+    },
+    {
+      "name": "Scheduler",
+      "current": {
+        "avgMs": 12.4,
+        "opsPerSec": 80.64516129032258,
+        "ciLower": 9.64761281793422,
+        "ciUpper": 15.15238718206578
+      },
+      "baseline": {
+        "avgMs": 11.65,
+        "opsPerSec": 85.83690987124463,
+        "ciLower": 8.812142674481327,
+        "ciUpper": 14.487857325518673
+      },
+      "variation": "6.44%",
+      "status": "WARNING",
+      "overlap": true
+    },
+    {
+      "name": "Providers",
+      "current": {
+        "avgMs": 13.65,
+        "opsPerSec": 73.26007326007327,
+        "ciLower": 11.510657530922177,
+        "ciUpper": 15.789342469077823
+      },
+      "baseline": {
+        "avgMs": 16.65,
+        "opsPerSec": 60.06006006006006,
+        "ciLower": 16.363444246262613,
+        "ciUpper": 16.936555753737384
+      },
+      "variation": "-18.02%",
+      "status": "PASS",
+      "overlap": false
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 3,
+    "warning": 1,
+    "regression": 1,
+    "noBaseline": 0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0.0",
+  "signatureAlgorithm": "Ed25519",
+  "timestamp": "2026-07-29T15:36:05.177Z",
+  "hashSigned": "a40a1eeced9e84e0cf792175d1280ac71ef290933389a94379400c4f8d6dde23",
+  "signature": "sarR/6htlPxalzkxKaPG5MPeXXyHbQnyCHmwnQtFyESdU/9s1hgsxHCmuUeRiz6vAay4lbpNeQZ9f37TppnMCw==",
+  "fileSigned": "laboratory-audit-report.json"
+}

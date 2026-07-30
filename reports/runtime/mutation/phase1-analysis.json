@@ -1,0 +1,218 @@
+{
+  "component": "execution-pipeline",
+  "file": "c:/Trajectoire/compiler/cvm/execution-pipeline.ts",
+  "testFile": "c:/Trajectoire/tests/vm/advanced/execution-pipeline.test.ts",
+  "callGraph": {
+    "publicMethods": [
+      "constructor",
+      "cycle",
+      "run",
+      "runCycles",
+      "stop",
+      "reset",
+      "getStatistics",
+      "getFetch",
+      "getDecode",
+      "getExecute",
+      "getContext",
+      "setBytecode",
+      "getBytecode",
+      "step",
+      "getCacheStatistics",
+      "enableCache",
+      "disableCache",
+      "setCacheSize",
+      "validate"
+    ],
+    "privateMethods": [
+      "initializeStatistics"
+    ],
+    "dependencies": [
+      "InstructionFetch",
+      "InstructionDecode",
+      "InstructionExecute",
+      "ExecutionContext"
+    ]
+  },
+  "invariants": [
+    {
+      "name": "statistics_sync",
+      "description": "Les compteurs doivent être synchronisés avec le nombre réel d'instructions",
+      "criticality": "HIGH"
+    },
+    {
+      "name": "pipeline_sequence",
+      "description": "Le pipeline doit suivre la séquence fetch-decode-execute",
+      "criticality": "CRITICAL"
+    },
+    {
+      "name": "halt_prevents_execution",
+      "description": "L'état HALTED doit empêcher toute exécution",
+      "criticality": "CRITICAL"
+    },
+    {
+      "name": "pc_valid",
+      "description": "Le PC doit être valide par rapport au bytecode",
+      "criticality": "HIGH"
+    }
+  ],
+  "internalStates": [
+    {
+      "name": "running",
+      "type": "boolean",
+      "values": [
+        "true",
+        "false"
+      ],
+      "criticality": "HIGH"
+    },
+    {
+      "name": "statistics",
+      "type": "PipelineStatistics",
+      "criticality": "HIGH"
+    }
+  ],
+  "counters": [
+    {
+      "name": "instructionsExecuted",
+      "line": 74,
+      "criticality": "HIGH"
+    },
+    {
+      "name": "cycles",
+      "line": 75,
+      "criticality": "HIGH"
+    },
+    {
+      "name": "branchesTaken",
+      "line": 78,
+      "criticality": "MEDIUM"
+    },
+    {
+      "name": "branchesNotTaken",
+      "line": 80,
+      "criticality": "MEDIUM"
+    },
+    {
+      "name": "calls",
+      "line": 84,
+      "criticality": "MEDIUM"
+    },
+    {
+      "name": "returns",
+      "line": 88,
+      "criticality": "MEDIUM"
+    },
+    {
+      "name": "errors",
+      "line": 92,
+      "criticality": "HIGH"
+    }
+  ],
+  "validations": [
+    {
+      "line": 57,
+      "description": "if (this.context.isHalted())",
+      "criticality": "CRITICAL",
+      "impact": "BLOCKING"
+    },
+    {
+      "line": 91,
+      "description": "if (!result.success)",
+      "criticality": "HIGH",
+      "impact": "ERROR_HANDLING"
+    },
+    {
+      "line": 234,
+      "description": "if (this.context.getProgramCounter() < 0)",
+      "criticality": "HIGH",
+      "impact": "VALIDATION"
+    },
+    {
+      "line": 239,
+      "description": "if (this.context.getProgramCounter() >= bytecode.length)",
+      "criticality": "HIGH",
+      "impact": "VALIDATION"
+    },
+    {
+      "line": 244,
+      "description": "valid: errors.length === 0",
+      "criticality": "HIGH",
+      "impact": "VALIDATION"
+    }
+  ],
+  "criticalConditions": [
+    {
+      "line": 77,
+      "description": "if (result.branchTaken)",
+      "criticality": "MEDIUM"
+    },
+    {
+      "line": 79,
+      "description": "else if (result.branchTaken === false)",
+      "criticality": "MEDIUM"
+    },
+    {
+      "line": 83,
+      "description": "if (decoded.isCall)",
+      "criticality": "MEDIUM"
+    },
+    {
+      "line": 87,
+      "description": "if (decoded.isReturn)",
+      "criticality": "MEDIUM"
+    },
+    {
+      "line": 105,
+      "description": "while (!this.context.isHalted() && this.running)",
+      "criticality": "CRITICAL"
+    },
+    {
+      "line": 116,
+      "description": "for (let i = 0; i < n && !this.context.isHalted() && this.running; i++)",
+      "criticality": "CRITICAL"
+    }
+  ],
+  "controlStructures": [
+    {
+      "line": 57,
+      "type": "if",
+      "description": "Arrêt si halted"
+    },
+    {
+      "line": 77,
+      "type": "if",
+      "description": "Comptage branches prises"
+    },
+    {
+      "line": 79,
+      "type": "else if",
+      "description": "Comptage branches non prises"
+    },
+    {
+      "line": 83,
+      "type": "if",
+      "description": "Comptage appels"
+    },
+    {
+      "line": 87,
+      "type": "if",
+      "description": "Comptage retours"
+    },
+    {
+      "line": 91,
+      "type": "if",
+      "description": "Gestion erreurs"
+    },
+    {
+      "line": 105,
+      "type": "while",
+      "description": "Boucle run()"
+    },
+    {
+      "line": 116,
+      "type": "for",
+      "description": "Boucle runCycles()"
+    }
+  ]
+}

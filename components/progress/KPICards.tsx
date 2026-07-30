@@ -6,7 +6,7 @@ interface KPICardProps {
   diff: number;
 }
 
-export function KPICard({ title, value, diff }: KPICardProps) {
+export function KPICard({ title, value, _diff }: KPICardProps) {
   const isPositive = diff > 0;
   const isNegative = diff < 0;
   const isNeutral = diff === 0;

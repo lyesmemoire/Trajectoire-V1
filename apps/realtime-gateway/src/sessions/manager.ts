@@ -7,6 +7,8 @@ export const SESSION_IDLE_TIMEOUT_MS = 300_000; // 5 min
 export const SESSION_CLEANUP_INTERVAL_MS = 30_000; // 30 s
 export const MAX_SESSION_DURATION_MS = 3_600_000; // 1 h
 
+// Canonical Reference: COS-OBJ-001 (blueprint.runtime.session)
+// Owner: COS Team
 export class Session {
   public readonly peer: RtcPeer;
   public readonly deepgram?: DeepgramWrapper;

@@ -27,11 +27,7 @@ export function estimateSpeakMs(text: string, speechRate: number): number {
   return Math.max(TIMING.minSpeakMs, Math.round(raw / rate));
 }
 
-export function buildTurnPlan(
-  ux: PerceptionUX,
-  replyText: string,
-  rng: Rng,
-): TurnPlan {
+export function buildTurnPlan(ux: PerceptionUX, replyText: string, rng: Rng, ): TurnPlan {
   const emphaticSilence = rng.chance(ux.silenceProbability);
   const recruiterInterrupts = rng.chance(ux.interruptionChance);
   const delayBeforeReplyMs = Math.max(0, Math.round(ux.delayBeforeReplyMs));
@@ -47,10 +43,7 @@ export function buildTurnPlan(
   };
 }
 
-export function interruptAtMs(
-  plan: TurnPlan,
-  candidateSpeechMs: number,
-): number | null {
+export function interruptAtMs(plan: TurnPlan, candidateSpeechMs: number, ): number | null {
   if (!plan.recruiterInterrupts) return null;
   return Math.round(Math.max(0, candidateSpeechMs) * TIMING.interruptAtFraction);
 }

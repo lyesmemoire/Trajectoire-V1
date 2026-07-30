@@ -23,7 +23,7 @@ export class SupabaseInterviewRepository implements InterviewRepository {
       metrics: record.metrics ?? null,
       voice_report: record.score ?? null,
       voice_score: typeof record.score === 'object' && record.score !== null && 'overall' in record.score 
-        ? (record.score as any).overall 
+        ? (record.score as unknown).overall 
         : null,
       premium_report: record.premiumReport ?? null,
     });
@@ -44,7 +44,7 @@ export class SupabaseInterviewRepository implements InterviewRepository {
         metrics: partial.metrics,
         voice_report: partial.score,
         voice_score: partial.score && typeof partial.score === 'object' && 'overall' in partial.score 
-          ? (partial.score as any).overall 
+          ? (partial.score as unknown).overall 
           : undefined,
         premium_report: partial.premiumReport,
       })

@@ -1,0 +1,45 @@
+name: CVM Certification Pipeline
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  certify:
+    name: Certification - execution-pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@9.15.9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run certification pipeline
+        run: node certification/certify.cjs
+
+      - name: Run independent verification
+        run: |
+          LATEST_RUN=$(ls -td certification/runs/*/ | head -1)
+          node certification/verify.cjs "$LATEST_RUN"
+
+      - name: Upload certification artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: certification-run-${{ github.sha }}
+          path: certification/runs/
+          retention-days: 90

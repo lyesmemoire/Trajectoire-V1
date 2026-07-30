@@ -11,9 +11,7 @@ export interface BehavioralAnalytics {
 /**
  * Aggregates behavioral signals from a user's recent sessions.
  */
-export async function computeUserBehavioralAnalytics(
-  userId: string,
-): Promise<BehavioralAnalytics> {
+export async function computeUserBehavioralAnalytics(userId: _string, ): Promise<BehavioralAnalytics> {
   const sessions = await prisma.interviewSession.findMany({
     where: { userId },
     include: { InterviewEvent: true },
@@ -36,11 +34,11 @@ export async function computeUserBehavioralAnalytics(
   let totalQuestions = 0;
 
   sessions.forEach((session) => {
-    const answers = (session.answers as any[]) || [];
+    const answers = (session.answers as unknown[]) || [];
     totalQuestions += answers.length;
 
     // Count interruptions from events
-    totalInterruptions += session.InterviewEvent.filter((e: any) =>
+    totalInterruptions += session.InterviewEvent.filter((e: unknown) =>
       e.type.startsWith("interruption"),
     ).length;
 

@@ -4,7 +4,7 @@ interface Props {
   score: number;
 }
 
-export default function CareerScoreCard({ score }: Props) {
+export default function CareerScoreCard({ score }: _Props) {
   return (
     <div className="rounded-2xl border p-6 bg-white shadow-sm border-slate-100">
       <h3 className="text-lg font-black text-slate-900 mb-2 tracking-tight">

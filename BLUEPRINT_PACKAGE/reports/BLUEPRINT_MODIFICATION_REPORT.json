@@ -1,0 +1,327 @@
+{
+  "summary": {
+    "totalCanonicalElements": 242,
+    "filesModified": 28,
+    "definitionsReplaced": 48
+  },
+  "filesModified": [
+    "C:\\Trajectoire\\apps\\realtime-gateway\\src\\sessions\\manager.ts",
+    "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+    "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\Session.ts",
+    "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+    "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\perception.ts",
+    "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts",
+    "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+    "C:\\Trajectoire\\domain\\decision-graph.contract.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer7-explainability\\ExplainabilityEngine.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+    "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+    "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts",
+    "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+    "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\EvidenceEngine.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+    "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts",
+    "C:\\Trajectoire\\apps\\web\\src\\lib\\features\\FeatureFlagService.ts",
+    "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\flags\\FeatureFlagEngine.ts",
+    "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+    "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+    "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+    "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+    "C:\\Trajectoire\\BCM\\BCM-015_SELFEVALUATION_THEORY.md"
+  ],
+  "definitionsReplaced": [
+    {
+      "name": "Session",
+      "file": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\sessions\\manager.ts",
+      "line": 10,
+      "canonicalId": "COS-OBJ-001"
+    },
+    {
+      "name": "Question",
+      "file": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+      "line": 8,
+      "canonicalId": "COS-OBJ-003"
+    },
+    {
+      "name": "Answer",
+      "file": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\db\\interview-json-schemas.ts",
+      "line": 15,
+      "canonicalId": "COS-OBJ-004"
+    },
+    {
+      "name": "Question",
+      "file": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\v2\\question-bank.ts",
+      "line": 20,
+      "canonicalId": "COS-OBJ-003"
+    },
+    {
+      "name": "Observation",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "line": 206,
+      "canonicalId": "BCM-OBJ-001"
+    },
+    {
+      "name": "Evidence",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "line": 44,
+      "canonicalId": "BCM-OBJ-003"
+    },
+    {
+      "name": "Hypothesis",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "line": 71,
+      "canonicalId": "BCM-OBJ-007"
+    },
+    {
+      "name": "Decision",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "line": 378,
+      "canonicalId": "BCM-OBJ-009"
+    },
+    {
+      "name": "Question",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\interfaces\\IHIIOSKernel.ts",
+      "line": 169,
+      "canonicalId": "COS-OBJ-003"
+    },
+    {
+      "name": "Session",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\domain\\entities\\Session.ts",
+      "line": 27,
+      "canonicalId": "COS-OBJ-001"
+    },
+    {
+      "name": "Evidence",
+      "file": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "line": 1158,
+      "canonicalId": "BCM-OBJ-003"
+    },
+    {
+      "name": "Decision",
+      "file": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "line": 1104,
+      "canonicalId": "BCM-OBJ-009"
+    },
+    {
+      "name": "Capability",
+      "file": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "line": 1797,
+      "canonicalId": "COS-OBJ-006"
+    },
+    {
+      "name": "KnowledgeGraph",
+      "file": "C:\\Trajectoire\\CVM\\contracts\\cvm.types.ts",
+      "line": 2424,
+      "canonicalId": "BCM-GRAPH-005"
+    },
+    {
+      "name": "Perception",
+      "file": "C:\\Trajectoire\\apps\\realtime-gateway\\src\\voice-interview\\core\\simulation\\perception.ts",
+      "line": 43,
+      "canonicalId": "BCM-OBJ-002"
+    },
+    {
+      "name": "Decision",
+      "file": "C:\\Trajectoire\\packages\\hiios-runtime\\src\\persistence\\InterviewRepository.ts",
+      "line": 39,
+      "canonicalId": "BCM-OBJ-009"
+    },
+    {
+      "name": "Confidence",
+      "file": "C:\\Trajectoire\\libs\\domain\\src\\memory\\value-objects\\CandidateMemory.ts",
+      "line": 225,
+      "canonicalId": "BCM-OBJ-004"
+    },
+    {
+      "name": "DecisionGraph",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\domain\\decision-graph.contract.ts",
+      "line": 20,
+      "canonicalId": "BCM-GRAPH-009"
+    },
+    {
+      "name": "DecisionGraph",
+      "file": "C:\\Trajectoire\\domain\\decision-graph.contract.ts",
+      "line": 20,
+      "canonicalId": "BCM-GRAPH-009"
+    },
+    {
+      "name": "ConfidenceGraph",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer7-explainability\\ExplainabilityEngine.ts",
+      "line": 165,
+      "canonicalId": "BCM-GRAPH-004"
+    },
+    {
+      "name": "KnowledgeGraph",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\cognitive-intelligence\\world-model\\interfaces\\IWorldModelEngine.ts",
+      "line": 244,
+      "canonicalId": "BCM-GRAPH-005"
+    },
+    {
+      "name": "Evidence",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\evaluation-contract.ts",
+      "line": 20,
+      "canonicalId": "BCM-OBJ-003"
+    },
+    {
+      "name": "Evidence",
+      "file": "C:\\Trajectoire\\core\\p7\\evaluation-contract.ts",
+      "line": 20,
+      "canonicalId": "BCM-OBJ-003"
+    },
+    {
+      "name": "Evidence",
+      "file": "C:\\Trajectoire\\libs\\domain\\src\\evaluation\\value-objects\\CompetencyEvaluation.ts",
+      "line": 38,
+      "canonicalId": "BCM-OBJ-003"
+    },
+    {
+      "name": "Hypothesis",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\HypothesisEngine.ts",
+      "line": 26,
+      "canonicalId": "BCM-OBJ-007"
+    },
+    {
+      "name": "Evaluating",
+      "file": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "line": 1096,
+      "canonicalId": "BCM-STATE-033"
+    },
+    {
+      "name": "Evaluated",
+      "file": "C:\\Trajectoire\\BCM\\BCM-009_DECISION_THEORY.md",
+      "line": 1097,
+      "canonicalId": "BCM-STATE-034"
+    },
+    {
+      "name": "EvidenceGraph",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\application\\hiios\\layer0-kernel\\EvidenceEngine.ts",
+      "line": 38,
+      "canonicalId": "BCM-GRAPH-003"
+    },
+    {
+      "name": "Traceability",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\core\\p7\\explainability\\explanation-contract.ts",
+      "line": 21,
+      "canonicalId": "BEA-INV-008"
+    },
+    {
+      "name": "Traceability",
+      "file": "C:\\Trajectoire\\core\\p7\\explainability\\explanation-contract.ts",
+      "line": 21,
+      "canonicalId": "BEA-INV-008"
+    },
+    {
+      "name": "FeatureFlag",
+      "file": "C:\\Trajectoire\\apps\\web\\src\\lib\\features\\FeatureFlagService.ts",
+      "line": 19,
+      "canonicalId": "COS-OBJ-010"
+    },
+    {
+      "name": "FeatureFlag",
+      "file": "C:\\Trajectoire\\packages\\hiios-enterprise\\src\\flags\\FeatureFlagEngine.ts",
+      "line": 14,
+      "canonicalId": "COS-OBJ-010"
+    },
+    {
+      "name": "Node",
+      "file": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "line": 241,
+      "canonicalId": "BCM-OBJ-021"
+    },
+    {
+      "name": "Execution",
+      "file": "C:\\Trajectoire\\docs\\CVM-000_Cognitive_VM_Constitution.md",
+      "line": 244,
+      "canonicalId": "CVM-OBJ-001"
+    },
+    {
+      "name": "Adapting",
+      "file": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "line": 1369,
+      "canonicalId": "BCM-STATE-029"
+    },
+    {
+      "name": "Adapted",
+      "file": "C:\\Trajectoire\\BCM\\BCM-010_PLANNING_THEORY.md",
+      "line": 1370,
+      "canonicalId": "BCM-STATE-030"
+    },
+    {
+      "name": "Encoding",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1075,
+      "canonicalId": "BCM-STATE-021"
+    },
+    {
+      "name": "Encoded",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1076,
+      "canonicalId": "BCM-STATE-022"
+    },
+    {
+      "name": "Retrieving",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1079,
+      "canonicalId": "BCM-STATE-023"
+    },
+    {
+      "name": "Retrieved",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1080,
+      "canonicalId": "BCM-STATE-024"
+    },
+    {
+      "name": "Consolidating",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1081,
+      "canonicalId": "BCM-STATE-025"
+    },
+    {
+      "name": "Consolidated",
+      "file": "C:\\Trajectoire\\BCM\\BCM-011_MEMORY_THEORY.md",
+      "line": 1082,
+      "canonicalId": "BCM-STATE-026"
+    },
+    {
+      "name": "Reflecting",
+      "file": "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+      "line": 1228,
+      "canonicalId": "BCM-STATE-031"
+    },
+    {
+      "name": "Reflected",
+      "file": "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+      "line": 1229,
+      "canonicalId": "BCM-STATE-032"
+    },
+    {
+      "name": "Evaluating",
+      "file": "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+      "line": 1230,
+      "canonicalId": "BCM-STATE-033"
+    },
+    {
+      "name": "Evaluated",
+      "file": "C:\\Trajectoire\\BCM\\BCM-014_METAREASONING_THEORY.md",
+      "line": 1231,
+      "canonicalId": "BCM-STATE-034"
+    },
+    {
+      "name": "Planning",
+      "file": "C:\\Trajectoire\\BCM\\BCM-015_SELFEVALUATION_THEORY.md",
+      "line": 1301,
+      "canonicalId": "BCM-STATE-019"
+    },
+    {
+      "name": "Planned",
+      "file": "C:\\Trajectoire\\BCM\\BCM-015_SELFEVALUATION_THEORY.md",
+      "line": 1302,
+      "canonicalId": "BCM-STATE-020"
+    }
+  ]
+}

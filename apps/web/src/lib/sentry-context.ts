@@ -14,13 +14,10 @@ export const setSentryContext = (context: {
   });
 };
 
-export const captureError = (
-  error: Error | unknown,
-  context?: Record<string, any>
-) => {
+export const captureError = (error: Error | unknown, context?: Record<string, unknown>) => {
   Sentry.captureException(error, {
     tags: {
-      component: context?.component || 'unknown',
+      component: (context?.component as string) || 'unknown',
     },
     extra: context,
   });

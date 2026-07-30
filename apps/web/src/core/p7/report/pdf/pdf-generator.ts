@@ -1,7 +1,6 @@
-import { ReportSummary } from "../report-contract.js";
-import { ReportJSON, PdfArtifact } from "../report-contract.js";
+import { ReportSummary, PdfArtifact } from "../report-contract.js";
 
-export function generatePDF(summary: ReportSummary, json: ReportJSON): PdfArtifact {
+export function generatePDF(summary: ReportSummary): PdfArtifact {
   // In a real environment, we would use PDFKit or similar.
   // For the architectural mock, we produce deterministic bytes based on JSON structure.
   // The deterministic hash allows the AuditPack to verify it.

@@ -1,10 +1,9 @@
-import { IdentityCardData } from "./identity-card";
 import { ARCHETYPES_META } from "../archetypes/career-archetypes";
 
 /**
  * Generates compelling social media copy for sharing.
  */
-export function generateShareCopy(data: IdentityCardData): string {
+export function generateShareCopy(data: _IdentityCardData): string {
   const templates = [
     `Je pensais être bon sous pression. 
     

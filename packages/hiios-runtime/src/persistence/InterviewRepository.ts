@@ -14,8 +14,8 @@ export interface InterviewEvent {
   sequenceNumber:  number;
   eventType:       string;
   eventVersion:    number;
-  payload:         any;
-  metadata?:       any;
+  payload: unknown;
+  metadata?: unknown;
   actorId?:        string;
   createdAt:       Date;
 }
@@ -31,19 +31,21 @@ export interface InterviewState {
   phase:           string;
   turnCount:       number;
   elapsedMinutes:  number;
-  questionsAsked:  any[];
-  responses:       any[];
+  questionsAsked: unknown[];
+  responses: unknown[];
   lastUpdated:     Date;
 }
 
+// Canonical Reference: BCM-OBJ-009 (blueprint.cognitive.decision)
+// Owner: Chief Cognitive Architect
 export interface Decision {
   id:                   string;
   interviewId:          string;
   recommendation:       string;
   globalConfidence:     string;
   globalConfidenceScore: number;
-  rationale:            any;
-  skillAssessments:     any[];
+  rationale: unknown;
+  skillAssessments: unknown[];
   keyStrengths:         string[];
   keyRisks:             string[];
   openQuestions:        string[];
@@ -235,7 +237,7 @@ export class InterviewRepository {
     eventType: string;
     description: string;
     actorId?: string;
-    metadata?: any;
+    metadata?: unknown;
   }): Promise<void> {
     // En production : persister dans la table audit_logs
     console.log("[AUDIT]", entry);

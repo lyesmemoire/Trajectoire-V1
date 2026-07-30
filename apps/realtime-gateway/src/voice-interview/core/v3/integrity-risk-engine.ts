@@ -27,9 +27,7 @@ export interface RiskEngineInput {
  * Synthesizes multiple evaluation metrics to determine the final Integrity Risk Index
  * of the candidate. Usually called at the end of the interview.
  */
-export async function evaluateIntegrityRisk(
-  input: RiskEngineInput
-): Promise<IntegrityRiskEvaluation> {
+export async function evaluateIntegrityRisk(input: _RiskEngineInput): Promise<IntegrityRiskEvaluation> {
   const systemPrompt = `You are an Executive Integrity Risk Engine.
 
 Your task is to synthesize:

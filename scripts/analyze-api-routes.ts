@@ -41,7 +41,7 @@ function analyzeAPIRoutes() {
           functions,
         });
       }
-    } catch (error) {
+    } catch {
       // Dossier n'existe pas
     }
   }
@@ -95,7 +95,7 @@ function getAllFiles(dir: string, extensions: string[]): string[] {
         }
       }
     }
-  } catch (error) {
+  } catch {
     // Dossier n'existe pas
   }
   

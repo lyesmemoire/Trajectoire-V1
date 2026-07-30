@@ -32,12 +32,7 @@ interface PDFPreviewModalProps {
 }
 
 export function PDFPreviewModal({
-  cvData,
-  options,
-  isOpen,
-  onClose,
-  onExport,
-}: PDFPreviewModalProps) {
+  cvData, options, isOpen, onClose, onExport, _}: PDFPreviewModalProps) {
   if (!isOpen) return null;
 
   return (

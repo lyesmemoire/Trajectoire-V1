@@ -1,0 +1,12 @@
+{
+  "phase": 11,
+  "title": "Certifiabilité de la Chaîne de Confiance",
+  "isCertifiable": false,
+  "evidence": [
+    "Le pipeline simule la réussite de la couverture en copiant un fichier non tracé par Git (reports/cli/coverage/coverage-final.json) au lieu de le générer dynamiquement.",
+    "Le pipeline simule la détection des mutations et régressions en forçant l'échec de Vitest avec une option invalide (--no-threads), ce qui est interprété comme un succès des tests.",
+    "Un laboratoire externe partant d'un dépôt propre (clone Git) ne peut pas reproduire les mêmes résultats car le fichier de couverture copié statiquement n'est pas versionné.",
+    "Les manifestes générés ne sont pas cryptographiquement reproductibles entre deux exécutions à cause des métadonnées temporelles."
+  ],
+  "conclusion": "Le certificateur n'est pas digne de confiance. Son architecture permet et encourage la fraude (faux positifs garantis) et dissimule des échecs d'exécution derrière des scores parfaits artificiels."
+}

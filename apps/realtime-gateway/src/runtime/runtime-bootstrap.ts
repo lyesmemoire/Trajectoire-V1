@@ -121,7 +121,7 @@ export class RuntimeBootstrap {
       });
 
       return this.wsAdapter.toWebSocketFrames(result.value.commands);
-    } catch (e) {
+    } catch {
       throw new Error("STT Processing failed");
     }
   }

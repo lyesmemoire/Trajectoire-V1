@@ -21,7 +21,7 @@ export class CreditTransaction {
 
     log.info("credit_reserve_attempt", { amount, idempotencyKey });
 
-    const supabase = createSupabaseServiceClient() as any;
+    const supabase = createSupabaseServiceClient() as unknown;
 
     const { data, error } = await supabase.rpc("reserve_credits_atomic", {
       p_user_id: userId,
@@ -46,12 +46,12 @@ export class CreditTransaction {
   /**
    * Commit (Succès) : Confirme l'utilisation, log les tokens
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async commit(txId: string, metadata?: Record<string, any>) {
+   
+  static async commit(txId: string, metadata?: Record<string, unknown>) {
     const log = logger.child({ txId });
     log.info("credit_commit_attempt", metadata);
 
-    const supabase = createSupabaseServiceClient() as any;
+    const supabase = createSupabaseServiceClient() as unknown;
     const tokensUsed = metadata?.tokensUsed ?? 0;
 
     const { error } = await supabase.rpc("commit_credits_atomic", {
@@ -74,7 +74,7 @@ export class CreditTransaction {
     const log = logger.child({ txId });
     log.warn("credit_rollback_attempt", { reason });
 
-    const supabase = createSupabaseServiceClient() as any;
+    const supabase = createSupabaseServiceClient() as unknown;
     const { error } = await supabase.rpc("rollback_credits_atomic", {
       p_tx_id: txId,
       p_reason: reason,

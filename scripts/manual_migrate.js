@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+import {  PrismaClient  } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -55,7 +55,7 @@ async function main() {
       await prisma.$executeRawUnsafe(
         `ALTER TABLE "public"."ResumeVersion" ADD CONSTRAINT "ResumeVersion_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;`,
       );
-    } catch (e) {
+    } catch (error) {
       console.log("FK ResumeVersion_userId_fkey may already exist or failed.");
     }
 
@@ -63,7 +63,7 @@ async function main() {
       await prisma.$executeRawUnsafe(
         `ALTER TABLE "public"."ResumeRewriteHistory" ADD CONSTRAINT "ResumeRewriteHistory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;`,
       );
-    } catch (e) {
+    } catch (error) {
       console.log(
         "FK ResumeRewriteHistory_userId_fkey may already exist or failed.",
       );
@@ -73,14 +73,14 @@ async function main() {
       await prisma.$executeRawUnsafe(
         `ALTER TABLE "public"."ResumeRewriteHistory" ADD CONSTRAINT "ResumeRewriteHistory_resumeId_fkey" FOREIGN KEY ("resumeId") REFERENCES "public"."ResumeVersion"("id") ON DELETE CASCADE ON UPDATE CASCADE;`,
       );
-    } catch (e) {
+    } catch (error) {
       console.log(
         "FK ResumeRewriteHistory_resumeId_fkey may already exist or failed.",
       );
     }
 
     console.log("Database update applied successfully!");
-  } catch (e) {
+  } catch (error) {
     console.error("Migration Error:", e);
   } finally {
     await prisma.$disconnect();

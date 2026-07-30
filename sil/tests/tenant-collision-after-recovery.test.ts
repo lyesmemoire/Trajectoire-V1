@@ -40,7 +40,7 @@ describe("Phase 2-F: Tenant Collision After Recovery", () => {
       adapter, reportRepo, checkpointRepo
     );
     const ingestor = new SILIngestor(new MockVerifier(), store, registry, loop);
-    const recoveryManager = new RecoveryManager(loop, adapter, checkpointRepo, sessionRepo, traceRepo, reportRepo, registry);
+    const _recoveryManager = new RecoveryManager(loop, adapter, checkpointRepo, sessionRepo, traceRepo, reportRepo, registry);
 
     const sessionId = "session-iso-3";
     

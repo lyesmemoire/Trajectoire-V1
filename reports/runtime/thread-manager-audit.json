@@ -1,0 +1,114 @@
+{
+  "component": "thread-manager",
+  "file": "compiler/cvm/thread-manager.ts",
+  "auditDate": "2026-07-26T23:45:00Z",
+  "metrics": {
+    "lines": {
+      "total": 313,
+      "code": 313,
+      "blank": 0,
+      "comments": 0
+    },
+    "functions": {
+      "total": 18,
+      "public": 18,
+      "private": 0,
+      "static": 0
+    },
+    "methods": {
+      "public": [
+        "createThread",
+        "getThread",
+        "getCurrentThread",
+        "setThreadState",
+        "schedule",
+        "yield",
+        "block",
+        "unblock",
+        "terminate",
+        "deleteThread",
+        "getAllThreads",
+        "getThreadsByState",
+        "getThreadCount",
+        "clear",
+        "setSchedulingPolicy",
+        "getSchedulingPolicy",
+        "setDefaultQuantum",
+        "getDefaultQuantum",
+        "validate",
+        "getStatistics"
+      ]
+    },
+    "complexity": {
+      "cyclomatic": 25,
+      "estimated": "Based on branching statements"
+    },
+    "interfaces": [
+      "Thread",
+      "ThreadManagerOptions"
+    ],
+    "enums": [
+      "ThreadState",
+      "SchedulingPolicy"
+    ]
+  },
+  "dependencies": {
+    "outgoing": [
+      {
+        "name": "ExecutionContext",
+        "path": "./execution-context",
+        "type": "import"
+      }
+    ],
+    "incoming": [],
+    "external": []
+  },
+  "components": {
+    "usingThreadManager": [],
+    "usedByThreadManager": [
+      "ExecutionContext"
+    ]
+  },
+  "architecture": {
+    "designPattern": "Manager Pattern",
+    "responsibilities": [
+      "Thread lifecycle management",
+      "Scheduling",
+      "Thread state management",
+      "Thread statistics"
+    ],
+    "schedulingPolicies": [
+      "ROUND_ROBIN",
+      "PRIORITY",
+      "FIFO"
+    ],
+    "threadStates": [
+      "READY",
+      "RUNNING",
+      "BLOCKED",
+      "TERMINATED"
+    ]
+  },
+  "keyFeatures": {
+    "threadCreation": true,
+    "threadDeletion": true,
+    "threadScheduling": true,
+    "threadYielding": true,
+    "threadBlocking": true,
+    "threadTermination": true,
+    "priorityScheduling": true,
+    "roundRobinScheduling": true,
+    "fifoScheduling": true,
+    "statistics": true,
+    "validation": true
+  },
+  "potentialComplexity": {
+    "reasons": [
+      "Multiple scheduling policies",
+      "Thread state transitions",
+      "Context switching logic",
+      "Validation logic"
+    ],
+    "riskLevel": "Medium"
+  }
+}

@@ -1,0 +1,503 @@
+name: SDK CI Matrix - Full Toolchain Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  generate:
+    name: Generate SDKs on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate all SDKs
+        run: |
+          npx tsx bin/blueprint sdk generate typescript --output ./sdks
+          npx tsx bin/blueprint sdk generate rust --output ./sdks
+          npx tsx bin/blueprint sdk generate go --output ./sdks
+          npx tsx bin/blueprint sdk generate python --output ./sdks
+          npx tsx bin/blueprint sdk generate java --output ./sdks
+          npx tsx bin/blueprint sdk generate kotlin --output ./sdks
+          npx tsx bin/blueprint sdk generate csharp --output ./sdks
+      
+      - name: Upload SDKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdks-${{ matrix.os }}
+          path: sdks/
+          retention-days: 7
+
+  typescript-full:
+    name: TypeScript Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate TypeScript SDK
+        run: npx tsx bin/blueprint sdk generate typescript --output ./sdks
+      
+      - name: Install TypeScript SDK dependencies
+        run: cd sdks/typescript && pnpm install
+      
+      - name: Build TypeScript SDK
+        run: cd sdks/typescript && pnpm build
+      
+      - name: Pack TypeScript SDK
+        run: cd sdks/typescript && pnpm pack
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/typescript/*.tgz SHA256
+          else
+            shasum -a 256 sdks/typescript/*.tgz
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/typescript && npx tsx hello.ts
+      
+      - name: Upload TypeScript artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript-artifacts-${{ matrix.os }}
+          path: sdks/typescript/*.tgz
+          retention-days: 7
+
+  rust-full:
+    name: Rust Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate Rust SDK
+        run: npx tsx bin/blueprint sdk generate rust --output ./sdks
+      
+      - name: Build Rust SDK
+        run: cd sdks/rust && cargo build --release
+      
+      - name: Test Rust SDK
+        run: cd sdks/rust && cargo test
+      
+      - name: Package Rust SDK
+        run: cd sdks/rust && cargo package
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/rust/target/package/*.crate SHA256
+          else
+            shasum -a 256 sdks/rust/target/package/*.crate
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/rust && cargo run --example hello
+      
+      - name: Upload Rust artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-artifacts-${{ matrix.os }}
+          path: sdks/rust/target/package/*.crate
+          retention-days: 7
+
+  go-full:
+    name: Go Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate Go SDK
+        run: npx tsx bin/blueprint sdk generate go --output ./sdks
+      
+      - name: Tidy Go modules
+        run: cd sdks/go && go mod tidy
+      
+      - name: Build Go SDK
+        run: cd sdks/go && go build -v
+      
+      - name: Test Go SDK
+        run: cd sdks/go && go test -v
+      
+      - name: Run Hello World
+        run: cd sdks/go && go run examples/hello.go
+      
+      - name: Upload Go artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-artifacts-${{ matrix.os }}
+          path: sdks/go/*.exe
+          if-no-files-found: ignore
+          retention-days: 7
+
+  python-full:
+    name: Python Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Install Python build tools
+        run: pip install build pytest
+      
+      - name: Generate Python SDK
+        run: npx tsx bin/blueprint sdk generate python --output ./sdks
+      
+      - name: Build Python SDK
+        run: cd sdks/python && python -m build
+      
+      - name: Test Python SDK
+        run: cd sdks/python && pytest
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/python/dist/*.whl SHA256
+          else
+            shasum -a 256 sdks/python/dist/*.whl
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/python && python examples/hello.py
+      
+      - name: Upload Python artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-artifacts-${{ matrix.os }}
+          path: sdks/python/dist/
+          retention-days: 7
+
+  java-full:
+    name: Java Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate Java SDK
+        run: npx tsx bin/blueprint sdk generate java --output ./sdks
+      
+      - name: Build Java SDK
+        run: cd sdks/java && mvn package
+      
+      - name: Test Java SDK
+        run: cd sdks/java && mvn test
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/java/target/*.jar SHA256
+          else
+            shasum -a 256 sdks/java/target/*.jar
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/java && java -cp target/classes com.blueprint.sdk.examples.Hello
+      
+      - name: Upload Java artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-artifacts-${{ matrix.os }}
+          path: sdks/java/target/*.jar
+          retention-days: 7
+
+  kotlin-full:
+    name: Kotlin Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate Kotlin SDK
+        run: npx tsx bin/blueprint sdk generate kotlin --output ./sdks
+      
+      - name: Build Kotlin SDK
+        run: cd sdks/kotlin && gradle build
+      
+      - name: Test Kotlin SDK
+        run: cd sdks/kotlin && gradle test
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/kotlin/build/libs/*.jar SHA256
+          else
+            shasum -a 256 sdks/kotlin/build/libs/*.jar
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/kotlin && java -jar build/libs/blueprint-sdk-1.0.0.jar
+      
+      - name: Upload Kotlin artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kotlin-artifacts-${{ matrix.os }}
+          path: sdks/kotlin/build/libs/*.jar
+          retention-days: 7
+
+  csharp-full:
+    name: C# Full Validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate C# SDK
+        run: npx tsx bin/blueprint sdk generate csharp --output ./sdks
+      
+      - name: Build C# SDK
+        run: cd sdks/csharp && dotnet build
+      
+      - name: Test C# SDK
+        run: cd sdks/csharp && dotnet test
+      
+      - name: Calculate SHA-256
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            certutil -hashfile sdks/csharp/bin/**/*.nupkg SHA256
+          else
+            shasum -a 256 sdks/csharp/bin/**/*.nupkg
+          fi
+        shell: bash
+      
+      - name: Run Hello World
+        run: cd sdks/csharp && dotnet run
+      
+      - name: Upload C# artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: csharp-artifacts-${{ matrix.os }}
+          path: sdks/csharp/bin/**/*.nupkg
+          if-no-files-found: ignore
+          retention-days: 7
+
+  summary:
+    name: SDK Cross-platform Summary
+    runs-on: ubuntu-latest
+    needs: [generate, typescript-full, rust-full, go-full, python-full, java-full, kotlin-full, csharp-full]
+    if: always()
+    
+    steps:
+      - name: Check results
+        run: |
+          echo "Generate job status: ${{ needs.generate.result }}"
+          echo "TypeScript job status: ${{ needs.typescript-full.result }}"
+          echo "Rust job status: ${{ needs.rust-full.result }}"
+          echo "Go job status: ${{ needs.go-full.result }}"
+          echo "Python job status: ${{ needs.python-full.result }}"
+          echo "Java job status: ${{ needs.java-full.result }}"
+          echo "Kotlin job status: ${{ needs.kotlin-full.result }}"
+          echo "C# job status: ${{ needs.csharp-full.result }}"
+          
+          FAILED=0
+          if [ "${{ needs.generate.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.typescript-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.rust-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.go-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.python-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.java-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.kotlin-full.result }}" != "success" ]; then FAILED=1; fi
+          if [ "${{ needs.csharp-full.result }}" != "success" ]; then FAILED=1; fi
+          
+          if [ $FAILED -eq 1 ]; then
+            echo "Some jobs failed"
+            exit 1
+          fi
+          
+          echo "All jobs passed successfully"
+

@@ -5,7 +5,7 @@ const GatewayEnvSchema = z.object({
 });
 const gatewayEnv = GatewayEnvSchema.parse(process.env);
 import { z } from "zod";
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { createClient } from "@supabase/supabase-js";
 import { verifyVoiceToken } from "../auth.js";
 
@@ -14,7 +14,7 @@ const supabase = createClient(
   gatewayEnv.SUPABASE_SERVICE_ROLE_KEY,
 );
 
-export async function registerEngineRoutes(app: FastifyInstance) {
+export async function registerEngineRoutes(app: _FastifyInstance) {
   app.get("/api/engine/metrics", async (request: FastifyRequest, reply: FastifyReply) => {
     // ── Admin Auth Guard ──
     const authHeader = request.headers.authorization;
@@ -55,7 +55,7 @@ export async function registerEngineRoutes(app: FastifyInstance) {
     const logs = data || [];
 
     // Helper to calculate aggregations
-    const calculateStats = (subset: any[]) => {
+    const calculateStats = (subset: unknown[]) => {
       const count = subset.length;
       if (count === 0) {
         return { count: 0, meanScore: null, meanIntegrity: null, percentHighPressure: null, timeoutRate: null, errorRate: null };
@@ -82,9 +82,9 @@ export async function registerEngineRoutes(app: FastifyInstance) {
     const globalStats = calculateStats(logs);
 
     // Segmentations
-    const groupedByLevel: Record<string, any[]> = {};
-    const groupedByJob: Record<string, any[]> = {};
-    const groupedByRole: Record<string, any[]> = {};
+    const groupedByLevel: Record<string, unknown[]> = {};
+    const groupedByJob: Record<string, unknown[]> = {};
+    const groupedByRole: Record<string, unknown[]> = {};
 
     logs.forEach(log => {
       if (log.candidate_level) {

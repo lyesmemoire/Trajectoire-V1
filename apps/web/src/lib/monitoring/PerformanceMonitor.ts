@@ -12,7 +12,7 @@ export interface PerformanceMetric {
   timestamp: number;
   memory?: number; // in MB
   cpu?: number; // percentage
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface PerformanceStats {
@@ -52,7 +52,7 @@ export class PerformanceMonitor {
     requestId: string,
     layer: PerformanceMetric["layer"],
     operation: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const startTime = this.activeRequests.get(requestId);
     if (!startTime) {
@@ -204,10 +204,7 @@ export function getPerformanceMonitor(): PerformanceMonitor {
 /**
  * Decorator to track method performance
  */
-export function trackPerformance(
-  layer: PerformanceMetric["layer"],
-  operation: string
-) {
+export function trackPerformance(layer: PerformanceMetric["layer"], operation: string) {
   return function (
     target: any,
     propertyKey: string,

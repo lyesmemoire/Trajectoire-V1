@@ -11,8 +11,6 @@ import {
   defaultAdaptiveJourneyConfig,
 } from "./interfaces/IAdaptiveJourney";
 import { userPersonalizationEngine } from "../adaptive-intelligence/UserPersonalizationEngine";
-import { strategyEngine } from "../adaptive-intelligence/StrategyEngine";
-import { planningEngine } from "../adaptive-intelligence/PlanningEngine";
 
 // ============================================================================
 // ADAPTIVE JOURNEY SERVICE CLASS

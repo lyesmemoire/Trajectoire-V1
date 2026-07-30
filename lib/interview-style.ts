@@ -4,9 +4,7 @@ export type InterviewStyle =
   | "BOARD_PRESSURE"
   | "CRISIS_TRANSFORMATION";
 
-export function getInterviewStyleFromPosture(
-  dominantPosture: string
-): InterviewStyle {
+export function getInterviewStyleFromPosture(dominantPosture: _string): InterviewStyle {
   switch (dominantPosture) {
     case "Operational":
       return "VISION_ARBITRAGE";

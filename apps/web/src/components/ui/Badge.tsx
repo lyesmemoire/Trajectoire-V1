@@ -1,42 +1,33 @@
-import { cn } from "@/lib/utils";
+type BadgeVariant = 'free' | 'pro' | 'expert'
 
-interface BadgeProps {
-  children: React.ReactNode;
-  variant?: "default" | "secondary" | "success" | "warning" | "danger" | "info";
-  size?: "sm" | "md";
-  className?: string;
+const styles: Record<BadgeVariant, string> = {
+  free: 'bg-ivoire-100 text-ink-600 border border-ivoire-200',
+  pro: 'bg-bronze-50 text-bronze-700 border border-bronze-100',
+  expert: 'bg-ink-900 text-bronze-400 border border-ink-900',
 }
 
-export function Badge({
-  children,
-  variant = "default",
-  size = "md",
-  className,
-}: BadgeProps) {
-  const variants = {
-    default: "bg-slate-100 text-slate-700",
-    secondary: "bg-slate-200 text-slate-800",
-    success: "bg-green-100 text-green-700",
-    warning: "bg-amber-100 text-amber-700",
-    danger: "bg-red-100 text-red-700",
-    info: "bg-blue-100 text-blue-700",
-  };
+const labels: Record<BadgeVariant, string> = {
+  free: 'Free',
+  pro: 'Pro',
+  expert: 'Expert',
+}
 
-  const sizes = {
-    sm: "px-2 py-0.5 text-xs",
-    md: "px-3 py-1 text-sm",
-  };
-
+export function Badge({ variant }: { variant: BadgeVariant }) {
   return (
     <span
-      className={cn(
-        "inline-flex items-center font-bold rounded-full",
-        variants[variant],
-        sizes[size],
-        className,
-      )}
+      className={`
+        inline-flex items-center gap-1.5
+        px-3 py-1 rounded-full
+        text-[11px] font-semibold uppercase tracking-wider
+        ${styles[variant]}
+      `}
     >
-      {children}
+      {variant === 'expert' && (
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z" />
+        </svg>
+      )}
+      {labels[variant]}
     </span>
-  );
+  )
 }

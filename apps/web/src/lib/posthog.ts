@@ -38,10 +38,7 @@ export type AnalyticsEvent =
  * Wrapper typé autour de posthog.capture
  * Utilisé uniquement côté client ('use client')
  */
-export function trackEvent(
-  event: AnalyticsEvent,
-  properties?: Record<string, string | number | boolean>,
-) {
+export function trackEvent(event: AnalyticsEvent, properties?: Record<string, string | number | boolean>, ) {
   if (typeof window === "undefined") return;
   if (!POSTHOG_KEY) return;
 
@@ -51,10 +48,7 @@ export function trackEvent(
 /**
  * Identifie l'utilisateur après connexion
  */
-export function identifyUser(
-  userId: string,
-  traits?: Record<string, string | number>,
-) {
+export function identifyUser(userId: string, traits?: Record<string, string | number>, ) {
   if (typeof window === "undefined") return;
   if (!POSTHOG_KEY) return;
 

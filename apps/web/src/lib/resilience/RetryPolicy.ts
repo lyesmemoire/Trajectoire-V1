@@ -58,7 +58,7 @@ const RETRYABLE_STATUS_CODES = [408, 429, 500, 502, 503, 504];
 /**
  * Check if an error is retryable
  */
-function isRetryableError(error: unknown): boolean {
+function isRetryableError(error: any): boolean {
   // Check if error is a non-retryable business error
   if (error instanceof Error) {
     for (const ErrorType of NON_RETRYABLE_ERRORS) {
@@ -78,7 +78,7 @@ function isRetryableError(error: unknown): boolean {
     }
 
     // Check HTTP status codes if available
-    const statusCode = (error as any).statusCode;
+    const statusCode = (error  as any).statusCode;
     if (statusCode && RETRYABLE_STATUS_CODES.includes(statusCode)) {
       return true;
     }

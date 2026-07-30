@@ -37,12 +37,7 @@ import { AuditService } from "@/lib/db/audit.service";
  * @param targetId L'ID de l'utilisateur ou entité cible de l'action
  * @param metadata Métadonnées optionnelles (ex: montant de crédits, raison)
  */
-export async function logAdminAction(
-  adminId: string,
-  action: string,
-  targetId: string,
-  metadata?: Record<string, any>
-) {
+export async function logAdminAction(adminId: string, action: string, targetId: string, metadata?: Record<string, _unknown>) {
   try {
     await AuditService.createLog({
       adminId,

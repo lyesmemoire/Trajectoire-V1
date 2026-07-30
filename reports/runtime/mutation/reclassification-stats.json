@@ -1,0 +1,14 @@
+{
+  "total": 40,
+  "killed": 7,
+  "survived": 0,
+  "invalid": 33,
+  "realInvalid": 0,
+  "expectedInvalid": 20,
+  "expectedKill": 0,
+  "testIssue": 13,
+  "critical": 8,
+  "major": 6,
+  "minor": 11,
+  "cosmetic": 15
+}

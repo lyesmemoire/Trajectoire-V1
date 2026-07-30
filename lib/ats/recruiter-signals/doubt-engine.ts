@@ -9,10 +9,7 @@ import { captureError } from "../../sentry-context";
  * 👔 Moteur de Doute Recruteur
  * Simule les hésitations d'un recruteur réel face au CV.
  */
-export async function generateRecruiterDoubts(
-  cvText: string,
-  jobDesc: string,
-): Promise<PressureMunition[]> {
+export async function generateRecruiterDoubts(cvText: string, jobDesc: string, ): Promise<PressureMunition[]> {
   const PROMPT = `Tu es un recruteur senior extrêmement exigeant. 
   Ton but est de trouver les failles, les manques de preuves et les incohérences dans ce CV par rapport à l'offre.
   

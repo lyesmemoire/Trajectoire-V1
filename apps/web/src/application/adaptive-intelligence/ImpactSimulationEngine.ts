@@ -48,7 +48,7 @@ export class ImpactSimulationEngine {
   simulateImpact(
     actionId: string,
     actionType: string,
-    parameters: Record<string, any>
+    parameters: Record<string, unknown>
   ): ImpactSimulation {
     const expectedImpact = this.calculateExpectedImpact(actionType, parameters);
     const confidence = this.calculateConfidence(expectedImpact);
@@ -74,7 +74,7 @@ export class ImpactSimulationEngine {
   /**
    * Calculate expected impact
    */
-  private calculateExpectedImpact(actionType: string, parameters: Record<string, any>): ImpactMetrics {
+  private calculateExpectedImpact(actionType: string, parameters: Record<string, unknown>): ImpactMetrics {
     // Base impact based on action type
     const baseImpact = this.getBaseImpact(actionType);
 
@@ -157,7 +157,7 @@ export class ImpactSimulationEngine {
    */
   private adjustImpactByParameters(
     base: Omit<ImpactMetrics, "riskLevel" | "uncertainty">,
-    parameters: Record<string, any>
+    parameters: Record<string, unknown>
   ): Omit<ImpactMetrics, "riskLevel" | "uncertainty"> {
     const adjusted = { ...base };
 
@@ -174,7 +174,7 @@ export class ImpactSimulationEngine {
 
     // Adjust based on duration
     if (parameters.duration) {
-      const durationFactor = parameters.duration / 45; // 45 minutes is baseline
+      const durationFactor = (parameters.duration as any) / 45; // 45 minutes is baseline
       adjusted.impactDuration *= durationFactor;
       adjusted.skillDevelopment *= Math.min(1.5, durationFactor);
     }
@@ -185,7 +185,7 @@ export class ImpactSimulationEngine {
   /**
    * Calculate uncertainty
    */
-  private calculateUncertainty(actionType: string, parameters: Record<string, any>): number {
+  private calculateUncertainty(actionType: string, parameters: Record<string, unknown>): number {
     let uncertainty = 0.3; // Base uncertainty
 
     // Higher uncertainty for complex actions
@@ -242,7 +242,7 @@ export class ImpactSimulationEngine {
    */
   private generateAlternatives(
     actionType: string,
-    parameters: Record<string, any>,
+    parameters: Record<string, unknown>,
     originalImpact: ImpactMetrics
   ): ImpactAlternative[] {
     const alternatives: ImpactAlternative[] = [];

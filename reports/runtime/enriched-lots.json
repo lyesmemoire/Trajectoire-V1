@@ -1,0 +1,2024 @@
+[
+  {
+    "id": 1,
+    "name": "execution-context",
+    "category": "CVM",
+    "file": "compiler\\cvm\\execution-context.ts",
+    "lines": 236,
+    "level": 0,
+    "criticalityScore": 36,
+    "dependencies": {
+      "upstream": [
+        "stack",
+        "heap",
+        "call-frames",
+        "register-table"
+      ],
+      "downstream": [
+        "branch-predictor",
+        "debugger-hooks",
+        "exception-handler",
+        "execution-pipeline",
+        "garbage-collector",
+        "instruction-execute",
+        "interrupt-manager",
+        "memory-manager",
+        "microcode-engine",
+        "profiler-hooks",
+        "rollback-manager",
+        "scheduler",
+        "snapshot-manager",
+        "thread-manager",
+        "trace-hooks"
+      ]
+    },
+    "files": [
+      "compiler\\cvm\\execution-context.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 59,
+      "additional": 29,
+      "totalTarget": 88
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 1
+  },
+  {
+    "id": 2,
+    "name": "register-file",
+    "category": "CVM",
+    "file": "compiler\\cvm\\register-file.ts",
+    "lines": 227,
+    "level": 0,
+    "criticalityScore": 30,
+    "dependencies": {
+      "upstream": [
+        "register-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\register-file.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 28,
+      "totalTarget": 28
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 3,
+    "name": "instruction-cache",
+    "category": "CVM",
+    "file": "compiler\\cvm\\instruction-cache.ts",
+    "lines": 263,
+    "level": 0,
+    "criticalityScore": 28,
+    "dependencies": {
+      "upstream": [
+        "instruction-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\instruction-cache.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 68,
+      "additional": 26,
+      "totalTarget": 94
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 4,
+    "name": "instruction-fetch",
+    "category": "CVM",
+    "file": "compiler\\cvm\\instruction-fetch.ts",
+    "lines": 241,
+    "level": 0,
+    "criticalityScore": 26,
+    "dependencies": {
+      "upstream": [
+        "instruction-table"
+      ],
+      "downstream": [
+        "execution-pipeline"
+      ]
+    },
+    "files": [
+      "compiler\\cvm\\instruction-fetch.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 70,
+      "additional": 22,
+      "totalTarget": 92
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 5,
+    "name": "frame-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\frame-manager.ts",
+    "lines": 239,
+    "level": 0,
+    "criticalityScore": 24,
+    "dependencies": {
+      "upstream": [
+        "stack",
+        "call-frames"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\frame-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 69,
+      "additional": 30,
+      "totalTarget": 99
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 6,
+    "name": "instruction-decode",
+    "category": "CVM",
+    "file": "compiler\\cvm\\instruction-decode.ts",
+    "lines": 126,
+    "level": 0,
+    "criticalityScore": 17,
+    "dependencies": {
+      "upstream": [
+        "instruction-table",
+        "opcode-table"
+      ],
+      "downstream": [
+        "execution-pipeline",
+        "instruction-execute"
+      ]
+    },
+    "files": [
+      "compiler\\cvm\\instruction-decode.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 36,
+      "additional": 10,
+      "totalTarget": 46
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 2
+  },
+  {
+    "id": 7,
+    "name": "debugger-hooks",
+    "category": "CVM",
+    "file": "compiler\\cvm\\debugger-hooks.ts",
+    "lines": 475,
+    "level": 1,
+    "criticalityScore": 62,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "opcode-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\debugger-hooks.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 93,
+      "additional": 45,
+      "totalTarget": 138
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 8
+  },
+  {
+    "id": 8,
+    "name": "trace-hooks",
+    "category": "CVM",
+    "file": "compiler\\cvm\\trace-hooks.ts",
+    "lines": 375,
+    "level": 1,
+    "criticalityScore": 47,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "opcode-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\trace-hooks.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 95,
+      "additional": 39,
+      "totalTarget": 134
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 9,
+    "name": "garbage-collector",
+    "category": "CVM",
+    "file": "compiler\\cvm\\garbage-collector.ts",
+    "lines": 337,
+    "level": 1,
+    "criticalityScore": 44,
+    "dependencies": {
+      "upstream": [
+        "heap",
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\garbage-collector.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 65,
+      "additional": 29,
+      "totalTarget": 94
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 7
+  },
+  {
+    "id": 10,
+    "name": "instruction-execute",
+    "category": "CVM",
+    "file": "compiler\\cvm\\instruction-execute.ts",
+    "lines": 420,
+    "level": 1,
+    "criticalityScore": 39,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "instruction-decode",
+        "opcode-table"
+      ],
+      "downstream": [
+        "execution-pipeline"
+      ]
+    },
+    "files": [
+      "compiler\\cvm\\instruction-execute.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 92,
+      "additional": 40,
+      "totalTarget": 132
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 7
+  },
+  {
+    "id": 11,
+    "name": "memory-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\memory-manager.ts",
+    "lines": 347,
+    "level": 1,
+    "criticalityScore": 39,
+    "dependencies": {
+      "upstream": [
+        "heap",
+        "stack",
+        "memory-addressing",
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\memory-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 71,
+      "additional": 45,
+      "totalTarget": 116
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 12,
+    "name": "rollback-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\rollback-manager.ts",
+    "lines": 304,
+    "level": 1,
+    "criticalityScore": 39,
+    "dependencies": {
+      "upstream": [
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\rollback-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 80,
+      "additional": 30,
+      "totalTarget": 110
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 13,
+    "name": "scheduler",
+    "category": "CVM",
+    "file": "compiler\\cvm\\scheduler.ts",
+    "lines": 304,
+    "level": 1,
+    "criticalityScore": 37,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "opcode-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\scheduler.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 4,
+      "additional": 35,
+      "totalTarget": 39
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 14,
+    "name": "thread-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\thread-manager.ts",
+    "lines": 313,
+    "level": 1,
+    "criticalityScore": 36,
+    "dependencies": {
+      "upstream": [
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\thread-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 68,
+      "additional": 29,
+      "totalTarget": 97
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 15,
+    "name": "microcode-engine",
+    "category": "CVM",
+    "file": "compiler\\cvm\\microcode-engine.ts",
+    "lines": 318,
+    "level": 1,
+    "criticalityScore": 35,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "opcode-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\microcode-engine.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 77,
+      "additional": 15,
+      "totalTarget": 92
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 16,
+    "name": "interrupt-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\interrupt-manager.ts",
+    "lines": 330,
+    "level": 1,
+    "criticalityScore": 33,
+    "dependencies": {
+      "upstream": [
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\interrupt-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 77,
+      "additional": 33,
+      "totalTarget": 110
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 17,
+    "name": "profiler-hooks",
+    "category": "CVM",
+    "file": "compiler\\cvm\\profiler-hooks.ts",
+    "lines": 233,
+    "level": 1,
+    "criticalityScore": 27,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "opcode-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\profiler-hooks.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 70,
+      "additional": 23,
+      "totalTarget": 93
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 18,
+    "name": "snapshot-manager",
+    "category": "CVM",
+    "file": "compiler\\cvm\\snapshot-manager.ts",
+    "lines": 256,
+    "level": 1,
+    "criticalityScore": 27,
+    "dependencies": {
+      "upstream": [
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\snapshot-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 62,
+      "additional": 22,
+      "totalTarget": 84
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 19,
+    "name": "branch-predictor",
+    "category": "CVM",
+    "file": "compiler\\cvm\\branch-predictor.ts",
+    "lines": 215,
+    "level": 1,
+    "criticalityScore": 25,
+    "dependencies": {
+      "upstream": [
+        "execution-context"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\branch-predictor.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 52,
+      "additional": 20,
+      "totalTarget": 72
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 20,
+    "name": "exception-handler",
+    "category": "CVM",
+    "file": "compiler\\cvm\\exception-handler.ts",
+    "lines": 196,
+    "level": 1,
+    "criticalityScore": 22,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "exception-table"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\exception-handler.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 40,
+      "additional": 22,
+      "totalTarget": 62
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 21,
+    "name": "execution-pipeline",
+    "category": "CVM",
+    "file": "compiler\\cvm\\execution-pipeline.ts",
+    "lines": 249,
+    "level": 2,
+    "criticalityScore": 32,
+    "dependencies": {
+      "upstream": [
+        "execution-context",
+        "instruction-fetch",
+        "instruction-decode",
+        "instruction-execute"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cvm\\execution-pipeline.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 86,
+      "additional": 28,
+      "totalTarget": 114
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 22,
+    "name": "cluster-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\cluster-manager.ts",
+    "lines": 292,
+    "level": 0,
+    "criticalityScore": 52,
+    "dependencies": {
+      "upstream": [],
+      "downstream": [
+        "api-gateway",
+        "autoscaler",
+        "consensus-engine",
+        "distributed-debugger",
+        "distributed-locks",
+        "distributed-memory",
+        "distributed-profiler",
+        "distributed-scheduler",
+        "distributed-trace",
+        "execution-coordinator",
+        "governance",
+        "leader-election",
+        "recovery-manager",
+        "replay-manager",
+        "runtime-kernel",
+        "runtime-manager",
+        "security",
+        "snapshot-manager",
+        "telemetry"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\cluster-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 28,
+      "totalTarget": 28
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 23,
+    "name": "knowledge-fabric",
+    "category": "CPR",
+    "file": "compiler\\cpr\\knowledge-fabric.ts",
+    "lines": 374,
+    "level": 0,
+    "criticalityScore": 48,
+    "dependencies": {
+      "upstream": [],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\knowledge-fabric.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 32,
+      "totalTarget": 32
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 8
+  },
+  {
+    "id": 24,
+    "name": "provider-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\provider-manager.ts",
+    "lines": 316,
+    "level": 0,
+    "criticalityScore": 30,
+    "dependencies": {
+      "upstream": [],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\provider-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 29,
+      "totalTarget": 29
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 25,
+    "name": "consensus-engine",
+    "category": "CPR",
+    "file": "compiler\\cpr\\consensus-engine.ts",
+    "lines": 429,
+    "level": 1,
+    "criticalityScore": 42,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": [
+        "runtime-kernel"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\consensus-engine.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 32,
+      "totalTarget": 32
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 26,
+    "name": "distributed-memory",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-memory.ts",
+    "lines": 307,
+    "level": 1,
+    "criticalityScore": 39,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": [
+        "snapshot-manager"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\distributed-memory.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 29,
+      "totalTarget": 29
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 27,
+    "name": "distributed-trace",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-trace.ts",
+    "lines": 369,
+    "level": 1,
+    "criticalityScore": 38,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\distributed-trace.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 29,
+      "totalTarget": 29
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 28,
+    "name": "telemetry",
+    "category": "CPR",
+    "file": "compiler\\cpr\\telemetry.ts",
+    "lines": 273,
+    "level": 1,
+    "criticalityScore": 36,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\telemetry.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 22,
+      "totalTarget": 22
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 29,
+    "name": "governance",
+    "category": "CPR",
+    "file": "compiler\\cpr\\governance.ts",
+    "lines": 368,
+    "level": 1,
+    "criticalityScore": 35,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\governance.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 33,
+      "totalTarget": 33
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 30,
+    "name": "leader-election",
+    "category": "CPR",
+    "file": "compiler\\cpr\\leader-election.ts",
+    "lines": 280,
+    "level": 1,
+    "criticalityScore": 34,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": [
+        "runtime-kernel"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\leader-election.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 26,
+      "totalTarget": 26
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 31,
+    "name": "security",
+    "category": "CPR",
+    "file": "compiler\\cpr\\security.ts",
+    "lines": 368,
+    "level": 1,
+    "criticalityScore": 34,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\security.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 35,
+      "totalTarget": 35
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 32,
+    "name": "runtime-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\runtime-manager.ts",
+    "lines": 239,
+    "level": 1,
+    "criticalityScore": 32,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": [
+        "autoscaler",
+        "distributed-debugger",
+        "distributed-scheduler",
+        "execution-coordinator",
+        "recovery-manager",
+        "replay-manager",
+        "runtime-kernel"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\runtime-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 23,
+      "totalTarget": 23
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 3
+  },
+  {
+    "id": 33,
+    "name": "api-gateway",
+    "category": "CPR",
+    "file": "compiler\\cpr\\api-gateway.ts",
+    "lines": 332,
+    "level": 1,
+    "criticalityScore": 31,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\api-gateway.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 28,
+      "totalTarget": 28
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 34,
+    "name": "distributed-locks",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-locks.ts",
+    "lines": 246,
+    "level": 1,
+    "criticalityScore": 30,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\distributed-locks.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 20,
+      "totalTarget": 20
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 35,
+    "name": "distributed-profiler",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-profiler.ts",
+    "lines": 303,
+    "level": 1,
+    "criticalityScore": 30,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\distributed-profiler.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 25,
+      "totalTarget": 25
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 36,
+    "name": "distributed-debugger",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-debugger.ts",
+    "lines": 357,
+    "level": 2,
+    "criticalityScore": 50,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\distributed-debugger.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 29,
+      "totalTarget": 29
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 7
+  },
+  {
+    "id": 37,
+    "name": "replay-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\replay-manager.ts",
+    "lines": 354,
+    "level": 2,
+    "criticalityScore": 47,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\replay-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 30,
+      "totalTarget": 30
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 38,
+    "name": "recovery-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\recovery-manager.ts",
+    "lines": 433,
+    "level": 2,
+    "criticalityScore": 46,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\recovery-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 33,
+      "totalTarget": 33
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 39,
+    "name": "execution-coordinator",
+    "category": "CPR",
+    "file": "compiler\\cpr\\execution-coordinator.ts",
+    "lines": 315,
+    "level": 2,
+    "criticalityScore": 45,
+    "dependencies": {
+      "upstream": [
+        "runtime-manager",
+        "cluster-manager"
+      ],
+      "downstream": [
+        "runtime-kernel"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\execution-coordinator.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 26,
+      "totalTarget": 26
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 40,
+    "name": "snapshot-manager",
+    "category": "CPR",
+    "file": "compiler\\cpr\\snapshot-manager.ts",
+    "lines": 322,
+    "level": 2,
+    "criticalityScore": 43,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "distributed-memory"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\snapshot-manager.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 62,
+      "additional": 23,
+      "totalTarget": 85
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 6
+  },
+  {
+    "id": 41,
+    "name": "distributed-scheduler",
+    "category": "CPR",
+    "file": "compiler\\cpr\\distributed-scheduler.ts",
+    "lines": 345,
+    "level": 2,
+    "criticalityScore": 40,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager"
+      ],
+      "downstream": [
+        "runtime-kernel"
+      ]
+    },
+    "files": [
+      "compiler\\cpr\\distributed-scheduler.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 29,
+      "totalTarget": 29
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 4
+  },
+  {
+    "id": 42,
+    "name": "autoscaler",
+    "category": "CPR",
+    "file": "compiler\\cpr\\autoscaler.ts",
+    "lines": 333,
+    "level": 2,
+    "criticalityScore": 38,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\autoscaler.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 25,
+      "totalTarget": 25
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 5
+  },
+  {
+    "id": 43,
+    "name": "runtime-kernel",
+    "category": "CPR",
+    "file": "compiler\\cpr\\runtime-kernel.ts",
+    "lines": 298,
+    "level": 3,
+    "criticalityScore": 28,
+    "dependencies": {
+      "upstream": [
+        "cluster-manager",
+        "runtime-manager",
+        "execution-coordinator",
+        "distributed-scheduler",
+        "consensus-engine",
+        "leader-election"
+      ],
+      "downstream": []
+    },
+    "files": [
+      "compiler\\cpr\\runtime-kernel.ts"
+    ],
+    "coverage": {
+      "current": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "target": {
+        "statements": 95,
+        "branches": 97,
+        "functions": 100
+      }
+    },
+    "tests": {
+      "existing": 0,
+      "additional": 28,
+      "totalTarget": 28
+    },
+    "validationCriteria": [
+      "Coverage Statements ≥ 95%",
+      "Coverage Branches ≥ 97%",
+      "Coverage Functions ≥ 100%",
+      "All tests pass",
+      "No TypeScript errors",
+      "No linting errors"
+    ],
+    "estimatedEffort": 2
+  }
+]

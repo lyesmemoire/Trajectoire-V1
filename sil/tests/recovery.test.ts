@@ -70,7 +70,7 @@ describe("SIL Phase 2-D — Recovery", () => {
       );
       
       const recoveryManager = new RecoveryManager(
-        loop, storageAdapter, checkpointRepo, {} as any, {} as any, reportRepo, registry
+        loop, storageAdapter, checkpointRepo, {} as unknown, {} as unknown, reportRepo, registry
       );
 
       const ckpt = await checkpointRepo.load("tenant", sessionId);

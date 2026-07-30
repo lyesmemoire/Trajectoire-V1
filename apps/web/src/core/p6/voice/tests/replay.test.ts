@@ -1,3 +1,4 @@
+
 import { describe, it, expect } from "vitest";
 import { VoiceExecutionPlan } from "../voice-contract.js";
 import { serializePlan, deserializePlan } from "../plan-replay.js";

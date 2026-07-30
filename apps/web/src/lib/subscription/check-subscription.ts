@@ -4,7 +4,7 @@
 // SOURCE DE VÉRITÉ : Base de données (table Subscription + User.plan)
 // DÉPENDANCES : Prisma uniquement — zéro Stripe
 //
-// TODO-L1.1 : Quand Stripe est câblé, le webhook met à jour ces champs.
+
 //             Ce helper n'a pas besoin de changer. Il lira simplement
 //             les valeurs mises à jour par le webhook.
 //             (Architecture déjà prête pour Stripe)
@@ -24,9 +24,7 @@ export interface SubscriptionCheck {
   plan: string | null
 }
 
-export async function checkUserSubscription(
-  userId: string
-): Promise<SubscriptionCheck> {
+export async function checkUserSubscription(userId: string): Promise<SubscriptionCheck> {
 
   try {
     // Lecture depuis la BDD — pas d'appel externe
@@ -78,9 +76,7 @@ export async function checkUserSubscription(
 // Vérification légère pour le middleware Edge (sans Prisma)
 // Utilise uniquement les cookies/headers déjà présents
 // Le middleware Edge ne peut pas appeler Prisma directement
-export function extractUserIdFromSession(
-  cookieHeader: string | null
-): string | null {
+export function extractUserIdFromSession(cookieHeader: string | null): string | null {
   if (!cookieHeader) return null
 
   // Supabase stocke le user_id dans le cookie de session

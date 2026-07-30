@@ -1,0 +1,11 @@
+[package]
+name = "blueprint-sdk"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+# Add Blueprint dependencies here
+
+[lib]
+name = "blueprint_sdk"
+crate-type = ["lib"]

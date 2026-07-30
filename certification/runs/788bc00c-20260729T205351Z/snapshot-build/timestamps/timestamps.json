@@ -1,0 +1,49 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "manifest.dsse.json",
+      "digest": {
+        "sha256": "15bbbde090024ba5a412ab84f02ead569da77b2a7b6d04c7cfbe16ed5706aebf"
+      }
+    }
+  ],
+  "predicateType": "https://trajectoire.ai/predicate/timestamp/v1",
+  "predicate": {
+    "profile": "trajectoire-timestamp-v1",
+    "schemaVersion": "1.0",
+    "trustedTime": [
+      {
+        "evidence": {
+          "tokenBase64": "TU9DS19SRkMzMTYxX1RPS0VOXzE1YmJiZGUwOTAwMjRiYTVhNDEyYWI4NGYwMmVhZDU2OWRhNzdiMmE3YjZkMDRjN2NmYmUxNmVkNTcwNmFlYmY="
+        },
+        "evidenceId": "urn:trajectoire:timestamp:rfc3161:v1:74a3fdba",
+        "generatedAt": "2026-07-29T14:52:19.000Z",
+        "provider": "mock",
+        "status": "collected",
+        "subject": {
+          "algorithm": "sha256",
+          "digest": "15bbbde090024ba5a412ab84f02ead569da77b2a7b6d04c7cfbe16ed5706aebf"
+        },
+        "type": "trusted-time"
+      }
+    ],
+    "transparency": [
+      {
+        "entryUUID": "69d26912-b50e-3aee-fc7b-31859a5a07bc",
+        "evidenceId": "urn:trajectoire:timestamp:rekor:v1:294a5a9c",
+        "inclusionProof": {
+          "hashes": [],
+          "rootHash": "28bcd3c022e1bdc3d2b6ec3777cd3593827a298b3a76fec4112d666a2b77a0cb",
+          "treeSize": 1000
+        },
+        "integratedTime": "2026-07-29T14:52:19.000Z",
+        "logID": "mock-log-id-001",
+        "logIndex": 38716,
+        "provider": "mock",
+        "status": "collected",
+        "type": "transparency"
+      }
+    ]
+  }
+}

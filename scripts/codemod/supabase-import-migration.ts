@@ -12,15 +12,15 @@ const sourceFiles = project.getSourceFiles([
   "lib/**/*.ts",
 ])
 
-function replaceImport(sourceFile: any) {
+function replaceImport(sourceFile: unknown) {
   const imports = sourceFile.getImportDeclarations()
 
-  imports.forEach((imp: any) => {
+  imports.forEach((imp: unknown) => {
     const moduleSpecifier = imp.getModuleSpecifierValue()
 
     // CASE 1: legacy supabase import
     if (moduleSpecifier === "@/lib/supabase") {
-      const namedImports = imp.getNamedImports().map((i: any) => i.getName())
+      const namedImports = imp.getNamedImports().map((i: unknown) => i.getName())
 
       imp.remove()
 
@@ -32,7 +32,7 @@ function replaceImport(sourceFile: any) {
         
         // Also need to replace createClient() calls with just 'supabase'
         const calls = sourceFile.getDescendantsOfKind(SyntaxKind.CallExpression)
-        calls.forEach((call: any) => {
+        calls.forEach((call: unknown) => {
            if (call.getExpression().getText() === "createClient") {
                call.replaceWithText("supabase")
            }

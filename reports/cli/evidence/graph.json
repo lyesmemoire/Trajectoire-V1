@@ -1,0 +1,51 @@
+{
+  "command": "npx",
+  "args": [
+    "tsx",
+    "bin/blueprint",
+    "graph",
+    "--type",
+    "dependency",
+    "--format",
+    "json",
+    "--output",
+    "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\graph.json"
+  ],
+  "exitCode": 0,
+  "duration": 4759,
+  "stdout": "[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36mGenerating dependency graph...\u001b[39m\n[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36mFormat: json\u001b[39m\n[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36mAnalyzing dependencies...\u001b[39m\n[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36mBuilding graph structure...\u001b[39m\n[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Graph generated in 132ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true\n[20:27:57] \u001b[32mINFO\u001b[39m: \u001b[36mOutput: C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\graph.json\u001b[39m",
+  "stderr": "",
+  "timestamp": "2026-07-25T20:27:57.937Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  },
+  "artifacts": [
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\blueprint.config.json",
+      "size": 391,
+      "sha256": "25e441a2fc1571f49d8b931dc4051fa753d826e69ed5f5cdf105b34414aa23aa"
+    },
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\graph.json",
+      "size": 449,
+      "sha256": "1a62f7d538135cd017637f2c4641ff72c19b18b95f1bea9f9c55d7379e0f0673"
+    },
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\README.md",
+      "size": 477,
+      "sha256": "10b4695d400a175b9dd73210df814b90e8d70dde2cb4ff5ba7ae37c1cea13fc6"
+    },
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\src\\contracts\\SampleContract.bp",
+      "size": 237,
+      "sha256": "c581b3c9d38bf8787ae0050107731e938029ba24f36837608926abc4cc25e95f"
+    },
+    {
+      "path": "C:\\Users\\ELITEB~1\\AppData\\Local\\Temp\\blueprint-evidence-1785011252619\\artifacts\\SampleContract.bpp",
+      "size": 396,
+      "sha256": "1f4da8dfe74199fa5387d69936db084d867174e25dff4217bcc6c5c9689e5703"
+    }
+  ]
+}

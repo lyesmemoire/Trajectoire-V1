@@ -1,0 +1,35 @@
+{
+  "hashes": [
+    {
+      "file": "coverage-report.json",
+      "labSha256": "f7e0dd3c2e24ace23fb72dd30bc3183b0e6e160989fe4e93fafd99d26c77d3da",
+      "pipelineSha256": "4c20269f0e2dea253166830cf3ceaa1c2e79781ed69963f84ffbe1d27176cc7d",
+      "match": false
+    },
+    {
+      "file": "mutation-report.json",
+      "labSha256": "60cc9e3b0886154b068c65216913d8703d84332d1e13fb8cbad071f1589389b6",
+      "pipelineSha256": "5034eb54bbed2881ab78fa75132eca1d01861ac847d4e354a347be014234c506",
+      "match": false
+    },
+    {
+      "file": "regression-report.json",
+      "labSha256": "7822c615b9c8130d1b6aef6aea723f422e07e7558a4d0997af8f13724b90a0cb",
+      "pipelineSha256": "faf030dce5734c9ce4c7be73175fddc8d25f3bef6067ddfd18247f5fea354707",
+      "match": false
+    },
+    {
+      "file": "certification.json",
+      "labSha256": "204e9c4d01dceb731fd281ca8d9871c7e9ad043dbe50c4784334e2144bd6fec0",
+      "pipelineSha256": "40f4af645e8264a5cd9480911f0625755fcc0d88bb557d69c50e92509d24f389",
+      "match": false
+    },
+    {
+      "file": "manifest.json",
+      "labSha256": "f3a1a50fb1476ceb42b8ac411a89ba4e13ca12ac6ac11848bc3769525d42c05a",
+      "pipelineSha256": null,
+      "match": null
+    }
+  ],
+  "allMatch": false
+}

@@ -43,7 +43,7 @@ export class ReplayEngine {
 
     for (const event of processedEvents) {
       if (event.type === "REPORT_GENERATED") {
-        originalReportHash = (event.payload as any)?.reportHash || null;
+        originalReportHash = (event.payload as { reportHash?: string })?.reportHash || null;
       }
     }
 
@@ -61,7 +61,7 @@ export class ReplayEngine {
         });
         replayHash = evaluation.reportHash;
       }
-    } catch (e) {
+    } catch {
       // Trace not found or P7 failed during replay
       replayHash = "ERROR";
     }
@@ -79,7 +79,7 @@ export class ReplayEngine {
   }
 
   async verifyReplayWithLedger(sessionId: string, tenantId: string) {
-    const events = await this.query.getSessionEvents(tenantId, sessionId);
+    const _events = await this.query.getSessionEvents(tenantId, sessionId);
 
     // Compute replay hash
     let replayHash = "";
@@ -92,7 +92,7 @@ export class ReplayEngine {
         });
         replayHash = evaluation.reportHash;
       }
-    } catch (e) {
+    } catch {
       replayHash = "ERROR";
     }
 

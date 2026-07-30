@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Document,
   Page,
@@ -6,8 +6,8 @@ import {
   View,
   StyleSheet,
   Font,
-} from "@react-pdf/renderer";
-import { CVData, ExportOptions } from "../types";
+} from "@react-pdf/renderer"
+import { CVData, ExportOptions } from "../types"
 
 Font.register({
   family: "Merriweather",
@@ -21,7 +21,7 @@ Font.register({
       fontWeight: 700,
     },
   ],
-});
+})
 
 Font.register({
   family: "Inter",
@@ -39,7 +39,7 @@ Font.register({
       fontWeight: 700,
     },
   ],
-});
+})
 
 const PALETTES = {
   blue: {
@@ -70,10 +70,10 @@ const PALETTES = {
     tag: "#F9FAFB",
     tagText: "#1F2937",
   },
-};
+}
 
 const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
-  const c = PALETTES[colorScheme] || PALETTES.blue;
+  const c = PALETTES[colorScheme] || PALETTES.blue
   return StyleSheet.create({
     page: {
       fontFamily: "Inter",
@@ -328,24 +328,23 @@ const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
       fontSize: 7,
       color: "#D1D5DB",
     },
-  });
-};
+  })
+}
 
 export const ClassicTemplate = ({
-  data,
-  options,
+  data, options
 }: {
-  data: CVData;
-  options: ExportOptions;
+  data: CVData
+  options: ExportOptions
 }) => {
-  const styles = createStyles(options.colorScheme);
+  const styles = createStyles(options.colorScheme)
   const contacts = [
     data.personalInfo.email,
     data.personalInfo.phone,
     data.personalInfo.location,
     data.personalInfo.linkedin,
     data.personalInfo.portfolio,
-  ].filter(Boolean) as string[];
+  ].filter(Boolean) as string[]
 
   return (
     <Document
@@ -445,6 +444,6 @@ export const ClassicTemplate = ({
         </View>
       </Page>
     </Document>
-  );
-};
-export default ClassicTemplate;
+  )
+}
+export default ClassicTemplate

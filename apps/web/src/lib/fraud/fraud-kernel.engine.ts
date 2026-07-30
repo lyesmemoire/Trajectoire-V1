@@ -1,11 +1,11 @@
 import { FraudKernel } from "./fraud-kernel"
 import { FraudSignal } from "@/domain/fraud-kernel.contract"
-import { EvaluationContext, AgentOpinion } from "@/domain/orchestration.contract"
+import { AgentOpinion } from "@/domain/orchestration.contract"
 
 export class FraudKernelEngine {
   constructor(private kernel: FraudKernel) {}
 
-  evaluate(ctx: EvaluationContext): AgentOpinion {
+  evaluate(ctx: any): AgentOpinion {
     const signals = this.extractSignals(ctx)
 
     const result = this.kernel.evaluate(signals, ctx.userId)
@@ -23,7 +23,7 @@ export class FraudKernelEngine {
     }
   }
 
-  private extractSignals(ctx: EvaluationContext): FraudSignal[] {
+  private extractSignals(ctx: any): FraudSignal[] {
     const signals: FraudSignal[] = []
 
     // velocity

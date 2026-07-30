@@ -23,18 +23,18 @@ export async function runScenario(): Promise<Array<{ tickId: number; nodeId: str
   // shared health emitter
   const globalTrace: Array<{ tickId: number; nodeId: string; isLeader: boolean }> = [];
   // attach listeners for each watchdog (including later restarts)
-  const attachListener = (id: string, wd: any) => {
-    wd.on("tickTrace", (ev: any) => globalTrace.push(ev));
+  const attachListener = (id: string, wd: unknown) => {
+    (wd as { on: (event: string, callback: (ev: unknown) => void) => void }).on("tickTrace", (ev: unknown) => globalTrace.push(ev as { tickId: number; nodeId: string; isLeader: boolean }));
   };
   const healthSource = new EventEmitter();
   // Global logical tick counter orchestrated by the test harness
-  let globalTick = 0;
+  let _globalTick = 0;
   const runTicks = async (ids: string[]) => {
-    globalTick++;
+    _globalTick++;
     for (const nid of ids) {
-      const wd = watchdogs[nid] as any;
-      if (wd && typeof wd.tick === "function") {
-        wd.tick(); // no argument
+      const wd = watchdogs[nid] as unknown;
+      if (wd && typeof (wd as { tick?: () => void }).tick === "function") {
+        (wd as { tick?: () => void }).tick?.(); // no argument
       }
     }
     // small pause to let async processing settle
@@ -51,12 +51,12 @@ export async function runScenario(): Promise<Array<{ tickId: number; nodeId: str
       listenPort: ports[i],
       peers: peersMap[nodeIds[i]],
       healthSource,
-    } as any;
+    } as unknown;
     const wd = new FederatedWatchdog(opts);
     wd.start();
     watchdogs[nodeIds[i]] = wd;
     // expose underlying comm for test control
-    const comm = (wd as any).comm as InterNodeComm;
+    const comm = (wd as unknown).comm as InterNodeComm;
     comms[nodeIds[i]] = comm;
     attachListener(nodeIds[i], wd);
   }
@@ -71,7 +71,7 @@ export async function runScenario(): Promise<Array<{ tickId: number; nodeId: str
   await sleep(500);
 
   // Capture initial leader info
-  const leaderInfo1 = (watchdogs["node1"] as any).leaderElection.getIsLeader() ? "node1" : "unknown";
+  const leaderInfo1 = (watchdogs["node1"] as unknown).leaderElection.getIsLeader() ? "node1" : "unknown";
   console.log(`[PARTITION_TEST] Initial leader elected: ${leaderInfo1}`);
 
   // ---- Simulate leader crash ----
@@ -98,11 +98,11 @@ export async function runScenario(): Promise<Array<{ tickId: number; nodeId: str
     listenPort: 9000,
     peers: peersMap["node1"],
     healthSource,
-  } as any;
+  } as unknown;
   const wd1 = new FederatedWatchdog(opts1);
   wd1.start();
   watchdogs["node1"] = wd1;
-  const comm1 = (wd1 as any).comm as InterNodeComm;
+  const comm1 = (wd1 as unknown).comm as InterNodeComm;
   comms["node1"] = comm1;
   attachListener("node1", wd1);
 
@@ -115,7 +115,7 @@ export async function runScenario(): Promise<Array<{ tickId: number; nodeId: str
   // Gather final consensus data
   const finalLeaders: string[] = [];
   for (const id of nodeIds) {
-    const le = (watchdogs[id] as any).leaderElection;
+    const le = (watchdogs[id] as unknown).leaderElection;
     if (le.getIsLeader()) finalLeaders.push(id);
   }
   console.log(`[PARTITION_TEST] Final leaders observed: ${finalLeaders.join(", ")}`);

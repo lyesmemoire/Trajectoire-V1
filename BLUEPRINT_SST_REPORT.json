@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "totalFilesTransformed": 6,
+    "totalFilesRemoved": 0
+  },
+  "transformedFiles": [
+    "billing.contract.ts",
+    "decision-graph.contract.ts",
+    "fraud-kernel.contract.ts",
+    "interview.contract.ts",
+    "orchestration.contract.ts",
+    "user.contract.ts"
+  ],
+  "removedFiles": []
+}

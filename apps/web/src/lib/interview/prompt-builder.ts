@@ -1,4 +1,4 @@
-import { PersonaConfig } from "./persona-config";
+import { PersonaConfig } from "./personas/persona-config";
 import { InterviewState } from "./interview-state-machine";
 import { FollowUpStrategy } from "./followup-strategy";
 

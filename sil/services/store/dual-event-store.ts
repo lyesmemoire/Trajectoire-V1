@@ -26,7 +26,7 @@ export class DualEventStore implements EventStore {
       eventId: event.eventId,
       hash: event.hash,
       previousHash: event.previousEventHash,
-      sequence: (event as any).sequence ?? 0,
+      sequence: (event as { sequence?: number }).sequence ?? 0,
     }).catch(() => {});
   }
 
@@ -41,13 +41,6 @@ export class DualEventStore implements EventStore {
   ): Promise<SILEvent[]> {
     // ALWAYS source of truth = primary
     return this.primary.readAfter(tenantId, sessionId, afterSequence);
-  }
-
-  async getLastEvent(
-    tenantId: string,
-    sessionId: string
-  ): Promise<SILEvent | null> {
-    return this.primary.getLastEvent(tenantId, sessionId);
   }
 
   async hasEvent(tenantId: string, sessionId: string, eventId: string): Promise<boolean> {

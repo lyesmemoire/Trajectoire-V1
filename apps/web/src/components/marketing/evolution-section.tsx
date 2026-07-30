@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { History, TrendingUp, Target, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion"
+import { History, TrendingUp, Target, ChevronRight } from "lucide-react"
 
 const EVOLUTION_STORY = [
   {
@@ -25,7 +25,7 @@ const EVOLUTION_STORY = [
     color: "#7C3AED",
     desc: "Émergence du leadership exécutif.",
   },
-];
+]
 
 export function EvolutionSection() {
   return (
@@ -38,7 +38,7 @@ export function EvolutionSection() {
                 Une mutation <br />
                 <span className="text-[#06B6D4] italic">continue.</span>
               </h2>
-              <p className="text-xl text-slate-400 font-medium max-w-xl leading-relaxed">
+              <p className="text-xl text-ink-400 font-medium max-w-xl leading-relaxed">
                 Le recrutement est un sport de combat. StudioEntretien est votre
                 centre d'entraînement comportemental pour passer du doute à la
                 domination.
@@ -51,7 +51,7 @@ export function EvolutionSection() {
                   <TrendingUp className="w-12 h-12" />
                 </div>
                 <p className="text-3xl font-black text-white">+14%</p>
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                <p className="text-[10px] font-black text-ink-500 uppercase tracking-widest">
                   Résilience Moyenne
                 </p>
               </div>
@@ -60,7 +60,7 @@ export function EvolutionSection() {
                   <Target className="w-12 h-12" />
                 </div>
                 <p className="text-3xl font-black text-white">Top 3%</p>
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                <p className="text-[10px] font-black text-ink-500 uppercase tracking-widest">
                   Score de Recovery
                 </p>
               </div>
@@ -75,7 +75,7 @@ export function EvolutionSection() {
             <div className="relative space-y-12">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-[#06B6D4] animate-pulse shadow-[0_0_10px_#06B6D4]" />
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                <h3 className="text-[10px] font-black text-ink-400 uppercase tracking-[0.3em]">
                   Chronologie Comportementale
                 </h3>
               </div>
@@ -90,7 +90,7 @@ export function EvolutionSection() {
                     viewport={{ once: true }}
                     className="flex gap-10 items-start relative group"
                   >
-                    <div className="text-[10px] font-black text-slate-500 w-20 pt-1 uppercase tracking-widest">
+                    <div className="text-[10px] font-black text-ink-500 w-20 pt-1 uppercase tracking-widest">
                       {step.date}
                     </div>
                     <div className="relative flex flex-col items-center">
@@ -106,7 +106,7 @@ export function EvolutionSection() {
                       <p className="text-base font-black text-white uppercase tracking-tight">
                         {step.label}
                       </p>
-                      <p className="text-sm text-slate-500 font-medium leading-relaxed">
+                      <p className="text-sm text-ink-500 font-medium leading-relaxed">
                         {step.desc}
                       </p>
                     </div>
@@ -125,5 +125,5 @@ export function EvolutionSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

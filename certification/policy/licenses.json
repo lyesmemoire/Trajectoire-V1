@@ -1,0 +1,20 @@
+{
+  "allowed": [
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Apache-2.0",
+    "ISC",
+    "0BSD",
+    "Unlicense",
+    "Zlib"
+  ],
+  "review": [
+    "MPL-2.0",
+    "LGPL-2.1"
+  ],
+  "blocked": [
+    "GPL-3.0",
+    "AGPL-3.0"
+  ]
+}

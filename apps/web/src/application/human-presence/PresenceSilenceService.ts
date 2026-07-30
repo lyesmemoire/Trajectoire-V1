@@ -158,27 +158,31 @@ export class PresenceSilenceService {
         return `${original} [pause: ${decision.duration}s]`;
 
       case "continue":
-        // Ajouter un élément de continuation
-        const continuations = [
-          "Et puis...",
-          "Ensuite...",
-          "De plus...",
-        ];
-        if (Math.random() > 0.5) {
-          const continuation = continuations[Math.floor(Math.random() * continuations.length)];
-          return `${original} ${continuation}`;
+        {
+          // Ajouter un élément de continuation
+          const continuations = [
+            "Et puis...",
+            "Ensuite...",
+            "De plus...",
+          ];
+          if (Math.random() > 0.5) {
+            const continuation = continuations[Math.floor(Math.random() * continuations.length)];
+            return `${original} ${continuation}`;
+          }
+          return original;
         }
-        return original;
 
       case "reformulate":
-        // Ajouter une reformulation
-        const reformulations = [
-          "En d'autres termes...",
-          "Pour le dire autrement...",
-          "C'est-à-dire...",
-        ];
-        const reformulation = reformulations[Math.floor(Math.random() * reformulations.length)];
-        return `${reformulation} ${original}`;
+        {
+          // Ajouter une reformulation
+          const reformulations = [
+            "En d'autres termes...",
+            "Pour le dire autrement...",
+            "C'est-à-dire...",
+          ];
+          const reformulation = reformulations[Math.floor(Math.random() * reformulations.length)];
+          return `${reformulation} ${original}`;
+        }
 
       case "wait":
         // Ajouter un indicateur d'attente (sera géré par le timing)

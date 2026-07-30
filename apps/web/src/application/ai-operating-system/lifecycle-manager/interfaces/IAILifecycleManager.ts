@@ -113,9 +113,9 @@ export interface DecisionOutcome {
   id: string;
   lifecycleId: string;
   decisionId: string;
-  actualDecision: unknown;
-  expectedDecision: unknown;
-  realResult: unknown;
+  actualDecision: any;
+  expectedDecision: any;
+  realResult: any;
   userFeedback: string;
   satisfaction: number; // 0-1
   roi: number; // 0-1

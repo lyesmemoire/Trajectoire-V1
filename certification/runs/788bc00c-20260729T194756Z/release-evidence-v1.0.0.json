@@ -1,0 +1,27 @@
+{
+  "artifacts": [
+    {
+      "digest": "sha256:bd0c4946bb11f86a6e9c23fbcc2d59e8f21cbbe12fa03f3581cef9e1b4d5bd0d",
+      "file": "certification/runs/788bc00c-20260729T194756Z/snapshot-build/reports/mutation-report.json",
+      "sizeBytes": 16918,
+      "type": "mutation"
+    },
+    {
+      "digest": "sha256:24da97e206a5a23a752a4d22f66bc0cd9cc6e387db9d2649850dce2023337c5d",
+      "file": "certification/runs/788bc00c-20260729T194756Z/snapshot-build/reports/coverage-report.json",
+      "sizeBytes": 2182,
+      "type": "coverage"
+    }
+  ],
+  "buildTimestamp": "2026-07-29T14:52:19.000Z",
+  "generatedAt": "2026-07-29T19:54:27.368Z",
+  "gitCommit": "788bc00c27d124f770e8c0e2ad73ff98dc1d5190",
+  "integrity": {
+    "algorithm": "sha256",
+    "artifactCount": 2
+  },
+  "qualificationId": "TRAJECTOIRE-Q1.0-2026-686d4ef3",
+  "qualificationProfile": "Q1.0",
+  "releaseVersion": "1.0.0",
+  "schemaVersion": "1.0.0"
+}

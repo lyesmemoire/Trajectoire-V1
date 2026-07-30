@@ -1,0 +1,1370 @@
+{
+  "cvm": {
+    "branch-predictor": {
+      "file": "compiler\\cvm\\branch-predictor.ts",
+      "lines": 215,
+      "complexity": 15,
+      "branches": 14,
+      "functions": 14,
+      "publicMethods": 11,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 25,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 52,
+        "additional": 20,
+        "totalTarget": 72
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "debugger-hooks": {
+      "file": "compiler\\cvm\\debugger-hooks.ts",
+      "lines": 475,
+      "complexity": 39,
+      "branches": 39,
+      "functions": 31,
+      "publicMethods": 31,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 62,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 93,
+        "additional": 45,
+        "totalTarget": 138
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "downstream": []
+      }
+    },
+    "exception-handler": {
+      "file": "compiler\\cvm\\exception-handler.ts",
+      "lines": 196,
+      "complexity": 11,
+      "branches": 10,
+      "functions": 15,
+      "publicMethods": 13,
+      "privateMethods": 2,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 22,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 40,
+        "additional": 22,
+        "totalTarget": 62
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "exception-table"
+        ],
+        "downstream": []
+      }
+    },
+    "execution-context": {
+      "file": "compiler\\cvm\\execution-context.ts",
+      "lines": 236,
+      "complexity": 5,
+      "branches": 4,
+      "functions": 20,
+      "publicMethods": 19,
+      "privateMethods": 1,
+      "dependents": 15,
+      "level": 0,
+      "criticalityScore": 36,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 59,
+        "additional": 29,
+        "totalTarget": 88
+      },
+      "dependencies": {
+        "upstream": [
+          "stack",
+          "heap",
+          "call-frames",
+          "register-table"
+        ],
+        "downstream": [
+          "branch-predictor",
+          "debugger-hooks",
+          "exception-handler",
+          "execution-pipeline",
+          "garbage-collector",
+          "instruction-execute",
+          "interrupt-manager",
+          "memory-manager",
+          "microcode-engine",
+          "profiler-hooks",
+          "rollback-manager",
+          "scheduler",
+          "snapshot-manager",
+          "thread-manager",
+          "trace-hooks"
+        ]
+      }
+    },
+    "execution-pipeline": {
+      "file": "compiler\\cvm\\execution-pipeline.ts",
+      "lines": 249,
+      "complexity": 14,
+      "branches": 13,
+      "functions": 19,
+      "publicMethods": 18,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 32,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 86,
+        "additional": 28,
+        "totalTarget": 114
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "instruction-fetch",
+          "instruction-decode",
+          "instruction-execute"
+        ],
+        "downstream": []
+      }
+    },
+    "frame-manager": {
+      "file": "compiler\\cvm\\frame-manager.ts",
+      "lines": 239,
+      "complexity": 11,
+      "branches": 10,
+      "functions": 21,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 0,
+      "criticalityScore": 24,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 69,
+        "additional": 30,
+        "totalTarget": 99
+      },
+      "dependencies": {
+        "upstream": [
+          "stack",
+          "call-frames"
+        ],
+        "downstream": []
+      }
+    },
+    "garbage-collector": {
+      "file": "compiler\\cvm\\garbage-collector.ts",
+      "lines": 337,
+      "complexity": 32,
+      "branches": 32,
+      "functions": 20,
+      "publicMethods": 14,
+      "privateMethods": 6,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 44,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 65,
+        "additional": 29,
+        "totalTarget": 94
+      },
+      "dependencies": {
+        "upstream": [
+          "heap",
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "instruction-cache": {
+      "file": "compiler\\cvm\\instruction-cache.ts",
+      "lines": 263,
+      "complexity": 18,
+      "branches": 17,
+      "functions": 18,
+      "publicMethods": 15,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 0,
+      "criticalityScore": 28,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 68,
+        "additional": 26,
+        "totalTarget": 94
+      },
+      "dependencies": {
+        "upstream": [
+          "instruction-table"
+        ],
+        "downstream": []
+      }
+    },
+    "instruction-decode": {
+      "file": "compiler\\cvm\\instruction-decode.ts",
+      "lines": 126,
+      "complexity": 10,
+      "branches": 9,
+      "functions": 7,
+      "publicMethods": 7,
+      "privateMethods": 0,
+      "dependents": 2,
+      "level": 0,
+      "criticalityScore": 17,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 36,
+        "additional": 10,
+        "totalTarget": 46
+      },
+      "dependencies": {
+        "upstream": [
+          "instruction-table",
+          "opcode-table"
+        ],
+        "downstream": [
+          "execution-pipeline",
+          "instruction-execute"
+        ]
+      }
+    },
+    "instruction-execute": {
+      "file": "compiler\\cvm\\instruction-execute.ts",
+      "lines": 420,
+      "complexity": 32,
+      "branches": 33,
+      "functions": 28,
+      "publicMethods": 3,
+      "privateMethods": 25,
+      "dependents": 1,
+      "level": 1,
+      "criticalityScore": 39,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 92,
+        "additional": 40,
+        "totalTarget": 132
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "instruction-decode",
+          "opcode-table"
+        ],
+        "downstream": [
+          "execution-pipeline"
+        ]
+      }
+    },
+    "instruction-fetch": {
+      "file": "compiler\\cvm\\instruction-fetch.ts",
+      "lines": 241,
+      "complexity": 16,
+      "branches": 15,
+      "functions": 15,
+      "publicMethods": 14,
+      "privateMethods": 1,
+      "dependents": 1,
+      "level": 0,
+      "criticalityScore": 26,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 70,
+        "additional": 22,
+        "totalTarget": 92
+      },
+      "dependencies": {
+        "upstream": [
+          "instruction-table"
+        ],
+        "downstream": [
+          "execution-pipeline"
+        ]
+      }
+    },
+    "interrupt-manager": {
+      "file": "compiler\\cvm\\interrupt-manager.ts",
+      "lines": 330,
+      "complexity": 17,
+      "branches": 17,
+      "functions": 23,
+      "publicMethods": 20,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 33,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 77,
+        "additional": 33,
+        "totalTarget": 110
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "memory-manager": {
+      "file": "compiler\\cvm\\memory-manager.ts",
+      "lines": 347,
+      "complexity": 18,
+      "branches": 17,
+      "functions": 31,
+      "publicMethods": 28,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 39,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 71,
+        "additional": 45,
+        "totalTarget": 116
+      },
+      "dependencies": {
+        "upstream": [
+          "heap",
+          "stack",
+          "memory-addressing",
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "microcode-engine": {
+      "file": "compiler\\cvm\\microcode-engine.ts",
+      "lines": 318,
+      "complexity": 27,
+      "branches": 28,
+      "functions": 10,
+      "publicMethods": 7,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 35,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 77,
+        "additional": 15,
+        "totalTarget": 92
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "downstream": []
+      }
+    },
+    "profiler-hooks": {
+      "file": "compiler\\cvm\\profiler-hooks.ts",
+      "lines": 233,
+      "complexity": 14,
+      "branches": 13,
+      "functions": 16,
+      "publicMethods": 16,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 27,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 70,
+        "additional": 23,
+        "totalTarget": 93
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "downstream": []
+      }
+    },
+    "register-file": {
+      "file": "compiler\\cvm\\register-file.ts",
+      "lines": 227,
+      "complexity": 18,
+      "branches": 17,
+      "functions": 19,
+      "publicMethods": 18,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 0,
+      "criticalityScore": 30,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 28,
+        "totalTarget": 28
+      },
+      "dependencies": {
+        "upstream": [
+          "register-table"
+        ],
+        "downstream": []
+      }
+    },
+    "rollback-manager": {
+      "file": "compiler\\cvm\\rollback-manager.ts",
+      "lines": 304,
+      "complexity": 23,
+      "branches": 22,
+      "functions": 21,
+      "publicMethods": 20,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 39,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 80,
+        "additional": 30,
+        "totalTarget": 110
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "scheduler": {
+      "file": "compiler\\cvm\\scheduler.ts",
+      "lines": 304,
+      "complexity": 20,
+      "branches": 19,
+      "functions": 24,
+      "publicMethods": 21,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 37,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 4,
+        "additional": 35,
+        "totalTarget": 39
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "downstream": []
+      }
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cvm\\snapshot-manager.ts",
+      "lines": 256,
+      "complexity": 14,
+      "branches": 13,
+      "functions": 15,
+      "publicMethods": 15,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 27,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 62,
+        "additional": 22,
+        "totalTarget": 84
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "thread-manager": {
+      "file": "compiler\\cvm\\thread-manager.ts",
+      "lines": 313,
+      "complexity": 19,
+      "branches": 22,
+      "functions": 20,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 36,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 68,
+        "additional": 29,
+        "totalTarget": 97
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context"
+        ],
+        "downstream": []
+      }
+    },
+    "trace-hooks": {
+      "file": "compiler\\cvm\\trace-hooks.ts",
+      "lines": 375,
+      "complexity": 27,
+      "branches": 26,
+      "functions": 27,
+      "publicMethods": 26,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 47,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 95,
+        "additional": 39,
+        "totalTarget": 134
+      },
+      "dependencies": {
+        "upstream": [
+          "execution-context",
+          "opcode-table"
+        ],
+        "downstream": []
+      }
+    }
+  },
+  "cpr": {
+    "api-gateway": {
+      "file": "compiler\\cpr\\api-gateway.ts",
+      "lines": 332,
+      "complexity": 19,
+      "branches": 18,
+      "functions": 19,
+      "publicMethods": 14,
+      "privateMethods": 5,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 31,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 28,
+        "totalTarget": 28
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "autoscaler": {
+      "file": "compiler\\cpr\\autoscaler.ts",
+      "lines": 333,
+      "complexity": 22,
+      "branches": 25,
+      "functions": 17,
+      "publicMethods": 13,
+      "privateMethods": 4,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 38,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 25,
+        "totalTarget": 25
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "cluster-manager": {
+      "file": "compiler\\cpr\\cluster-manager.ts",
+      "lines": 292,
+      "complexity": 16,
+      "branches": 15,
+      "functions": 19,
+      "publicMethods": 19,
+      "privateMethods": 0,
+      "dependents": 19,
+      "level": 0,
+      "criticalityScore": 52,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 28,
+        "totalTarget": 28
+      },
+      "dependencies": {
+        "upstream": [],
+        "downstream": [
+          "api-gateway",
+          "autoscaler",
+          "consensus-engine",
+          "distributed-debugger",
+          "distributed-locks",
+          "distributed-memory",
+          "distributed-profiler",
+          "distributed-scheduler",
+          "distributed-trace",
+          "execution-coordinator",
+          "governance",
+          "leader-election",
+          "recovery-manager",
+          "replay-manager",
+          "runtime-kernel",
+          "runtime-manager",
+          "security",
+          "snapshot-manager",
+          "telemetry"
+        ]
+      }
+    },
+    "consensus-engine": {
+      "file": "compiler\\cpr\\consensus-engine.ts",
+      "lines": 429,
+      "complexity": 30,
+      "branches": 30,
+      "functions": 22,
+      "publicMethods": 11,
+      "privateMethods": 11,
+      "dependents": 1,
+      "level": 1,
+      "criticalityScore": 42,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 32,
+        "totalTarget": 32
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": [
+          "runtime-kernel"
+        ]
+      }
+    },
+    "distributed-debugger": {
+      "file": "compiler\\cpr\\distributed-debugger.ts",
+      "lines": 357,
+      "complexity": 32,
+      "branches": 32,
+      "functions": 20,
+      "publicMethods": 18,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 50,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 29,
+        "totalTarget": 29
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "distributed-locks": {
+      "file": "compiler\\cpr\\distributed-locks.ts",
+      "lines": 246,
+      "complexity": 18,
+      "branches": 17,
+      "functions": 14,
+      "publicMethods": 14,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 30,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 20,
+        "totalTarget": 20
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "distributed-memory": {
+      "file": "compiler\\cpr\\distributed-memory.ts",
+      "lines": 307,
+      "complexity": 23,
+      "branches": 22,
+      "functions": 20,
+      "publicMethods": 18,
+      "privateMethods": 2,
+      "dependents": 1,
+      "level": 1,
+      "criticalityScore": 39,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 29,
+        "totalTarget": 29
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": [
+          "snapshot-manager"
+        ]
+      }
+    },
+    "distributed-profiler": {
+      "file": "compiler\\cpr\\distributed-profiler.ts",
+      "lines": 303,
+      "complexity": 17,
+      "branches": 16,
+      "functions": 17,
+      "publicMethods": 16,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 30,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 25,
+        "totalTarget": 25
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "distributed-scheduler": {
+      "file": "compiler\\cpr\\distributed-scheduler.ts",
+      "lines": 345,
+      "complexity": 20,
+      "branches": 19,
+      "functions": 20,
+      "publicMethods": 19,
+      "privateMethods": 1,
+      "dependents": 1,
+      "level": 2,
+      "criticalityScore": 40,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 29,
+        "totalTarget": 29
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "downstream": [
+          "runtime-kernel"
+        ]
+      }
+    },
+    "distributed-trace": {
+      "file": "compiler\\cpr\\distributed-trace.ts",
+      "lines": 369,
+      "complexity": 22,
+      "branches": 21,
+      "functions": 20,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 38,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 29,
+        "totalTarget": 29
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "execution-coordinator": {
+      "file": "compiler\\cpr\\execution-coordinator.ts",
+      "lines": 315,
+      "complexity": 26,
+      "branches": 25,
+      "functions": 18,
+      "publicMethods": 18,
+      "privateMethods": 0,
+      "dependents": 1,
+      "level": 2,
+      "criticalityScore": 45,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 26,
+        "totalTarget": 26
+      },
+      "dependencies": {
+        "upstream": [
+          "runtime-manager",
+          "cluster-manager"
+        ],
+        "downstream": [
+          "runtime-kernel"
+        ]
+      }
+    },
+    "governance": {
+      "file": "compiler\\cpr\\governance.ts",
+      "lines": 368,
+      "complexity": 17,
+      "branches": 21,
+      "functions": 23,
+      "publicMethods": 20,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 35,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 33,
+        "totalTarget": 33
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "knowledge-fabric": {
+      "file": "compiler\\cpr\\knowledge-fabric.ts",
+      "lines": 374,
+      "complexity": 38,
+      "branches": 39,
+      "functions": 22,
+      "publicMethods": 14,
+      "privateMethods": 8,
+      "dependents": 0,
+      "level": 0,
+      "criticalityScore": 48,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 32,
+        "totalTarget": 32
+      },
+      "dependencies": {
+        "upstream": [],
+        "downstream": []
+      }
+    },
+    "leader-election": {
+      "file": "compiler\\cpr\\leader-election.ts",
+      "lines": 280,
+      "complexity": 22,
+      "branches": 21,
+      "functions": 18,
+      "publicMethods": 12,
+      "privateMethods": 6,
+      "dependents": 1,
+      "level": 1,
+      "criticalityScore": 34,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 26,
+        "totalTarget": 26
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": [
+          "runtime-kernel"
+        ]
+      }
+    },
+    "provider-manager": {
+      "file": "compiler\\cpr\\provider-manager.ts",
+      "lines": 316,
+      "complexity": 17,
+      "branches": 16,
+      "functions": 20,
+      "publicMethods": 20,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 0,
+      "criticalityScore": 30,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 29,
+        "totalTarget": 29
+      },
+      "dependencies": {
+        "upstream": [],
+        "downstream": []
+      }
+    },
+    "recovery-manager": {
+      "file": "compiler\\cpr\\recovery-manager.ts",
+      "lines": 433,
+      "complexity": 28,
+      "branches": 34,
+      "functions": 23,
+      "publicMethods": 15,
+      "privateMethods": 8,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 46,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 33,
+        "totalTarget": 33
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "replay-manager": {
+      "file": "compiler\\cpr\\replay-manager.ts",
+      "lines": 354,
+      "complexity": 28,
+      "branches": 28,
+      "functions": 21,
+      "publicMethods": 20,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 47,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 30,
+        "totalTarget": 30
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "runtime-kernel": {
+      "file": "compiler\\cpr\\runtime-kernel.ts",
+      "lines": 298,
+      "complexity": 9,
+      "branches": 8,
+      "functions": 19,
+      "publicMethods": 16,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 3,
+      "criticalityScore": 28,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 28,
+        "totalTarget": 28
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "runtime-manager",
+          "execution-coordinator",
+          "distributed-scheduler",
+          "consensus-engine",
+          "leader-election"
+        ],
+        "downstream": []
+      }
+    },
+    "runtime-manager": {
+      "file": "compiler\\cpr\\runtime-manager.ts",
+      "lines": 239,
+      "complexity": 11,
+      "branches": 10,
+      "functions": 16,
+      "publicMethods": 15,
+      "privateMethods": 1,
+      "dependents": 7,
+      "level": 1,
+      "criticalityScore": 32,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 23,
+        "totalTarget": 23
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": [
+          "autoscaler",
+          "distributed-debugger",
+          "distributed-scheduler",
+          "execution-coordinator",
+          "recovery-manager",
+          "replay-manager",
+          "runtime-kernel"
+        ]
+      }
+    },
+    "security": {
+      "file": "compiler\\cpr\\security.ts",
+      "lines": 368,
+      "complexity": 15,
+      "branches": 19,
+      "functions": 24,
+      "publicMethods": 21,
+      "privateMethods": 3,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 34,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 35,
+        "totalTarget": 35
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    },
+    "snapshot-manager": {
+      "file": "compiler\\cpr\\snapshot-manager.ts",
+      "lines": 322,
+      "complexity": 27,
+      "branches": 26,
+      "functions": 16,
+      "publicMethods": 15,
+      "privateMethods": 1,
+      "dependents": 0,
+      "level": 2,
+      "criticalityScore": 43,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 62,
+        "additional": 23,
+        "totalTarget": 85
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager",
+          "distributed-memory"
+        ],
+        "downstream": []
+      }
+    },
+    "telemetry": {
+      "file": "compiler\\cpr\\telemetry.ts",
+      "lines": 273,
+      "complexity": 23,
+      "branches": 22,
+      "functions": 15,
+      "publicMethods": 15,
+      "privateMethods": 0,
+      "dependents": 0,
+      "level": 1,
+      "criticalityScore": 36,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "tests": {
+        "existing": 0,
+        "additional": 22,
+        "totalTarget": 22
+      },
+      "dependencies": {
+        "upstream": [
+          "cluster-manager"
+        ],
+        "downstream": []
+      }
+    }
+  },
+  "formula": {
+    "description": "Score de Criticité (sur 100)",
+    "components": [
+      {
+        "name": "Complexité cyclomatique",
+        "weight": 25,
+        "description": "Normalisée sur 40"
+      },
+      {
+        "name": "Nombre de dépendants",
+        "weight": 25,
+        "description": "Normalisé sur 20"
+      },
+      {
+        "name": "Surface publique",
+        "weight": 20,
+        "description": "Méthodes publiques normalisées sur 30"
+      },
+      {
+        "name": "Nombre de branches",
+        "weight": 15,
+        "description": "Normalisé sur 40"
+      },
+      {
+        "name": "Position dans le graphe",
+        "weight": 15,
+        "description": "Niveau de dépendance normalisé sur 5"
+      }
+    ]
+  }
+}

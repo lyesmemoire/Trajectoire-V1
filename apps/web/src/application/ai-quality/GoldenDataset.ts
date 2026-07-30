@@ -10,7 +10,6 @@ import {
   QualityMetrics,
   ConversationEvaluation,
 } from "./interfaces/IEvaluationPlatform";
-import { scenarioLibrary, InterviewScenario } from "./ScenarioLibrary";
 import { evaluationEngine } from "./EvaluationEngine";
 
 // ============================================================================

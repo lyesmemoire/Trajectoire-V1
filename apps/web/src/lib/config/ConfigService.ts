@@ -116,7 +116,7 @@ class ConfigService {
         sentryDsn: process.env.SENTRY_DSN,
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT || environment,
         sentryTracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "0.1"),
-        logLevel: (process.env.LOG_LEVEL as any) || "info",
+        logLevel: (process.env.LOG_LEVEL  as any) || "info",
       },
     };
 
@@ -184,7 +184,7 @@ class ConfigService {
   /**
    * Get configuration as JSON (for debugging, exclude secrets)
    */
-  toJSON(): Record<string, any> {
+  toJSON(): Record<string, unknown> {
     return {
       environment: this.config.environment,
       version: this.config.version,

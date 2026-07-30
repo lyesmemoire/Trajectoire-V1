@@ -1,0 +1,421 @@
+﻿{
+  "auditDate": "2026-07-27T08:00:03.047Z",
+  "totalComponents": 21,
+  "certifiedCount": 6,
+  "remainingCount": 15,
+  "neverAudited": [
+    {
+      "name": "branch-predictor",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "debugger-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "exception-handler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-context",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "frame-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "garbage-collector",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "interrupt-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "memory-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "microcode-engine",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "profiler-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "register-file",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "scheduler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "snapshot-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "trace-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    }
+  ],
+  "withoutCertification": [
+    {
+      "name": "branch-predictor",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "debugger-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "exception-handler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-context",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-pipeline",
+      "hasAudit": true,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "AUDITED"
+    },
+    {
+      "name": "frame-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "garbage-collector",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "interrupt-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "memory-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "microcode-engine",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "profiler-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "register-file",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "scheduler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "snapshot-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "trace-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    }
+  ],
+  "withoutTests": [],
+  "withoutReports": [
+    {
+      "name": "branch-predictor",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "debugger-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "exception-handler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-context",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "frame-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "garbage-collector",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "interrupt-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "memory-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "microcode-engine",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "profiler-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "register-file",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "scheduler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "snapshot-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "trace-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    }
+  ],
+  "analysis": [
+    {
+      "name": "branch-predictor",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "debugger-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "exception-handler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-context",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "execution-pipeline",
+      "hasAudit": true,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "AUDITED"
+    },
+    {
+      "name": "frame-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "garbage-collector",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "interrupt-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "memory-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "microcode-engine",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "profiler-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "register-file",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "scheduler",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "snapshot-manager",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    },
+    {
+      "name": "trace-hooks",
+      "hasAudit": false,
+      "hasCertification": false,
+      "hasTest": true,
+      "status": "TESTED"
+    }
+  ]
+}

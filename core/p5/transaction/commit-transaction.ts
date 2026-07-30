@@ -1,6 +1,6 @@
 import { applyEvents } from "../execution-engine.js";
 import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
-import { Transaction, CommitResult } from "./transaction-contract.js";
+import { CommitResult } from "./transaction-contract.js";
 
 /**
  * Commits a transaction: applies ALL pending events atomically.
@@ -13,7 +13,7 @@ import { Transaction, CommitResult } from "./transaction-contract.js";
  *
  * Pure function — no side effects.
  */
-export function commitTransaction(tx: Transaction): CommitResult {
+export function commitTransaction(tx: _Transaction): CommitResult {
   const initial = restoreSnapshot(tx.snapshot);
   const finalState = applyEvents(initial, tx.events);
 

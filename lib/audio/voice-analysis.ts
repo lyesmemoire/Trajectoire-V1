@@ -24,7 +24,7 @@ export interface StressAnalysisResult {
  * Analyzes voice signals to compute an evidence-based stress score.
  * Only uses real, measurable data.
  */
-export function analyzeVoiceStress(signals: VoiceSignals): StressAnalysisResult {
+export function analyzeVoiceStress(signals: _VoiceSignals): StressAnalysisResult {
   const availableSignals = Object.values(signals).filter(v => v !== undefined && v !== null).length;
 
   // Not enough real data → explicit insufficient data

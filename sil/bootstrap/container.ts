@@ -48,7 +48,7 @@ export function bootstrapReplayEngine(): ReplayEngine {
       ? new PostgresMerkleLedgerReader(pgPool)
       : undefined;
 
-  const queryService = new DefaultEventQueryService(eventStore as any);
+  const queryService = new DefaultEventQueryService(eventStore as unknown);
   const p7 = new MockP7EvaluatorClient();
   const traceProvider = new MockRuntimeTraceProvider();
 

@@ -2,7 +2,6 @@ import { P5Event } from "../execution-contract.js";
 import { normalizeDecision } from "../bridge/normalize-decision.js";
 import { validateDecision } from "../bridge/validation.js";
 import { GovernorDecision } from "../bridge/normalization-contract.js";
-import { RuntimeDecision } from "./integration-contract.js";
 
 /**
  * Result of adapting a RuntimeDecision into P5Events.
@@ -23,7 +22,7 @@ export interface AdaptResult {
  *
  * Pure function — no side effects.
  */
-export function adaptDecision(decision: RuntimeDecision): AdaptResult {
+export function adaptDecision(decision: _RuntimeDecision): AdaptResult {
   const govDecision: GovernorDecision = {};
   if (decision.trustDelta !== undefined) govDecision.trustDelta = decision.trustDelta;
   if (decision.suspicionDelta !== undefined) govDecision.suspicionDelta = decision.suspicionDelta;

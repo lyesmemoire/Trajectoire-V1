@@ -31,7 +31,7 @@ export type LogContext = {
   munitionId?: string;
   component?: string;
   duration?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 export const createChildLogger = (context: LogContext) => {
@@ -47,7 +47,7 @@ export function logWarn(prefix: string, message: string, context?: LogContext) {
   logger.warn({ ...context, prefix }, message);
 }
 
-export function logError(prefix: string, error: any, context?: LogContext) {
+export function logError(prefix: string, error: unknown, context?: LogContext) {
   logger.error({ ...context, prefix, err: error }, error?.message || "Unknown error");
 }
 

@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase";
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase"
 
 interface CreditBadgeProps {
-  userId: string;
-  className?: string;
+  userId: string
+  className?: string
 }
 
 export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
-  const [credits, setCredits] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [credits, setCredits] = useState<number | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const supabase = createClient();
+    const supabase = createClient()
 
     // Lecture initiale
     supabase
@@ -22,10 +22,10 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
       .eq("id", userId)
       .single()
       .then(({ data }) => {
-        const profile = data as any;
-        setCredits(profile?.credits ?? 0);
-        setLoading(false);
-      });
+        const profile = data  as any
+        setCredits(profile?.credits ?? 0)
+        setLoading(false)
+      })
 
     // Abonnement temps réel aux changements de crédits
     const channel = supabase
@@ -39,27 +39,27 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
           filter: `id=eq.${userId}`,
         },
         (payload) => {
-          const newCredits = (payload.new as { credits: number }).credits;
-          setCredits(newCredits);
+          const newCredits = (payload.new as { credits: number }).credits
+          setCredits(newCredits)
         },
       )
-      .subscribe();
+      .subscribe()
 
     return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId]);
+      supabase.removeChannel(channel)
+    }
+  }, [userId])
 
   if (loading) {
     return (
       <div
-        className={`h-6 w-16 animate-pulse rounded-full bg-gray-200 ${className}`}
+        className={`h-6 w-16 animate-pulse rounded-full bg-ivoire-200 ${className}`}
       />
-    );
+    )
   }
 
-  const isLow = (credits ?? 0) <= 1;
-  const isEmpty = (credits ?? 0) === 0;
+  const isLow = (credits ?? 0) <= 1
+  const isEmpty = (credits ?? 0) === 0
 
   return (
     <div
@@ -67,10 +67,10 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
         inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium
         ${
           isEmpty
-            ? "bg-red-100 text-red-700 ring-1 ring-red-200"
+            ? "bg-brick-50 text-brick-700 ring-1 ring-brick-100"
             : isLow
-              ? "bg-amber-100 text-amber-700 ring-1 ring-amber-200"
-              : "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200"
+              ? "bg-terracotta-50 text-terracotta-600 ring-1 ring-terracotta-100"
+              : "bg-forest-50 text-forest-600 ring-1 ring-forest-100"
         }
         ${className}
       `}
@@ -82,5 +82,5 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
         {credits} crédit{credits !== 1 ? "s" : ""}
       </span>
     </div>
-  );
+  )
 }

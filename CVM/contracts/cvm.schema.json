@@ -1,0 +1,1089 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cvm.example.com/schemas/cvm.schema.json",
+  "title": "Cognitive Virtual Machine Schema",
+  "description": "JSON Schema for Cognitive Virtual Machine (CVM) types",
+  "version": "1.0.0",
+  "definitions": {
+    "CVMInstance": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "config": { "$ref": "#/definitions/CVMConfig" },
+        "state": { "$ref": "#/definitions/CVMState" },
+        "executionGraph": { "$ref": "#/definitions/ExecutionGraph" },
+        "resourceBudgets": { "$ref": "#/definitions/ResourceBudgets" },
+        "metrics": { "$ref": "#/definitions/ExecutionMetrics" }
+      },
+      "required": ["id", "config", "state", "executionGraph", "resourceBudgets", "metrics"]
+    },
+    "CVMConfig": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "mode": { "$ref": "#/definitions/ExecutionMode" },
+        "optimizationLevel": { "$ref": "#/definitions/OptimizationLevel" },
+        "traceLevel": { "$ref": "#/definitions/TraceLevel" },
+        "securityLevel": { "$ref": "#/definitions/SecurityLevel" },
+        "resourceLimits": { "$ref": "#/definitions/ResourceLimits" }
+      },
+      "required": ["version", "mode", "optimizationLevel", "traceLevel", "securityLevel", "resourceLimits"]
+    },
+    "ExecutionMode": {
+      "type": "string",
+      "enum": ["NORMAL", "DEBUG", "PROFILE", "SANDBOX"]
+    },
+    "OptimizationLevel": {
+      "type": "string",
+      "enum": ["O0", "O1", "O2", "O3"]
+    },
+    "TraceLevel": {
+      "type": "string",
+      "enum": ["NONE", "BASIC", "DETAILED", "FULL"]
+    },
+    "SecurityLevel": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "STRICT"]
+    },
+    "ResourceLimits": {
+      "type": "object",
+      "properties": {
+        "maxMemory": { "type": "number" },
+        "maxCPU": { "type": "number" },
+        "maxGPU": { "type": "number" },
+        "maxExecutionTime": { "type": "number" }
+      },
+      "required": ["maxMemory", "maxCPU", "maxExecutionTime"]
+    },
+    "CVMState": {
+      "type": "object",
+      "properties": {
+        "status": { "$ref": "#/definitions/ExecutionStatus" },
+        "programCounter": { "type": "integer" },
+        "registerFile": { "$ref": "#/definitions/RegisterFile" },
+        "memory": { "$ref": "#/definitions/MemoryState" },
+        "stack": { "$ref": "#/definitions/StackState" },
+        "knowledgeGraph": { "$ref": "#/definitions/KnowledgeGraph" },
+        "checkpoints": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/Checkpoint" }
+        }
+      },
+      "required": ["status", "programCounter", "registerFile", "memory", "stack", "knowledgeGraph"]
+    },
+    "ExecutionStatus": {
+      "type": "string",
+      "enum": ["IDLE", "RUNNING", "PAUSED", "STOPPED", "ERROR"]
+    },
+    "RegisterFile": {
+      "type": "object",
+      "properties": {
+        "registers": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": ["registers"]
+    },
+    "MemoryState": {
+      "type": "object",
+      "properties": {
+        "heap": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "stack": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "constants": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": ["heap", "stack", "constants"]
+    },
+    "StackState": {
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/StackFrame" }
+        },
+        "pointer": { "type": "integer" }
+      },
+      "required": ["frames", "pointer"]
+    },
+    "StackFrame": {
+      "type": "object",
+      "properties": {
+        "returnAddress": { "type": "integer" },
+        "basePointer": { "type": "integer" },
+        "locals": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": ["returnAddress", "basePointer", "locals"]
+    },
+    "Checkpoint": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "programCounter": { "type": "integer" },
+        "state": { "$ref": "#/definitions/CVMState" },
+        "lastEvent": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "programCounter", "state"]
+    },
+    "ExecutionGraph": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExecutionNode" }
+        },
+        "edges": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExecutionEdge" }
+        },
+        "entryPoint": { "type": "string" },
+        "exitPoints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["nodes", "edges", "entryPoint", "exitPoints"]
+    },
+    "ExecutionNode": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "instruction": { "$ref": "#/definitions/Instruction" },
+        "dependencies": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "resourceRequirements": { "$ref": "#/definitions/ResourceRequirements" },
+        "optimizationHints": { "$ref": "#/definitions/OptimizationHints" },
+        "metadata": { "$ref": "#/definitions/NodeMetadata" }
+      },
+      "required": ["id", "instruction", "dependencies", "resourceRequirements", "metadata"]
+    },
+    "Instruction": {
+      "type": "object",
+      "properties": {
+        "opcode": { "type": "string" },
+        "operands": {
+          "type": "array",
+          "items": true
+        },
+        "metadata": { "$ref": "#/definitions/InstructionMetadata" }
+      },
+      "required": ["opcode", "operands"]
+    },
+    "InstructionMetadata": {
+      "type": "object",
+      "properties": {
+        "traceId": { "type": "string" },
+        "rollbackId": { "type": "string" },
+        "replayId": { "type": "string" },
+        "latencyBudget": { "type": "number" },
+        "tokenBudget": { "type": "integer" },
+        "memoryBudget": { "type": "number" },
+        "optimizationHints": { "$ref": "#/definitions/OptimizationHints" }
+      }
+    },
+    "OptimizationHints": {
+      "type": "object",
+      "properties": {
+        "canParallelize": { "type": "boolean" },
+        "canCache": { "type": "boolean" },
+        "canFusion": { "type": "boolean" },
+        "priority": { "type": "integer" }
+      }
+    },
+    "ExecutionEdge": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "condition": { "type": "string" },
+        "type": { "$ref": "#/definitions/EdgeType" }
+      },
+      "required": ["id", "from", "to", "type"]
+    },
+    "EdgeType": {
+      "type": "string",
+      "enum": ["SEQUENTIAL", "CONDITIONAL", "DATA_DEPENDENCY", "CONTROL_DEPENDENCY"]
+    },
+    "ResourceRequirements": {
+      "type": "object",
+      "properties": {
+        "tokens": { "type": "integer" },
+        "latency": { "type": "number" },
+        "memory": { "type": "number" },
+        "cpu": { "type": "number" },
+        "gpu": { "type": "number" }
+      },
+      "required": ["tokens", "latency", "memory", "cpu"]
+    },
+    "NodeMetadata": {
+      "type": "object",
+      "properties": {
+        "index": { "type": "integer" },
+        "sourceLocation": { "$ref": "#/definitions/SourceLocation" }
+      },
+      "required": ["index", "sourceLocation"]
+    },
+    "SourceLocation": {
+      "type": "object",
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer" },
+        "column": { "type": "integer" }
+      },
+      "required": ["file", "line", "column"]
+    },
+    "ResourceBudgets": {
+      "type": "object",
+      "properties": {
+        "tokens": { "type": "integer" },
+        "latency": { "type": "number" },
+        "memory": { "type": "number" },
+        "cpu": { "type": "number" },
+        "gpu": { "type": "number" }
+      },
+      "required": ["tokens", "latency", "memory", "cpu"]
+    },
+    "ExecutionMetrics": {
+      "type": "object",
+      "properties": {
+        "executionTime": { "type": "number" },
+        "tokenUsage": { "type": "integer" },
+        "memoryUsage": { "type": "number" },
+        "cpuUsage": { "type": "number" },
+        "gpuUsage": { "type": "number" },
+        "instructionCount": { "type": "integer" },
+        "cacheHits": { "type": "integer" },
+        "cacheMisses": { "type": "integer" }
+      },
+      "required": ["executionTime", "tokenUsage", "memoryUsage", "cpuUsage", "instructionCount"]
+    },
+    "BytecodeContainer": {
+      "type": "object",
+      "properties": {
+        "header": { "$ref": "#/definitions/BytecodeHeader" },
+        "constantPool": { "$ref": "#/definitions/ConstantPool" },
+        "instructionStream": { "$ref": "#/definitions/InstructionStream" },
+        "debugInfo": { "$ref": "#/definitions/DebugInfo" },
+        "signature": { "$ref": "#/definitions/BytecodeSignature" }
+      },
+      "required": ["header", "constantPool", "instructionStream", "debugInfo", "signature"]
+    },
+    "BytecodeHeader": {
+      "type": "object",
+      "properties": {
+        "magic": { "type": "integer" },
+        "version": { "type": "integer" },
+        "constantPoolOffset": { "type": "integer" },
+        "constantPoolSize": { "type": "integer" },
+        "instructionStreamOffset": { "type": "integer" },
+        "instructionStreamSize": { "type": "integer" },
+        "debugInfoOffset": { "type": "integer" },
+        "debugInfoSize": { "type": "integer" },
+        "signatureOffset": { "type": "integer" },
+        "signatureSize": { "type": "integer" },
+        "checksum": { "type": "integer" }
+      },
+      "required": ["magic", "version", "checksum"]
+    },
+    "ConstantPool": {
+      "type": "object",
+      "properties": {
+        "entries": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ConstantPoolEntry" }
+        }
+      },
+      "required": ["entries"]
+    },
+    "ConstantPoolEntry": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/ConstantType" },
+        "value": true,
+        "index": { "type": "integer" }
+      },
+      "required": ["type", "value", "index"]
+    },
+    "ConstantType": {
+      "type": "string",
+      "enum": ["INTEGER", "FLOAT", "STRING", "BOOLEAN", "NULL", "OBJECT", "ARRAY"]
+    },
+    "InstructionStream": {
+      "type": "object",
+      "properties": {
+        "instructions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/EncodedInstruction" }
+        }
+      },
+      "required": ["instructions"]
+    },
+    "EncodedInstruction": {
+      "type": "object",
+      "properties": {
+        "opcode": { "type": "integer" },
+        "operands": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "metadata": { "$ref": "#/definitions/InstructionMetadata" }
+      },
+      "required": ["opcode", "operands", "metadata"]
+    },
+    "DebugInfo": {
+      "type": "object",
+      "properties": {
+        "sourceMap": { "$ref": "#/definitions/SourceMap" },
+        "lineInfo": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LineInfo" }
+        },
+        "symbolTable": { "$ref": "#/definitions/SymbolTable" }
+      },
+      "required": ["sourceMap", "lineInfo", "symbolTable"]
+    },
+    "SourceMap": {
+      "type": "object",
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "mappings": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/SourceMapping" }
+        }
+      },
+      "required": ["sources", "mappings"]
+    },
+    "SourceMapping": {
+      "type": "object",
+      "properties": {
+        "generatedPosition": { "$ref": "#/definitions/Position" },
+        "originalPosition": { "$ref": "#/definitions/Position" },
+        "source": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "required": ["generatedPosition", "originalPosition", "source"]
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "line": { "type": "integer" },
+        "column": { "type": "integer" }
+      },
+      "required": ["line", "column"]
+    },
+    "LineInfo": {
+      "type": "object",
+      "properties": {
+        "instructionIndex": { "type": "integer" },
+        "sourceFile": { "type": "string" },
+        "lineNumber": { "type": "integer" },
+        "columnNumber": { "type": "integer" }
+      },
+      "required": ["instructionIndex", "sourceFile", "lineNumber", "columnNumber"]
+    },
+    "SymbolTable": {
+      "type": "object",
+      "properties": {
+        "symbols": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Symbol" }
+        }
+      },
+      "required": ["symbols"]
+    },
+    "Symbol": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "$ref": "#/definitions/SymbolType" },
+        "scope": { "type": "string" },
+        "address": { "type": "integer" }
+      },
+      "required": ["name", "type", "scope", "address"]
+    },
+    "SymbolType": {
+      "type": "string",
+      "enum": ["FUNCTION", "VARIABLE", "CONSTANT", "LABEL"]
+    },
+    "BytecodeSignature": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string" },
+        "checksum": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["algorithm", "checksum", "timestamp"]
+    },
+    "TraceEvent": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "traceId": { "type": "string" },
+        "spanId": { "type": "string" },
+        "parentSpanId": { "type": "string" },
+        "eventType": { "$ref": "#/definitions/EventType" },
+        "timestamp": { "type": "integer" },
+        "duration": { "type": "number" },
+        "data": { "$ref": "#/definitions/EventData" },
+        "metadata": { "$ref": "#/definitions/EventMetadata" }
+      },
+      "required": ["id", "traceId", "spanId", "eventType", "timestamp", "data", "metadata"]
+    },
+    "EventType": {
+      "type": "string",
+      "enum": [
+        "INSTRUCTION_START",
+        "INSTRUCTION_END",
+        "OBSERVATION_MADE",
+        "INFERENCE_COMPLETED",
+        "VERIFICATION_COMPLETED",
+        "DECISION_MADE",
+        "LLM_CALL_STARTED",
+        "LLM_CALL_COMPLETED",
+        "GRAPH_QUERIED",
+        "GRAPH_TRAVERSED",
+        "MEMORY_ACCESSED",
+        "MEMORY_MODIFIED",
+        "ERROR_OCCURRED",
+        "CHECKPOINT_CREATED",
+        "CHECKPOINT_RESTORED"
+      ]
+    },
+    "EventData": {
+      "type": "object",
+      "properties": {
+        "instruction": { "$ref": "#/definitions/Instruction" },
+        "result": true,
+        "input": true,
+        "context": true,
+        "metrics": { "$ref": "#/definitions/EventMetrics" }
+      }
+    },
+    "EventMetrics": {
+      "type": "object",
+      "properties": {
+        "tokensUsed": { "type": "integer" },
+        "latency": { "type": "number" },
+        "memoryUsed": { "type": "number" }
+      }
+    },
+    "EventMetadata": {
+      "type": "object",
+      "properties": {
+        "sourceLocation": { "$ref": "#/definitions/SourceLocation" },
+        "threadId": { "type": "string" },
+        "processId": { "type": "string" }
+      }
+    },
+    "CognitivePackage": {
+      "type": "object",
+      "properties": {
+        "header": { "$ref": "#/definitions/PackageHeader" },
+        "manifest": { "$ref": "#/definitions/PackageManifest" },
+        "bytecode": { "$ref": "#/definitions/BytecodeContainer" },
+        "signature": { "$ref": "#/definitions/PackageSignature" },
+        "resources": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Resource" }
+        },
+        "metadata": { "$ref": "#/definitions/PackageMetadata" },
+        "security": { "$ref": "#/definitions/SecurityInfo" },
+        "data": {
+          "type": "string",
+          "contentEncoding": "base64"
+        }
+      },
+      "required": ["header", "manifest", "bytecode", "security", "data"]
+    },
+    "PackageHeader": {
+      "type": "object",
+      "properties": {
+        "magic": { "type": "integer" },
+        "version": { "type": "integer" },
+        "headerSize": { "type": "integer" },
+        "manifestOffset": { "type": "integer" },
+        "manifestSize": { "type": "integer" },
+        "bytecodeOffset": { "type": "integer" },
+        "bytecodeSize": { "type": "integer" },
+        "metadataOffset": { "type": "integer" },
+        "metadataSize": { "type": "integer" },
+        "resourcesOffset": { "type": "integer" },
+        "resourcesSize": { "type": "integer" },
+        "signatureOffset": { "type": "integer" },
+        "signatureSize": { "type": "integer" },
+        "checksum": { "type": "integer" },
+        "flags": { "type": "integer" },
+        "reserved": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      },
+      "required": ["magic", "version", "checksum"]
+    },
+    "PackageManifest": {
+      "type": "object",
+      "properties": {
+        "package": { "$ref": "#/definitions/PackageInfo" },
+        "version": { "$ref": "#/definitions/VersionInfo" },
+        "dependencies": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Dependency" }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Capability" }
+        },
+        "requirements": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Requirement" }
+        },
+        "security": { "$ref": "#/definitions/SecurityInfo" },
+        "metadata": { "$ref": "#/definitions/PackageMetadata" }
+      },
+      "required": ["package", "version", "dependencies", "capabilities", "requirements", "security", "metadata"]
+    },
+    "PackageInfo": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "author": { "type": "string" },
+        "license": { "type": "string" },
+        "homepage": { "type": "string" },
+        "repository": { "type": "string" }
+      },
+      "required": ["id", "name", "author", "license"]
+    },
+    "VersionInfo": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "build": { "type": "string" },
+        "compatibility": { "type": "string" },
+        "bytecodeVersion": { "type": "string" }
+      },
+      "required": ["version", "compatibility", "bytecodeVersion"]
+    },
+    "Dependency": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "string" },
+        "type": { "$ref": "#/definitions/DependencyType" },
+        "required": { "type": "boolean" },
+        "checksum": { "type": "string" }
+      },
+      "required": ["id", "version", "type", "required", "checksum"]
+    },
+    "DependencyType": {
+      "type": "string",
+      "enum": ["RUNTIME", "DEVELOPMENT", "TEST", "OPTIONAL"]
+    },
+    "Capability": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "version": { "type": "string" },
+        "permissions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Permission" }
+        }
+      },
+      "required": ["id", "name", "version", "permissions"]
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "resource": { "type": "string" },
+        "actions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Constraint" }
+        }
+      },
+      "required": ["resource", "actions"]
+    },
+    "Constraint": {
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": true,
+        "operator": { "type": "string" }
+      },
+      "required": ["key", "value", "operator"]
+    },
+    "Requirement": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/RequirementType" },
+        "value": { "type": "string" },
+        "minimum": { "type": "string" },
+        "maximum": { "type": "string" }
+      },
+      "required": ["type", "value"]
+    },
+    "RequirementType": {
+      "type": "string",
+      "enum": ["CVM_VERSION", "MEMORY", "CPU", "STORAGE", "NETWORK", "GPU"]
+    },
+    "SecurityInfo": {
+      "type": "object",
+      "properties": {
+        "signature": { "$ref": "#/definitions/SignatureInfo" },
+        "encryption": { "$ref": "#/definitions/EncryptionInfo" },
+        "integrity": { "$ref": "#/definitions/IntegrityInfo" },
+        "accessControl": { "$ref": "#/definitions/AccessControlInfo" }
+      }
+    },
+    "SignatureInfo": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string" },
+        "publicKey": { "type": "string" },
+        "signature": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["algorithm", "publicKey", "signature", "timestamp"]
+    },
+    "EncryptionInfo": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string" },
+        "keyId": { "type": "string" },
+        "iv": { "type": "string" }
+      },
+      "required": ["algorithm", "keyId", "iv"]
+    },
+    "IntegrityInfo": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string" },
+        "checksum": { "type": "string" },
+        "salt": { "type": "string" }
+      },
+      "required": ["algorithm", "checksum", "salt"]
+    },
+    "AccessControlInfo": {
+      "type": "object",
+      "properties": {
+        "acl": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ACL" }
+        },
+        "owner": { "type": "string" },
+        "group": { "type": "string" }
+      },
+      "required": ["acl", "owner", "group"]
+    },
+    "ACL": {
+      "type": "object",
+      "properties": {
+        "principal": { "type": "string" },
+        "permissions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["principal", "permissions"]
+    },
+    "PackageMetadata": {
+      "type": "object",
+      "properties": {
+        "created": { "type": "integer" },
+        "modified": { "type": "integer" },
+        "size": { "type": "integer" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "categories": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["created", "modified", "size"]
+    },
+    "PackageSignature": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "$ref": "#/definitions/SignatureAlgorithm" },
+        "publicKey": { "type": "string" },
+        "signature": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "certificate": { "type": "string" },
+        "chain": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["algorithm", "publicKey", "signature", "timestamp"]
+    },
+    "SignatureAlgorithm": {
+      "type": "string",
+      "enum": ["RSA_SHA256", "RSA_SHA512", "ECDSA_SHA256", "ECDSA_SHA512", "ED25519"]
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/ResourceType" },
+        "path": { "type": "string" },
+        "size": { "type": "integer" },
+        "checksum": { "type": "string" },
+        "compression": { "type": "string" },
+        "metadata": { "$ref": "#/definitions/ResourceMetadata" }
+      },
+      "required": ["id", "type", "path", "size", "checksum", "metadata"]
+    },
+    "ResourceType": {
+      "type": "string",
+      "enum": ["KNOWLEDGE_GRAPH", "MODEL", "PROMPT", "CONFIG", "ASSET", "DATA"]
+    },
+    "ResourceMetadata": {
+      "type": "object",
+      "properties": {
+        "mimeType": { "type": "string" },
+        "encoding": { "type": "string" },
+        "language": { "type": "string" },
+        "version": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["mimeType", "encoding"]
+    },
+    "KnowledgeGraph": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/GraphNode" }
+        },
+        "edges": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/GraphEdge" }
+        },
+        "metadata": { "$ref": "#/definitions/GraphMetadata" }
+      },
+      "required": ["nodes", "edges", "metadata"]
+    },
+    "GraphNode": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/NodeType" },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "embeddings": {
+          "type": "array",
+          "items": { "type": "number" }
+        }
+      },
+      "required": ["id", "type", "properties"]
+    },
+    "NodeType": {
+      "type": "string",
+      "enum": ["ENTITY", "CONCEPT", "RELATION", "ATTRIBUTE", "EVENT"]
+    },
+    "GraphEdge": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "type": { "$ref": "#/definitions/EdgeType" },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "weight": { "type": "number" }
+      },
+      "required": ["id", "from", "to", "type"]
+    },
+    "GraphMetadata": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "createdAt": { "type": "integer" },
+        "updatedAt": { "type": "integer" },
+        "nodeCount": { "type": "integer" },
+        "edgeCount": { "type": "integer" }
+      },
+      "required": ["version", "createdAt", "updatedAt", "nodeCount", "edgeCount"]
+    },
+    "ValidationResult": {
+      "type": "object",
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ValidationError" }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ValidationWarning" }
+        },
+        "info": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ValidationInfo" }
+        },
+        "metrics": { "$ref": "#/definitions/ValidationMetrics" }
+      },
+      "required": ["valid", "errors", "warnings", "info", "metrics"]
+    },
+    "ValidationError": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/ErrorType" },
+        "severity": { "$ref": "#/definitions/ErrorSeverity" },
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "location": { "$ref": "#/definitions/ValidationLocation" },
+        "suggestion": { "type": "string" }
+      },
+      "required": ["id", "type", "severity", "code", "message", "location"]
+    },
+    "ErrorType": {
+      "type": "string",
+      "enum": ["STRUCTURAL", "SEMANTIC", "SECURITY", "RUNTIME", "COMPATIBILITY"]
+    },
+    "ErrorSeverity": {
+      "type": "string",
+      "enum": ["ERROR", "WARNING", "INFO"]
+    },
+    "ValidationLocation": {
+      "type": "object",
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer" },
+        "column": { "type": "integer" },
+        "instruction": { "type": "string" },
+        "component": { "type": "string" }
+      }
+    },
+    "ValidationWarning": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/WarningType" },
+        "message": { "type": "string" },
+        "location": { "$ref": "#/definitions/ValidationLocation" }
+      },
+      "required": ["id", "type", "message", "location"]
+    },
+    "WarningType": {
+      "type": "string",
+      "enum": ["DEPRECATED", "PERFORMANCE", "SECURITY", "BEST_PRACTICE"]
+    },
+    "ValidationInfo": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/InfoType" },
+        "message": { "type": "string" },
+        "location": { "$ref": "#/definitions/ValidationLocation" }
+      },
+      "required": ["id", "type", "message", "location"]
+    },
+    "InfoType": {
+      "type": "string",
+      "enum": ["METADATA", "STATISTICS", "RECOMMENDATION"]
+    },
+    "ValidationMetrics": {
+      "type": "object",
+      "properties": {
+        "validationTime": { "type": "number" },
+        "checksPerformed": { "type": "integer" },
+        "checksPassed": { "type": "integer" },
+        "checksFailed": { "type": "integer" },
+        "checksSkipped": { "type": "integer" }
+      },
+      "required": ["validationTime", "checksPerformed", "checksPassed", "checksFailed", "checksSkipped"]
+    },
+    "LoadResult": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "packageId": { "type": "string" },
+        "package": { "$ref": "#/definitions/CognitivePackage" },
+        "errors": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LoadError" }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LoadWarning" }
+        },
+        "metrics": { "$ref": "#/definitions/LoadMetrics" }
+      },
+      "required": ["success", "packageId", "errors", "warnings", "metrics"]
+    },
+    "LoadError": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/LoadErrorType" },
+        "message": { "type": "string" },
+        "error": { "type": "string" },
+        "details": true
+      },
+      "required": ["type", "message"]
+    },
+    "LoadErrorType": {
+      "type": "string",
+      "enum": ["PARSE_FAILED", "SIGNATURE_VERIFICATION_FAILED", "CHECKSUM_VERIFICATION_FAILED", "DEPENDENCY_RESOLUTION_FAILED", "RESOURCE_LOAD_FAILED", "INITIALIZATION_FAILED", "SANDBOX_SETUP_FAILED"]
+    },
+    "LoadWarning": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/LoadWarningType" },
+        "message": { "type": "string" }
+      },
+      "required": ["type", "message"]
+    },
+    "LoadWarningType": {
+      "type": "string",
+      "enum": ["DEPENDENCY_WARNING", "VERSION_WARNING", "COMPATIBILITY_WARNING"]
+    },
+    "LoadMetrics": {
+      "type": "object",
+      "properties": {
+        "loadTime": { "type": "number" },
+        "parseTime": { "type": "number" },
+        "dependencyResolutionTime": { "type": "number" },
+        "resourceLoadTime": { "type": "number" },
+        "initializationTime": { "type": "number" },
+        "totalTime": { "type": "number" },
+        "memoryUsed": { "type": "number" }
+      },
+      "required": ["loadTime", "parseTime", "dependencyResolutionTime", "resourceLoadTime", "initializationTime", "totalTime", "memoryUsed"]
+    },
+    "ExecutionOutput": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "result": true,
+        "metrics": { "$ref": "#/definitions/ExecutionMetrics" },
+        "traceId": { "type": "string" },
+        "errors": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/CVMError" }
+        }
+      },
+      "required": ["success", "result", "metrics", "traceId", "errors"]
+    },
+    "CVMError": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "$ref": "#/definitions/ErrorType" },
+        "message": { "type": "string" },
+        "context": true,
+        "timestamp": { "type": "integer" },
+        "stackTrace": { "type": "string" }
+      },
+      "required": ["id", "type", "message", "timestamp"]
+    },
+    "ProfileMetrics": {
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "latency": { "$ref": "#/definitions/LatencyMetrics" },
+        "cpu": { "$ref": "#/definitions/CPUMetrics" },
+        "memory": { "$ref": "#/definitions/MemoryMetrics" },
+        "tokens": { "$ref": "#/definitions/TokenMetrics" },
+        "network": { "$ref": "#/definitions/NetworkMetrics" }
+      },
+      "required": ["sessionId", "latency", "cpu", "memory", "tokens", "network"]
+    },
+    "LatencyMetrics": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "number" },
+        "reasoning": { "type": "number" },
+        "evidence": { "type": "number" },
+        "decision": { "type": "number" },
+        "conversation": { "type": "number" },
+        "knowledge": { "type": "number" },
+        "planning": { "type": "number" },
+        "memory": { "type": "number" },
+        "llm": { "type": "number" },
+        "scheduler": { "type": "number" },
+        "compiler": { "type": "number" }
+      },
+      "required": ["total"]
+    },
+    "CPUMetrics": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "number" },
+        "user": { "type": "number" },
+        "system": { "type": "number" },
+        "iowait": { "type": "number" }
+      },
+      "required": ["total", "user", "system"]
+    },
+    "MemoryMetrics": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "number" },
+        "heap": { "type": "number" },
+        "stack": { "type": "number" },
+        "cache": { "type": "number" },
+        "knowledgeGraph": { "type": "number" }
+      },
+      "required": ["total"]
+    },
+    "TokenMetrics": {
+      "type": "object",
+      "properties": {
+        "input": { "type": "integer" },
+        "output": { "type": "integer" },
+        "total": { "type": "integer" },
+        "cached": { "type": "integer" },
+        "byModel": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        }
+      },
+      "required": ["input", "output", "total"]
+    },
+    "NetworkMetrics": {
+      "type": "object",
+      "properties": {
+        "requests": { "type": "integer" },
+        "bytes": { "type": "integer" },
+        "latency": { "type": "number" },
+        "errors": { "type": "integer" }
+      },
+      "required": ["requests", "bytes", "latency", "errors"]
+    }
+  }
+}

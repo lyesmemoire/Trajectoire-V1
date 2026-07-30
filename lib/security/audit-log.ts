@@ -21,14 +21,7 @@ export interface AuditDetails {
   [key: string]: unknown;
 }
 
-export async function logEvent(
-  userId: string,
-  action: AuditAction,
-  details: AuditDetails = {},
-  ip?: string,
-  userAgent?: string,
-  requestId?: string,
-): Promise<void> {
+export async function logEvent(userId: string, action: AuditAction, details: AuditDetails = {}, ip?: string, userAgent?: string, requestId?: string, ): Promise<void> {
   try {
     const supabase = createSupabaseServiceClient();
     await supabase.from("audit_logs").insert({

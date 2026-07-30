@@ -1,324 +1,125 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { getAuthenticatedUser } from "@/lib/auth";
+"use client"
 
-export const metadata: Metadata = {
-  title: "Trajectoire – Préparez vos entretiens avec une IA personnalisée",
-  description: "Uploadez votre CV. Simulez vos entretiens. Recevez un feedback structuré.",
-};
+import { useState } from "react"
+import { motion } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
+import { CVUploader } from "@/components/analyze/CVUploader"
+import { JobInput } from "@/components/analyze/JobInput"
+import { AnalyzeButton } from "@/components/analyze/AnalyzeButton"
 
-export default async function HomePage() {
-  const user = await getAuthenticatedUser();
-  const ctaHref = user ? "/dashboard" : "/signup";
-  const ctaText = user ? "Accéder au Dashboard" : "Commencer gratuitement";
+const heroImage = "/images/hero-professional.jpg"
+
+export default function HomePage() {
+  const [file, setFile] = useState<File | null>(null)
+  const [job, setJob] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const canAnalyze = !!file && !loading
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* HERO SECTION */}
-      <section className="bg-white py-20 lg:py-24">
-        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <div className="bg-ivoire-50 min-h-screen text-ink-900">
+      {/* Lumières d'ambiance premium */}
+      <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-bronze-100/25 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-5%] w-[35%] h-[35%] rounded-full bg-bronze-50/30 blur-[100px] pointer-events-none" />
 
-          {/* Colonne gauche — Texte */}
-          <div className="text-center lg:text-left">
-
-            <p className="text-xs tracking-[0.25em] uppercase text-slate-400 mb-10">
+      <main className="max-w-7xl mx-auto px-6 relative z-10 min-h-[calc(100vh-73px)] flex items-center py-8">
+        <div className="w-full grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          
+          {/* Colonne gauche */}
+          <motion.div
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 flex flex-col"
+          >
+            <p className="font-medium text-[11px] text-bronze-700 tracking-[0.3em] uppercase mb-3">
               Plateforme d'entraînement stratégique
             </p>
-
-            <h1 className="
-              text-4xl
-              md:text-5xl
-              lg:text-6xl
-              font-semibold
-              tracking-tight
-              text-slate-900
-              leading-[1.1]
-            ">
-              Préparez vos entretiens
-              <br />
-              comme un stratège.
+            
+            <h1
+              className="text-3xl md:text-4xl font-serif font-bold text-ink-900 leading-[1.15]"
+            >
+              Préparez vos entretiens{" "}
+              <span className="bg-gradient-to-r from-bronze-700 via-ink-800 to-bronze-700 bg-clip-text text-transparent">
+                comme un stratège.
+              </span>
             </h1>
-
-            <p className="
-              mt-8
-              text-lg
-              text-slate-600
-              max-w-xl
-              mx-auto
-              lg:mx-0
-              leading-relaxed
-            ">
-              Analyse de votre profil, simulations réalistes,
-              feedback structuré pour performer dans les environnements exigeants.
+            
+            <p className="mt-3 text-sm text-ink-600 leading-relaxed max-w-md">
+              Analyse de votre profil, simulations réalistes et feedback structuré pour performer dans les environnements les plus exigeants.
             </p>
-
-            <div className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
-              <Link href={ctaHref}>
-                <button className="
-                  bg-slate-900
-                  text-white
-                  px-10
-                  py-4
-                  rounded-xl
-                  font-medium
-                  hover:bg-slate-800
-                  transition
-                  focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2
-                ">
-                  Accéder à la plateforme
-                </button>
+            
+            {/* Formulaire compacté */}
+            <div className="mt-5 space-y-3 bg-white/70 backdrop-blur-xl p-5 rounded-2xl border border-ivoire-200/60 shadow-premium">
+              <CVUploader file={file} onFile={setFile} />
+              <JobInput value={job} onChange={setJob} />
+              
+              <Link 
+                href={canAnalyze ? "/analyze" : "#"}
+                className={!canAnalyze ? 'pointer-events-none block' : 'block'}
+                aria-disabled={!canAnalyze}
+              >
+                <AnalyzeButton
+                  disabled={!canAnalyze}
+                  loading={loading}
+                  onClick={() => { if(canAnalyze) setLoading(true) }}
+                />
               </Link>
-
-              <Link href="/pricing">
-                <button className="
-                  text-slate-700
-                  font-medium
-                  hover:text-slate-900
-                  transition
-                  underline-offset-4
-                  hover:underline
-                  focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2
-                ">
-                  Voir les tarifs →
-                </button>
-              </Link>
+              
+              <p className="text-[11px] text-ink-400 text-center tracking-wide">
+                Accès immédiat et confidentiel
+              </p>
             </div>
 
-            <p className="mt-8 text-sm text-slate-400 text-center lg:text-left">
-              Aucune carte bancaire requise · Accès immédiat
-            </p>
+            {/* Barre de réassurance compactée */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-5 pt-4 border-t border-ivoire-200/60 flex items-center gap-4"
+            >
+              <div className="flex -space-x-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <div 
+                    key={i}
+                    className="w-7 h-7 rounded-full bg-gradient-to-br from-bronze-200 to-bronze-100 border-2 border-white shadow-sm"
+                  />
+                ))}
+              </div>
+              <div>
+                <div className="flex items-center gap-1 text-bronze-600 text-xs">
+                  {"★★★★★"}
+                </div>
+                <p className="text-[11px] text-ink-500 mt-0.5">
+                  Plus de <span className="font-semibold text-ink-700">2 400 professionnels</span> accompagnés
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
 
-          </div>
-
-          {/* Colonne droite — Image */}
-          <div className="relative">
-            <div className="
-              relative
-              rounded-2xl
-              overflow-hidden
-              aspect-[4/5]
-              max-h-[600px]
-              shadow-2xl
-              ring-1
-              ring-slate-200
-            ">
+          {/* Colonne droite */}
+          <motion.div
+            initial={{ opacity: 0, x: 15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex justify-center lg:justify-end"
+          >
+            <div className="relative w-full max-w-[480px]">
               <Image
-                src="/images/hero-professional.webp"
-                alt="Professionnel en préparation stratégique pour ses entretiens"
-                fill
-                className="object-cover object-[60%_center]"
+                src={heroImage}
+                alt="Professionnel en entretien"
+                width={480}
+                height={600}
+                className="rounded-2xl object-cover w-full h-auto shadow-premium-lg"
                 priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
               />
+              <div className="absolute inset-0 rounded-2xl border border-white/40 pointer-events-none" />
+              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl bg-gradient-to-br from-bronze-100/40 to-bronze-50/40 blur-xl -z-10" />
             </div>
-          </div>
-
+          </motion.div>
         </div>
-      </section>
-
-      {/* SECTION ÉDITORIALE */}
-      <section className="bg-slate-50 py-20 md:py-36">
-        <div className="max-w-5xl mx-auto px-5 md:px-6 grid md:grid-cols-2 gap-16 md:gap-24 items-center">
-
-          {/* Colonne gauche — Texte */}
-          <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-slate-400 mb-6">
-              Notre approche
-            </p>
-
-            <h2 className="
-              text-3xl
-              md:text-4xl
-              font-semibold
-              tracking-tight
-              text-slate-900
-            ">
-              Une méthode structurée,
-              pas un simple simulateur.
-            </h2>
-
-            <p className="mt-6 text-slate-600 leading-relaxed">
-              Trajectoire analyse votre profil en profondeur
-              pour générer des simulations réellement adaptées
-              à votre parcours et vos ambitions.
-            </p>
-          </div>
-
-          {/* Colonne droite — Steps */}
-          <div className="space-y-12">
-
-            <div className="flex gap-8 items-start">
-              <span className="text-5xl font-semibold text-slate-200">
-                01
-              </span>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  Analyse de votre profil
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Lecture complète de votre CV,
-                  extraction de votre ADN professionnel.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-8 items-start">
-              <span className="text-5xl font-semibold text-slate-200">
-                02
-              </span>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  Simulation réaliste
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Questions adaptées à votre secteur
-                  et au type d'entreprise ciblé.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-8 items-start">
-              <span className="text-5xl font-semibold text-slate-200">
-                03
-              </span>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  Feedback structuré
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Rapport précis sur votre structure,
-                  clarté et impact.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION LÉGITIMITÉ CANDIDAT */}
-      <section className="bg-white py-20 md:py-36">
-        <div className="max-w-4xl mx-auto px-5 md:px-6 text-center">
-
-          <p className="text-xs tracking-[0.2em] uppercase text-slate-400 mb-6">
-            Conçu pour
-          </p>
-
-          <h2 className="
-            text-3xl
-            md:text-4xl
-            font-semibold
-            tracking-tight
-            text-slate-900
-          ">
-            Les candidats qui refusent
-            de laisser leur préparation au hasard.
-          </h2>
-
-          <p className="
-            mt-8
-            text-lg
-            text-slate-600
-            max-w-2xl
-            mx-auto
-            leading-relaxed
-          ">
-            Consulting, finance, technologie, management.
-            Trajectoire s'adresse à ceux qui considèrent
-            chaque entretien comme un exercice stratégique.
-          </p>
-
-          {/* Stats */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-12">
-
-            <div>
-              <p className="text-4xl font-semibold text-slate-900">
-                +150
-              </p>
-              <p className="text-slate-500 text-sm mt-2">
-                Simulations générées
-              </p>
-            </div>
-
-            <div>
-              <p className="text-4xl font-semibold text-slate-900">
-                4.8/5
-              </p>
-              <p className="text-slate-500 text-sm mt-2">
-                Satisfaction beta
-              </p>
-            </div>
-
-            <div>
-              <p className="text-4xl font-semibold text-slate-900">
-                3 min
-              </p>
-              <p className="text-slate-500 text-sm mt-2">
-                Pour commencer
-              </p>
-            </div>
-
-            <div>
-              <p className="text-4xl font-semibold text-slate-900">
-                100%
-              </p>
-              <p className="text-slate-500 text-sm mt-2">
-                Personnalisé
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* CTA FINAL FORT */}
-      <section className="bg-slate-50 py-20 md:py-36">
-        <div className="max-w-3xl mx-auto px-5 md:px-6 text-center">
-
-          <h2 className="
-            text-3xl
-            md:text-4xl
-            font-semibold
-            tracking-tight
-            text-slate-900
-          ">
-            Votre prochain entretien
-            mérite une préparation sérieuse.
-          </h2>
-
-          <p className="mt-8 text-lg text-slate-600">
-            Rejoignez Trajectoire et transformez
-            votre façon de vous préparer.
-          </p>
-
-          <div className="mt-12">
-            <Link href={ctaHref}>
-              <button className="
-                bg-slate-900
-                text-white
-                px-14
-                py-4
-                rounded-xl
-                font-medium
-                hover:bg-slate-800
-                transition-all
-                duration-200
-                focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2
-              ">
-                Commencer gratuitement
-              </button>
-            </Link>
-          </div>
-
-          <p className="mt-6 text-sm text-slate-400">
-            Aucune carte bancaire requise.
-          </p>
-
-        </div>
-      </section>
+      </main>
     </div>
-  );
+  )
 }

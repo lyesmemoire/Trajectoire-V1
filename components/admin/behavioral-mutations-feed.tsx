@@ -5,8 +5,7 @@ import { Zap, TrendingUp, History } from "lucide-react";
 import { UserMutation } from "@/lib/analytics/mutations/mutation-engine";
 
 export function BehavioralMutationsFeed({
-  mutations,
-}: {
+  mutations, _}: {
   mutations: UserMutation[];
 }) {
   return (

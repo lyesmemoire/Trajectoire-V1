@@ -48,7 +48,7 @@ export class ExecutionFacade {
     if (this.commitListener) {
       this.commitListener({
         sessionId,
-        snapshotHash: nextSession.initialSnapshot?.id || "snapshot-0", // TODO: proper snapshot hash later
+        snapshotHash: nextSession.initialSnapshot?.id || "snapshot-0", 
         journalPointer: nextSession.journal.entries.length.toString(),
       });
     }

@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "totalRemoved": 9,
+    "totalErrors": 0
+  },
+  "removals": [
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\debugging\\DEBUGGING_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\observability\\DEBUGGING_CONTRACT.md",
+      "contractName": "DEBUGGING"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\events\\EVENT_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\EVENT_CONTRACT.md",
+      "contractName": "EVENT"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\graph\\GRAPH_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\GRAPH_CONTRACT.md",
+      "contractName": "GRAPH"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\memory\\MEMORY_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\MEMORY_CONTRACT.md",
+      "contractName": "MEMORY"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\objects\\OBJECT_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\OBJECT_CONTRACT.md",
+      "contractName": "OBJECT"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\profiling\\PROFILING_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\observability\\PROFILING_CONTRACT.md",
+      "contractName": "PROFILING"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\runtime\\RUNTIME_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\RUNTIME_CONTRACT.md",
+      "contractName": "RUNTIME"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\scheduling\\SCHEDULING_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\foundation\\SCHEDULING_CONTRACT.md",
+      "contractName": "SCHEDULING"
+    },
+    {
+      "duplicate": "C:\\Trajectoire\\contracts\\tracing\\TRACING_CONTRACT.md",
+      "canonical": "C:\\Trajectoire\\contracts\\observability\\TRACING_CONTRACT.md",
+      "contractName": "TRACING"
+    }
+  ],
+  "errors": []
+}

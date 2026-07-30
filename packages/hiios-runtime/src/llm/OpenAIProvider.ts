@@ -77,7 +77,7 @@ export class OpenAIProvider implements LLMProvider {
       }
     );
 
-    const data = await response.json() as any;
+    const data = await response.json() as unknown;
 
     if (!response.ok) {
       throw this.mapError(data, response.status);
@@ -143,7 +143,7 @@ export class OpenAIProvider implements LLMProvider {
         if (data === "[DONE]") continue;
 
         try {
-          const parsed = JSON.parse(data) as any;
+          const parsed = JSON.parse(data) as unknown;
           const delta  = parsed.choices?.[0]?.delta?.content ?? "";
 
           if (delta) {
@@ -191,7 +191,7 @@ export class OpenAIProvider implements LLMProvider {
       }
     );
 
-    const data = await response.json() as any;
+    const data = await response.json() as unknown;
 
     return {
       embedding: data.data[0].embedding,
@@ -211,7 +211,7 @@ export class OpenAIProvider implements LLMProvider {
       body:    JSON.stringify({ input: text }),
     });
 
-    const data = await response.json() as any;
+    const data = await response.json() as unknown;
     const result = data.results[0];
 
     return {
@@ -284,7 +284,7 @@ export class OpenAIProvider implements LLMProvider {
 
       return response;
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (error.name === "AbortError") {
         throw new LLMError("Request timeout", "openai", "TIMEOUT", true);
       }
@@ -296,7 +296,7 @@ export class OpenAIProvider implements LLMProvider {
     }
   }
 
-  private mapError(data: any, status: number): LLMError {
+  private mapError(data: unknown, status: number): LLMError {
     const message = data?.error?.message ?? "Unknown error";
     const code    = data?.error?.code    ?? "unknown";
 
@@ -311,7 +311,7 @@ export class OpenAIProvider implements LLMProvider {
 
     const [errorCode, retryable] = errorMap[status] ?? ["UNKNOWN", false];
 
-    return new LLMError(message, "openai", errorCode as any, retryable, data);
+    return new LLMError(message, "openai", errorCode as unknown, retryable, data);
   }
 
   private sleep(ms: number): Promise<void> {

@@ -1,251 +1,157 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase";
+import { useState } from "react"
+import Link from "next/link"
+import { createClient } from "@/lib/supabase"
+import { Button } from "@/components/ui/button"
 
 export default function SignupPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    consent: false,
-  });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.type === "checkbox" ? (e.target as HTMLInputElement).checked : e.target.value });
-    setError("");
-  };
-
-  const validateForm = () => {
-    if (!formData.firstName.trim() || !formData.lastName.trim()) {
-      return "Le prénom et le nom sont requis";
-    }
-    if (!formData.email.trim()) {
-      return "L'email est requis";
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      return "Email invalide";
-    }
-    if (!formData.password) {
-      return "Le mot de passe est requis";
-    }
-    if (formData.password.length < 8) {
-      return "Le mot de passe doit contenir au moins 8 caractères";
-    }
-    if (formData.password !== formData.confirmPassword) {
-      return "Les mots de passe ne correspondent pas";
-    }
-    if (!formData.consent) {
-      return "Vous devez accepter la politique de confidentialité";
-    }
-    return "";
-  };
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [acceptCGU, setAcceptCGU] = useState(false)
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+    e.preventDefault()
+    setError("")
 
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      setLoading(false);
-      return;
+    if (!email || !password || !confirmPassword) {
+      setError("Veuillez remplir tous les champs.")
+      return
     }
+    if (password !== confirmPassword) {
+      setError("Les mots de passe ne correspondent pas.")
+      return
+    }
+    if (password.length < 6) {
+      setError("Le mot de passe doit contenir au moins 6 caractères.")
+      return
+    }
+    if (!acceptCGU) {
+      setError("Vous devez accepter les conditions d'utilisation.")
+      return
+    }
+
+    setLoading(true)
 
     try {
-      const supabase = createClient();
-      
-      // Create user in auth.users
-      const { data: { user }, error: signUpError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
+      const supabase = createClient()
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
         options: {
-          data: {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-          },
+          emailRedirectTo: `${window.location.origin}/dashboard`,
         },
-      });
+      })
 
-      if (signUpError) {
-        setError(signUpError.message);
-        setLoading(false);
-        return;
-      }
+      if (signUpError) throw signUpError
 
-      if (!user) {
-        setError("Erreur lors de la création du compte");
-        setLoading(false);
-        return;
-      }
-
-      // Récupérer la session pour le token
-      const { data: { session } } = await supabase.auth.getSession();
-
-      // Synchroniser avec la table User via API route
-      try {
-        const syncResponse = await fetch("/api/auth/sync-user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${session?.access_token}`,
-          },
-          body: JSON.stringify({
-            fullName: `${formData.firstName} ${formData.lastName}`.trim(),
-          }),
-        });
-
-        if (!syncResponse.ok) {
-          console.error("[Signup] Échec sync DB (non-bloquant)");
-        }
-      } catch (syncError) {
-        console.error("[Signup] Erreur appel sync DB (non-bloquant):", syncError);
-      }
-
-      // Redirect to dashboard
-      router.push("/dashboard");
-      router.refresh();
-    } catch {
-      setError("Une erreur est survenue. Veuillez réessayer.");
-      setLoading(false);
+      setSuccess(true)
+    } catch (err: any) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer.")
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
-  return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Créer un compte</h1>
-            <p className="text-slate-600">Rejoignez Trajectoire dès maintenant</p>
-          </div>
-
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-1">
-                  Prénom
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-1">
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
-                Mot de passe
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                required
-              />
-              <p className="text-xs text-slate-500 mt-1">Minimum 8 caractères</p>
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
-                Confirmer le mot de passe
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                required
-              />
-            </div>
-
-            <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
-                id="consent"
-                name="consent"
-                checked={formData.consent}
-                onChange={handleChange}
-                className="mt-1 w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
-                required
-              />
-              <label htmlFor="consent" className="text-sm text-slate-600">
-                J&apos;accepte la politique de confidentialité et le traitement de mes données personnelles.
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? "Création en cours..." : "Créer mon compte"}
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-slate-600">
-              Vous avez déjà un compte?{" "}
-              <Link href="/login" className="text-blue-600 hover:underline font-medium">
-                Se connecter
-              </Link>
-            </p>
-          </div>
+  if (success) {
+    return (
+      <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium text-center space-y-4">
+          <div className="text-forest-500 text-5xl mb-4">✉️</div>
+          <h2 className="text-2xl font-serif font-bold text-ink-900">Vérifiez vos emails</h2>
+          <p className="text-ink-600">
+            Un lien de confirmation a été envoyé à <span className="font-medium text-ink-900">{email}</span>.
+            Cliquez dessus pour activer votre compte.
+          </p>
+          <Link href="/login" className="block mt-6 text-sm text-bronze-600 font-medium hover:underline">
+            Retour à la connexion
+          </Link>
         </div>
       </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
+      <Link href="/" className="text-2xl font-serif font-bold text-ink-900 mb-8">
+        Trajectoire
+      </Link>
+
+      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-serif font-bold text-ink-900 mb-2">Créer un compte</h1>
+          <p className="text-ink-600 text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
+        </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-brick-50 border border-brick-100 rounded-xl">
+            <p className="text-brick-600 text-sm font-medium text-center">{error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              placeholder="vous@exemple.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-1">Mot de passe</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-1">Confirmer le mot de passe</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <div className="flex items-start gap-3 py-2">
+            <input
+              type="checkbox"
+              id="cgu"
+              checked={acceptCGU}
+              onChange={(e) => setAcceptCGU(e.target.checked)}
+              className="mt-1 w-4 h-4 rounded border-ivoire-300 text-bronze-600 focus:ring-bronze-400 cursor-pointer"
+            />
+            <label htmlFor="cgu" className="text-sm text-ink-600 cursor-pointer leading-tight">
+              J'accepte les <Link href="/terms" className="text-bronze-600 hover:underline">conditions d'utilisation</Link> et la <Link href="/privacy" className="text-bronze-600 hover:underline">politique de confidentialité</Link>.
+            </label>
+          </div>
+
+          <Button type="submit" disabled={loading} className="w-full" size="md">
+            {loading ? "Création en cours..." : "S'inscrire"}
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-ink-600">
+          Déjà un compte ? <Link href="/login" className="text-bronze-600 font-medium hover:underline">Se connecter</Link>
+        </p>
+      </div>
     </div>
-  );
+  )
 }

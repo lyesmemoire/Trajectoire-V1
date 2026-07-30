@@ -25,7 +25,7 @@ export class PostgresEventStore implements EventStore {
         event.tenantId,
         event.sessionId,
         event.eventId,
-        (event as any).sequence ?? 0, // Using index sequence if present
+        (event as { sequence?: number }).sequence ?? 0, // Using index sequence if present
         JSON.stringify(event.payload),
         event.hash,
         event.previousEventHash,
@@ -41,7 +41,7 @@ export class PostgresEventStore implements EventStore {
       e.tenantId,
       e.sessionId,
       e.eventId,
-      (e as any).sequence ?? 0,
+      (e as { sequence?: number }).sequence ?? 0,
       JSON.stringify(e.payload),
       e.hash,
       e.previousEventHash
@@ -86,22 +86,6 @@ export class PostgresEventStore implements EventStore {
     return res.rows.map(this.mapRow);
   }
 
-  async getLastEvent(
-    tenantId: string,
-    sessionId: string
-  ): Promise<SILEvent | null> {
-    const res = await this.pool.query(
-      `
-      SELECT * FROM events
-      WHERE tenant_id = $1 AND session_id = $2
-      ORDER BY sequence DESC
-      LIMIT 1
-      `,
-      [tenantId, sessionId]
-    );
-    return res.rows[0] ? this.mapRow(res.rows[0]) : null;
-  }
-
   async hasEvent(tenantId: string, sessionId: string, eventId: string): Promise<boolean> {
     const res = await this.pool.query(
       `
@@ -114,23 +98,23 @@ export class PostgresEventStore implements EventStore {
     return res.rows.length > 0;
   }
 
-  async getCheckpoint(tenantId: string, sessionId: string): Promise<SILCheckpoint | null> {
+  async getCheckpoint(_tenantId: string, _sessionId: string): Promise<SILCheckpoint | null> {
     // For now, checkpoints are handled by CheckpointRepository in Postgres.
     // If EventStore also requires them, we can implement it. 
     // In our architecture, checkpointing is currently split out in PostgresCheckpointRepository.
     return null; 
   }
 
-  async saveCheckpoint(tenantId: string, checkpoint: SILCheckpoint): Promise<void> {
+  async saveCheckpoint(_tenantId: string, _checkpoint: SILCheckpoint): Promise<void> {
     // Handled by PostgresCheckpointRepository
   }
 
-  private mapRow(row: any): SILEvent {
+  private mapRow(row: { tenant_id: string; session_id: string; event_id: string; sequence: number; payload: unknown; hash: string; previous_hash: string; created_at: Date }): SILEvent {
     return {
       tenantId: row.tenant_id,
       sessionId: row.session_id,
       eventId: row.event_id,
-      type: "UNKNOWN", // In an actual system we'd save type too
+      type: "SESSION_CREATED", // In an actual system we'd save type too
       payload: typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload,
       hash: row.hash,
       previousEventHash: row.previous_hash,

@@ -6,10 +6,7 @@ import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const ExperienceEditor = React.memo(function ExperienceEditor({
-  experience,
-  onChange,
-  onRewrite,
-}: {
+  experience, onChange, onRewrite, _}: {
   experience: Experience;
   onChange: (exp: Experience) => void;
   onRewrite: () => void;

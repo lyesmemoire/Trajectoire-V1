@@ -14,15 +14,7 @@ import { logError } from "@/lib/logger/Logger";
 /**
  * Enregistre une métrique IA dans Supabase
  */
-export async function recordAIRequest(
-  latency: number,
-  promptTokens: number,
-  completionTokens: number,
-  totalTokens: number,
-  model: string,
-  userId?: string,
-  context?: string
-): Promise<void> {
+export async function recordAIRequest(latency: number, promptTokens: number, completionTokens: number, totalTokens: number, model: string, userId?: string, context?: string): Promise<void> {
   const supabase = await createClient();
 
   try {
@@ -43,12 +35,7 @@ export async function recordAIRequest(
 /**
  * Enregistre une erreur dans Supabase
  */
-export async function recordError(
-  type: string,
-  message: string,
-  userId?: string,
-  context?: string
-): Promise<void> {
+export async function recordError(type: string, message: string, userId?: string, context?: string): Promise<void> {
   const supabase = await createClient();
 
   try {

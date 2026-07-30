@@ -6,9 +6,6 @@
 import {
   Candidate,
   CandidateArchetype,
-  Skill,
-  Evidence,
-  Hypothesis,
 } from "../interfaces/IHIIOSKernel";
 import { logInfo } from "@/lib/logger/Logger";
 
@@ -351,12 +348,12 @@ CE QUE TU NE PRÉTENDS PAS FAIRE :
    * Calcule le score d'une catégorie de compétences
    */
   private calculateSkillScore(skills: any[], category: string): number {
-    const categorySkills = skills.filter((s) => s.id.startsWith(category));
+    const categorySkills = skills.filter((s: any) => s.id.startsWith(category));
     if (categorySkills.length === 0) {
       return 0;
     }
 
-    const total = categorySkills.reduce((sum, s) => sum + s.confidence, 0);
+    const total = categorySkills.reduce((sum: number, s: any) => sum + s.confidence, 0);
     return parseFloat((total / categorySkills.length).toFixed(2));
   }
 

@@ -1,0 +1,96 @@
+{
+  "component": "execution-pipeline",
+  "file": "compiler/cvm/execution-pipeline.ts",
+  "auditDate": "2026-07-27T09:22:17.859Z",
+  "coverageSource": "coverage-final.json",
+  "provider": "Vitest with V8 coverage",
+  "before": {
+    "statements": {
+      "total": 63,
+      "covered": 0,
+      "uncovered": 63,
+      "percentage": "0.00"
+    },
+    "branches": {
+      "total": 11,
+      "covered": 0,
+      "uncovered": 11,
+      "percentage": "0.00"
+    },
+    "functions": {
+      "total": 20,
+      "covered": 0,
+      "uncovered": 20,
+      "percentage": "0.00"
+    },
+    "lines": {
+      "total": 63,
+      "covered": 0,
+      "uncovered": 63,
+      "percentage": "0.00"
+    }
+  },
+  "after": {
+    "statements": {
+      "total": 63,
+      "covered": 63,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "branches": {
+      "total": 23,
+      "covered": 23,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20,
+      "uncovered": 0,
+      "percentage": "100.00"
+    },
+    "lines": {
+      "total": 63,
+      "covered": 63,
+      "uncovered": 0,
+      "percentage": "100.00"
+    }
+  },
+  "certificationStatus": "CERTIFIED",
+  "summary": "Component achieved 100% coverage across all metrics after resolving coverage data inconsistency. The initial discrepancy was due to an outdated coverage-final.json file. After regeneration, the component met all Enterprise certification criteria.",
+  "changes": [
+    "Regenerated coverage-final.json to obtain accurate coverage data",
+    "Verified Vitest configuration includes compiler/cvm/**/*.ts",
+    "Confirmed all 73 tests pass successfully",
+    "Validated branch coverage calculation using V8 branch locations method",
+    "Added branch statistics coverage tests (branchTaken=true/false, isCall, isReturn, error handling)"
+  ],
+  "validation": {
+    "vitest": "PASSED - 73 tests passed",
+    "coverage": "PASSED - 100% statements, 100% branches, 100% functions, 100% lines",
+    "build": "PASSED",
+    "tsc": "PASSED"
+  },
+  "certificationCriteria": {
+    "statements": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "branches": {
+      "required": "≥97%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "functions": {
+      "required": "100%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    },
+    "lines": {
+      "required": "≥95%",
+      "achieved": "100.00%",
+      "status": "PASSED"
+    }
+  }
+}

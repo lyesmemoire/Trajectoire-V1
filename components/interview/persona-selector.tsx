@@ -9,8 +9,8 @@ interface Props {
   onSelect: (id: string) => void;
 }
 
-export function PersonaSelector({ selectedId, onSelect }: Props) {
-  const iconMap: any = {
+export function PersonaSelector({ selectedId, _onSelect }: Props) {
+  const iconMap: unknown = {
     faang: <Brain className="w-6 h-6" />,
     stress: <ShieldAlert className="w-6 h-6" />,
     supportive: <HeartHandshake className="w-6 h-6" />,

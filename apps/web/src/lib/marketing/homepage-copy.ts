@@ -1,51 +1,48 @@
-export const COMPARISON_DATA = {
-  title: "IA Classiques vs Trajectoire",
-  subtitle:
-    "Découvrez pourquoi notre solution dépasse les outils traditionnels",
-  traditional: [
-    "Analyse superficielle",
-    "Pas de détection du stress",
-    "Statistiques limitées",
-    "Pas de suivi comportemental",
-  ],
-  studio: [
-    "Analyse en temps réel du stress",
-    "Détection d’interruption et de dynamique",
-    "Feedback personnalisé",
-    "Suivi de l’évolution comportementale",
-  ],
-};
 export const HOME_STRATEGY = {
   hero: {
-    badge: "Behavioral Intelligence v2.0",
-    headline:
-      "La plupart des candidats échouent sous pression sans comprendre pourquoi.",
-    subheadline:
-      "Trajectoire analyse vos signaux comportementaux en temps réel pour révéquer comment vous communiquez, réagissez et survivez sous haute tension.",
-    primaryCTA: "Révéler mon Career DNA",
-    secondaryCTA: "Lancer le Test d'Exposition",
-    proof: "12 482 analyses comportementales complétées ce mois-ci",
+    badge: "Nouvelle technologie",
+    headline: "Maîtrisez la pression pendant vos entretiens",
+    subheadline: "Notre moteur cognitif analyse vos réponses en temps réel pour adapter l'entretien.",
+    primaryCTA: "Démarrer le test",
+    proof: "Preuve sociale"
   },
   engine: {
-    title: "Le Moteur d'Analyse Comportementale",
-    subtitle: "Une orchestration invisible qui décode chaque signal.",
+    title: "Behavioral Engine",
+    subtitle: "Notre moteur cognitif analyse vos réponses en temps réel pour adapter l'entretien.",
     features: [
       {
-        title: "Clarity Analysis",
-        desc: "Détection des structures de réponses STAR.",
+        title: "Analyse en temps réel",
+        desc: "Détection instantanée des patterns de comportement."
       },
       {
-        title: "Stress Detection",
-        desc: "Mesure biométrique du ton et du débit vocal.",
+        title: "Adaptation dynamique",
+        desc: "Questions qui s'adaptent à votre profil."
       },
       {
-        title: "Interruption Logic",
-        desc: "Réactions humaines basées sur la verbosité.",
+        title: "Feedback précis",
+        desc: "Analyse détaillée de vos performances."
       },
       {
-        title: "Behavior Tracking",
-        desc: "Mémoire persistante des patterns de réponse.",
-      },
-    ],
-  },
-};
+        title: "Progression mesurable",
+        desc: "Suivi de votre évolution dans le temps."
+      }
+    ]
+  }
+}
+
+export const COMPARISON_DATA = {
+  title: "Pourquoi Trajectoire",
+  subtitle: "est différent",
+  traditional: [
+    "Réponses génériques",
+    "Pas d'analyse du stress",
+    "Feedback superficiel",
+    "Questions statiques"
+  ],
+  studio: [
+    "Réponses personnalisées",
+    "Analyse du stress en temps réel",
+    "Feedback détaillé",
+    "Questions adaptatives"
+  ]
+}

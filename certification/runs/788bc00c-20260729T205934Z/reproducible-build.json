@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "hashes": [
+    {
+      "file": "branch-predictor.ts",
+      "hash": "33ccadec038f478e1941cf72e2bdaf5402bc5f5ceaa9e6575c3ca9c541a6b380"
+    },
+    {
+      "file": "debugger-hooks.ts",
+      "hash": "983a40658406135cc75f9d30ccb926b85be3989b3e3d355e4091e9b7b6c8cecb"
+    },
+    {
+      "file": "exception-handler.ts",
+      "hash": "9868a3a60b5206169f93d66ec30b4bbd0661f0d649d60143ea2927979d67c0f2"
+    },
+    {
+      "file": "execution-context.ts",
+      "hash": "aea24e669ddeebe711d27e81990b3498dfe1b5db38d4d167139970bb52cae710"
+    },
+    {
+      "file": "execution-pipeline.ts",
+      "hash": "3382342ad8bf5b1f89863b908f2d1fb3e446d2d3ef873ec27a79bae8f03d2cd9"
+    },
+    {
+      "file": "frame-manager.ts",
+      "hash": "a90b8e1c3594c8cfb106503ea847898694f018ccb1326bba2fe19a6719ad22ea"
+    },
+    {
+      "file": "garbage-collector.ts",
+      "hash": "3ffb9fd52bb9102a0253ddc8a3761a6cb2a2e23b674ed8816fc7bb6f303ca75f"
+    },
+    {
+      "file": "index.ts",
+      "hash": "6ea57eea7d40f9a294b075f4610a6ecd96e96bef2dba1d5654c586874ee6e2c3"
+    },
+    {
+      "file": "instruction-cache.ts",
+      "hash": "ec05101a9a0da88c2054882615280de9746d9be274c21fb307ccb8b9277340ab"
+    },
+    {
+      "file": "instruction-decode.ts",
+      "hash": "33a25362d943bcc0527417c74babd3f440f9627b15602244d0598b5705c48d70"
+    },
+    {
+      "file": "instruction-execute.ts",
+      "hash": "778308f79a5b75944fcbf5fcfbc722f228e0b83871f83c3856db2ebeda1ac0fc"
+    },
+    {
+      "file": "instruction-fetch.ts",
+      "hash": "291446702cc8f4471faedb13423932613d7da87e8dccc5d8ccf7f3084cb3e083"
+    },
+    {
+      "file": "interrupt-manager.ts",
+      "hash": "a23e7fd90cc7bd58d5ee536cef1a0d80bb42c5eaa676f44c26bb597f31d4fbc5"
+    },
+    {
+      "file": "memory-manager.ts",
+      "hash": "efa1931b5b82b3253ff1762c7082bddfb7aabf666214efe15d2564cac79fc864"
+    },
+    {
+      "file": "microcode-engine.ts",
+      "hash": "93be3773da3b9898975bb7f3df868220356609d7d3d3934bd63bbc2cb5c99d30"
+    },
+    {
+      "file": "profiler-hooks.ts",
+      "hash": "87a4a2c6fa8e6a62e40d3ae8ba7e522e755514bae64b31e4df47e9ba81a1af6a"
+    },
+    {
+      "file": "register-file.ts",
+      "hash": "62e379651d9a1b572b85adeb0d0cfc5909403312b0ea6a971ac3ad02fc8d1cc4"
+    },
+    {
+      "file": "rollback-manager.ts",
+      "hash": "6178eb5c3aefa4d9d438fc7f41fa2a1dbf7d0584ecce59daa052edab422db00e"
+    },
+    {
+      "file": "scheduler.ts",
+      "hash": "09278b765668836700ca914380f690d18f9b6a5e83cdc7b218802d3cfe63362b"
+    },
+    {
+      "file": "snapshot-manager.ts",
+      "hash": "4ef1c43e5ac86919f3852dda318d797b0c378c0c632445037207805496b8de5d"
+    },
+    {
+      "file": "thread-manager.ts",
+      "hash": "00606b4e3d2083e4b592764d0dc2f34c601a3060d9985e04f4e0fcba795338fb"
+    },
+    {
+      "file": "trace-hooks.ts",
+      "hash": "fdf5c81f7a39167d4d4242a5657db626c3cbc41d98d206d6949d6c489b42e944"
+    }
+  ]
+}

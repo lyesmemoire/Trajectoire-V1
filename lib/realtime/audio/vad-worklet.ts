@@ -20,9 +20,7 @@ export async function loadVADWorklet(audioCtx: AudioContext): Promise<void> {
  * Initialise VAD using the AudioWorklet processor.
  * The returned object mirrors the old `initVAD` signature used by the UI.
  */
-export function initVADWorklet(
-  audioCtx: AudioContext,
-  onSpeechStart: () => void,
+export function initVADWorklet(audioCtx: AudioContext, onSpeechStart: () => void,
   onSpeechEnd: () => void,
   options: {
     silenceThreshold?: number;

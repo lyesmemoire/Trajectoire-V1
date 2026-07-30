@@ -107,7 +107,7 @@ export class VoiceClient {
       try {
         this.ws = new WebSocket(this.buildUrl());
         this.ws.binaryType = "arraybuffer";
-      } catch {
+      } catch (error) {
         this.fail("URL WebSocket invalide.");
         return resolve(false);
       }
@@ -142,7 +142,7 @@ export class VoiceClient {
   private async startMic(): Promise<void> {
     try {
       this.media = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
+    } catch (error) {
       this.fail("Micro refusé ou indisponible.");
       return;
     }
@@ -156,7 +156,7 @@ export class VoiceClient {
       this.recorder.start(250);
       this.setupBargeIn();
       this.setState("listening");
-    } catch {
+    } catch (error) {
       this.fail("Capture audio non supportée par ce navigateur.");
     }
   }
@@ -186,7 +186,7 @@ export class VoiceClient {
         this.monitorRAF = requestAnimationFrame(monitor);
       };
       this.monitorRAF = requestAnimationFrame(monitor);
-    } catch {
+    } catch (error) {
       dbg("barge-in unavailable");
     }
   }
@@ -218,9 +218,9 @@ export class VoiceClient {
     this.monitorRAF = null;
     this.analyser = null;
     this.abortAudio();
-    try { this.recorder?.stop(); } catch {}
+    try { this.recorder?.stop(); } catch (error) {}
     this.media?.getTracks().forEach((t) => t.stop());
-    try { this.ws?.close(); } catch {}
+    try { this.ws?.close(); } catch (error) {}
     this.recorder = null;
     this.media = null;
     this.ws = null;
@@ -236,7 +236,7 @@ export class VoiceClient {
     }
     if (typeof ev.data !== "string") return;
     let msg: Record<string, unknown> = {};
-    try { msg = JSON.parse(ev.data); } catch { return; }
+    try { msg = JSON.parse(ev.data); } catch (error) { return; }
     if (typeof msg.eventId === "string") {
       if (this.seenEvents.has(msg.eventId)) return;
       this.seenEvents.add(msg.eventId);
@@ -266,7 +266,7 @@ export class VoiceClient {
 
   private ensureCtx(): AudioContext {
     if (!this.audioCtx) {
-      const Ctor = window.AudioContext || (window as any).webkitAudioContext;
+      const Ctor = window.AudioContext || (window as unknown).webkitAudioContext;
       this.audioCtx = new Ctor();
     }
     return this.audioCtx;
@@ -314,14 +314,14 @@ export class VoiceClient {
         });
         src.start();
       });
-    } catch {
+    } catch (error) {
       dbg("playback skipped");
     }
   }
 
   private abortAudio() {
     this.audioQueue = [];
-    try { this.currentSource?.stop(); } catch {}
+    try { this.currentSource?.stop(); } catch (error) {}
     this.currentSource = null;
     this.playing = false;
   }
@@ -376,13 +376,13 @@ export class VoiceClient {
                 accumulatedText = "";
                 tokenCount = 0;
               }
-            } catch (e) {
+            } catch (error) {
               dbg("Error parsing SSE token", e);
             }
           }
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (error.name === 'AbortError') {
         dbg("LLM Stream aborted by barge-in");
       } else {

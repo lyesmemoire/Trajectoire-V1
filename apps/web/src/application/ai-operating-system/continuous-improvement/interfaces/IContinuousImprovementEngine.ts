@@ -26,9 +26,9 @@ export type ImprovementType =
 // ============================================================================
 
 export interface ComparisonMetric {
-  expectedDecision: unknown;
-  actualDecision: unknown;
-  realResult: unknown;
+  expectedDecision: any;
+  actualDecision: any;
+  realResult: any;
   userFeedback: string;
   roi: number; // 0-1
   quality: number; // 0-1
@@ -56,8 +56,8 @@ export interface ImprovementAction {
   sessionId: string;
   type: ImprovementType;
   target: string;
-  currentValue: unknown;
-  newValue: unknown;
+  currentValue: any;
+  newValue: any;
   reason: string;
   expectedImpact: number; // 0-1
   confidence: number; // 0-1

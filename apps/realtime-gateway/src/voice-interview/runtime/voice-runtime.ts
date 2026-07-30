@@ -31,9 +31,7 @@ export interface RunTurnInput {
   rng: Rng;
 }
 
-export async function runVoiceTurn(
-  input: RunTurnInput,
-  options?: {
+export async function runVoiceTurn(input: _RunTurnInput, options?: {
     signal?: AbortSignal;
     onEmit?: (instr: VoiceInstruction) => void;
   }
@@ -175,7 +173,7 @@ export class VoiceRuntime {
               }
             }
           );
-        } catch (err: any) {
+        } catch (err: unknown) {
           if (err.name === "AbortError" || err.message === "superseded_by_new_transcript") {
             metrics.recordAbort();
             if (this.isSpeaking && !this.disposed) {

@@ -13,7 +13,7 @@ export interface ImpactSimulation {
   id: string;
   actionId: string;
   actionType: string;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   expectedImpact: ImpactMetrics;
   confidence: number;
   alternatives: ImpactAlternative[];
@@ -63,7 +63,7 @@ export const ImpactMetricsSchema = z.object({
 
 export interface ImpactAlternative {
   actionType: string;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   expectedImpact: ImpactMetrics;
   confidence: number;
   tradeoffs: string[];

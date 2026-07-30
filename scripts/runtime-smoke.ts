@@ -10,9 +10,9 @@ async function runSmoke() {
   // Simple setup: empty bus and a placeholder FSM (using a mock that always returns a transition)
   const bus = RuntimeEventBus.create();
   const mockFsm = {
-    transition: (seq: number, event: any) => ({ transitionId: "mock", newState: {} })
-  } as any;
-  const guardEngine = new RuntimeGuardEngine();
+    transition: (_seq: number, _event: unknown) => ({ transitionId: "mock", newState: {} })
+  } as unknown;
+  const _guardEngine = new RuntimeGuardEngine();
   const orchestrator = new RuntimeOrchestrator(bus, mockFsm);
 
   const events = Array.from({ length: 50 }).map((_, i) => ({
@@ -26,9 +26,9 @@ async function runSmoke() {
 
   for (const event of events) {
     try {
-      await orchestrator.process(event as any);
+      await orchestrator.process(event as unknown);
       processed++;
-    } catch (e) {
+    } catch (error) {
       console.error("❌ Error processing event:", e);
     }
   }

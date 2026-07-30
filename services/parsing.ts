@@ -15,6 +15,7 @@ export function validatePDFMagicBytes(buffer: Buffer): boolean {
 export function cleanExtractedText(rawText: string): string {
   return rawText
     .replace(/\s+/g, " ")
+    // eslint-disable-next-line no-control-regex
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")
     .replace(/[\uFFFD]/g, "")
     .replace(/[^\x20-\x7E\u00C0-\u024F\u2000-\u206F\n\r\t]/g, " ")

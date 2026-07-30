@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Document,
   Page,
@@ -6,8 +6,8 @@ import {
   View,
   StyleSheet,
   Font,
-} from "@react-pdf/renderer";
-import { CVData, ExportOptions } from "../types";
+} from "@react-pdf/renderer"
+import { CVData, ExportOptions } from "../types"
 
 // Enregistrement des polices
 Font.register({
@@ -30,7 +30,7 @@ Font.register({
       fontWeight: 700,
     },
   ],
-});
+})
 
 const COLOR_PALETTES = {
   blue: {
@@ -65,10 +65,10 @@ const COLOR_PALETTES = {
     dark: "#020617",
     text: "#334155",
   },
-} as const;
+} as const
 
 const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
-  const c = COLOR_PALETTES[colorScheme] || COLOR_PALETTES.blue;
+  const c = COLOR_PALETTES[colorScheme] || COLOR_PALETTES.blue
 
   return StyleSheet.create({
     page: {
@@ -445,8 +445,8 @@ const createStyles = (colorScheme: ExportOptions["colorScheme"]) => {
       color: c.text,
       fontWeight: 600,
     },
-  });
-};
+  })
+}
 
 const LANG_LEVELS: Record<string, number> = {
   natif: 1.0,
@@ -462,42 +462,42 @@ const LANG_LEVELS: Record<string, number> = {
   b2: 0.65,
   c1: 0.8,
   c2: 0.95,
-};
+}
 
 function getLangBarWidth(langEntry: string): number {
-  const lower = langEntry.toLowerCase();
+  const lower = langEntry.toLowerCase()
   for (const [key, val] of Object.entries(LANG_LEVELS)) {
-    if (lower.includes(key)) return val;
+    if (lower.includes(key)) return val
   }
-  return 0.6;
+  return 0.6
 }
 
 function parseLangEntry(entry: string): { name: string; level: string } {
-  const dashMatch = entry.match(/^(.+?)\s*[—–-]\s*(.+)$/);
-  const parenMatch = entry.match(/^(.+?)\s*\((.+?)\)$/);
+  const dashMatch = entry.match(/^(.+?)\s*[—–-]\s*(.+)$/)
+  const parenMatch = entry.match(/^(.+?)\s*\((.+?)\)$/)
 
   if (dashMatch)
-    return { name: (dashMatch[1] ?? "").trim(), level: (dashMatch[2] ?? "").trim() };
+    return { name: (dashMatch[1] ?? "").trim(), level: (dashMatch[2] ?? "").trim() }
   if (parenMatch)
-    return { name: (parenMatch[1] ?? "").trim(), level: (parenMatch[2] ?? "").trim() };
-  return { name: entry, level: "" };
+    return { name: (parenMatch[1] ?? "").trim(), level: (parenMatch[2] ?? "").trim() }
+  return { name: entry, level: "" }
 }
 
 export interface ModernTemplateProps {
-  data: CVData;
-  options: ExportOptions;
+  data: CVData
+  options: ExportOptions
 }
 
 export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
-  const styles = createStyles(options.colorScheme);
-  const c = COLOR_PALETTES[options.colorScheme] || COLOR_PALETTES.blue;
+  const styles = createStyles(options.colorScheme)
+  const c = COLOR_PALETTES[options.colorScheme] || COLOR_PALETTES.blue
 
-  const hasExperience = data.experience.length > 0;
-  const hasEducation = data.education.length > 0;
-  const hasTechSkills = data.skills.technical.length > 0;
-  const hasSoftSkills = data.skills.soft.length > 0;
-  const hasLanguages = data.skills.languages.length > 0;
-  const hasCertifications = (data.certifications ?? []).length > 0;
+  const hasExperience = data.experience.length > 0
+  const hasEducation = data.education.length > 0
+  const hasTechSkills = data.skills.technical.length > 0
+  const hasSoftSkills = data.skills.soft.length > 0
+  const hasLanguages = data.skills.languages.length > 0
+  const hasCertifications = (data.certifications ?? []).length > 0
 
   return (
     <Document
@@ -657,7 +657,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                         <View
                           key={i}
                           style={{
-                            ...(styles.skillPill as any),
+                            ...(styles.skillPill  as any),
                             backgroundColor: c.secondary,
                             borderColor: "transparent",
                           }}
@@ -675,8 +675,8 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
               <View style={styles.sideSection}>
                 <Text style={styles.sideSectionTitle}>Langues</Text>
                 {data.skills.languages.map((langEntry: any, i: number) => {
-                  const { name, level } = parseLangEntry(langEntry);
-                  const barWidth = getLangBarWidth(langEntry);
+                  const { name, level } = parseLangEntry(langEntry)
+                  const barWidth = getLangBarWidth(langEntry)
                   return (
                     <View key={i}>
                       <View style={styles.langItem}>
@@ -692,7 +692,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
                         />
                       </View>
                     </View>
-                  );
+                  )
                 })}
               </View>
             )}
@@ -724,7 +724,7 @@ export const ModernTemplate = ({ data, options }: ModernTemplateProps) => {
         </View>
       </Page>
     </Document>
-  );
-};
+  )
+}
 
-export default ModernTemplate;
+export default ModernTemplate

@@ -5,14 +5,11 @@ export const MAX_BUFFER_LENGTH = 300;
  * Uses a regex that matches after a period, exclamation mark, question mark or newline.
  * Also ensures the buffer never exceeds MAX_BUFFER_LENGTH to avoid memory bloat.
  */
-export function bufferChunk(
-  chunk: string,
-  buffer: string,
-  send: (data: string) => void,
+export function bufferChunk(chunk: string, buffer: string, send: (data: string) => void,
 ): string {
   let newBuffer = buffer + chunk;
   // Split on sentence boundaries while keeping the delimiter.
-  const parts = newBuffer.split(/(?<=[\.\!\?\n])\s+/);
+  const parts = newBuffer.split(/(?<=[.!?])\s+/);
   // If we have more than one part, we can emit all but the last (which may be incomplete).
   if (parts.length > 1) {
     const toEmit = parts.slice(0, -1).join(" ");

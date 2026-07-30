@@ -27,7 +27,7 @@ import { MockRuntimeTraceProvider } from "../../sil/tests/mocks/mock-runtime-tra
 const JWT_SECRET = "e2e-jwt-secret";
 const TENANT_SECRET = "e2e-tenant-hmac-secret";
 
-function createJwt(payload: any, secret: string = JWT_SECRET): string {
+function createJwt(payload: unknown, secret: string = JWT_SECRET): string {
   const header = { alg: "HS256", typ: "JWT" };
   const headerB64 = Buffer.from(JSON.stringify(header)).toString("base64url");
   const payloadB64 = Buffer.from(JSON.stringify(payload)).toString("base64url");

@@ -1,0 +1,82 @@
+{
+  "A": {
+    "total": 7,
+    "killed": 2,
+    "survived": 0,
+    "invalid": 5,
+    "totalWeight": 7,
+    "killedWeight": 2
+  },
+  "B": {
+    "total": 9,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 8,
+    "totalWeight": 37,
+    "killedWeight": 10
+  },
+  "C": {
+    "total": 3,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 2,
+    "totalWeight": 6,
+    "killedWeight": 2
+  },
+  "D": {
+    "total": 4,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 3,
+    "totalWeight": 13,
+    "killedWeight": 1
+  },
+  "E": {
+    "total": 4,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 4,
+    "totalWeight": 25,
+    "killedWeight": 0
+  },
+  "F": {
+    "total": 2,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 2,
+    "totalWeight": 10,
+    "killedWeight": 0
+  },
+  "G": {
+    "total": 2,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 1,
+    "totalWeight": 4,
+    "killedWeight": 2
+  },
+  "H": {
+    "total": 2,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 1,
+    "totalWeight": 2,
+    "killedWeight": 1
+  },
+  "I": {
+    "total": 4,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 4,
+    "totalWeight": 40,
+    "killedWeight": 0
+  },
+  "J": {
+    "total": 3,
+    "killed": 0,
+    "survived": 0,
+    "invalid": 3,
+    "totalWeight": 3,
+    "killedWeight": 0
+  }
+}

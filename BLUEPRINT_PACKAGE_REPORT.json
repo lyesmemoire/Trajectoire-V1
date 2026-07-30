@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-07-25T19:35:26.823Z",
+  "buildId": "77072e086713ed9f5e0cc8e4d2269e33",
+  "summary": {
+    "version": "1.0.0",
+    "totalFiles": 2602,
+    "totalSize": 438332744,
+    "outputDirectory": "C:\\Trajectoire\\BLUEPRINT_PACKAGE"
+  },
+  "contents": {
+    "byType": {
+      "canonicalModel": 1,
+      "symbolTable": 1,
+      "ast": 1,
+      "semanticGraph": 1,
+      "contracts": 20,
+      "interfaces": 140,
+      "runtime": 238,
+      "documentation": 1,
+      "reports": 15,
+      "multiLang": 2184
+    }
+  }
+}

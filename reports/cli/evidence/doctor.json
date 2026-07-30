@@ -1,0 +1,18 @@
+{
+  "command": "npx",
+  "args": [
+    "tsx",
+    "bin/blueprint",
+    "doctor"
+  ],
+  "exitCode": 0,
+  "duration": 4330,
+  "stdout": "[20:27:40] \u001b[32mINFO\u001b[39m: \u001b[36mRunning health checks...\u001b[39m\n[20:27:40] \u001b[32mINFO\u001b[39m: \u001b[36mHealth checks completed: 6 healthy, 7 warning, 0 critical\u001b[39m\n[20:27:40] \u001b[32mINFO\u001b[39m: \u001b[36m✓ Doctor completed in 3ms\u001b[39m\n    \u001b[35msuccess\u001b[39m: true",
+  "stderr": "",
+  "timestamp": "2026-07-25T20:27:40.905Z",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v24.13.0"
+  }
+}

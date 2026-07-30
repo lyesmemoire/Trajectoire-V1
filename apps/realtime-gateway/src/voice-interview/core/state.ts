@@ -81,10 +81,7 @@ export function averageScore(state: InterviewState): number {
  * Applique un patch immuable à l'état (retourne un NOUVEL objet).
  * Garantit l'absence de mutation cachée — clé pour la testabilité.
  */
-export function applyPatch(
-  state: InterviewState,
-  patch: Partial<InterviewState>,
-): InterviewState {
+export function applyPatch(state: InterviewState, patch: Partial<InterviewState>, ): InterviewState {
   return {
     ...state,
     ...patch,

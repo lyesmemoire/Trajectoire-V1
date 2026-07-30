@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 export function ThreatIntelligenceDashboard() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<unknown>(null);
 
   useEffect(() => {
     fetch("/api/admin/threat-intel")
@@ -152,7 +152,7 @@ export function ThreatIntelligenceDashboard() {
   );
 }
 
-function SecurityKPICard({ title, value, icon, color }: any) {
+function SecurityKPICard({ title, value, icon, _color }: unknown) {
   return (
     <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm">
       <div

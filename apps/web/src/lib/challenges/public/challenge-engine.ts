@@ -33,12 +33,7 @@ export async function joinChallenge(userId: string, challengeId: string) {
   });
 }
 
-export async function updateChallengeProgress(
-  sessionId: string,
-  score: number,
-  pressure: number,
-  interruptions: number,
-) {
+export async function updateChallengeProgress(sessionId: string, score: number, pressure: number, interruptions: number, ) {
   const session = await prisma.interviewSession.findUnique({
     where: { id: sessionId },
     select: { challengeEntryId: true, userId: true },

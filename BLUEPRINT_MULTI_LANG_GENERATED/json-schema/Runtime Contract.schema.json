@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://blueprint.enterprise/schemas/BEA-CONTRACT-003.json",
+  "description": "Canonical schema for undefined",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Canonical ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Object name"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owner"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "owner"
+  ],
+  "additionalProperties": true,
+  "_metadata": {
+    "canonicalId": "BEA-CONTRACT-003",
+    "uuid": "600e8400-e29b-41d4-a716-446655440602",
+    "semanticId": "blueprint.contract.runtime",
+    "owner": "Enterprise Chief Architect",
+    "layer": "BEA",
+    "type": "contract",
+    "generatedBy": "Blueprint Multi-Language Generator"
+  }
+}

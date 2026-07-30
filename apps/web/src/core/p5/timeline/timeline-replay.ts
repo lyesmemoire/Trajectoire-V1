@@ -1,7 +1,9 @@
+
+
 import { MindState } from "../execution-contract.js";
 import { reduceMind } from "../reduceMind.js";
-import { MindSnapshot } from "../snapshot/snapshot-contract.js";
 import { restoreSnapshot } from "../snapshot/restore-snapshot.js";
+import { MindSnapshot } from "../snapshot/snapshot-contract.js";
 import { Timeline } from "./timeline-contract.js";
 
 /**

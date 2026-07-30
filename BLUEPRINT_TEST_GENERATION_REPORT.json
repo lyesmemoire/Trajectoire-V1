@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "totalTestsGenerated": 15
+  },
+  "generatedTests": [
+    "c:\\Trajectoire\\tests\\unit\\lexer.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\parser.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\symbol-table.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\type-checker.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\bytecode-generator.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\memory-manager.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\garbage-collector.test.ts",
+    "c:\\Trajectoire\\tests\\unit\\scheduler.test.ts",
+    "c:\\Trajectoire\\tests\\integration\\compiler-pipeline.test.ts",
+    "c:\\Trajectoire\\tests\\integration\\cvm-execution.test.ts",
+    "c:\\Trajectoire\\tests\\integration\\cpr-distributed.test.ts",
+    "c:\\Trajectoire\\tests\\compiler\\compiler.test.ts",
+    "c:\\Trajectoire\\tests\\runtime\\runtime.test.ts",
+    "c:\\Trajectoire\\tests\\memory\\memory.test.ts",
+    "c:\\Trajectoire\\tests\\security\\security.test.ts"
+  ]
+}

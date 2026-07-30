@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { Container, ServiceTokens } from "@/infrastructure/di";
 import { initializeContainer } from "@/infrastructure/di/bootstrap";

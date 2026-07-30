@@ -1,0 +1,37 @@
+{
+  "component": "execution-pipeline",
+  "auditType": "INDEPENDENT_RESEARCH_LEVEL_V2",
+  "date": "2026-07-27",
+  "sha": "3e22378",
+  "certification": "SILVER",
+  "summary": {
+    "totalMutations": 40,
+    "killed": 7,
+    "survived": 0,
+    "invalid": 33,
+    "validMutations": 7,
+    "realInvalid": 0,
+    "expectedInvalid": 20,
+    "testIssue": 13,
+    "realInvalidRate": "32.5%"
+  },
+  "scores": {
+    "weightedMutationScore": "100%",
+    "confidenceIndex": "44.67%"
+  },
+  "certificationCriteria": {
+    "scoreMet": true,
+    "sampleSizeMet": false,
+    "realInvalidRateMet": false,
+    "noCriticalSurvivorsMet": true,
+    "familyCoverageMet": false,
+    "criticalityCoverageMet": false
+  },
+  "reasonsForCertification": [
+    "Échantillon insuffisant: 7 mutations valides < 30 requis",
+    "Taux d'INVALID réels trop élevé: 32.5% > 20% requis",
+    "Familles non couvertes: E, F, I, J",
+    "Niveaux de criticité non couverts: MAJOR"
+  ],
+  "conclusion": "Certification SILVER accordée. Score pondéré de 100% sur les mutations valides, mais l'échantillon insuffisant (7 < 30 requis), le taux d'INVALID réels élevé (32.5% > 20% requis), et la couverture incomplète des familles et niveaux de criticité empêchent la certification GOLD."
+}

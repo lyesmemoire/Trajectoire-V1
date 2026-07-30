@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-07-24T09:44:37.981Z",
+  "summary": {
+    "totalViolations": 4,
+    "byType": {
+      "contract_validation": 4
+    },
+    "bySeverity": {
+      "error": 4,
+      "warning": 0
+    }
+  },
+  "violations": [
+    {
+      "type": "contract_validation",
+      "id": "BLUEPRINT-CTR-514FAF5A",
+      "message": "Contract missing owner",
+      "severity": "error"
+    },
+    {
+      "type": "contract_validation",
+      "id": "BLUEPRINT-CTR-514FAF5A",
+      "message": "Contract not in canonical directory",
+      "severity": "error"
+    },
+    {
+      "type": "contract_validation",
+      "id": "BLUEPRINT-CTR-514FAF5A",
+      "message": "Contract missing owner",
+      "severity": "error"
+    },
+    {
+      "type": "contract_validation",
+      "id": "BLUEPRINT-CTR-514FAF5A",
+      "message": "Contract not in canonical directory",
+      "severity": "error"
+    }
+  ]
+}

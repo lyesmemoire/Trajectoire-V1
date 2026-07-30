@@ -19,20 +19,13 @@ export type AuditAction =
   | "AI_ERROR";
 
 export interface AuditDetails {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
-export async function logEvent(
-  userId: string,
-  action: AuditAction,
-  details: AuditDetails = {},
-  ip?: string,
-  userAgent?: string,
-  requestId?: string,
-): Promise<void> {
+export async function logEvent(userId: string, action: AuditAction, details: AuditDetails = {}, ip?: string, userAgent?: string, requestId?: string, ): Promise<void> {
   try {
     const supabase = createAdminClient();
-    await (supabase as any).from("audit_logs").insert({
+    await (supabase  as any).from("audit_logs").insert({
       user_id: userId,
       action,
       details,

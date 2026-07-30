@@ -1,0 +1,20 @@
+{
+  "laboratoire": "ISO 17025",
+  "audit": "Validation complète du pipeline de certification",
+  "dossier": "Studio Entretien - Trajectoire",
+  "resultat": {
+    "reproductible": false,
+    "deterministe": false,
+    "falsifiable": true,
+    "auditable": true,
+    "independant": false
+  },
+  "fraudes_identifiees": [
+    "Usurpation de couverture par copie de fichier statique",
+    "Faux positifs à 100% sur les mutations par interprétation abusive des crashs",
+    "Faux positifs à 100% sur les régressions par interprétation abusive des crashs",
+    "Non-déterminisme des empreintes (inclusion de dates/aléas dans la base du hash)"
+  ],
+  "verdict": "B",
+  "conclusion": "Le pipeline de certification est scientifiquement invalide. Il ne mesure pas le code source, mais s'appuie sur des erreurs d'environnement et des artefacts statiques pré-existants pour afficher une conformité artificielle de 100%."
+}

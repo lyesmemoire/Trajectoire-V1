@@ -89,7 +89,7 @@ const SCHEMA_DESCRIPTION = `
 }
 `;
 
-export async function extractStructuredCV(cvText: string): Promise<StructuredCV> {
+export async function extractStructuredCV(cvText: _string): Promise<StructuredCV> {
   const userPrompt = `Extract structural data from the following CV:\n\n${cvText}`;
   
   const rawData = await callLlmStrict(

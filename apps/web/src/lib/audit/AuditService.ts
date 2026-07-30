@@ -18,7 +18,7 @@ export interface AuditLogEntry {
   errorMessage?: string;
   beforeValue?: any;
   afterValue?: any;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export class AuditService {
@@ -96,7 +96,7 @@ export class AuditService {
     userId: string,
     limit: number = 100,
     offset: number = 0
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     try {
       const supabase = await createClient();
       const { data, error } = await supabase
@@ -124,7 +124,7 @@ export class AuditService {
     entityType: string,
     entityId: string,
     limit: number = 100
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     try {
       const supabase = await createClient();
       const { data, error } = await supabase
@@ -152,7 +152,7 @@ export class AuditService {
   async getAuditLogsByAction(
     action: string,
     limit: number = 100
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     try {
       const supabase = await createClient();
       const { data, error } = await supabase

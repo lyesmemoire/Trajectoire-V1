@@ -1,11 +1,11 @@
-const { PrismaClient } = require("@prisma/client");
+import {  PrismaClient  } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function seedAILogs() {
   console.log("Seeding AI logs...");
 
   const features = ["interview", "ats", "dna", "replay", "optimize"];
-  const models = ["mistral-small-latest", "mistral-large-latest"];
+  const _models = ["mistral-small-latest", "mistral-large-latest"];
 
   for (let i = 0; i < 50; i++) {
     const feature = features[Math.floor(Math.random() * features.length)];

@@ -1,0 +1,145 @@
+{
+  "module": "Runtime Scheduler",
+  "timestamp": "2025-01-09T14:19:01Z",
+  "coverage": {
+    "statements": 99.03,
+    "branches": 95.09,
+    "functions": 100.0,
+    "lines": 99.0
+  },
+  "files": [
+    {
+      "name": "AffinityManager.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "BinaryHeap.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "BudgetManager.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "CognitiveScheduler.ts",
+      "statements": 91.86,
+      "branches": 73.07,
+      "functions": 100.0,
+      "lines": 91.76,
+      "uncoveredLines": [90, 150, 151, 152, 153, 177, 178, 179]
+    },
+    {
+      "name": "DeadlineScheduler.ts",
+      "statements": 100.0,
+      "branches": 96.66,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": [92]
+    },
+    {
+      "name": "DependencyResolver.ts",
+      "statements": 100.0,
+      "branches": 90.9,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": [110, 130]
+    },
+    {
+      "name": "PriorityQueueManager.ts",
+      "statements": 97.72,
+      "branches": 90.9,
+      "functions": 100.0,
+      "lines": 97.72,
+      "uncoveredLines": [33]
+    },
+    {
+      "name": "RetryManager.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "SchedulerCore.ts",
+      "statements": 100.0,
+      "branches": 93.02,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": [165, 166, 167, 274]
+    },
+    {
+      "name": "TaskDispatcher.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "TaskQueueManager.ts",
+      "statements": 100.0,
+      "branches": 96.96,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": [73]
+    },
+    {
+      "name": "WorkStealingManager.ts",
+      "statements": 100.0,
+      "branches": 93.75,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": [69, 108]
+    },
+    {
+      "name": "WorkerPool.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    },
+    {
+      "name": "types.ts",
+      "statements": 100.0,
+      "branches": 100.0,
+      "functions": 100.0,
+      "lines": 100.0,
+      "uncoveredLines": []
+    }
+  ],
+  "tests": {
+    "total": 631,
+    "passed": 631,
+    "failed": 0,
+    "skipped": 0
+  },
+  "certification": {
+    "status": "PASSED",
+    "requirements": {
+      "branchCoverage": {
+        "required": 95.0,
+        "achieved": 95.09,
+        "passed": true
+      },
+      "functionCoverage": {
+        "required": 100.0,
+        "achieved": 100.0,
+        "passed": true
+      }
+    }
+  }
+}

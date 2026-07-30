@@ -18,6 +18,8 @@
 
 // ─── Traceability Link ──────────────────────────────────────────────
 
+// Canonical Reference: BEA-INV-008 (blueprint.invariant.traceability)
+// Owner: Enterprise Chief Architect
 export interface Traceability {
   sessionId: string;
   turnIndex: number;

@@ -1,0 +1,38 @@
+{
+  "lab": {
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "rawMetrics": {
+      "statements": {
+        "total": 63,
+        "covered": 63
+      },
+      "branches": {
+        "total": 23,
+        "covered": 23
+      },
+      "functions": {
+        "total": 20,
+        "covered": 20
+      }
+    }
+  },
+  "pipeline": {
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "details": {
+      "statementsTotal": 63,
+      "statementsCovered": 63,
+      "branchesTotal": 11,
+      "branchesCovered": 11,
+      "functionsTotal": 20,
+      "functionsCovered": 20,
+      "linesTotal": 82,
+      "linesCovered": 82
+    }
+  },
+  "match": true
+}

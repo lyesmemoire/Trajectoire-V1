@@ -32,7 +32,7 @@ async function main() {
     fs.mkdirSync(datasetDir, { recursive: true });
   }
 
-  const generatedProfiles: any[] = [];
+  const generatedProfiles: unknown[] = [];
   
   console.log("Generating 30 profiles via LLM with strict human noise constraints...");
 
@@ -70,7 +70,7 @@ Output format must match the JSON schema.`;
         `{ "profileId": "${def.id}", "jobOffer": "string", "cv": "string", "behaviorType": "${def.type}", "responses": ["string"] }`
       );
       generatedProfiles.push(data);
-    } catch (e) {
+    } catch (error) {
       console.error(`Failed to generate ${def.id}`, e);
     }
   }

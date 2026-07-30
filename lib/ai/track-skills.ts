@@ -1,12 +1,9 @@
 
 export async function trackSkills({
-  userId,
-  profileId,
-  scores,
-}: {
+  userId, profileId, scores, _}: {
   userId: string;
   profileId: string;
-  scores: Record<string, number>;
+  scores: Record<string, _number>;
 }) {
   // const entries = Object.entries(scores).map(([skill, score]) => ({
   //   userId,

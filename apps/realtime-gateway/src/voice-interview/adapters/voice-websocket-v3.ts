@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { VoiceWsLike } from "./voice-websocket.js";
 import { SessionManager, VoiceTurnRecord } from "../sessions/session-manager.js";
 import { DeepgramAdapter } from "./deepgram.js";
 import { TTSAdapter, DefaultTTSAdapter } from "./tts/index.js";
@@ -37,7 +36,7 @@ export interface VoiceConnectionV3Input {
   sessionId: string;
   userId?: string;
   targetRole?: string;
-  context: any;
+  context: unknown;
 }
 
 let eventSeq = 0;
@@ -52,12 +51,12 @@ const WebSocketMessageSchema = z.object({
 }).passthrough();
 
 export async function handleVoiceConnectionV3(
-  ws: VoiceWsLike,
+  ws: _VoiceWsLike,
   input: VoiceConnectionV3Input,
   deps: VoiceConnectionV3Deps
 ) {
   const tts = deps.tts ?? new DefaultTTSAdapter();
-  const connIp = (input as any).ip || "unknown";
+  const connIp = (input as unknown).ip || "unknown";
   const connUserId = input.userId || "anon";
 
   const log = createChildLogger({
@@ -78,7 +77,7 @@ export async function handleVoiceConnectionV3(
       () => withTimeout(acquireWsSession(connUserId, connIp), 500),
       true
     );
-  } catch (err) {
+  } catch (error) {
     log.warn({ event: 'redis_circuit_breaker_open', err });
     captureError(err, { component: 'voice-websocket-v3', event: 'redis_acquire_session', sessionId: input.sessionId });
     sessionAcquired = true;
@@ -93,13 +92,13 @@ export async function handleVoiceConnectionV3(
     return;
   }
 
-  const initOptions: any = { context: input.context };
+  const initOptions: unknown = { context: input.context };
   if (input.targetRole) initOptions.targetRole = input.targetRole;
 
   const { state: initialState, question: initialQuestion } = initInterviewV3(initOptions);
 
   // 1. DB Kill Switch (with timeout + fail-open)
-  let settings: any = null;
+  let settings: unknown = null;
   try {
     const res = await withTimeout(
       supabase.from("engine_settings").select("engine_enabled").eq("id", "default").single(),
@@ -108,7 +107,7 @@ export async function handleVoiceConnectionV3(
     );
     if (res.error) throw res.error;
     settings = res.data;
-  } catch (err) {
+  } catch (error) {
     log.warn({ event: 'db_kill_switch_failed_or_timeout', fallback: 'engine_enabled=true', err });
     settings = { engine_enabled: true };
   }
@@ -122,11 +121,11 @@ export async function handleVoiceConnectionV3(
     try {
       const { releaseWsSession } = await import("../../server/rate-limiter.js");
       await releaseWsSession(connUserId, connIp);
-    } catch { /* noop */ }
+    } catch (error) { /* noop */ }
     return;
   }
 
-  const sessionInput: any = {
+  const sessionInput: unknown = {
     id: input.sessionId,
     state: initialState
   };
@@ -137,10 +136,10 @@ export async function handleVoiceConnectionV3(
 
   const ttsAudio = await tts.synthesize(initialQuestion).catch(() => undefined);
 
-  const safeSend = (msg: any) => {
+  const safeSend = (msg: unknown) => {
     try {
       ws.send(JSON.stringify({ ...msg, eventId: nextEventId() }));
-    } catch (e) {
+    } catch (error) {
       // socket closed
     }
   };
@@ -172,7 +171,7 @@ export async function handleVoiceConnectionV3(
   if (ttsAudio) {
     try {
       ws.send(ttsAudio);
-    } catch {
+    } catch (error) {
       // closed
     }
   }
@@ -181,7 +180,7 @@ export async function handleVoiceConnectionV3(
 
   let processing = false;
 
-  let sttCallbacks: any = null;
+  let sttCallbacks: unknown = null;
 
   const stt = (deps.createStt ?? ((cb) => { sttCallbacks = cb; return new DeepgramAdapter(cb); }))({
     onTranscript: (t) => safeSend({ type: "transcript", text: t, final: false }),
@@ -209,7 +208,7 @@ export async function handleVoiceConnectionV3(
         try {
           const { resetLlmErrors } = await import("../../server/rate-limiter.js");
           await redisCircuit.execute(() => withTimeout(resetLlmErrors(session.id), 500));
-        } catch (err) {
+        } catch (error) {
           log.warn({ event: 'redis_reset_llm_errors_failed', err });
         }
 
@@ -323,7 +322,7 @@ export async function handleVoiceConnectionV3(
               }),
               5000
             );
-          } catch (dbErr) {
+          } catch (error) {
             log.error({ err: dbErr, event: 'db_final_save_failed' });
             captureError(dbErr, { component: 'voice-websocket-v3', event: 'db_final_save_failed', sessionId: session.id });
           }
@@ -362,7 +361,7 @@ export async function handleVoiceConnectionV3(
               candidate_level: "C-Level",
               role_target: session.targetRole || "Unknown"
             });
-          } catch (logErr) {
+          } catch (error) {
             log.error({ err: logErr, event: 'db_health_log_failed' });
             captureError(logErr, { component: 'voice-websocket-v3', event: 'db_health_log_failed', sessionId: session.id });
           }
@@ -370,14 +369,14 @@ export async function handleVoiceConnectionV3(
           setTimeout(() => ws.close(), 1000);
         }
 
-      } catch (err) {
+      } catch (error) {
         // ── LLM Fail Safe: track consecutive errors ──
         captureError(err, { component: 'voice-websocket-v3', event: 'llm_turn_failed', sessionId: session.id });
         let shouldKill = false;
         try {
           const { trackLlmError } = await import("../../server/rate-limiter.js");
           shouldKill = await redisCircuit.execute(() => withTimeout(trackLlmError(session.id), 500), false);
-        } catch (err2) {
+        } catch (error) {
           log.warn({ event: 'redis_track_llm_error_failed', err: err2 });
         }
 
@@ -429,7 +428,7 @@ export async function handleVoiceConnectionV3(
           // E2E testing hook
           sttCallbacks.onFinalTranscript(parsed.data.text!);
         }
-      } catch {
+      } catch (error) {
         // ignore
       }
     }
@@ -445,7 +444,7 @@ export async function handleVoiceConnectionV3(
     try {
       const { releaseWsSession } = await import("../../server/rate-limiter.js");
       await redisCircuit.execute(() => withTimeout(releaseWsSession(connUserId, connIp), 500));
-    } catch (err) {
+    } catch (error) {
       log.warn({ event: 'redis_release_failed', err });
     }
     intentRateLimiter.cleanup(session.id);

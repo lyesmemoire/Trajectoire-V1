@@ -4,8 +4,6 @@
  * Tracks: clicks, scrolls, hover, element interactions
  */
 
-import { z } from "zod";
-
 // Heatmap Event Type
 export enum HeatmapEventType {
   CLICK = "click",
@@ -36,7 +34,7 @@ export interface HeatmapEvent {
   clientX: number;
   clientY: number;
   targetText?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // Heatmap Metrics
@@ -95,7 +93,7 @@ export class HeatmapEvents {
     eventType: HeatmapEventType,
     element: HTMLElement,
     pageUrl: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const event: HeatmapEvent = {
       id: this.generateEventId(),
@@ -257,12 +255,12 @@ export class HeatmapEvents {
     const scrollEvents = this.events.filter(e => e.eventType === HeatmapEventType.SCROLL);
     const scrollDepths = scrollEvents.map(e => e.metadata?.scrollDepth || 0);
     const averageScrollDepth = scrollDepths.length > 0
-      ? scrollDepths.reduce((sum, depth) => sum + depth, 0) / scrollDepths.length
+      ? scrollDepths.reduce((sum: number, depth: any) => sum + depth, 0) / scrollDepths.length
       : 0;
 
-    const usersScrolledToBottom = scrollEvents.filter(e => (e.metadata?.scrollDepth || 0) >= 0.9).length;
-    const usersScrolledToMiddle = scrollEvents.filter(e => (e.metadata?.scrollDepth || 0) >= 0.5).length;
-    const usersScrolledToQuarter = scrollEvents.filter(e => (e.metadata?.scrollDepth || 0) >= 0.25).length;
+    const usersScrolledToBottom = scrollEvents.filter(e => ((e.metadata?.scrollDepth as any) || 0) >= 0.9).length;
+    const usersScrolledToMiddle = scrollEvents.filter(e => ((e.metadata?.scrollDepth as any) || 0) >= 0.5).length;
+    const usersScrolledToQuarter = scrollEvents.filter(e => ((e.metadata?.scrollDepth as any) || 0) >= 0.25).length;
 
     // Hover heatmap
     const hoverEvents = this.events.filter(e => e.eventType === HeatmapEventType.HOVER);
@@ -271,7 +269,7 @@ export class HeatmapEvents {
     hoverEvents.forEach(event => {
       const key = event.elementSelector;
       const existing = elementHoverData.get(key);
-      const duration = event.metadata?.duration || 0;
+      const duration: any = event.metadata?.duration || 0;
       if (existing) {
         existing.count++;
         existing.totalDuration += duration;

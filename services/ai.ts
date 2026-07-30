@@ -1,6 +1,6 @@
 import { generateText } from "@/lib/openai";
 
-export async function aiCvOptimization(cvContent: string) {
+export async function aiCvOptimization(cvContent: _string) {
   // Logic is handled in the API route to ensure credits are deducted first
   // This service just encapsulates the prompt logic if needed
   return generateText(`You are an expert CV optimizer. Optimize the following CV content. 

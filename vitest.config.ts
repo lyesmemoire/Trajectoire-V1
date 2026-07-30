@@ -18,7 +18,18 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/*.spec.ts"],
+    testTimeout: 60000,
+    include: ["**/*.{test,spec,bench}.?(c|m)[jt]s?(x)", "tests/runtime/**/*.ts"],
+    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+    coverage: {
+      provider: 'v8',
+      include: ['src/cli/**/*.ts', 'compiler/**/*.ts', 'CVM/src/scheduler/**/*.ts'],
+      exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.d.ts', 'compiler/parser/ast-types.ts'],
+      reporter: ['json', 'html', 'text'],
+      reportsDirectory: './reports/cli/coverage',
+    },
+    reporters: ['verbose', 'json'],
+    outputFile: './reports/cli/tests/vitest-results.json',
     env: {
       SUPABASE_URL: "http://127.0.0.1:54321",
       SUPABASE_SERVICE_ROLE_KEY: "test-key-123",

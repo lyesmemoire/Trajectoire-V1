@@ -102,7 +102,7 @@ function nextEventId(): string {
  * Retourne l'id de session.
  */
 export async function handleVoiceConnectionV2(
-  ws: VoiceWsLike,
+  ws: _VoiceWsLike,
   deps: VoiceConnectionDeps,
   input: VoiceConnectionInput = {},
 ): Promise<string> {
@@ -112,14 +112,14 @@ export async function handleVoiceConnectionV2(
   const sendJson = (msg: VoiceServerMessageInput) => {
     try {
       ws.send(JSON.stringify({ ...msg, eventId: nextEventId() }));
-    } catch {
+    } catch (error) {
       /* socket fermé */
     }
   };
   const sendAudio = (audio: ArrayBuffer) => {
     try {
       ws.send(audio);
-    } catch {
+    } catch (error) {
       /* socket fermé */
     }
   };
@@ -184,7 +184,7 @@ export async function handleVoiceConnectionV2(
         if (existing && t.trim()) {
           repository.update(sessionId, { transcript: [...existing.transcript, `User: ${t.trim()}`] }).catch(console.error);
         }
-      } catch (e) {
+      } catch (error) {
         console.error("Error in onFinalTranscript:", e);
       }
     },
@@ -289,7 +289,7 @@ export async function handleVoiceConnectionV2(
       let msg: { type?: string } = {};
       try {
         msg = JSON.parse(data);
-      } catch {
+      } catch (error) {
         return;
       }
       if (msg.type === "end_speech") void handleEndSpeech();

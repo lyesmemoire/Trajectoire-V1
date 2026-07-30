@@ -70,14 +70,7 @@ interface OpenAIMessage {
 export async function callLLMStrict<T>(
   options: LLMCallOptions<T>
 ): Promise<T> {
-  const {
-    systemPrompt,
-    userPrompt,
-    schema,
-    provider = "openai",
-    timeoutMs = DEFAULT_TIMEOUT_MS,
-    signal,
-  } = options;
+  const { systemPrompt, userPrompt, schema, _provider = "openai", _timeoutMs = DEFAULT_TIMEOUT_MS, signal,  } = options;
   const messages: OpenAIMessage[] = [
     { role: "system", content: systemPrompt },
     { role: "user", content: userPrompt },
@@ -159,12 +152,7 @@ async function attemptCall<T>(
 
 // ── Fetch avec race (timeout + signal) ───────────────────────────────────
 
-async function fetchWithRace(
-  messages: OpenAIMessage[],
-  provider: Provider,
-  timeoutMs: number,
-  signal: AbortSignal | undefined
-): Promise<{
+async function fetchWithRace(messages: OpenAIMessage[], provider: Provider, timeoutMs: number, signal: AbortSignal | undefined): Promise<{
   choices: Array<{ message: { content: string } }>;
 }> {
   // ── Promise 1 : appel LLM ───────────────────────────────────────────────
@@ -212,11 +200,7 @@ async function fetchWithRace(
 
 // ── Fetch vers le provider ────────────────────────────────────────────────
 
-async function fetchLLM(
-  messages: OpenAIMessage[],
-  provider: Provider,
-  signal: AbortSignal | undefined
-): Promise<{ choices: Array<{ message: { content: string } }> }> {
+async function fetchLLM(messages: OpenAIMessage[], provider: Provider, signal: AbortSignal | undefined): Promise<{ choices: Array<{ message: { content: string } }> }> {
   const isOpenAI = provider === "openai";
 
   const apiKey = isOpenAI

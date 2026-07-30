@@ -98,14 +98,14 @@ export class AdaptiveIntelligenceOrchestrator {
         context.userId,
         `session_${Date.now()}`,
         decision.reasoning,
-        context as unknown as Record<string, unknown>
+        context  as any as Record<string, unknown>
       );
 
       // Apply presence modification to decision reasoning
       if (presenceModification.modifiedDecision) {
         decision.reasoning = presenceModification.modifiedDecision;
       }
-    } catch (error) {
+    } catch {
       // If presence fails, continue with original decision
       // Presence is a nice-to-have, not critical
     }
@@ -129,7 +129,7 @@ export class AdaptiveIntelligenceOrchestrator {
           philosophyValidation.violations
         );
       }
-    } catch (error) {
+    } catch {
       // If philosophy validation fails, continue with original decision
       // Philosophy validation is critical but should not block the system
     }

@@ -12,7 +12,7 @@ const mistral = createMistral({
  * Mistral Large est préférable pour les entretiens complexes.
  * Cast needed: @ai-sdk/mistral returns LanguageModelV1, ai SDK expects LanguageModel.
  */
-export const mistralModel = mistral("mistral-large-latest") as unknown as LanguageModel;
+export const mistralModel = mistral("mistral-large-latest")  as any as LanguageModel;
 export const mistralSmallModel = mistral(
   "mistral-small-latest",
-) as unknown as LanguageModel;
+)  as any as LanguageModel;

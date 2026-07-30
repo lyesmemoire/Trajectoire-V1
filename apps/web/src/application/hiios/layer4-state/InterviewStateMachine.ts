@@ -7,7 +7,6 @@
 import {
   InterviewState,
   Candidate,
-  BiasEvent,
 } from "../interfaces/IHIIOSKernel";
 import { logInfo } from "@/lib/logger/Logger";
 
@@ -198,14 +197,16 @@ export class InterviewStateMachine {
         return DetailedInterviewState.PRECISION;
 
       case DetailedInterviewState.JUSTIFICATION:
-        // 3 → 4 : Quand le raisonnement est explicité OU son absence documentée
-        const highConfidenceHypotheses = candidate.currentInterview.activeHypotheses.filter(
-          (h) => h.confidence >= 0.60
-        );
-        if (highConfidenceHypotheses.length > 0) {
-          return DetailedInterviewState.CONTRADICTION;
+        {
+          // 3 → 4 : Quand le raisonnement est explicité OU son absence documentée
+          const highConfidenceHypotheses = candidate.currentInterview.activeHypotheses.filter(
+            (h) => h.confidence >= 0.60
+          );
+          if (highConfidenceHypotheses.length > 0) {
+            return DetailedInterviewState.CONTRADICTION;
+          }
+          return DetailedInterviewState.JUSTIFICATION;
         }
-        return DetailedInterviewState.JUSTIFICATION;
 
       case DetailedInterviewState.CONTRADICTION:
         // 4 → 5 : Quand Contradiction Engine a été activé ET Principe d'Or vérifié ET tous les BiasEvents résolus
@@ -215,16 +216,18 @@ export class InterviewStateMachine {
         return DetailedInterviewState.CONTRADICTION;
 
       case DetailedInterviewState.PRESSION:
-        // 5 → 6 : Quand le comportement sous pression est documenté
-        if (candidate.currentInterview.currentTurn >= 10) {
-          return DetailedInterviewState.REFLEXION;
-        }
-        // X → X-1 : Si contradiction majeure remet en question une conclusion
-        const majorContradiction = candidate.currentInterview.contradictionLog.find(
-          (c) => c.severity === "HIGH" && c.resolution === "PENDING"
-        );
-        if (majorContradiction) {
-          return DetailedInterviewState.PRECISION;
+        {
+          // 5 → 6 : Quand le comportement sous pression est documenté
+          if (candidate.currentInterview.currentTurn >= 10) {
+            return DetailedInterviewState.REFLEXION;
+          }
+          // X → X-1 : Si contradiction majeure remet en question une conclusion
+          const majorContradiction = candidate.currentInterview.contradictionLog.find(
+            (c) => c.severity === "HIGH" && c.resolution === "PENDING"
+          );
+          if (majorContradiction) {
+            return DetailedInterviewState.PRECISION;
+          }
         }
         return DetailedInterviewState.PRESSION;
 

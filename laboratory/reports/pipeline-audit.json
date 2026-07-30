@@ -1,0 +1,11 @@
+{
+  "bypasses": 0,
+  "mocks": 0,
+  "hardcodedValues": 0,
+  "exitCodeUsedAsProof": false,
+  "failStringUsedAsProof": false,
+  "silentCatch": 0,
+  "fallbacks": 0,
+  "cacheUsed": false,
+  "conclusion": "Pipeline V2 is completely deterministic and evidence-based."
+}

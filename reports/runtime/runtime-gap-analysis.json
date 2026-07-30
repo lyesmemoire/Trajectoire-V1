@@ -1,0 +1,658 @@
+{
+  "auditDate": "2026-07-26",
+  "auditPhase": "Phase 2 - État des tests",
+  "testCoverage": {
+    "cvm": {
+      "execution-context": {
+        "testFile": "tests/vm/core/execution-context.test.ts",
+        "existingTests": 40,
+        "coverage": {
+          "statements": "85%",
+          "branches": "70%",
+          "functions": "90%",
+          "lines": "82%"
+        },
+        "uncoveredParts": [
+          "Edge cases with negative program counter",
+          "Complex snapshot restoration scenarios",
+          "Error propagation in nested calls"
+        ],
+        "testDebt": "Faible"
+      },
+      "memory-manager": {
+        "testFile": "tests/vm/memory/memory-manager.test.ts",
+        "existingTests": 50,
+        "coverage": {
+          "statements": "80%",
+          "branches": "65%",
+          "functions": "85%",
+          "lines": "78%"
+        },
+        "uncoveredParts": [
+          "Memory protection violations",
+          "Handle table edge cases",
+          "Concurrent allocation scenarios"
+        ],
+        "testDebt": "Moyen"
+      },
+      "thread-manager": {
+        "testFile": "tests/vm/advanced/thread-manager.test.ts",
+        "existingTests": 70,
+        "coverage": {
+          "statements": "88%",
+          "branches": "75%",
+          "functions": "92%",
+          "lines": "85%"
+        },
+        "uncoveredParts": [
+          "Thread starvation scenarios",
+          "Priority inversion cases",
+          "Concurrent thread operations"
+        ],
+        "testDebt": "Faible"
+      },
+      "execution-pipeline": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All pipeline functionality",
+          "Fetch-decode-execute cycle",
+          "Pipeline statistics",
+          "Cache integration"
+        ],
+        "testDebt": "Critique"
+      },
+      "instruction-fetch": {
+        "testFile": "tests/vm/loader/instruction-fetch.test.ts",
+        "existingTests": 35,
+        "coverage": {
+          "statements": "75%",
+          "branches": "60%",
+          "functions": "80%",
+          "lines": "72%"
+        },
+        "uncoveredParts": [
+          "Cache eviction policies",
+          "Prefetch edge cases",
+          "Invalid bytecode handling"
+        ],
+        "testDebt": "Moyen"
+      },
+      "instruction-decode": {
+        "testFile": "tests/vm/decoder/instruction-decode.test.ts",
+        "existingTests": 30,
+        "coverage": {
+          "statements": "70%",
+          "branches": "55%",
+          "functions": "75%",
+          "lines": "68%"
+        },
+        "uncoveredParts": [
+          "Invalid opcode handling",
+          "Operand validation",
+          "Stack effect calculation"
+        ],
+        "testDebt": "Moyen"
+      },
+      "instruction-execute": {
+        "testFile": "tests/vm/executor/instruction-execute.test.ts",
+        "existingTests": 45,
+        "coverage": {
+          "statements": "65%",
+          "branches": "50%",
+          "functions": "70%",
+          "lines": "62%"
+        },
+        "uncoveredParts": [
+          "Complex arithmetic edge cases",
+          "Memory operation validation",
+          "Control flow integration"
+        ],
+        "testDebt": "Élevé"
+      },
+      "instruction-cache": {
+        "testFile": "tests/vm/performance/instruction-cache.test.ts",
+        "existingTests": 25,
+        "coverage": {
+          "statements": "72%",
+          "branches": "58%",
+          "functions": "78%",
+          "lines": "70%"
+        },
+        "uncoveredParts": [
+          "LRU eviction correctness",
+          "Cache size changes",
+          "Hit rate calculation"
+        ],
+        "testDebt": "Moyen"
+      },
+      "exception-handler": {
+        "testFile": "tests/vm/exceptions/exception-handler.test.ts",
+        "existingTests": 30,
+        "coverage": {
+          "statements": "68%",
+          "branches": "52%",
+          "functions": "72%",
+          "lines": "65%"
+        },
+        "uncoveredParts": [
+          "Nested exception handling",
+          "Exception table lookup",
+          "Handler chaining"
+        ],
+        "testDebt": "Moyen"
+      },
+      "interrupt-manager": {
+        "testFile": "tests/vm/advanced/interrupt-manager.test.ts",
+        "existingTests": 80,
+        "coverage": {
+          "statements": "90%",
+          "branches": "78%",
+          "functions": "95%",
+          "lines": "88%"
+        },
+        "uncoveredParts": [
+          "Interrupt storm recovery",
+          "Priority inversion scenarios",
+          "Context restoration edge cases"
+        ],
+        "testDebt": "Faible"
+      },
+      "rollback-manager": {
+        "testFile": "tests/vm/advanced/rollback-manager.test.ts",
+        "existingTests": 40,
+        "coverage": {
+          "statements": "75%",
+          "branches": "60%",
+          "functions": "80%",
+          "lines": "72%"
+        },
+        "uncoveredParts": [
+          "Snapshot consistency",
+          "Rollback failure scenarios",
+          "Auto-snapshot timing"
+        ],
+        "testDebt": "Moyen"
+      },
+      "garbage-collector": {
+        "testFile": "tests/vm/advanced/garbage-collector.test.ts",
+        "existingTests": 60,
+        "coverage": {
+          "statements": "82%",
+          "branches": "68%",
+          "functions": "85%",
+          "lines": "80%"
+        },
+        "uncoveredParts": [
+          "Generational GC correctness",
+          "Reference counting cycles",
+          "GC pause time measurement"
+        ],
+        "testDebt": "Moyen"
+      }
+    },
+    "cpr": {
+      "cluster-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All cluster management functionality",
+          "Node lifecycle",
+          "Leader election integration",
+          "Heartbeat mechanisms"
+        ],
+        "testDebt": "Critique"
+      },
+      "runtime-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All runtime management",
+          "Instance lifecycle",
+          "Status transitions"
+        ],
+        "testDebt": "Critique"
+      },
+      "runtime-kernel": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "Kernel orchestration",
+          "Component integration",
+          "Leadership management"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-scheduler": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All scheduling policies",
+          "Task distribution",
+          "Load balancing"
+        ],
+        "testDebt": "Critique"
+      },
+      "provider-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All provider management",
+          "Request lifecycle",
+          "Provider failover"
+        ],
+        "testDebt": "Critique"
+      },
+      "execution-coordinator": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All coordination logic",
+          "Plan execution",
+          "Dependency resolution"
+        ],
+        "testDebt": "Critique"
+      },
+      "consensus-engine": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All consensus algorithms",
+          "Leader election",
+          "Log replication",
+          "Vote handling"
+        ],
+        "testDebt": "Critique"
+      },
+      "leader-election": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All election logic",
+          "Vote processing",
+          "Term management"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-memory": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All memory distribution",
+          "Replication logic",
+          "Consistency checks"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-locks": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All lock management",
+          "Lock acquisition",
+          "Lock renewal",
+          "Deadlock detection"
+        ],
+        "testDebt": "Critique"
+      },
+      "snapshot-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All snapshot functionality",
+          "Cluster snapshots",
+          "Memory snapshots",
+          "Restore operations"
+        ],
+        "testDebt": "Critique"
+      },
+      "recovery-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All recovery logic",
+          "Failure detection",
+          "Recovery actions",
+          "Policy enforcement"
+        ],
+        "testDebt": "Critique"
+      },
+      "replay-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All replay functionality",
+          "Event recording",
+          "Session replay",
+          "Event filtering"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-trace": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All tracing functionality",
+          "Span management",
+          "Trace correlation"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-profiler": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All profiling functionality",
+          "Metric collection",
+          "Report generation"
+        ],
+        "testDebt": "Critique"
+      },
+      "distributed-debugger": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All debugging functionality",
+          "Breakpoint management",
+          "State inspection"
+        ],
+        "testDebt": "Critique"
+      },
+      "telemetry": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All telemetry collection",
+          "Metric aggregation",
+          "Data retention"
+        ],
+        "testDebt": "Critique"
+      },
+      "security": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All security policies",
+          "Authentication",
+          "Authorization",
+          "Audit logging"
+        ],
+        "testDebt": "Critique"
+      },
+      "governance": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All governance policies",
+          "Policy evaluation",
+          "Compliance checking"
+        ],
+        "testDebt": "Critique"
+      },
+      "knowledge-fabric": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All knowledge management",
+          "Graph operations",
+          "Query execution"
+        ],
+        "testDebt": "Critique"
+      },
+      "autoscaler": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All scaling logic",
+          "Policy evaluation",
+          "Scale operations"
+        ],
+        "testDebt": "Critique"
+      },
+      "api-gateway": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All gateway functionality",
+          "Route handling",
+          "Rate limiting",
+          "Authentication"
+        ],
+        "testDebt": "Critique"
+      }
+    },
+    "memory": {
+      "cognitive-memory-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All memory management",
+          "Quota enforcement",
+          "Eviction policies",
+          "Compression"
+        ],
+        "testDebt": "Critique"
+      },
+      "memory-block": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All block operations",
+          "Versioning",
+          "TTL handling"
+        ],
+        "testDebt": "Critique"
+      },
+      "memory-quota": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All quota logic",
+          "Threshold checking",
+          "Limit enforcement"
+        ],
+        "testDebt": "Critique"
+      },
+      "specialized-memory-manager": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "0%",
+          "branches": "0%",
+          "functions": "0%",
+          "lines": "0%"
+        },
+        "uncoveredParts": [
+          "All specialized management",
+          "Type-specific operations",
+          "Metrics tracking"
+        ],
+        "testDebt": "Critique"
+      },
+      "types": {
+        "testFile": null,
+        "existingTests": 0,
+        "coverage": {
+          "statements": "N/A",
+          "branches": "N/A",
+          "functions": "N/A",
+          "lines": "N/A"
+        },
+        "uncoveredParts": [],
+        "testDebt": "N/A"
+      }
+    }
+  },
+  "summary": {
+    "totalComponents": 32,
+    "componentsWithTests": 12,
+    "componentsWithoutTests": 20,
+    "totalExistingTests": 535,
+    "averageCoverage": {
+      "statements": "48%",
+      "branches": "35%",
+      "functions": "52%",
+      "lines": "45%"
+    },
+    "criticalTestDebt": 20,
+    "highTestDebt": 0,
+    "mediumTestDebt": 8,
+    "lowTestDebt": 4
+  }
+}

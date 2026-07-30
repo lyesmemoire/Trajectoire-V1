@@ -11,7 +11,7 @@ interface Props {
   };
 }
 
-export function PredictiveOverviewCards({ data }: Props) {
+export function PredictiveOverviewCards({ data }: _Props) {
   const cards = [
     {
       title: "Predicted Return Health",

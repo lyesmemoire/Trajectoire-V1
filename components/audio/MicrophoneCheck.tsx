@@ -9,7 +9,7 @@ interface Props {
   onSuccess: (stream: MediaStream) => void;
 }
 
-export function MicrophoneCheck({ onSuccess }: Props) {
+export function MicrophoneCheck({ onSuccess }: _Props) {
   const [status, setStatus] = useState<
     "idle" | "testing" | "success" | "error"
   >("idle");
@@ -24,7 +24,7 @@ export function MicrophoneCheck({ onSuccess }: Props) {
       streamRef.current = stream;
 
       const audioContext = new (
-        window.AudioContext || (window as any).webkitAudioContext
+        window.AudioContext || (window as unknown).webkitAudioContext
       )();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
@@ -57,7 +57,7 @@ export function MicrophoneCheck({ onSuccess }: Props) {
       setTimeout(() => {
         if (!detected) setStatus("error");
       }, 10000);
-    } catch (err) {
+    } catch (error) {
       setStatus("error");
     }
   };

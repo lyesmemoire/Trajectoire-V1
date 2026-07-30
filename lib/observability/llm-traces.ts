@@ -8,19 +8,19 @@ export interface LLMTrace {
   completionTokens: number;
   latencyMs: number;
   status: "success" | "error";
-  metadata?: any;
+  metadata?: unknown;
 }
 
 /**
  * Logs an LLM interaction for performance and quality monitoring.
  */
-export async function logLLMTrace(trace: LLMTrace) {
+export async function logLLMTrace(trace: _LLMTrace) {
   // We can store this in a dedicated monitoring table or simple audit log
   console.log(
     `[LLM Trace] ${trace.endpoint} | ${trace.model} | ${trace.latencyMs}ms | ${trace.status}`,
   );
 
-  // Example storage logic (if table exists)
+  
   /*
   await prisma.aIUsageStats.create({
     data: {

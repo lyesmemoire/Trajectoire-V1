@@ -1,3 +1,5 @@
+
+
 import { describe, it, expect } from "vitest";
 import { ReportBuilder } from "../report/report-builder.js";
 import { ReportInput } from "../report/report-contract.js";
@@ -96,7 +98,7 @@ describe("P7.5 — Report Generator", () => {
       expect(report.summary.verdict).toBe("STRONG_HIRE");
 
       const badInput = buildMockInput();
-      (badInput.evaluation as any).score = 35;
+      (badInput.evaluation  as any).score = 35;
       const badReport = builder.build(badInput);
       expect(badReport.summary.verdict).toBe("NO_HIRE");
     });

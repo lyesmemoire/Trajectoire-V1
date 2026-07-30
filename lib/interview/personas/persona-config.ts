@@ -49,6 +49,6 @@ export const PERSONAS: Record<string, PersonaConfig> = {
   },
 };
 
-export function getPersonaConfig(id: string): PersonaConfig {
+export function getPersonaConfig(id: _string): PersonaConfig {
   return PERSONAS[id] || PERSONAS.faang!;
 }

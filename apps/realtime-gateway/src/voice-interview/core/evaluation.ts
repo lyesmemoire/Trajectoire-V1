@@ -50,10 +50,7 @@ function hasQuantifiedResult(text: string): boolean {
   );
 }
 
-export function evaluateTranscript(
-  transcript: string,
-  gap?: string,
-): AnswerEvaluation {
+export function evaluateTranscript(transcript: string, gap?: string, ): AnswerEvaluation {
   const answer = (transcript ?? "").trim();
   const text = answer.toLowerCase();
 

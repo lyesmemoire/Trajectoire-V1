@@ -59,9 +59,7 @@ export function checkSimulationBounds(sim: SimulationState): StabilityViolation[
  * la pression ne doit pas croître strictement à chaque tour indéfiniment
  * (un système stable a une borne supérieure — ici 100 — et peut redescendre).
  */
-export function checkBoundedOscillation(
-  pressureLevels: number[],
-): StabilityViolation[] {
+export function checkBoundedOscillation(pressureLevels: number[], ): StabilityViolation[] {
   const v: StabilityViolation[] = [];
   for (const lvl of pressureLevels) {
     if (!inRange(lvl, 0, 100)) {
@@ -73,20 +71,14 @@ export function checkBoundedOscillation(
 }
 
 /** True si l'état complet est stable (aucune violation). */
-export function isStable(
-  sim: SimulationState,
-  mind: RecruiterMindState,
-): boolean {
+export function isStable(sim: SimulationState, mind: RecruiterMindState, ): boolean {
   return (
     checkSimulationBounds(sim).length === 0 && checkMindBounds(mind).length === 0
   );
 }
 
 /** Garde-fou runtime : lève si l'état est instable (à activer en dev/staging). */
-export function assertStable(
-  sim: SimulationState,
-  mind: RecruiterMindState,
-): void {
+export function assertStable(sim: SimulationState, mind: RecruiterMindState, ): void {
   const violations = [...checkSimulationBounds(sim), ...checkMindBounds(mind)];
   if (violations.length > 0) {
     throw new Error(

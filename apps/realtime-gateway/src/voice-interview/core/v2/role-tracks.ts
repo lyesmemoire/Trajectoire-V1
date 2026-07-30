@@ -31,7 +31,7 @@ export const ROLE_TRACKS: Record<RoleTrackName, RoleTrack> = {
 };
 
 /** Devine le parcours à partir du rôle ciblé (texte libre). */
-export function inferRoleTrack(targetRole: string): RoleTrack {
+export function inferRoleTrack(targetRole: _string): RoleTrack {
   const r = (targetRole ?? "").toLowerCase();
   if (/devops|sre|infra|cloud|platform/.test(r)) return ROLE_TRACKS.devops;
   if (/front/.test(r)) return ROLE_TRACKS.frontend;

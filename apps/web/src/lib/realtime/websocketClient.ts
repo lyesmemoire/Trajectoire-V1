@@ -45,8 +45,8 @@ export class RealtimeWebSocketClient {
           const rtt = performance.now() - msg.payload;
           this.onPong?.(rtt);
         }
-      } catch (err) {
-        console.error("Failed to parse WS message", err);
+      } catch (error) {
+        console.error("Failed to parse WS message", error);
       }
     };
 

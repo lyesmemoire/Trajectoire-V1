@@ -14,7 +14,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 Mo
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   let form: FormData;
   try {
     form = await req.formData();
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { error: "Requête invalide (multipart/form-data attendu)." },
       { status: 400 },
@@ -70,7 +70,9 @@ export async function POST(req: NextRequest) {
     for (let i = 1; i <= numPages; i++) {
       const page = await pdfDocument.getPage(i);
       const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item: any) => item.str).join(" ");
+      const pageText = textContent.items
+        .map((item: any) => ('str' in item ? item.str : ''))
+        .join(" ");
       cvText += pageText + "\n";
     }
     
@@ -93,7 +95,7 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 },
     );
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { error: "Erreur lors de la lecture du PDF." },
       { status: 500 },

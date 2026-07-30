@@ -1,0 +1,34 @@
+services:
+  certification:
+    build:
+      context: ../..
+      dockerfile: certification/docker/Dockerfile
+    # Isolation réseau stricte
+    network_mode: none
+    # Isolation IPC / UTS
+    ipc: none
+    uts: private
+    # Utilisateur non-root strict
+    user: "1000:1000"
+    # Limitation des ressources et processus
+    pids_limit: 512
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4g
+    # Contraintes de sécurité du noyau
+    cap_drop:
+      - ALL
+    privileged: false
+    security_opt:
+      - no-new-privileges:true
+    # Système de fichiers principal en lecture seule
+    read_only: true
+    # Répertoires temporaires nécessaires pour l'exécution (en mémoire)
+    tmpfs:
+      - /tmp
+      - /workspace/certification/runs
+    # Volume de sortie pour récupérer les artefacts
+    volumes:
+      - ./out:/out:rw

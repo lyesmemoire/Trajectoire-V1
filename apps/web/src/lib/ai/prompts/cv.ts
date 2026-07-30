@@ -33,7 +33,7 @@ export const CV_ANALYSIS_PROMPT = (jobTitle: string, jobDescription: string): st
 
 Position: ${jobTitle}
 
-Job Description:
+any Description:
 ${jobDescription}
 
 Please provide a comprehensive analysis focusing on how well this CV matches the position requirements.`;

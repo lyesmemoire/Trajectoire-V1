@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   BarChart,
@@ -9,22 +9,22 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
-} from "recharts";
+} from "recharts"
 
 export function AIFeatureCosts({ logs }: { logs: any[] }) {
-  const dataMap: Record<string, number> = {};
-  logs.forEach((l) => {
-    dataMap[l.feature] = (dataMap[l.feature] || 0) + l.costUsd;
-  });
+  const dataMap: Record<string, number> = {}
+  logs.forEach((l: any) => {
+    dataMap[l.feature] = (dataMap[l.feature] || 0) + l.costUsd
+  })
 
   const data = Object.entries(dataMap).map(([name, value]) => ({
     name,
     value,
-  }));
+  }))
 
   return (
-    <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm h-full">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">
+    <div className="bg-white rounded-[2.5rem] border border-ivoire-100 p-8 shadow-sm h-full">
+      <h3 className="text-sm font-black text-ink-400 uppercase tracking-widest mb-6">
         Cost by Feature (USD)
       </h3>
       <div className="h-[300px] w-full">
@@ -63,5 +63,5 @@ export function AIFeatureCosts({ logs }: { logs: any[] }) {
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  )
 }

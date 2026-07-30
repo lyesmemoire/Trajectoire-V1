@@ -1,4 +1,3 @@
-import { MindState } from "../execution-contract.js";
 import { createSnapshot } from "../snapshot/create-snapshot.js";
 import { Transaction } from "./transaction-contract.js";
 
@@ -10,7 +9,7 @@ import { Transaction } from "./transaction-contract.js";
  *
  * Pure function — no side effects.
  */
-export function beginTransaction(state: MindState, timestamp: number): Transaction {
+export function beginTransaction(state: _MindState, timestamp: number): Transaction {
   return {
     snapshot: createSnapshot(state, timestamp),
     events: [],

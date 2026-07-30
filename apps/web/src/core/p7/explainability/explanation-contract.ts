@@ -1,3 +1,4 @@
+
 /**
  * P7.4 — Explainability Layer Contracts
  *
@@ -18,6 +19,8 @@
 
 // ─── Traceability Link ──────────────────────────────────────────────
 
+// Canonical Reference: BEA-INV-008 (blueprint.invariant.traceability)
+// Owner: Enterprise Chief Architect
 export interface Traceability {
   sessionId: string;
   turnIndex: number;
@@ -85,7 +88,7 @@ export interface ExplainedScore {
 export interface ExplanationNode {
   id: string;
   type: "signal" | "evidence" | "score" | "aggregate";
-  payload: unknown;
+  payload: any;
 }
 
 export interface ExplanationEdge {
