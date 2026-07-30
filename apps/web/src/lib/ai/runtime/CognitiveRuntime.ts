@@ -12,6 +12,7 @@ import { SnapshotMetadata } from "../../../domain/cognitive/SnapshotMetadata";
 import { EngineExecutionError, EngineTimeoutError, EngineBudgetExceededError } from "./errors/EngineExecutionError";
 import { ExecutionBudgetManager, BudgetConfig } from "./ExecutionBudget";
 import { ExecutionReportBuilder, ExecutionReport } from "./ExecutionReport";
+import { EngineCapabilityRegistry, EngineCapability } from "./EngineCapability";
 
 // ===================================================================
 // COGNITIVE RUNTIME — Cognitive Runtime Contract
@@ -25,6 +26,7 @@ export interface CognitiveRuntime {
   getReducerRegistry(): ReducerRegistry;
   getSnapshotBuilder(): SnapshotBuilder;
   getExecutionReport(): ExecutionReport | null;
+  getCapabilityRegistry(): EngineCapabilityRegistry;
 }
 
 export class DefaultCognitiveRuntime implements CognitiveRuntime {
@@ -34,6 +36,7 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
   private readonly reducerRegistry: ReducerRegistry;
   private readonly hooks: RuntimeHooks;
   private readonly snapshotBuilder: SnapshotBuilder;
+  private readonly capabilityRegistry: EngineCapabilityRegistry;
   private sessionId: string | null = null;
   private currentContext: InvestigationContext | null = null;
   private currentState: CognitiveState | null = null;
@@ -50,6 +53,7 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
     this.reducerRegistry = new DefaultReducerRegistry();
     this.hooks = new DefaultRuntimeHooks();
     this.snapshotBuilder = new DefaultSnapshotBuilder();
+    this.capabilityRegistry = new EngineCapabilityRegistry();
   }
 
   async initialize(sessionId: string, context: InvestigationContext, budgetConfig?: BudgetConfig): Promise<void> {
@@ -72,6 +76,12 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
   async execute(engineNames: string[], input: EngineInput, abortSignal?: AbortSignal): Promise<ExecutionReport> {
     if (!this.sessionId || !this.reportBuilder) {
       throw new Error("Runtime not initialized. Call initialize() first.");
+    }
+
+    // Verify engine chain contracts
+    const violations = this.capabilityRegistry.verifyChain(engineNames);
+    if (violations.length > 0) {
+      throw new Error(`Engine chain contract violations: ${violations.map(v => v.violation).join(", ")}`);
     }
 
     const reportBuilder = this.reportBuilder;
@@ -225,6 +235,10 @@ export class DefaultCognitiveRuntime implements CognitiveRuntime {
 
   getExecutionReport(): ExecutionReport | null {
     return this.reportBuilder?.finalize() || null;
+  }
+
+  getCapabilityRegistry(): EngineCapabilityRegistry {
+    return this.capabilityRegistry;
   }
 
   setExecutionPolicy(policy: "stop-on-error" | "continue-on-error"): void {

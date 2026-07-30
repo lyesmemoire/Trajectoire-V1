@@ -109,6 +109,9 @@ export class FactBuilder {
     category?: string;
     source: string;
     confidence?: number;
+    observationType?: string;
+    expectedFields?: string[];
+    sourceText?: string;
   }): Fact {
     return {
       id: crypto.randomUUID(),
@@ -119,6 +122,9 @@ export class FactBuilder {
       data: {
         content: data.content,
         category: data.category,
+        observationType: data.observationType,
+        expectedFields: data.expectedFields,
+        sourceText: data.sourceText,
       },
     };
   }
