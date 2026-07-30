@@ -88,7 +88,15 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
         observation.id,
         assessment,
         dimensions,
-        EvidenceManifest.version
+        EvidenceManifest.version,
+        {
+          provider: "internal",
+          model: "internal",
+          promptId: "evidence-default",
+          promptVersion: "1.0.0",
+          promptChecksum: "sha256-placeholder",
+          schemaVersion: "1.0",
+        }
       );
       events.push(...assessmentEvents);
     }
@@ -99,7 +107,15 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
       const linkEvent = EvidenceEventFactory.createEventFromLink(
         sessionId,
         link,
-        EvidenceManifest.version
+        EvidenceManifest.version,
+        {
+          provider: "internal",
+          model: "internal",
+          promptId: "evidence-default",
+          promptVersion: "1.0.0",
+          promptChecksum: "sha256-placeholder",
+          schemaVersion: "1.0",
+        }
       );
       events.push(linkEvent);
     }

@@ -114,7 +114,15 @@ export class ContradictionEngine extends BaseEngine<
             assessment,
             ruleId,
             ruleVersion,
-            ContradictionManifest.version
+            ContradictionManifest.version,
+            {
+              provider: "internal",
+              model: "internal",
+              promptId: "contradiction-default",
+              promptVersion: "1.0.0",
+              promptChecksum: "sha256-placeholder",
+              schemaVersion: "1.0",
+            }
           );
           events.push(...assessmentEvents);
         }

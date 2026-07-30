@@ -16,7 +16,15 @@ export class ContradictionEventFactory {
     assessment: ContradictionAssessment,
     ruleId: string,
     ruleVersion: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
     return {
       id: crypto.randomUUID(),
@@ -39,6 +47,12 @@ export class ContradictionEventFactory {
         isFalsePositive: assessment.isFalsePositive,
       },
       createdAt: new Date(),
+      provider: promptMetadata?.provider,
+      model: promptMetadata?.model,
+      promptId: promptMetadata?.promptId,
+      promptVersion: promptMetadata?.promptVersion,
+      promptChecksum: promptMetadata?.promptChecksum,
+      schemaVersion: promptMetadata?.schemaVersion,
     };
   }
 
@@ -52,7 +66,15 @@ export class ContradictionEventFactory {
     assessment: ContradictionAssessment,
     ruleId: string,
     ruleVersion: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
     return {
       id: crypto.randomUUID(),
@@ -73,6 +95,12 @@ export class ContradictionEventFactory {
         resolution: assessment.resolution,
       },
       createdAt: new Date(),
+      provider: promptMetadata?.provider,
+      model: promptMetadata?.model,
+      promptId: promptMetadata?.promptId,
+      promptVersion: promptMetadata?.promptVersion,
+      promptChecksum: promptMetadata?.promptChecksum,
+      schemaVersion: promptMetadata?.schemaVersion,
     };
   }
 
@@ -86,7 +114,15 @@ export class ContradictionEventFactory {
     assessment: ContradictionAssessment,
     ruleId: string,
     ruleVersion: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
     return {
       id: crypto.randomUUID(),
@@ -107,6 +143,12 @@ export class ContradictionEventFactory {
         resolution: assessment.resolution,
       },
       createdAt: new Date(),
+      provider: promptMetadata?.provider,
+      model: promptMetadata?.model,
+      promptId: promptMetadata?.promptId,
+      promptVersion: promptMetadata?.promptVersion,
+      promptChecksum: promptMetadata?.promptChecksum,
+      schemaVersion: promptMetadata?.schemaVersion,
     };
   }
 
@@ -120,7 +162,15 @@ export class ContradictionEventFactory {
     assessment: ContradictionAssessment,
     ruleId: string,
     ruleVersion: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
     return {
       id: crypto.randomUUID(),
@@ -150,7 +200,15 @@ export class ContradictionEventFactory {
     sessionId: string,
     contradictionId: string,
     resolutionMethod: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
     return {
       id: crypto.randomUUID(),
@@ -165,6 +223,12 @@ export class ContradictionEventFactory {
         resolvedAt: new Date(),
       },
       createdAt: new Date(),
+      provider: promptMetadata?.provider,
+      model: promptMetadata?.model,
+      promptId: promptMetadata?.promptId,
+      promptVersion: promptMetadata?.promptVersion,
+      promptChecksum: promptMetadata?.promptChecksum,
+      schemaVersion: promptMetadata?.schemaVersion,
     };
   }
 
@@ -179,7 +243,15 @@ export class ContradictionEventFactory {
     assessment: ContradictionAssessment,
     ruleId: string,
     ruleVersion: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent[] {
     const events: BaseEvent[] = [];
 
@@ -196,7 +268,8 @@ export class ContradictionEventFactory {
         assessment,
         ruleId,
         ruleVersion,
-        engineVersion
+        engineVersion,
+        promptMetadata
       )
     );
 
@@ -210,7 +283,8 @@ export class ContradictionEventFactory {
           assessment,
           ruleId,
           ruleVersion,
-          engineVersion
+          engineVersion,
+          promptMetadata
         )
       );
     }
@@ -224,7 +298,8 @@ export class ContradictionEventFactory {
           assessment,
           ruleId,
           ruleVersion,
-          engineVersion
+          engineVersion,
+          promptMetadata
         )
       );
     }
@@ -238,7 +313,8 @@ export class ContradictionEventFactory {
           assessment,
           ruleId,
           ruleVersion,
-          engineVersion
+          engineVersion,
+          promptMetadata
         )
       );
     }
@@ -253,8 +329,16 @@ export class ContradictionEventFactory {
     sessionId: string,
     contradictionId: string,
     resolutionMethod: string,
-    engineVersion: string
+    engineVersion: string,
+    promptMetadata?: {
+      provider: string;
+      model: string;
+      promptId: string;
+      promptVersion: string;
+      promptChecksum: string;
+      schemaVersion: string;
+    }
   ): BaseEvent {
-    return this.createContradictionResolved(sessionId, contradictionId, resolutionMethod, engineVersion);
+    return this.createContradictionResolved(sessionId, contradictionId, resolutionMethod, engineVersion, promptMetadata);
   }
 }
