@@ -20,3 +20,7 @@ export type { ContradictionAssessment, ContradictionLedgerEntry } from "./Contra
 
 // Event Factory
 export { ContradictionEventFactory } from "./ContradictionEventFactory";
+
+// Validator
+export { ContradictionValidator } from "./ContradictionValidator";
+export type { ContradictionValidatorContext, ContradictionValidatorResult } from "./ContradictionValidator";

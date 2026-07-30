@@ -1,14 +1,11 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { ContradictionEngine } from "../../apps/web/src/lib/ai/engines/ContradictionEngine";
-import { CognitiveState } from "../../apps/web/src/domain/cognitive/CognitiveState";
 
 describe("Phase A.11 - ContradictionEngine Tests", () => {
   let engine: ContradictionEngine;
-  let state: CognitiveState;
 
   beforeEach(() => {
-    state = CognitiveState.create("550e8400-e29b-41d4-a716-446655440000", "1.0.0");
-    engine = new ContradictionEngine({}, state);
+    engine = new ContradictionEngine();
   });
 
   it("should have correct manifest", () => {

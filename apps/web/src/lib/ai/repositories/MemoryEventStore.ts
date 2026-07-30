@@ -43,6 +43,8 @@ export class MemoryEventStore implements EventStore {
       sessionId,
       eventType,
       engine,
+      traceId,
+      aggregateId,
       fromSequence,
       toSequence,
       fromTimestamp,
@@ -61,6 +63,14 @@ export class MemoryEventStore implements EventStore {
 
     if (engine) {
       filtered = filtered.filter(e => e.engine === engine);
+    }
+
+    if (traceId) {
+      filtered = filtered.filter(e => e.metadata?.traceId === traceId);
+    }
+
+    if (aggregateId) {
+      filtered = filtered.filter(e => e.metadata?.aggregateId === aggregateId);
     }
 
     if (fromSequence !== undefined) {
@@ -99,6 +109,27 @@ export class MemoryEventStore implements EventStore {
       fromSequence,
     });
     return result.events;
+  }
+
+  streamByTrace(traceId: string, options?: Omit<EventStreamOptions, 'traceId'>): EventStreamResult {
+    return this.stream({ ...options, traceId });
+  }
+
+  streamByAggregate(aggregateId: string, options?: Omit<EventStreamOptions, 'aggregateId'>): EventStreamResult {
+    return this.stream({ ...options, aggregateId });
+  }
+
+  rebuild(sessionId: string, fromSequence?: number): any {
+    const events = this.replay(sessionId, fromSequence);
+    
+    // Simple rebuild: return all events as an array
+    // In a real implementation, this would apply events to reconstruct state
+    return {
+      sessionId,
+      fromSequence,
+      eventCount: events.length,
+      events,
+    };
   }
 
   getLatestSequence(sessionId: string): number {

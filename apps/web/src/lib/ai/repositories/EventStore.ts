@@ -16,6 +16,7 @@ export interface StoredEvent {
     correlationId?: string;
     ruleId?: string;
     ruleVersion?: string;
+    aggregateId?: string;
   };
 }
 
@@ -23,6 +24,8 @@ export interface EventStreamOptions {
   sessionId?: string;
   eventType?: string;
   engine?: string;
+  traceId?: string;
+  aggregateId?: string;
   fromSequence?: number;
   toSequence?: number;
   fromTimestamp?: Date;
@@ -58,6 +61,21 @@ export interface EventStore {
    * Replay events for a session
    */
   replay(sessionId: string, fromSequence?: number): StoredEvent[];
+
+  /**
+   * Stream events by trace ID
+   */
+  streamByTrace(traceId: string, options?: Omit<EventStreamOptions, 'traceId'>): EventStreamResult;
+
+  /**
+   * Stream events by aggregate ID
+   */
+  streamByAggregate(aggregateId: string, options?: Omit<EventStreamOptions, 'aggregateId'>): EventStreamResult;
+
+  /**
+   * Rebuild state from events for a session
+   */
+  rebuild(sessionId: string, fromSequence?: number): any;
 
   /**
    * Get latest sequence number for a session
