@@ -11,6 +11,7 @@ import { MinimumEvidencePolicy } from "./evidence/policies/MinimumEvidencePolicy
 import { EvidenceQualityPolicy } from "./evidence/policies/EvidenceQualityPolicy";
 import { CorroborationPolicy } from "./evidence/policies/CorroborationPolicy";
 import { WeakEvidencePolicy } from "./evidence/policies/WeakEvidencePolicy";
+import { EvidenceEventFactory } from "./evidence/EvidenceEventFactory";
 
 // ===================================================================
 // EVIDENCE ENGINE — Evidence Evaluator with LLM + Policies
@@ -70,65 +71,44 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     // Evaluate each observation
     for (const observation of payload.observationFacts) {
       const assessment = this.evaluateObservation(observation, payload.entityFacts);
+      const dimensions = this.extractDimensions(observation);
       
-      // Record in ledger
+      // Record in ledger with complete metadata
       this.ledger.record({
         id: crypto.randomUUID(),
         originObservationId: observation.id,
         assessment,
-        dimensions: this.extractDimensions(observation),
+        dimensions,
         policiesApplied: Array.from(this.policies.keys()),
         timestamp: new Date(),
         engineVersion: EvidenceManifest.version,
+        promptVersion: "1.0.0", // TODO: Extract from LLM provider when available
+        provider: "internal", // TODO: Extract from LLM provider when available
         traceId: context.traceId,
         correlationId: context.correlationId,
         sessionId,
       });
 
-      // Emit appropriate events
-      if (assessment.hasEvidence) {
-        events.push(
-          this.createBaseEvent(sessionId, "EVIDENCE_DETECTED", {
-            observationId: observation.id,
-            evidenceType: assessment.evidenceType,
-            overallScore: assessment.overallScore,
-            confidence: assessment.confidence,
-          })
-        );
-
-        events.push(
-          this.createBaseEvent(sessionId, "EVIDENCE_STRENGTH_CALCULATED", {
-            observationId: observation.id,
-            strength: assessment.evidenceType,
-            score: assessment.overallScore,
-            dimensions: Array.from(this.extractDimensions(observation).entries()),
-          })
-        );
-      } else {
-        // Emit MISSING_EVIDENCE_DETECTED for non-evidence observations
-        events.push(
-          this.createBaseEvent(sessionId, "MISSING_EVIDENCE_DETECTED", {
-            observationId: observation.id,
-            reason: assessment.reason,
-            missingDimensions: assessment.missingDimensions,
-            evidenceType: assessment.evidenceType,
-          })
-        );
-      }
+      // Create events using EventFactory (separation of concerns)
+      const assessmentEvents = EvidenceEventFactory.createEventsFromAssessment(
+        sessionId,
+        observation.id,
+        assessment,
+        dimensions,
+        EvidenceManifest.version
+      );
+      events.push(...assessmentEvents);
     }
 
     // Check for potential conflicts between observations
     const conflictLinks = this.detectPotentialConflicts(payload.observationFacts);
     for (const link of conflictLinks) {
-      events.push(
-        this.createBaseEvent(sessionId, "EVIDENCE_LINKED", {
-          linkType: link.linkType,
-          sourceObservationId: link.sourceObservationId,
-          targetObservationId: link.targetObservationId,
-          confidence: link.confidence,
-          reason: link.reason,
-        })
+      const linkEvent = EvidenceEventFactory.createEventFromLink(
+        sessionId,
+        link,
+        EvidenceManifest.version
       );
+      events.push(linkEvent);
     }
 
     return events;
@@ -137,6 +117,9 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
   private evaluateObservation(observation: any, entityFacts: any[]): EvidenceAssessment {
     const dimensions = this.extractDimensions(observation);
     const policiesApplied: string[] = [];
+
+    // Extract category from observation
+    const category = observation.data?.category?.toLowerCase() || observation.category?.toLowerCase() || "";
 
     // Apply policies
     const minimumEvidenceResult = this.policies.get("minimum-evidence")?.evaluate({
@@ -163,25 +146,31 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
       metadata: {},
     });
 
+    // Track which policies were applied
+    if (minimumEvidenceResult) policiesApplied.push("minimum-evidence");
+    if (qualityResult) policiesApplied.push("evidence-quality");
+    if (corroborationResult) policiesApplied.push("corroboration");
+    if (weakEvidenceResult) policiesApplied.push("weak-evidence");
+
     // Special case: claims without quantification are always "claim-only"
-    const isClaimWithoutEvidence = observation.category === "claim" && 
+    const isClaimWithoutEvidence = category === "claim" && 
       (dimensions.get("quantification") || 0) < 0.3;
 
-    // Determine if observation contains evidence
-    const hasEvidence = !isClaimWithoutEvidence && (minimumEvidenceResult?.passed || false);
+    // Determine if observation contains evidence (all policies must agree)
+    const hasEvidence = !isClaimWithoutEvidence && 
+      (minimumEvidenceResult?.passed || false) &&
+      (qualityResult?.passed || false) &&
+      (corroborationResult?.passed || false);
     
-    // Determine evidence type
+    // Determine evidence type (claims without evidence get special treatment)
     let evidenceType = "none";
-    if (hasEvidence) {
+    if (isClaimWithoutEvidence) {
+      evidenceType = "claim-only";
+    } else if (hasEvidence) {
       if (weakEvidenceResult?.passed) {
         evidenceType = "strong";
       } else {
         evidenceType = "weak";
-      }
-    } else {
-      // Check if it's a claim without evidence
-      if (isClaimWithoutEvidence) {
-        evidenceType = "claim-only";
       }
     }
 
@@ -192,14 +181,21 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     // Identify missing dimensions
     const missingDimensions = this.identifyMissingDimensions(dimensions);
 
+    // Build reason from all policy results
+    const reasons: string[] = [];
+    if (minimumEvidenceResult?.reason) reasons.push(minimumEvidenceResult.reason);
+    if (qualityResult?.reason) reasons.push(qualityResult.reason);
+    if (corroborationResult?.reason) reasons.push(corroborationResult.reason);
+    if (weakEvidenceResult?.reason) reasons.push(weakEvidenceResult.reason);
+
     return {
       hasEvidence,
       evidenceType,
       overallScore,
       confidence,
       reason: hasEvidence 
-        ? "Evidence meets minimum threshold" 
-        : (isClaimWithoutEvidence ? "Claim without evidence" : "Insufficient evidence"),
+        ? reasons.join("; ") 
+        : (isClaimWithoutEvidence ? "Claim without evidence" : reasons.join("; ")),
       missingDimensions,
     };
   }
@@ -211,31 +207,36 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     const content = observation.data?.content?.toLowerCase() || observation.content?.toLowerCase() || "";
     const category = observation.data?.category?.toLowerCase() || observation.category?.toLowerCase() || "";
 
-    // Specificity: more specific content = higher score
-    dimensions.set("specificity", this.calculateSpecificity(content));
-
-    // Ownership: explicit ownership statements
-    dimensions.set("ownership", this.calculateOwnership(content));
-
-    // Production: production-related observations
-    dimensions.set("production", category === "production" ? 0.8 : 0.3);
-
-    // Quantification: presence of numbers/metrics
-    dimensions.set("quantification", this.calculateQuantification(content));
-
-    // Failure: failure-related observations
-    dimensions.set("failure", category === "failure" ? 0.8 : 0.2);
-
-    // Recency: default to neutral (would need timestamp info)
-    dimensions.set("recency", 0.5);
-
-    // Corroboration: default to neutral (would need other observations)
-    dimensions.set("corroboration", 0.3);
-
-    // Verifiability: how verifiable is the claim
-    dimensions.set("verifiability", this.calculateVerifiability(content));
+    // Use EvidenceDimensionCatalog to drive dimension calculation
+    for (const [dimensionId, dimensionConfig] of EvidenceDimensionCatalog.entries()) {
+      const score = this.calculateDimensionScore(dimensionId, content, category);
+      dimensions.set(dimensionId, score);
+    }
 
     return dimensions;
+  }
+
+  private calculateDimensionScore(dimensionId: string, content: string, category: string): number {
+    switch (dimensionId) {
+      case "specificity":
+        return this.calculateSpecificity(content);
+      case "ownership":
+        return this.calculateOwnership(content);
+      case "production":
+        return category === "production" ? 0.8 : 0.3;
+      case "quantification":
+        return this.calculateQuantification(content);
+      case "failure":
+        return category === "failure" ? 0.8 : 0.2;
+      case "recency":
+        return 0.5; // Default to neutral (would need timestamp info)
+      case "corroboration":
+        return 0.3; // Default to neutral (would need other observations)
+      case "verifiability":
+        return this.calculateVerifiability(content);
+      default:
+        return 0.5; // Default neutral score
+    }
   }
 
   private calculateSpecificity(content: string): number {
@@ -280,22 +281,13 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
   }
 
   private calculateOverallScore(dimensions: Map<string, number>): number {
-    const weights: Record<string, number> = {
-      specificity: 0.25,
-      ownership: 0.20,
-      production: 0.30,
-      quantification: 0.20,
-      failure: 0.25,
-      recency: 0.15,
-      corroboration: 0.20,
-      verifiability: 0.15,
-    };
-
     let totalScore = 0;
     let totalWeight = 0;
 
-    for (const [dimension, value] of dimensions.entries()) {
-      const weight = weights[dimension] || 0.1;
+    // Use weights from EvidenceDimensionCatalog
+    for (const [dimensionId, dimensionConfig] of EvidenceDimensionCatalog.entries()) {
+      const value = dimensions.get(dimensionId) || 0;
+      const weight = dimensionConfig.weight;
       totalScore += value * weight;
       totalWeight += weight;
     }
@@ -314,19 +306,6 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     }
 
     return missing;
-  }
-
-  protected createBaseEvent(sessionId: string, eventType: string, payload: any): BaseEvent {
-    return {
-      id: crypto.randomUUID(),
-      sessionId,
-      sequence: 0,
-      engine: EvidenceManifest.id,
-      eventType,
-      engineVersion: EvidenceManifest.version,
-      payload,
-      createdAt: new Date(),
-    };
   }
 
   private detectPotentialConflicts(observations: any[]): any[] {

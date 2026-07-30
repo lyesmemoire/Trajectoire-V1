@@ -72,7 +72,7 @@ describe("Phase A.8 - EvidenceEngine Tests", () => {
     expect(missingEvidence).toBeUndefined();
   });
 
-  it("Cas 2: 'Je suis très bon en Kubernetes.' → Evidence faible (claim)", async () => {
+  it("Cas 2: 'Je suis très bon en Kubernetes.' → Aucune preuve (claim)", async () => {
     const input: EngineInput<
       { sessionId: string; traceId: string; correlationId: string },
       { observationFacts: any[]; entityFacts: any[] }
@@ -100,10 +100,14 @@ describe("Phase A.8 - EvidenceEngine Tests", () => {
 
     const result = await engine.execute(input);
 
-    // Should emit EVIDENCE_DETECTED event (but with low confidence)
+    // Should emit MISSING_EVIDENCE_DETECTED event (claim without quantification)
+    const missingEvidence = result.events.find((e: any) => e.eventType === "MISSING_EVIDENCE_DETECTED");
+    expect(missingEvidence).toBeDefined();
+    expect(missingEvidence.payload.evidenceType).toBe("claim-only");
+
+    // Should NOT emit EVIDENCE_DETECTED event
     const evidenceDetected = result.events.find((e: any) => e.eventType === "EVIDENCE_DETECTED");
-    expect(evidenceDetected).toBeDefined();
-    expect(evidenceDetected.payload.confidence).toBeLessThan(0.6);
+    expect(evidenceDetected).toBeUndefined();
   });
 
   it("Cas 3: 'On a perdu la production pendant 6 heures.' → FailureEvidence", async () => {
@@ -140,7 +144,7 @@ describe("Phase A.8 - EvidenceEngine Tests", () => {
     expect(evidenceDetected.payload.evidenceType).toBe("strong");
   });
 
-  it("Cas 4: 'Je pense être senior.' → Evidence faible (claim)", async () => {
+  it("Cas 4: 'Je pense être senior.' → Aucune preuve (claim)", async () => {
     const input: EngineInput<
       { sessionId: string; traceId: string; correlationId: string },
       { observationFacts: any[]; entityFacts: any[] }
@@ -168,10 +172,14 @@ describe("Phase A.8 - EvidenceEngine Tests", () => {
 
     const result = await engine.execute(input);
 
-    // Should emit EVIDENCE_DETECTED event (but with low confidence)
+    // Should emit MISSING_EVIDENCE_DETECTED event (claim without quantification)
+    const missingEvidence = result.events.find((e: any) => e.eventType === "MISSING_EVIDENCE_DETECTED");
+    expect(missingEvidence).toBeDefined();
+    expect(missingEvidence.payload.evidenceType).toBe("claim-only");
+
+    // Should NOT emit EVIDENCE_DETECTED event
     const evidenceDetected = result.events.find((e: any) => e.eventType === "EVIDENCE_DETECTED");
-    expect(evidenceDetected).toBeDefined();
-    expect(evidenceDetected.payload.confidence).toBeLessThan(0.6);
+    expect(evidenceDetected).toBeUndefined();
   });
 
   it("Cas 5: Deux observations '180 services' + '120 services' → PotentialConflictReference", async () => {
