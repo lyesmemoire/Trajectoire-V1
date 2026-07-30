@@ -8,6 +8,12 @@ export interface EngineExecutionMetrics {
   eventsProduced: number;
   success: boolean;
   error?: string;
+  factsConsumed?: string[];
+  factsProduced?: string[];
+  budgetUsed?: {
+    durationMs: number;
+    tokens: number;
+  };
 }
 
 export interface ReducerExecutionMetrics {
@@ -15,6 +21,29 @@ export interface ReducerExecutionMetrics {
   durationMs: number;
   success: boolean;
   error?: string;
+}
+
+export interface ExecutionGraphNode {
+  engineName: string;
+  durationMs: number;
+  eventsProduced: number;
+  success: boolean;
+  factsConsumed: string[];
+  factsProduced: string[];
+  errors: string[];
+  budgetUsed: {
+    durationMs: number;
+    tokens: number;
+  };
+}
+
+export interface ExecutionGraph {
+  nodes: ExecutionGraphNode[];
+  edges: Array<{
+    from: string;
+    to: string;
+    type: "produces" | "consumes";
+  }>;
 }
 
 export interface ExecutionReport {
@@ -40,6 +69,7 @@ export interface ExecutionReport {
     beforeReducer: number;
     afterReducer: number;
   };
+  executionGraph?: ExecutionGraph;
 }
 
 export class ExecutionReportBuilder {
@@ -61,6 +91,8 @@ export class ExecutionReportBuilder {
       afterReducer: 0,
     },
   };
+  private graphNodes: ExecutionGraphNode[] = [];
+  private graphEdges: Array<{ from: string; to: string; type: "produces" | "consumes" }> = [];
 
   constructor(
     private readonly sessionId: string,
@@ -77,11 +109,27 @@ export class ExecutionReportBuilder {
     this.report.enginesExecuted!.push(metrics);
     this.report.eventsPublished! += metrics.eventsProduced;
     this.report.budgetUsed!.durationMs += metrics.durationMs;
+
+    // Add to execution graph
+    this.graphNodes.push({
+      engineName: metrics.engineName,
+      durationMs: metrics.durationMs,
+      eventsProduced: metrics.eventsProduced,
+      success: metrics.success,
+      factsConsumed: metrics.factsConsumed || [],
+      factsProduced: metrics.factsProduced || [],
+      errors: metrics.error ? [metrics.error] : [],
+      budgetUsed: metrics.budgetUsed || { durationMs: metrics.durationMs, tokens: 0 },
+    });
   }
 
   recordReducerExecution(metrics: ReducerExecutionMetrics): void {
     this.report.reducersExecuted!.push(metrics);
     this.report.budgetUsed!.durationMs += metrics.durationMs;
+  }
+
+  addGraphEdge(from: string, to: string, type: "produces" | "consumes"): void {
+    this.graphEdges.push({ from, to, type });
   }
 
   incrementSnapshotCount(): void {
@@ -96,6 +144,12 @@ export class ExecutionReportBuilder {
     const endTime = new Date();
     this.report.endTime = endTime;
     this.report.totalDurationMs = endTime.getTime() - this.report.startTime!.getTime();
+
+    // Build execution graph
+    this.report.executionGraph = {
+      nodes: this.graphNodes,
+      edges: this.graphEdges,
+    };
 
     return this.report as ExecutionReport;
   }
