@@ -39,6 +39,11 @@ export class FactBuilder {
     attributes: Record<string, any>;
     source: string;
     confidence?: number;
+    canonicalName?: string;
+    aliases?: string[];
+    provider?: string;
+    category?: string;
+    sourceText?: string;
   }): Fact {
     return {
       id: crypto.randomUUID(),
@@ -50,6 +55,11 @@ export class FactBuilder {
         name: data.name,
         entityType: data.type,
         attributes: data.attributes,
+        canonicalName: data.canonicalName,
+        aliases: data.aliases,
+        provider: data.provider,
+        category: data.category,
+        sourceText: data.sourceText,
       },
     };
   }
