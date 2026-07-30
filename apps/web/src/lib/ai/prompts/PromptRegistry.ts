@@ -12,8 +12,12 @@ export interface Prompt {
   template: string;
   parameters: string[];
   checksum: string;
+  provider: string;
+  model: string;
   createdAt: Date;
   updatedAt: Date;
+  deprecated: boolean;
+  schemaVersion: string;
   metadata?: Record<string, unknown>;
 }
 

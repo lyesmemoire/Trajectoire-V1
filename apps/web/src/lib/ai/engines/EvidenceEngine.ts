@@ -7,11 +7,8 @@ import { EngineInput } from "../contracts/Engine";
 import { EvidenceDimensionCatalog, getDimension } from "../../../domain/cognitive/catalogs/EvidenceDimensionCatalog";
 import { EvidenceLedger, EvidenceAssessment } from "./evidence/EvidenceLedger";
 import { EvidenceLinker, EvidenceLinkCandidate } from "./evidence/EvidenceLinker";
-import { MinimumEvidencePolicy } from "./evidence/policies/MinimumEvidencePolicy";
-import { EvidenceQualityPolicy } from "./evidence/policies/EvidenceQualityPolicy";
-import { CorroborationPolicy } from "./evidence/policies/CorroborationPolicy";
-import { WeakEvidencePolicy } from "./evidence/policies/WeakEvidencePolicy";
 import { EvidenceEventFactory } from "./evidence/EvidenceEventFactory";
+import { EvidencePolicyRegistry } from "./evidence/policies/EvidencePolicyRegistry";
 
 // ===================================================================
 // EVIDENCE ENGINE — Evidence Evaluator with LLM + Policies
@@ -43,9 +40,9 @@ export const EvidenceManifest: EngineManifest = {
 
 export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload, BaseEvent> {
   private readonly ledger: EvidenceLedger;
-  private readonly policies: Map<string, any>;
+  private readonly policyRegistry: EvidencePolicyRegistry;
 
-  constructor() {
+  constructor(policyRegistry?: EvidencePolicyRegistry) {
     super({
       name: "EvidenceEngine",
       version: EvidenceManifest.version,
@@ -53,12 +50,7 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     });
 
     this.ledger = new EvidenceLedger();
-    this.policies = new Map([
-      ["minimum-evidence", new MinimumEvidencePolicy()],
-      ["evidence-quality", new EvidenceQualityPolicy()],
-      ["corroboration", new CorroborationPolicy()],
-      ["weak-evidence", new WeakEvidencePolicy()],
-    ]);
+    this.policyRegistry = policyRegistry || new EvidencePolicyRegistry();
   }
 
   protected async process(
@@ -79,7 +71,7 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
         originObservationId: observation.id,
         assessment,
         dimensions,
-        policiesApplied: Array.from(this.policies.keys()),
+        policiesApplied: Array.from(this.policyRegistry.getAll().map(p => p.id)),
         timestamp: new Date(),
         engineVersion: EvidenceManifest.version,
         promptVersion: "1.0.0", // TODO: Extract from LLM provider when available
@@ -122,25 +114,25 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
     const category = observation.data?.category?.toLowerCase() || observation.category?.toLowerCase() || "";
 
     // Apply policies
-    const minimumEvidenceResult = this.policies.get("minimum-evidence")?.evaluate({
+    const minimumEvidenceResult = this.policyRegistry.getMinimumEvidenceResult({
       observation,
       dimensions,
       metadata: {},
     });
 
-    const qualityResult = this.policies.get("evidence-quality")?.evaluate({
+    const qualityResult = this.policyRegistry.getEvidenceQualityResult({
       observation,
       dimensions,
       metadata: {},
     });
 
-    const corroborationResult = this.policies.get("corroboration")?.evaluate({
+    const corroborationResult = this.policyRegistry.getCorroborationResult({
       observation,
       dimensions,
       metadata: {},
     });
 
-    const weakEvidenceResult = this.policies.get("weak-evidence")?.evaluate({
+    const weakEvidenceResult = this.policyRegistry.getWeakEvidenceResult({
       observation,
       dimensions,
       metadata: {},

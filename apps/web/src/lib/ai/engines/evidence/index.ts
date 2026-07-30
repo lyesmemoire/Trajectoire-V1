@@ -4,6 +4,7 @@
 
 export { EvidenceEngine } from "./EvidenceEngine";
 export { EVIDENCE_SYSTEM_PROMPT } from "./EvidencePrompt";
+export { EvidencePolicyRegistry } from "./policies/EvidencePolicyRegistry";
 export {
   EvidenceLevelSchema,
   EvidenceDimensionsSchema,
