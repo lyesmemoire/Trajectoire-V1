@@ -16,6 +16,7 @@ import { RuntimeMetricsAggregator } from "./global-execution-graph/RuntimeMetric
 import { ContradictionPolicyRegistry } from "../../lib/ai/engines/contradiction/policies/ContradictionPolicyRegistry";
 import { ContradictionValidatorRegistry } from "../../lib/ai/engines/contradiction/ContradictionValidatorRegistry";
 import { ContradictionCatalogProvider } from "../../lib/ai/catalogs/ContradictionCatalogProvider";
+import { EngineFactory } from "./EngineFactory";
 
 export interface RuntimeServices {
   // Repositories
@@ -121,21 +122,8 @@ export class MemoryRuntimeContainer implements RuntimeContainer {
     const contradictionValidatorRegistry = new ContradictionValidatorRegistry();
     const contradictionCatalogProvider = new ContradictionCatalogProvider();
 
-    // Register all services
-    this.register("factRepository", factRepository);
-    this.register("snapshotRepository", snapshotRepository);
-    this.register("eventStore", eventStore);
-    this.register("policyRegistry", policyRegistry);
-    this.register("validatorRegistry", validatorRegistry);
-    this.register("promptRegistry", promptRegistry);
-    this.register("catalogProvider", catalogProvider);
-    this.register("metricsAggregator", metricsAggregator);
-    this.register("contradictionPolicyRegistry", contradictionPolicyRegistry);
-    this.register("contradictionValidatorRegistry", contradictionValidatorRegistry);
-    this.register("contradictionCatalogProvider", contradictionCatalogProvider);
-
-    // Build runtime services object
-    this.runtimeServices = {
+    // Build runtime services object first (without engineFactory)
+    const runtimeServicesWithoutEngineFactory = {
       factRepository,
       snapshotRepository,
       eventStore,
@@ -148,6 +136,30 @@ export class MemoryRuntimeContainer implements RuntimeContainer {
       contradictionValidatorRegistry,
       contradictionCatalogProvider,
     };
+
+    // Engine Factory (created after services are ready)
+    const engineFactory = new EngineFactory({
+      runtimeServices: runtimeServicesWithoutEngineFactory as any,
+    });
+
+    // Register all services
+    this.register("factRepository", factRepository);
+    this.register("snapshotRepository", snapshotRepository);
+    this.register("eventStore", eventStore);
+    this.register("policyRegistry", policyRegistry);
+    this.register("validatorRegistry", validatorRegistry);
+    this.register("promptRegistry", promptRegistry);
+    this.register("catalogProvider", catalogProvider);
+    this.register("metricsAggregator", metricsAggregator);
+    this.register("contradictionPolicyRegistry", contradictionPolicyRegistry);
+    this.register("contradictionValidatorRegistry", contradictionValidatorRegistry);
+    this.register("contradictionCatalogProvider", contradictionCatalogProvider);
+    this.register("engineFactory", engineFactory);
+
+    // Build final runtime services object with engineFactory
+    this.runtimeServices = {
+      ...runtimeServicesWithoutEngineFactory,
+    } as RuntimeServices;
   }
 
   clear(): void {
