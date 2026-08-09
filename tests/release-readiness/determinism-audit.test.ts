@@ -1,5 +1,4 @@
 import { describe, it, expect } from "vitest";
-import { MemoryEventStore } from "../../apps/web/src/lib/ai/repositories/MemoryEventStore";
 import { SnapshotHash, SnapshotData } from "../../apps/web/src/lib/ai/utils/SnapshotHash";
 
 describe("Release Readiness - Determinism Audit", () => {

@@ -1,0 +1,1 @@
+{"version":3,"file":"share-engine.d.ts","sourceRoot":"","sources":["share-engine.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,iBAAiB,CAAC;AAGnD;;GAEG;AACH,qBAAa,WAAW;IAChB,eAAe,CAAC,IAAI,EAAE,gBAAgB;IAMtC,mBAAmB,CAAC,SAAS,EAAE,MAAM;CAK5C;AAED,eAAO,MAAM,WAAW,aAAoB,CAAC"}

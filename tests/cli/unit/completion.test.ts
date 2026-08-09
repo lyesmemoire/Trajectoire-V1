@@ -2,7 +2,7 @@
  * Unit tests for CLI Completion functionality
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { generateBashCompletion, generateZshCompletion, generateFishCompletion, generatePowerShellCompletion } from '../../../src/cli/core/completion';
 import { Command } from 'commander';
 

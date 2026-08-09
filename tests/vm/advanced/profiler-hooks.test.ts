@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ProfilerHooks, ProfileData, ProfileStatistics } from '../../../compiler/cvm/profiler-hooks';
+import { ProfilerHooks } from '../../../compiler/cvm/profiler-hooks';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { Opcode } from '../../../compiler/cbs/opcode-table';
 

@@ -2,11 +2,20 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "schema": "../../prisma/schema.prisma"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:fix": "tsx src/e2e/run-e2e.ts",
+    "test:api": "tsx src/e2e/api-test-runner.ts",
+    "test:check": "tsx src/e2e/simple-api-test.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.2",
@@ -21,22 +30,17 @@
     "lucide-react": "0.460.0",
     "next": "15.5.21",
     "openai": "^6.39.0",
-    "pdfjs-dist": "^6.1.200",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "recharts": "^3.9.2",
-    "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.2.108",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "stripe": "^17.7.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "autoprefixer": "^10.5.4",
-    "eslint": "^9.39.5",
-    "eslint-config-next": "16.2.9",
-    "postcss": "^8.5.19",
-    "tailwindcss": "^3.4.19",
-    "typescript": "^5.9.3"
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
   }
 }

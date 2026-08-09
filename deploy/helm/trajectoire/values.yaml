@@ -1,0 +1,151 @@
+# Default values for trajectoire
+replicaCount: 3
+
+image:
+  repository: trajectoire/api
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3000
+  metricsPort: 9464
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: api.trajectoire.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: trajectoire-tls
+      hosts:
+        - api.trajectoire.com
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - trajectoire-api
+          topologyKey: kubernetes.io/hostname
+
+# PostgreSQL configuration
+postgres:
+  enabled: true
+  image: postgres:15-alpine
+  persistence:
+    enabled: true
+    size: 10Gi
+  backup:
+    enabled: true
+    size: 20Gi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Redis configuration
+redis:
+  enabled: true
+  image: redis:7-alpine
+  persistence:
+    enabled: true
+    size: 2Gi
+  backup:
+    enabled: true
+    size: 5Gi
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 20Gi
+  grafana:
+    enabled: true
+    persistence:
+      enabled: true
+      size: 5Gi
+  jaeger:
+    enabled: true
+
+# Secrets (should be overridden with --set-file or external secrets)
+secrets:
+  postgres:
+    user: postgres
+    password: changeme
+    database: trajectoire
+  redis:
+    password: changeme
+  openai:
+    apiKey: changeme
+  jwt:
+    secret: changeme
+  grafana:
+    adminUser: admin
+    adminPassword: changeme

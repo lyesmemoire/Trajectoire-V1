@@ -1,0 +1,48 @@
+Jean Dupont
+Développeur Full Stack
+Paris, France
+jean.dupont@email.com
++33 6 12 34 56 78
+
+PROFIL
+Développeur Full Stack avec 5 ans d'expérience dans le développement d'applications web modernes. Expert en JavaScript, React, Node.js et Python. Passionné par les nouvelles technologies et l'optimisation des performances.
+
+COMPÉTENCES TECHNIQUES
+- Langages: JavaScript, TypeScript, Python, SQL
+- Frontend: React, Next.js, Vue.js, HTML5, CSS3, Tailwind CSS
+- Backend: Node.js, Express, NestJS, FastAPI
+- Bases de données: PostgreSQL, MongoDB, Redis
+- DevOps: Docker, Git, CI/CD, AWS
+- Outils: VS Code, Postman, Jira
+
+EXPÉRIENCE PROFESSIONNELLE
+
+Développeur Full Stack | TechCorp Paris | Janvier 2022 - Présent
+- Développement d'applications web avec React et Node.js
+- Conception et implémentation d'API RESTful
+- Optimisation des performances et de l'expérience utilisateur
+- Collaboration avec l'équipe produit et les designers
+- Participation au code review et aux tests unitaires
+
+Développeur Frontend | StartupXYZ Lyon | Septembre 2020 - Décembre 2021
+- Développement d'interfaces utilisateur avec React
+- Intégration de designs responsive
+- Création de composants réutilisables
+- Tests automatisés avec Jest et Cypress
+
+Développeur Junior | WebAgency Marseille | Juin 2019 - Août 2020
+- Développement de sites web avec HTML, CSS et JavaScript
+- Maintenance de projets existants
+- Support technique aux clients
+
+FORMATION
+Master Informatique | Université Paris-Saclay | 2017 - 2019
+Licence Informatique | Université Lyon 1 | 2014 - 2017
+
+LANGUES
+Français: Natif
+Anglais: Courant (C1)
+Espagnol: Intermédiaire (B1)
+
+CENTRES D'INTÉRÊT
+Open source, contribution à des projets GitHub, veille technologique, hackathons, musique

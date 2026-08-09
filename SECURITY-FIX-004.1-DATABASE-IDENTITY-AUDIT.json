@@ -1,0 +1,580 @@
+{
+  "timestamp": "2026-08-09T10:51:12.306Z",
+  "phase": "DATABASE_IDENTITY_AUDIT",
+  "mode": "READ_ONLY",
+  "mutations_performed": "NONE",
+  "database_url_masked": "postgresql://postgres.bzxdozzbdvzgvgshyamp:***@aws-0-eu-west-1.pooler.supabase.com:5432/postgres",
+  "direct_url_masked": "postgresql://postgres.bzxdozzbdvzgvgshyamp:***@aws-0-eu-west-1.pooler.supabase.com:5432/postgres",
+  "supabase_url_masked": "https://bzxdozzbdvzgvgshyamp.supabase.co",
+  "supabase_project_ref": "bzxdozzbdvzgvgshyamp",
+  "expected_project_ref": "bzxdozzbdvzgvgshyamp",
+  "project_match": "YES",
+  "schemas": [
+    {
+      "schema_name": "auth",
+      "table_count": "23",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "cron",
+      "table_count": "2",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "extensions",
+      "table_count": "2",
+      "view_count": "2"
+    },
+    {
+      "schema_name": "graphql",
+      "table_count": "0",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "graphql_public",
+      "table_count": "0",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "pgbouncer",
+      "table_count": "0",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "public",
+      "table_count": "0",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "realtime",
+      "table_count": "3",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "storage",
+      "table_count": "8",
+      "view_count": "0"
+    },
+    {
+      "schema_name": "vault",
+      "table_count": "2",
+      "view_count": "1"
+    }
+  ],
+  "trajectoire_tables": [
+    {
+      "table_schema": "auth",
+      "table_name": "users",
+      "exists": "EXISTS"
+    }
+  ],
+  "business_columns": [
+    {
+      "table_schema": "auth",
+      "table_name": "audit_log_entries",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "custom_oauth_providers",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "flow_state",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "flow_state",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "identities",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "identities",
+      "column_name": "email",
+      "data_type": "text"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "identities",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "instances",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_amr_claims",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_challenges",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_factors",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_factors",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_authorizations",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_authorizations",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_client_states",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_clients",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_consents",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "one_time_tokens",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "one_time_tokens",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "refresh_tokens",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "refresh_tokens",
+      "column_name": "user_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_providers",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_relay_states",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sessions",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sessions",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_domains",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_providers",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "users",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "users",
+      "column_name": "email",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_challenges",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_challenges",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_credentials",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_credentials",
+      "column_name": "user_id",
+      "data_type": "uuid"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "subscription",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets",
+      "column_name": "owner_id",
+      "data_type": "text"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_analytics",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_vectors",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "objects",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "objects",
+      "column_name": "owner_id",
+      "data_type": "text"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads",
+      "column_name": "owner_id",
+      "data_type": "text"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads_parts",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads_parts",
+      "column_name": "owner_id",
+      "data_type": "text"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "vector_indexes",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "decrypted_secrets",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "secrets",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone"
+    }
+  ],
+  "content_audit": [
+    {
+      "table_schema": "auth",
+      "table_name": "audit_log_entries",
+      "column_count": "5"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "custom_oauth_providers",
+      "column_count": "25"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "flow_state",
+      "column_count": "17"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "identities",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "instances",
+      "column_count": "5"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_amr_claims",
+      "column_count": "5"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_challenges",
+      "column_count": "7"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_factors",
+      "column_count": "13"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_authorizations",
+      "column_count": "17"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_client_states",
+      "column_count": "4"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_clients",
+      "column_count": "13"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_consents",
+      "column_count": "6"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "one_time_tokens",
+      "column_count": "7"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "refresh_tokens",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_providers",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_relay_states",
+      "column_count": "8"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "schema_migrations",
+      "column_count": "1"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sessions",
+      "column_count": "15"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_domains",
+      "column_count": "5"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_providers",
+      "column_count": "5"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "users",
+      "column_count": "35"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_challenges",
+      "column_count": "6"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_credentials",
+      "column_count": "14"
+    },
+    {
+      "table_schema": "cron",
+      "table_name": "job",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "cron",
+      "table_name": "job_run_details",
+      "column_count": "10"
+    },
+    {
+      "table_schema": "extensions",
+      "table_name": "pg_stat_statements",
+      "column_count": "49"
+    },
+    {
+      "table_schema": "extensions",
+      "table_name": "pg_stat_statements_info",
+      "column_count": "2"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "schema_migrations",
+      "column_count": "2"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "subscription",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets",
+      "column_count": "11"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_analytics",
+      "column_count": "7"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_vectors",
+      "column_count": "4"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "migrations",
+      "column_count": "4"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "objects",
+      "column_count": "12"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads",
+      "column_count": "10"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads_parts",
+      "column_count": "10"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "vector_indexes",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "decrypted_secrets",
+      "column_count": "9"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "secrets",
+      "column_count": "8"
+    }
+  ],
+  "prisma_migrations": [],
+  "postgres_identity": [
+    {
+      "current_database": "postgres",
+      "current_user": "postgres",
+      "current_schema": "public",
+      "server_addr": "2a05:d018:10e0:3300:4818:b1fd:d6f4:c6de",
+      "server_port": 5432,
+      "version": "PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit"
+    }
+  ],
+  "database_url_set": true,
+  "direct_url_set": true,
+  "urls_match": "YES",
+  "supabase_project_ref_extracted": "bzxdozzbdvzgvgshyamp",
+  "project_ref_match": "YES",
+  "public_table_count": 0,
+  "public_empty": "YES",
+  "trajectoire_tables_found": "YES",
+  "prisma_migrations_found": "NO",
+  "diagnosis": "NO_PRISMA_MIGRATIONS",
+  "status": "BLOCKED",
+  "reason": "READ_ONLY_AUDIT_COMPLETE_NO_MUTATIONS_PERFORMED"
+}

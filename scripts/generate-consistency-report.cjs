@@ -109,7 +109,7 @@ const justifications = notStarted.map(comp => {
   const hasGapAnalysis = allReportFiles.includes(`${comp.name}-gap-analysis.json`);
   const hasDecision = allReportFiles.includes(`${comp.name}-decision.json`);
   
-  let reasons = [];
+  const reasons = [];
   
   if (!hasCertification) {
     reasons.push('No certification report found');

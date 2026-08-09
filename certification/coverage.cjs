@@ -72,7 +72,7 @@ function runCoverage(runDir, logDir) {
 
   let metrics = { statements: 0, branches: 0, functions: 0, lines: 0 };
   let uncoveredLines = [];
-  let uncoveredBranches = [];
+  const uncoveredBranches = [];
 
   if (sourceKey) {
     const fileCov = coverageData[sourceKey];

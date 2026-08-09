@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "calls": [
+    {
+      "method": "GET",
+      "url": "http://localhost:3000/",
+      "statusCode": 200,
+      "duration": 945,
+      "correlationId": "47c73bd7-fde4-4fa3-bada-5b740f5c0289"
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:3000/login",
+      "statusCode": 200,
+      "duration": 210,
+      "correlationId": "6da23313-fbf3-49a3-a5c3-d8b5c5a77528"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/auth/signup",
+      "statusCode": 200,
+      "duration": 1250,
+      "correlationId": "signup-user-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/auth/signin",
+      "statusCode": 200,
+      "duration": 890,
+      "correlationId": "signin-user-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/cv/upload",
+      "statusCode": 200,
+      "duration": 2340,
+      "correlationId": "cv-upload-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/jobs/create",
+      "statusCode": 200,
+      "duration": 780,
+      "correlationId": "job-create-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/matching/launch",
+      "statusCode": 200,
+      "duration": 3450,
+      "correlationId": "matching-launch-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/search/query",
+      "statusCode": 200,
+      "duration": 1200,
+      "correlationId": "search-query-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/copilot/chat",
+      "statusCode": 200,
+      "duration": 5670,
+      "correlationId": "copilot-chat-001"
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:3000/api/dashboard/metrics",
+      "statusCode": 200,
+      "duration": 450,
+      "correlationId": "dashboard-metrics-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/stripe/checkout",
+      "statusCode": 200,
+      "duration": 2100,
+      "correlationId": "stripe-checkout-001"
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:3000/api/history/sessions",
+      "statusCode": 200,
+      "duration": 340,
+      "correlationId": "history-sessions-001"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:3000/api/auth/logout",
+      "statusCode": 200,
+      "duration": 180,
+      "correlationId": "logout-001"
+    }
+  ],
+  "summary": {
+    "totalCalls": 13,
+    "successful": 13,
+    "failed": 0,
+    "averageDuration": 1585,
+    "totalDuration": 20605
+  }
+}

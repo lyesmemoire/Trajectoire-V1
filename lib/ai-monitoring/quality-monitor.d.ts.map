@@ -1,0 +1,1 @@
+{"version":3,"file":"quality-monitor.d.ts","sourceRoot":"","sources":["quality-monitor.ts"],"names":[],"mappings":"AAEA,MAAM,WAAW,eAAe;IAC9B,SAAS,EAAE,MAAM,CAAC;IAClB,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,MAAM,CAAC;IAChB,eAAe,EAAE,MAAM,CAAC;IACxB,aAAa,EAAE,OAAO,CAAC;IACvB,SAAS,EAAE,MAAM,CAAC;CACnB;AAED;;GAEG;AACH,eAAO,MAAM,gBAAgB;wBACD,eAAe;CAwB1C,CAAC"}

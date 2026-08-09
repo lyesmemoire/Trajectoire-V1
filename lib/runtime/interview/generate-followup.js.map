@@ -1,0 +1,1 @@
+{"version":3,"file":"generate-followup.js","sourceRoot":"","sources":["generate-followup.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAEH,MAAM,UAAU,gBAAgB,CAAC,QAAgB,EAAE,GAAY;IAC7D,IAAI,GAAG,IAAI,GAAG,CAAC,IAAI,EAAE,EAAE,CAAC;QACtB,OAAO,uDAAuD,GAAG,CAAC,IAAI,EAAE,MAAM,CAAC;IACjF,CAAC;IACD,iCAAiC;IACjC,KAAK,QAAQ,CAAC,CAAC,oEAAoE;IACnF,OAAO,qEAAqE,CAAC;AAC/E,CAAC"}

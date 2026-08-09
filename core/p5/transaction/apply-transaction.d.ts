@@ -9,5 +9,5 @@ import { Transaction } from "./transaction-contract.js";
  *
  * Pure function — no side effects.
  */
-export declare function applyTransaction(_tx: Transaction, _event: P5Event): Transaction;
+export declare function applyTransaction(tx: Transaction, event: P5Event): Transaction;
 //# sourceMappingURL=apply-transaction.d.ts.map

@@ -10,7 +10,7 @@
  * 6. Crash après réservation → nettoyage démontré
  * 7. Transaction expired/rolled_back → jamais cached:true
  */
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://bzxdozzbdvzgvgshyamp.supabase.co';

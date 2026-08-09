@@ -35,8 +35,8 @@ killedMutations.forEach((mutation) => {
   
   let detectorTest = '';
   let assertion = '';
-  let expected = '';
-  let obtained = '';
+  const expected = '';
+  const obtained = '';
   let status = 'UNKNOWN';
   let reason = '';
   

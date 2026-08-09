@@ -1,0 +1,58 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 10
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 30
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 60
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 30
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 10
+      name: "Cool down"
+
+scenarios:
+  - name: "Search Load Test"
+    flow:
+      # Basic search
+      - get:
+          url: '/search?q=JavaScript'
+          expect:
+            - statusCode: 200
+      
+      # Advanced search
+      - post:
+          url: '/search/advanced'
+          json:
+            query: 'React developer'
+            filters:
+              skills:
+                - JavaScript
+                - React
+              experience: senior
+              location: remote
+            limit: 20
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Paginated search
+      - get:
+          url: '/search?q=Python&page=1&limit=10'
+          expect:
+            - statusCode: 200
+      
+      # Search with sorting
+      - get:
+          url: '/search?q=Node.js&sort=relevance&order=desc'
+          expect:
+            - statusCode: 200
+      
+      - think: 0.5

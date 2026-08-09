@@ -1,8 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { RollbackManager } from '../../../compiler/cvm/rollback-manager';
-import { Stack } from '../../../compiler/cbs/stack';
-import { Register } from '../../../compiler/cbs/register-table';
 
 describe('Demo Programs - Rollback', () => {
   let context: ExecutionContext;

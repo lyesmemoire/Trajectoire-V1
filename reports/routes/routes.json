@@ -1,0 +1,222 @@
+﻿[
+    {
+        "type":  "page",
+        "route":  "/",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/__qa__",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\__qa__\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/admin/adaptive-intelligence",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\admin\\adaptive-intelligence\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/admin/ai-operating-system",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\admin\\ai-operating-system\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/admin/ai-quality",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\admin\\ai-quality\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/admin/analytics",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\admin\\analytics\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/admin/cognitive",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\admin\\cognitive\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/analyze",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\analyze\\page.tsx"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/account/delete",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\account\\delete\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/account/export",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\account\\export\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/auth/check-access",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\auth\\check-access\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/auth/sync-user",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\auth\\sync-user\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/cv/analyze",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\cv\\analyze\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/cv/rewrite",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\cv\\rewrite\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/cv/upload",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\cv\\upload\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/health",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\health\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/interview",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\interview\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/product/upload",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\product\\upload\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/public/analyze-preview",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\public\\analyze-preview\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/report/generate",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\report\\generate\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/simulation/:id",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\simulation\\[id]\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/simulation/create",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\simulation\\create\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/simulation/end",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\simulation\\end\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/simulation/message",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\simulation\\message\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/stripe/checkout",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\stripe\\checkout\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/stripe/customer-portal",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\stripe\\customer-portal\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/stripe/webhook",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\stripe\\webhook\\route.ts"
+    },
+    {
+        "type":  "api",
+        "route":  "/api/user/subscription",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\api\\user\\subscription\\route.ts"
+    },
+    {
+        "type":  "page",
+        "route":  "/contact",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\contact\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/copilot",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\copilot\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/dashboard",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\dashboard\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/history",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\history\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/login",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\login\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/logout",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\logout\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/pricing",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\pricing\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/privacy",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\privacy\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/recruiter",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\recruiter\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/report/:id",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\report\\[id]\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/search",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\search\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/settings",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\settings\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/signup",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\signup\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/simulation",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\simulation\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/simulation/:id",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\simulation\\[id]\\page.tsx"
+    },
+    {
+        "type":  "page",
+        "route":  "/terms",
+        "file":  "C:\\Trajectoire\\apps\\web\\src\\app\\terms\\page.tsx"
+    }
+]

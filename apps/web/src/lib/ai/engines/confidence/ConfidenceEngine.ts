@@ -1,7 +1,6 @@
 import { BaseEngine, BaseEngineConfig } from "../BaseEngine";
 import { EngineManifest } from "../EngineManifest";
 import { BaseEvent } from "../../contracts/Event";
-import { EngineInput } from "../../contracts/Engine";
 
 // ===================================================================
 // CONFIDENCE ENGINE — 100% Deterministic Confidence Calculation

@@ -1,5 +1,5 @@
 import { P5Event } from "../execution-contract.js";
-import { RuntimeDecision, ExecutionResult } from "./integration-contract.js";
+import { RuntimeDecision } from "./integration-contract.js";
 import { normalizeDecision } from "../bridge/normalize-decision.js";
 import { validateDecision } from "../bridge/validation.js";
 import { GovernorDecision } from "../bridge/normalization-contract.js";

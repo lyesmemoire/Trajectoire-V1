@@ -32,7 +32,7 @@ export declare function createSession(state: _MindState, timestamp: number): Exe
  * - R3: deterministic — same state + same decision → same result.
  * - R4: rollback-safe — invalid decisions leave session untouched.
  */
-export declare function executeDecision(session: ExecutionSession, _decision: RuntimeDecision, _timestamp: number): {
+export declare function executeDecision(session: ExecutionSession, decision: RuntimeDecision, timestamp: number): {
     session: ExecutionSession;
     result: ExecutionResult | null;
 };

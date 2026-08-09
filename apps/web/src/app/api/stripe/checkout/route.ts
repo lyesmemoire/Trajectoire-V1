@@ -3,23 +3,18 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse }  from "next/server";
-import Stripe                         from "stripe";
 import { z }                          from "zod";
 import { prisma }                     from "@/lib/prisma";
 import { getStrictUser }              from "@/lib/auth/session-logic";
 import { envServer }                  from "@/lib/env.server";
 import { logInfo, logError }          from "@/lib/logger";
 import { checkRateLimit }             from "@/lib/rate-limit";
+import { stripe }                    from "@/lib/stripe";
+import Stripe from 'stripe';
 
-// ── Client Stripe (lazy) ──────────────────────────────────────────────────────
-let stripeClient: Stripe | null = null;
-function getStripe(): Stripe {
-  if (!stripeClient) {
-    stripeClient = new Stripe(envServer.STRIPE_SECRET_KEY ?? "", {
-      apiVersion: "2025-08-27.basil" as Stripe.LatestApiVersion,
-    });
-  }
-  return stripeClient;
+// ── Client Stripe (resilient) ──────────────────────────────────────────────────────
+function getStripe() {
+  return stripe;
 }
 
 // ── Plans autorisés — source de vérité côté serveur ──────────────────────────
@@ -153,7 +148,7 @@ export async function POST(request: NextRequest) {
       sessionParams.customer_email = userProfile.email;
     }
 
-    const session = await getStripe().checkout.sessions.create(sessionParams);
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     // Sauvegarder stripeCustomerId immédiatement si Stripe en a créé un
     if (session.customer && !userProfile?.stripeCustomerId) {

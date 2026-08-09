@@ -5,6 +5,13 @@ import { evaluateTechDirector } from "./tech-director-evaluator.js";
 import { evaluatePressure } from "./pressure-evaluator.js";
 import { evaluateLeadership } from "./leadership-evaluator.js";
 import { determineAdaptiveNextMove, AdaptiveControllerInput } from "./adaptive-controller.js";
+// Meta-brain integration (mode shadow - palier 1 / pilotage - palier 2)
+import { 
+  runUnifiedEvaluation, 
+  runMetaDecision, 
+  runMultiEngineQuestionGenerator,
+  extractLegacySignalsRudimentary
+} from "../meta/index.js";
 
 export interface ClaimFocus {
   claimId: string;
@@ -131,6 +138,42 @@ function computeIntegrityRisk({
 
 function addToAverage(avg: number, count: number, val: number) {
   return ((avg * count) + val) / (count + 1);
+}
+
+/**
+ * Mappe les phases V3 vers les phases du meta-brain.
+ * Phase1 (HR narrative) → "hr"
+ * Phase2 (Tech Director) → "tech"
+ * Phase3 (Pressure) → "pressure"
+ * Phase4 (Leadership) → "leadership"
+ */
+function mapV3PhaseToMeta(phase: "Phase1" | "Phase2" | "Phase3" | "Phase4"): "hr" | "tech" | "pressure" | "leadership" | "wrap" {
+  switch (phase) {
+    case "Phase1": return "hr";
+    case "Phase2": return "tech";
+    case "Phase3": return "pressure";
+    case "Phase4": return "leadership";
+    default: return "wrap";
+  }
+}
+
+/**
+ * Mappe les phases du meta-brain vers les phases V3 (mapping inverse).
+ * "hr" → Phase1
+ * "tech" → Phase2
+ * "pressure" → Phase3
+ * "leadership" → Phase4
+ * "wrap" → Phase4 (fin)
+ */
+function mapMetaPhaseToV3(phase: "hr" | "tech" | "pressure" | "leadership" | "wrap"): "Phase1" | "Phase2" | "Phase3" | "Phase4" {
+  switch (phase) {
+    case "hr": return "Phase1";
+    case "tech": return "Phase2";
+    case "pressure": return "Phase3";
+    case "leadership": return "Phase4";
+    case "wrap": return "Phase4";
+    default: return "Phase2";
+  }
 }
 
 import { detectIntent } from "../intent-detector.js";
@@ -308,6 +351,136 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
   // Record timelines
   state.integrityRiskTimeline.push(state.integrityRiskIndex);
   state.pressureTimeline.push(state.pressureLevel);
+
+  // === META-BRAIN SHADOW MODE (PALIER 1) / PILOTAGE (PALIER 2) ===
+  // Le meta-brain tourne en parallèle. 
+  // USE_META_BRAIN=true : pilote les questions
+  // USE_META_BRAIN=false ou undefined : mode shadow (log seulement)
+  const USE_META_BRAIN = process.env.USE_META_BRAIN === "true";
+  
+  try {
+    // Construire un snapshot RecruiterMind minimal depuis l'état V3
+    const recruiterMindSnapshot = {
+      trust: Math.max(0, 1 - state.integrityRiskIndex),
+      suspicion: state.integrityRiskIndex,
+      engagement: Math.max(0, 1 - (state.turnCount * 0.1)),
+      pressure_level: state.pressureLevel / 5,
+      fatigue: Math.min(state.turnCount * 0.1, 1),
+      confidence: (state.avgTech + state.avgComm + state.avgAlign) / 3 / 10,
+      momentum: 0
+    };
+
+    // PALIER 3 : Extraire les signaux V1/V2 rudimentaires depuis V3
+    // Mapping progressif pour lier les 3 cerveaux
+    const avgV3Score = (state.avgTech + state.avgComm + state.avgAlign) / 3;
+    const legacySignals = extractLegacySignalsRudimentary(avgV3Score, state.integrityRiskIndex);
+
+    // Évaluation unifiée (V3 + V1/V2 rudimentaires pour l'instant)
+    const unified = await runUnifiedEvaluation({
+      candidate_answer: transcript,
+      v1_signals: legacySignals.v1_signals, // Palier 3 : signaux V1 rudimentaires
+      v2_signals: legacySignals.v2_signals, // Palier 3 : signaux V2 rudimentaires
+      v3_signals: {
+        bluff_score: bluffEval.bluff_score,
+        vagueness_level: bluffEval.vagueness_level,
+        integrity_risk_index: state.integrityRiskIndex,
+        leadership_signal: state.phase === "Phase4" ? commScore : undefined
+      },
+      recruiter_mind_snapshot: recruiterMindSnapshot
+    });
+
+    // Décision méta
+    const metaDecision = await runMetaDecision({
+      unified_signals: unified,
+      recruiter_mind_snapshot: recruiterMindSnapshot,
+      interview_state: {
+        current_phase: mapV3PhaseToMeta(state.phase),
+        current_pressure_level: state.pressureLevel,
+        profile_level: "senior", // à configurer selon le candidat
+        turn_count: state.turnCount,
+        max_turns: 10
+      }
+    });
+
+    // Génération de question multi-moteur
+    const metaQuestion = await runMultiEngineQuestionGenerator({
+      job_context: {
+        job_title: state.targetRole ?? "Senior Engineer",
+        job_requirements: Array.isArray((state.context as any)?.job_requirements) 
+          ? (state.context as any).job_requirements 
+          : []
+      },
+      candidate_profile: {
+        cv_summary: (state.context as any)?.cv_summary ?? "",
+        key_strengths: Array.isArray((state.context as any)?.strengths) 
+          ? (state.context as any).strengths 
+          : [],
+        key_gaps: Array.isArray((state.context as any)?.gaps) 
+          ? (state.context as any).gaps 
+          : []
+      },
+      interview_state: {
+        current_phase: metaDecision.meta_decision.target_phase,
+        current_pressure_level: metaDecision.meta_decision.target_pressure_level,
+        profile_level: "senior",
+        turn_count: state.turnCount,
+        max_turns: 10
+      },
+      meta_decision: metaDecision.meta_decision,
+      engine_routing: metaDecision.engine_routing,
+      unified_signals: unified,
+      candidate_recent_answers: state.history.slice(-3).map(h => ({
+        question: h.role === "assistant" ? h.content : "",
+        answer: h.role === "user" ? h.content : "",
+        timestamp: new Date().toISOString()
+      }))
+    });
+
+    if (USE_META_BRAIN) {
+      // PALIER 2 : Le meta-brain pilote les questions
+      // Met à jour state.phase / pressure avec les cibles méta
+      state.phase = mapMetaPhaseToV3(metaDecision.meta_decision.target_phase);
+      state.pressureLevel = metaDecision.meta_decision.target_pressure_level;
+      state.lastQuestion = metaQuestion.next_question.question_text;
+      
+      console.log(JSON.stringify({
+        meta_brain_pilot: {
+          turn: state.turnCount,
+          phase: state.phase,
+          pressureLevel: state.pressureLevel,
+          unified,
+          metaDecision,
+          metaQuestion: {
+            question_text: metaQuestion.next_question.question_text,
+            interviewer_role: metaQuestion.next_question.interviewer_role,
+            tone: metaQuestion.next_question.tone,
+            primary_goal: metaQuestion.question_intent.primary_goal
+          }
+        }
+      }));
+    } else {
+      // PALIER 1 : LOG seulement, on n'utilise pas encore metaQuestion
+      console.log(JSON.stringify({
+        meta_brain_shadow: {
+          turn: state.turnCount,
+          phase: state.phase,
+          unified,
+          metaDecision,
+          metaQuestion: {
+            question_text: metaQuestion.next_question.question_text,
+            interviewer_role: metaQuestion.next_question.interviewer_role,
+            tone: metaQuestion.next_question.tone,
+            primary_goal: metaQuestion.question_intent.primary_goal
+          }
+        }
+      }));
+    }
+  } catch (error) {
+    console.error("[meta-brain] Error:", error);
+    // Ne pas bloquer le flux V3 en cas d'erreur du meta-brain
+    // En mode pilotage, on fallback sur la logique V3 existante
+  }
+  // === END META-BRAIN MODE ===
 
   // Calibration Instrumentation Log
   console.log(JSON.stringify({

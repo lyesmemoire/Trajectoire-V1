@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { DefaultCognitiveRuntime } from "../../apps/web/src/lib/ai/runtime/CognitiveRuntime";
-import { PerceptionEngine, PerceptionManifest } from "../../apps/web/src/lib/ai/engines/PerceptionEngine";
+import { PerceptionEngine } from "../../apps/web/src/lib/ai/engines/PerceptionEngine";
 import { InvestigationContext } from "../../apps/web/src/domain/cognitive/InvestigationContext";
 import { EngineInput } from "../../apps/web/src/lib/ai/contracts/Engine";
 

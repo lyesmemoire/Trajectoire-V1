@@ -1,0 +1,1 @@
+{"version":3,"file":"trace.context.d.ts","sourceRoot":"","sources":["trace.context.ts"],"names":[],"mappings":"AAEA,qBAAa,YAAY;IACvB,OAAO,CAAC,OAAO,CAAuB;gBAE1B,OAAO,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,EAAE,SAAS,CAAC,EAAE,MAAM;IAI/D,IAAI,KAAK,yBAER;CACF"}

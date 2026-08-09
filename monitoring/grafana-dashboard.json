@@ -1,0 +1,378 @@
+{
+  "dashboard": {
+    "title": "Trajectoire API - Observability Dashboard",
+    "uid": "trajectoire-api-observability",
+    "tags": ["trajectoire", "api", "observability"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(http_server_duration_seconds_count{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "{{method}} {{route}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Request Duration (P95)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_server_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "{{method}} {{route}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Request Duration (P99)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.99, rate(http_server_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "{{method}} {{route}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "rate(http_server_duration_seconds_count{service_name='trajectoire-api', status_code=~'5..'}[1m]) / rate(http_server_duration_seconds_count{service_name='trajectoire-api'}[1m]) * 100",
+            "legendFormat": "Error Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Graph Operations",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "rate(graph_operation_duration_seconds_count{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "{{operation}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "title": "Graph Operation Duration",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(graph_operation_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "{{operation}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Matching Operations",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+        "targets": [
+          {
+            "expr": "rate(matching_operation_duration_seconds_count{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "Matching Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "title": "Matching Duration",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(matching_operation_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "Matching P95"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Search Operations",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32},
+        "targets": [
+          {
+            "expr": "rate(search_operation_duration_seconds_count{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "Search Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 10,
+        "title": "Search Duration",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(search_operation_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "Search P95"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 11,
+        "title": "Copilot Operations",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 40},
+        "targets": [
+          {
+            "expr": "rate(copilot_operation_duration_seconds_count{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "Copilot Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 12,
+        "title": "Copilot Duration",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 40},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(copilot_operation_duration_seconds_bucket{service_name='trajectoire-api'}[1m]))",
+            "legendFormat": "Copilot P95"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 13,
+        "title": "Cache Hit Rate",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 48},
+        "targets": [
+          {
+            "expr": "rate(cache_hits_total{service_name='trajectoire-api'}[1m]) / (rate(cache_hits_total{service_name='trajectoire-api'}[1m]) + rate(cache_misses_total{service_name='trajectoire-api'}[1m])) * 100",
+            "legendFormat": "Cache Hit Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 14,
+        "title": "Cache Miss Rate",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 48},
+        "targets": [
+          {
+            "expr": "rate(cache_misses_total{service_name='trajectoire-api'}[1m]) / (rate(cache_hits_total{service_name='trajectoire-api'}[1m]) + rate(cache_misses_total{service_name='trajectoire-api'}[1m])) * 100",
+            "legendFormat": "Cache Miss Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 15,
+        "title": "Active Connections",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 48},
+        "targets": [
+          {
+            "expr": "pg_stat_activity{datname='trajectoire', state='active'}",
+            "legendFormat": "Active Connections"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 16,
+        "title": "CPU Usage",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 48},
+        "targets": [
+          {
+            "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode='idle'}[1m])) * 100)",
+            "legendFormat": "CPU Usage"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 17,
+        "title": "Memory Usage",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 52},
+        "targets": [
+          {
+            "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+            "legendFormat": "Memory Usage"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 18,
+        "title": "Disk Usage",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 52},
+        "targets": [
+          {
+            "expr": "(1 - (node_filesystem_avail_bytes{mountpoint='/'} / node_filesystem_size_bytes{mountpoint='/'})) * 100",
+            "legendFormat": "Disk Usage"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 19,
+        "title": "Network In",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 52},
+        "targets": [
+          {
+            "expr": "rate(node_network_receive_bytes_total[1m])",
+            "legendFormat": "Network In"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 20,
+        "title": "Network Out",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 52},
+        "targets": [
+          {
+            "expr": "rate(node_network_transmit_bytes_total[1m])",
+            "legendFormat": "Network Out"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 21,
+        "title": "Error Count by Type",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 56},
+        "targets": [
+          {
+            "expr": "rate(error_count_total{service_name='trajectoire-api'}[1m])",
+            "legendFormat": "{{error_type}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "eps"
+          }
+        }
+      }
+    ]
+  }
+}

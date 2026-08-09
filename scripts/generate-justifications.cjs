@@ -22,7 +22,7 @@ const justifications = cvmFiles.map(comp => {
   const hasDecision = allReportFiles.includes(`${comp}-decision.json`);
   
   let status = 'NOT STARTED';
-  let reasons = [];
+  const reasons = [];
   
   if (!hasCertification) {
     status = 'NOT STARTED';

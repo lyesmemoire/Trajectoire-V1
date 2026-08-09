@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { BytecodeGenerator, BytecodeOpcode, type BytecodeModule } from '../../../compiler/bytecode/bytecode-generator';
+import { BytecodeGenerator, BytecodeOpcode } from '../../../compiler/bytecode/bytecode-generator';
 import { IRInstructionType, IRNodeType, type IRModule } from '../../../compiler/cir/ir-generator';
 
 describe('BytecodeGenerator', () => {

@@ -125,7 +125,7 @@ function runAudit(runDir) {
   let licensePass = false;
   if (licensesRaw) {
     const policyLic = JSON.parse(fs.readFileSync(path.join(ROOT, 'certification/policy/licenses.json'), 'utf8'));
-    let foundBlocked = [];
+    const foundBlocked = [];
     for (const [pkg, info] of Object.entries(licensesRaw)) {
       let lic = info.licenses;
       if (Array.isArray(lic)) lic = lic[0]; // Simplification MVP
@@ -142,7 +142,7 @@ function runAudit(runDir) {
   console.log('  [8/8] Verifying Reproducibility Hashes...');
   // As a proxy for reproducibility, we hash the compiler/cvm sources and environment
   // A true reproducible build would hash the built output like dist/
-  let srcHashes = [];
+  const srcHashes = [];
   try {
     const files = fs.readdirSync(path.join(ROOT, 'compiler/cvm'));
     for (const file of files) {

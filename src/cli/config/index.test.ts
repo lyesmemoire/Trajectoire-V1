@@ -1,7 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ConfigManager } from './index';
-import { ConfigError } from '../errors';
-import path from 'path';
 
 describe('ConfigManager', () => {
   let configManager: ConfigManager;

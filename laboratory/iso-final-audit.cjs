@@ -280,7 +280,7 @@ log(`Hash Machine A: ${hashA}`);
 const machineBDir = path.join(os.tmpdir(), 'Trajectoire-MachineB-' + Date.now());
 fs.mkdirSync(machineBDir, { recursive: true });
 
-let hashBResult = { hashA, machineBRuns: [], identical: false, error: null };
+const hashBResult = { hashA, machineBRuns: [], identical: false, error: null };
 try {
   log('Copie du dépôt vers Machine B (fs.cpSync)...');
   fs.cpSync(ROOT, machineBDir, {

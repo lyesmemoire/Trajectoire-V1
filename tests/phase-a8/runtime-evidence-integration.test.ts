@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { DefaultCognitiveRuntime } from "../../apps/web/src/lib/ai/runtime/CognitiveRuntime";
-import { EvidenceEngine, EvidenceManifest } from "../../apps/web/src/lib/ai/engines/EvidenceEngine";
+import { EvidenceEngine } from "../../apps/web/src/lib/ai/engines/EvidenceEngine";
 import { EvidencePolicyRegistry } from "../../apps/web/src/lib/ai/engines/evidence/policies/EvidencePolicyRegistry";
 import { InvestigationContext } from "../../apps/web/src/domain/cognitive/InvestigationContext";
 import { EngineInput } from "../../apps/web/src/lib/ai/contracts/Engine";

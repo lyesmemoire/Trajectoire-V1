@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TraceHooks, TraceEvent, TraceEventType, TraceOptions } from '../../../compiler/cvm/trace-hooks';
+import { TraceHooks, TraceEventType } from '../../../compiler/cvm/trace-hooks';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { Opcode } from '../../../compiler/cbs/opcode-table';
 

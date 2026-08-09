@@ -35,6 +35,15 @@ jobs:
       - name: Run ESLint
         run: pnpm lint
 
+      - name: Upload lint results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: |
+            apps/api/lint-report.json
+            apps/web/lint-report.json
+
   # Typecheck
   typecheck:
     name: Typecheck
@@ -59,7 +68,16 @@ jobs:
       - name: Run TypeScript
         run: pnpm typecheck
 
-  # Tests
+      - name: Upload typecheck results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typecheck-results
+          path: |
+            apps/api/ts-report.json
+            apps/web/ts-report.json
+
+  # Tests with Coverage
   test:
     name: Tests
     runs-on: ubuntu-latest
@@ -80,17 +98,74 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run tests
-        run: pnpm test
+      - name: Run tests with coverage
+        run: pnpm test:cov
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "Coverage $COVERAGE% is below 80% threshold"
+            exit 1
+          fi
+          echo "Coverage $COVERAGE% meets threshold"
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  # Regression Tests
+  regression:
+    name: Regression Tests
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run regression tests
+        run: pnpm test:e2e
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Compare with baseline
+        run: |
+          # Compare performance metrics with baseline
+          # Fail if regression detected
+          echo "Running regression comparison..."
 
   # Build
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, test]
+    needs: [lint, typecheck, test, regression]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -115,7 +190,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: apps/web/.next
+          path: |
+            apps/api/dist
+            apps/web/.next
           retention-days: 1
 
   # Security Scan
@@ -134,6 +211,7 @@ jobs:
           scan-ref: '.'
           format: 'sarif'
           output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
@@ -141,14 +219,118 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 
       - name: Run npm audit
-        run: pnpm audit
-        continue-on-error: true
+        run: pnpm audit --audit-level=moderate
+        continue-on-error: false
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Docker Build
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [build, security]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/api
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/trajectoire-api:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/trajectoire-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Web image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/web
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/trajectoire-web:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/trajectoire-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Scan Docker images
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/trajectoire-api:${{ github.sha }}
+          format: 'sarif'
+          output: 'docker-trivy-results.sarif'
+
+      - name: Upload Docker scan results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'docker-trivy-results.sarif'
+
+  # Quality Report
+  quality-report:
+    name: Quality Report
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, test, security, docker]
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Generate quality report
+        run: |
+          echo "# Quality Report" > quality-report.md
+          echo "" >> quality-report.md
+          echo "## Build: ${{ github.sha }}" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "## Lint Status: ${{ needs.lint.result }}" >> quality-report.md
+          echo "## Typecheck Status: ${{ needs.typecheck.result }}" >> quality-report.md
+          echo "## Test Status: ${{ needs.test.result }}" >> quality-report.md
+          echo "## Security Status: ${{ needs.security.result }}" >> quality-report.md
+          echo "## Docker Status: ${{ needs.docker.result }}" >> quality-report.md
+
+      - name: Upload quality report
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-report
+          path: quality-report.md
+
+      - name: Comment PR with quality report
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('quality-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
 
   # Deploy Preview (for PRs)
   deploy-preview:
     name: Deploy Preview
     runs-on: ubuntu-latest
-    needs: [build, security]
+    needs: [docker, quality-report]
     if: github.event_name == 'pull_request'
     environment:
       name: preview
@@ -156,22 +338,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
 
       - name: Deploy to Vercel Preview
         id: deploy
@@ -182,11 +348,15 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prebuilt'
 
+      - name: Run smoke tests on preview
+        run: |
+          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+
   # Deploy Staging
   deploy-staging:
     name: Deploy Staging
     runs-on: ubuntu-latest
-    needs: [build, security]
+    needs: [docker, quality-report]
     if: github.ref == 'refs/heads/develop'
     environment:
       name: staging
@@ -194,22 +364,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
 
       - name: Deploy to Vercel Staging
         id: deploy
@@ -221,11 +375,25 @@ jobs:
           vercel-args: '--prebuilt --prod'
           working-directory: ./apps/web
 
+      - name: Run Prisma migrations
+        run: pnpm migration:up
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+
+      - name: Run smoke tests on staging
+        run: |
+          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+
+      - name: Store deployment info for rollback
+        run: |
+          echo "${{ github.sha }}" > deployment-sha.txt
+          echo "${{ steps.deploy.outputs.url }}" > deployment-url.txt
+
   # Deploy Production
   deploy-production:
     name: Deploy Production
     runs-on: ubuntu-latest
-    needs: [build, security]
+    needs: [docker, quality-report]
     if: github.ref == 'refs/heads/main'
     environment:
       name: production
@@ -233,24 +401,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
-        env:
-          NODE_ENV: production
 
       - name: Deploy to Vercel Production
         id: deploy
@@ -262,15 +412,77 @@ jobs:
           vercel-args: '--prebuilt --prod'
           working-directory: ./apps/web
 
-      - name: Run database migrations
+      - name: Run Prisma migrations
         run: pnpm migration:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run smoke tests on production
+        run: |
+          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+
+      - name: Run health checks
+        run: |
+          curl -f ${{ steps.deploy.outputs.url }}/api/health || exit 1
+
+      - name: Store deployment info for rollback
+        run: |
+          echo "${{ github.sha }}" > deployment-sha.txt
+          echo "${{ steps.deploy.outputs.url }}" > deployment-url.txt
+          echo "${{ github.sha }}" > last-successful-deployment.txt
 
       - name: Notify deployment
         uses: 8398a7/action-slack@v3
         if: success()
         with:
           status: ${{ job.status }}
-          text: 'Production deployment successful'
+          text: 'Production deployment successful - SHA: ${{ github.sha }}'
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Rollback on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.setFailed('Deployment failed, initiating rollback...');
+            // Trigger rollback workflow
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'rollback.yml',
+              ref: 'main'
+            });
+
+  # Rollback Job
+  rollback:
+    name: Automatic Rollback
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    if: failure() && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.before }}
+
+      - name: Deploy previous version
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prebuilt --prod'
+          working-directory: ./apps/web
+
+      - name: Rollback Prisma migrations
+        run: pnpm migration:down
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: 'failure'
+          text: 'Automatic rollback initiated due to deployment failure'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+

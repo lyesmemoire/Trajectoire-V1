@@ -18,7 +18,7 @@ Object.entries(testFiles).forEach(([component, filePath]) => {
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
 
-  let mutationRisk = {
+  const mutationRisk = {
     score: 0,
     factors: {
       hasBusinessLogicTests: false,

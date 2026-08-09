@@ -11,6 +11,6 @@ export type LogContext = {
 };
 export declare const createChildLogger: (context: LogContext) => pino.Logger<never, boolean>;
 export declare function logInfo(prefix: string, message: string, context?: LogContext): void;
-export declare function logWarn(prefix: string, _message: string, context?: LogContext): void;
-export declare function logError(_prefix: string, _error: unknown, _context?: LogContext): void;
+export declare function logWarn(prefix: string, message: string, context?: LogContext): void;
+export declare function logError(prefix: string, error: unknown, context?: LogContext): void;
 //# sourceMappingURL=logger.d.ts.map

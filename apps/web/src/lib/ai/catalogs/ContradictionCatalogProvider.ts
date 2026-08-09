@@ -1,4 +1,4 @@
-import { CatalogProvider, CatalogConfig, CatalogItem } from "./CatalogProvider";
+import { CatalogConfig, CatalogItem } from "./CatalogProvider";
 import { MemoryCatalogProvider } from "./CatalogProvider";
 import contradictionsJson from "./data/contradictions.json";
 

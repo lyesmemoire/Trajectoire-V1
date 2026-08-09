@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { ContradictionCatalog, getContradictionType, getAllContradictionTypes, getContradictionTypesByCategory, getContradictionTypesBySeverity, getContradictionTypesByPolicy } from "../../apps/web/src/domain/cognitive/catalogs/ContradictionCatalog";
+import { getContradictionType, getAllContradictionTypes, getContradictionTypesByCategory, getContradictionTypesBySeverity, getContradictionTypesByPolicy } from "../../apps/web/src/domain/cognitive/catalogs/ContradictionCatalog";
 import { BlockingContradictionPolicy, RecoverableContradictionPolicy, BenefitOfDoubtPolicy, FalsePositivePolicy } from "../../apps/web/src/lib/ai/engines/contradiction";
 import { ContradictionLedger } from "../../apps/web/src/lib/ai/engines/contradiction/ContradictionLedger";
 import { ContradictionEventFactory } from "../../apps/web/src/lib/ai/engines/contradiction/ContradictionEventFactory";

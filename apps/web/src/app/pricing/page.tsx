@@ -1,7 +1,43 @@
-import Link from "next/link"
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
 export default function PricingPage() {
+  const router = useRouter()
+  const [loading, setLoading] = useState<string | null>(null)
+
+  const handleSubscribe = async (plan: string) => {
+    setLoading(plan)
+    try {
+      // In development, skip Stripe and go directly to dashboard
+      if (process.env.NODE_ENV === 'development') {
+        router.push('/dashboard')
+        return
+      }
+
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId: plan }),
+      })
+
+      if (response.ok) {
+        const { url } = await response.json()
+        window.location.href = url
+      } else {
+        console.error('Payment failed')
+        router.push('/signup')
+      }
+    } catch (error) {
+      console.error('Payment error:', error)
+      router.push('/signup')
+    } finally {
+      setLoading(null)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-ivoire-50">
       <section className="bg-ivoire-50 py-20 md:py-36">
@@ -42,11 +78,14 @@ export default function PricingPage() {
               <p className="text-ink-400 text-sm mb-10">
                 / mois
               </p>
-              <Link href="/signup">
-                <Button variant="secondary" className="w-full">
-                  Choisir Starter
-                </Button>
-              </Link>
+              <Button 
+                variant="secondary" 
+                className="w-full"
+                onClick={() => handleSubscribe('starter')}
+                disabled={loading === 'starter'}
+              >
+                {loading === 'starter' ? 'Chargement...' : 'Choisir Starter'}
+              </Button>
             </div>
 
             {/* Pro — Recommandé */}
@@ -88,11 +127,14 @@ export default function PricingPage() {
               <p className="text-ink-400 text-sm mb-10">
                 / mois
               </p>
-              <Link href="/signup">
-                <Button variant="premium" className="w-full">
-                  Choisir Pro
-                </Button>
-              </Link>
+              <Button 
+                variant="premium" 
+                className="w-full"
+                onClick={() => handleSubscribe('pro')}
+                disabled={loading === 'pro'}
+              >
+                {loading === 'pro' ? 'Chargement...' : 'Choisir Pro'}
+              </Button>
             </div>
 
             {/* Expert */}
@@ -109,11 +151,14 @@ export default function PricingPage() {
               <p className="text-ink-500 text-sm mb-10">
                 / mois
               </p>
-              <Link href="/signup">
-                <Button variant="secondary" className="w-full bg-white text-ink-900 border-white hover:bg-ivoire-100">
-                  Choisir Expert
-                </Button>
-              </Link>
+              <Button 
+                variant="secondary" 
+                className="w-full bg-white text-ink-900 border-white hover:bg-ivoire-100"
+                onClick={() => handleSubscribe('expert')}
+                disabled={loading === 'expert'}
+              >
+                {loading === 'expert' ? 'Chargement...' : 'Choisir Expert'}
+              </Button>
             </div>
 
           </div>

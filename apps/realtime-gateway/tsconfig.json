@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "composite": true,
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
     "outDir": "dist",
+    "rootDir": "src",
     "strict": true,
     "exactOptionalPropertyTypes": false,
     "skipLibCheck": true,
@@ -15,8 +15,9 @@
     "declarationMap": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "noEmitOnError": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "src/interview/**/*", "src/__tests__/**/*", "src/scripts/**/*"]
+  "exclude": ["node_modules", "dist", "src/interview/**/*", "src/__tests__/**/*", "src/scripts/**/*", "../../core/p5", "../../core/p6", "../../lib"]
 }

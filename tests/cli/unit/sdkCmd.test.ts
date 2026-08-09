@@ -12,7 +12,6 @@ vi.mock('fs/promises', () => ({
 }));
 
 import { generateSDK, validateSDK } from '../../../src/cli/sdkCmd/index';
-import * as path from 'path';
 
 describe('SDK Command', () => {
   beforeEach(() => {

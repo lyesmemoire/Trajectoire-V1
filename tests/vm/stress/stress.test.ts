@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { Stack } from '../../../compiler/cbs/stack';
-import { Heap } from '../../../compiler/cbs/heap';
 import { GarbageCollector } from '../../../compiler/cvm/garbage-collector';
 import { SnapshotManager } from '../../../compiler/cvm/snapshot-manager';
 import { RollbackManager } from '../../../compiler/cvm/rollback-manager';

@@ -1,0 +1,1 @@
+{"version":3,"file":"timeline-verifier.d.ts","sourceRoot":"","sources":["timeline-verifier.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,MAAM,WAAW,kBAAkB;IACjC,QAAQ,CAAC,KAAK,EAAE,OAAO,CAAC;IACxB,QAAQ,CAAC,UAAU,EAAE,MAAM,EAAE,CAAC;CAC/B;AAED;;;;;;;;;GASG;AACH,wBAAgB,cAAc,CAAC,QAAQ,EAAE,SAAS,GAAG,kBAAkB,CAoBtE"}

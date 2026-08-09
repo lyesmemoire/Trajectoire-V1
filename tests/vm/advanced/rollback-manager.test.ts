@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { RollbackManager, RollbackOptions } from '../../../compiler/cvm/rollback-manager';
+import { RollbackManager } from '../../../compiler/cvm/rollback-manager';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 
 describe('Rollback Manager - Priority 3', () => {

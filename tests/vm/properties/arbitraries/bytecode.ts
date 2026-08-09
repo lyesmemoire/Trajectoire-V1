@@ -68,8 +68,7 @@ const createInstructionArb = (encodings: any[]) => {
       });
     }
 
-    // @ts-ignore
-    return fc.tuple(...operandArbs).map(operands => ({
+    return (fc.tuple(...operandArbs) as any).map(operands => ({
       opcode: encoding.opcode as Opcode,
       operands: operands.filter((_, i) => encoding.operandTypes[i] !== OperandType.NONE),
       size: encoding.size,

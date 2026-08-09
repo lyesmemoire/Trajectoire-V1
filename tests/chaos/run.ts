@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { ChaosEngine } from './engine/ChaosEngine';
-import { ChaosTarget, ChaosScenario } from './engine/interfaces';
+import { ChaosScenario } from './engine/interfaces';
 import { FaultInjector } from './engine/FaultInjector';
 import { CreditOracle, TransactionOracle, RecoveryOracle, ConsistencyOracle } from './oracles';
 import { BusinessChaosTarget } from './targets/BusinessApp';
@@ -92,7 +92,7 @@ async function runChaos() {
     }
   ];
 
-  let configPath = path.join(__dirname, 'campaigns', `${mode}.json`);
+  const configPath = path.join(__dirname, 'campaigns', `${mode}.json`);
   if (!fs.existsSync(configPath)) {
     console.error(`Campaign config not found: ${configPath}`);
     process.exit(1);

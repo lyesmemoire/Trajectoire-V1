@@ -1,0 +1,73 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 10
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 50
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 100
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 50
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 10
+      name: "Cool down"
+  processor: './processor.js'
+
+scenarios:
+  - name: "API Load Test"
+    flow:
+      # Health check
+      - get:
+          url: '/health'
+          expect:
+            - statusCode: 200
+      
+      # Graph operations
+      - post:
+          url: '/graph'
+          json:
+            nodes:
+              - id: '1'
+                type: 'skill'
+                properties:
+                  name: 'JavaScript'
+            edges: []
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 201
+      
+      # Search operations
+      - get:
+          url: '/search?q=JavaScript'
+          expect:
+            - statusCode: 200
+      
+      # Matching operations
+      - post:
+          url: '/matching'
+          json:
+            candidateId: 'test-candidate'
+            jobId: 'test-job'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Copilot operations
+      - post:
+          url: '/copilot'
+          json:
+            message: 'What jobs match my profile?'
+            context: {}
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      - think: 2

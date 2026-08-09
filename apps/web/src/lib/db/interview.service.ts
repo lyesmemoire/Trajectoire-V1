@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
 import { envServer } from "@/lib/env.server";
 import prisma from "@/lib/prisma";
 import { AnalyticsEngine } from "@/lib/analytics/interview.engine";
@@ -11,6 +10,12 @@ import {
   InterviewAnalyticsProjection,
 } from "@/domain/interview.contract";
 import { logWarn } from "@/lib/logger/Logger";
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseClient = createClient(
+  envServer.NEXT_PUBLIC_SUPABASE_URL || '',
+  envServer.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
 
 /**
  * SOURCE OF TRUTH for Interview operations.
@@ -23,8 +28,7 @@ import { logWarn } from "@/lib/logger/Logger";
 export const InterviewService = {
 
   async startStandardSession(userId: string) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-    const { data, error } = await supabase.from("interview_sessions").insert({
+    const { data, error } = await supabaseClient.from("interview_sessions").insert({
       user_id: userId,
       status: "created",
       questions: [],
@@ -36,8 +40,7 @@ export const InterviewService = {
   },
 
   async startPremiumSession(userId: string) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-    const { data, error } = await supabase.from("premium_interview_sessions").insert({
+    const { data, error } = await supabaseClient.from("premium_interview_sessions").insert({
       user_id: userId,
       status: "created",
       transcript: [],
@@ -50,34 +53,32 @@ export const InterviewService = {
   },
 
   async submitAnswer(sessionId: string, answer: string) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-    const { data: session } = await supabase.from("interview_sessions").select("*").eq("id", sessionId).single();
+    const { data: session } = await supabaseClient.from("interview_sessions").select("*").eq("id", sessionId).single();
     if (!session) throw new Error("Session not found");
     if (session.status === "completed") throw new Error("Cannot mutate completed session");
 
     const currentAnswers = session.answers || [];
-    const { data, error } = await supabase.from("interview_sessions").update({
+    const { data, error } = await supabaseClient.from("interview_sessions").update({
       answers: [...currentAnswers, answer],
       status: "running",
     }).eq("id", sessionId).select("*").single();
 
-    if (error) throw error;
+    if (error) throw new Error("Failed to submit answer: " + error.message);
     return data;
   },
 
   async appendTranscript(sessionId: string, message: any) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-    const { data: session } = await supabase.from("premium_interview_sessions").select("*").eq("id", sessionId).single();
+    const { data: session } = await supabaseClient.from("premium_interview_sessions").select("*").eq("id", sessionId).single();
     if (!session) throw new Error("Session not found");
     if (session.status === "completed") throw new Error("Cannot mutate completed session");
 
     const currentTranscript = session.transcript || [];
-    const { data, error } = await supabase.from("premium_interview_sessions").update({
+    const { data, error } = await supabaseClient.from("premium_interview_sessions").update({
       transcript: [...currentTranscript, message],
       status: "streaming",
     }).eq("id", sessionId).select("*").single();
 
-    if (error) throw error;
+    if (error) throw new Error("Failed to append transcript: " + error.message);
     return data;
   },
 
@@ -95,15 +96,13 @@ export const InterviewService = {
    * 9. Mark runtime session as completed
    */
   async completeSession(sessionId: string) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-
     // ── 1. Lock Session ──
     let isStandard = true;
-    let { data: session } = await supabase.from("interview_sessions").select("*").eq("id", sessionId).single();
+    let { data: session } = await supabaseClient.from("interview_sessions").select("*").eq("id", sessionId).single();
 
     if (!session) {
       isStandard = false;
-      const { data: premiumSession } = await supabase.from("premium_interview_sessions").select("*").eq("id", sessionId).single();
+      const { data: premiumSession } = await supabaseClient.from("premium_interview_sessions").select("*").eq("id", sessionId).single();
       session = premiumSession;
       if (!session) throw new Error("Session not found");
     }
@@ -151,16 +150,12 @@ export const InterviewService = {
       ? {
           userId: existingProfile.userId,
           trends: {
-            // @ts-ignore - Property exists in DB but not in Prisma type
-            confidenceTrend: (existingProfile.confidenceTrend as number[]) || [],
-            // @ts-ignore - Property exists in DB but not in Prisma type
-            clarityTrend: (existingProfile.clarityTrend as number[]) || [],
+            confidenceTrend: ((existingProfile as any).confidenceTrend as number[]) || [],
+            clarityTrend: ((existingProfile as any).clarityTrend as number[]) || [],
             improvementRate: 0,
           },
-          // @ts-ignore - Property exists in DB but not in Prisma type
-          archetypeEvolution: (existingProfile.archetypeHistory as string[]) || [],
-          // @ts-ignore - Property exists in DB but not in Prisma type
-          stabilityScore: existingProfile.stabilityScore ?? 1.0,
+          archetypeEvolution: ((existingProfile as any).archetypeHistory as string[]) || [],
+          stabilityScore: ((existingProfile as any).stabilityScore as number) ?? 1.0,
         }
       : null;
 
@@ -296,9 +291,9 @@ export const InterviewService = {
 
     // ── 10. Mark runtime session completed ──
     if (isStandard) {
-      await supabase.from("interview_sessions").update({ status: "completed", completed_at: new Date().toISOString() }).eq("id", sessionId);
+      await supabaseClient.from("interview_sessions").update({ status: "completed", completed_at: new Date().toISOString() }).eq("id", sessionId);
     } else {
-      await supabase.from("premium_interview_sessions").update({ status: "completed", completed_at: new Date().toISOString() }).eq("id", sessionId);
+      await supabaseClient.from("premium_interview_sessions").update({ status: "completed", completed_at: new Date().toISOString() }).eq("id", sessionId);
     }
 
     return { projection, features, drift, memory: updatedMemory, decision, traceId: trace.graph.build({
@@ -309,14 +304,12 @@ export const InterviewService = {
   },
 
   async getHistory(userId: string) {
-    const supabase = createClient(envServer.NEXT_PUBLIC_SUPABASE_URL, envServer.SUPABASE_SERVICE_ROLE_KEY);
-    const { data: std } = await supabase.from("interview_sessions").select("*").eq("user_id", userId);
-    const { data: prm } = await supabase.from("premium_interview_sessions").select("*").eq("user_id", userId);
+    const { data: std } = await supabaseClient.from("interview_sessions").select("*").eq("user_id", userId);
+    const { data: prm } = await supabaseClient.from("premium_interview_sessions").select("*").eq("user_id", userId);
     return [...(std || []), ...(prm || [])];
   },
 
   async getAnalytics(sessionId: string) {
-    // @ts-ignore - interviewAnalytics exists in DB but not in Prisma type
     return (prisma as any).interviewAnalytics.findUnique({
       where: { sessionId },
     });

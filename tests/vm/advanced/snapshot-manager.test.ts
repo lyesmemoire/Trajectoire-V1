@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SnapshotManager, SnapshotOptions } from '../../../compiler/cvm/snapshot-manager';
+import { SnapshotManager } from '../../../compiler/cvm/snapshot-manager';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 
 describe('Snapshot Manager - Priority 2', () => {

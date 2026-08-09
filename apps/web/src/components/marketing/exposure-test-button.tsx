@@ -9,7 +9,6 @@ export default function ExposureTestButton() {
     <button
       type="button"
       onClick={() => {
-        console.log("BUTTON CLICKED")
         router.push("/signup")
       }}
       className="rounded-xl bg-black px-6 py-3 text-white hover:opacity-90"

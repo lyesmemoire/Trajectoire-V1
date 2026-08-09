@@ -1,6 +1,5 @@
 import { PersonaConfig } from "../personas/persona-config";
 import { InterviewState } from "../orchestration/interview-state-machine";
-import { AnswerAnalysis } from '../behavior/answer-analysis';
 import { mistralModel } from "@/lib/mistral";
 import { generateText } from "ai";
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"extract-pdf-text.d.ts","sourceRoot":"","sources":["extract-pdf-text.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,gBAAgB;IAC/B,IAAI,EAAE,MAAM,CAAC;IACb,UAAU,EAAE,MAAM,CAAC;IACnB,MAAM,EAAE,OAAO,GAAG,KAAK,CAAC;IACxB,KAAK,CAAC,EAAE,MAAM,CAAC;CAChB;AAED;;GAEG;AACH,wBAAsB,aAAa,CAAC,MAAM,EAAE,OAAO,GAAG,OAAO,CAAC,gBAAgB,CAAC,CAqB9E"}

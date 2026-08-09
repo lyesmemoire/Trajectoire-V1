@@ -2,7 +2,6 @@
 
 import { P5Event } from "../execution-contract.js";
 import { MindSnapshot } from "../snapshot/snapshot-contract.js";
-import { MindState } from "../execution-contract.js";
 
 
 

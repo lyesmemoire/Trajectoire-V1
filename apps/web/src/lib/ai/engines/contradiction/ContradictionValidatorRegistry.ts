@@ -1,5 +1,5 @@
 import { ContradictionValidator, ContradictionValidatorContext, ContradictionValidatorResult } from "./ContradictionValidator";
-import { MemoryValidatorRegistry, BaseValidator } from "../../validators/ValidatorRegistry";
+import { MemoryValidatorRegistry } from "../../validators/ValidatorRegistry";
 
 // ===================================================================
 // CONTRADICTION VALIDATOR REGISTRY — Specific Registry for Contradiction Validators

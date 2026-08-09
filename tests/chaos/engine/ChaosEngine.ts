@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { ChaosTarget, ChaosScenario, ChaosCampaignConfig, ChaosReport, ChaosOracleResult } from './interfaces';
+import { ChaosScenario, ChaosCampaignConfig, ChaosReport, ChaosOracleResult } from './interfaces';
 import { FaultInjector } from './FaultInjector';
 
 export class ChaosEngine {

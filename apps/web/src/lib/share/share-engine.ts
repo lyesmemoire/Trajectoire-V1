@@ -1,4 +1,3 @@
-import { IdentityCardData } from "./identity-card";
 import { generateShareCopy } from "./share-copy";
 import { logger } from "@/lib/logger/Logger";
 

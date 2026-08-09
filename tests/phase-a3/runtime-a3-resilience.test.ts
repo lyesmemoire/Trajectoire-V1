@@ -4,10 +4,8 @@ import { DummyEngine, DummyInput } from "../../apps/web/src/lib/ai/runtime/Dummy
 import { InvestigationContext } from "../../apps/web/src/domain/cognitive/InvestigationContext";
 import { Engine } from "../../apps/web/src/lib/ai/contracts/Engine";
 import { EngineResult } from "../../apps/web/src/lib/ai/contracts/EngineResult";
-import { BaseEvent } from "../../apps/web/src/lib/ai/contracts/Event";
 import { createEventEnvelope } from "../../apps/web/src/lib/ai/contracts/EventEnvelope";
 import { EngineExecutionError } from "../../apps/web/src/lib/ai/runtime/errors/EngineExecutionError";
-import { EngineBudgetExceededError } from "../../apps/web/src/lib/ai/runtime/errors/EngineExecutionError";
 
 describe("Phase A.3 - Runtime Resilience & Observability Tests", () => {
   let runtime: DefaultCognitiveRuntime;

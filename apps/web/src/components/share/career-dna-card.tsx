@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { IdentityCardData } from '@/lib/share/identity-card'
 import { Sparkles, Zap, Shield, Share2 } from "lucide-react"
 
 export function CareerDNACard({ data }: { data: any }) {

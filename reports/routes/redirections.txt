@@ -1,0 +1,109 @@
+﻿
+Path                                                   LineNumber Line                                                                                   
+----                                                   ---------- ----                                                                                   
+C:\Trajectoire\apps\web\src\domain\billing.contract.ts          2 export * from '../../../../domain/billing.contract'                                    
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts          5 export type BillingState = {                                                           
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts          7   plan: string;                                                                        
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         11 export function useBillingState(userId: string): BillingState {                        
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         12   const [state, setState] = useState<BillingState>({                                   
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         14     plan: "free",                                                                      
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         23         const res = await fetch("/api/billing/state");                                 
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         29               plan: data.plan ?? "free",                                               
+C:\Trajectoire\apps\web\src\hooks\use-billing-state.ts         35         console.error("Failed to fetch billing state", error);                         
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                 4 // Appelle l'API route /api/user/subscription pour obtenir le statut                   
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                12   plan: string | null;                                                                 
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                20     plan: null,                                                                        
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                28         const response = await fetch("/api/user/subscription");                        
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                32             isPremium: data.hasAccess || data.plan !== "FREE",                         
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                33             plan: data.plan,                                                           
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                40             plan: "FREE",                                                              
+C:\Trajectoire\apps\web\src\hooks\usePremium.ts                48           plan: "FREE",                                                                
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts            1 // apps/web/src/hooks/useSubscription.ts                                               
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts            9 import type { SubscriptionCheck } from '@/lib/subscription/check-subscription'         
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           11 interface UseSubscriptionReturn {                                                      
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           12   subscription: SubscriptionCheck | null                                               
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           17 export function useSubscription(): UseSubscriptionReturn {                             
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           18   const [subscription, setSubscription] = useState<SubscriptionCheck | null>(null)     
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           22     async function fetchSubscription() {                                               
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           24         const response = await fetch('/api/user/subscription')                         
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           27           setSubscription({ hasAccess: false, status: 'none', plan: null })            
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           32         setSubscription(data)                                                          
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           35         setSubscription({ hasAccess: false, status: 'none', plan: null })              
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           41     fetchSubscription()                                                                
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           45     subscription,                                                                      
+C:\Trajectoire\apps\web\src\hooks\useSubscription.ts           47     hasAccess: subscription?.hasAccess ?? false,                                       
+C:\Trajectoire\apps\web\src\i18n\fr.ts                        222         planProgression       : 'Plan de progression personnalisé',                    
+C:\Trajectoire\apps\web\src\i18n\fr.ts                        225       planLabels: {                                                                    
+C:\Trajectoire\apps\web\src\i18n\fr.ts                        457       planProgression   : 'Plan de progression',                                       
+C:\Trajectoire\apps\web\src\lib\env.client.ts                  28   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z                                                
+C:\Trajectoire\apps\web\src\lib\env.client.ts                  56     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                14     STRIPE_SECRET_KEY: z.ZodString;                                                    
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                15     STRIPE_WEBHOOK_SECRET: z.ZodOptional<z.ZodString>;                                 
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                16     STRIPE_PRICE_EARLY: z.ZodOptional<z.ZodString>;                                    
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                17     STRIPE_PRO_PRICE_ID: z.ZodOptional<z.ZodString>;                                   
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                18     STRIPE_EXPERT_PRICE_ID: z.ZodOptional<z.ZodString>;                                
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                42     STRIPE_SECRET_KEY: string;                                                         
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                51     STRIPE_WEBHOOK_SECRET?: string | undefined;                                        
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                52     STRIPE_PRICE_EARLY?: string | undefined;                                           
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                53     STRIPE_PRO_PRICE_ID?: string | undefined;                                          
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                54     STRIPE_EXPERT_PRICE_ID?: string | undefined;                                       
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                74     STRIPE_SECRET_KEY: string;                                                         
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                81     STRIPE_WEBHOOK_SECRET?: string | undefined;                                        
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                82     STRIPE_PRICE_EARLY?: string | undefined;                                           
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                83     STRIPE_PRO_PRICE_ID?: string | undefined;                                          
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts                84     STRIPE_EXPERT_PRICE_ID?: string | undefined;                                       
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts               109     STRIPE_SECRET_KEY: string;                                                         
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts               118     STRIPE_WEBHOOK_SECRET?: string | undefined;                                        
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts               119     STRIPE_PRICE_EARLY?: string | undefined;                                           
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts               120     STRIPE_PRO_PRICE_ID?: string | undefined;                                          
+C:\Trajectoire\apps\web\src\lib\env.server.d.ts               121     STRIPE_EXPERT_PRICE_ID?: string | undefined;                                       
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  59   // ── Stripe ────────────────────────────────────────────────────────────────        
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  60   STRIPE_SECRET_KEY: z                                                                 
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  62     .min(1, "STRIPE_SECRET_KEY manquante"),                                            
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  64   STRIPE_WEBHOOK_SECRET: z                                                             
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  66     .startsWith("whsec_", "STRIPE_WEBHOOK_SECRET doit commencer par whsec_")           
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  69   STRIPE_PRICE_EARLY: z                                                                
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  74   STRIPE_PRO_PRICE_ID: z                                                               
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  79   STRIPE_EXPERT_PRICE_ID: z                                                            
+C:\Trajectoire\apps\web\src\lib\env.server.ts                  84   STRIPE_PRICE_STARTER_MONTHLY: z                                                      
+C:\Trajectoire\apps\web\src\lib\monitoring.ts                  46     | "signup"                                                                         
+C:\Trajectoire\apps\web\src\lib\posthog.ts                     13   SIGNUP_STARTED: "signup_started",                                                    
+C:\Trajectoire\apps\web\src\lib\posthog.ts                     14   SIGNUP_COMPLETED: "signup_completed",                                                
+C:\Trajectoire\apps\web\src\lib\rate-limit.ts                  54   stripe_checkout: { requests: 5, window: "1 h" },                                     
+C:\Trajectoire\apps\web\src\lib\stripe.ts                       1 import Stripe from "stripe";                                                           
+C:\Trajectoire\apps\web\src\lib\stripe.ts                       4 export const stripe = new Stripe(                                                      
+C:\Trajectoire\apps\web\src\lib\stripe.ts                       5   envServer.STRIPE_SECRET_KEY || "dummy_key_to_avoid_build_crash",                     
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      12   pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID!,                               
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      13   pro_yearly: process.env.STRIPE_PRO_YEARLY_PRICE_ID!,                                 
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      14   expert_monthly: process.env.STRIPE_EXPERT_MONTHLY_PRICE_ID!,                         
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      15   expert_yearly: process.env.STRIPE_EXPERT_YEARLY_PRICE_ID!,                           
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      25   return stripe.checkout.sessions.create({                                             
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      26     mode: "subscription",                                                              
+C:\Trajectoire\apps\web\src\lib\stripe.ts                      32     subscription_data: {                                                               
+C:\Trajectoire\apps\web\src\types\database.ts                 139       stripe_events: {                                                                 
+C:\Trajectoire\apps\web\src\types\database.ts                 264       process_stripe_payment: {                                                        
+C:\Trajectoire\apps\web\src\types\database.ts                 313   | "stripe_purchase"                                                                  
+C:\Trajectoire\apps\web\src\types\database.ts                 314   | "signup_bonus"                                                                     
+C:\Trajectoire\apps\web\src\types\search.types.ts               5   explanation: string;                                                                 
+C:\Trajectoire\apps\web\src\types\search.types.ts              29   explanation: string;                                                                 
+C:\Trajectoire\apps\web\src\middleware.ts                      14 //             Le webhook Stripe met à jour la BDD.                                    
+C:\Trajectoire\apps\web\src\middleware.ts                      16 //             (Architecture déjà prête pour Stripe)                                   
+C:\Trajectoire\apps\web\src\middleware.ts                      38   '/pricing',                                                                          
+C:\Trajectoire\apps\web\src\middleware.ts                      44   '/signup',                                                                           
+C:\Trajectoire\apps\web\src\middleware.ts                      50   '/api/stripe/webhook',  // CRITIQUE — jamais bloquer                                 
+C:\Trajectoire\apps\web\src\middleware.ts                     200       return NextResponse.redirect(loginUrl);                                          
+C:\Trajectoire\apps\web\src\middleware.ts                     255       const pricingUrl = new URL('/pricing', request.url);                             
+C:\Trajectoire\apps\web\src\middleware.ts                     256       pricingUrl.searchParams.set('redirect', originalPath);                           
+C:\Trajectoire\apps\web\src\middleware.ts                     257       pricingUrl.searchParams.set('reason', 'access_check_failed');                    
+C:\Trajectoire\apps\web\src\middleware.ts                     258       return NextResponse.redirect(pricingUrl);                                        
+C:\Trajectoire\apps\web\src\middleware.ts                     264       // Rediriger vers pricing en conservant l'URL d'origine                          
+C:\Trajectoire\apps\web\src\middleware.ts                     265       const pricingUrl = new URL('/pricing', request.url);                             
+C:\Trajectoire\apps\web\src\middleware.ts                     266       pricingUrl.searchParams.set('redirect', originalPath);                           
+C:\Trajectoire\apps\web\src\middleware.ts                     267       pricingUrl.searchParams.set('reason', 'premium_required');                       
+C:\Trajectoire\apps\web\src\middleware.ts                     268       return NextResponse.redirect(pricingUrl);                                        
+C:\Trajectoire\apps\web\src\middleware.ts                     275     const pricingUrl = new URL('/pricing', request.url);                               
+C:\Trajectoire\apps\web\src\middleware.ts                     276     pricingUrl.searchParams.set('redirect', originalPath);                             
+C:\Trajectoire\apps\web\src\middleware.ts                     277     pricingUrl.searchParams.set('reason', 'access_check_error');                       
+C:\Trajectoire\apps\web\src\middleware.ts                     278     return NextResponse.redirect(pricingUrl);                                          
+
+

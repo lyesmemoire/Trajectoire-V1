@@ -10,5 +10,5 @@ import { CommitResult } from "./transaction-contract.js";
  *
  * Pure function — no side effects.
  */
-export declare function commitTransaction(_tx: _Transaction): CommitResult;
+export declare function commitTransaction(tx: _Transaction): CommitResult;
 //# sourceMappingURL=commit-transaction.d.ts.map

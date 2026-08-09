@@ -2,7 +2,7 @@ import { MinimumEvidencePolicy } from "./MinimumEvidencePolicy";
 import { EvidenceQualityPolicy } from "./EvidenceQualityPolicy";
 import { CorroborationPolicy } from "./CorroborationPolicy";
 import { WeakEvidencePolicy } from "./WeakEvidencePolicy";
-import { MemoryPolicyRegistry, BasePolicy } from "../../../policies/PolicyRegistry";
+import { MemoryPolicyRegistry } from "../../../policies/PolicyRegistry";
 
 // ===================================================================
 // EVIDENCE POLICY REGISTRY — Specific Registry for Evidence Policies

@@ -7,9 +7,9 @@ export class TrustExtractor implements SignalExtractor {
   extract(trace: RuntimeTrace): Signal[] {
     const signals: Signal[] = [];
     
-    // TODO: Implement trust extraction after realtime-gateway migration
-    // The current TurnTrace placeholder doesn't include events or decision data
-    // This extractor will be functional once the full RuntimeTrace types are available
+    // Trust extraction requires full RuntimeTrace with events and decision data
+    // Currently using TurnTrace placeholder - awaiting realtime-gateway migration
+    // Placeholder implementation returns empty signals until full trace data is available
     
     return signals;
   }

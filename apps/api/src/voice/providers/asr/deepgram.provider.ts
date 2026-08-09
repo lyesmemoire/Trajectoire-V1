@@ -30,13 +30,13 @@ export class DeepgramProvider {
   ): AsyncGenerator<TranscriptChunk> {
     const transcriptSubject = new Subject<TranscriptChunk>();
 
-    const live = this.client.transcription.live({
+    const live = (this.client as any).transcription.live({
       punctuate: true,
       interim_results: true,
     });
 
     // Wire SDK events to the subject
-    live.on('transcript', (data: unknown) => {
+    live.on('transcript', (data: any) => {
       const alt = data.channel?.alternatives?.[0];
       if (alt) {
         const chunk: TranscriptChunk = {
@@ -61,7 +61,7 @@ export class DeepgramProvider {
           live.send(chunk);
         }
       } catch (error) {
-        this.logger.error('Error streaming audio to Deepgram', err);
+        this.logger.error('Error streaming audio to Deepgram', error);
       } finally {
         live.finish();
         transcriptSubject.complete();
@@ -70,10 +70,10 @@ export class DeepgramProvider {
 
     // Yield from the subject as an async iterable
     // If Subject is not async iterable, we mock the behavior or cast it
-    const iterator = (transcriptSubject as unknown)[Symbol.asyncIterator]
-      ? (transcriptSubject as unknown)[Symbol.asyncIterator]()
+    const iterator = (transcriptSubject as any)[Symbol.asyncIterator]
+      ? (transcriptSubject as any)[Symbol.asyncIterator]()
       : null;
-    
+
     if (iterator) {
       while (true) {
         const { value, done } = await iterator.next();
@@ -83,4 +83,3 @@ export class DeepgramProvider {
     }
   }
 }
-

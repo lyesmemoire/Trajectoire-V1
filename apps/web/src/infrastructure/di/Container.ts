@@ -61,6 +61,15 @@ export class Container {
   }
 
   /**
+   * Alias for resolve - for backward compatibility
+   * @param token - Service identifier
+   * @returns Service instance
+   */
+  static async get<T>(token: string): Promise<T> {
+    return this.resolve<T>(token);
+  }
+
+  /**
    * Check if a service is registered
    * @param token - Service identifier
    * @returns Whether service is registered

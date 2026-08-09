@@ -43,7 +43,7 @@ export class MemoryFactRepository implements FactRepository {
 
   findLatestFacts<T>(factType?: string, options?: FactQueryOptions): FactQueryResult<T> {
     const allFacts = this.getAll();
-    let filteredFacts = factType 
+    const filteredFacts = factType 
       ? allFacts.filter((fact) => fact.type === factType)
       : allFacts;
 

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Job } from '../data/jobs';
 import { Company } from "../data/companies";
 
 export function generateInterviewMetadata(job: any, company: Company, ): Metadata {

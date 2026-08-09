@@ -4,5 +4,5 @@ export declare class InvalidLifecycleTransitionError extends Error {
     readonly event: LifecycleEvent["type"];
     constructor(state: SessionLifecycleState, event: LifecycleEvent["type"]);
 }
-export declare function reduceLifecycle(_state: SessionLifecycleState, _event: LifecycleEvent): SessionLifecycleState;
+export declare function reduceLifecycle(state: SessionLifecycleState, event: LifecycleEvent): SessionLifecycleState;
 //# sourceMappingURL=lifecycle-reducer.d.ts.map

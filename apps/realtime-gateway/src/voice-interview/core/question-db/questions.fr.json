@@ -1,0 +1,233 @@
+[
+  {
+    "id": "tech-api-scalability-1",
+    "text": "Peux-tu me décrire une situation où tu as dû rendre une API beaucoup plus scalable ? Qu'as-tu concrètement mis en place ?",
+    "language": "fr",
+    "role": "tech",
+    "tone": "neutral",
+    "phase": "tech",
+    "primary_goal": "probe_technical_depth",
+    "difficulty": 3,
+    "target_profile": [
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "api",
+      "scalability",
+      "backend"
+    ],
+    "triggers": [
+      "api",
+      "rest",
+      "node",
+      "backend"
+    ]
+  },
+  {
+    "id": "behavior-conflict-1",
+    "text": "Raconte-moi un conflit important que tu as dû gérer avec un collègue ou un manager. Que s'est-il passé, qu'as-tu fait, et quel a été le résultat ?",
+    "language": "fr",
+    "role": "hr",
+    "tone": "friendly",
+    "phase": "hr",
+    "primary_goal": "probe_behavioral_example",
+    "difficulty": 2,
+    "target_profile": [
+      "junior",
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "conflict",
+      "communication",
+      "team"
+    ],
+    "triggers": [
+      "management",
+      "lead",
+      "team"
+    ]
+  },
+  {
+    "id": "tech-database-optimization-1",
+    "text": "Parle-moi d'une fois où tu as dû optimiser une base de données sous forte charge. Quels problèmes as-tu rencontrés et comment les as-tu résolus ?",
+    "language": "fr",
+    "role": "tech",
+    "tone": "neutral",
+    "phase": "tech",
+    "primary_goal": "probe_technical_depth",
+    "difficulty": 4,
+    "target_profile": [
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "database",
+      "optimization",
+      "performance"
+    ],
+    "triggers": [
+      "sql",
+      "database",
+      "postgres",
+      "mysql",
+      "mongodb"
+    ]
+  },
+  {
+    "id": "hr-motivation-1",
+    "text": "Qu'est-ce qui t'a motivé à postuler pour ce poste en particulier ? Pourquoi cette entreprise et ce rôle maintenant ?",
+    "language": "fr",
+    "role": "hr",
+    "tone": "friendly",
+    "phase": "hr",
+    "primary_goal": "explore_motivation",
+    "difficulty": 1,
+    "target_profile": [
+      "junior",
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "motivation",
+      "career",
+      "values"
+    ],
+    "triggers": []
+  },
+  {
+    "id": "leadership-decision-1",
+    "text": "Décris une décision difficile que tu as dû prendre en tant que leader. Comment as-tu procédé et quelles ont été les conséquences ?",
+    "language": "fr",
+    "role": "exec",
+    "tone": "executive",
+    "phase": "leadership",
+    "primary_goal": "assess_leadership",
+    "difficulty": 4,
+    "target_profile": [
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "leadership",
+      "decision",
+      "responsibility"
+    ],
+    "triggers": [
+      "lead",
+      "manager",
+      "director",
+      "cto"
+    ]
+  },
+  {
+    "id": "pressure-deadline-1",
+    "text": "Tu as 24 heures pour livrer une fonctionnalité critique. Comment organises-tu ton travail et quelles priorités tu fixes ?",
+    "language": "fr",
+    "role": "tech",
+    "tone": "neutral",
+    "phase": "pressure",
+    "primary_goal": "stress_test",
+    "difficulty": 4,
+    "target_profile": [
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "deadline",
+      "pressure",
+      "prioritization"
+    ],
+    "triggers": [
+      "deadline",
+      "urgent",
+      "crisis"
+    ]
+  },
+  {
+    "id": "tech-architecture-1",
+    "text": "Comment approches-tu la conception d'une nouvelle architecture système ? Quels principes guides-tu et comment tu assures la maintenabilité ?",
+    "language": "fr",
+    "role": "tech",
+    "tone": "neutral",
+    "phase": "tech",
+    "primary_goal": "probe_technical_depth",
+    "difficulty": 5,
+    "target_profile": [
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "architecture",
+      "design",
+      "maintainability"
+    ],
+    "triggers": [
+      "architecture",
+      "system",
+      "design"
+    ]
+  },
+  {
+    "id": "behavior-failure-1",
+    "text": "Parle-moi d'un échec professionnel important. Qu'as-tu appris de cette expérience et comment cela a influencé ta manière de travailler ?",
+    "language": "fr",
+    "role": "hr",
+    "tone": "friendly",
+    "phase": "hr",
+    "primary_goal": "probe_behavioral_example",
+    "difficulty": 2,
+    "target_profile": [
+      "junior",
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "failure",
+      "learning",
+      "resilience"
+    ],
+    "triggers": []
+  },
+  {
+    "id": "consistency-claim-1",
+    "text": "Tu as mentionné avoir travaillé sur {skill}. Peux-tu me donner un exemple concret d'un problème que tu as résolu avec cette technologie ?",
+    "language": "fr",
+    "role": "tech",
+    "tone": "neutral",
+    "phase": "tech",
+    "primary_goal": "test_consistency",
+    "difficulty": 3,
+    "target_profile": [
+      "junior",
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "consistency",
+      "verification"
+    ],
+    "triggers": []
+  },
+  {
+    "id": "wrap-up-questions-1",
+    "text": "As-tu des questions pour nous sur l'équipe, la culture ou les défis techniques que nous rencontrons ?",
+    "language": "fr",
+    "role": "hr",
+    "tone": "friendly",
+    "phase": "wrap",
+    "primary_goal": "wrap_up",
+    "difficulty": 1,
+    "target_profile": [
+      "junior",
+      "senior",
+      "executive"
+    ],
+    "tags": [
+      "closing",
+      "candidate-questions"
+    ],
+    "triggers": []
+  }
+]

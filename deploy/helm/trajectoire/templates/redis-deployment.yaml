@@ -1,0 +1,109 @@
+{{- if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-redis
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "trajectoire.selectorLabels" . | nindent 6 }}
+      app: redis
+  template:
+    metadata:
+      labels:
+        {{- include "trajectoire.selectorLabels" . | nindent 8 }}
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: {{ .Values.redis.image }}
+        ports:
+        - containerPort: 6379
+        command:
+        - redis-server
+        - --appendonly
+        - "yes"
+        - --requirepass
+        - $(REDIS_PASSWORD)
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "trajectoire.fullname" . }}-secrets
+              key: REDIS_PASSWORD
+        volumeMounts:
+        - name: redis-storage
+          mountPath: /data
+        - name: redis-backup
+          mountPath: /backups
+        resources:
+          {{- toYaml .Values.redis.resources | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --raw
+            - incr
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-storage
+        persistentVolumeClaim:
+          claimName: {{ include "trajectoire.fullname" . }}-redis-pvc
+      - name: redis-backup
+        persistentVolumeClaim:
+          claimName: {{ include "trajectoire.fullname" . }}-redis-backup-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-redis
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "trajectoire.selectorLabels" . | nindent 4 }}
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-redis-pvc
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistence.size }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-redis-backup-pvc
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.redis.backup.size }}
+{{- end }}

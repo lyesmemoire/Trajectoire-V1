@@ -1,4 +1,3 @@
-import { ContradictionAssessment } from "./ContradictionLedger";
 
 // ===================================================================
 // CONTRADICTION VALIDATOR — Business Logic for Contradiction Detection

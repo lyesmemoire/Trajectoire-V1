@@ -130,7 +130,7 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
 
         // Helper functions
         async function upsertSubscription(userId: string, subscription: Stripe.Subscription) {
-          await supabase
+          const { error: updateError } = await supabase
             .from("user_usage")
             .update({
               stripe_customer_id: subscription.customer as string,
@@ -140,6 +140,11 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
               plan: subscription.status === "active" ? "pro" : "free",
             })
             .eq("user_id", userId);
+
+          if (updateError) {
+            console.error(`Failed to upsert subscription for user ${userId}:`, updateError);
+            throw updateError;
+          }
         }
 
         async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
@@ -155,32 +160,67 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
           const subscription = await stripe.subscriptions.retrieve((invoice as unknown).subscription as string);
           const customerId = subscription.customer as string;
 
-          const { data: user } = await supabase
+          const { data: user, error: lookupError } = await supabase
             .from("user_usage")
             .select("user_id")
             .eq("stripe_customer_id", customerId)
-            .single();
+            .maybeSingle();
 
-          if (!user) return;
+          if (lookupError) {
+            console.error(`Failed to resolve Stripe customer ${customerId} ownership:`, lookupError);
+            return;
+          }
+
+          if (!user) {
+            console.warn(`Stripe webhook received for unknown customer ${customerId}`);
+            return;
+          }
+
           await upsertSubscription(user.user_id, subscription);
         }
 
         async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
           const customerId = subscription.customer as string;
 
-          const { data: user } = await supabase
+          const { data: user, error: lookupError } = await supabase
             .from("user_usage")
             .select("user_id")
             .eq("stripe_customer_id", customerId)
-            .single();
+            .maybeSingle();
 
-          if (!user) return;
+          if (lookupError) {
+            console.error(`Failed to resolve Stripe customer ${customerId} ownership:`, lookupError);
+            return;
+          }
+
+          if (!user) {
+            console.warn(`Stripe webhook received for unknown customer ${customerId}`);
+            return;
+          }
+
           await upsertSubscription(user.user_id, subscription);
         }
 
         async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
           const customerId = subscription.customer as string;
-          await supabase
+
+          const { data: usage, error: lookupError } = await supabase
+            .from("user_usage")
+            .select("user_id")
+            .eq("stripe_customer_id", customerId)
+            .maybeSingle();
+
+          if (lookupError) {
+            console.error(`Failed to resolve Stripe customer ${customerId} ownership:`, lookupError);
+            return;
+          }
+
+          if (!usage) {
+            console.warn(`Stripe webhook received for unknown customer ${customerId}`);
+            return;
+          }
+
+          const { error: updateError } = await supabase
             .from("user_usage")
             .update({
               plan: "free",
@@ -188,7 +228,13 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
               stripe_subscription_id: null,
               current_period_end: null,
             })
+            .eq("user_id", usage.user_id)
             .eq("stripe_customer_id", customerId);
+
+          if (updateError) {
+            console.error(`Failed to cancel subscription for user ${usage.user_id}:`, updateError);
+            return;
+          }
         }
 
         try {

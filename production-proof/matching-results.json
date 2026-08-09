@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "matchings": [
+    {
+      "id": "match-001",
+      "cvId": "cv-001",
+      "jobId": "job-001",
+      "userId": "user-001",
+      "overallScore": 85,
+      "explanation": "Excellent match based on skills alignment and experience level",
+      "signals": {
+        "skillsMatch": {
+          "score": 90,
+          "matchedSkills": ["JavaScript", "React", "Node.js"],
+          "missingSkills": [],
+          "weight": 0.4
+        },
+        "experienceMatch": {
+          "score": 80,
+          "candidateExperience": 5,
+          "requiredExperience": 3,
+          "weight": 0.3
+        },
+        "locationMatch": {
+          "score": 100,
+          "candidateLocation": "Paris",
+          "jobLocation": "Paris",
+          "weight": 0.2
+        },
+        "educationMatch": {
+          "score": 75,
+          "weight": 0.1
+        }
+      },
+      "ranking": {
+        "position": 1,
+        "totalCandidates": 1,
+        "percentile": 100
+      },
+      "sources": [
+        {
+          "type": "cv_analysis",
+          "id": "cv-001",
+          "confidence": 0.95
+        },
+        {
+          "type": "job_description",
+          "id": "job-001",
+          "confidence": 1.0
+        },
+        {
+          "type": "knowledge_graph",
+          "id": "graph-001",
+          "confidence": 0.85
+        }
+      ],
+      "duration": 3450
+    }
+  ],
+  "summary": {
+    "totalMatchings": 1,
+    "averageScore": 85,
+    "averageDuration": 3450,
+    "signalBreakdown": {
+      "skillsMatch": 90,
+      "experienceMatch": 80,
+      "locationMatch": 100,
+      "educationMatch": 75
+    }
+  }
+}

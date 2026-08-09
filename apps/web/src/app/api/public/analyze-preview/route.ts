@@ -3,6 +3,7 @@ import { checkRateLimit } from "@/lib/rate-limit/upstash-rate-limit"
 import { generateFingerprint } from "@/lib/security/ip-extraction"
 import { validateCVUpload, validateJobDescription } from "@/lib/validators/cv-validator"
 import { generatePreviewAnalysis } from "@/lib/ai/preview-analyzer"
+import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisService"
 import { logger } from "@/lib/logger"
 import * as Sentry from "@sentry/nextjs"
 
@@ -57,7 +58,15 @@ export async function POST(req: NextRequest) {
       { timeout: 8000 }
     )
 
-    // 6. Réponse teaser avec insights intelligents
+    // 6. Sauvegarder dans PreviewAnalysis avec token
+    const previewToken = await previewAnalysisService.analyzePreview({
+      cvText: cvValidation.content!,
+      jobText: jobDescription,
+      ipHash: fingerprint,
+      fingerprint: fingerprint,
+    })
+
+    // 7. Réponse teaser avec insights intelligents
     const gapToOptimal = Math.max(0, 80 - preview.score)
     
     // Calcul percentile (basé sur distribution hypothétique)
@@ -72,7 +81,8 @@ export async function POST(req: NextRequest) {
       relevance: jobDescription ? Math.min(100, preview.score + 15) : preview.score,
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
+      previewToken: previewToken.previewToken,
       score: preview.score,
       gapToOptimal,
       percentile,
@@ -81,6 +91,17 @@ export async function POST(req: NextRequest) {
       radarDimensions,
       message: `Il vous manque ${gapToOptimal} points pour atteindre le seuil recommandé. Ce gap peut impacter vos chances d'entretien.`,
     })
+
+    // 8. Set cookie pour persistance
+    response.cookies.set('preview_token', previewToken.previewToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60, // 24h
+      path: '/',
+    })
+
+    return response
 
   } catch (error) {
     Sentry.captureException(error, {

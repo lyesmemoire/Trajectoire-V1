@@ -174,6 +174,23 @@ const EnvServerSchema = z.object({
 
 // ── Validation au démarrage ────────────────────────────────────────────────────
 function validateEnv() {
+  // En mode test, on permet l'exécution sans variables d'environnement obligatoires
+  const isTest = process.env.NODE_ENV === "test" || process.env.VITEST === "true";
+  
+  if (isTest) {
+    // Retourne un objet dummy pour les tests
+    return {
+      NEXT_PUBLIC_SUPABASE_URL: "https://test.supabase.co",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+      OPENAI_API_KEY: "sk-test-key",
+      MISTRAL_API_KEY: "test-mistral-key",
+      STRIPE_SECRET_KEY: "sk-test-stripe-key",
+      SUPABASE_SERVICE_ROLE_KEY: "test-service-role-key",
+      NODE_ENV: "test" as const,
+      PORT: 3000,
+    } as z.infer<typeof EnvServerSchema>;
+  }
+
   const result = EnvServerSchema.safeParse(process.env);
 
   if (!result.success) {

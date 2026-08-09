@@ -6,7 +6,6 @@
 
 import { Token, TokenType } from '../lexer/lexer';
 import {
-  ASTNode,
   ModuleNode,
   ImportNode,
   ExportNode,
@@ -16,10 +15,6 @@ import {
   BlockNode,
   StatementNode,
   ExpressionNode,
-  BinaryExpressionNode,
-  UnaryExpressionNode,
-  CallExpressionNode,
-  MemberExpressionNode,
   AssignmentNode,
   ReturnNode,
   IfNode,

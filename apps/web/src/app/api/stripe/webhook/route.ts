@@ -7,6 +7,8 @@ import { envServer }                 from "@/lib/env.server";
 import { logger }                    from "@/lib/logger/Logger";
 import Stripe                        from "stripe";
 import { z }                         from "zod";
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
+import { RouteType, RateLimitScope } from "@/lib/rate-limiting/centralized-rate-limit.service";
 
 const StripeMetadataSchema = z.object({
   user_id:        z.string().uuid(),
@@ -16,24 +18,26 @@ const StripeMetadataSchema = z.object({
   credits:        z.string().optional(), // Amount of credits
 });
 
-export async function POST(req: NextRequest) {
-  const body = await req.text();
-  const sig  = req.headers.get("stripe-signature");
+export const POST = rateLimit(
+  RouteType.STRIPE,
+  async (req: NextRequest) => {
+    const body = await req.text();
+    const sig  = req.headers.get("stripe-signature");
 
-  if (!sig) {
-    return NextResponse.json({ error: "Signature manquante." }, { status: 400 });
-  }
+    if (!sig) {
+      return NextResponse.json({ error: "Signature manquante." }, { status: 400 });
+    }
 
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      envServer.STRIPE_WEBHOOK_SECRET ?? ""
-    );
-  } catch (error) {
-    return NextResponse.json({ error: "Signature invalide." }, { status: 400 });
-  }
+    let event: Stripe.Event;
+    try {
+      event = stripe.webhooks.constructEvent(
+        body,
+        sig,
+        envServer.STRIPE_WEBHOOK_SECRET ?? ""
+      );
+    } catch (error) {
+      return NextResponse.json({ error: "Signature invalide." }, { status: 400 });
+    }
 
   try {
     switch (event.type) {
@@ -170,7 +174,9 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ received: true });
-}
+  },
+  { scopes: [RateLimitScope.IP] }
+);
 
 // ── Upsert Subscription + mise à jour User.plan (atomique) ───────────────────
 async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscription, eventCreatedTimestamp: number): Promise<void> {

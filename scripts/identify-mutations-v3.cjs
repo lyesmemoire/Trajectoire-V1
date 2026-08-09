@@ -19,7 +19,7 @@ Object.entries(components).forEach(([component, filePath]) => {
   const lines = content.split('\n');
   
   const mutations = [];
-  let inValidationMethod = false;
+  const inValidationMethod = false;
   let inValidateFunction = false;
   
   lines.forEach((line, index) => {

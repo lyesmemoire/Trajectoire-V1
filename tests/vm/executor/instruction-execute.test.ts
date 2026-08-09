@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { InstructionExecute } from '../../../compiler/cvm/instruction-execute';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { DecodedInstruction } from '../../../compiler/cvm/instruction-decode';
-import { Instruction } from '../../../compiler/cbs/instruction-table';
 import { Opcode } from '../../../compiler/cbs/opcode-table';
 
 describe('InstructionExecute', () => {

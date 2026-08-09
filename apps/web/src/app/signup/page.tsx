@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
+import { usePreviewStorage } from "@/hooks/usePreviewStorage"
 
 export default function SignupPage() {
   const [email, setEmail] = useState("")
@@ -13,6 +14,8 @@ export default function SignupPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  
+  const { claimPreview, hasToken, clearToken } = usePreviewStorage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,12 +47,31 @@ export default function SignupPage() {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/dashboard`,
+          // Skip email confirmation in development
+          ...(process.env.NODE_ENV === 'development' ? { data: { skip_email_confirmation: true } } : {}),
         },
       })
 
       if (signUpError) throw signUpError
 
+      // In development, auto-signin after signup
+      if (process.env.NODE_ENV === 'development') {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        })
+        if (!signInError) {
+          window.location.href = '/dashboard'
+          return
+        }
+      }
+
       setSuccess(true)
+
+      // Auto-claim de la preview si un token existe
+      if (hasToken()) {
+        await claimPreview()
+      }
     } catch (err: any) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer.")
     } finally {

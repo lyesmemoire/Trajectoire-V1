@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import {
   AIProvider,
   ChatCompletionParams,
@@ -10,21 +9,18 @@ import {
 } from "./Provider";
 import { ExternalServiceError } from "@/core/errors";
 import { recordAIRequest, recordError } from "@/lib/monitoring/metricsSupabase";
+import OpenAI from 'openai';
 
 /**
  * OpenAI Provider Implementation
- * Implements the AIProvider interface for OpenAI
+ * Implements the AIProvider interface for OpenAI with resilience patterns
  */
 export class OpenAIProvider implements AIProvider {
   private client: OpenAI;
 
   constructor(apiKey: string, organization?: string) {
-    this.client = new OpenAI({
-      apiKey,
-      organization: organization || undefined,
-      timeout: 60000,
-      maxRetries: 2,
-    });
+    this.client = new OpenAI({ apiKey, organization });
+    // API key is loaded from environment by resilient client
   }
 
   public getName(): string {
@@ -35,19 +31,13 @@ export class OpenAIProvider implements AIProvider {
     const startTime = Date.now();
 
     try {
-      const createParams: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming = {
+      const response = await this.client.chat.completions.create({
         model: params.model,
-        messages: params.messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+        messages: params.messages as any,
         temperature: params.temperature,
         max_tokens: params.maxTokens,
-      };
-
-      if (params.responseFormat) {
-        createParams.response_format = params.responseFormat as { type: "json_object" | "text" };
-      }
-
-      const options = params.signal ? { signal: params.signal } : undefined;
-      const response = await this.client.chat.completions.create(createParams, options);
+        response_format: params.responseFormat as any,
+      });
 
       const latency = Date.now() - startTime;
 

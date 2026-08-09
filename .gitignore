@@ -128,6 +128,10 @@ fix_*.cjs
 replace_*.cjs
 apply-premium-upgrade.ps1
 test-route.ts
+
+# SECURITY TEST CREDENTIALS
+# ============================================
+.env.security-test
 # Temporary folders
 .stryker-tmp/
 # Local diagnostics

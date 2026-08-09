@@ -1,4 +1,3 @@
-import { GovernorDecision } from '../bridge/normalization-contract.js'
 import { MindState } from "../execution-contract.js";
 
 /**

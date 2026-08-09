@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "conversations": [
+    {
+      "id": "conv-001",
+      "userId": "user-001",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Comment améliorer mon CV pour le poste de Senior Full Stack Developer?",
+          "timestamp": "2026-08-07T07:52:00Z"
+        },
+        {
+          "role": "assistant",
+          "content": "Pour améliorer votre CV pour ce poste, je recommande de:\n1. Mettre en avant vos projets React et Node.js\n2. Ajouter des métriques de performance\n3. Inclure des certifications pertinentes\n\nBasé sur l'analyse de votre CV actuel, vous avez une bonne base mais pouvez renforcer la section projets.",
+          "timestamp": "2026-08-07T07:52:01Z",
+          "contextRetrieved": {
+            "cvId": "cv-001",
+            "jobId": "job-001",
+            "skills": ["JavaScript", "React", "Node.js"],
+            "experience": 5
+          },
+          "sources": [
+            {
+              "type": "cv_analysis",
+              "id": "cv-001",
+              "relevance": 0.95
+            },
+            {
+              "type": "job_requirements",
+              "id": "job-001",
+              "relevance": 0.90
+            },
+            {
+              "type": "knowledge_graph",
+              "id": "graph-001",
+              "relevance": 0.85
+            }
+          ],
+          "citations": [
+            "Votre CV mentionne 5 ans d'expérience en développement Full Stack",
+            "Le poste requiert une expertise en React et Node.js",
+            "Vos compétences actuelles correspondent à 90% des exigences"
+          ]
+        },
+        {
+          "role": "user",
+          "content": "Quelles sont les compétences techniques les plus demandées?",
+          "timestamp": "2026-08-07T07:52:05Z"
+        },
+        {
+          "role": "assistant",
+          "content": "Les compétences les plus demandées pour les postes Full Stack Senior sont:\n1. React/Next.js (95% des offres)\n2. Node.js/Express (90%)\n3. TypeScript (85%)\n4. PostgreSQL/MongoDB (80%)\n5. AWS/Docker (75%)\n\nVotre profil couvre 3 de ces 5 compétences clés.",
+          "timestamp": "2026-08-07T07:52:06Z",
+          "contextRetrieved": {
+            "marketData": true,
+            "trends": true
+          },
+          "sources": [
+            {
+              "type": "market_analysis",
+              "relevance": 0.92
+            }
+          ]
+        }
+      ],
+      "totalDuration": 5670,
+      "tokensUsed": 450,
+      "model": "gpt-4"
+    }
+  ],
+  "summary": {
+    "totalConversations": 1,
+    "totalMessages": 4,
+    "averageResponseTime": 2835,
+    "averageTokensPerResponse": 225,
+    "contextSourcesUsed": 4,
+    "averageSourceRelevance": 0.88
+  }
+}

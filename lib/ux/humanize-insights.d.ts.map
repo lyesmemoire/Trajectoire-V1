@@ -1,0 +1,1 @@
+{"version":3,"file":"humanize-insights.d.ts","sourceRoot":"","sources":["humanize-insights.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,iBAAiB;IAChC,OAAO,EAAE,MAAM,CAAC;IAChB,WAAW,EAAE,MAAM,CAAC;CACrB;AAED;;;GAGG;AACH,wBAAgB,yBAAyB,CAAC,OAAO,EAAE;IACjD,SAAS,EAAE,MAAM,CAAC;IAClB,OAAO,EAAE,MAAM,CAAC;IAChB,UAAU,EAAE,MAAM,CAAC;IACnB,SAAS,EAAE,MAAM,CAAC;CACnB,GAAG,iBAAiB,CAmCpB"}

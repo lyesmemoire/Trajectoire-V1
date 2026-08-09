@@ -1,4 +1,4 @@
-import { Engine, EngineInput } from "../contracts/Engine";
+import { EngineInput } from "../contracts/Engine";
 import { EngineRegistry } from "./EngineRegistry";
 
 // ===================================================================

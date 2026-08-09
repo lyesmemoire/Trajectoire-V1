@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
-import { InstructionFetch } from '../../../compiler/cvm/instruction-fetch';
 import { InstructionDecode } from '../../../compiler/cvm/instruction-decode';
 import { InstructionExecute } from '../../../compiler/cvm/instruction-execute';
 import { Opcode } from '../../../compiler/cbs/opcode-table';

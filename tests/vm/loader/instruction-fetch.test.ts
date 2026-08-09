@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { InstructionFetch } from '../../../compiler/cvm/instruction-fetch';
-import { Instruction, InstructionTable } from '../../../compiler/cbs/instruction-table';
 
 describe('InstructionFetch', () => {
   let fetch: InstructionFetch;

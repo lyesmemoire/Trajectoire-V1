@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { SnapshotManager } from '../../../compiler/cvm/snapshot-manager';
-import { Register } from '../../../compiler/cbs/register-table';
 
 describe('Demo Programs - Snapshot', () => {
   let context: ExecutionContext;

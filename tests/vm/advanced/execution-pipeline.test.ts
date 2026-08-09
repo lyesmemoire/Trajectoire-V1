@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ExecutionPipeline, PipelineStatistics } from '../../../compiler/cvm/execution-pipeline';
+import { ExecutionPipeline } from '../../../compiler/cvm/execution-pipeline';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 
 describe('Execution Pipeline - Priority 5', () => {

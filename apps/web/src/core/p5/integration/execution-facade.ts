@@ -2,6 +2,7 @@ import { MindState } from "../execution-contract.js";
 import { RuntimeDecision, ExecutionResult } from "./integration-contract.js";
 import { createSession, executeDecision } from "./execution-session.js";
 import { RuntimeStateStore } from "./runtime-state-store.js";
+import { createHash } from "crypto";
 
 /**
  * High-level facade for the P5 execution engine.
@@ -46,9 +47,11 @@ export class ExecutionFacade {
     this.store.setSession(sessionId, nextSession);
 
     if (this.commitListener) {
+      // Generate proper snapshot hash from session state
+      const snapshotHash = this.generateSnapshotHash(nextSession);
       this.commitListener({
         sessionId,
-        snapshotHash: nextSession.initialSnapshot?.id || "snapshot-0", 
+        snapshotHash,
         journalPointer: nextSession.journal.entries.length.toString(),
       });
     }
@@ -74,5 +77,18 @@ export class ExecutionFacade {
   /** Number of active sessions. */
   get activeSessions(): number {
     return this.store.size;
+  }
+
+  /**
+   * Generate a proper snapshot hash from session state.
+   * Uses a deterministic hash of the session state for reproducibility.
+   */
+  private generateSnapshotHash(session: any): string {
+    const stateString = JSON.stringify({
+      state: session.state,
+      journalLength: session.journal.entries.length,
+      timestamp: session.timestamp,
+    });
+    return createHash("sha256").update(stateString).digest("hex").substring(0, 16);
   }
 }

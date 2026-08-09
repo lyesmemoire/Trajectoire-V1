@@ -1,4 +1,4 @@
-import { Timeline, TimelineNode, TimelineEdge } from "./TimelineBuilder";
+import { Timeline, TimelineNode } from "./TimelineBuilder";
 
 // ===================================================================
 // TEMPORAL VALIDATOR — Pure TypeScript Temporal Consistency Validation

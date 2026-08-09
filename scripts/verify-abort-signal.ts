@@ -1,5 +1,3 @@
-import { AIClient } from '../apps/web/src/lib/ai/client';
-import { ConversationService } from '../apps/web/src/application/services/ConversationService';
 import { InterviewService } from '../apps/web/src/lib/ai/services/interview.service';
 
 async function verifyAbortSignal() {

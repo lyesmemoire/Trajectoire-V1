@@ -10,5 +10,5 @@ import { Timeline } from "./timeline-contract.js";
  * The original timeline is never mutated.
  * Pure function — no side effects.
  */
-export declare function appendTick(_timeline: Timeline, _event: P5Event): Timeline;
+export declare function appendTick(timeline: Timeline, event: P5Event): Timeline;
 //# sourceMappingURL=append-tick.d.ts.map

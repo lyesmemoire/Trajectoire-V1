@@ -1,0 +1,752 @@
+[
+  {
+    "profileId": "solid_1",
+    "behaviorType": "solid",
+    "finalExecutiveScore": 1.7427847407616,
+    "integrityRiskIndex": 0.39121525923839995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "solid_2",
+    "behaviorType": "solid",
+    "finalExecutiveScore": 1.7427847407616,
+    "integrityRiskIndex": 0.39121525923839995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "solid_3",
+    "behaviorType": "solid",
+    "finalExecutiveScore": 1.7427847407616,
+    "integrityRiskIndex": 0.39121525923839995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "solid_4",
+    "behaviorType": "solid",
+    "finalExecutiveScore": 1.7427847407616,
+    "integrityRiskIndex": 0.39121525923839995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "solid_5",
+    "behaviorType": "solid",
+    "finalExecutiveScore": 1.7427847407616,
+    "integrityRiskIndex": 0.39121525923839995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "bluff_1",
+    "behaviorType": "bluff",
+    "finalExecutiveScore": 1.7796216873088,
+    "integrityRiskIndex": 0.3895033126912,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "bluff_2",
+    "behaviorType": "bluff",
+    "finalExecutiveScore": 1.7796216873088,
+    "integrityRiskIndex": 0.3895033126912,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "bluff_3",
+    "behaviorType": "bluff",
+    "finalExecutiveScore": 1.7796216873088,
+    "integrityRiskIndex": 0.3895033126912,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "bluff_4",
+    "behaviorType": "bluff",
+    "finalExecutiveScore": 1.7796216873088,
+    "integrityRiskIndex": 0.3895033126912,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "bluff_5",
+    "behaviorType": "bluff",
+    "finalExecutiveScore": 1.7796216873088,
+    "integrityRiskIndex": 0.3895033126912,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "vague_1",
+    "behaviorType": "vague",
+    "finalExecutiveScore": 1.6296248774144,
+    "integrityRiskIndex": 0.36587512258559995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "vague_2",
+    "behaviorType": "vague",
+    "finalExecutiveScore": 1.6296248774144,
+    "integrityRiskIndex": 0.36587512258559995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "vague_3",
+    "behaviorType": "vague",
+    "finalExecutiveScore": 1.6296248774144,
+    "integrityRiskIndex": 0.36587512258559995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "vague_4",
+    "behaviorType": "vague",
+    "finalExecutiveScore": 1.6296248774144,
+    "integrityRiskIndex": 0.36587512258559995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "vague_5",
+    "behaviorType": "vague",
+    "finalExecutiveScore": 1.6296248774144,
+    "integrityRiskIndex": 0.36587512258559995,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "fragile_1",
+    "behaviorType": "fragile",
+    "finalExecutiveScore": 1.3887350084864,
+    "integrityRiskIndex": 0.3735149915136,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "fragile_2",
+    "behaviorType": "fragile",
+    "finalExecutiveScore": 1.3887350084864,
+    "integrityRiskIndex": 0.3735149915136,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "fragile_3",
+    "behaviorType": "fragile",
+    "finalExecutiveScore": 1.3887350084864,
+    "integrityRiskIndex": 0.3735149915136,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "fragile_4",
+    "behaviorType": "fragile",
+    "finalExecutiveScore": 1.3887350084864,
+    "integrityRiskIndex": 0.3735149915136,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "fragile_5",
+    "behaviorType": "fragile",
+    "finalExecutiveScore": 1.3887350084864,
+    "integrityRiskIndex": 0.3735149915136,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "tech_1",
+    "behaviorType": "technical",
+    "finalExecutiveScore": 1.7674366623872,
+    "integrityRiskIndex": 0.4156883376128,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "tech_2",
+    "behaviorType": "technical",
+    "finalExecutiveScore": 1.7674366623872,
+    "integrityRiskIndex": 0.4156883376128,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "tech_3",
+    "behaviorType": "technical",
+    "finalExecutiveScore": 1.7674366623872,
+    "integrityRiskIndex": 0.4156883376128,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "tech_4",
+    "behaviorType": "technical",
+    "finalExecutiveScore": 1.7674366623872,
+    "integrityRiskIndex": 0.4156883376128,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "tech_5",
+    "behaviorType": "technical",
+    "finalExecutiveScore": 1.7674366623872,
+    "integrityRiskIndex": 0.4156883376128,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "lead_1",
+    "behaviorType": "leadership",
+    "finalExecutiveScore": 1.9328709742208,
+    "integrityRiskIndex": 0.3937540257792,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "lead_2",
+    "behaviorType": "leadership",
+    "finalExecutiveScore": 1.9328709742208,
+    "integrityRiskIndex": 0.3937540257792,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "lead_3",
+    "behaviorType": "leadership",
+    "finalExecutiveScore": 1.9328709742208,
+    "integrityRiskIndex": 0.3937540257792,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "lead_4",
+    "behaviorType": "leadership",
+    "finalExecutiveScore": 1.9328709742208,
+    "integrityRiskIndex": 0.3937540257792,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  },
+  {
+    "profileId": "lead_5",
+    "behaviorType": "leadership",
+    "finalExecutiveScore": 1.9328709742208,
+    "integrityRiskIndex": 0.3937540257792,
+    "maxPressureLevel": 1,
+    "pressureIncreases": 0,
+    "decisionSimulation": {
+      "hr": "PASS",
+      "technical": "FAIL",
+      "committee": "FAIL"
+    },
+    "escalationActions": [
+      "continue",
+      "phase_transition_to_Phase2",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase3",
+      "continue",
+      "continue",
+      "phase_transition_to_Phase4",
+      "continue",
+      "continue"
+    ]
+  }
+]

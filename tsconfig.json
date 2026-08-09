@@ -103,9 +103,5 @@
     "node_modules",
     "apps/realtime-gateway/tests",
     "apps/realtime-gateway/**"
-  ],
-  "references": [
-    { "path": "./apps/api" },
-    { "path": "./apps/realtime-gateway" }
   ]
 }

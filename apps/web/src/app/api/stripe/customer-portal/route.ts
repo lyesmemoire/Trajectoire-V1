@@ -4,20 +4,14 @@
 export const dynamic = "force-dynamic";
 
 import { NextResponse, NextRequest } from 'next/server';
-import Stripe                        from "stripe";
 import { getStrictUser }             from "@/lib/auth/session-logic";
 import { prisma }                    from "@/lib/prisma";
 import { envServer }                 from "@/lib/env.server";
 import { logError }                  from "@/lib/logger/Logger";
+import { stripe }                    from "@/lib/stripe";
 
-let stripeClient: Stripe | null = null;
-function getStripe(): Stripe {
-  if (!stripeClient) {
-    stripeClient = new Stripe(envServer.STRIPE_SECRET_KEY ?? "", {
-      apiVersion: "2025-08-27.basil" as Stripe.LatestApiVersion,
-    });
-  }
-  return stripeClient;
+function getStripe() {
+  return stripe;
 }
 
 export async function POST(_request: NextRequest) {

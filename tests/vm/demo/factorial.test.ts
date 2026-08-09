@@ -70,7 +70,7 @@ describe('Demo Programs - Factorial', () => {
       registers.set(Register.R0, 5);
       
       // Calculate factorial
-      let n = registers.get(Register.R0);
+      const n = registers.get(Register.R0);
       let result = 1;
       for (let i = 2; i <= n; i++) {
         result *= i;
@@ -89,7 +89,7 @@ describe('Demo Programs - Factorial', () => {
       registers.set(Register.R0, 10);
       
       // Calculate factorial: 10! = 3628800
-      let n = registers.get(Register.R0);
+      const n = registers.get(Register.R0);
       let result = 1;
       for (let i = 2; i <= n; i++) {
         result *= i;

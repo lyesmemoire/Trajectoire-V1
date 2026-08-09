@@ -1,0 +1,61 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 2
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 5
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 10
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 5
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 2
+      name: "Cool down"
+
+scenarios:
+  - name: "OpenAI Load Test"
+    flow:
+      # Simple completion
+      - post:
+          url: '/ai/completion'
+          json:
+            prompt: 'Analyze this CV and extract skills'
+            model: 'gpt-4'
+            maxTokens: 500
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Chat completion
+      - post:
+          url: '/ai/chat'
+          json:
+            messages:
+              - role: system
+                content: 'You are a helpful assistant.'
+              - role: user
+                content: 'Generate a job description for a React developer'
+            model: 'gpt-4'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Embedding
+      - post:
+          url: '/ai/embedding'
+          json:
+            text: 'JavaScript React Node.js developer'
+            model: 'text-embedding-ada-002'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      - think: 2

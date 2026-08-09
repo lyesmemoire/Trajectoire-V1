@@ -101,8 +101,8 @@ export class ContradictionEngine extends BaseEngine<
             policy: this.getAppliedPolicies(assessment).join(","),
             timestamp: new Date(),
             engineVersion: ContradictionManifest.version,
-            promptVersion: "1.0.0", // TODO: Extract from LLM provider when available
-            provider: "internal", // TODO: Extract from LLM provider when available
+            promptVersion: "1.0.0", // Internal LLM version - will be extracted from provider config when external provider is integrated
+            provider: "internal", // Using internal LLM - will be updated when external provider is configured
             traceId: context.traceId,
             correlationId: context.correlationId,
             sessionId,

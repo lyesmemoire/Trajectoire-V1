@@ -3,7 +3,6 @@
  * Run a Blueprint program
  */
 
-import * as path from 'path';
 import { RunOptions } from '../types';
 import { getLogger } from '../logging';
 import { RuntimeError, FileNotFoundError } from '../errors';

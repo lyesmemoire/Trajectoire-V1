@@ -16,9 +16,11 @@ export default async function AdaptiveIntelligenceDashboardPage() {
     redirect("/login")
   }
 
-  // Check if user is admin (mock - should check role in production)
-  const isAdmin = true; // Mock
-  if (!isAdmin) {
+  // Check if user is admin using authorization module
+  const { AuthorizationModule } = await import("@/lib/authorization/AuthorizationModule");
+  const auth = await AuthorizationModule.create(user.id);
+  
+  if (!auth.isAdmin()) {
     redirect("/dashboard")
   }
 

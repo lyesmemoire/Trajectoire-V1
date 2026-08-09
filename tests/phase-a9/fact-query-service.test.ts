@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { FactQueryService } from "../../apps/web/src/lib/ai/services/FactQueryService";
 import { CognitiveState } from "../../apps/web/src/domain/cognitive/CognitiveState";
-import { KnowledgeGraph } from "../../apps/web/src/domain/cognitive/KnowledgeGraph";
 
 describe("Phase A.9 - FactQueryService Tests", () => {
   let state: CognitiveState;

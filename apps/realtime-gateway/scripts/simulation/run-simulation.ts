@@ -1,14 +1,37 @@
 import fs from "fs";
 import path from "path";
-import { initInterviewV3, nextV3Step } from "../../src/voice-interview/core/v3/interview-engine-v3";
+import { fileURLToPath } from "url";
+import { initInterviewV3, nextV3Step } from "./mock-interview-engine-v3.js";
 import { simulateDecision } from "../../src/voice-interview/core/v3/decision-simulator";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+interface Profile {
+  profileId: string;
+  jobOffer: string;
+  cv: string;
+  behaviorType: string;
+  responses: string[];
+}
+
+interface SimulationResult {
+  profileId: string;
+  behaviorType: string;
+  finalExecutiveScore: number;
+  integrityRiskIndex: number;
+  maxPressureLevel: number;
+  pressureIncreases: number;
+  decisionSimulation: unknown;
+  escalationActions: unknown[];
+}
 
 const resultsDir = path.join(__dirname, "results");
 if (!fs.existsSync(resultsDir)) {
   fs.mkdirSync(resultsDir, { recursive: true });
 }
 
-async function runProfile(profile: unknown) {
+async function runProfile(profile: Profile) {
   const context = {
     job_summary: profile.jobOffer,
     key_requirements: ["Scalability", "Leadership", "Technical depth"],
@@ -51,11 +74,12 @@ async function runProfile(profile: unknown) {
   const avgQuant = state.quantCount > 0 ? state.avgQuant / state.quantCount : 0;
 
   let leadershipComposite = avgAlign; // fallback
-  if (state.phase4Scores) {
+  if (state.phase4Scores && typeof state.phase4Scores === 'object') {
+    const scores = state.phase4Scores as Record<string, number>;
     leadershipComposite = (
-      state.phase4Scores.strategic_thinking_score + 
-      state.phase4Scores.conflict_leadership_score + 
-      state.phase4Scores.organizational_impact_score
+      (scores.strategic_thinking_score || 0) + 
+      (scores.conflict_leadership_score || 0) + 
+      (scores.organizational_impact_score || 0)
     ) / 3;
   }
 
@@ -97,7 +121,7 @@ async function main() {
   const profiles = JSON.parse(fs.readFileSync(profilesPath, "utf-8"));
   console.log(`Starting DIRECT ENGINE simulation for ${profiles.length} profiles...`);
 
-  const results: unknown[] = [];
+  const results: SimulationResult[] = [];
 
   for (const profile of profiles) {
     console.log(`Simulating profile: ${profile.profileId}`);
@@ -106,7 +130,7 @@ async function main() {
       results.push(record);
       console.log(`  -> Score: ${record.finalExecutiveScore.toFixed(1)} | Integrity: ${record.integrityRiskIndex.toFixed(2)} | Max Pressure: ${record.maxPressureLevel}`);
     } catch (error) {
-      console.error(`Error simulating ${profile.profileId}`, e);
+      console.error(`Error simulating ${profile.profileId}`, error);
     }
   }
 
@@ -114,7 +138,7 @@ async function main() {
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
 
   // Compute stats
-  const scores = results.map(r => r.finalExecutiveScore);
+  const scores = results.map((r: SimulationResult) => r.finalExecutiveScore);
   const meanScore = scores.reduce((a, b) => a + b, 0) / scores.length;
   
   // Standard Deviation
@@ -130,9 +154,9 @@ async function main() {
   const percentBelow5_5 = (scores.filter(s => s < 5.5).length / scores.length) * 100;
   const percentAbove8 = (scores.filter(s => s > 8).length / scores.length) * 100;
   
-  const meanIntegrityRisk = results.reduce((a, r) => a + r.integrityRiskIndex, 0) / results.length;
-  const meanMaxPressure = results.reduce((a, r) => a + r.maxPressureLevel, 0) / results.length;
-  const meanPressureIncreaseRate = results.reduce((a, r) => a + r.pressureIncreases, 0) / results.length;
+  const meanIntegrityRisk = results.reduce((a, r: SimulationResult) => a + r.integrityRiskIndex, 0) / results.length;
+  const meanMaxPressure = results.reduce((a, r: SimulationResult) => a + r.maxPressureLevel, 0) / results.length;
+  const meanPressureIncreaseRate = results.reduce((a, r: SimulationResult) => a + r.pressureIncreases, 0) / results.length;
 
   const stats = {
     meanFinalScore: Number(meanScore.toFixed(2)),

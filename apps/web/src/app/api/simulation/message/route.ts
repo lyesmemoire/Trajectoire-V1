@@ -8,116 +8,113 @@ import { ApiResponseBuilder } from "@/core/http";
 import { SendMessageSchema } from "@/validation";
 import { IdempotencyService } from "@/core/idempotency/IdempotencyService";
 import { BillingService } from "@/lib/db/billing.service";
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
+import { RouteType, RateLimitScope } from "@/lib/rate-limiting/centralized-rate-limit.service";
+import { csrfProtect } from "@/lib/security/csrf-middleware";
 
 const ENABLE_SIL_BILLING = process.env.ENABLE_SIL_BILLING === 'true';
 const SIL_MESSAGE_COST = 5; // credits per message
 
-export async function POST(request: NextRequest) {
-  try {
-    initializeContainer();
-
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      return ApiResponseBuilder.unauthorized();
-    }
-
-    const idempotencyKey = request.headers.get("Idempotency-Key");
-
-    const formData = await request.formData();
-    const rawData = {
-      sessionId: formData.get("sessionId") as string,
-      content: formData.get("content") as string,
-    };
-
-    const validationResult = SendMessageSchema.safeParse(rawData);
-    if (!validationResult.success) {
-      const fieldErrors = validationResult.error.flatten().fieldErrors;
-      const validationFields: Array<{ field: string; message: string }> = [];
-      
-      for (const [field, messages] of Object.entries(fieldErrors)) {
-        if (messages && messages.length > 0) {
-          validationFields.push({ field, message: messages[0] });
-        }
-      }
-      
-      throw new ValidationError("Invalid input data", validationFields);
-    }
-
-    const validatedData = validationResult.data;
-    const conversationService = await Container.resolve(ServiceTokens.ConversationService) as ConversationService;
-
-    const sendWithBilling = async () => {
-      let txId: string | undefined;
-      const opKey = idempotencyKey || `sil-msg-${user.id}-${validatedData.sessionId}-${Date.now()}`;
-
-      // Reserve
-      if (ENABLE_SIL_BILLING) {
-        const reserve = await BillingService.reserveCredits({
-          userId: user.id,
-          amount: SIL_MESSAGE_COST,
-          action: "sil_message" as any,
-          operationId: opKey,
-        });
-        if (!reserve.success) {
-          throw new Error(`BILLING_ERROR:${reserve.error}`);
-        }
-        txId = reserve.txId;
-      }
-
+export const POST = csrfProtect(
+  rateLimit(
+    RouteType.SIMULATION,
+    async (request: NextRequest) => {
       try {
-        const data = await conversationService.sendMessage({
-          userId: user.id,
-          sessionId: validatedData.sessionId,
-          content: validatedData.content,
-        });
+        initializeContainer();
 
-        // Commit
-        if (txId) {
-          await BillingService.commitCredits(txId, 0);
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+          return ApiResponseBuilder.unauthorized();
         }
 
-        return data;
-      } catch (err: any) {
-        // Rollback
-        if (txId) {
-          await BillingService.rollbackCredits(txId, err.message || "LLM failure");
-        }
-        throw err;
+      const idempotencyKey = request.headers.get("Idempotency-Key");
+
+      const formData = await request.formData();
+      const rawData = {
+        sessionId: formData.get("sessionId") as string,
+        content: formData.get("content") as string,
+      };
+
+      const validationResult = SendMessageSchema.safeParse(rawData);
+
+      if (!validationResult.success) {
+        return ApiResponseBuilder.badRequest("Invalid input data");
       }
-    };
 
-    let result;
-    if (idempotencyKey) {
+      const validatedData = validationResult.data;
+
       const idempotencyService = new IdempotencyService();
-      result = await idempotencyService.execute(
-        idempotencyKey,
-        user.id,
-        "message_send",
-        validatedData,
-        async () => {
-          const data = await sendWithBilling();
-          return { resultRef: data.messageId, data };
-        },
-        async (resultRef) => ({
-          messageId: resultRef,
-          aiResponse: "",
-          messageCount: 0,
-        })
-      );
-    } else {
-      result = await sendWithBilling();
-    }
+      const effectiveIdempKey = idempotencyKey || `sil-message-${user.id}-${Date.now()}`;
 
-    return NextResponse.redirect(new URL(`/simulation/${validatedData.sessionId}`, request.url));
-  } catch (error: any) {
-    if (error instanceof AuthenticationError) {
-      return ApiResponseBuilder.unauthorized();
+      const sendWithBilling = async () => {
+        if (ENABLE_SIL_BILLING) {
+          const reserveResult = await BillingService.reserveCredits({
+            userId: user.id,
+            amount: SIL_MESSAGE_COST,
+            action: "sil_message" as any,
+            operationId: effectiveIdempKey,
+          });
+
+          if (!reserveResult.success) {
+            throw new Error(`BILLING_ERROR:${reserveResult.error}`);
+          }
+
+          const conversationService = await Container.get<ConversationService>(
+            ServiceTokens.ConversationService
+          );
+
+          const result = await conversationService.sendMessage({
+            userId: user.id,
+            sessionId: validatedData.sessionId,
+            content: validatedData.content,
+          });
+
+          await BillingService.commitCredits(reserveResult.txId!, 0);
+
+          return { resultRef: result.messageId, data: result } as any;
+        } else {
+          const conversationService = await Container.get<ConversationService>(
+            ServiceTokens.ConversationService
+          );
+
+          const result = await conversationService.sendMessage({
+            userId: user.id,
+            sessionId: validatedData.sessionId,
+            content: validatedData.content,
+          });
+          return { resultRef: result.messageId, data: result } as any;
+        }
+      };
+
+      const result = await idempotencyService.execute(
+        effectiveIdempKey,
+        user.id,
+        "sil_message",
+        { sessionId: validatedData.sessionId },
+        sendWithBilling,
+        async (resultRef: string) => {
+          // Reload from DB on Cache HIT
+          const conversationService = await Container.get<ConversationService>(
+            ServiceTokens.ConversationService
+          );
+          const messages = await conversationService.getMessages(validatedData.sessionId, user.id);
+          return { resultRef, data: messages };
+        }
+      );
+
+      return NextResponse.redirect(new URL(`/simulation/${validatedData.sessionId}`, request.url));
+    } catch (error: any) {
+      if (error instanceof AuthenticationError) {
+        return ApiResponseBuilder.unauthorized();
+      }
+      if (error?.message?.startsWith("BILLING_ERROR:")) {
+        return ApiResponseBuilder.badRequest("Crédits insuffisants");
+      }
+      return ApiResponseBuilder.fromError(error);
     }
-    if (error?.message?.startsWith("BILLING_ERROR:")) {
-      return ApiResponseBuilder.badRequest("Crédits insuffisants");
-    }
-    return ApiResponseBuilder.fromError(error);
-  }
-}
+    },
+    { scopes: [RateLimitScope.USER, RateLimitScope.IP] }
+  )
+);

@@ -1,0 +1,1 @@
+{"version":3,"file":"risk-score.js","sourceRoot":"","sources":["risk-score.ts"],"names":[],"mappings":"AAKA,MAAM,UAAU,kBAAkB,CAAC,KAAc;IAC/C,IAAI,KAAK,IAAI,EAAE;QAAE,OAAO,UAAU,CAAC;IACnC,IAAI,KAAK,IAAI,EAAE;QAAE,OAAO,MAAM,CAAC;IAC/B,IAAI,KAAK,IAAI,EAAE;QAAE,OAAO,QAAQ,CAAC;IACjC,OAAO,KAAK,CAAC;AACf,CAAC"}

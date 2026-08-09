@@ -135,7 +135,7 @@ describe("Phase A.1 - Runtime Integration Test", () => {
     };
 
     // Collect events from EventBus
-    let collectedEvents: any[] = [];
+    const collectedEvents: any[] = [];
     eventBus.subscribe("DUMMY_EVENT", (event) => {
       collectedEvents.push(event);
     });

@@ -77,11 +77,39 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   const limitedStrengths = isPremium ? strengths : strengths.slice(0, 1)
   const limitedImprovements = isPremium ? improvements : []
 
-  // Generate recommendations from AI engines (mock for now)
-  const recommendations = [
-    { id: "1", title: "Améliorez votre communication", description: "Pratiquez des scénarios de communication pour renforcer vos compétences.", priority: "high" as const, category: "Communication" },
-    { id: "2", title: "Préparez-vous aux questions techniques", description: "Révisez les concepts techniques clés pour votre domaine.", priority: "medium" as const, category: "Technique" },
-  ]
+  // Generate recommendations from AI engines using real recommendation fusion engine
+  const { RecommendationFusionEngine } = await import("@/application/adaptive-intelligence/RecommendationFusionEngine");
+  const fusionEngine = RecommendationFusionEngine.getInstance();
+  
+  // Generate recommendations based on report data using the correct interface
+  const fusionResult = fusionEngine.fuseRecommendations([
+    {
+      engine: "interview_analysis",
+      recommendation: "Améliorez votre communication - Pratiquez des scénarios de communication pour renforcer vos compétences.",
+      confidence: 0.85,
+      priority: 1,
+      timestamp: new Date(),
+    },
+    {
+      engine: "interview_analysis",
+      recommendation: "Préparez-vous aux questions techniques - Révisez les concepts techniques clés pour votre domaine.",
+      confidence: 0.75,
+      priority: 2,
+      timestamp: new Date(),
+    }
+  ]);
+  
+  // Convert FusedRecommendation to the expected format
+  const recommendations = fusionResult.fusedRecommendations.map(rec => {
+    const priorityValue = rec.priority === 1 ? "high" : rec.priority === 2 ? "medium" : "low";
+    return {
+      id: rec.id,
+      title: rec.content.split(" - ")[0] || rec.content,
+      description: rec.content.split(" - ")[1] || rec.content,
+      priority: priorityValue as "high" | "medium" | "low",
+      category: rec.category,
+    };
+  });
 
   // Insight clé pour les utilisateurs FREE (1 insight uniquement)
   const keyInsight = strengths[0] || "Excellente communication lors de la présentation"
@@ -212,12 +240,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             <p className="text-ivoire-100">
               Débloquez l'analyse complète, le plan d'action personnalisé et les recommandations avancées.
             </p>
-            <Link
-              href="/pricing"
-              className="inline-block px-8 py-4 bg-white text-bronze-600 font-bold rounded-lg hover:bg-ivoire-50 transition-colors"
-            >
-              Débloquer maintenant
-            </Link>
+            <UpgradeCTA feature="le rapport complet" />
           </div>
         </div>
       )}

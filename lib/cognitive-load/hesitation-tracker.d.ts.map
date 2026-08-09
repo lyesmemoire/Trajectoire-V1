@@ -1,0 +1,1 @@
+{"version":3,"file":"hesitation-tracker.d.ts","sourceRoot":"","sources":["hesitation-tracker.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,wBAAgB,kBAAkB,CAAC,MAAM,EAAE;IACzC,gBAAgB,EAAE,MAAM,CAAC;IACzB,cAAc,EAAE,MAAM,CAAC;IACvB,WAAW,EAAE,MAAM,CAAC;IACpB,UAAU,EAAE,MAAM,CAAC;CACpB,GAAG;IAAE,SAAS,EAAE,KAAK,GAAG,QAAQ,GAAG,MAAM,CAAC;IAAC,IAAI,EAAE,MAAM,GAAG,IAAI,CAAA;CAAE,CAgBhE"}

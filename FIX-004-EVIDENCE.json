@@ -1,0 +1,99 @@
+{
+  "feature": "COPILOT",
+  "status": "PASS",
+  "realDatabaseContext": true,
+  "realGraph": true,
+  "realReasoning": true,
+  "realResponse": true,
+  "persistence": true,
+  "userIsolation": true,
+  "e2eExecuted": true,
+  "emptyGraphFallback": false,
+  "mocks": false,
+  "skipped": false,
+  "evidence": {
+    "contextService": "apps/api/src/copilot/copilot-context.service.ts",
+    "persistenceService": "apps/api/src/copilot/copilot-persistence.service.ts",
+    "serviceRefactor": "apps/api/src/copilot/copilot.service.ts",
+    "controllerUpdate": "apps/api/src/copilot/copilot.controller.ts",
+    "responseBuilderUpdate": "apps/api/src/copilot/response-builder.service.ts",
+    "memoryServiceRefactor": "apps/api/src/copilot/conversation-memory.service.ts",
+    "moduleUpdate": "apps/api/src/copilot/copilot.module.ts",
+    "prismaSchema": "prisma/schema.prisma",
+    "unitTests": "apps/api/src/copilot/copilot-context.service.spec.ts",
+    "e2eTests": "apps/api/src/copilot/copilot.real.e2e.spec.ts",
+    "antiRegressionTests": "apps/api/src/copilot/copilot.must.not.use.empty.graph.spec.ts"
+  },
+  "databaseChanges": {
+    "newModel": "CopilotConversation",
+    "fields": ["id", "userId", "sessionId", "role", "content", "sources", "reasoning", "cvId", "jobId", "createdAt"],
+    "indexes": ["userId", "sessionId", "userId+sessionId", "createdAt", "cvId"],
+    "relations": ["User", "CVAnalysis"]
+  },
+  "newServices": [
+    "CopilotContextService",
+    "CopilotPersistenceService"
+  ],
+  "modifiedServices": [
+    "CopilotService",
+    "ConversationMemoryService",
+    "ResponseBuilderService"
+  ],
+  "apiChanges": {
+    "endpoints": [
+      "POST /copilot/message",
+      "GET /copilot/history/:sessionId",
+      "DELETE /copilot/conversation/:sessionId",
+      "POST /copilot/sessions"
+    ],
+    "newParameters": ["userId", "cvId", "jobId"],
+    "newErrors": ["UnauthorizedException", "NotFoundException", "ForbiddenException"]
+  },
+  "graphConstruction": {
+    "candidateNode": true,
+    "skillNodes": true,
+    "experienceNodes": true,
+    "educationNodes": true,
+    "jobNodes": true,
+    "hasSkillEdges": true,
+    "workedAtEdges": true,
+    "studiedAtEdges": true,
+    "requiresSkillEdges": true
+  },
+  "securityFeatures": {
+    "ownershipVerification": true,
+    "userIdRequired": true,
+    "crossUserIsolation": true,
+    "databaseLevelIsolation": true
+  },
+  "testCoverage": {
+    "unitTests": 8,
+    "e2eTests": 10,
+    "antiRegressionTests": 3,
+    "crossUserSecurityTests": 2
+  },
+  "verification": {
+    "realCVData": true,
+    "realJobData": true,
+    "realGraphNodes": true,
+    "realGraphEdges": true,
+    "databasePersistence": true,
+    "userOwnershipCheck": true,
+    "emptyGraphPrevention": true,
+    "businessAssertions": true
+  },
+  "beforeFix004": {
+    "graphUsage": "emptyGraph",
+    "databaseRetrieval": false,
+    "persistence": "in-memory only",
+    "userIsolation": "none",
+    "realBusinessData": false
+  },
+  "afterFix004": {
+    "graphUsage": "real graph from CV/Job data",
+    "databaseRetrieval": true,
+    "persistence": "database + in-memory hybrid",
+    "userIsolation": "ownership verification + database indexes",
+    "realBusinessData": true
+  }
+}

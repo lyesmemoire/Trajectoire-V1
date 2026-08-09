@@ -1,0 +1,295 @@
+{
+  "auditId": "GO-LIVE-004.1",
+  "title": "Security Adversarial Verification",
+  "auditDate": "2025-01-08",
+  "auditor": "Independent Security Audit",
+  "auditType": "ADVERSARIAL",
+  "status": "NO-GO",
+  "apiUrl": "http://localhost:3000",
+  "apiProcessId": 7556,
+  "summary": {
+    "totalTests": 10,
+    "critical": 2,
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "pass": 0,
+    "fail": 2,
+    "notTested": 7,
+    "error": 1
+  },
+  "tests": {
+    "TEST1_IMPERSONATION": {
+      "name": "IMPERSONATION",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY)",
+      "findings": [],
+      "evidence": "Cannot verify if client-provided userId can be used for impersonation"
+    },
+    "TEST2_IDOR": {
+      "name": "IDOR",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials",
+      "findings": [],
+      "evidence": "Cannot verify cross-user resource access prevention"
+    },
+    "TEST3_GRAPH": {
+      "name": "GRAPH OWNERSHIP",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials and Prisma access",
+      "findings": [],
+      "evidence": "Cannot verify Graph ownership enforcement at database level"
+    },
+    "TEST4_COPILOT": {
+      "name": "COPILOT ISOLATION",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials",
+      "findings": [],
+      "evidence": "Cannot verify Copilot isolation from cross-user CV/Job/Graph access"
+    },
+    "TEST5_BILLING": {
+      "name": "BILLING ISOLATION",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials",
+      "findings": [],
+      "evidence": "Cannot verify billing isolation"
+    },
+    "TEST6_SEARCH": {
+      "name": "SEARCH ISOLATION",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Supabase credentials",
+      "findings": [],
+      "evidence": "Cannot verify search isolation"
+    },
+    "TEST7_AUTH": {
+      "name": "AUTH TOKEN VALIDATION",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "reason": "API returns 404 instead of 401 for invalid tokens",
+      "findings": [
+        "CRITICAL: No token returned 404 (expected 401)",
+        "CRITICAL: Invalid token returned 404 (expected 401)",
+        "CRITICAL: Malformed token returned 404 (expected 401)",
+        "CRITICAL: Empty Bearer returned 404 (expected 401)"
+      ],
+      "evidence": "JwtAuthGuard is NOT active. Routes are not protected. Authentication middleware is not applied. Security fixes from SECURITY-FIX-002 are NOT deployed.",
+      "endpoint": "/graph",
+      "testedTokens": [
+        "none",
+        "invalid.jwt.token",
+        "not-a-jwt",
+        "Bearer "
+      ],
+      "expectedStatus": 401,
+      "actualStatus": 404
+    },
+    "TEST8_RATE_LIMITING": {
+      "name": "RATE LIMITING",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "reason": "No rate limiting detected after 60 requests",
+      "findings": [
+        "WARNING: No rate limiting detected after 60 requests",
+        "WARNING: Rate limit headers missing"
+      ],
+      "evidence": "No 429 responses received. X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset headers missing. Rate limiting middleware is NOT active or not properly configured.",
+      "requestsMade": 60,
+      "rateLimitTriggered": false,
+      "headersPresent": {
+        "x-ratelimit-limit": false,
+        "x-ratelimit-remaining": false,
+        "x-ratelimit-reset": false,
+        "retry-after": false
+      }
+    },
+    "TEST9_HEADERS": {
+      "name": "SECURITY HEADERS",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "reason": "Security headers added to main.ts are not present in HTTP responses",
+      "findings": [
+        "CRITICAL: x-frame-options missing",
+        "CRITICAL: x-content-type-options missing",
+        "CRITICAL: x-xss-protection missing",
+        "CRITICAL: referrer-policy missing",
+        "CRITICAL: permissions-policy missing",
+        "INFO: CSP not present (optional for API)"
+      ],
+      "evidence": "Security headers added to apps/api/src/main.ts are NOT present in responses. Middleware not applied or API not running updated code. Security fixes from SECURITY-FIX-002 are NOT deployed.",
+      "endpoint": "/graph",
+      "headersChecked": [
+        "x-frame-options",
+        "x-content-type-options",
+        "x-xss-protection",
+        "referrer-policy",
+        "permissions-policy",
+        "content-security-policy"
+      ],
+      "headersPresent": {}
+    },
+    "TEST10_DATABASE": {
+      "name": "DATABASE INTEGRITY",
+      "status": "BLOCKED",
+      "severity": "NOT_TESTED",
+      "reason": "Missing Prisma database access",
+      "findings": [],
+      "evidence": "Cannot verify database integrity, orphan records, or ownership"
+    }
+  },
+  "vulnerabilities": {
+    "critical": [
+      {
+        "id": "AUTH-001",
+        "category": "AUTHENTICATION",
+        "title": "Authentication Not Active",
+        "description": "API returns 404 instead of 401 for unauthenticated requests",
+        "evidence": "Real HTTP requests to /graph endpoint with no/invalid tokens returned 404",
+        "rootCause": "JwtAuthGuard not applied or not deployed",
+        "impact": "All endpoints are effectively public, no authentication enforcement",
+        "fixRequired": [
+          "Verify AuthModule is imported in AppModule",
+          "Verify JwtAuthGuard is applied to all controllers",
+          "Restart API with updated code",
+          "Verify middleware is active"
+        ]
+      },
+      {
+        "id": "HDR-001",
+        "category": "SECURITY HEADERS",
+        "title": "Security Headers Missing",
+        "description": "Security headers added to main.ts are not present in responses",
+        "evidence": "Real HTTP responses lack x-frame-options, x-content-type-options, etc.",
+        "rootCause": "Middleware not applied or API not running updated code",
+        "impact": "Vulnerable to clickjacking, XSS, MIME sniffing attacks",
+        "fixRequired": [
+          "Verify main.ts middleware is configured",
+          "Restart API with updated code",
+          "Verify headers in response"
+        ]
+      }
+    ],
+    "high": [
+      {
+        "id": "RL-001",
+        "category": "RATE LIMITING",
+        "title": "Rate Limiting Not Active",
+        "description": "No rate limiting detected after 60 requests",
+        "evidence": "No 429 responses, rate limit headers missing",
+        "rootCause": "Rate limiting middleware not applied or not configured",
+        "impact": "Vulnerable to DoS attacks, API abuse",
+        "fixRequired": [
+          "Verify RateLimitingMiddleware is configured",
+          "Verify Redis connection for rate limiting backend",
+          "Restart API with updated code"
+        ]
+      }
+    ],
+    "medium": [],
+    "low": []
+  },
+  "comparison": {
+    "securityFix002": {
+      "claimedFixes": [
+        "JwtAuthGuard applied to all controllers",
+        "Security headers added to main.ts",
+        "Rate limiting middleware configured",
+        "Graph ownership schema updated"
+      ],
+      "auditFindings": [
+        "JwtAuthGuard NOT active (404 instead of 401)",
+        "Security headers NOT present in responses",
+        "Rate limiting NOT active",
+        "Cannot verify Graph ownership (blocked)"
+      ],
+      "conclusion": "The code changes from SECURITY-FIX-002 are NOT deployed or active in the running API."
+    }
+  },
+  "rootCauseAnalysis": {
+    "primaryIssue": "The API running on port 3000 is not the updated version with security fixes.",
+    "evidence": [
+      "Authentication guard not active",
+      "Security headers not present",
+      "Rate limiting not active",
+      "All indicate old code is running"
+    ],
+    "possibleCauses": [
+      "API not restarted after code changes",
+      "Old process still running on port 3000",
+      "Code changes not built/compiled",
+      "Environment not configured correctly"
+    ],
+    "runningProcess": {
+      "pid": 7556,
+      "port": 3000,
+      "name": "node"
+    }
+  },
+  "recommendations": {
+    "immediate": [
+      "Stop current API process (PID: 7556)",
+      "Build updated API: cd apps/api && pnpm build",
+      "Configure environment variables: SUPABASE_JWT_SECRET, ALLOWED_ORIGINS",
+      "Start updated API: cd apps/api && pnpm start:dev",
+      "Verify deployment: Test authentication returns 401, verify headers present, verify rate limiting",
+      "Re-run full audit with Supabase credentials"
+    ],
+    "beforeGoLive": [
+      "Apply database migration: prisma/migrations/20260808_add_graph_user_id/migration.sql",
+      "Verify backfill success",
+      "Test rollback plan",
+      "Execute full security audit with real credentials",
+      "Verify 0 CRITICAL, 0 HIGH findings",
+      "Document evidence",
+      "Build application",
+      "Execute workflows",
+      "Verify no regressions"
+    ]
+  },
+  "goCriteria": {
+    "required": {
+      "critical": 0,
+      "high": 0,
+      "realSecurityTests": "PASS",
+      "regression": "PASS",
+      "databaseIntegrity": "PASS"
+    },
+    "actual": {
+      "critical": 2,
+      "high": 1,
+      "realSecurityTests": "FAIL",
+      "regression": "NOT_TESTED",
+      "databaseIntegrity": "NOT_TESTED"
+    },
+    "met": false,
+    "blockingIssues": [
+      "Security fixes from SECURITY-FIX-002 are NOT deployed",
+      "API authentication is not active",
+      "Security headers are not present",
+      "Rate limiting is not active",
+      "Cannot verify authorization/IDOR fixes (blocked)"
+    ]
+  },
+  "finalVerdict": {
+    "status": "NO-GO",
+    "reason": "Multiple CRITICAL and HIGH severity vulnerabilities confirmed. Security fixes from SECURITY-FIX-002 are NOT deployed or active in the running API.",
+    "recommendation": "Do NOT proceed to production. Address all blocking issues and re-run full audit before Go-Live."
+  },
+  "evidenceFiles": [
+    "GO-LIVE-004.1-LIMITED-EVIDENCE.json",
+    "go-live-004.1-limited-audit.cjs",
+    "go-live-004.1-adversarial-audit.cjs"
+  ],
+  "auditMetadata": {
+    "version": "1.0",
+    "generatedAt": "2025-01-08T00:00:00Z",
+    "auditDuration": "Limited audit completed",
+    "environment": "Development",
+    "apiStatus": "Running outdated code"
+  }
+}

@@ -9,5 +9,5 @@ import { ValidationResult } from "./normalization-contract.js";
  *
  * This is a pure function — no Date.now(), no Math.random(), no side effects.
  */
-export declare function validateDecision(_decision: _GovernorDecision): ValidationResult;
+export declare function validateDecision(decision: _GovernorDecision): ValidationResult;
 //# sourceMappingURL=validation.d.ts.map

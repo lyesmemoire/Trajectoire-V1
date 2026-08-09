@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
 // lib/supabase/service.ts
 // Client service role — RLS DÉSACTIVÉ — pour admin/cron/webhooks UNIQUEMENT
 //

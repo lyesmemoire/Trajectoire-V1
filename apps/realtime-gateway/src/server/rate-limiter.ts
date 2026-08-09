@@ -13,35 +13,68 @@ import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
 // ── Redis Client ──────────────────────────────────────────────
-const redis = new Redis({
-  url: envServer.UPSTASH_REDIS_REST_URL,
-  token: envServer.UPSTASH_REDIS_REST_TOKEN,
-});
+let redis: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (!envServer.UPSTASH_REDIS_REST_URL || !envServer.UPSTASH_REDIS_REST_TOKEN) {
+    return null;
+  }
+
+  if (!redis) {
+    redis = new Redis({
+      url: envServer.UPSTASH_REDIS_REST_URL,
+      token: envServer.UPSTASH_REDIS_REST_TOKEN,
+    });
+  }
+
+  return redis;
+}
 
 // ── HTTP Rate Limiters (3 tiers) ──────────────────────────────
-export const burstLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(2, "1 m"),
-  prefix: "rl:burst",
-});
+function getBurstLimiter(): Ratelimit | null {
+  const r = getRedis();
+  if (!r) return null;
+  return new Ratelimit({
+    redis: r,
+    limiter: Ratelimit.slidingWindow(2, "1 m"),
+    prefix: "rl:burst",
+  });
+}
 
-export const hourlyLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, "1 h"),
-  prefix: "rl:hourly",
-});
+function getHourlyLimiter(): Ratelimit | null {
+  const r = getRedis();
+  if (!r) return null;
+  return new Ratelimit({
+    redis: r,
+    limiter: Ratelimit.slidingWindow(5, "1 h"),
+    prefix: "rl:hourly",
+  });
+}
 
-export const dailyLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, "1 d"),
-  prefix: "rl:daily",
-});
+function getDailyLimiter(): Ratelimit | null {
+  const r = getRedis();
+  if (!r) return null;
+  return new Ratelimit({
+    redis: r,
+    limiter: Ratelimit.slidingWindow(10, "1 d"),
+    prefix: "rl:daily",
+  });
+}
 
 /**
  * Check all 3 rate limit tiers for a given IP.
  * Returns { allowed: boolean, retryAfter?: number }
  */
 export async function checkRateLimit(ip: string): Promise<{ allowed: boolean; retryAfter?: number }> {
+  const burstLimiter = getBurstLimiter();
+  const hourlyLimiter = getHourlyLimiter();
+  const dailyLimiter = getDailyLimiter();
+
+  // Fallback: si Redis absent, autoriser toujours (dev/test)
+  if (!burstLimiter || !hourlyLimiter || !dailyLimiter) {
+    return { allowed: true };
+  }
+
   const burst = await burstLimiter.limit(ip);
   if (!burst.success) return { allowed: false, retryAfter: Math.ceil(burst.reset - Date.now() / 1000) };
 
@@ -64,29 +97,36 @@ const WS_DAILY_MAX = 2;
  * Returns true if the session is allowed, false if blocked.
  */
 export async function acquireWsSession(userId: string, ip: string): Promise<boolean> {
+  const r = getRedis();
+  
+  // Fallback: si Redis absent, autoriser toujours (dev/test)
+  if (!r) {
+    return true;
+  }
+
   // 1. Check if user already has an active session
   const userKey = `active_ws:user:${userId}`;
-  const existingUser = await redis.get(userKey);
+  const existingUser = await r.get(userKey);
   if (existingUser) return false;
 
   // 2. Check if IP already has an active session
   const ipKey = `active_ws:ip:${ip}`;
-  const existingIp = await redis.get(ipKey);
+  const existingIp = await r.get(ipKey);
   if (existingIp) return false;
 
   // 3. Check daily quota
   const dailyKey = `daily_ws:${userId}`;
-  const dailyCount = await redis.get<number>(dailyKey);
+  const dailyCount = await r.get<number>(dailyKey);
   if (dailyCount !== null && dailyCount >= WS_DAILY_MAX) return false;
 
   // 4. Acquire locks
-  await redis.set(userKey, "1", { ex: WS_SESSION_TTL });
-  await redis.set(ipKey, "1", { ex: WS_SESSION_TTL });
+  await r.set(userKey, "1", { ex: WS_SESSION_TTL });
+  await r.set(ipKey, "1", { ex: WS_SESSION_TTL });
 
   // 5. Increment daily counter
-  const newCount = await redis.incr(dailyKey);
+  const newCount = await r.incr(dailyKey);
   if (newCount === 1) {
-    await redis.expire(dailyKey, 86400); // 24h TTL
+    await r.expire(dailyKey, 86400); // 24h TTL
   }
 
   return true;
@@ -96,8 +136,11 @@ export async function acquireWsSession(userId: string, ip: string): Promise<bool
  * Release the WebSocket session lock when the session ends.
  */
 export async function releaseWsSession(userId: string, ip: string): Promise<void> {
-  await redis.del(`active_ws:user:${userId}`);
-  await redis.del(`active_ws:ip:${ip}`);
+  const r = getRedis();
+  if (r) {
+    await r.del(`active_ws:user:${userId}`);
+    await r.del(`active_ws:ip:${ip}`);
+  }
 }
 
 // ── Alerting (Slack Webhook) ──────────────────────────────────
@@ -170,10 +213,17 @@ const LLM_ERROR_THRESHOLD = 3;
  * Returns true if threshold is reached (session should be killed).
  */
 export async function trackLlmError(sessionId: string): Promise<boolean> {
+  const r = getRedis();
+  
+  // Fallback: si Redis absent, ne jamais tuer la session (dev/test)
+  if (!r) {
+    return false;
+  }
+
   const key = `llm_errors:${sessionId}`;
-  const count = await redis.incr(key);
+  const count = await r.incr(key);
   if (count === 1) {
-    await redis.expire(key, WS_SESSION_TTL);
+    await r.expire(key, WS_SESSION_TTL);
   }
   return count >= LLM_ERROR_THRESHOLD;
 }
@@ -182,5 +232,8 @@ export async function trackLlmError(sessionId: string): Promise<boolean> {
  * Reset LLM error counter after a successful call.
  */
 export async function resetLlmErrors(sessionId: string): Promise<void> {
-  await redis.del(`llm_errors:${sessionId}`);
+  const r = getRedis();
+  if (r) {
+    await r.del(`llm_errors:${sessionId}`);
+  }
 }

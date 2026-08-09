@@ -1,5 +1,5 @@
-import { TechnologyCatalog, TechnologyEntry } from "../../../domain/cognitive/catalogs/TechnologyCatalog";
-import { CompanyCatalog, CompanyEntry } from "../../../domain/cognitive/catalogs/CompanyCatalog";
+import { TechnologyCatalog } from "../../../domain/cognitive/catalogs/TechnologyCatalog";
+import { CompanyCatalog } from "../../../domain/cognitive/catalogs/CompanyCatalog";
 
 // ===================================================================
 // CANONICAL ENTITY RESOLVER — Normalize Entity Names to Canonical Form

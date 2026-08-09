@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "keys": [
+    {
+      "key": "session:user-001",
+      "type": "hash",
+      "ttl": 3600,
+      "created": "2026-08-07T07:52:00Z",
+      "fields": {
+        "userId": "user-001",
+        "email": "test@trajectoire.com",
+        "createdAt": "2026-08-07T07:52:00Z",
+        "lastActivity": "2026-08-07T07:52:00Z"
+      }
+    },
+    {
+      "key": "cv:cache:cv-001",
+      "type": "string",
+      "ttl": 7200,
+      "created": "2026-08-07T07:52:00Z",
+      "value": "{\"atsScore\":75,\"skills\":[\"JavaScript\",\"React\",\"Node.js\"]}"
+    },
+    {
+      "key": "matching:result:match-001",
+      "type": "string",
+      "ttl": 1800,
+      "created": "2026-08-07T07:52:05Z",
+      "value": "{\"score\":85,\"explanation\":\"Excellent match\"}"
+    },
+    {
+      "key": "search:cache:search-001",
+      "type": "list",
+      "ttl": 900,
+      "created": "2026-08-07T07:52:00Z",
+      "length": 1
+    },
+    {
+      "key": "rate_limit:user-001:api",
+      "type": "string",
+      "ttl": 60,
+      "created": "2026-08-07T07:52:00Z",
+      "value": "5"
+    },
+    {
+      "key": "copilot:context:conv-001",
+      "type": "hash",
+      "ttl": 1800,
+      "created": "2026-08-07T07:52:10Z",
+      "fields": {
+        "userId": "user-001",
+        "messageCount": "4",
+        "lastMessage": "2026-08-07T07:52:06Z"
+      }
+    }
+  ],
+  "statistics": {
+    "totalKeys": 6,
+    "totalKeysByType": {
+      "hash": 2,
+      "string": 3,
+      "list": 1
+    },
+    "cacheHits": 180,
+    "cacheMisses": 70,
+    "cacheHitRatio": 0.72,
+    "averageTTL": 2516,
+    "memoryUsage": {
+      "used": 2048576,
+      "peak": 4194304,
+      "unit": "bytes"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "TEST7_AUTH": {
+    "status": "FAIL",
+    "findings": [
+      "CRITICAL: No token returned 404 (expected 401)",
+      "CRITICAL: Invalid token returned 404 (expected 401)",
+      "CRITICAL: Malformed token returned 404 (expected 401)",
+      "CRITICAL: Empty Bearer returned 404 (expected 401)"
+    ]
+  },
+  "TEST8_RATE_LIMITING": {
+    "status": "NOT_TESTED",
+    "findings": [
+      "WARNING: No rate limiting detected after 60 requests",
+      "WARNING: Rate limit headers missing"
+    ]
+  },
+  "TEST9_HEADERS": {
+    "status": "FAIL",
+    "findings": [
+      "CRITICAL: x-frame-options missing",
+      "CRITICAL: x-content-type-options missing",
+      "CRITICAL: x-xss-protection missing",
+      "CRITICAL: referrer-policy missing",
+      "CRITICAL: permissions-policy missing",
+      "INFO: CSP not present (optional for API)"
+    ]
+  }
+}

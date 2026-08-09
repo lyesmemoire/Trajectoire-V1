@@ -27,7 +27,7 @@ function verifyLockfileCompleteness(sbomPath) {
   
   for (const [key, details] of Object.entries(lockDeps)) {
     const parts = key.split('@');
-    let name = key.startsWith('/@') ? '@' + parts[1] : parts[0].replace(/^\//, '');
+    const name = key.startsWith('/@') ? '@' + parts[1] : parts[0].replace(/^\//, '');
     
     // In pnpm lockfiles, versions are embedded in the key or in the details.version
     let version = details.version || 'unknown';

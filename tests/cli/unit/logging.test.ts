@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { createLogger, getLogger, Logger, LogLevel, LogFormat } from '../../../src/cli/logging/index';
+import { createLogger, getLogger, Logger } from '../../../src/cli/logging/index';
 
 describe('Logger', () => {
   let logger: Logger;

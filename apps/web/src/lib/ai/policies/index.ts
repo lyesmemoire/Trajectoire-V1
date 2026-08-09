@@ -3,5 +3,5 @@
 // ===================================================================
 
 // Policy Registry
-export { MemoryPolicyRegistry, PolicyRegistry, BasePolicy, PolicyRegistryConfig } from "./PolicyRegistry";
-export type { PolicyRegistry } from "./PolicyRegistry";
+export { MemoryPolicyRegistry } from "./PolicyRegistry";
+export type { PolicyRegistry, BasePolicy, PolicyRegistryConfig } from "./PolicyRegistry";

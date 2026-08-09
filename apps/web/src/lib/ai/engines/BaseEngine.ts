@@ -2,7 +2,6 @@ import { Engine, EngineInput } from "../contracts/Engine";
 import { EngineResult } from "../contracts/EngineResult";
 import { BaseEvent } from "../contracts/Event";
 import { createEventEnvelope } from "../contracts/EventEnvelope";
-import { z } from "zod";
 
 // ===================================================================
 // BASE ENGINE — Abstract Base Class for All Engines

@@ -1,0 +1,115 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-postgres
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "trajectoire.selectorLabels" . | nindent 6 }}
+      app: postgres
+  template:
+    metadata:
+      labels:
+        {{- include "trajectoire.selectorLabels" . | nindent 8 }}
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: {{ .Values.postgres.image }}
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "trajectoire.fullname" . }}-secrets
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "trajectoire.fullname" . }}-secrets
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "trajectoire.fullname" . }}-secrets
+              key: POSTGRES_DB
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        - name: postgres-backup
+          mountPath: /backups
+        resources:
+          {{- toYaml .Values.postgres.resources | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - postgres
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - postgres
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: {{ include "trajectoire.fullname" . }}-postgres-pvc
+      - name: postgres-backup
+        persistentVolumeClaim:
+          claimName: {{ include "trajectoire.fullname" . }}-postgres-backup-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-postgres
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "trajectoire.selectorLabels" . | nindent 4 }}
+    app: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-postgres-pvc
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistence.size }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-postgres-backup-pvc
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.backup.size }}
+{{- end }}

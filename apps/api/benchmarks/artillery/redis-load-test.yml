@@ -1,0 +1,70 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 20
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 50
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 100
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 50
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 20
+      name: "Cool down"
+
+scenarios:
+  - name: "Redis Load Test"
+    flow:
+      # Set operation
+      - post:
+          url: '/cache/set'
+          json:
+            key: 'test-key-{{$randomNumber()}}'
+            value:
+              data: '{{$randomNumber()}}'
+              timestamp: '{{$timestamp}}'
+            ttl: 3600
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Get operation
+      - get:
+          url: '/cache/get?key=test-key-1'
+          expect:
+            - statusCode: 200
+      
+      # Delete operation
+      - delete:
+          url: '/cache/delete?key=test-key-1'
+          expect:
+            - statusCode: 200
+      
+      # Batch set
+      - post:
+          url: '/cache/batch-set'
+          json:
+            - key: 'batch-key-1'
+              value:
+                data: '{{$randomNumber()}}'
+            - key: 'batch-key-2'
+              value:
+                data: '{{$randomNumber()}}'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Rate limiting check
+      - get:
+          url: '/rate-limit/check?scope=test&identifier=test-user'
+          expect:
+            - statusCode: 200
+      
+      - think: 0.2

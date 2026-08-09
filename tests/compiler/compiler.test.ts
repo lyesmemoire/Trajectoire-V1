@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { Lexer } from '../../compiler/lexer/lexer';
-import { Parser } from '../../compiler/parser/parser';
-import { BytecodeGenerator } from '../../compiler/bytecode/bytecode-generator';
 
 describe('Compiler', () => {
   it('should compile DSL to bytecode', () => {

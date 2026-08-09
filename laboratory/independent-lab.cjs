@@ -101,7 +101,7 @@ function runIndependentAudit(snapshotDir) {
 
   // Vérification de la Provenance
   const provRel = (snapshot.relationships || []).find(r => r.from === 'provenance/provenance.dsse.json');
-  let subjectDigests = new Map();
+  const subjectDigests = new Map();
 
   if (provRel || fs.existsSync(path.join(snapshotDir, 'provenance', 'provenance.dsse.json'))) {
     const provPath = path.join(snapshotDir, 'provenance', 'provenance.dsse.json');
@@ -384,7 +384,7 @@ function runIndependentAudit(snapshotDir) {
           }
           
           if (timestampData) {
-            let subjectIntegrityOk = (timestampSubjectDigest === manifestDigest);
+            const subjectIntegrityOk = (timestampSubjectDigest === manifestDigest);
 
             const tEvidences = timestampData.trustedTime || [];
             const trEvidences = timestampData.transparency || [];
@@ -708,7 +708,7 @@ function runIndependentAudit(snapshotDir) {
       // L-038: Property Catalog Integrity
       if (pbtStats.catalog && Array.isArray(pbtStats.catalog.properties)) {
         let catalogValid = true;
-        let missing = [];
+        const missing = [];
         const expectedIds = ["P-005", "P-006", "P-007", "P-008", "P-009", "P-010", "P-011", "P-012", "P-013"];
         for (const id of expectedIds) {
           if (!pbtStats.catalog.properties.find(p => p.id === id)) {
@@ -1024,7 +1024,7 @@ function runIndependentAudit(snapshotDir) {
 
   const manifestPathForId = path.join(snapshotDir, 'manifest.json');
   let qualificationId = 'UNKNOWN';
-  let runId = path.basename(snapshotDir);
+  const runId = path.basename(snapshotDir);
   if (fs.existsSync(manifestPathForId)) {
     try {
       const manifestObj = JSON.parse(fs.readFileSync(manifestPathForId, 'utf8'));

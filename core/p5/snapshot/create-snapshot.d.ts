@@ -9,5 +9,5 @@ import { MindSnapshot } from "./snapshot-contract.js";
  * - Deep copy: no shared references between input state and snapshot.state.
  * - The original state is never mutated.
  */
-export declare function createSnapshot(_state: _MindState, _timestamp: number): MindSnapshot;
+export declare function createSnapshot(state: _MindState, timestamp: number): MindSnapshot;
 //# sourceMappingURL=create-snapshot.d.ts.map

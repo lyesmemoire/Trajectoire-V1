@@ -7,9 +7,7 @@ import { DummyEngine, DummyInput } from "../../apps/web/src/lib/ai/runtime/Dummy
 import { DefaultReducerRegistry, Reducer } from "../../apps/web/src/lib/ai/runtime/ReducerRegistry";
 import { DefaultSnapshotBuilder } from "../../apps/web/src/lib/ai/runtime/SnapshotBuilder";
 import { InvestigationContext } from "../../apps/web/src/domain/cognitive/InvestigationContext";
-import { BaseEvent } from "../../apps/web/src/lib/ai/contracts/Event";
 import { Engine } from "../../apps/web/src/lib/ai/contracts/Engine";
-import { CognitiveState } from "../../apps/web/src/domain/cognitive/CognitiveState";
 
 describe("Phase A.2 - Runtime Integration Tests", () => {
   let runtime: DefaultCognitiveRuntime;

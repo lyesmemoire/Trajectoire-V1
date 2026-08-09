@@ -1,0 +1,1472 @@
+
+===== apps\api\src\runtime\kg\graph-repository.service.ts =====
+
+/**
+ * Knowledge Graph RH Runtime v2
+ * Graph Repository Service
+ * Handles persistence of graphs with versioning, soft delete, transactions, and snapshots
+ */
+
+import { Graph, Node, Edge } from './graph-types';
+import {
+  PrismaClient,
+  Graph as PrismaGraph,
+  GraphNode as PrismaGraphNode,
+  GraphEdge as PrismaGraphEdge,
+  GraphVersion as PrismaGraphVersion,
+  GraphSnapshot as PrismaGraphSnapshot,
+} from '@prisma/client';
+import { CacheService } from '../../cache/cache.decorator';
+import { Injectable } from '@nestjs/common';
+import { RollbackService } from '../../resilience/rollback.service';
+import { PrismaService } from './prisma.service';
+
+export interface GraphCreateInput {
+  name?: string;
+  description?: string;
+  source?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface GraphUpdateInput {
+  name?: string;
+  description?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface GraphFilter {
+  isActive?: boolean;
+  source?: string;
+  includeDeleted?: boolean;
+  userId?: string;
+}
+
+export interface NodeFilter {
+  type?: string;
+  normalizedLabel?: string;
+  minConfidence?: number;
+  maxConfidence?: number;
+  includeDeleted?: boolean;
+}
+
+export interface EdgeFilter {
+  type?: string;
+  sourceNodeId?: string;
+  targetNodeId?: string;
+  minWeight?: number;
+  maxWeight?: number;
+  minConfidence?: number;
+  maxConfidence?: number;
+  includeDeleted?: boolean;
+}
+
+export interface VersionCreateInput {
+  description?: string;
+  changeLog?: Record<string, unknown>;
+  createdBy?: string;
+}
+
+export interface SnapshotCreateInput {
+  name: string;
+  description?: string;
+  metadata?: Record<string, unknown>;
+}
+
+@Injectable()
+export class GraphRepository {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cacheService: CacheService,
+    private readonly rollbackService: RollbackService,
+  ) {}
+
+  // ============================================================================
+  // GRAPH CRUD OPERATIONS
+  // ============================================================================
+
+  /**
+   * Create a new graph
+   */
+  async createGraph(input: GraphCreateInput, userId?: string): Promise<Graph> {
+    const data: any = {
+      name: input.name || 'Unnamed Graph',
+      description: input.description || null,
+      source: input.source || 'UNKNOWN',
+      metadata: input.metadata as any,
+    };
+
+    // Add userId for tenant isolation
+    if (userId) {
+      data.userId = userId;
+    }
+
+    const prismaGraph = await this.prisma.graph.create({
+      data,
+    });
+
+    const graph = this.mapPrismaGraphToGraph(prismaGraph);
+
+    // Cache the new graph
+    const cacheKey = this.cacheService.generateKey('graph', graph.id);
+    await this.cacheService.set(cacheKey, graph, 3600); // 1 hour TTL
+
+    return graph;
+  }
+
+  /**
+   * Get a graph by ID
+   */
+  async getGraphById(
+    id: string,
+    filter: GraphFilter = {},
+  ): Promise<Graph | null> {
+    const cacheKey = this.cacheService.generateKey('graph', id);
+
+    // Try cache first
+    const cached = await this.cacheService.get<Graph>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const where: any = { id };
+    
+    // Add userId filtering for tenant isolation
+    if (filter.userId) {
+      where.userId = filter.userId;
+    }
+
+    const prismaGraph = await this.prisma.graph.findUnique({
+      where,
+      include: {
+        nodes: {
+          where: this.buildNodeWhere(filter),
+        },
+        edges: {
+          where: this.buildEdgeWhere(filter),
+        },
+      },
+    });
+
+    if (!prismaGraph) {
+      return null;
+    }
+
+    if (!filter.includeDeleted && prismaGraph.deletedAt) {
+      return null;
+    }
+
+    const graph = this.mapPrismaGraphToGraph(prismaGraph);
+
+    // Cache the result
+    await this.cacheService.set(cacheKey, graph, 3600); // 1 hour TTL
+
+    return graph;
+  }
+
+  /**
+   * Update a graph
+   */
+  async updateGraph(id: string, input: GraphUpdateInput, userId?: string): Promise<Graph> {
+    return this.rollbackService.executeWithRollback(
+      async () => {
+        const updateData: any = {};
+        if (input.name !== undefined) updateData.name = input.name;
+        if (input.description !== undefined)
+          updateData.description = input.description;
+        if (input.metadata !== undefined)
+          updateData.metadata = input.metadata as any;
+
+        const where: any = { id };
+        
+        // Add userId filtering for tenant isolation
+        if (userId) {
+          where.userId = userId;
+        }
+
+        const prismaGraph = await this.prisma.graph.update({
+          where,
+          data: updateData,
+        });
+
+        const graph = this.mapPrismaGraphToGraph(prismaGraph);
+
+        // Invalidate cache
+        const cacheKey = this.cacheService.generateKey('graph', id);
+        await this.cacheService.del(cacheKey);
+
+        return graph;
+      },
+      async () => {
+        // Rollback: restore original graph from cache or database
+        const cacheKey = this.cacheService.generateKey('graph', id);
+        await this.cacheService.del(cacheKey);
+      },
+      `update-graph-${id}`,
+    );
+  }
+
+  /**
+   * Soft delete a graph
+   */
+  async softDeleteGraph(id: string, userId?: string): Promise<Graph> {
+    const where: any = { id };
+    
+    // Add userId filtering for tenant isolation
+    if (userId) {
+      where.userId = userId;
+    }
+
+    const prismaGraph = await this.prisma.graph.update({
+      where,
+      data: {
+        deletedAt: new Date(),
+        isActive: false,
+      },
+    });
+
+    return this.mapPrismaGraphToGraph(prismaGraph);
+  }
+
+  /**
+   * Hard delete a graph (permanent)
+   */
+  async hardDeleteGraph(id: string, userId?: string): Promise<void> {
+    const where: any = { id };
+    
+    // Add userId filtering for tenant isolation
+    if (userId) {
+      where.userId = userId;
+    }
+
+    await this.prisma.graph.delete({
+      where,
+    });
+  }
+
+  /**
+   * Restore a soft-deleted graph
+   */
+  async restoreGraph(id: string, userId?: string): Promise<Graph> {
+    const where: any = { id };
+    
+    // Add userId filtering for tenant isolation
+    if (userId) {
+      where.userId = userId;
+    }
+
+    const prismaGraph = await this.prisma.graph.update({
+      where,
+      data: {
+        deletedAt: null,
+        isActive: true,
+      },
+    });
+
+    return this.mapPrismaGraphToGraph(prismaGraph);
+  }
+
+  /**
+   * List graphs with filters
+   */
+  async listGraphs(
+    filter: GraphFilter = {},
+    skip = 0,
+    take = 50,
+  ): Promise<Graph[]> {
+    const where = this.buildGraphWhere(filter);
+    
+    // Add userId filtering for tenant isolation
+    if (filter.userId) {
+      where.userId = filter.userId;
+    }
+
+    const prismaGraphs = await this.prisma.graph.findMany({
+      where,
+      skip,
+      take,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return prismaGraphs.map((g) => this.mapPrismaGraphToGraph(g));
+  }
+
+  // ============================================================================
+  // NODE CRUD OPERATIONS
+  // ============================================================================
+
+  /**
+   * Create nodes for a graph
+   */
+  async createNodes(graphId: string, nodes: Node[]): Promise<Node[]> {
+    const prismaNodes = await this.prisma.graphNode.createMany({
+      data: nodes.map((node) => ({
+        graphId,
+        nodeId: node.id,
+        type: node.type,
+        label: node.label,
+        normalizedLabel: node.normalizedLabel,
+        confidence: node.confidence,
+        source: node.source,
+        metadata: node.metadata as any,
+      })),
+      skipDuplicates: true,
+    });
+
+    // Return the created nodes
+    return this.getNodesByGraphId(graphId);
+  }
+
+  /**
+   * Get nodes for a graph with ownership verification
+   */
+  async getNodesByGraphId(
+    graphId: string,
+    filter: NodeFilter = {},
+    userId?: string,
+  ): Promise<Node[]> {
+    // First verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    const prismaNodes = await this.prisma.graphNode.findMany({
+      where: {
+        graphId,
+        ...this.buildNodeWhere(filter),
+      },
+    });
+
+    return prismaNodes.map((n) => this.mapPrismaNodeToNode(n));
+  }
+
+  /**
+   * Update a node with ownership verification
+   */
+  async updateNode(id: string, updates: Partial<Node>, userId?: string): Promise<Node> {
+    // Verify node ownership through graph if userId provided
+    if (userId) {
+      const node = await this.prisma.graphNode.findUnique({
+        where: { id },
+        select: { graphId: true },
+      });
+      if (!node) {
+        throw new Error('Node not found');
+      }
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: node.graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Access denied');
+      }
+    }
+
+    const updateData: any = {};
+    if (updates.label !== undefined) updateData.label = updates.label;
+    if (updates.normalizedLabel !== undefined)
+      updateData.normalizedLabel = updates.normalizedLabel;
+    if (updates.confidence !== undefined)
+      updateData.confidence = updates.confidence;
+    if (updates.metadata !== undefined)
+      updateData.metadata = updates.metadata as any;
+
+    const prismaNode = await this.prisma.graphNode.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return this.mapPrismaNodeToNode(prismaNode);
+  }
+
+  /**
+   * Soft delete a node with ownership verification
+   */
+  async softDeleteNode(id: string, userId?: string): Promise<Node> {
+    // Verify node ownership through graph if userId provided
+    if (userId) {
+      const node = await this.prisma.graphNode.findUnique({
+        where: { id },
+        select: { graphId: true },
+      });
+      if (!node) {
+        throw new Error('Node not found');
+      }
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: node.graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Access denied');
+      }
+    }
+
+    const prismaNode = await this.prisma.graphNode.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+
+    return this.mapPrismaNodeToNode(prismaNode);
+  }
+
+  /**
+   * Delete nodes by graph ID with ownership verification
+   */
+  async deleteNodesByGraphId(graphId: string, userId?: string): Promise<void> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    await this.prisma.graphNode.deleteMany({
+      where: { graphId },
+    });
+  }
+
+  // ============================================================================
+  // EDGE CRUD OPERATIONS
+  // ============================================================================
+
+  /**
+   * Create edges for a graph
+   */
+  async createEdges(graphId: string, edges: Edge[]): Promise<Edge[]> {
+    const prismaEdges = await this.prisma.graphEdge.createMany({
+      data: edges.map((edge) => ({
+        graphId,
+        edgeId: edge.id,
+        type: edge.type,
+        sourceNodeId: edge.sourceNode,
+        targetNodeId: edge.targetNode,
+        weight: edge.weight,
+        confidence: edge.confidence,
+        reason: edge.reason || null,
+        metadata: edge.metadata as any,
+      })),
+      skipDuplicates: true,
+    });
+
+    return this.getEdgesByGraphId(graphId);
+  }
+
+  /**
+   * Get edges for a graph with ownership verification
+   */
+  async getEdgesByGraphId(
+    graphId: string,
+    filter: EdgeFilter = {},
+    userId?: string,
+  ): Promise<Edge[]> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    const prismaEdges = await this.prisma.graphEdge.findMany({
+      where: {
+        graphId,
+        ...this.buildEdgeWhere(filter),
+      },
+    });
+
+    return prismaEdges.map((e) => this.mapPrismaEdgeToEdge(e));
+  }
+
+  /**
+   * Update an edge with ownership verification
+   */
+  async updateEdge(id: string, updates: Partial<Edge>, userId?: string): Promise<Edge> {
+    // Verify edge ownership through graph if userId provided
+    if (userId) {
+      const edge = await this.prisma.graphEdge.findUnique({
+        where: { id },
+        select: { graphId: true },
+      });
+      if (!edge) {
+        throw new Error('Edge not found');
+      }
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: edge.graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Access denied');
+      }
+    }
+
+    const updateData: any = {};
+    if (updates.weight !== undefined) updateData.weight = updates.weight;
+    if (updates.confidence !== undefined)
+      updateData.confidence = updates.confidence;
+    if (updates.reason !== undefined) updateData.reason = updates.reason;
+    if (updates.metadata !== undefined)
+      updateData.metadata = updates.metadata as any;
+
+    const prismaEdge = await this.prisma.graphEdge.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return this.mapPrismaEdgeToEdge(prismaEdge);
+  }
+
+  /**
+   * Soft delete an edge with ownership verification
+   */
+  async softDeleteEdge(id: string, userId?: string): Promise<Edge> {
+    // Verify edge ownership through graph if userId provided
+    if (userId) {
+      const edge = await this.prisma.graphEdge.findUnique({
+        where: { id },
+        select: { graphId: true },
+      });
+      if (!edge) {
+        throw new Error('Edge not found');
+      }
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: edge.graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Access denied');
+      }
+    }
+
+    const prismaEdge = await this.prisma.graphEdge.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+
+    return this.mapPrismaEdgeToEdge(prismaEdge);
+  }
+
+  /**
+   * Delete edges by graph ID with ownership verification
+   */
+  async deleteEdgesByGraphId(graphId: string, userId?: string): Promise<void> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    await this.prisma.graphEdge.deleteMany({
+      where: { graphId },
+    });
+  }
+
+  // ============================================================================
+  // VERSIONING SYSTEM
+  // ============================================================================
+
+  /**
+   * Create a new version of a graph with ownership verification
+   */
+  async createVersion(
+    graphId: string,
+    input: VersionCreateInput,
+    userId?: string,
+  ): Promise<PrismaGraphVersion> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    const graph = await this.prisma.graph.findUnique({
+      where: { id: graphId },
+      include: {
+        nodes: { where: { deletedAt: null } },
+        edges: { where: { deletedAt: null } },
+      },
+    });
+
+    if (!graph) {
+      throw new Error(`Graph ${graphId} not found`);
+    }
+
+    const newVersion = await this.prisma.$transaction(async (tx) => {
+      // Increment graph version
+      await tx.graph.update({
+        where: { id: graphId },
+        data: { version: { increment: 1 } },
+      });
+
+      // Create version record
+      return tx.graphVersion.create({
+        data: {
+          graphId,
+          version: graph.version + 1,
+          description: input.description || null,
+          changeLog: input.changeLog as any,
+          nodeCount: graph.nodes.length,
+          edgeCount: graph.edges.length,
+          createdBy: input.createdBy || null,
+        },
+      });
+    });
+
+    return newVersion;
+  }
+
+  /**
+   * Get versions for a graph with ownership verification
+   */
+  async getVersionsByGraphId(graphId: string, userId?: string): Promise<PrismaGraphVersion[]> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    return this.prisma.graphVersion.findMany({
+      where: { graphId },
+      orderBy: { version: 'desc' },
+    });
+  }
+
+  /**
+   * Get a specific version with ownership verification
+   */
+  async getVersion(
+    graphId: string,
+    version: number,
+    userId?: string,
+  ): Promise<PrismaGraphVersion | null> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    return this.prisma.graphVersion.findUnique({
+      where: {
+        graphId_version: {
+          graphId,
+          version,
+        },
+      },
+    });
+  }
+
+  /**
+   * Rollback to a specific version with ownership verification
+   */
+  async rollbackToVersion(graphId: string, version: number, userId?: string): Promise<Graph> {
+    // Verify graph ownership if userId provided
+    if (userId) {
+      const graph = await this.prisma.graph.findUnique({
+        where: { id: graphId },
+        select: { userId: true },
+      });
+      if (!graph || graph.userId !== userId) {
+        throw new Error('Graph not found or access denied');
+      }
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      // Get the version
+      const versionRecord = await tx.graphVersion.findUnique({
+        where: {
+          graphId_version: {
+            graphId,
+            version,
+          },
+        },
+      });
+
+      if (!versionRecord) {
+        throw new Error(`Version ${version} not found for graph ${graphId}`);
+      }
+
+      // Delete current nodes and edges
+      await tx.graphNode.deleteMany({ where: { graphId } });
+      await tx.graphEdge.deleteMany({ where: { graphId } });
+
+      // Restore nodes and edges from snapshot if available
+      // This would require storing full data in snapshots or using a different approach
+      // For now, we'll just update the version number
+
+      await tx.graph.update({
+        where: { id: graphId },
+        data: { version },
+      });
+
+      const graph = await tx.graph.findUnique({
+        where: { id: graphId },
+      });
+
+      return this.mapPrismaGraphToGraph(graph!);
+    });
+  }
+
+  // ============================================================================
+  // SNAPSHOT FUNCTIONALITY
+  // ============================================================================
+
+  /**
+   * Create a snapshot of a graph
+   */
+  async createSnapshot(
+    graphId: string,
+    input: SnapshotCreateInput,
+  ): Promise<PrismaGraphSnapshot> {
+    const graph = await this.prisma.graph.findUnique({
+      where: { id: graphId },
+      include: {
+        nodes: { where: { deletedAt: null } },
+        edges: { where: { deletedAt: null } },
+      },
+    });
+
+    if (!graph) {
+      throw new Error(`Graph ${graphId} not found`);
+    }
+
+    return this.prisma.graphSnapshot.create({
+      data: {
+        graphId,
+        version: graph.version,
+        name: input.name,
+        description: input.description || null,
+        nodeData: graph.nodes as any,
+        edgeData: graph.edges as any,
+        metadata: input.metadata as any,
+      },
+    });
+  }
+
+  /**
+   * Get snapshots for a graph
+   */
+  async getSnapshotsByGraphId(graphId: string): Promise<PrismaGraphSnapshot[]> {
+    return this.prisma.graphSnapshot.findMany({
+      where: { graphId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  /**
+   * Get a specific snapshot
+   */
+  async getSnapshot(snapshotId: string): Promise<PrismaGraphSnapshot | null> {
+    return this.prisma.graphSnapshot.findUnique({
+      where: { id: snapshotId },
+    });
+  }
+
+  /**
+   * Restore from a snapshot
+   */
+  async restoreFromSnapshot(snapshotId: string): Promise<Graph> {
+    return this.prisma.$transaction(async (tx) => {
+      const snapshot = await tx.graphSnapshot.findUnique({
+        where: { id: snapshotId },
+      });
+
+      if (!snapshot) {
+        throw new Error(`Snapshot ${snapshotId} not found`);
+      }
+
+      // Delete current nodes and edges
+      await tx.graphNode.deleteMany({ where: { graphId: snapshot.graphId } });
+      await tx.graphEdge.deleteMany({ where: { graphId: snapshot.graphId } });
+
+      // Restore nodes and edges from snapshot
+      const nodeData = snapshot.nodeData as any[];
+      const edgeData = snapshot.edgeData as any[];
+
+      if (nodeData.length > 0) {
+        await tx.graphNode.createMany({
+          data: nodeData.map((n: any) => ({
+            graphId: snapshot.graphId,
+            nodeId: n.nodeId,
+            type: n.type,
+            label: n.label,
+            normalizedLabel: n.normalizedLabel,
+            confidence: n.confidence,
+            source: n.source,
+            metadata: n.metadata,
+          })),
+        });
+      }
+
+      if (edgeData.length > 0) {
+        await tx.graphEdge.createMany({
+          data: edgeData.map((e: any) => ({
+            graphId: snapshot.graphId,
+            edgeId: e.edgeId,
+            type: e.type,
+            sourceNodeId: e.sourceNodeId,
+            targetNodeId: e.targetNodeId,
+            weight: e.weight,
+            confidence: e.confidence,
+            reason: e.reason,
+            metadata: e.metadata,
+          })),
+        });
+      }
+
+      // Update graph version
+      await tx.graph.update({
+        where: { id: snapshot.graphId },
+        data: { version: snapshot.version },
+      });
+
+      const graph = await tx.graph.findUnique({
+        where: { id: snapshot.graphId },
+        include: {
+          nodes: true,
+          edges: true,
+        },
+      });
+
+      return this.mapPrismaGraphToGraph(graph!);
+    });
+  }
+
+  // ============================================================================
+  // TRANSACTION SUPPORT
+  // ============================================================================
+
+  /**
+   * Execute operations in a transaction
+   */
+  async transaction<T>(
+    callback: (
+      tx: Omit<
+        PrismaClient,
+        | '$connect'
+        | '$disconnect'
+        | '$on'
+        | '$transaction'
+        | '$use'
+        | '$extends'
+      >,
+    ) => Promise<T>,
+  ): Promise<T> {
+    return this.prisma.$transaction(callback);
+  }
+
+  // ============================================================================
+  // HELPER METHODS
+  // ============================================================================
+
+  private buildGraphWhere(filter: GraphFilter) {
+    const where: any = {};
+
+    if (filter.isActive !== undefined) {
+      where.isActive = filter.isActive;
+    }
+
+    if (filter.source) {
+      where.source = filter.source;
+    }
+
+    if (!filter.includeDeleted) {
+      where.deletedAt = null;
+    }
+
+    return where;
+  }
+
+  private buildNodeWhere(filter: NodeFilter) {
+    const where: any = {};
+
+    if (filter.type) {
+      where.type = filter.type;
+    }
+
+    if (filter.normalizedLabel) {
+      where.normalizedLabel = filter.normalizedLabel;
+    }
+
+    if (filter.minConfidence !== undefined) {
+      where.confidence = { gte: filter.minConfidence };
+    }
+
+    if (filter.maxConfidence !== undefined) {
+      where.confidence = { ...where.confidence, lte: filter.maxConfidence };
+    }
+
+    if (!filter.includeDeleted) {
+      where.deletedAt = null;
+    }
+
+    return where;
+  }
+
+  private buildEdgeWhere(filter: EdgeFilter) {
+    const where: any = {};
+
+    if (filter.type) {
+      where.type = filter.type;
+    }
+
+    if (filter.sourceNodeId) {
+      where.sourceNodeId = filter.sourceNodeId;
+    }
+
+    if (filter.targetNodeId) {
+      where.targetNodeId = filter.targetNodeId;
+    }
+
+    if (filter.minWeight !== undefined) {
+      where.weight = { gte: filter.minWeight };
+    }
+
+    if (filter.maxWeight !== undefined) {
+      where.weight = { ...where.weight, lte: filter.maxWeight };
+    }
+
+    if (filter.minConfidence !== undefined) {
+      where.confidence = { gte: filter.minConfidence };
+    }
+
+    if (filter.maxConfidence !== undefined) {
+      where.confidence = { ...where.confidence, lte: filter.maxConfidence };
+    }
+
+    if (!filter.includeDeleted) {
+      where.deletedAt = null;
+    }
+
+    return where;
+  }
+
+  private mapPrismaGraphToGraph(
+    prismaGraph: PrismaGraph & {
+      nodes?: PrismaGraphNode[];
+      edges?: PrismaGraphEdge[];
+    },
+  ): Graph {
+    const nodes =
+      prismaGraph.nodes?.map((n) => this.mapPrismaNodeToNode(n)) || [];
+    const edges =
+      prismaGraph.edges?.map((e) => this.mapPrismaEdgeToEdge(e)) || [];
+
+    return {
+      id: prismaGraph.id,
+      nodes: new Map(nodes.map((n) => [n.id, n])),
+      edges: new Map(edges.map((e) => [e.id, e])),
+      metadata: prismaGraph.metadata as any,
+    };
+  }
+
+  private mapPrismaNodeToNode(prismaNode: PrismaGraphNode): Node {
+    return {
+      id: prismaNode.nodeId,
+      type: prismaNode.type as any,
+      label: prismaNode.label,
+      normalizedLabel: prismaNode.normalizedLabel,
+      confidence: prismaNode.confidence,
+      source: prismaNode.source,
+      metadata: prismaNode.metadata as any,
+      timestamps: {
+        createdAt: prismaNode.createdAt,
+        updatedAt: prismaNode.updatedAt,
+        deletedAt: prismaNode.deletedAt || undefined,
+      },
+      provenance: {
+        createdBy: 'system',
+        algorithmVersion: '1.0.0',
+        sourceDocument:
+          (prismaNode.metadata as any)?.sourceDocument || undefined,
+        sourceSection: (prismaNode.metadata as any)?.sourceSection || undefined,
+        sourceSentence:
+          (prismaNode.metadata as any)?.sourceSentence || undefined,
+        hash: (prismaNode.metadata as any)?.hash || undefined,
+      },
+    };
+  }
+
+  private mapPrismaEdgeToEdge(prismaEdge: PrismaGraphEdge): Edge {
+    return {
+      id: prismaEdge.edgeId,
+      type: prismaEdge.type as any,
+      sourceNode: prismaEdge.sourceNodeId,
+      targetNode: prismaEdge.targetNodeId,
+      weight: prismaEdge.weight,
+      confidence: prismaEdge.confidence,
+      reason: prismaEdge.reason || undefined,
+      metadata: prismaEdge.metadata as any,
+      timestamps: {
+        createdAt: prismaEdge.createdAt,
+        updatedAt: prismaEdge.updatedAt,
+      },
+      provenance: {
+        createdBy: 'system',
+        algorithmVersion: '1.0.0',
+        sourceDocument:
+          (prismaEdge.metadata as any)?.sourceDocument || undefined,
+        sourceSection: (prismaEdge.metadata as any)?.sourceSection || undefined,
+        sourceSentence:
+          (prismaEdge.metadata as any)?.sourceSentence || undefined,
+        hash: (prismaEdge.metadata as any)?.hash || undefined,
+      },
+    };
+  }
+}
+
+===== apps\api\src\runtime\kg\graph.controller.ts =====
+
+/**
+ * Knowledge Graph RH Runtime v2
+ * Graph Controller
+ * Exposes graph persistence operations via REST API
+ */
+
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Query,
+  HttpCode,
+  HttpStatus,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import type {
+  GraphRepository,
+  GraphCreateInput,
+  GraphUpdateInput,
+  GraphFilter,
+  NodeFilter,
+  EdgeFilter,
+  VersionCreateInput,
+  SnapshotCreateInput,
+} from './graph-repository.service';
+import type { Graph, Node, Edge } from './graph-types';
+import { RateLimitGraph } from '../../resilience/rate-limiting.decorator';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+
+@Controller('graph')
+@UseGuards(JwtAuthGuard)
+export class GraphController {
+  constructor(private readonly graphRepository: GraphRepository) {}
+
+  // ============================================================================
+  // GRAPH CRUD OPERATIONS
+  // ============================================================================
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @RateLimitGraph()
+  async createGraph(@Req() req, @Body() input: GraphCreateInput): Promise<Graph> {
+    const userId = req.user?.id;
+    return this.graphRepository.createGraph(input, userId);
+  }
+
+  @Get(':id')
+  @RateLimitGraph()
+  async getGraph(
+    @Req() req,
+    @Param('id') id: string,
+    @Query('includeDeleted') includeDeleted?: string,
+    @Query('source') source?: string,
+  ): Promise<Graph> {
+    const filter: GraphFilter = {};
+    if (includeDeleted === 'true') {
+      filter.includeDeleted = true;
+    }
+    if (source) {
+      filter.source = source;
+    }
+    // Add userId for tenant isolation
+    filter.userId = req.user?.id;
+    
+    const graph = await this.graphRepository.getGraphById(id, filter);
+    if (!graph) {
+      throw new Error(`Graph ${id} not found`);
+    }
+    return graph;
+  }
+
+  @Put(':id')
+  @RateLimitGraph()
+  async updateGraph(
+    @Req() req,
+    @Param('id') id: string,
+    @Body() input: GraphUpdateInput,
+  ): Promise<Graph> {
+    const userId = req.user?.id;
+    return this.graphRepository.updateGraph(id, input, userId);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @RateLimitGraph()
+  async softDeleteGraph(@Req() req, @Param('id') id: string): Promise<void> {
+    const userId = req.user?.id;
+    await this.graphRepository.softDeleteGraph(id, userId);
+  }
+
+  @Delete(':id/hard')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @RateLimitGraph()
+  async hardDeleteGraph(@Req() req, @Param('id') id: string): Promise<void> {
+    const userId = req.user?.id;
+    await this.graphRepository.hardDeleteGraph(id, userId);
+  }
+
+  @Post(':id/restore')
+  @RateLimitGraph()
+  async restoreGraph(@Req() req, @Param('id') id: string): Promise<Graph> {
+    const userId = req.user?.id;
+    return this.graphRepository.restoreGraph(id, userId);
+  }
+
+  @Get()
+  @RateLimitGraph()
+  async listGraphs(
+    @Req() req,
+    @Query('isActive') isActive?: string,
+    @Query('source') source?: string,
+    @Query('includeDeleted') includeDeleted?: string,
+    @Query('skip') skip?: string,
+    @Query('take') take?: string,
+  ): Promise<Graph[]> {
+    const filter: GraphFilter = {};
+    if (isActive === 'true') {
+      filter.isActive = true;
+    } else if (isActive === 'false') {
+      filter.isActive = false;
+    }
+    if (source) {
+      filter.source = source;
+    }
+    if (includeDeleted === 'true') {
+      filter.includeDeleted = true;
+    }
+    // Add userId for tenant isolation
+    filter.userId = req.user?.id;
+    
+    return this.graphRepository.listGraphs(
+      filter,
+      parseInt(skip || '0'),
+      parseInt(take || '50'),
+    );
+  }
+
+  // ============================================================================
+  // NODE CRUD OPERATIONS
+  // ============================================================================
+
+  @Post(':id/nodes')
+  @HttpCode(HttpStatus.CREATED)
+  @RateLimitGraph()
+  async createNodes(
+    @Param('id') graphId: string,
+    @Body() nodes: Node[],
+  ): Promise<Node[]> {
+    return this.graphRepository.createNodes(graphId, nodes);
+  }
+
+  @Get(':id/nodes')
+  @RateLimitGraph()
+  async getNodes(
+    @Param('id') graphId: string,
+    @Query('type') type?: string,
+    @Query('normalizedLabel') normalizedLabel?: string,
+    @Query('minConfidence') minConfidence?: string,
+    @Query('maxConfidence') maxConfidence?: string,
+    @Query('includeDeleted') includeDeleted?: string,
+  ): Promise<Node[]> {
+    const filter: NodeFilter = {};
+    if (type) {
+      filter.type = type;
+    }
+    if (normalizedLabel) {
+      filter.normalizedLabel = normalizedLabel;
+    }
+    if (minConfidence) {
+      filter.minConfidence = parseFloat(minConfidence);
+    }
+    if (maxConfidence) {
+      filter.maxConfidence = parseFloat(maxConfidence);
+    }
+    if (includeDeleted === 'true') {
+      filter.includeDeleted = true;
+    }
+    return this.graphRepository.getNodesByGraphId(graphId, filter);
+  }
+
+  @Put('nodes/:nodeId')
+  @RateLimitGraph()
+  async updateNode(
+    @Param('nodeId') nodeId: string,
+    @Body() updates: Partial<Node>,
+  ): Promise<Node> {
+    return this.graphRepository.updateNode(nodeId, updates);
+  }
+
+  @Delete('nodes/:nodeId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @RateLimitGraph()
+  async softDeleteNode(@Param('nodeId') nodeId: string): Promise<void> {
+    await this.graphRepository.softDeleteNode(nodeId);
+  }
+
+  // ============================================================================
+  // EDGE CRUD OPERATIONS
+  // ============================================================================
+
+  @Post(':id/edges')
+  @HttpCode(HttpStatus.CREATED)
+  @RateLimitGraph()
+  async createEdges(
+    @Param('id') graphId: string,
+    @Body() edges: Edge[],
+  ): Promise<Edge[]> {
+    return this.graphRepository.createEdges(graphId, edges);
+  }
+
+  @Get(':id/edges')
+  @RateLimitGraph()
+  async getEdges(
+    @Param('id') graphId: string,
+    @Query('type') type?: string,
+    @Query('sourceNodeId') sourceNodeId?: string,
+    @Query('targetNodeId') targetNodeId?: string,
+    @Query('minWeight') minWeight?: string,
+    @Query('maxWeight') maxWeight?: string,
+    @Query('minConfidence') minConfidence?: string,
+    @Query('maxConfidence') maxConfidence?: string,
+    @Query('includeDeleted') includeDeleted?: string,
+  ): Promise<Edge[]> {
+    const filter: EdgeFilter = {};
+    if (type) {
+      filter.type = type;
+    }
+    if (sourceNodeId) {
+      filter.sourceNodeId = sourceNodeId;
+    }
+    if (targetNodeId) {
+      filter.targetNodeId = targetNodeId;
+    }
+    if (minWeight) {
+      filter.minWeight = parseFloat(minWeight);
+    }
+    if (maxWeight) {
+      filter.maxWeight = parseFloat(maxWeight);
+    }
+    if (minConfidence) {
+      filter.minConfidence = parseFloat(minConfidence);
+    }
+    if (maxConfidence) {
+      filter.maxConfidence = parseFloat(maxConfidence);
+    }
+    if (includeDeleted === 'true') {
+      filter.includeDeleted = true;
+    }
+    return this.graphRepository.getEdgesByGraphId(graphId, filter);
+  }
+
+  @Put('edges/:edgeId')
+  @RateLimitGraph()
+  async updateEdge(
+    @Param('edgeId') edgeId: string,
+    @Body() updates: Partial<Edge>,
+  ): Promise<Edge> {
+    return this.graphRepository.updateEdge(edgeId, updates);
+  }
+
+  @Delete('edges/:edgeId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @RateLimitGraph()
+  async softDeleteEdge(@Param('edgeId') edgeId: string): Promise<void> {
+    await this.graphRepository.softDeleteEdge(edgeId);
+  }
+
+  // ============================================================================
+  // VERSIONING SYSTEM
+  // ============================================================================
+
+  @Post(':id/versions')
+  @HttpCode(HttpStatus.CREATED)
+  @RateLimitGraph()
+  async createVersion(
+    @Param('id') graphId: string,
+    @Body() input: VersionCreateInput,
+  ) {
+    return this.graphRepository.createVersion(graphId, input);
+  }
+
+  @Get(':id/versions')
+  @RateLimitGraph()
+  async getVersions(@Param('id') graphId: string) {
+    return this.graphRepository.getVersionsByGraphId(graphId);
+  }
+
+  @Get(':id/versions/:version')
+  @RateLimitGraph()
+  async getVersion(
+    @Param('id') graphId: string,
+    @Param('version') version: string,
+  ) {
+    return this.graphRepository.getVersion(graphId, parseInt(version));
+  }
+
+  @Post(':id/versions/:version/rollback')
+  @RateLimitGraph()
+  async rollbackToVersion(
+    @Param('id') graphId: string,
+    @Param('version') version: string,
+  ): Promise<Graph> {
+    return this.graphRepository.rollbackToVersion(graphId, parseInt(version));
+  }
+
+  // ============================================================================
+  // SNAPSHOT FUNCTIONALITY
+  // ============================================================================
+
+  @Post(':id/snapshots')
+  @HttpCode(HttpStatus.CREATED)
+  @RateLimitGraph()
+  async createSnapshot(
+    @Param('id') graphId: string,
+    @Body() input: SnapshotCreateInput,
+  ) {
+    return this.graphRepository.createSnapshot(graphId, input);
+  }
+
+  @Get(':id/snapshots')
+  @RateLimitGraph()
+  async getSnapshots(@Param('id') graphId: string) {
+    return this.graphRepository.getSnapshotsByGraphId(graphId);
+  }
+
+  @Get('snapshots/:snapshotId')
+  @RateLimitGraph()
+  async getSnapshot(@Param('snapshotId') snapshotId: string) {
+    return this.graphRepository.getSnapshot(snapshotId);
+  }
+
+  @Post('snapshots/:snapshotId/restore')
+  @RateLimitGraph()
+  async restoreFromSnapshot(
+    @Param('snapshotId') snapshotId: string,
+  ): Promise<Graph> {
+    return this.graphRepository.restoreFromSnapshot(snapshotId);
+  }
+}
+
+===== apps\api\src\dashboard\dashboard.controller.ts =====
+
+/**
+ * Dashboard Controller
+ * Exposes dashboard data aggregation endpoints
+ */
+
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  BadRequestException,
+} from '@nestjs/common';
+import { DashboardService } from './dashboard.service';
+import { Graph } from '../runtime/kg/graph-types';
+import {
+  RateLimitApi,
+} from '../resilience/rate-limiting.decorator';
+
+@Controller('dashboard')
+export class DashboardController {
+  constructor(private readonly dashboardService: DashboardService) {}
+
+  @Get(':userId')
+  @RateLimitApi()
+  async getDashboardData(@Param('userId') userId: string) {
+    try {
+      const data = await this.dashboardService.getDashboardData(userId);
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      throw new BadRequestException((error as Error).message);
+    }
+  }
+
+  @Post('match-score')
+  @RateLimitApi()
+  async getRealTimeMatchScore(
+    @Body() body: { candidateGraph: Graph; jobGraph: Graph },
+  ) {
+    try {
+      const result = await this.dashboardService.getRealTimeMatchScore(
+        body.candidateGraph,
+        body.jobGraph,
+      );
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (error) {
+      throw new BadRequestException((error as Error).message);
+    }
+  }
+
+  @Post('match-explanation')
+  @RateLimitApi()
+  async getMatchExplanation(
+    @Body() body: { candidateGraph: Graph; jobGraph: Graph },
+  ) {
+    try {
+      const result = await this.dashboardService.getMatchExplanation(
+        body.candidateGraph,
+        body.jobGraph,
+      );
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (error) {
+      throw new BadRequestException((error as Error).message);
+    }
+  }
+}

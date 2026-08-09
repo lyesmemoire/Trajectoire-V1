@@ -1,4 +1,4 @@
-import type { FactRepository, Fact, FactQueryOptions, FactQueryResult } from "../repositories/FactRepository";
+import type { FactRepository, FactQueryOptions, FactQueryResult } from "../repositories/FactRepository";
 
 // ===================================================================
 // FACT QUERY SERVICE — Unified API for Fact Queries

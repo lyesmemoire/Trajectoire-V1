@@ -1,0 +1,195 @@
+{
+  "timestamp": "2026-08-09T21:38:42.883Z",
+  "phase": "SECURITY-FIX-004.9_RUNTIME_SECURITY_GATE",
+  "mode": "VERIFICATION_ONLY",
+  "api_url": "http://localhost:3000",
+  "tests": [
+    {
+      "phase": "PHASE_0",
+      "test": "Environment Gate",
+      "actor": null,
+      "resource": "Environment Variables",
+      "expected": "SET",
+      "actual": "SET",
+      "status": "PASS",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_3",
+      "test": "Identity Verification",
+      "actor": null,
+      "resource": "API Request",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_4",
+      "test": "API Health",
+      "actor": null,
+      "resource": "/api/health",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_5",
+      "test": "Auth Negative Tests",
+      "actor": null,
+      "resource": "/api/auth/me",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_5",
+      "test": "Auth Negative Tests",
+      "actor": null,
+      "resource": "/api/graphs",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_6",
+      "test": "Positive Auth",
+      "actor": null,
+      "resource": "/api/auth/me",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_7",
+      "test": "Anti-Impersonation",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_8",
+      "test": "Resource Creation",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_9",
+      "test": "Cross-User IDOR",
+      "actor": null,
+      "resource": "API Request",
+      "expected": "SUCCESS",
+      "actual": "BLOCKED",
+      "status": "BLOCKED",
+      "httpStatus": null,
+      "evidence": ""
+    },
+    {
+      "phase": "PHASE_10",
+      "test": "Graph Isolation",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_11",
+      "test": "CV/Job/Matching/Search",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_12",
+      "test": "Copilot Isolation",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_13",
+      "test": "Billing Isolation",
+      "actor": null,
+      "resource": "Endpoints",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_14",
+      "test": "Rate Limiting",
+      "actor": null,
+      "resource": "Config",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_15",
+      "test": "Security Headers",
+      "actor": null,
+      "resource": "HTTP",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_16",
+      "test": "Database Ownership",
+      "actor": null,
+      "resource": "DB",
+      "expected": "INSPECTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    },
+    {
+      "phase": "PHASE_17",
+      "test": "Regression",
+      "actor": null,
+      "resource": "Build",
+      "expected": "EXECUTED",
+      "actual": "NOT_APPLICABLE",
+      "status": "NOT_APPLICABLE",
+      "httpStatus": null,
+      "evidence": null
+    }
+  ]
+}

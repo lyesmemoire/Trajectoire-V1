@@ -1,11 +1,10 @@
-import { Engine, EngineInput } from "../../contracts/Engine";
+import { Engine } from "../../contracts/Engine";
 import { EngineResult } from "../../contracts/EngineResult";
 import { StructuredLLMProvider } from "../../contracts/LLMProvider";
 import {
   EvidenceEngineInput,
   EvidenceEvent,
   EvidenceOutput,
-  AnalyzedEvidence,
 } from "./EvidenceTypes";
 import { EvidenceOutputSchema } from "./EvidenceSchema";
 import { EVIDENCE_SYSTEM_PROMPT } from "./EvidencePrompt";

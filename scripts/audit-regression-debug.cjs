@@ -263,8 +263,8 @@ regressions.forEach((regression, index) => {
   let status = 'UNKNOWN';
   let timeoutOccurred = false;
   let processKilled = false;
-  let tempFiles = [];
-  let cacheCleared = false;
+  const tempFiles = [];
+  const cacheCleared = false;
   
   try {
     // Appliquer régression

@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { ConfigManager, BlueprintConfig } from '../../../src/cli/config/index';
+import { ConfigManager } from '../../../src/cli/config/index';
 import { ConfigError } from '../../../src/cli/errors';
 import * as fs from 'fs/promises';
 import * as path from 'path';

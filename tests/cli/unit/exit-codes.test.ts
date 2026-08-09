@@ -2,7 +2,7 @@
  * Unit tests for CLI Exit Codes
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { execa } from 'execa';
 import { CLIError, CommandError, ValidationError, ConfigError } from '../../../src/cli/errors';
 

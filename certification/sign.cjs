@@ -35,7 +35,7 @@ function createDsseEnvelope(payloadObject, payloadType = 'application/vnd.in-tot
   const primaryProvider = providers[0];
   const primarySigner = getSigner(primaryProvider);
   
-  let { dsseEnvelope, metadata } = primarySigner.sign(payloadObject);
+  const { dsseEnvelope, metadata } = primarySigner.sign(payloadObject);
   
   // Inject metadata into the first signature for laboratory trace
   dsseEnvelope.signatures[0].metadata = metadata;

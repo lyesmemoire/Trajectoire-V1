@@ -86,7 +86,7 @@ console.log(`Mutation Quality Index: ${mutationQualityIndex.toFixed(2)}`);
 console.log('\n=== PHASE 8: Certification ===');
 
 let certification = 'REJECTED';
-let certificationReasons = [];
+const certificationReasons = [];
 
 // Critère de base: Mutation Score
 if (mutationScore >= 99) {

@@ -1,0 +1,86 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 20
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 50
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 20
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 5
+      name: "Cool down"
+
+scenarios:
+  - name: "Graph Load Test"
+    flow:
+      # Create graph
+      - post:
+          url: '/graph'
+          json:
+            nodes:
+              - id: 'node-1'
+                type: 'skill'
+                properties:
+                  name: 'JavaScript'
+                  value: 85
+              - id: 'node-2'
+                type: 'experience'
+                properties:
+                  name: 'React Developer'
+                  value: 90
+            edges:
+              - id: 'edge-1'
+                source: 'node-1'
+                target: 'node-2'
+                type: 'has_skill'
+          headers:
+            Content-Type: 'application/json'
+          capture:
+            - json: '$.id'
+              as: 'graphId'
+          expect:
+            - statusCode: 201
+      
+      # Get graph
+      - get:
+          url: '/graph/{{ graphId }}'
+          expect:
+            - statusCode: 200
+      
+      # Query graph
+      - post:
+          url: '/graph/query'
+          json:
+            graphId: '{{ graphId }}'
+            query:
+              type: 'neighbors'
+              nodeId: 'node-1'
+              depth: 2
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Update graph
+      - patch:
+          url: '/graph/{{ graphId }}'
+          json:
+            nodes:
+              - id: 'node-3'
+                type: 'skill'
+                properties:
+                  name: 'TypeScript'
+                  value: 80
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      - think: 1

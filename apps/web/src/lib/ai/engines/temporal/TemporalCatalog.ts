@@ -4,6 +4,8 @@
 
 import { TemporalCatalogProvider, TemporalPattern, TemporalExtractionRule } from "../../catalogs/TemporalCatalogProvider";
 
+export type { TemporalPattern, TemporalExtractionRule };
+
 export class TemporalCatalog {
   private static provider: TemporalCatalogProvider | null = null;
 

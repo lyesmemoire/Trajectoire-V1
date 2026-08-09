@@ -39,9 +39,9 @@ export const AnalyzedEvidenceSchema = z.object({
   confidence: z.number().min(0).max(1).describe("The LLM's confidence in this analysis."),
   reason: z.string().describe("Why this is or isn't considered strong evidence."),
   missingEvidence: z.array(z.string()).describe("What is missing to make this a complete, VERIFIED proof (e.g., metrics, team size, outcome)."),
-  supports: z.array(z.string().uuid()).default([]).describe("IDs of other observations this evidence supports."),
-  contradicts: z.array(z.string().uuid()).default([]).describe("IDs of other observations this evidence contradicts."),
-  relatedFacts: z.array(z.string()).default([]).describe("Other facts that relate to this evidence."),
+  supports: z.array(z.string().uuid()).describe("IDs of other observations this evidence supports."),
+  contradicts: z.array(z.string().uuid()).describe("IDs of other observations this evidence contradicts."),
+  relatedFacts: z.array(z.string()).describe("Other facts that relate to this evidence."),
 });
 
 // The payload that the LLM will generate

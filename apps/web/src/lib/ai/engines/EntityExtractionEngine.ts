@@ -1,10 +1,8 @@
-import { BaseEngine, BaseEngineConfig } from "./BaseEngine";
-import { EventFactory } from "./EventFactory";
+import { BaseEngine } from "./BaseEngine";
 import { FactBuilder } from "./FactBuilder";
-import { CanonicalEntityResolver, ResolvedEntity } from "./CanonicalEntityResolver";
+import { CanonicalEntityResolver } from "./CanonicalEntityResolver";
 import { EngineManifest } from "./EngineManifest";
 import { BaseEvent } from "../contracts/Event";
-import { EngineInput } from "../contracts/Engine";
 import { TechnologyCatalog } from "../../../domain/cognitive/catalogs/TechnologyCatalog";
 import { CompanyCatalog } from "../../../domain/cognitive/catalogs/CompanyCatalog";
 

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { z } from "zod";
 import { PerceptionEngine } from "../../../apps/web/src/lib/ai/engines/perception/PerceptionEngine";
 import { StructuredLLMProvider } from "../../../apps/web/src/lib/ai/contracts/LLMProvider";
-import { PerceptionOutput, ObservationType } from "../../../apps/web/src/lib/ai/engines/perception/PerceptionTypes";
+import { PerceptionOutput } from "../../../apps/web/src/lib/ai/engines/perception/PerceptionTypes";
 
 // ===================================================================
 // MOCK LLM PROVIDER

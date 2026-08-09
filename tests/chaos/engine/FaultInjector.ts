@@ -1,5 +1,5 @@
 import { ExternalDeps } from '../targets/BusinessApp';
-import { ChaosFault, FaultFamily } from './interfaces';
+import { ChaosFault } from './interfaces';
 
 export class FaultInjector {
   private activeFaults: Set<string> = new Set();

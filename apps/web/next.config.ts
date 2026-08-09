@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 import path from "path";
-import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -42,36 +41,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  turbopack: {
-    resolveAlias: {
-      '@': path.resolve(__dirname, './src'),
-      '@/lib': path.resolve(__dirname, '../lib'),
-      '@/components': path.resolve(__dirname, '../components'),
-      '@/hooks': path.resolve(__dirname, '../hooks'),
-      '@/types': path.resolve(__dirname, '../types'),
-      '@/domain': path.resolve(__dirname, '../domain'),
-    },
-  },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': path.resolve(__dirname, './src'),
-      '@/lib': path.resolve(__dirname, '../lib'),
-      '@/components': path.resolve(__dirname, '../components'),
-      '@/hooks': path.resolve(__dirname, '../hooks'),
-      '@/types': path.resolve(__dirname, '../types'),
-      '@/domain': path.resolve(__dirname, '../domain'),
-    };
-    return config;
+  // Production optimizations
+  compress: true,
+  productionBrowserSourceMaps: false,
+  // Image optimization
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 };
 
-export default withSentryConfig(
-  nextConfig,
-  {
-    silent: true,
-    org: process.env.SENTRY_ORG,
-    project: process.env.SENTRY_PROJECT,
-    widenClientFileUpload: true,
-  }
-);
+export default nextConfig;

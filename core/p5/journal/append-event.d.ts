@@ -9,5 +9,5 @@ import { EventJournal } from "./journal-contract.js";
  *
  * Pure function — no side effects.
  */
-export declare function appendEvent(_journal: EventJournal, event: P5Event): EventJournal;
+export declare function appendEvent(journal: EventJournal, event: P5Event): EventJournal;
 //# sourceMappingURL=append-event.d.ts.map

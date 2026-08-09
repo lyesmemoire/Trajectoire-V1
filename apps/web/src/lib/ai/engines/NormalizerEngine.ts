@@ -1,8 +1,7 @@
-import { BaseEngine, BaseEngineConfig } from "./BaseEngine";
+import { BaseEngine } from "./BaseEngine";
 import { EventFactory } from "./EventFactory";
 import { EngineManifest } from "./EngineManifest";
 import { BaseEvent } from "../contracts/Event";
-import { EngineInput } from "../contracts/Engine";
 
 // ===================================================================
 // NORMALIZER ENGINE — Minimal Text Normalization

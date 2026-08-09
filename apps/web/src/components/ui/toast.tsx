@@ -205,5 +205,5 @@ function ToastItem({
 
 // Helper function for easy toast usage outside of context if needed (though context is preferred)
 export function toast(type: ToastType, title: string, message?: string) {
-  console.log(`[TOAST FALLBACK] ${type}: ${title} - ${message}`)
+  // No-op - toast must be used within ToastProvider context
 }

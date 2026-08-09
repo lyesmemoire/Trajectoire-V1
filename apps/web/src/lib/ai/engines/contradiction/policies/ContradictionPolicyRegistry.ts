@@ -3,7 +3,7 @@ import { BlockingContradictionPolicy } from "./BlockingContradictionPolicy";
 import { RecoverableContradictionPolicy } from "./RecoverableContradictionPolicy";
 import { BenefitOfDoubtPolicy } from "./BenefitOfDoubtPolicy";
 import { FalsePositivePolicy } from "./FalsePositivePolicy";
-import { MemoryPolicyRegistry, BasePolicy } from "../../../policies/PolicyRegistry";
+import { MemoryPolicyRegistry } from "../../../policies/PolicyRegistry";
 
 // ===================================================================
 // CONTRADICTION POLICY REGISTRY — Specific Registry for Contradiction Policies

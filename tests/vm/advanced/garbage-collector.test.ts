@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { GarbageCollector, GCAlgorithm, GCOptions } from '../../../compiler/cvm/garbage-collector';
+import { GarbageCollector, GCAlgorithm } from '../../../compiler/cvm/garbage-collector';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 
 describe('Garbage Collector - Priority 4', () => {

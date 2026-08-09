@@ -14,10 +14,10 @@ function captureCmd(cmd, cwd) {
 
 function captureLabEnvironment(rootPath) {
   const nodeVersion = process.versions.node;
-  let vitestVersion = captureCmd('npx vitest --version', rootPath).replace('vitest/', '').trim();
+  const vitestVersion = captureCmd('npx vitest --version', rootPath).replace('vitest/', '').trim();
   const tscVersion = captureCmd('npx tsc --version', rootPath).replace('Version ', '').trim();
   
-  let pnpmVersion = captureCmd('pnpm --version', rootPath);
+  const pnpmVersion = captureCmd('pnpm --version', rootPath);
   
   let fastCheckVersion = 'N/A';
   try {

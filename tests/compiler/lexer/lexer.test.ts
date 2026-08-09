@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Lexer, TokenType, type Token } from '../../../compiler/lexer/lexer';
+import { Lexer, TokenType } from '../../../compiler/lexer/lexer';
 
 describe('Lexer', () => {
   describe('Basic tokenization', () => {

@@ -3,19 +3,28 @@ import { logger } from "@/lib/logger"
 
 let redis: Redis | null = null
 
-function getRedis(): Redis {
+function getRedis(): Redis | null {
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    return null
+  }
   if (!redis) {
     redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL || "",
-      token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
     })
   }
   return redis
 }
 
 export async function checkRateLimit(identifier: string, limit: number, windowSeconds: number): Promise<{ allowed: boolean; reset: number }> {
+  const redis = getRedis()
+  
+  // Fallback: si Redis absent, autoriser toujours (dev/test)
+  if (!redis) {
+    return { allowed: true, reset: Date.now() + windowSeconds * 1000 }
+  }
+
   try {
-    const redis = getRedis()
     const key = `ratelimit:${identifier}`
     const now = Date.now()
     const windowStart = now - windowSeconds * 1000

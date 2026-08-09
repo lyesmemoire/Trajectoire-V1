@@ -9,8 +9,7 @@ import {
   TaskPriority,
   TaskStatus,
   BackoffStrategy,
-  WorkerStatus,
-  EngineAffinity
+  WorkerStatus
 } from '../../../CVM/src/scheduler/types';
 
 function createMockTask(id: string, priority: TaskPriority = TaskPriority.NORMAL): CognitiveTask {

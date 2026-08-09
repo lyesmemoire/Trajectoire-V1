@@ -1,0 +1,413 @@
+name: Kubernetes Deployment
+
+on:
+  push:
+    branches: [main, develop]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      strategy:
+        description: 'Deployment strategy'
+        required: true
+        default: 'rolling'
+        type: choice
+        options:
+          - rolling
+          - blue-green
+          - canary
+
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8'
+  KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+jobs:
+  # Build and Push Docker Images
+  build-push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/trajectoire-api
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/api
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Automatic Database Migrations
+  migrations:
+    name: Database Migrations
+    runs-on: ubuntu-latest
+    needs: [build-push]
+    environment:
+      name: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Prisma migrations
+        run: pnpm migration:up
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Backup database before migration
+        run: |
+          pg_dump ${{ secrets.DATABASE_URL }} > backup-$(date +%Y%m%d-%H%M%S).sql
+        env:
+          PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
+  # Smoke Tests
+  smoke-tests:
+    name: Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [migrations]
+    environment:
+      name: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Wait for deployment
+        run: |
+          kubectl rollout status deployment/trajectoire-api -n trajectoire --timeout=5m
+
+      - name: Run smoke tests
+        run: |
+          # Health check
+          kubectl exec -n trajectoire deployment/trajectoire-api -- curl -f http://localhost:3000/health || exit 1
+          
+          # Metrics endpoint
+          kubectl exec -n trajectoire deployment/trajectoire-api -- curl -f http://localhost:3000/metrics || exit 1
+          
+          # Dashboard endpoint
+          kubectl exec -n trajectoire deployment/trajectoire-api -- curl -f http://localhost:3000/dashboard || exit 1
+
+  # Blue-Green Deployment
+  blue-green:
+    name: Blue-Green Deployment
+    runs-on: ubuntu-latest
+    needs: [build-push, smoke-tests]
+    if: github.event.inputs.strategy == 'blue-green'
+    environment:
+      name: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Deploy Blue environment
+        run: |
+          helm upgrade --install trajectoire-blue ./deploy/helm/trajectoire \
+            --namespace trajectoire \
+            --set image.tag=${{ github.sha }} \
+            --set fullnameOverride=trajectoire-blue \
+            --values deploy/helm/trajectoire/values.yaml
+
+      - name: Wait for Blue deployment
+        run: |
+          kubectl rollout status deployment/trajectoire-blue -n trajectoire --timeout=5m
+
+      - name: Run tests on Blue
+        run: |
+          # Run integration tests on blue environment
+          kubectl exec -n trajectoire deployment/trajectoire-blue -- npm test
+
+      - name: Switch traffic to Blue
+        run: |
+          # Update service to point to blue
+          kubectl patch service trajectoire-api-service -n trajectoire \
+            -p '{"spec":{"selector":{"app":"trajectoire-blue"}}}'
+
+      - name: Scale down Green
+        run: |
+          kubectl scale deployment trajectoire-api -n trajectoire --replicas=0
+
+  # Canary Deployment
+  canary:
+    name: Canary Deployment
+    runs-on: ubuntu-latest
+    needs: [build-push, smoke-tests]
+    if: github.event.inputs.strategy == 'canary'
+    environment:
+      name: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Deploy Canary (10% traffic)
+        run: |
+          helm upgrade --install trajectoire-canary ./deploy/helm/trajectoire \
+            --namespace trajectoire \
+            --set image.tag=${{ github.sha }} \
+            --set replicaCount=1 \
+            --set fullnameOverride=trajectoire-canary \
+            --values deploy/helm/trajectoire/values.yaml
+
+      - name: Wait for Canary deployment
+        run: |
+          kubectl rollout status deployment/trajectoire-canary -n trajectoire --timeout=5m
+
+      - name: Monitor Canary metrics
+        run: |
+          # Monitor error rates and latency
+          sleep 300
+          ERROR_RATE=$(kubectl exec -n trajectoire deployment/trajectoire-canary -- curl -s http://localhost:3000/metrics | grep error_rate)
+          if (( $(echo "$ERROR_RATE > 0.05" | bc -l) )); then
+            echo "Error rate too high, aborting canary"
+            exit 1
+          fi
+
+      - name: Scale Canary to 50%
+        run: |
+          kubectl scale deployment trajectoire-canary -n trajectoire --replicas=2
+
+      - name: Monitor Canary metrics (50%)
+        run: |
+          sleep 600
+          ERROR_RATE=$(kubectl exec -n trajectoire deployment/trajectoire-canary -- curl -s http://localhost:3000/metrics | grep error_rate)
+          if (( $(echo "$ERROR_RATE > 0.05" | bc -l) )); then
+            echo "Error rate too high, rolling back canary"
+            kubectl scale deployment trajectoire-canary -n trajectoire --replicas=0
+            exit 1
+          fi
+
+      - name: Promote Canary to 100%
+        run: |
+          helm upgrade --install trajectoire ./deploy/helm/trajectoire \
+            --namespace trajectoire \
+            --set image.tag=${{ github.sha }} \
+            --values deploy/helm/trajectoire/values.yaml
+          kubectl delete deployment trajectoire-canary -n trajectoire
+
+  # Rolling Deployment (Default)
+  rolling:
+    name: Rolling Deployment
+    runs-on: ubuntu-latest
+    needs: [build-push, smoke-tests]
+    if: github.event.inputs.strategy != 'blue-green' && github.event.inputs.strategy != 'canary'
+    environment:
+      name: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install trajectoire ./deploy/helm/trajectoire \
+            --namespace trajectoire \
+            --set image.tag=${{ github.sha }} \
+            --values deploy/helm/trajectoire/values.yaml \
+            --wait --timeout 10m
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/trajectoire-api -n trajectoire --timeout=5m
+
+  # Backup Strategy
+  backup:
+    name: Backup
+    runs-on: ubuntu-latest
+    needs: [rolling]
+    if: github.event.inputs.environment == 'production'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Backup PostgreSQL
+        run: |
+          kubectl exec -n trajectoire deployment/trajectoire-postgres -- \
+            pg_dump -U postgres trajectoire > backup-$(date +%Y%m%d-%H%M%S).sql
+
+      - name: Backup Redis
+        run: |
+          kubectl exec -n trajectoire deployment/trajectoire-redis -- \
+            redis-cli --rdb /backups/dump-$(date +%Y%m%d-%H%M%S).rdb
+
+      - name: Upload backups to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl private
+        env:
+          AWS_S3_BUCKET: ${{ secrets.BACKUP_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-1'
+          SOURCE_DIR: './backups'
+          DEST_DIR: '/trajectoire/backups'
+
+  # Disaster Recovery
+  disaster-recovery:
+    name: Disaster Recovery
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.dr_test == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Simulate disaster
+        run: |
+          kubectl delete deployment trajectoire-api -n trajectoire
+
+      - name: Restore from backup
+        run: |
+          # Restore PostgreSQL
+          kubectl exec -n trajectoire deployment/trajectoire-postgres -- \
+            psql -U postgres trajectoire < /backups/latest.sql
+
+      - name: Redeploy application
+        run: |
+          helm upgrade --install trajectoire ./deploy/helm/trajectoire \
+            --namespace trajectoire \
+            --values deploy/helm/trajectoire/values.yaml
+
+      - name: Verify recovery
+        run: |
+          kubectl rollout status deployment/trajectoire-api -n trajectoire --timeout=5m
+          kubectl exec -n trajectoire deployment/trajectoire-api -- curl -f http://localhost:3000/health
+
+  # Rollback
+  rollback:
+    name: Rollback
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.rollback == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+
+      - name: Get previous revision
+        id: previous
+        run: |
+          PREV=$(helm history trajectoire -n trajectoire -o json | jq -r '.[-2].revision')
+          echo "revision=$PREV" >> $GITHUB_OUTPUT
+
+      - name: Rollback Helm release
+        run: |
+          helm rollback trajectoire ${{ steps.previous.outputs.revision }} -n trajectoire
+
+      - name: Verify rollback
+        run: |
+          kubectl rollout status deployment/trajectoire-api -n trajectoire --timeout=5m
+
+      - name: Rollback migrations
+        run: pnpm migration:down
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: 'warning'
+          text: 'Rollback completed successfully'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}

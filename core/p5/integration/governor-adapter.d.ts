@@ -17,5 +17,5 @@ export interface AdaptResult {
  *
  * Pure function — no side effects.
  */
-export declare function adaptDecision(_decision: _RuntimeDecision): AdaptResult;
+export declare function adaptDecision(decision: _RuntimeDecision): AdaptResult;
 //# sourceMappingURL=governor-adapter.d.ts.map

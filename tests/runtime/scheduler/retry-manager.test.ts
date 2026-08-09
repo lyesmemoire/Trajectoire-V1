@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { RetryManager } from '../../../CVM/src/scheduler/RetryManager';
 import { TaskPriority, TaskStatus, BackoffStrategy } from '../../../CVM/src/scheduler/types';
 

@@ -4,7 +4,7 @@
  * Instead of waiting 20 seconds for the full response, stream tokens as they arrive
  */
 
-import { OpenAI } from "openai"
+import OpenAI from 'openai'
 
 export interface StreamingOptions {
   model?: string
@@ -25,7 +25,7 @@ export class AIStreamingService {
   private openai: OpenAI
 
   constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey })
+    this.openai = new OpenAI({ apiKey });
   }
 
   /**

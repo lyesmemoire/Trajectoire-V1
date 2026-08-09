@@ -4,6 +4,10 @@ import { useState } from "react"
 import { CVUploader } from "@/components/analyze/CVUploader"
 import { JobInput } from "@/components/analyze/JobInput"
 import { AnalyzeButton } from "@/components/analyze/AnalyzeButton"
+import { usePreviewStorage } from "@/hooks/usePreviewStorage"
+import { SavePreviewPayload, ATSResult, CandidateData, JobData } from "@/types/preview"
+import { PremiumATSResult } from "@/components/analyze/PremiumATSResult"
+import { ConversionPanel } from "@/components/conversion/ConversionPanel"
 
 export default function AnalyzePage() {
   const [file, setFile] = useState<File | null>(null)
@@ -11,6 +15,9 @@ export default function AnalyzePage() {
   const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showConversion, setShowConversion] = useState(false)
+  
+  const { savePreview, loading: previewLoading } = usePreviewStorage()
 
   const canAnalyze = !!file && !loading
 
@@ -35,7 +42,26 @@ export default function AnalyzePage() {
         throw new Error(data.error || "Erreur d'analyse")
       }
 
-      setPreview(await res.json())
+      const analysisResult = await res.json()
+      setPreview(analysisResult)
+
+      // Sauvegarder automatiquement la preview
+      const payload: SavePreviewPayload = {
+        atsResult: analysisResult as ATSResult,
+        candidateData: {
+          fullName: undefined,
+          email: undefined,
+        } as CandidateData,
+        jobData: {
+          title: job,
+          description: job,
+        } as JobData,
+      }
+
+      await savePreview(payload)
+
+      // Afficher le panneau de conversion après l'analyse
+      setShowConversion(true)
     } catch (e: any) {
       setError(e instanceof Error ? e.message : "Erreur inconnue")
     } finally {
@@ -78,22 +104,21 @@ export default function AnalyzePage() {
             </p>
           </div>
         ) : (
-          <div className="w-full bg-white p-8 rounded-2xl border border-ivoire-200 shadow-sm shadow-ivoire-200/50">
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">Résultat de l'analyse</h2>
-            <div className="bg-ivoire-50 p-4 rounded-lg">
-              <pre className="text-sm text-ink-700 whitespace-pre-wrap">{JSON.stringify(preview, null, 2)}</pre>
-            </div>
-            <button
-              onClick={() => {
-                setPreview(null)
-                setFile(null)
-                setJob("")
-              }}
-              className="mt-4 w-full py-3 bg-ink-900 text-white rounded-lg hover:bg-ink-800 transition-colors"
-            >
-              Nouvelle analyse
-            </button>
-          </div>
+          <PremiumATSResult
+            score={preview.score}
+            radarDimensions={preview.radarDimensions}
+            strengths={preview.strengths}
+            weaknesses={[preview.weakness]}
+            recommendations={preview.recommendations}
+          />
+        )}
+
+        {/* Conversion Panel */}
+        {showConversion && preview && (
+          <ConversionPanel
+            atsScore={preview.score}
+            onContinue={() => setShowConversion(false)}
+          />
         )}
 
       </div>

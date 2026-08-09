@@ -1,5 +1,5 @@
-import OpenAI from "openai"
 import { logger } from "@/lib/logger"
+import OpenAI from 'openai'
 
 const SYSTEM_PROMPT = `You are a CV analysis assistant. Your task is to:
 1. Analyze the CV against the job description
@@ -20,11 +20,6 @@ Return ONLY valid JSON with this structure:
   "strengths": [string, string],
   "weakness": string
 }`
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  maxRetries: 0, // Pas de retry pour éviter explosion coûts
-})
 
 // Limite de tokens pour le coût control
 const MAX_INPUT_TOKENS = 4000
@@ -52,6 +47,7 @@ export async function generatePreviewAnalysis(cvContent: string, jobDescription:
   }
 
   try {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'dummy' });
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       response_format: { type: "json_object" },
@@ -64,9 +60,7 @@ export async function generatePreviewAnalysis(cvContent: string, jobDescription:
       ],
       temperature: 0.3,
       max_tokens: MAX_OUTPUT_TOKENS,
-    }, {
-      timeout: options.timeout,
-    })
+    });
     
     const content = response.choices[0].message.content
     if (!content) {
@@ -95,7 +89,6 @@ function estimateTokens(text: string): number {
 
 function sanitizeInput(text: string): string {
   return text
-    // eslint-disable-next-line no-control-regex
     .replace(/[\x00-\x1F\x7F]/g, '')
     .replace(/<script[^>]*>.*?<\/script>/gi, '')
     .substring(0, 10000)

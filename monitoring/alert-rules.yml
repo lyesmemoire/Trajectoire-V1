@@ -1,0 +1,209 @@
+groups:
+  - name: trajectoire-api-alerts
+    interval: 30s
+    rules:
+      # High Error Rate
+      - alert: HighErrorRate
+        expr: |
+          rate(http_server_duration_seconds_count{service_name='trajectoire-api', status_code=~'5..'}[5m]) 
+          / 
+          rate(http_server_duration_seconds_count{service_name='trajectoire-api'}[5m]) * 100 > 5
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }}% for the last 5 minutes"
+
+      # High Response Time P95
+      - alert: HighResponseTimeP95
+        expr: |
+          histogram_quantile(0.95, rate(http_server_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High P95 response time"
+          description: "P95 response time is {{ $value }}s for the last 5 minutes"
+
+      # High Response Time P99
+      - alert: HighResponseTimeP99
+        expr: |
+          histogram_quantile(0.99, rate(http_server_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 2
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "High P99 response time"
+          description: "P99 response time is {{ $value }}s for the last 5 minutes"
+
+      # Low Cache Hit Rate
+      - alert: LowCacheHitRate
+        expr: |
+          rate(cache_hits_total{service_name='trajectoire-api'}[5m]) 
+          / 
+          (rate(cache_hits_total{service_name='trajectoire-api'}[5m]) + rate(cache_misses_total{service_name='trajectoire-api'}[5m])) * 100 < 60
+        for: 10m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is {{ $value }}% for the last 10 minutes"
+
+      # High CPU Usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode='idle'}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value }}% for the last 5 minutes"
+
+      # Critical CPU Usage
+      - alert: CriticalCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode='idle'}[5m])) * 100) > 90
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "Critical CPU usage"
+          description: "CPU usage is {{ $value }}% for the last 5 minutes"
+
+      # High Memory Usage
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }}% for the last 5 minutes"
+
+      # Critical Memory Usage
+      - alert: CriticalMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "Critical memory usage"
+          description: "Memory usage is {{ $value }}% for the last 5 minutes"
+
+      # High Disk Usage
+      - alert: HighDiskUsage
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint='/'} / node_filesystem_size_bytes{mountpoint='/'})) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High disk usage"
+          description: "Disk usage is {{ $value }}% for the last 5 minutes"
+
+      # Critical Disk Usage
+      - alert: CriticalDiskUsage
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint='/'} / node_filesystem_size_bytes{mountpoint='/'})) * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "Critical disk usage"
+          description: "Disk usage is {{ $value }}% for the last 5 minutes"
+
+      # High Database Connections
+      - alert: HighDatabaseConnections
+        expr: pg_stat_activity{datname='trajectoire', state='active'} > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High database connections"
+          description: "Database connections: {{ $value }}"
+
+      # Critical Database Connections
+      - alert: CriticalDatabaseConnections
+        expr: pg_stat_activity{datname='trajectoire', state='active'} > 90
+        for: 5m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "Critical database connections"
+          description: "Database connections: {{ $value }}"
+
+      # Slow Graph Operations
+      - alert: SlowGraphOperations
+        expr: histogram_quantile(0.95, rate(graph_operation_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "Slow graph operations"
+          description: "Graph operation P95 is {{ $value }}s for the last 5 minutes"
+
+      # Slow Matching Operations
+      - alert: SlowMatchingOperations
+        expr: histogram_quantile(0.95, rate(matching_operation_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 0.3
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "Slow matching operations"
+          description: "Matching operation P95 is {{ $value }}s for the last 5 minutes"
+
+      # Slow Search Operations
+      - alert: SlowSearchOperations
+        expr: histogram_quantile(0.95, rate(search_operation_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 0.2
+        for: 5m
+_labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "Slow search operations"
+          description: "Search operation P95 is {{ $value }}s for the last 5 minutes"
+
+      # Slow Copilot Operations
+      - alert: SlowCopilotOperations
+        expr: histogram_quantile(0.95, rate(copilot_operation_duration_seconds_bucket{service_name='trajectoire-api'}[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "Slow copilot operations"
+          description: "Copilot operation P95 is {{ $value }}s for the last 5 minutes"
+
+      # Service Down
+      - alert: ServiceDown
+        expr: up{job='trajectoire-api'} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: trajectoire-api
+        annotations:
+          summary: "Service is down"
+          description: "Trajectoire API service is not responding"
+
+      # High Request Rate
+      - alert: HighRequestRate
+        expr: rate(http_server_duration_seconds_count{service_name='trajectoire-api'}[1m]) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          service: trajectoire-api
+        annotations:
+          summary: "High request rate"
+          description: "Request rate is {{ $value }} req/s for the last 5 minutes"

@@ -1,0 +1,243 @@
+{
+  "mission": "GO-LIVE-002.2 BUILD → RUNTIME → REAL EXECUTION",
+  "date": "2026-08-08",
+  "status": "BLOCKED",
+  "phaseResults": {
+    "phase1": {
+      "name": "Environment",
+      "status": "PASS",
+      "evidence": [
+        {
+          "command": "node --version",
+          "result": "v24.13.0",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "command": "npm --version",
+          "result": "11.6.2",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "command": "pnpm --version",
+          "result": "9.15.9",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "command": "pnpm install",
+          "result": "SUCCESS",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "command": "pnpm exec tsc --version",
+          "result": "Version 5.9.3",
+          "exitCode": 0,
+          "status": "PASS"
+        }
+      ]
+    },
+    "phase2": {
+      "name": "Build API",
+      "status": "FAIL",
+      "evidence": [
+        {
+          "command": "cd C:\\Trajectoire && pnpm --filter api build",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        },
+        {
+          "command": "cd C:\\Trajectoire\\apps\\api && pnpm build",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        },
+        {
+          "command": "cd C:\\Trajectoire\\apps\\api && npx nest build --verbose",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        },
+        {
+          "command": "cd C:\\Trajectoire\\apps\\api && npx tsc --noEmit",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        },
+        {
+          "command": "cd C:\\Trajectoire\\apps\\api && npx tsc",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        }
+      ],
+      "configuration": {
+        "nest-cli.json": {
+          "sourceRoot": "src",
+          "compilerOptions": {
+            "deleteOutDir": true,
+            "webpack": false,
+            "tsConfigPath": "tsconfig.json"
+          }
+        },
+        "tsconfig.json": {
+          "outDir": "./dist",
+          "rootDir": "./src"
+        },
+        "main.ts": "exists in src/"
+      }
+    },
+    "phase3": {
+      "name": "Build Web",
+      "status": "FAIL",
+      "evidence": [
+        {
+          "command": "cd C:\\Trajectoire && pnpm --filter web build",
+          "exitCode": 1,
+          "status": "FAIL",
+          "errorOutput": "Not captured in Windows environment"
+        }
+      ]
+    },
+    "phase4": {
+      "name": "Corriger le problème dist/api",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase5": {
+      "name": "Start API",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase6": {
+      "name": "Start Web",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase7": {
+      "name": "Real business smoke test",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase8": {
+      "name": "Copilot",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase9": {
+      "name": "No false positive",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    },
+    "phase10": {
+      "name": "Production decision",
+      "status": "NOT_EXECUTED",
+      "reason": "Blocked by failed builds"
+    }
+  },
+  "executionGate": {
+    "buildApi": "FAIL",
+    "buildWeb": "FAIL",
+    "apiRuntime": "NOT_TESTED",
+    "webRuntime": "NOT_TESTED",
+    "auth": "NOT_TESTED",
+    "cv": "NOT_TESTED",
+    "job": "NOT_TESTED",
+    "matching": "NOT_TESTED",
+    "search": "NOT_TESTED",
+    "copilot": "NOT_TESTED",
+    "billing": "NOT_TESTED",
+    "database": "NOT_TESTED",
+    "security": "NOT_TESTED",
+    "resilience": "NOT_TESTED",
+    "observability": "NOT_TESTED"
+  },
+  "realWorkflows": {
+    "total": 14,
+    "pass": 0,
+    "fail": 0,
+    "notTested": 14
+  },
+  "falsePositives": 0,
+  "blockers": [
+    {
+      "phase": "PHASE 2",
+      "component": "Build API",
+      "issue": "All build commands fail with exit code 1",
+      "cause": "Error output not captured in Windows environment",
+      "impact": "Cannot build API, cannot start API, cannot test workflows"
+    },
+    {
+      "phase": "PHASE 3",
+      "component": "Build Web",
+      "issue": "Build command fails with exit code 1",
+      "cause": "Error output not captured in Windows environment",
+      "impact": "Cannot build Web, cannot start Web, cannot test workflows"
+    }
+  ],
+  "fixesApplied": [],
+  "realEvidence": [
+    {
+      "command": "node --version",
+      "result": "v24.13.0",
+      "status": "PASS"
+    },
+    {
+      "command": "npm --version",
+      "result": "11.6.2",
+      "status": "PASS"
+    },
+    {
+      "command": "pnpm --version",
+      "result": "9.15.9",
+      "status": "PASS"
+    },
+    {
+      "command": "pnpm install",
+      "result": "SUCCESS",
+      "status": "PASS"
+    },
+    {
+      "command": "pnpm exec tsc --version",
+      "result": "Version 5.9.3",
+      "status": "PASS"
+    },
+    {
+      "command": "pnpm --filter api build",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    },
+    {
+      "command": "pnpm build (apps/api)",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    },
+    {
+      "command": "npx nest build --verbose",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    },
+    {
+      "command": "npx tsc",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    },
+    {
+      "command": "pnpm --filter web build",
+      "result": "Exit code 1",
+      "status": "FAIL"
+    }
+  ],
+  "deliverables": {
+    "GO-LIVE-002.2-RESULT.md": "created",
+    "GO-LIVE-002.2-EVIDENCE.json": "created"
+  }
+}

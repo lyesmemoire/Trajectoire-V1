@@ -1,0 +1,1 @@
+{"version":3,"file":"model-router.d.ts","sourceRoot":"","sources":["model-router.ts"],"names":[],"mappings":"AAEA,MAAM,MAAM,QAAQ,GAChB,cAAc,GACd,SAAS,GACT,QAAQ,GACR,cAAc,GACd,UAAU,CAAC;AAEf;;GAEG;AACH,wBAAgB,eAAe,CAAC,IAAI,EAAE,QAAQ,OAgB7C;AAED,MAAM,WAAW,eAAe;IAC9B,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,MAAM,CAAC;CACrB;AAED,wBAAgB,gBAAgB,CAAC,IAAI,EAAE,QAAQ,GAAG,eAAe,CAShE"}

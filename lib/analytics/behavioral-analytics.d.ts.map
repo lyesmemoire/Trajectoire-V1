@@ -1,0 +1,1 @@
+{"version":3,"file":"behavioral-analytics.d.ts","sourceRoot":"","sources":["behavioral-analytics.ts"],"names":[],"mappings":"AAEA,MAAM,WAAW,mBAAmB;IAClC,gBAAgB,EAAE,MAAM,CAAC;IACzB,YAAY,EAAE,MAAM,CAAC;IACrB,kBAAkB,EAAE,MAAM,CAAC;IAC3B,kBAAkB,EAAE,MAAM,CAAC;IAC3B,eAAe,EAAE,MAAM,CAAC;CACzB;AAED;;GAEG;AACH,wBAAsB,8BAA8B,CAAC,MAAM,EAAE,OAAO,GAAK,OAAO,CAAC,mBAAmB,CAAC,CA8CpG"}

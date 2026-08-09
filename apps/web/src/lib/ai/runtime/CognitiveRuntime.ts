@@ -2,17 +2,15 @@ import { EngineInput } from "../contracts/Engine";
 import { EngineRegistry, DefaultEngineRegistry } from "./EngineRegistry";
 import { EventBus, DefaultEventBus } from "./EventBus";
 import { EngineScheduler, SequentialEngineScheduler } from "./EngineScheduler";
-import { ReducerRegistry, DefaultReducerRegistry, Reducer } from "./ReducerRegistry";
+import { ReducerRegistry, DefaultReducerRegistry } from "./ReducerRegistry";
 import { RuntimeHooks, DefaultRuntimeHooks } from "./RuntimeHooks";
 import { SnapshotBuilder, DefaultSnapshotBuilder } from "./SnapshotBuilder";
 import { InvestigationContext } from "../../../domain/cognitive/InvestigationContext";
-import { BaseEvent } from "../contracts/Event";
 import { CognitiveState } from "../../../domain/cognitive/CognitiveState";
-import { SnapshotMetadata } from "../../../domain/cognitive/SnapshotMetadata";
-import { EngineExecutionError, EngineTimeoutError, EngineBudgetExceededError } from "./errors/EngineExecutionError";
+import { EngineExecutionError, EngineBudgetExceededError } from "./errors/EngineExecutionError";
 import { ExecutionBudgetManager, BudgetConfig } from "./ExecutionBudget";
 import { ExecutionReportBuilder, ExecutionReport } from "./ExecutionReport";
-import { EngineCapabilityRegistry, EngineCapability } from "./EngineCapability";
+import { EngineCapabilityRegistry } from "./EngineCapability";
 
 // ===================================================================
 // COGNITIVE RUNTIME — Cognitive Runtime Contract

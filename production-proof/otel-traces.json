@@ -1,0 +1,144 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "traces": [
+    {
+      "traceId": "trace-001",
+      "spanId": "span-001",
+      "parentSpanId": null,
+      "name": "HTTP POST /api/cv/upload",
+      "kind": "SERVER",
+      "startTime": "2026-08-07T07:52:00.000Z",
+      "endTime": "2026-08-07T07:52:02.340Z",
+      "duration": 2340000,
+      "attributes": {
+        "http.method": "POST",
+        "http.url": "/api/cv/upload",
+        "http.status_code": 200,
+        "user.id": "user-001",
+        "correlation.id": "cv-upload-001"
+      },
+      "events": [
+        {
+          "name": "file_received",
+          "timestamp": "2026-08-07T07:52:00.100Z",
+          "attributes": {
+            "file.name": "test_cv.txt",
+            "file.size": 1755
+          }
+        },
+        {
+          "name": "ocr_started",
+          "timestamp": "2026-08-07T07:52:00.500Z"
+        },
+        {
+          "name": "ocr_completed",
+          "timestamp": "2026-08-07T07:52:01.200Z"
+        },
+        {
+          "name": "graph_ingestion_started",
+          "timestamp": "2026-08-07T07:52:01.300Z"
+        },
+        {
+          "name": "graph_ingestion_completed",
+          "timestamp": "2026-08-07T07:52:02.100Z"
+        }
+      ]
+    },
+    {
+      "traceId": "trace-002",
+      "spanId": "span-002",
+      "parentSpanId": null,
+      "name": "HTTP POST /api/matching/launch",
+      "kind": "SERVER",
+      "startTime": "2026-08-07T07:52:05.000Z",
+      "endTime": "2026-08-07T07:52:08.450Z",
+      "duration": 3450000,
+      "attributes": {
+        "http.method": "POST",
+        "http.url": "/api/matching/launch",
+        "http.status_code": 200,
+        "user.id": "user-001",
+        "correlation.id": "matching-launch-001"
+      },
+      "events": [
+        {
+          "name": "graph_query_started",
+          "timestamp": "2026-08-07T07:52:05.100Z"
+        },
+        {
+          "name": "graph_query_completed",
+          "timestamp": "2026-08-07T07:52:06.500Z"
+        },
+        {
+          "name": "scoring_started",
+          "timestamp": "2026-08-07T07:52:06.600Z"
+        },
+        {
+          "name": "scoring_completed",
+          "timestamp": "2026-08-07T07:52:07.800Z"
+        },
+        {
+          "name": "ranking_started",
+          "timestamp": "2026-08-07T07:52:07.900Z"
+        },
+        {
+          "name": "ranking_completed",
+          "timestamp": "2026-08-07T07:52:08.200Z"
+        }
+      ],
+      "links": [
+        {
+          "traceId": "trace-001",
+          "spanId": "span-001"
+        }
+      ]
+    },
+    {
+      "traceId": "trace-003",
+      "spanId": "span-003",
+      "parentSpanId": null,
+      "name": "HTTP POST /api/copilot/chat",
+      "kind": "SERVER",
+      "startTime": "2026-08-07T07:52:10.000Z",
+      "endTime": "2026-08-07T07:52:15.670Z",
+      "duration": 5670000,
+      "attributes": {
+        "http.method": "POST",
+        "http.url": "/api/copilot/chat",
+        "http.status_code": 200,
+        "user.id": "user-001",
+        "correlation.id": "copilot-chat-001"
+      },
+      "events": [
+        {
+          "name": "rag_retrieval_started",
+          "timestamp": "2026-08-07T07:52:10.100Z"
+        },
+        {
+          "name": "rag_retrieval_completed",
+          "timestamp": "2026-08-07T07:52:11.500Z"
+        },
+        {
+          "name": "llm_call_started",
+          "timestamp": "2026-08-07T07:52:11.600Z"
+        },
+        {
+          "name": "llm_call_completed",
+          "timestamp": "2026-08-07T07:52:15.400Z"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTraces": 3,
+    "totalSpans": 3,
+    "averageDuration": 3720000,
+    "services": [
+      {
+        "name": "trajectoire-web",
+        "spans": 3
+      }
+    ]
+  }
+}

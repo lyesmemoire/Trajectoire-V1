@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
 }
 
@@ -7,7 +7,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["public", "auth"]
+  schemas   = ["public"]
 }
 
 model User {
@@ -17,7 +17,7 @@ model User {
   image                  String?
   emailVerified          DateTime?
   createdAt              DateTime                 @default(now())
-  updatedAt              DateTime @updatedAt
+  updatedAt              DateTime                 @updatedAt
   role                   UserRole                 @default(USER)
   plan                   Plan                     @default(FREE)
   stripeCustomerId       String?                  @unique
@@ -25,8 +25,9 @@ model User {
   referredBy             String?
   referralCount          Int                      @default(0)
   monthlyAnalysisCount   Int                      @default(0)
-  monthlyResetDate       DateTime                 @default(dbgenerated("(NOW() + INTERVAL '1 month')"))
+  monthlyResetDate       DateTime                 @default(dbgenerated("(now() + '1 mon'::interval)"))
   credits                Int                      @default(100)
+  onboardingCompleted    Boolean                  @default(false)
   AIUsageLog             AIUsageLog[]
   Account                Account[]
   AdminAuditLog          AdminAuditLog[]
@@ -34,6 +35,7 @@ model User {
   BehavioralPattern      BehavioralPattern[]
   CVAnalysis             CVAnalysis[]
   careerProfile          CareerProfile?
+  graphs                 Graph[]
   interviewSessions      InterviewSession[]
   PublicChallengeEntry   PublicChallengeEntry[]
   RecoveryEmailLog       RecoveryEmailLog[]
@@ -69,32 +71,32 @@ model CareerProfile {
 }
 
 model InterviewSession {
-  id                   String                @id @default(dbgenerated("gen_random_uuid()"))
-  userId               String
-  persona              String
-  currentState         String
-  clarityScore         Float?
-  confidenceScore      Float?
-  ownershipScore       Float?
-  specificityScore     Float?
-  pressureLevel        Int                   @default(0)
-  authenticityScore    Float                 @default(1.0)
-  jobTitle             String?
-  company              String?
-  score                Int?
-  status               String                @default("active")
-  questions            Json?
-  answers              Json?
-  analysis             Json?
-  startedAt            DateTime              @default(now())
-  completedAt          DateTime?
-  createdAt            DateTime              @default(now())
-  careerTrajectoryScore Float?          @map("career_trajectory_score")
-  challengeEntryId     String?
-  BehaviorEvent        BehaviorEvent[]
-  InterviewEvent       InterviewEvent[]
-  PublicChallengeEntry PublicChallengeEntry? @relation(fields: [challengeEntryId], references: [id])
-  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String                @id @default(dbgenerated("gen_random_uuid()"))
+  userId                String
+  persona               String
+  currentState          String
+  clarityScore          Float?
+  confidenceScore       Float?
+  ownershipScore        Float?
+  specificityScore      Float?
+  pressureLevel         Int                   @default(0)
+  authenticityScore     Float                 @default(1.0)
+  jobTitle              String?
+  company               String?
+  score                 Int?
+  status                String                @default("active")
+  questions             Json?
+  answers               Json?
+  analysis              Json?
+  startedAt             DateTime              @default(now())
+  completedAt           DateTime?
+  createdAt             DateTime              @default(now())
+  careerTrajectoryScore Float?                @map("career_trajectory_score")
+  challengeEntryId      String?
+  BehaviorEvent         BehaviorEvent[]
+  InterviewEvent        InterviewEvent[]
+  PublicChallengeEntry  PublicChallengeEntry? @relation(fields: [challengeEntryId], references: [id])
+  user                  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([createdAt])
@@ -161,7 +163,7 @@ model AdminAuditLog {
 }
 
 model BehaviorEvent {
-  id String @id @default(cuid())
+  id               String           @id @default(cuid())
   userId           String
   sessionId        String
   type             String
@@ -182,20 +184,20 @@ model BehaviorEvent {
 }
 
 model BehavioralPattern {
-  id String @id @default(cuid())
+  id          String   @id @default(cuid())
   userId      String
   pattern     String
   frequency   Int      @default(1)
   severity    Float
   firstSeenAt DateTime @default(now())
-  lastSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
 
 model CVAnalysis {
-  id String @id @default(cuid())
+  id             String   @id @default(cuid())
   userId         String
   fileName       String
   originalText   String
@@ -227,6 +229,36 @@ model ProcessedWebhook {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
 
+  @@schema("public")
+}
+
+model PreviewAnalysis {
+  id              String    @id @default(cuid())
+  token           String    @unique
+  createdAt       DateTime  @default(now())
+  expiresAt       DateTime
+  ipHash          String
+  fingerprint     String
+  consumed        Boolean   @default(false)
+  analysisResult  Json?     @map("analysis_result")
+  atsScore        Int?      @map("ats_score")
+  claimedAt       DateTime? @map("claimed_at")
+  claimedByUserId String?   @map("claimed_by_user_id")
+  consumedAt      DateTime? @map("consumed_at")
+  cvExtract       Json?     @map("cv_extract")
+  jobExtract      Json?     @map("job_extract")
+  rawPayload      Json?     @map("raw_payload")
+  recommendations Json?     @map("recommendations")
+  status          String    @default("pending")
+  strengths       Json?     @map("strengths")
+  weaknesses      Json?     @map("weaknesses")
+
+  @@index([token])
+  @@index([expiresAt])
+  @@index([consumed])
+  @@index([claimedByUserId])
+  @@index([claimedByUserId, consumed])
+  @@index([status, expiresAt])
   @@schema("public")
 }
 
@@ -380,38 +412,19 @@ model WaitlistEntry {
   @@schema("public")
 }
 
-enum UserRole {
-  USER
-  ADMIN_SUPPORT
-  ADMIN_PRODUCT
-  ADMIN_FOUNDER
-
-  @@schema("public")
-}
-
-enum Plan {
-  FREE
-  PRO
-  EXPERT
-
-  @@schema("public")
-}
-
 model PremiumInterviewSession {
-  id             String   @id @default(uuid())
-  userId         String?
-  analysisId     String?
-  interviewType  String   @default("standard")
-  status         String   @default("active")
-  score          Int      @default(0)
-
-  questions      Json?
-  answers        Json?
-  feedback       Json?
-
-  startedAt      DateTime @default(now())
-  completedAt    DateTime?
-  createdAt      DateTime @default(now())
+  id                    String    @id @default(uuid())
+  userId                String?
+  analysisId            String?
+  interviewType         String    @default("standard")
+  status                String    @default("active")
+  score                 Int       @default(0)
+  questions             Json?
+  answers               Json?
+  feedback              Json?
+  startedAt             DateTime  @default(now())
+  completedAt           DateTime?
+  createdAt             DateTime  @default(now())
   careerTrajectoryScore Float?
 
   @@map("premium_interview_sessions")
@@ -430,42 +443,30 @@ model SimulationSession {
   @@schema("public")
 }
 
-// ============================================================
-// SUPABASE TABLES (Billing & Idempotency)
-// These tables are created by SQL migrations but need Prisma models
-// for type-checking and TypeScript support.
-// ============================================================
-
-// REMOVED: Model Profile mapped to table "profiles" which does not exist in the database.
-// 15 Supabase SDK callers use supabase.from("profiles") but this Prisma model was never
-// the source — those callers target a table that must be created or migrated to "User".
-// See AUDIT/evidence/phase2-schema-alignment.md for full usage inventory.
-// Dead code removal tracked in migration 20260730000004_schema_alignment.sql
-
 model CreditTransaction {
-  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  idempotencyKey String  @unique @map("idempotency_key") @db.Text
-  userId         String  @map("user_id") @db.Text
-  amount         Int     @db.Integer
-  action         String  @db.Text
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String   @unique @map("idempotency_key")
+  userId         String   @map("user_id")
+  amount         Int
+  action         String
   state          tx_state @default(reserved)
-  tokensUsed     Int     @default(0) @map("tokens_used") @db.Integer
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+  tokensUsed     Int      @default(0) @map("tokens_used")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("credit_transactions")
   @@schema("public")
 }
 
 model CreditUsage {
-  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId            String  @map("user_id") @db.Uuid
-  action            String  @db.Text
-  creditsSpent      Int     @map("credits_spent") @db.Integer
-  tokensUsed        Int     @default(0) @map("tokens_used") @db.Integer
-  estimatedCostEur  Decimal @default(0) @map("estimated_cost_eur") @db.Decimal(10, 6)
-  metadata          Json?   @default("{}") @db.JsonB
-  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action           String
+  creditsSpent     Int      @map("credits_spent")
+  tokensUsed       Int      @default(0) @map("tokens_used")
+  estimatedCostEur Decimal  @default(0) @map("estimated_cost_eur") @db.Decimal(10, 6)
+  metadata         Json?    @default("{}")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  userId           String   @map("user_id") @db.Uuid
 
   @@map("credit_usage")
   @@schema("public")
@@ -473,31 +474,237 @@ model CreditUsage {
 
 model StripeEvent {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  eventId      String   @unique @map("event_id") @db.Text
+  eventId      String   @unique @map("event_id")
+  creditsAdded Int?     @map("credits_added")
+  processedAt  DateTime @default(now()) @map("processed_at") @db.Timestamptz(6)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   userId       String?  @map("user_id") @db.Uuid
-  creditsAdded Int?     @map("credits_added") @db.Integer
-  processedAt  DateTime @default(now()) @map("processed_at") @db.Timestamptz
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   @@map("stripe_events")
   @@schema("public")
 }
 
 model Idempotency {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  idempotencyKey String   @map("idempotency_key") @db.Text
-  userId         String   @map("user_id") @db.Text
-  operation      String   @db.Text
-  requestParams  Json     @map("request_params") @db.JsonB
-  resultRef      String?  @map("result_ref") @db.Text
-  status         String   @db.Text
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
-  completedAt    DateTime? @map("completed_at") @db.Timestamptz
-  expiresAt      DateTime @map("expires_at") @db.Timestamptz
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String    @map("idempotency_key")
+  userId         String    @map("user_id")
+  operation      String
+  requestParams  Json      @map("request_params")
+  resultRef      String?   @map("result_ref")
+  status         String
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  completedAt    DateTime? @map("completed_at") @db.Timestamptz(6)
+  expiresAt      DateTime  @map("expires_at") @db.Timestamptz(6)
 
   @@unique([idempotencyKey, userId, operation], name: "idempotency_key_user_op_unique")
   @@index([expiresAt], map: "idx_idempotency_expires_at")
   @@map("idempotency")
+  @@schema("public")
+}
+
+model CvRewrite {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String   @map("user_id")
+  idempotencyKey   String   @unique @map("idempotency_key")
+  action           String
+  originalContent  String   @map("original_content")
+  rewrittenContent String   @map("rewritten_content")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt        DateTime @map("expires_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("cv_rewrites")
+  @@schema("public")
+}
+
+model Graph {
+  id          String          @id @default(cuid())
+  userId      String          @map("user_id")
+  name        String
+  description String?
+  version     Int             @default(1)
+  isActive    Boolean         @default(true) @map("is_active")
+  source      String          @default("MANUAL")
+  metadata    Json?           @default("{}")
+  deletedAt   DateTime?       @map("deleted_at")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  edges       GraphEdge[]
+  nodes       GraphNode[]
+  snapshots   GraphSnapshot[]
+  versions    GraphVersion[]
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([deletedAt])
+  @@index([source])
+  @@index([createdAt])
+  @@index([isActive, source])
+  @@index([userId, isActive])
+  @@map("graphs")
+  @@schema("public")
+}
+
+model GraphNode {
+  id              String                 @id @default(cuid())
+  graphId         String                 @map("graph_id")
+  nodeId          String                 @map("node_id")
+  type            String
+  label           String
+  normalizedLabel String                 @map("normalized_label")
+  confidence      Float                  @default(0.5)
+  source          String
+  metadata        Json?                  @default("{}")
+  embedding       Unsupported("vector")?
+  deletedAt       DateTime?              @map("deleted_at")
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+  outgoingEdges   GraphEdge[]            @relation("OutgoingEdges")
+  incomingEdges   GraphEdge[]            @relation("IncomingEdges")
+  graph           Graph                  @relation(fields: [graphId], references: [id], onDelete: Cascade)
+
+  @@index([graphId])
+  @@index([type])
+  @@index([normalizedLabel])
+  @@index([confidence])
+  @@index([deletedAt])
+  @@index([graphId, type])
+  @@index([graphId, normalizedLabel])
+  @@index([graphId, type, confidence])
+  @@index([graphId, deletedAt])
+  @@map("graph_nodes")
+  @@schema("public")
+}
+
+model GraphEdge {
+  id           String    @id @default(cuid())
+  graphId      String    @map("graph_id")
+  edgeId       String    @map("edge_id")
+  type         String
+  sourceNodeId String    @map("source_node_id")
+  targetNodeId String    @map("target_node_id")
+  weight       Float     @default(0.5)
+  confidence   Float     @default(0.5)
+  reason       String?
+  metadata     Json?     @default("{}")
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  graph        Graph     @relation(fields: [graphId], references: [id], onDelete: Cascade)
+  sourceNode   GraphNode @relation("OutgoingEdges", fields: [sourceNodeId], references: [id], onDelete: Cascade)
+  targetNode   GraphNode @relation("IncomingEdges", fields: [targetNodeId], references: [id], onDelete: Cascade)
+
+  @@index([graphId])
+  @@index([type])
+  @@index([sourceNodeId])
+  @@index([targetNodeId])
+  @@index([weight])
+  @@index([confidence])
+  @@index([deletedAt])
+  @@index([graphId, type])
+  @@index([graphId, sourceNodeId])
+  @@index([graphId, targetNodeId])
+  @@index([sourceNodeId, targetNodeId])
+  @@index([graphId, type, weight])
+  @@index([graphId, deletedAt])
+  @@map("graph_edges")
+  @@schema("public")
+}
+
+model GraphVersion {
+  id          String   @id @default(cuid())
+  graphId     String   @map("graph_id")
+  version     Int
+  description String?
+  changeLog   Json?    @default("{}")
+  nodeCount   Int      @default(0) @map("node_count")
+  edgeCount   Int      @default(0) @map("edge_count")
+  createdBy   String?  @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  graph       Graph    @relation(fields: [graphId], references: [id], onDelete: Cascade)
+
+  @@unique([graphId, version])
+  @@index([graphId])
+  @@index([version])
+  @@index([createdAt])
+  @@index([graphId, version])
+  @@map("graph_versions")
+  @@schema("public")
+}
+
+model GraphSnapshot {
+  id          String   @id @default(cuid())
+  graphId     String   @map("graph_id")
+  version     Int
+  name        String
+  description String?
+  nodeData    Json     @map("node_data")
+  edgeData    Json     @map("edge_data")
+  metadata    Json?    @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  graph       Graph    @relation(fields: [graphId], references: [id], onDelete: Cascade)
+
+  @@index([graphId])
+  @@index([version])
+  @@index([createdAt])
+  @@index([graphId, version])
+  @@map("graph_snapshots")
+  @@schema("public")
+}
+
+model DataLineage {
+  uuid                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sourceType                String   @map("source_type")
+  sourceOrigin              String   @map("source_origin")
+  sourceProvenance          String   @map("source_provenance")
+  sourcePipeline            String   @map("source_pipeline")
+  sourceStage               String   @map("source_stage")
+  sourceTimestamp           DateTime @map("source_timestamp") @db.Timestamptz(6)
+  transformationType        String   @map("transformation_type")
+  transformationParameters  Json?    @default("{}") @map("transformation_parameters")
+  transformationDescription String   @map("transformation_description")
+  hash                      String
+  graphNodeId               String?  @map("graph_node_id") @db.Uuid
+  relationType              String?  @map("relation_type")
+  relationTargetUuid        String?  @map("relation_target_uuid") @db.Uuid
+  relationName              String?  @map("relation_name")
+  parentUuid                String?  @map("parent_uuid") @db.Uuid
+  storageType               String   @map("storage_type")
+  storageLocation           String   @map("storage_location")
+  confidence                Float    @default(0.5)
+  timestamp                 DateTime @default(now()) @db.Timestamptz(6)
+  metadata                  Json?    @default("{}")
+
+  @@index([sourceType])
+  @@index([transformationType])
+  @@index([relationType])
+  @@index([storageType])
+  @@index([graphNodeId])
+  @@index([timestamp])
+  @@index([confidence])
+  @@index([hash])
+  @@index([parentUuid, timestamp])
+  @@index([graphNodeId, timestamp])
+  @@map("data_lineage")
+  @@schema("public")
+}
+
+enum UserRole {
+  USER
+  ADMIN_SUPPORT
+  ADMIN_PRODUCT
+  ADMIN_FOUNDER
+
+  @@schema("public")
+}
+
+enum Plan {
+  FREE
+  PRO
+  EXPERT
+
   @@schema("public")
 }
 
@@ -507,21 +714,5 @@ enum tx_state {
   failed
   expired
 
-  @@schema("public")
-}
-
-model CvRewrite {
-  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId           String   @map("user_id") @db.Text
-  idempotencyKey   String   @unique @map("idempotency_key") @db.Text
-  action           String   @db.Text
-  originalContent  String   @map("original_content") @db.Text
-  rewrittenContent String   @map("rewritten_content") @db.Text
-  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz
-  expiresAt        DateTime @map("expires_at") @db.Timestamptz
-
-  @@index([userId])
-  @@index([expiresAt])
-  @@map("cv_rewrites")
   @@schema("public")
 }

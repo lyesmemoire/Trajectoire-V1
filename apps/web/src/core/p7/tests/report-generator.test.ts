@@ -53,9 +53,9 @@ describe("P7.5 — Report Generator", () => {
 
   // ─── R1 — Determinism ───────────────────────────────────────────────
   describe("R1 — Full determinism", () => {
-    it("same input → same report byte-to-byte", () => {
-      const report1 = builder.build(input);
-      const report2 = builder.build(input);
+    it("same input → same report byte-to-byte", async () => {
+      const report1 = await builder.build(input);
+      const report2 = await builder.build(input);
 
       expect(report1.metadata.deterministicHash).toBe(report2.metadata.deterministicHash);
       expect(report1.exports.pdf.hash).toBe(report2.exports.pdf.hash);
@@ -65,11 +65,11 @@ describe("P7.5 — Report Generator", () => {
 
   // ─── R2 — Explanation completeness ──────────────────────────────────
   describe("R2 — Explanation completeness", () => {
-    it("every score links to evidence in embedded graph", () => {
-      const report = builder.build(input);
+    it("every score links to evidence in embedded graph", async () => {
+      const report = await builder.build(input);
       const idx = report.explanation.index.scoreToEvidence;
       
-      const scoreNodes = report.explanation.nodes.filter(n => n.type === "score");
+      const scoreNodes = report.explanation.nodes.filter((n: any) => n.type === "score");
       for (const sn of scoreNodes) {
         const evidence = idx[sn.id];
         expect(evidence).toBeDefined();
@@ -80,8 +80,8 @@ describe("P7.5 — Report Generator", () => {
 
   // ─── R3 — Audit reproducibility ─────────────────────────────────────
   describe("R3 — Audit reproducibility", () => {
-    it("audit pack contains replay instructions and verification hashes", () => {
-      const report = builder.build(input);
+    it("audit pack contains replay instructions and verification hashes", async () => {
+      const report = await builder.build(input);
       const audit = report.exports.auditPack;
 
       expect(audit.evaluationGraphHash).toBeDefined();
@@ -93,21 +93,21 @@ describe("P7.5 — Report Generator", () => {
 
   // ─── R4 — No semantic drift ─────────────────────────────────────────
   describe("R4 — No semantic drift", () => {
-    it("verdict maps deterministically from mathematical score", () => {
-      const report = builder.build(input);
+    it("verdict maps deterministically from mathematical score", async () => {
+      const report = await builder.build(input);
       expect(report.summary.verdict).toBe("STRONG_HIRE");
 
       const badInput = buildMockInput();
       (badInput.evaluation  as any).score = 35;
-      const badReport = builder.build(badInput);
+      const badReport = await builder.build(badInput);
       expect(badReport.summary.verdict).toBe("NO_HIRE");
     });
   });
 
   // ─── R5 — Cross-format consistency ──────────────────────────────────
   describe("R5 — Cross-format consistency", () => {
-    it("JSON, PDF, and AuditPack share exact same data references", () => {
-      const report = builder.build(input);
+    it("JSON, PDF, and AuditPack share exact same data references", async () => {
+      const report = await builder.build(input);
 
       // JSON contains the exact same trace pointers as the input
       expect(report.exports.json.tracePointers.sessionId).toBe(report.sessionId);

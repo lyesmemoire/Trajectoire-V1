@@ -2,7 +2,7 @@
 // PERCEPTION ENGINE — Barrel Export
 // ===================================================================
 
-export { PerceptionEngine } from "./PerceptionEngine";
+export { PerceptionEngine } from "../PerceptionEngine";
 
 export { PERCEPTION_SYSTEM_PROMPT } from "./PerceptionPrompt";
 

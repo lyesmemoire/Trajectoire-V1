@@ -38,7 +38,7 @@ export interface GovernorState {
   antiDrift: AntiDriftState;
 }
 
-export function createGovernorState(budgetTotal = _100): GovernorState {
+export function createGovernorState(budgetTotal = 100): GovernorState {
   return {
     budget: createEmotionalBudget(budgetTotal),
     guardrails: createGuardrailState(),

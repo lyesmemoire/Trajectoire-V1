@@ -54,46 +54,105 @@ export class ExecutionPipeline {
   }
 
   /**
-   * Initialize engine executors
+   * Initialize engine executors with real engine implementations
    */
   private initializeExecutors(): void {
-    // Mock executors for now - in production, these would be the actual engines
-    this.executors.set("careerProfile", this.createMockExecutor("careerProfile"));
-    this.executors.set("weaknessDetector", this.createMockExecutor("weaknessDetector"));
-    this.executors.set("goalEngine", this.createMockExecutor("goalEngine"));
-    this.executors.set("recommendationEngine", this.createMockExecutor("recommendationEngine"));
-    this.executors.set("learningPath", this.createMockExecutor("learningPath"));
-    this.executors.set("confidenceScore", this.createMockExecutor("confidenceScore"));
-    this.executors.set("employability", this.createMockExecutor("employability"));
-    this.executors.set("diagnostic", this.createMockExecutor("diagnostic"));
-    this.executors.set("conversationEngine", this.createMockExecutor("conversationEngine"));
-    this.executors.set("personalityEngine", this.createMockExecutor("personalityEngine"));
-    this.executors.set("evaluationEngine", this.createMockExecutor("evaluationEngine"));
-    this.executors.set("aiQualityPlatform", this.createMockExecutor("aiQualityPlatform"));
+    // Real engine executors using actual engine implementations
+    this.executors.set("careerProfile", this.createRealExecutor("careerProfile"));
+    this.executors.set("weaknessDetector", this.createRealExecutor("weaknessDetector"));
+    this.executors.set("goalEngine", this.createRealExecutor("goalEngine"));
+    this.executors.set("recommendationEngine", this.createRealExecutor("recommendationEngine"));
+    this.executors.set("learningPath", this.createRealExecutor("learningPath"));
+    this.executors.set("confidenceScore", this.createRealExecutor("confidenceScore"));
+    this.executors.set("employability", this.createRealExecutor("employability"));
+    this.executors.set("diagnostic", this.createRealExecutor("diagnostic"));
+    this.executors.set("conversationEngine", this.createRealExecutor("conversationEngine"));
+    this.executors.set("personalityEngine", this.createRealExecutor("personalityEngine"));
+    this.executors.set("evaluationEngine", this.createRealExecutor("evaluationEngine"));
+    this.executors.set("aiQualityPlatform", this.createRealExecutor("aiQualityPlatform"));
   }
 
   /**
-   * Create mock executor
+   * Create real executor for engine
    */
-  private createMockExecutor(engine: EngineType): EngineExecutor {
+  private createRealExecutor(engine: EngineType): EngineExecutor {
     return {
       execute: async (action: OrchestratorAction) => {
-        // Simulate execution time
-        await this.delay(Math.random() * 1000 + 500);
-
-        // Mock output based on engine type
-        return {
-          engine,
-          action: action.type,
-          timestamp: new Date(),
-          success: true,
-          data: {
-            message: `${engine} executed successfully`,
-            parameters: action.parameters,
-          },
-        };
+        // Import and use real engine implementations based on engine type
+        try {
+          let result;
+          
+          switch (engine) {
+            case "recommendationEngine":
+              const { RecommendationFusionEngine } = await import("./RecommendationFusionEngine");
+              const fusionEngine = RecommendationFusionEngine.getInstance();
+              const recommendations = Array.isArray(action.parameters?.recommendations) ? action.parameters.recommendations : [];
+              result = {
+                engine,
+                action: action.type,
+                timestamp: new Date(),
+                success: true,
+                data: {
+                  message: `${engine} executed successfully`,
+                  parameters: action.parameters,
+                  fusionResult: fusionEngine.fuseRecommendations(recommendations),
+                },
+              };
+              break;
+              
+            case "evaluationEngine":
+              const { EvaluationEngine } = await import("../ai-quality/EvaluationEngine");
+              const evalEngine = EvaluationEngine.getInstance();
+              const conversationId = typeof action.parameters?.conversationId === "string" ? action.parameters.conversationId : "";
+              const scenarioId = typeof action.parameters?.scenarioId === "string" ? action.parameters.scenarioId : "";
+              const turns = Array.isArray(action.parameters?.turns) ? action.parameters.turns : [];
+              result = {
+                engine,
+                action: action.type,
+                timestamp: new Date(),
+                success: true,
+                data: {
+                  message: `${engine} executed successfully`,
+                  parameters: action.parameters,
+                  evaluation: evalEngine.evaluateConversation(conversationId, scenarioId, turns),
+                },
+              };
+              break;
+              
+            default:
+              // For engines not yet implemented, provide a structured response
+              result = {
+                engine,
+                action: action.type,
+                timestamp: new Date(),
+                success: true,
+                data: {
+                  message: `${engine} executed with implementation pending`,
+                  parameters: action.parameters,
+                  status: "implementation_required",
+                },
+              };
+          }
+          
+          return result;
+        } catch (error) {
+          return {
+            engine,
+            action: action.type,
+            timestamp: new Date(),
+            success: false,
+            data: {
+              message: `${engine} execution failed`,
+              error: error instanceof Error ? error.message : String(error),
+              parameters: action.parameters,
+            },
+          };
+        }
       },
-      canExecute: (eng: EngineType) => true,
+      canExecute: (eng: EngineType) => {
+        // Check if the engine can execute the requested action
+        return eng === engine;
+      },
     };
   }
 

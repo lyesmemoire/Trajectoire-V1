@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
+import type { ChatCompletionMessageParam, ChatCompletion } from "openai/resources/chat/completions";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
@@ -10,7 +10,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
  * @param onDone     Callback invoked when the stream finishes.
  * @param signal?    Optional AbortSignal to cancel the request.
  */
-export async function streamChat(messages: ChatCompletionMessageParam[], onChunk: (chunk: _string) => void,
+export async function streamChat(messages: ChatCompletionMessageParam[], onChunk: (chunk: string) => void,
   onDone: () => void,
   signal?: AbortSignal,
 ): Promise<void> {
@@ -37,4 +37,23 @@ export async function streamChat(messages: ChatCompletionMessageParam[], onChunk
     }
   }
   onDone();
+}
+
+/**
+ * Get a JSON chat completion using the OpenAI SDK.
+ * Used for structured outputs with JSON mode.
+ * @param messages   Chat messages (system/user/assistant) to send.
+ * @param signal?    Optional AbortSignal to cancel the request.
+ */
+export async function getJsonCompletion(
+  messages: ChatCompletionMessageParam[],
+  signal?: AbortSignal,
+): Promise<ChatCompletion> {
+  return await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages,
+    temperature: 0,
+    response_format: { type: "json_object" },
+    ...(signal && { signal }),
+  });
 }

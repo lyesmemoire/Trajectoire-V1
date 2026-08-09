@@ -1,12 +1,8 @@
-import OpenAI from "openai";
 import { logError } from "@/lib/logger/Logger";
+import OpenAI from 'openai';
 
-let openai: OpenAI;
 function getOpenAI() {
-  if (!openai) {
-    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy" });
-  }
-  return openai;
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'dummy' });
 }
 
 export async function getRelevantCVSections({

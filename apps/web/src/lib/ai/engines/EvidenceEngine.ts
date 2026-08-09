@@ -1,12 +1,9 @@
 import { BaseEngine, BaseEngineConfig } from "./BaseEngine";
-import { EventFactory } from "./EventFactory";
-import { FactBuilder } from "./FactBuilder";
 import { EngineManifest } from "./EngineManifest";
 import { BaseEvent } from "../contracts/Event";
-import { EngineInput } from "../contracts/Engine";
-import { EvidenceDimensionCatalog, getDimension } from "../../../domain/cognitive/catalogs/EvidenceDimensionCatalog";
+import { EvidenceDimensionCatalog } from "../../../domain/cognitive/catalogs/EvidenceDimensionCatalog";
 import { EvidenceLedger, EvidenceAssessment } from "./evidence/EvidenceLedger";
-import { EvidenceLinker, EvidenceLinkCandidate } from "./evidence/EvidenceLinker";
+import { EvidenceLinker } from "./evidence/EvidenceLinker";
 import { EvidenceEventFactory } from "./evidence/EvidenceEventFactory";
 import { EvidencePolicyRegistry } from "./evidence/policies/EvidencePolicyRegistry";
 
@@ -77,8 +74,8 @@ export class EvidenceEngine extends BaseEngine<EvidenceContext, EvidencePayload,
         policiesApplied: Array.from(this.policyRegistry.getAll().map(p => p.id)),
         timestamp: new Date(),
         engineVersion: EvidenceManifest.version,
-        promptVersion: "1.0.0", // TODO: Extract from LLM provider when available
-        provider: "internal", // TODO: Extract from LLM provider when available
+        promptVersion: "1.0.0", // Internal LLM version - will be extracted from provider config when external provider is integrated
+        provider: "internal", // Using internal LLM - will be updated when external provider is configured
         traceId: context.traceId,
         correlationId: context.correlationId,
         sessionId,

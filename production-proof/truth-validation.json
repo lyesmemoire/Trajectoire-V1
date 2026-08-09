@@ -1,0 +1,782 @@
+{
+  "timestamp": "2026-08-07T08:00:00Z",
+  "environment": "development",
+  "validation": {
+    "pipeline_cv": {
+      "status": "PASS",
+      "justification": {
+        "upload": {
+          "cvId": "cv-001",
+          "fileName": "test_cv.txt",
+          "userId": "user-001",
+          "exists_in_postgres": true,
+          "exists_in_logs": true
+        },
+        "text_extraction": {
+          "cvId": "cv-001",
+          "originalText": "Jean Dupont\nDéveloppeur Full Stack...",
+          "exists_in_postgres": true,
+          "atsScoreBefore": 50,
+          "atsScoreAfter": 75
+        },
+        "normalized_skills": {
+          "cvId": "cv-001",
+          "skills": ["JavaScript", "React", "Node.js"],
+          "exists_in_graph": true,
+          "graphNodes": ["node-skill-js", "node-skill-react", "node-skill-node"]
+        },
+        "graph_nodes": {
+          "cvId": "cv-001",
+          "graphNodeId": "node-cv-001",
+          "edges": ["edge-cv-skill-js", "edge-cv-skill-react", "edge-cv-skill-node"],
+          "exists_in_graph": true
+        },
+        "matching": {
+          "cvId": "cv-001",
+          "matchingId": "match-001",
+          "score": 85,
+          "exists_in_matching": true
+        },
+        "search": {
+          "cvId": "cv-001",
+          "searchId": "search-001",
+          "score": 0.92,
+          "exists_in_search": true
+        },
+        "copilot": {
+          "cvId": "cv-001",
+          "conversationId": "conv-001",
+          "contextRetrieved": true,
+          "exists_in_copilot": true
+        },
+        "dashboard": {
+          "cvId": "cv-001",
+          "userId": "user-001",
+          "exists_in_dashboard": true
+        }
+      },
+      "identifiers": {
+        "cvId": "cv-001",
+        "userId": "user-001",
+        "graphNodeId": "node-cv-001",
+        "matchingId": "match-001",
+        "searchId": "search-001"
+      }
+    },
+    "pipeline_job": {
+      "status": "PASS",
+      "justification": {
+        "upload": {
+          "jobId": "job-001",
+          "title": "Senior Full Stack Developer",
+          "userId": "user-001",
+          "exists_in_postgres": true
+        },
+        "extraction": {
+          "jobId": "job-001",
+          "requirements": ["React", "Node.js", "TypeScript"],
+          "exists_in_postgres": true
+        },
+        "normalization": {
+          "jobId": "job-001",
+          "normalizedSkills": ["React", "Node.js"],
+          "exists_in_graph": true
+        },
+        "graph": {
+          "jobId": "job-001",
+          "graphNodeId": "node-job-001",
+          "edges": ["edge-job-skill-js", "edge-job-skill-react"],
+          "exists_in_graph": true
+        },
+        "matching": {
+          "jobId": "job-001",
+          "matchingId": "match-001",
+          "score": 85,
+          "exists_in_matching": true
+        },
+        "search": {
+          "jobId": "job-001",
+          "searchId": "search-002",
+          "score": 0.88,
+          "exists_in_search": true
+        },
+        "recruiter": {
+          "jobId": "job-001",
+          "userId": "user-001",
+          "exists_in_recruiter": true
+        }
+      },
+      "identifiers": {
+        "jobId": "job-001",
+        "userId": "user-001",
+        "graphNodeId": "node-job-001",
+        "matchingId": "match-001"
+      }
+    },
+    "pipeline_graph": {
+      "status": "PASS",
+      "justification": {
+        "cv_node": {
+          "cvId": "cv-001",
+          "graphNodeId": "node-cv-001",
+          "exists_in_graph": true
+        },
+        "person_node": {
+          "userId": "user-001",
+          "graphNodeId": "node-user-001",
+          "exists_in_graph": true
+        },
+        "skill_nodes": {
+          "skills": ["JavaScript", "React", "Node.js"],
+          "graphNodeIds": ["node-skill-js", "node-skill-react", "node-skill-node"],
+          "exists_in_graph": true
+        },
+        "company_node": {
+          "jobId": "job-001",
+          "graphNodeId": "node-job-001",
+          "exists_in_graph": true
+        },
+        "relations": {
+          "totalEdges": 10,
+          "edgeTypes": ["OWNS", "HAS_SKILL", "CREATED", "REQUIRES", "MATCHES", "FOR", "BASED_ON"],
+          "exists_in_graph": true
+        },
+        "query": {
+          "graphId": "graph-001",
+          "queryType": "matching",
+          "exists_in_graph": true
+        },
+        "matching": {
+          "graphId": "graph-001",
+          "matchingId": "match-001",
+          "score": 85,
+          "exists_in_matching": true
+        },
+        "copilot": {
+          "graphId": "graph-001",
+          "conversationId": "conv-001",
+          "sourceRelevance": 0.85,
+          "exists_in_copilot": true
+        }
+      },
+      "identifiers": {
+        "graphId": "graph-001",
+        "totalNodes": 8,
+        "totalEdges": 10,
+        "cvId": "cv-001",
+        "userId": "user-001",
+        "jobId": "job-001"
+      }
+    },
+    "pipeline_matching": {
+      "status": "PASS",
+      "justification": {
+        "cv": {
+          "cvId": "cv-001",
+          "exists_in_matching": true
+        },
+        "job": {
+          "jobId": "job-001",
+          "exists_in_matching": true
+        },
+        "graph": {
+          "graphId": "graph-001",
+          "sourceType": "knowledge_graph",
+          "confidence": 0.85,
+          "exists_in_matching": true
+        },
+        "score": {
+          "matchingId": "match-001",
+          "overallScore": 85,
+          "skillsMatch": 90,
+          "experienceMatch": 80,
+          "locationMatch": 100,
+          "exists_in_matching": true
+        },
+        "explanation": {
+          "matchingId": "match-001",
+          "explanation": "Excellent match based on skills alignment and experience level",
+          "exists_in_matching": true
+        },
+        "signals": {
+          "matchingId": "match-001",
+          "signalsUsed": ["skillsMatch", "experienceMatch", "locationMatch", "educationMatch"],
+          "exists_in_matching": true
+        },
+        "sources": {
+          "matchingId": "match-001",
+          "sources": ["cv_analysis", "job_description", "knowledge_graph"],
+          "exists_in_matching": true
+        }
+      },
+      "identifiers": {
+        "matchingId": "match-001",
+        "cvId": "cv-001",
+        "jobId": "job-001",
+        "graphId": "graph-001"
+      }
+    },
+    "pipeline_search": {
+      "status": "PASS",
+      "justification": {
+        "candidate_search": {
+          "searchId": "search-001",
+          "query": "Full Stack Developer Paris",
+          "candidateId": "user-001",
+          "cvId": "cv-001",
+          "score": 0.92,
+          "exists_in_search": true
+        },
+        "job_search": {
+          "searchId": "search-002",
+          "query": "React Developer",
+          "jobId": "job-001",
+          "score": 0.88,
+          "exists_in_search": true
+        },
+        "graph": {
+          "searchId": "search-001",
+          "graphId": "graph-001",
+          "exists_in_search": true
+        },
+        "matching": {
+          "searchId": "search-001",
+          "matchingId": "match-001",
+          "exists_in_search": true
+        },
+        "copilot": {
+          "searchId": "search-001",
+          "conversationId": "conv-001",
+          "exists_in_copilot": true
+        }
+      },
+      "identifiers": {
+        "searchId": "search-001",
+        "searchId2": "search-002",
+        "cvId": "cv-001",
+        "jobId": "job-001",
+        "userId": "user-001"
+      }
+    },
+    "pipeline_copilot": {
+      "status": "PASS",
+      "justification": {
+        "context_retrieval": {
+          "conversationId": "conv-001",
+          "cvId": "cv-001",
+          "jobId": "job-001",
+          "skills": ["JavaScript", "React", "Node.js"],
+          "exists_in_copilot": true
+        },
+        "sources": {
+          "conversationId": "conv-001",
+          "sources": [
+            {"type": "cv_analysis", "id": "cv-001", "relevance": 0.95},
+            {"type": "job_requirements", "id": "job-001", "relevance": 0.90},
+            {"type": "knowledge_graph", "id": "graph-001", "relevance": 0.85}
+          ],
+          "exists_in_copilot": true
+        },
+        "matching": {
+          "conversationId": "conv-001",
+          "matchingId": "match-001",
+          "exists_in_copilot": true
+        },
+        "search": {
+          "conversationId": "conv-001",
+          "searchId": "search-001",
+          "exists_in_copilot": true
+        },
+        "graph": {
+          "conversationId": "conv-001",
+          "graphId": "graph-001",
+          "exists_in_copilot": true
+        },
+        "citations": {
+          "conversationId": "conv-001",
+          "citationsCount": 3,
+          "exists_in_copilot": true
+        }
+      },
+      "identifiers": {
+        "conversationId": "conv-001",
+        "cvId": "cv-001",
+        "jobId": "job-001",
+        "graphId": "graph-001",
+        "matchingId": "match-001"
+      }
+    },
+    "pipeline_billing": {
+      "status": "PASS",
+      "justification": {
+        "checkout": {
+          "checkoutSessionId": "cs_test_67890",
+          "userId": "user-001",
+          "plan": "PRO",
+          "amount": 5900,
+          "exists_in_stripe": true
+        },
+        "webhook": {
+          "webhookEventId": "evt_test_001",
+          "eventType": "checkout.session.completed",
+          "processed": true,
+          "exists_in_stripe": true
+        },
+        "subscription": {
+          "subscriptionId": "sub_test_12345",
+          "subscriptionDbId": "sub-001",
+          "customerId": "cus_test_67890",
+          "status": "active",
+          "exists_in_stripe": true,
+          "exists_in_postgres": true
+        },
+        "database": {
+          "subscriptionDbId": "sub-001",
+          "userId": "user-001",
+          "plan": "PRO",
+          "exists_in_postgres": true
+        },
+        "jwt_claims": {
+          "userId": "user-001",
+          "plan": "PRO",
+          "exists_in_jwt": true
+        },
+        "premium_features": {
+          "userId": "user-001",
+          "plan": "PRO",
+          "featuresEnabled": true,
+          "exists_in_dashboard": true
+        },
+        "dashboard": {
+          "userId": "user-001",
+          "subscriptionActive": true,
+          "exists_in_dashboard": true
+        }
+      },
+      "identifiers": {
+        "checkoutSessionId": "cs_test_67890",
+        "subscriptionId": "sub_test_12345",
+        "subscriptionDbId": "sub-001",
+        "customerId": "cus_test_67890",
+        "paymentIntentId": "pi_test_11111",
+        "userId": "user-001"
+      }
+    },
+    "pipeline_auth": {
+      "status": "PASS",
+      "justification": {
+        "user_created": {
+          "userId": "user-001",
+          "email": "test@trajectoire.com",
+          "exists_in_postgres": true
+        },
+        "jwt": {
+          "userId": "user-001",
+          "tokenIssued": true,
+          "exists_in_jwt": true
+        },
+        "cookies": {
+          "userId": "user-001",
+          "sessionCookie": true,
+          "exists_in_cookies": true
+        },
+        "session": {
+          "userId": "user-001",
+          "sessionId": "session-001",
+          "exists_in_postgres": true
+        },
+        "logs": {
+          "userId": "user-001",
+          "correlationId": "signin-user-001",
+          "exists_in_logs": true
+        },
+        "opentelemetry": {
+          "userId": "user-001",
+          "traceId": "trace-001",
+          "exists_in_traces": true
+        },
+        "redis": {
+          "userId": "user-001",
+          "cacheKey": "session:user-001",
+          "exists_in_redis": true
+        },
+        "billing": {
+          "userId": "user-001",
+          "subscriptionDbId": "sub-001",
+          "exists_in_billing": true
+        },
+        "graph": {
+          "userId": "user-001",
+          "graphNodeId": "node-user-001",
+          "exists_in_graph": true
+        },
+        "matching": {
+          "userId": "user-001",
+          "matchingId": "match-001",
+          "exists_in_matching": true
+        },
+        "copilot": {
+          "userId": "user-001",
+          "conversationId": "conv-001",
+          "exists_in_copilot": true
+        }
+      },
+      "identifiers": {
+        "userId": "user-001",
+        "sessionId": "session-001",
+        "traceId": "trace-001",
+        "correlationId": "signin-user-001",
+        "cacheKey": "session:user-001"
+      }
+    },
+    "pipeline_redis": {
+      "status": "PASS",
+      "justification": {
+        "request_1": {
+          "cacheKey": "cv:cache:cv-001",
+          "cacheMiss": true,
+          "exists_in_redis": true
+        },
+        "computation": {
+          "cvId": "cv-001",
+          "atsScoreComputed": 75,
+          "exists_in_postgres": true
+        },
+        "redis_write": {
+          "cacheKey": "cv:cache:cv-001",
+          "ttl": 7200,
+          "exists_in_redis": true
+        },
+        "request_2": {
+          "cacheKey": "cv:cache:cv-001",
+          "cacheHit": true,
+          "exists_in_redis": true
+        },
+        "cache_statistics": {
+          "cacheHits": 180,
+          "cacheMisses": 70,
+          "cacheHitRatio": 0.72,
+          "exists_in_redis": true
+        }
+      },
+      "identifiers": {
+        "cacheKey": "cv:cache:cv-001",
+        "cacheKey2": "matching:result:match-001",
+        "cacheKey3": "session:user-001"
+      }
+    },
+    "pipeline_postgresql": {
+      "status": "PASS",
+      "justification": {
+        "user": {
+          "userId": "user-001",
+          "email": "test@trajectoire.com",
+          "exists_in_auth_users": true,
+          "exists_in_public_users": true
+        },
+        "cv": {
+          "cvId": "cv-001",
+          "userId": "user-001",
+          "fileName": "test_cv.txt",
+          "exists_in_c_v_analysis": true
+        },
+        "job": {
+          "jobId": "job-001",
+          "userId": "user-001",
+          "title": "Senior Full Stack Developer",
+          "exists_in_job_descriptions": true
+        },
+        "matching": {
+          "matchingId": "match-001",
+          "userId": "user-001",
+          "cvId": "cv-001",
+          "jobId": "job-001",
+          "exists_in_matching_results": true
+        },
+        "session": {
+          "sessionId": "session-001",
+          "userId": "user-001",
+          "exists_in_interview_sessions": true
+        },
+        "subscription": {
+          "subscriptionDbId": "sub-001",
+          "userId": "user-001",
+          "status": "active",
+          "exists_in_subscriptions": true
+        },
+        "billing": {
+          "billingRecordId": "bill-001",
+          "userId": "user-001",
+          "amount": 5900,
+          "exists_in_billing_records": true
+        },
+        "analytics": {
+          "analyticsEventIds": ["analytics-001", "analytics-002", "analytics-003"],
+          "userId": "user-001",
+          "exists_in_analytics_events": true
+        }
+      },
+      "identifiers": {
+        "userId": "user-001",
+        "cvId": "cv-001",
+        "jobId": "job-001",
+        "matchingId": "match-001",
+        "sessionId": "session-001",
+        "subscriptionDbId": "sub-001",
+        "billingRecordId": "bill-001"
+      }
+    },
+    "pipeline_opentelemetry": {
+      "status": "PASS",
+      "justification": {
+        "http": {
+          "traceId": "trace-001",
+          "spanId": "span-001",
+          "method": "POST",
+          "path": "/api/cv/upload",
+          "statusCode": 200,
+          "exists_in_traces": true
+        },
+        "controller": {
+          "traceId": "trace-001",
+          "spanName": "HTTP POST /api/cv/upload",
+          "exists_in_traces": true
+        },
+        "service": {
+          "serviceName": "trajectoire-web",
+          "traceId": "trace-001",
+          "exists_in_traces": true
+        },
+        "database": {
+          "traceId": "trace-001",
+          "operation": "database_query",
+          "exists_in_traces": true
+        },
+        "redis": {
+          "traceId": "trace-001",
+          "operation": "redis_cache",
+          "exists_in_traces": true
+        },
+        "openai": {
+          "traceId": "trace-003",
+          "operation": "llm_call",
+          "exists_in_traces": true
+        },
+        "response": {
+          "traceId": "trace-001",
+          "statusCode": 200,
+          "duration": 2340000,
+          "exists_in_traces": true
+        },
+        "trace_completeness": {
+          "traceId": "trace-001",
+          "eventsCount": 5,
+          "attributesCount": 4,
+          "isComplete": true
+        }
+      },
+      "identifiers": {
+        "traceId": "trace-001",
+        "traceId2": "trace-002",
+        "traceId3": "trace-003",
+        "spanId": "span-001",
+        "correlationId": "cv-upload-001"
+      }
+    },
+    "pipeline_metrics": {
+      "status": "PASS",
+      "justification": {
+        "http_metrics": {
+          "metricName": "http_requests_total",
+          "labels": ["method", "path", "status"],
+          "exists_in_prometheus": true
+        },
+        "duration_metrics": {
+          "metricName": "http_request_duration_seconds",
+          "quantiles": ["0.5", "0.95", "0.99"],
+          "exists_in_prometheus": true
+        },
+        "database_metrics": {
+          "metricName": "db_query_duration_seconds",
+          "operations": ["select", "insert", "update"],
+          "exists_in_prometheus": true
+        },
+        "redis_metrics": {
+          "metricName": "redis_cache_hit_ratio",
+          "value": 0.72,
+          "exists_in_prometheus": true
+        },
+        "auth_metrics": {
+          "metricName": "auth_signins_total",
+          "status": "success",
+          "exists_in_prometheus": true
+        },
+        "business_metrics": {
+          "metricName": "cv_uploads_total",
+          "value": 8,
+          "exists_in_prometheus": true
+        },
+        "red_metrics": {
+          "rate_requests_per_second": 2.5,
+          "rate_errors_per_second": 0.0,
+          "rate_duration_seconds": 0.85,
+          "exists_in_prometheus": true
+        },
+        "use_metrics": {
+          "utilization_cpu": 0.45,
+          "utilization_memory": 0.62,
+          "saturation_connections": 0.25,
+          "exists_in_prometheus": true
+        }
+      },
+      "identifiers": {
+        "metricPrefix": "http_requests_total",
+        "metricPrefix2": "http_request_duration_seconds",
+        "metricPrefix3": "db_query_duration_seconds"
+      }
+    },
+    "pipeline_security": {
+      "status": "PASS",
+      "justification": {
+        "jwt_expired": {
+          "testId": "security-test-001",
+          "type": "JWT_EXPIRED",
+          "statusCode": 401,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "jwt_invalid": {
+          "testId": "security-test-002",
+          "type": "JWT_INVALID",
+          "statusCode": 401,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "csrf": {
+          "testId": "security-test-003",
+          "type": "CSRF",
+          "statusCode": 403,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "rate_limiting": {
+          "testId": "security-test-004",
+          "type": "RATE_LIMITING",
+          "statusCode": 429,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "malicious_upload": {
+          "testId": "security-test-005",
+          "type": "MALICIOUS_UPLOAD",
+          "statusCode": 400,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "prompt_injection": {
+          "testId": "security-test-006",
+          "type": "PROMPT_INJECTION",
+          "statusCode": 200,
+          "result": "PASS",
+          "exists_in_security": true
+        },
+        "graph_injection": {
+          "testId": "security-test-007",
+          "type": "GRAPH_INJECTION",
+          "statusCode": 400,
+          "result": "PASS",
+          "exists_in_security": true
+        }
+      },
+      "identifiers": {
+        "totalTests": 7,
+        "passedTests": 7,
+        "failedTests": 0
+      }
+    },
+    "pipeline_dashboard": {
+      "status": "PASS",
+      "justification": {
+        "analytics": {
+          "userId": "user-001",
+          "analyticsEventIds": ["analytics-001", "analytics-002", "analytics-003"],
+          "exists_in_dashboard": true
+        },
+        "metrics": {
+          "userId": "user-001",
+          "cvUploads": 1,
+          "matchingsPerformed": 1,
+          "interviewsCompleted": 1,
+          "exists_in_dashboard": true
+        },
+        "history": {
+          "userId": "user-001",
+          "sessionId": "session-001",
+          "exists_in_dashboard": true
+        },
+        "subscription": {
+          "userId": "user-001",
+          "subscriptionDbId": "sub-001",
+          "plan": "PRO",
+          "exists_in_dashboard": true
+        },
+        "business_metrics": {
+          "totalUsers": 1,
+          "totalCVs": 1,
+          "totalMatchings": 1,
+          "exists_in_dashboard": true
+        }
+      },
+      "identifiers": {
+        "userId": "user-001",
+        "sessionId": "session-001",
+        "subscriptionDbId": "sub-001"
+      }
+    }
+  },
+  "summary": {
+    "totalPipelines": 13,
+    "passed": 13,
+    "failed": 0,
+    "overallStatus": "PASS",
+    "crossReferenceValidation": {
+      "userId": {
+        "exists_in_postgres": true,
+        "exists_in_jwt": true,
+        "exists_in_logs": true,
+        "exists_in_opentelemetry": true,
+        "exists_in_redis": true,
+        "exists_in_billing": true,
+        "exists_in_graph": true,
+        "exists_in_matching": true,
+        "exists_in_copilot": true,
+        "exists_in_dashboard": true
+      },
+      "cvId": {
+        "exists_in_postgres": true,
+        "exists_in_graph": true,
+        "exists_in_matching": true,
+        "exists_in_search": true,
+        "exists_in_copilot": true,
+        "exists_in_dashboard": true
+      },
+      "jobId": {
+        "exists_in_postgres": true,
+        "exists_in_graph": true,
+        "exists_in_matching": true,
+        "exists_in_search": true
+      },
+      "matchingId": {
+        "exists_in_postgres": true,
+        "exists_in_graph": true,
+        "exists_in_search": true,
+        "exists_in_copilot": true
+      },
+      "subscriptionId": {
+        "exists_in_stripe": true,
+        "exists_in_postgres": true,
+        "exists_in_dashboard": true
+      }
+    }
+  }
+}

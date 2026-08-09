@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-08-09T13:37:00Z",
+  "phase": "SECURITY-GATE-005_RUNTIME_IDENTITY",
+  "mode": "READ-ONLY",
+  "api_port": 3000,
+  "api_pid": 20284,
+  "api_process_name": "node",
+  "api_command_line": "node  --enable-source-maps C:\\Trajectoire\\apps\\api\\dist\\main",
+  "api_path": "C:\\Program Files\\nodejs\\node.exe",
+  "api_workspace": "C:\\Trajectoire",
+  "api_build_path": "C:\\Trajectoire\\apps\\api\\dist\\main",
+  "health_check": {
+    "url": "http://localhost:3000/health",
+    "status": 200,
+    "status_description": "OK",
+    "response": "{\"status\":\"ok\",\"info\":{\"memory_heap\":{\"status\":\"up\"},\"memory_rss\":{\"status\":\"up\"}},\"error\":{},\"details\":{\"memory_heap\":{\"status\":\"up\"},\"memory_rss\":{\"status\":\"up\"}}}"
+  },
+  "readiness_check": {
+    "url": "http://localhost:3000/health/readiness",
+    "status": 200,
+    "status_description": "OK",
+    "response": "{\"status\":\"ok\",\"info\":{\"memory_heap\":{\"status\":\"up\"}},\"error\":{},\"details\":{\"memory_heap\":{\"status\":\"up\"}}}"
+  },
+  "verification": {
+    "correct_workspace": true,
+    "uses_current_build": true,
+    "health_check_pass": true,
+    "api_running": true
+  },
+  "status": "PASS"
+}

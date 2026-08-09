@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trajectoire-api
+  namespace: trajectoire
+  labels:
+    app: trajectoire-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trajectoire-api
+  template:
+    metadata:
+      labels:
+        app: trajectoire-api
+    spec:
+      containers:
+      - name: api
+        image: trajectoire/api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        - containerPort: 9464
+        env:
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: trajectoire-config
+              key: NODE_ENV
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: trajectoire-config
+              key: PORT
+        - name: DATABASE_URL
+          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)"
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: trajectoire-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: trajectoire-config
+              key: REDIS_PORT
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: trajectoire-secrets
+              key: REDIS_PASSWORD
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: trajectoire-secrets
+              key: OPENAI_API_KEY
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: trajectoire-secrets
+              key: JWT_SECRET
+        - name: JAEGER_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: trajectoire-config
+              key: JAEGER_ENDPOINT
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/health/liveness
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health/readiness
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - trajectoire-api
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trajectoire-api-service
+  namespace: trajectoire
+spec:
+  selector:
+    app: trajectoire-api
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+  - name: metrics
+    port: 9464
+    targetPort: 9464
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: trajectoire-api-hpa
+  namespace: trajectoire
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: trajectoire-api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

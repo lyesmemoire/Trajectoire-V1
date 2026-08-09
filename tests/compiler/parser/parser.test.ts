@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Parser, NodeType, type ModuleNode } from '../../../compiler/parser/parser';
-import { Lexer, TokenType } from '../../../compiler/lexer/lexer';
+import { Parser, NodeType } from '../../../compiler/parser/parser';
+import { Lexer } from '../../../compiler/lexer/lexer';
 
 describe('Parser', () => {
   describe('Basic parsing', () => {

@@ -150,14 +150,62 @@ export class EvaluationEngine {
 
   private calculateCoherence(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze logical flow
-    return 7.5;
+    // Real implementation: analyze logical flow and consistency
+    let coherenceScore = 0;
+    let coherenceCount = 0;
+    
+    for (let i = 1; i < turns.length; i++) {
+      const prevTurn = turns[i - 1];
+      const currentTurn = turns[i];
+      
+      // Check if current turn references previous content
+      const prevWords = new Set(prevTurn.content.toLowerCase().split(/\s+/));
+      const currentWords = currentTurn.content.toLowerCase().split(/\s+/);
+      
+      // Calculate word overlap for coherence
+      let overlap = 0;
+      currentWords.forEach(word => {
+        if (prevWords.has(word) && word.length > 3) {
+          overlap++;
+        }
+      });
+      
+      const overlapRatio = currentWords.length > 0 ? overlap / currentWords.length : 0;
+      coherenceScore += Math.min(1, overlapRatio * 2); // Amplify for visibility
+      coherenceCount++;
+    }
+    
+    return coherenceCount > 0 ? (coherenceScore / coherenceCount) * 10 : 5;
   }
 
   private calculateRelevance(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0) return 0;
-    // Mock implementation - would analyze question-response relevance
-    return 8.0;
+    // Real implementation: analyze question-response relevance
+    let relevanceScore = 0;
+    let relevanceCount = 0;
+    
+    const minTurns = Math.min(recruiterTurns.length, candidateTurns.length);
+    for (let i = 0; i < minTurns; i++) {
+      const question = recruiterTurns[i].content.toLowerCase();
+      const answer = candidateTurns[i].content.toLowerCase();
+      
+      // Extract key terms from question
+      const questionKeywords = question.split(/\s+/).filter(w => w.length > 4);
+      
+      // Check if answer contains question keywords
+      let keywordMatches = 0;
+      questionKeywords.forEach(keyword => {
+        if (answer.includes(keyword)) {
+          keywordMatches++;
+        }
+      });
+      
+      const matchRatio = questionKeywords.length > 0 ? keywordMatches / questionKeywords.length : 0;
+      relevanceScore += matchRatio;
+      relevanceCount++;
+    }
+    
+    return relevanceCount > 0 ? (relevanceScore / relevanceCount) * 10 : 5;
   }
 
   private calculateVariety(turns: ConversationTurn[]): number {
@@ -168,56 +216,250 @@ export class EvaluationEngine {
 
   private calculateNaturalness(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze language patterns
-    return 7.0;
+    // Real implementation: analyze language patterns and conversational flow
+    let naturalnessScore = 0;
+    let naturalnessCount = 0;
+    
+    turns.forEach(turn => {
+      const content = turn.content;
+      
+      // Check for natural language markers
+      const hasFillers = /\b(um|uh|like|you know)\b/i.test(content);
+      const hasContractions = /\b(can't|won't|don't|it's|that's)\b/i.test(content);
+      const hasInformalLanguage = /\b(yeah|nope|sure|okay)\b/i.test(content);
+      
+      // Calculate naturalness based on conversational markers
+      let score = 0.5; // Base score
+      if (hasFillers) score += 0.2; // Some fillers are natural
+      if (hasContractions) score += 0.2; // Contractions indicate natural speech
+      if (hasInformalLanguage) score += 0.1; // Some informal language is natural
+      
+      naturalnessScore += Math.min(1, score);
+      naturalnessCount++;
+    });
+    
+    return naturalnessCount > 0 ? (naturalnessScore / naturalnessCount) * 10 : 5;
   }
 
   private calculateFluency(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze sentence structure
-    return 8.5;
+    // Real implementation: analyze sentence structure and flow
+    let fluencyScore = 0;
+    let fluencyCount = 0;
+    
+    turns.forEach(turn => {
+      const sentences = turn.content.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      
+      if (sentences.length === 0) {
+        fluencyCount++;
+        return;
+      }
+      
+      // Calculate average sentence length
+      const avgSentenceLength = sentences.reduce((sum, s) => sum + s.split(/\s+/).length, 0) / sentences.length;
+      
+      // Ideal sentence length is 10-20 words for natural conversation
+      const lengthScore = avgSentenceLength >= 8 && avgSentenceLength <= 25 ? 1 : Math.max(0, 1 - Math.abs(avgSentenceLength - 15) / 15);
+      
+      fluencyScore += lengthScore;
+      fluencyCount++;
+    });
+    
+    return fluencyCount > 0 ? (fluencyScore / fluencyCount) * 10 : 5;
   }
 
   private calculatePersonality(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze personality consistency
-    return 7.5;
+    // Real implementation: analyze personality consistency through language patterns
+    if (turns.length < 3) return 5; // Need sufficient data
+    
+    // Analyze consistency in communication style
+    const firstHalf = turns.slice(0, Math.floor(turns.length / 2));
+    const secondHalf = turns.slice(Math.floor(turns.length / 2));
+    
+    const firstHalfAvgLength = firstHalf.reduce((sum, t) => sum + t.content.length, 0) / firstHalf.length;
+    const secondHalfAvgLength = secondHalf.reduce((sum, t) => sum + t.content.length, 0) / secondHalf.length;
+    
+    // Calculate consistency (lower difference = higher consistency)
+    const lengthDiff = Math.abs(firstHalfAvgLength - secondHalfAvgLength);
+    const consistencyScore = Math.max(0, 1 - lengthDiff / 100);
+    
+    return consistencyScore * 10;
   }
 
   private calculateRealism(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0) return 0;
-    // Mock implementation - would compare to real interviews
-    return 7.0;
+    // Real implementation: compare to real interview patterns
+    let realismScore = 0;
+    let realismCount = 0;
+    
+    // Check for realistic interview patterns
+    const typicalInterviewPatterns = [
+      /\b(tell me about yourself|describe your experience|walk me through)\b/i,
+      /\b(strengths|weaknesses|challenges)\b/i,
+      /\b(why do you want|what interests you)\b/i,
+      /\b(questions for me|do you have any questions)\b/i,
+    ];
+    
+    recruiterTurns.forEach(turn => {
+      let matchesPattern = false;
+      typicalInterviewPatterns.forEach(pattern => {
+        if (pattern.test(turn.content)) {
+          matchesPattern = true;
+        }
+      });
+      
+      if (matchesPattern) {
+        realismScore += 1;
+      }
+      realismCount++;
+    });
+    
+    return realismCount > 0 ? (realismScore / realismCount) * 10 : 5;
   }
 
   private calculateListeningAbility(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0 || candidateTurns.length === 0) return 0;
-    // Mock implementation - would analyze follow-up questions
-    return 8.0;
+    // Real implementation: analyze follow-up questions and references
+    let listeningScore = 0;
+    let listeningCount = 0;
+    
+    const minTurns = Math.min(recruiterTurns.length, candidateTurns.length);
+    for (let i = 1; i < minTurns; i++) {
+      const prevCandidateAnswer = candidateTurns[i - 1].content.toLowerCase();
+      const currentRecruiterQuestion = recruiterTurns[i].content.toLowerCase();
+      
+      // Check if recruiter references candidate's previous answer
+      const prevAnswerWords = new Set(prevCandidateAnswer.split(/\s+/).filter(w => w.length > 4));
+      const currentQuestionWords = currentRecruiterQuestion.split(/\s+/);
+      
+      let references = 0;
+      currentQuestionWords.forEach(word => {
+        if (prevAnswerWords.has(word)) {
+          references++;
+        }
+      });
+      
+      if (references > 0) {
+        listeningScore += Math.min(1, references / 3); // Cap at reasonable references
+      }
+      listeningCount++;
+    }
+    
+    return listeningCount > 0 ? (listeningScore / listeningCount) * 10 : 5;
   }
 
   private calculateFollowUpQuality(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0 || candidateTurns.length === 0) return 0;
-    // Mock implementation - would analyze follow-up relevance
-    return 7.5;
+    // Real implementation: analyze follow-up question relevance and depth
+    let followUpScore = 0;
+    let followUpCount = 0;
+    
+    const minTurns = Math.min(recruiterTurns.length, candidateTurns.length);
+    for (let i = 1; i < minTurns; i++) {
+      const prevCandidateAnswer = candidateTurns[i - 1].content;
+      const currentRecruiterQuestion = recruiterTurns[i].content;
+      
+      // Check if follow-up question is specific and relevant
+      const hasSpecificReference = /\b(you mentioned|you said|regarding|about)\b/i.test(currentRecruiterQuestion);
+      const asksForDetail = /\b(can you|tell me more|elaborate|explain)\b/i.test(currentRecruiterQuestion);
+      const reasonableLength = currentRecruiterQuestion.length > 20 && currentRecruiterQuestion.length < 200;
+      
+      let score = 0;
+      if (hasSpecificReference) score += 0.4;
+      if (asksForDetail) score += 0.3;
+      if (reasonableLength) score += 0.3;
+      
+      followUpScore += score;
+      followUpCount++;
+    }
+    
+    return followUpCount > 0 ? (followUpScore / followUpCount) * 10 : 5;
   }
 
   private calculateSilenceManagement(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze timing
-    return 8.0;
+    // Real implementation: analyze timing and response patterns
+    let silenceScore = 0;
+    let silenceCount = 0;
+    
+    for (let i = 1; i < turns.length; i++) {
+      const prevTurn = turns[i - 1];
+      const currentTurn = turns[i];
+      
+      if (prevTurn.timestamp && currentTurn.timestamp) {
+        const timeDiff = currentTurn.timestamp.getTime() - prevTurn.timestamp.getTime();
+        
+        // Ideal response time is 2-8 seconds for natural conversation
+        if (timeDiff >= 2000 && timeDiff <= 8000) {
+          silenceScore += 1;
+        } else if (timeDiff > 0 && timeDiff < 15000) {
+          silenceScore += 0.5; // Acceptable but not ideal
+        }
+        
+        silenceCount++;
+      }
+    }
+    
+    return silenceCount > 0 ? (silenceScore / silenceCount) * 10 : 5;
   }
 
   private calculateStressManagement(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0 || candidateTurns.length === 0) return 0;
-    // Mock implementation - would analyze stress cues
-    return 7.5;
+    // Real implementation: analyze stress handling through difficult questions
+    let stressScore = 0;
+    let stressCount = 0;
+    
+    // Identify potentially stressful questions
+    const stressIndicators = [
+      /\b(challenge|difficult|failure|mistake|weakness)\b/i,
+      /\b(pressure|deadline|conflict|disagree)\b/i,
+      /\b(why did you|what went wrong)\b/i,
+    ];
+    
+    const minTurns = Math.min(recruiterTurns.length, candidateTurns.length);
+    for (let i = 0; i < minTurns; i++) {
+      const question = recruiterTurns[i].content;
+      const answer = candidateTurns[i].content;
+      
+      const isStressful = stressIndicators.some(pattern => pattern.test(question));
+      
+      if (isStressful) {
+        // Check if candidate handles it well (balanced response, not defensive)
+        const answerLength = answer.length;
+        const hasPositiveSpin = /\b(learned|improved|grew|developed|experience)\b/i.test(answer);
+        const isDefensive = /\b(not my fault|they didn't|unfair)\b/i.test(answer);
+        
+        let score = 0.5; // Base score for responding
+        if (answerLength > 100 && answerLength < 500) score += 0.2; // Reasonable length
+        if (hasPositiveSpin) score += 0.2; // Positive framing
+        if (!isDefensive) score += 0.1; // Not defensive
+        
+        stressScore += score;
+        stressCount++;
+      }
+    }
+    
+    return stressCount > 0 ? (stressScore / stressCount) * 10 : 5;
   }
 
   private calculateAdaptation(recruiterTurns: ConversationTurn[], candidateTurns: ConversationTurn[]): number {
     if (recruiterTurns.length === 0 || candidateTurns.length === 0) return 0;
-    // Mock implementation - would analyze adaptation to candidate
-    return 7.0;
+    // Real implementation: analyze adaptability to question types
+    if (candidateTurns.length < 3) return 5;
+    
+    // Analyze how candidate adapts to different question types
+    const firstThird = candidateTurns.slice(0, Math.floor(candidateTurns.length / 3));
+    const lastThird = candidateTurns.slice(Math.floor(candidateTurns.length * 2 / 3));
+    
+    const firstAvgLength = firstThird.reduce((sum, t) => sum + t.content.length, 0) / firstThird.length;
+    const lastAvgLength = lastThird.reduce((sum, t) => sum + t.content.length, 0) / lastThird.length;
+    
+    // Some adaptation is good (not identical responses)
+    const adaptationDiff = Math.abs(firstAvgLength - lastAvgLength);
+    const adaptationScore = Math.min(1, adaptationDiff / 50); // Normalize
+    
+    return adaptationScore * 10;
   }
 
   private calculateRepetitionAvoidance(turns: ConversationTurn[]): number {
@@ -228,20 +470,75 @@ export class EvaluationEngine {
 
   private calculateCVRespect(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze CV-based questions
-    return 8.0;
+    // Real implementation: analyze CV reference accuracy
+    let cvScore = 0;
+    let cvCount = 0;
+    
+    // Check for CV-related references
+    const cvIndicators = [
+      /\b(resume|cv|curriculum|experience|background)\b/i,
+      /\b(mentioned|listed|stated|according to)\b/i,
+    ];
+    
+    turns.forEach(turn => {
+      const hasCVReference = cvIndicators.some(pattern => pattern.test(turn.content));
+      if (hasCVReference) {
+        cvScore += 1;
+      }
+      cvCount++;
+    });
+    
+    return cvCount > 0 ? Math.min(10, (cvScore / cvCount) * 10 + 5) : 5;
   }
 
   private calculateContextRespect(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze context awareness
-    return 7.5;
+    // Real implementation: analyze context awareness
+    let contextScore = 0;
+    let contextCount = 0;
+    
+    for (let i = 1; i < turns.length; i++) {
+      const prevTurn = turns[i - 1].content.toLowerCase();
+      const currentTurn = turns[i].content.toLowerCase();
+      
+      // Check if current turn acknowledges previous context
+      const contextMarkers = ["yes", "no", "right", "exactly", "correct", "understand", "agree"];
+      const hasContextAck = contextMarkers.some(marker => currentTurn.includes(marker));
+      
+      if (hasContextAck) {
+        contextScore += 1;
+      }
+      contextCount++;
+    }
+    
+    return contextCount > 0 ? (contextScore / contextCount) * 10 : 5;
   }
 
   private calculateDifficultyRespect(turns: ConversationTurn[]): number {
     if (turns.length === 0) return 0;
-    // Mock implementation - would analyze question difficulty
-    return 8.0;
+    // Real implementation: analyze question difficulty appropriateness
+    let difficultyScore = 0;
+    let difficultyCount = 0;
+    
+    turns.forEach(turn => {
+      const content = turn.content;
+      const length = content.length;
+      
+      // Assess difficulty based on complexity
+      const hasComplexStructure = /[,.;]\s/.test(content);
+      const hasTechnicalTerms = /\b(experience|skills|knowledge|expertise|technical)\b/i.test(content);
+      const reasonableComplexity = length > 50 && length < 300;
+      
+      let score = 0.3; // Base score
+      if (hasComplexStructure) score += 0.3;
+      if (hasTechnicalTerms) score += 0.2;
+      if (reasonableComplexity) score += 0.2;
+      
+      difficultyScore += score;
+      difficultyCount++;
+    });
+    
+    return difficultyCount > 0 ? (difficultyScore / difficultyCount) * 10 : 5;
   }
 
   // ============================================================================

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 // Import all contracts using relative paths
 import { BaseEvent } from "../../apps/web/src/lib/ai/contracts/Event";
-import { Fact, FactSchema, FactType, FactTypeSchema } from "../../apps/web/src/domain/cognitive/Fact";
+import { Fact, FactSchema, FactType } from "../../apps/web/src/domain/cognitive/Fact";
 import { Snapshot, SnapshotSchema } from "../../apps/web/src/domain/cognitive/Snapshot";
 import { InvestigationContext, InvestigationContextSchema } from "../../apps/web/src/domain/cognitive/InvestigationContext";
 import { RuntimeContext, RuntimeContextSchema } from "../../apps/web/src/lib/ai/contracts/RuntimeContext";

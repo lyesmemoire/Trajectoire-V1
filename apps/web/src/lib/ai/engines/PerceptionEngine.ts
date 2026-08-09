@@ -1,10 +1,8 @@
-import { BaseEngine, BaseEngineConfig } from "./BaseEngine";
-import { EventFactory } from "./EventFactory";
+import { BaseEngine } from "./BaseEngine";
 import { FactBuilder } from "./FactBuilder";
 import { ObservationResolver } from "./ObservationResolver";
 import { EngineManifest } from "./EngineManifest";
 import { BaseEvent } from "../contracts/Event";
-import { EngineInput } from "../contracts/Engine";
 
 // ===================================================================
 // PERCEPTION ENGINE — Extract Observations from NormalizedText + EntityFacts

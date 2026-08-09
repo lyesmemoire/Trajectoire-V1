@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import Footer from "@/components/layout/Footer"
 import { Navbar } from "@/components/layout/Navbar"
+import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://trajectoire.app"),
@@ -22,9 +23,24 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const scriptNonce = await getScriptNonce()
+  const styleNonce = await getStyleNonce()
+
   return (
     <html lang="fr" className="scroll-smooth">
+      <head>
+        {/* CSP Nonce - Pass nonces to client via data attributes */}
+        <script
+          id="csp-nonces"
+          data-script-nonce={scriptNonce}
+          data-style-nonce={styleNonce}
+          nonce={scriptNonce}
+          suppressHydrationWarning
+        >
+          {`window.__CSP_NONCES__ = { script: "${scriptNonce}", style: "${styleNonce}" };`}
+        </script>
+      </head>
       <body className="min-h-screen bg-ivoire-50 text-ink-900 antialiased font-sans">
         <a
           href="#main"

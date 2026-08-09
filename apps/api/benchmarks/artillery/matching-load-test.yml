@@ -1,0 +1,65 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 15
+      name: "Ramp up"
+    - duration: 120
+      arrivalRate: 30
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 15
+      name: "Ramp down"
+    - duration: 30
+      arrivalRate: 5
+      name: "Cool down"
+
+scenarios:
+  - name: "Matching Load Test"
+    flow:
+      # Basic matching
+      - post:
+          url: '/matching'
+          json:
+            candidateId: 'candidate-1'
+            jobId: 'job-1'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Batch matching
+      - post:
+          url: '/matching/batch'
+          json:
+            candidateId: 'candidate-1'
+            jobIds:
+              - 'job-1'
+              - 'job-2'
+              - 'job-3'
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      # Filtered matching
+      - post:
+          url: '/matching/filtered'
+          json:
+            candidateId: 'candidate-1'
+            jobId: 'job-1'
+            filters:
+              minScore: 0.5
+              skills:
+                - JavaScript
+                - React
+              experience: senior
+          headers:
+            Content-Type: 'application/json'
+          expect:
+            - statusCode: 200
+      
+      - think: 1

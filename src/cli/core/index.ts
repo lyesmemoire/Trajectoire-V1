@@ -4,7 +4,7 @@
  */
 
 import { Command } from 'commander';
-import { createLogger, getLogger } from '../logging';
+import { createLogger } from '../logging';
 import { handleError } from '../errors';
 import { configManager } from '../config';
 import { generateBashCompletion, generateZshCompletion, generateFishCompletion, generatePowerShellCompletion } from './completion';

@@ -96,7 +96,7 @@ mutations.forEach((mutation) => {
   fs.writeFileSync(filePath + '.backup', originalContent);
   
   let status = 'UNKNOWN';
-  let duration = 0;
+  const duration = 0;
   
   try {
     // Appliquer mutation

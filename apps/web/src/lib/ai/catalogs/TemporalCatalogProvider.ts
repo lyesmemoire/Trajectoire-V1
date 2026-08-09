@@ -1,4 +1,4 @@
-import { CatalogProvider, CatalogConfig, CatalogItem } from "./CatalogProvider";
+import { CatalogConfig } from "./CatalogProvider";
 import { MemoryCatalogProvider } from "./CatalogProvider";
 import temporalPatternsJson from "./data/temporal_patterns.json";
 

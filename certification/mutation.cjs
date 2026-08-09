@@ -46,8 +46,8 @@ function runMutations(runDir, logDir) {
 
     const mutStart = new Date().toISOString();
     let status = 'UNKNOWN';
-    let tscExitCode = null;
-    let vitestExitCode = null;
+    const tscExitCode = null;
+    const vitestExitCode = null;
     let vitestStdout = '';
     let vitestStderr = '';
     let failedTests = [];

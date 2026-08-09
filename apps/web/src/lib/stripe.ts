@@ -1,12 +1,9 @@
-import Stripe from "stripe";
 import { envServer } from "@/lib/env.server";
+import Stripe from 'stripe';
 
-export const stripe = new Stripe(
-  envServer.STRIPE_SECRET_KEY || "dummy_key_to_avoid_build_crash",
-  {
-    typescript: true,
-  },
-);
+export const stripe = new Stripe(envServer.STRIPE_SECRET_KEY || 'sk_test_dummy', {
+  apiVersion: '2025-02-24.acacia',
+});
 
 export const PRICE_IDS = {
   pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID!,

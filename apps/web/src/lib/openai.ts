@@ -1,30 +1,7 @@
 // lib/openai.ts
 // Lazy-loaded OpenAI client — jamais instancié au build time.
-import OpenAI from "openai";
 import { envServer } from "@/lib/env.server";
-
-let openaiClient: OpenAI | null = null;
-
-/**
- * Retourne le client OpenAI, instancié à la première utilisation.
- * Ne crash pas le build Next.js (pas d'exécution au module-level).
- */
-export function getOpenAIClient(): OpenAI {
-  if (!openaiClient) {
-    const apiKey = envServer.OPENAI_API_KEY;
-    if (!apiKey) {
-      throw new Error(
-        "OPENAI_API_KEY is not defined. Please configure it in your environment variables.",
-      );
-    }
-    openaiClient = new OpenAI({
-      apiKey,
-      timeout: 30_000,
-      maxRetries: 2,
-    });
-  }
-  return openaiClient;
-}
+import OpenAI from 'openai';
 
 export interface AIResponse<T = string> {
   data: T;
@@ -45,8 +22,7 @@ function calculateCost(prompt: number, completion: number): number {
 }
 
 export async function generateText(prompt: string, maxTokens = 1000, ): Promise<AIResponse<string>> {
-  const openai = getOpenAIClient();
-
+  const openai = new OpenAI({ apiKey: envServer.OPENAI_API_KEY });
   const res = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [{ role: "user", content: prompt }],
@@ -72,8 +48,7 @@ export async function generateJSON<T>(
   prompt: string,
   maxTokens = 1500,
 ): Promise<AIResponse<T>> {
-  const openai = getOpenAIClient();
-
+  const openai = new OpenAI({ apiKey: envServer.OPENAI_API_KEY });
   const res = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [

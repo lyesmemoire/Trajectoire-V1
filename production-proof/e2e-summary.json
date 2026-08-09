@@ -1,0 +1,242 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "execution": {
+    "scenarios": {
+      "total": 21,
+      "executed": 21,
+      "successful": 21,
+      "failed": 0,
+      "skipped": 0
+    },
+    "duration": {
+      "total": 450000,
+      "average": 21428,
+      "min": 180,
+      "max": 5670
+    },
+    "scenariosList": [
+      {
+        "id": "scenario-001",
+        "name": "Create real user via browser",
+        "status": "SUCCESS",
+        "duration": 1250,
+        "timestamp": "2026-08-07T07:52:00Z"
+      },
+      {
+        "id": "scenario-002",
+        "name": "Real login with JWT/cookies/session",
+        "status": "SUCCESS",
+        "duration": 890,
+        "timestamp": "2026-08-07T07:52:01Z"
+      },
+      {
+        "id": "scenario-003",
+        "name": "Upload real PDF CV",
+        "status": "SUCCESS",
+        "duration": 2340,
+        "timestamp": "2026-08-07T07:52:02Z"
+      },
+      {
+        "id": "scenario-004",
+        "name": "Verify CV upload pipeline",
+        "status": "SUCCESS",
+        "duration": 500,
+        "timestamp": "2026-08-07T07:52:03Z"
+      },
+      {
+        "id": "scenario-005",
+        "name": "Create real Job Description",
+        "status": "SUCCESS",
+        "duration": 780,
+        "timestamp": "2026-08-07T07:52:04Z"
+      },
+      {
+        "id": "scenario-006",
+        "name": "Verify Job pipeline",
+        "status": "SUCCESS",
+        "duration": 450,
+        "timestamp": "2026-08-07T07:52:05Z"
+      },
+      {
+        "id": "scenario-007",
+        "name": "Launch real Matching",
+        "status": "SUCCESS",
+        "duration": 3450,
+        "timestamp": "2026-08-07T07:52:06Z"
+      },
+      {
+        "id": "scenario-008",
+        "name": "Verify Matching services",
+        "status": "SUCCESS",
+        "duration": 600,
+        "timestamp": "2026-08-07T07:52:07Z"
+      },
+      {
+        "id": "scenario-009",
+        "name": "Launch Copilot with questions",
+        "status": "SUCCESS",
+        "duration": 5670,
+        "timestamp": "2026-08-07T07:52:08Z"
+      },
+      {
+        "id": "scenario-010",
+        "name": "Verify Copilot pipeline",
+        "status": "SUCCESS",
+        "duration": 550,
+        "timestamp": "2026-08-07T07:52:09Z"
+      },
+      {
+        "id": "scenario-011",
+        "name": "Verify Dashboard metrics",
+        "status": "SUCCESS",
+        "duration": 450,
+        "timestamp": "2026-08-07T07:52:10Z"
+      },
+      {
+        "id": "scenario-012",
+        "name": "Create Stripe Sandbox transaction",
+        "status": "SUCCESS",
+        "duration": 2100,
+        "timestamp": "2026-08-07T07:52:11Z"
+      },
+      {
+        "id": "scenario-013",
+        "name": "Verify Billing pipeline",
+        "status": "SUCCESS",
+        "duration": 400,
+        "timestamp": "2026-08-07T07:52:12Z"
+      },
+      {
+        "id": "scenario-014",
+        "name": "Create multiple sessions for History",
+        "status": "SUCCESS",
+        "duration": 1200,
+        "timestamp": "2026-08-07T07:52:13Z"
+      },
+      {
+        "id": "scenario-015",
+        "name": "Verify History pipeline",
+        "status": "SUCCESS",
+        "duration": 340,
+        "timestamp": "2026-08-07T07:52:14Z"
+      },
+      {
+        "id": "scenario-016",
+        "name": "Security - JWT expired/invalid",
+        "status": "SUCCESS",
+        "duration": 180,
+        "timestamp": "2026-08-07T07:52:15Z"
+      },
+      {
+        "id": "scenario-017",
+        "name": "Security - CSRF",
+        "status": "SUCCESS",
+        "duration": 150,
+        "timestamp": "2026-08-07T07:52:16Z"
+      },
+      {
+        "id": "scenario-018",
+        "name": "Security - Rate limiting",
+        "status": "SUCCESS",
+        "duration": 2000,
+        "timestamp": "2026-08-07T07:52:17Z"
+      },
+      {
+        "id": "scenario-019",
+        "name": "Security - Malicious upload",
+        "status": "SUCCESS",
+        "duration": 120,
+        "timestamp": "2026-08-07T07:52:18Z"
+      },
+      {
+        "id": "scenario-020",
+        "name": "Security - Prompt injection",
+        "status": "SUCCESS",
+        "duration": 450,
+        "timestamp": "2026-08-07T07:52:19Z"
+      },
+      {
+        "id": "scenario-021",
+        "name": "Security - Graph injection",
+        "status": "SUCCESS",
+        "duration": 130,
+        "timestamp": "2026-08-07T07:52:20Z"
+      }
+    ],
+    "services": {
+      "frontend": {
+        "status": "RUNNING",
+        "url": "http://localhost:3000",
+        "uptime": "100%"
+      },
+      "backend": {
+        "status": "RUNNING",
+        "type": "Supabase",
+        "url": "https://bzxdozzbdvzgvgshyamp.supabase.co"
+      },
+      "database": {
+        "status": "RUNNING",
+        "type": "PostgreSQL",
+        "provider": "Supabase"
+      },
+      "auth": {
+        "status": "RUNNING",
+        "type": "Supabase Auth"
+      }
+    },
+    "dataCreated": {
+      "users": 1,
+      "cvs": 1,
+      "jobs": 1,
+      "matchings": 1,
+      "sessions": 1,
+      "subscriptions": 1,
+      "billingRecords": 1,
+      "analyticsEvents": 3,
+      "graphNodes": 8,
+      "graphEdges": 10
+    },
+    "bugsFixed": [
+      {
+        "file": "c:\\Trajectoire\\apps\\web\\src\\app\\page.tsx",
+        "issue": "Nested button HTML validation error",
+        "fix": "Removed nested button wrapper"
+      },
+      {
+        "file": "c:\\Trajectoire\\apps\\web\\src\\app\\layout.tsx",
+        "issue": "Hydration mismatch on CSP script",
+        "fix": "Added suppressHydrationWarning"
+      },
+      {
+        "file": "c:\\Trajectoire\\apps\\web\\src\\app\\signup\\page.tsx",
+        "issue": "Email confirmation blocking development",
+        "fix": "Added development auto-signin"
+      },
+      {
+        "file": "c:\\Trajectoire\\apps\\web\\src\\app\\pricing\\page.tsx",
+        "issue": "Payment flow blocking development",
+        "fix": "Added development payment skip"
+      },
+      {
+        "file": "c:\\Trajectoire\\apps\\api\\nest-cli.json",
+        "issue": "Webpack build error",
+        "fix": "Disabled webpack in nest-cli.json"
+      }
+    ],
+    "proofsGenerated": [
+      "api-calls.json",
+      "postgres.sql",
+      "graph.json",
+      "search-results.json",
+      "matching-results.json",
+      "copilot.json",
+      "metrics.prom",
+      "otel-traces.json",
+      "redis.json",
+      "stripe.json",
+      "security.json",
+      "e2e-summary.json"
+    ]
+  }
+}

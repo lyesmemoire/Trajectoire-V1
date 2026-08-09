@@ -9,7 +9,7 @@ import * as crypto from "crypto";
 
 export class ReportBuilder {
   
-  public build(input: ReportInput): EvaluationReport {
+  public async build(input: ReportInput): Promise<EvaluationReport> {
     // 1. Validate inputs (pure guards, skipped here assuming valid)
     
     // 2. Build explanation embedding
@@ -29,8 +29,8 @@ export class ReportBuilder {
     // 5. Build audit pack
     const auditPack = buildAuditPack(input);
 
-    // 6. Render PDF
-    const pdf = generatePDF(summary);
+    // 6. Render PDF (now async)
+    const pdf = await generatePDF(summary);
 
     // 7. Compute deterministic hash of the final object representation
     const deterministicHash = crypto.createHash("sha256")

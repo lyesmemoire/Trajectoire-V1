@@ -106,7 +106,7 @@ function generateReleaseEvidence(runDir, releaseVersion = '1.0.0') {
 function generateMarkdownReport(runDir, evidence, baseDir) {
   const mdPath = path.join(runDir, `qualification-final-report-v${evidence.releaseVersion}.md`);
   
-  let labReportText = 'N/A';
+  const labReportText = 'N/A';
   let totalControls = 0;
   let passedControls = 0;
   let labResult = 'NOT_RUN';

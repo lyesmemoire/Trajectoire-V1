@@ -21,6 +21,7 @@ export default defineConfig({
     testTimeout: 60000,
     include: ["**/*.{test,spec,bench}.?(c|m)[jt]s?(x)", "tests/runtime/**/*.ts"],
     exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+    setupFiles: ["./vitest.setup.ts"],
     coverage: {
       provider: 'v8',
       include: ['src/cli/**/*.ts', 'compiler/**/*.ts', 'CVM/src/scheduler/**/*.ts'],
@@ -31,6 +32,8 @@ export default defineConfig({
     reporters: ['verbose', 'json'],
     outputFile: './reports/cli/tests/vitest-results.json',
     env: {
+      VITEST: "true",
+      NODE_ENV: "test",
       SUPABASE_URL: "http://127.0.0.1:54321",
       SUPABASE_SERVICE_ROLE_KEY: "test-key-123",
       OPENAI_API_KEY: "sk-test-12345678901234567890", // requires >20 chars

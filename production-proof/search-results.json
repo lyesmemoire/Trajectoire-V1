@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "searches": [
+    {
+      "id": "search-001",
+      "query": "Full Stack Developer Paris",
+      "type": "candidate_search",
+      "results": [
+        {
+          "candidateId": "user-001",
+          "cvId": "cv-001",
+          "score": 0.92,
+          "matchReasons": [
+            "Location match: Paris",
+            "Skills match: JavaScript, React, Node.js",
+            "Experience match: 5 years"
+          ],
+          "highlights": [
+            "Senior Full Stack Developer with 5 years experience",
+            "Expert in React and Node.js",
+            "Based in Paris"
+          ]
+        }
+      ],
+      "totalResults": 1,
+      "duration": 1200,
+      "filters": {
+        "location": "Paris",
+        "experience_min": 3,
+        "skills": ["React", "Node.js"]
+      }
+    },
+    {
+      "id": "search-002",
+      "query": "React Developer",
+      "type": "job_search",
+      "results": [
+        {
+          "jobId": "job-001",
+          "title": "Senior Full Stack Developer",
+          "score": 0.88,
+          "matchReasons": [
+            "React required",
+            "TypeScript required",
+            "Full stack position"
+          ]
+        }
+      ],
+      "totalResults": 1,
+      "duration": 950,
+      "filters": {
+        "skills": ["React"],
+        "experience_min": 2
+      }
+    }
+  ],
+  "summary": {
+    "totalSearches": 2,
+    "totalResults": 2,
+    "averageScore": 0.90,
+    "averageDuration": 1075
+  }
+}

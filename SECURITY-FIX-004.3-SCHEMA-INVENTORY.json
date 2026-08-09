@@ -1,0 +1,4602 @@
+{
+  "tables": [
+    {
+      "table_name": "AIUsageLog"
+    },
+    {
+      "table_name": "Account"
+    },
+    {
+      "table_name": "AdminAuditLog"
+    },
+    {
+      "table_name": "BehaviorEvent"
+    },
+    {
+      "table_name": "BehavioralPattern"
+    },
+    {
+      "table_name": "CVAnalysis"
+    },
+    {
+      "table_name": "CareerProfile"
+    },
+    {
+      "table_name": "InterviewEvent"
+    },
+    {
+      "table_name": "InterviewSession"
+    },
+    {
+      "table_name": "PreviewAnalysis"
+    },
+    {
+      "table_name": "ProcessedWebhook"
+    },
+    {
+      "table_name": "PromptVersion"
+    },
+    {
+      "table_name": "PublicChallenge"
+    },
+    {
+      "table_name": "PublicChallengeEntry"
+    },
+    {
+      "table_name": "RecoveryEmailLog"
+    },
+    {
+      "table_name": "Session"
+    },
+    {
+      "table_name": "SimulationSession"
+    },
+    {
+      "table_name": "Subscription"
+    },
+    {
+      "table_name": "User"
+    },
+    {
+      "table_name": "UserAnalytics"
+    },
+    {
+      "table_name": "UserBehaviorProfile"
+    },
+    {
+      "table_name": "UserPredictionSnapshot"
+    },
+    {
+      "table_name": "WaitlistEntry"
+    },
+    {
+      "table_name": "credit_transactions"
+    },
+    {
+      "table_name": "credit_usage"
+    },
+    {
+      "table_name": "cv_rewrites"
+    },
+    {
+      "table_name": "data_lineage"
+    },
+    {
+      "table_name": "graph_edges"
+    },
+    {
+      "table_name": "graph_nodes"
+    },
+    {
+      "table_name": "graph_snapshots"
+    },
+    {
+      "table_name": "graph_versions"
+    },
+    {
+      "table_name": "graphs"
+    },
+    {
+      "table_name": "idempotency"
+    },
+    {
+      "table_name": "premium_interview_sessions"
+    },
+    {
+      "table_name": "stripe_events"
+    }
+  ],
+  "columns": [
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "provider",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "model",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "feature",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "tokensInput",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "tokensOutput",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "latencyMs",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "costUsd",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "cacheHit",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "confidenceScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "failureType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "AIUsageLog",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 14
+    },
+    {
+      "table_name": "Account",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "Account",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "Account",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "Account",
+      "column_name": "provider",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "Account",
+      "column_name": "providerAccountId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "Account",
+      "column_name": "refresh_token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "Account",
+      "column_name": "access_token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "Account",
+      "column_name": "expires_at",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "Account",
+      "column_name": "token_type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "Account",
+      "column_name": "scope",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "Account",
+      "column_name": "id_token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "Account",
+      "column_name": "session_state",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "adminId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "action",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "targetId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "ipAddress",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "userAgent",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "subtype",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "timestamp",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "payload",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "latencyMs",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "intensityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "entropyScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "previousEventId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "column_name": "nextEventId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "pattern",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "frequency",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "1",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "severity",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "firstSeenAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "column_name": "lastSeenAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "fileName",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "originalText",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "optimizedText",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "cvData",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "atsScoreBefore",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "atsScoreAfter",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "improvements",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "keywords",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "CVAnalysis",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "employabilityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "clarityTrend",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "confidenceTrend",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "ownershipTrend",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "stressResistance",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "leadershipScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "communicationScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "careerDNA",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "unlockedPersonas",
+      "data_type": "ARRAY",
+      "udt_name": "_text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "CareerProfile",
+      "column_name": "updatedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "InterviewEvent",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "InterviewEvent",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "InterviewEvent",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "InterviewEvent",
+      "column_name": "impactScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "InterviewEvent",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "persona",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "currentState",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "clarityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "confidenceScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "ownershipScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "specificityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "pressureLevel",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "authenticityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "1.0",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "jobTitle",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "company",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "score",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'active'::text",
+      "ordinal_position": 14
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "questions",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 15
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "answers",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 16
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "analysis",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 17
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "startedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 18
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "completedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 19
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 20
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "career_trajectory_score",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 21
+    },
+    {
+      "table_name": "InterviewSession",
+      "column_name": "challengeEntryId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 22
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "token",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "expiresAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "ipHash",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "fingerprint",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "consumed",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "analysis_result",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "ats_score",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "claimed_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "claimed_by_user_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "consumed_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "cv_extract",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "job_extract",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 14
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "raw_payload",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 15
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "recommendations",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 16
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'pending'::text",
+      "ordinal_position": 17
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "strengths",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 18
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "column_name": "weaknesses",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 19
+    },
+    {
+      "table_name": "ProcessedWebhook",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "ProcessedWebhook",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "version",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "content",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "active",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "PromptVersion",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "slug",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "startDate",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "endDate",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "isActive",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "config",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "rewardCredits",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "PublicChallenge",
+      "column_name": "rewardBadgeId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "challengeId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "bestScore",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "maxPressure",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "interruptions",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "completedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "riskLevel",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "cause",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "sentAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "Session",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "Session",
+      "column_name": "sessionToken",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "Session",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "Session",
+      "column_name": "expires",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "overall",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "percentile",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "scores",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "SimulationSession",
+      "column_name": "level",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "stripeCustomerId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "stripeSubId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "currentPeriodEnd",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "plan",
+      "data_type": "USER-DEFINED",
+      "udt_name": "Plan",
+      "is_nullable": "NO",
+      "column_default": "'FREE'::\"Plan\"",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "Subscription",
+      "column_name": "updatedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "User",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "User",
+      "column_name": "email",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "User",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "User",
+      "column_name": "image",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "User",
+      "column_name": "emailVerified",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "User",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "User",
+      "column_name": "updatedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "User",
+      "column_name": "role",
+      "data_type": "USER-DEFINED",
+      "udt_name": "UserRole",
+      "is_nullable": "NO",
+      "column_default": "'USER'::\"UserRole\"",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "User",
+      "column_name": "plan",
+      "data_type": "USER-DEFINED",
+      "udt_name": "Plan",
+      "is_nullable": "NO",
+      "column_default": "'FREE'::\"Plan\"",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "User",
+      "column_name": "stripeCustomerId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "User",
+      "column_name": "referralCode",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "User",
+      "column_name": "referredBy",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "User",
+      "column_name": "referralCount",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "User",
+      "column_name": "monthlyAnalysisCount",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 14
+    },
+    {
+      "table_name": "User",
+      "column_name": "monthlyResetDate",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "(now() + '1 mon'::interval)",
+      "ordinal_position": 15
+    },
+    {
+      "table_name": "User",
+      "column_name": "credits",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "100",
+      "ordinal_position": 16
+    },
+    {
+      "table_name": "User",
+      "column_name": "onboardingCompleted",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 17
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "activationScore",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "churnRisk",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "viralityScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "engagementScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "lastActiveAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "UserAnalytics",
+      "column_name": "updatedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "pressureType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "weaknessPattern",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "targetArchetype",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "returnProbability",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "returnSegment",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "lastPredictionDate",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "onboardingCompleted",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "sessionId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "returnProbability",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "returnSegment",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "primaryDriver",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "stressScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "recoveryScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "engagementScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "email",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "source",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "converted",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "pressureType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "weakness",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "intentReason",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "isWillingToRetry",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'PENDING'::text",
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "idempotency_key",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "user_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "amount",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "action",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "state",
+      "data_type": "USER-DEFINED",
+      "udt_name": "tx_state",
+      "is_nullable": "NO",
+      "column_default": "'reserved'::tx_state",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "tokens_used",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "credit_transactions",
+      "column_name": "updated_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "action",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "credits_spent",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "tokens_used",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "estimated_cost_eur",
+      "data_type": "numeric",
+      "udt_name": "numeric",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "credit_usage",
+      "column_name": "user_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "user_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "idempotency_key",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "action",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "original_content",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "rewritten_content",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "cv_rewrites",
+      "column_name": "expires_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "uuid",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_origin",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_provenance",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_pipeline",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_stage",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "source_timestamp",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "transformation_type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "transformation_parameters",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "transformation_description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "hash",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "graph_node_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "relation_type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "relation_target_uuid",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 14
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "relation_name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 15
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "parent_uuid",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 16
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "storage_type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 17
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "storage_location",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 18
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "confidence",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0.5",
+      "ordinal_position": 19
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "timestamp",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 20
+    },
+    {
+      "table_name": "data_lineage",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 21
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "graph_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "edge_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "source_node_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "target_node_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "weight",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0.5",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "confidence",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0.5",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "reason",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "deleted_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "graph_edges",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "graph_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "node_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "type",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "label",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "normalized_label",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "confidence",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": "0.5",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "source",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "embedding",
+      "data_type": "USER-DEFINED",
+      "udt_name": "vector",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "deleted_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "graph_nodes",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "graph_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "node_data",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "edge_data",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "graph_snapshots",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "graph_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "changeLog",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "node_count",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "edge_count",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "created_by",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "graph_versions",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "user_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "version",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "1",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "is_active",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "source",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'MANUAL'::text",
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "deleted_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "graphs",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "idempotency_key",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "user_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "operation",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "request_params",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "result_ref",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "completed_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "idempotency",
+      "column_name": "expires_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "userId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "analysisId",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "interviewType",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'standard'::text",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "status",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'active'::text",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "score",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 6
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "questions",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "answers",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "feedback",
+      "data_type": "jsonb",
+      "udt_name": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "startedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 10
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "completedAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 12
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "column_name": "careerTrajectoryScore",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "event_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "credits_added",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "processed_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 4
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "created_at",
+      "data_type": "timestamp with time zone",
+      "udt_name": "timestamptz",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP",
+      "ordinal_position": 5
+    },
+    {
+      "table_name": "stripe_events",
+      "column_name": "user_id",
+      "data_type": "uuid",
+      "udt_name": "uuid",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    }
+  ],
+  "primary_keys": [
+    {
+      "table_name": "AIUsageLog",
+      "constraint_name": "AIUsageLog_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "Account",
+      "constraint_name": "Account_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "constraint_name": "AdminAuditLog_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "constraint_name": "BehaviorEvent_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "constraint_name": "BehavioralPattern_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "CVAnalysis",
+      "constraint_name": "CVAnalysis_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "CareerProfile",
+      "constraint_name": "CareerProfile_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "InterviewEvent",
+      "constraint_name": "InterviewEvent_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "InterviewSession",
+      "constraint_name": "InterviewSession_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "PreviewAnalysis",
+      "constraint_name": "PreviewAnalysis_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "ProcessedWebhook",
+      "constraint_name": "ProcessedWebhook_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "PromptVersion",
+      "constraint_name": "PromptVersion_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "PublicChallenge",
+      "constraint_name": "PublicChallenge_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "constraint_name": "PublicChallengeEntry_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "constraint_name": "RecoveryEmailLog_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "Session",
+      "constraint_name": "Session_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "SimulationSession",
+      "constraint_name": "SimulationSession_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "Subscription",
+      "constraint_name": "Subscription_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "User",
+      "constraint_name": "User_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "UserAnalytics",
+      "constraint_name": "UserAnalytics_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "constraint_name": "UserBehaviorProfile_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "constraint_name": "UserPredictionSnapshot_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "constraint_name": "WaitlistEntry_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "credit_transactions",
+      "constraint_name": "credit_transactions_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "credit_usage",
+      "constraint_name": "credit_usage_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "cv_rewrites",
+      "constraint_name": "cv_rewrites_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "data_lineage",
+      "constraint_name": "data_lineage_pkey",
+      "column_name": "uuid"
+    },
+    {
+      "table_name": "graph_edges",
+      "constraint_name": "graph_edges_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "graph_nodes",
+      "constraint_name": "graph_nodes_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "graph_snapshots",
+      "constraint_name": "graph_snapshots_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "graph_versions",
+      "constraint_name": "graph_versions_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "graphs",
+      "constraint_name": "graphs_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "idempotency",
+      "constraint_name": "idempotency_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "premium_interview_sessions",
+      "constraint_name": "premium_interview_sessions_pkey",
+      "column_name": "id"
+    },
+    {
+      "table_name": "stripe_events",
+      "constraint_name": "stripe_events_pkey",
+      "column_name": "id"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "table_name": "AIUsageLog",
+      "constraint_name": "AIUsageLog_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "SET NULL",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "Account",
+      "constraint_name": "Account_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "AdminAuditLog",
+      "constraint_name": "AdminAuditLog_adminId_fkey",
+      "column_name": "adminId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "RESTRICT",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "constraint_name": "BehaviorEvent_sessionId_fkey",
+      "column_name": "sessionId",
+      "referenced_table": "InterviewSession",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "BehaviorEvent",
+      "constraint_name": "BehaviorEvent_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "BehavioralPattern",
+      "constraint_name": "BehavioralPattern_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "CVAnalysis",
+      "constraint_name": "CVAnalysis_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "CareerProfile",
+      "constraint_name": "CareerProfile_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "InterviewEvent",
+      "constraint_name": "InterviewEvent_sessionId_fkey",
+      "column_name": "sessionId",
+      "referenced_table": "InterviewSession",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "InterviewSession",
+      "constraint_name": "InterviewSession_challengeEntryId_fkey",
+      "column_name": "challengeEntryId",
+      "referenced_table": "PublicChallengeEntry",
+      "referenced_column": "id",
+      "delete_rule": "SET NULL",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "InterviewSession",
+      "constraint_name": "InterviewSession_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "constraint_name": "PublicChallengeEntry_challengeId_fkey",
+      "column_name": "challengeId",
+      "referenced_table": "PublicChallenge",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "PublicChallengeEntry",
+      "constraint_name": "PublicChallengeEntry_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "RecoveryEmailLog",
+      "constraint_name": "RecoveryEmailLog_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "Session",
+      "constraint_name": "Session_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "Subscription",
+      "constraint_name": "Subscription_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "UserAnalytics",
+      "constraint_name": "UserAnalytics_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "UserBehaviorProfile",
+      "constraint_name": "UserBehaviorProfile_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "UserPredictionSnapshot",
+      "constraint_name": "UserPredictionSnapshot_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "WaitlistEntry",
+      "constraint_name": "WaitlistEntry_userId_fkey",
+      "column_name": "userId",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "SET NULL",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_edges",
+      "constraint_name": "graph_edges_graph_id_fkey",
+      "column_name": "graph_id",
+      "referenced_table": "graphs",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_edges",
+      "constraint_name": "graph_edges_source_node_id_fkey",
+      "column_name": "source_node_id",
+      "referenced_table": "graph_nodes",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_edges",
+      "constraint_name": "graph_edges_target_node_id_fkey",
+      "column_name": "target_node_id",
+      "referenced_table": "graph_nodes",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_nodes",
+      "constraint_name": "graph_nodes_graph_id_fkey",
+      "column_name": "graph_id",
+      "referenced_table": "graphs",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_snapshots",
+      "constraint_name": "graph_snapshots_graph_id_fkey",
+      "column_name": "graph_id",
+      "referenced_table": "graphs",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graph_versions",
+      "constraint_name": "graph_versions_graph_id_fkey",
+      "column_name": "graph_id",
+      "referenced_table": "graphs",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    },
+    {
+      "table_name": "graphs",
+      "constraint_name": "graphs_user_id_fkey",
+      "column_name": "user_id",
+      "referenced_table": "User",
+      "referenced_column": "id",
+      "delete_rule": "CASCADE",
+      "update_rule": "CASCADE"
+    }
+  ],
+  "indexes": [
+    {
+      "schemaname": "public",
+      "tablename": "AIUsageLog",
+      "indexname": "AIUsageLog_createdAt_idx",
+      "indexdef": "CREATE INDEX \"AIUsageLog_createdAt_idx\" ON public.\"AIUsageLog\" USING btree (\"createdAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "AIUsageLog",
+      "indexname": "AIUsageLog_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"AIUsageLog_pkey\" ON public.\"AIUsageLog\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "AIUsageLog",
+      "indexname": "AIUsageLog_userId_idx",
+      "indexdef": "CREATE INDEX \"AIUsageLog_userId_idx\" ON public.\"AIUsageLog\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Account",
+      "indexname": "Account_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"Account_pkey\" ON public.\"Account\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Account",
+      "indexname": "Account_provider_providerAccountId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"Account_provider_providerAccountId_key\" ON public.\"Account\" USING btree (provider, \"providerAccountId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Account",
+      "indexname": "Account_userId_idx",
+      "indexdef": "CREATE INDEX \"Account_userId_idx\" ON public.\"Account\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "AdminAuditLog",
+      "indexname": "AdminAuditLog_action_idx",
+      "indexdef": "CREATE INDEX \"AdminAuditLog_action_idx\" ON public.\"AdminAuditLog\" USING btree (action)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "AdminAuditLog",
+      "indexname": "AdminAuditLog_adminId_idx",
+      "indexdef": "CREATE INDEX \"AdminAuditLog_adminId_idx\" ON public.\"AdminAuditLog\" USING btree (\"adminId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "AdminAuditLog",
+      "indexname": "AdminAuditLog_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"AdminAuditLog_pkey\" ON public.\"AdminAuditLog\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "BehaviorEvent",
+      "indexname": "BehaviorEvent_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"BehaviorEvent_pkey\" ON public.\"BehaviorEvent\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "BehaviorEvent",
+      "indexname": "BehaviorEvent_sessionId_idx",
+      "indexdef": "CREATE INDEX \"BehaviorEvent_sessionId_idx\" ON public.\"BehaviorEvent\" USING btree (\"sessionId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "BehaviorEvent",
+      "indexname": "BehaviorEvent_userId_type_idx",
+      "indexdef": "CREATE INDEX \"BehaviorEvent_userId_type_idx\" ON public.\"BehaviorEvent\" USING btree (\"userId\", type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "BehavioralPattern",
+      "indexname": "BehavioralPattern_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"BehavioralPattern_pkey\" ON public.\"BehavioralPattern\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "CVAnalysis",
+      "indexname": "CVAnalysis_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"CVAnalysis_pkey\" ON public.\"CVAnalysis\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "CVAnalysis",
+      "indexname": "CVAnalysis_userId_idx",
+      "indexdef": "CREATE INDEX \"CVAnalysis_userId_idx\" ON public.\"CVAnalysis\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "CareerProfile",
+      "indexname": "CareerProfile_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"CareerProfile_pkey\" ON public.\"CareerProfile\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "CareerProfile",
+      "indexname": "CareerProfile_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"CareerProfile_userId_key\" ON public.\"CareerProfile\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "InterviewEvent",
+      "indexname": "InterviewEvent_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"InterviewEvent_pkey\" ON public.\"InterviewEvent\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "InterviewSession",
+      "indexname": "InterviewSession_createdAt_idx",
+      "indexdef": "CREATE INDEX \"InterviewSession_createdAt_idx\" ON public.\"InterviewSession\" USING btree (\"createdAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "InterviewSession",
+      "indexname": "InterviewSession_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"InterviewSession_pkey\" ON public.\"InterviewSession\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "InterviewSession",
+      "indexname": "InterviewSession_userId_createdAt_idx",
+      "indexdef": "CREATE INDEX \"InterviewSession_userId_createdAt_idx\" ON public.\"InterviewSession\" USING btree (\"userId\", \"createdAt\" DESC)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "InterviewSession",
+      "indexname": "InterviewSession_userId_idx",
+      "indexdef": "CREATE INDEX \"InterviewSession_userId_idx\" ON public.\"InterviewSession\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_claimed_by_user_id_consumed_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_claimed_by_user_id_consumed_idx\" ON public.\"PreviewAnalysis\" USING btree (claimed_by_user_id, consumed)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_claimed_by_user_id_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_claimed_by_user_id_idx\" ON public.\"PreviewAnalysis\" USING btree (claimed_by_user_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_consumed_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_consumed_idx\" ON public.\"PreviewAnalysis\" USING btree (consumed)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_expiresAt_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_expiresAt_idx\" ON public.\"PreviewAnalysis\" USING btree (\"expiresAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"PreviewAnalysis_pkey\" ON public.\"PreviewAnalysis\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_status_expiresAt_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_status_expiresAt_idx\" ON public.\"PreviewAnalysis\" USING btree (status, \"expiresAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_token_idx",
+      "indexdef": "CREATE INDEX \"PreviewAnalysis_token_idx\" ON public.\"PreviewAnalysis\" USING btree (token)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PreviewAnalysis",
+      "indexname": "PreviewAnalysis_token_key",
+      "indexdef": "CREATE UNIQUE INDEX \"PreviewAnalysis_token_key\" ON public.\"PreviewAnalysis\" USING btree (token)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "ProcessedWebhook",
+      "indexname": "ProcessedWebhook_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"ProcessedWebhook_pkey\" ON public.\"ProcessedWebhook\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"PromptVersion_pkey\" ON public.\"PromptVersion\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PublicChallenge",
+      "indexname": "PublicChallenge_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"PublicChallenge_pkey\" ON public.\"PublicChallenge\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PublicChallenge",
+      "indexname": "PublicChallenge_slug_key",
+      "indexdef": "CREATE UNIQUE INDEX \"PublicChallenge_slug_key\" ON public.\"PublicChallenge\" USING btree (slug)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PublicChallengeEntry",
+      "indexname": "PublicChallengeEntry_challengeId_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"PublicChallengeEntry_challengeId_userId_key\" ON public.\"PublicChallengeEntry\" USING btree (\"challengeId\", \"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "PublicChallengeEntry",
+      "indexname": "PublicChallengeEntry_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"PublicChallengeEntry_pkey\" ON public.\"PublicChallengeEntry\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "RecoveryEmailLog",
+      "indexname": "RecoveryEmailLog_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"RecoveryEmailLog_pkey\" ON public.\"RecoveryEmailLog\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "RecoveryEmailLog",
+      "indexname": "RecoveryEmailLog_userId_sentAt_idx",
+      "indexdef": "CREATE INDEX \"RecoveryEmailLog_userId_sentAt_idx\" ON public.\"RecoveryEmailLog\" USING btree (\"userId\", \"sentAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Session",
+      "indexname": "Session_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"Session_pkey\" ON public.\"Session\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Session",
+      "indexname": "Session_sessionToken_key",
+      "indexdef": "CREATE UNIQUE INDEX \"Session_sessionToken_key\" ON public.\"Session\" USING btree (\"sessionToken\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Session",
+      "indexname": "Session_userId_idx",
+      "indexdef": "CREATE INDEX \"Session_userId_idx\" ON public.\"Session\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "SimulationSession",
+      "indexname": "SimulationSession_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"SimulationSession_pkey\" ON public.\"SimulationSession\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Subscription",
+      "indexname": "Subscription_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"Subscription_pkey\" ON public.\"Subscription\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Subscription",
+      "indexname": "Subscription_stripeSubId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"Subscription_stripeSubId_key\" ON public.\"Subscription\" USING btree (\"stripeSubId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "Subscription",
+      "indexname": "Subscription_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"Subscription_userId_key\" ON public.\"Subscription\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_email_idx",
+      "indexdef": "CREATE INDEX \"User_email_idx\" ON public.\"User\" USING btree (email)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_email_key",
+      "indexdef": "CREATE UNIQUE INDEX \"User_email_key\" ON public.\"User\" USING btree (email)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_monthlyResetDate_idx",
+      "indexdef": "CREATE INDEX \"User_monthlyResetDate_idx\" ON public.\"User\" USING btree (\"monthlyResetDate\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"User_pkey\" ON public.\"User\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_referralCode_key",
+      "indexdef": "CREATE UNIQUE INDEX \"User_referralCode_key\" ON public.\"User\" USING btree (\"referralCode\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_stripeCustomerId_idx",
+      "indexdef": "CREATE INDEX \"User_stripeCustomerId_idx\" ON public.\"User\" USING btree (\"stripeCustomerId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "User",
+      "indexname": "User_stripeCustomerId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"User_stripeCustomerId_key\" ON public.\"User\" USING btree (\"stripeCustomerId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserAnalytics",
+      "indexname": "UserAnalytics_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"UserAnalytics_pkey\" ON public.\"UserAnalytics\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserAnalytics",
+      "indexname": "UserAnalytics_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"UserAnalytics_userId_key\" ON public.\"UserAnalytics\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserBehaviorProfile",
+      "indexname": "UserBehaviorProfile_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"UserBehaviorProfile_pkey\" ON public.\"UserBehaviorProfile\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserBehaviorProfile",
+      "indexname": "UserBehaviorProfile_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"UserBehaviorProfile_userId_key\" ON public.\"UserBehaviorProfile\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserPredictionSnapshot",
+      "indexname": "UserPredictionSnapshot_createdAt_idx",
+      "indexdef": "CREATE INDEX \"UserPredictionSnapshot_createdAt_idx\" ON public.\"UserPredictionSnapshot\" USING btree (\"createdAt\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserPredictionSnapshot",
+      "indexname": "UserPredictionSnapshot_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"UserPredictionSnapshot_pkey\" ON public.\"UserPredictionSnapshot\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserPredictionSnapshot",
+      "indexname": "UserPredictionSnapshot_returnSegment_idx",
+      "indexdef": "CREATE INDEX \"UserPredictionSnapshot_returnSegment_idx\" ON public.\"UserPredictionSnapshot\" USING btree (\"returnSegment\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "UserPredictionSnapshot",
+      "indexname": "UserPredictionSnapshot_userId_idx",
+      "indexdef": "CREATE INDEX \"UserPredictionSnapshot_userId_idx\" ON public.\"UserPredictionSnapshot\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "WaitlistEntry",
+      "indexname": "WaitlistEntry_email_key",
+      "indexdef": "CREATE UNIQUE INDEX \"WaitlistEntry_email_key\" ON public.\"WaitlistEntry\" USING btree (email)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "WaitlistEntry",
+      "indexname": "WaitlistEntry_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"WaitlistEntry_pkey\" ON public.\"WaitlistEntry\" USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "WaitlistEntry",
+      "indexname": "WaitlistEntry_userId_key",
+      "indexdef": "CREATE UNIQUE INDEX \"WaitlistEntry_userId_key\" ON public.\"WaitlistEntry\" USING btree (\"userId\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "credit_transactions",
+      "indexname": "credit_transactions_idempotency_key_key",
+      "indexdef": "CREATE UNIQUE INDEX credit_transactions_idempotency_key_key ON public.credit_transactions USING btree (idempotency_key)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "credit_transactions",
+      "indexname": "credit_transactions_pkey",
+      "indexdef": "CREATE UNIQUE INDEX credit_transactions_pkey ON public.credit_transactions USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "credit_usage",
+      "indexname": "credit_usage_pkey",
+      "indexdef": "CREATE UNIQUE INDEX credit_usage_pkey ON public.credit_usage USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "cv_rewrites",
+      "indexname": "cv_rewrites_expires_at_idx",
+      "indexdef": "CREATE INDEX cv_rewrites_expires_at_idx ON public.cv_rewrites USING btree (expires_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "cv_rewrites",
+      "indexname": "cv_rewrites_idempotency_key_key",
+      "indexdef": "CREATE UNIQUE INDEX cv_rewrites_idempotency_key_key ON public.cv_rewrites USING btree (idempotency_key)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "cv_rewrites",
+      "indexname": "cv_rewrites_pkey",
+      "indexdef": "CREATE UNIQUE INDEX cv_rewrites_pkey ON public.cv_rewrites USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "cv_rewrites",
+      "indexname": "cv_rewrites_user_id_idx",
+      "indexdef": "CREATE INDEX cv_rewrites_user_id_idx ON public.cv_rewrites USING btree (user_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_confidence_idx",
+      "indexdef": "CREATE INDEX data_lineage_confidence_idx ON public.data_lineage USING btree (confidence)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_graph_node_id_idx",
+      "indexdef": "CREATE INDEX data_lineage_graph_node_id_idx ON public.data_lineage USING btree (graph_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_graph_node_id_timestamp_idx",
+      "indexdef": "CREATE INDEX data_lineage_graph_node_id_timestamp_idx ON public.data_lineage USING btree (graph_node_id, \"timestamp\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_hash_idx",
+      "indexdef": "CREATE INDEX data_lineage_hash_idx ON public.data_lineage USING btree (hash)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_parent_uuid_timestamp_idx",
+      "indexdef": "CREATE INDEX data_lineage_parent_uuid_timestamp_idx ON public.data_lineage USING btree (parent_uuid, \"timestamp\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_pkey",
+      "indexdef": "CREATE UNIQUE INDEX data_lineage_pkey ON public.data_lineage USING btree (uuid)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_relation_type_idx",
+      "indexdef": "CREATE INDEX data_lineage_relation_type_idx ON public.data_lineage USING btree (relation_type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_source_type_idx",
+      "indexdef": "CREATE INDEX data_lineage_source_type_idx ON public.data_lineage USING btree (source_type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_storage_type_idx",
+      "indexdef": "CREATE INDEX data_lineage_storage_type_idx ON public.data_lineage USING btree (storage_type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_timestamp_idx",
+      "indexdef": "CREATE INDEX data_lineage_timestamp_idx ON public.data_lineage USING btree (\"timestamp\")"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "data_lineage",
+      "indexname": "data_lineage_transformation_type_idx",
+      "indexdef": "CREATE INDEX data_lineage_transformation_type_idx ON public.data_lineage USING btree (transformation_type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_confidence_idx",
+      "indexdef": "CREATE INDEX graph_edges_confidence_idx ON public.graph_edges USING btree (confidence)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_deleted_at_idx",
+      "indexdef": "CREATE INDEX graph_edges_deleted_at_idx ON public.graph_edges USING btree (deleted_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_deleted_at_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_deleted_at_idx ON public.graph_edges USING btree (graph_id, deleted_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_idx ON public.graph_edges USING btree (graph_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_source_node_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_source_node_id_idx ON public.graph_edges USING btree (graph_id, source_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_target_node_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_target_node_id_idx ON public.graph_edges USING btree (graph_id, target_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_type_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_type_idx ON public.graph_edges USING btree (graph_id, type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_graph_id_type_weight_idx",
+      "indexdef": "CREATE INDEX graph_edges_graph_id_type_weight_idx ON public.graph_edges USING btree (graph_id, type, weight)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_pkey",
+      "indexdef": "CREATE UNIQUE INDEX graph_edges_pkey ON public.graph_edges USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_source_node_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_source_node_id_idx ON public.graph_edges USING btree (source_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_source_node_id_target_node_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_source_node_id_target_node_id_idx ON public.graph_edges USING btree (source_node_id, target_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_target_node_id_idx",
+      "indexdef": "CREATE INDEX graph_edges_target_node_id_idx ON public.graph_edges USING btree (target_node_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_type_idx",
+      "indexdef": "CREATE INDEX graph_edges_type_idx ON public.graph_edges USING btree (type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_edges",
+      "indexname": "graph_edges_weight_idx",
+      "indexdef": "CREATE INDEX graph_edges_weight_idx ON public.graph_edges USING btree (weight)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_confidence_idx",
+      "indexdef": "CREATE INDEX graph_nodes_confidence_idx ON public.graph_nodes USING btree (confidence)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_deleted_at_idx",
+      "indexdef": "CREATE INDEX graph_nodes_deleted_at_idx ON public.graph_nodes USING btree (deleted_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_graph_id_deleted_at_idx",
+      "indexdef": "CREATE INDEX graph_nodes_graph_id_deleted_at_idx ON public.graph_nodes USING btree (graph_id, deleted_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_graph_id_idx",
+      "indexdef": "CREATE INDEX graph_nodes_graph_id_idx ON public.graph_nodes USING btree (graph_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_graph_id_normalized_label_idx",
+      "indexdef": "CREATE INDEX graph_nodes_graph_id_normalized_label_idx ON public.graph_nodes USING btree (graph_id, normalized_label)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_graph_id_type_confidence_idx",
+      "indexdef": "CREATE INDEX graph_nodes_graph_id_type_confidence_idx ON public.graph_nodes USING btree (graph_id, type, confidence)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_graph_id_type_idx",
+      "indexdef": "CREATE INDEX graph_nodes_graph_id_type_idx ON public.graph_nodes USING btree (graph_id, type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_normalized_label_idx",
+      "indexdef": "CREATE INDEX graph_nodes_normalized_label_idx ON public.graph_nodes USING btree (normalized_label)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_pkey",
+      "indexdef": "CREATE UNIQUE INDEX graph_nodes_pkey ON public.graph_nodes USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_nodes",
+      "indexname": "graph_nodes_type_idx",
+      "indexdef": "CREATE INDEX graph_nodes_type_idx ON public.graph_nodes USING btree (type)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_snapshots",
+      "indexname": "graph_snapshots_created_at_idx",
+      "indexdef": "CREATE INDEX graph_snapshots_created_at_idx ON public.graph_snapshots USING btree (created_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_snapshots",
+      "indexname": "graph_snapshots_graph_id_idx",
+      "indexdef": "CREATE INDEX graph_snapshots_graph_id_idx ON public.graph_snapshots USING btree (graph_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_snapshots",
+      "indexname": "graph_snapshots_graph_id_version_idx",
+      "indexdef": "CREATE INDEX graph_snapshots_graph_id_version_idx ON public.graph_snapshots USING btree (graph_id, version)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_snapshots",
+      "indexname": "graph_snapshots_pkey",
+      "indexdef": "CREATE UNIQUE INDEX graph_snapshots_pkey ON public.graph_snapshots USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_snapshots",
+      "indexname": "graph_snapshots_version_idx",
+      "indexdef": "CREATE INDEX graph_snapshots_version_idx ON public.graph_snapshots USING btree (version)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_created_at_idx",
+      "indexdef": "CREATE INDEX graph_versions_created_at_idx ON public.graph_versions USING btree (created_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_graph_id_idx",
+      "indexdef": "CREATE INDEX graph_versions_graph_id_idx ON public.graph_versions USING btree (graph_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_graph_id_version_idx",
+      "indexdef": "CREATE INDEX graph_versions_graph_id_version_idx ON public.graph_versions USING btree (graph_id, version)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_graph_id_version_key",
+      "indexdef": "CREATE UNIQUE INDEX graph_versions_graph_id_version_key ON public.graph_versions USING btree (graph_id, version)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_pkey",
+      "indexdef": "CREATE UNIQUE INDEX graph_versions_pkey ON public.graph_versions USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graph_versions",
+      "indexname": "graph_versions_version_idx",
+      "indexdef": "CREATE INDEX graph_versions_version_idx ON public.graph_versions USING btree (version)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_created_at_idx",
+      "indexdef": "CREATE INDEX graphs_created_at_idx ON public.graphs USING btree (created_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_deleted_at_idx",
+      "indexdef": "CREATE INDEX graphs_deleted_at_idx ON public.graphs USING btree (deleted_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_is_active_idx",
+      "indexdef": "CREATE INDEX graphs_is_active_idx ON public.graphs USING btree (is_active)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_is_active_source_idx",
+      "indexdef": "CREATE INDEX graphs_is_active_source_idx ON public.graphs USING btree (is_active, source)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_pkey",
+      "indexdef": "CREATE UNIQUE INDEX graphs_pkey ON public.graphs USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_source_idx",
+      "indexdef": "CREATE INDEX graphs_source_idx ON public.graphs USING btree (source)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_user_id_idx",
+      "indexdef": "CREATE INDEX graphs_user_id_idx ON public.graphs USING btree (user_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "graphs",
+      "indexname": "graphs_user_id_is_active_idx",
+      "indexdef": "CREATE INDEX graphs_user_id_is_active_idx ON public.graphs USING btree (user_id, is_active)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "idempotency",
+      "indexname": "idempotency_idempotency_key_user_id_operation_key",
+      "indexdef": "CREATE UNIQUE INDEX idempotency_idempotency_key_user_id_operation_key ON public.idempotency USING btree (idempotency_key, user_id, operation)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "idempotency",
+      "indexname": "idempotency_pkey",
+      "indexdef": "CREATE UNIQUE INDEX idempotency_pkey ON public.idempotency USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "idempotency",
+      "indexname": "idx_idempotency_expires_at",
+      "indexdef": "CREATE INDEX idx_idempotency_expires_at ON public.idempotency USING btree (expires_at)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "premium_interview_sessions",
+      "indexname": "premium_interview_sessions_pkey",
+      "indexdef": "CREATE UNIQUE INDEX premium_interview_sessions_pkey ON public.premium_interview_sessions USING btree (id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "stripe_events",
+      "indexname": "stripe_events_event_id_key",
+      "indexdef": "CREATE UNIQUE INDEX stripe_events_event_id_key ON public.stripe_events USING btree (event_id)"
+    },
+    {
+      "schemaname": "public",
+      "tablename": "stripe_events",
+      "indexname": "stripe_events_pkey",
+      "indexdef": "CREATE UNIQUE INDEX stripe_events_pkey ON public.stripe_events USING btree (id)"
+    }
+  ],
+  "unique_constraints": [],
+  "extensions": [
+    {
+      "extname": "pg_cron",
+      "extversion": "1.6.4",
+      "nspname": "pg_catalog"
+    },
+    {
+      "extname": "pg_stat_statements",
+      "extversion": "1.11",
+      "nspname": "extensions"
+    },
+    {
+      "extname": "pgcrypto",
+      "extversion": "1.3",
+      "nspname": "extensions"
+    },
+    {
+      "extname": "plpgsql",
+      "extversion": "1.0",
+      "nspname": "pg_catalog"
+    },
+    {
+      "extname": "supabase_vault",
+      "extversion": "0.3.1",
+      "nspname": "vault"
+    },
+    {
+      "extname": "uuid-ossp",
+      "extversion": "1.1",
+      "nspname": "extensions"
+    },
+    {
+      "extname": "vector",
+      "extversion": "0.8.2",
+      "nspname": "public"
+    }
+  ]
+}

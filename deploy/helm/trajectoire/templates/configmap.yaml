@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "trajectoire.fullname" . }}-config
+  labels:
+    {{- include "trajectoire.labels" . | nindent 4 }}
+data:
+  NODE_ENV: "production"
+  PORT: {{ .Values.service.port | quote }}
+  REDIS_HOST: {{ include "trajectoire.fullname" . }}-redis
+  REDIS_PORT: "6379"
+  POSTGRES_HOST: {{ include "trajectoire.fullname" . }}-postgres
+  POSTGRES_PORT: "5432"
+  JAEGER_ENDPOINT: "http://{{ include "trajectoire.fullname" . }}-jaeger:4317"

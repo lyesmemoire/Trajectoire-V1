@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { DebuggerHooks, Breakpoint, Watchpoint, WatchpointType, StepMode } from '../../../compiler/cvm/debugger-hooks';
+import { DebuggerHooks, WatchpointType, StepMode } from '../../../compiler/cvm/debugger-hooks';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { Opcode } from '../../../compiler/cbs/opcode-table';
 

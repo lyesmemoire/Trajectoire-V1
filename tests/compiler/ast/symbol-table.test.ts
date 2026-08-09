@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SymbolTable, SymbolKind, type Symbol, type Scope } from '../../../compiler/ast/symbol-table';
+import { SymbolTable } from '../../../compiler/ast/symbol-table';
 
 describe('SymbolTable', () => {
   let symbolTable: SymbolTable;

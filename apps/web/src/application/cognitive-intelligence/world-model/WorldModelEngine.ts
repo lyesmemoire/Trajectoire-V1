@@ -5,7 +5,6 @@
 
 import {
   Skill,
-  Job,
   Company,
   Industry,
   Certification,

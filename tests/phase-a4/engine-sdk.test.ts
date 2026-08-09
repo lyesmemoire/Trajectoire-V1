@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { BaseEngine, BaseEngineConfig } from "../../apps/web/src/lib/ai/engines/BaseEngine";
+import { describe, it, expect } from "vitest";
+import { BaseEngine } from "../../apps/web/src/lib/ai/engines/BaseEngine";
 import { PromptRunner, PromptConfig } from "../../apps/web/src/lib/ai/engines/PromptRunner";
-import { FactBuilder, Fact } from "../../apps/web/src/lib/ai/engines/FactBuilder";
+import { FactBuilder } from "../../apps/web/src/lib/ai/engines/FactBuilder";
 import { EventFactory } from "../../apps/web/src/lib/ai/engines/EventFactory";
 import { BaseEvent } from "../../apps/web/src/lib/ai/contracts/Event";
 import { EngineInput } from "../../apps/web/src/lib/ai/contracts/Engine";

@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import { FuzzerEngine } from './engine/FuzzerEngine';
 import { Scheduler } from './engine/Scheduler';
 import { FuzzTarget, FuzzOracle, OracleResult, FuzzResult } from './engine/interfaces';
-import { CorpusManager } from './engine/CorpusManager';
 
 class BuggyTarget implements FuzzTarget {
   name = 'GoldenSuiteTarget';

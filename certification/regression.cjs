@@ -38,7 +38,7 @@ function runRegressions(runDir, logDir) {
 
     const regStart = new Date().toISOString();
     let status = 'UNKNOWN';
-    let tscExitCode = null;
+    const tscExitCode = null;
     let vitestExitCode = null;
     let vitestStdout = '';
     let vitestStderr = '';

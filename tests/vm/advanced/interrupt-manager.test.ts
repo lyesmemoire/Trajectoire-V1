@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { InterruptManager, InterruptType, Interrupt } from '../../../compiler/cvm/interrupt-manager';
+import { InterruptManager, InterruptType } from '../../../compiler/cvm/interrupt-manager';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 
 describe('Interrupt Manager - Priority 7', () => {

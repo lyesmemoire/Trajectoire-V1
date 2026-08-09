@@ -1,0 +1,177 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "nodes": [
+    {
+      "id": "node-user-001",
+      "type": "User",
+      "properties": {
+        "email": "test@trajectoire.com",
+        "plan": "FREE"
+      }
+    },
+    {
+      "id": "node-cv-001",
+      "type": "CV",
+      "properties": {
+        "fileName": "test_cv.txt",
+        "atsScore": 75
+      }
+    },
+    {
+      "id": "node-skill-js",
+      "type": "Skill",
+      "properties": {
+        "name": "JavaScript",
+        "level": "expert"
+      }
+    },
+    {
+      "id": "node-skill-react",
+      "type": "Skill",
+      "properties": {
+        "name": "React",
+        "level": "expert"
+      }
+    },
+    {
+      "id": "node-skill-node",
+      "type": "Skill",
+      "properties": {
+        "name": "Node.js",
+        "level": "expert"
+      }
+    },
+    {
+      "id": "node-job-001",
+      "type": "Job",
+      "properties": {
+        "title": "Senior Full Stack Developer",
+        "location": "Paris"
+      }
+    },
+    {
+      "id": "node-match-001",
+      "type": "Matching",
+      "properties": {
+        "score": 85,
+        "status": "completed"
+      }
+    },
+    {
+      "id": "node-session-001",
+      "type": "InterviewSession",
+      "properties": {
+        "score": 78,
+        "status": "completed"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-user-cv",
+      "source": "node-user-001",
+      "target": "node-cv-001",
+      "type": "OWNS",
+      "properties": {
+        "uploadedAt": "2026-08-07T07:52:00Z"
+      }
+    },
+    {
+      "id": "edge-cv-skill-js",
+      "source": "node-cv-001",
+      "target": "node-skill-js",
+      "type": "HAS_SKILL",
+      "properties": {
+        "proficiency": 0.9
+      }
+    },
+    {
+      "id": "edge-cv-skill-react",
+      "source": "node-cv-001",
+      "target": "node-skill-react",
+      "properties": {
+        "proficiency": 0.95
+      }
+    },
+    {
+      "id": "edge-cv-skill-node",
+      "source": "node-cv-001",
+      "target": "node-skill-node",
+      "properties": {
+        "proficiency": 0.85
+      }
+    },
+    {
+      "id": "edge-user-job",
+      "source": "node-user-001",
+      "target": "node-job-001",
+      "type": "CREATED",
+      "properties": {
+        "createdAt": "2026-08-07T07:52:00Z"
+      }
+    },
+    {
+      "id": "edge-job-skill-js",
+      "source": "node-job-001",
+      "target": "node-skill-js",
+      "type": "REQUIRES",
+      "properties": {
+        "required": true
+      }
+    },
+    {
+      "id": "edge-job-skill-react",
+      "source": "node-job-001",
+      "target": "node-skill-react",
+      "type": "REQUIRES",
+      "properties": {
+        "required": true
+      }
+    },
+    {
+      "id": "edge-match-cv-job",
+      "source": "node-match-001",
+      "target": "node-cv-001",
+      "type": "MATCHES",
+      "properties": {
+        "score": 85
+      }
+    },
+    {
+      "id": "edge-match-job",
+      "source": "node-match-001",
+      "target": "node-job-001",
+      "type": "FOR",
+      "properties": {}
+    },
+    {
+      "id": "edge-session-match",
+      "source": "node-session-001",
+      "target": "node-match-001",
+      "type": "BASED_ON",
+      "properties": {}
+    }
+  ],
+  "summary": {
+    "totalNodes": 8,
+    "totalEdges": 10,
+    "nodeTypes": {
+      "User": 1,
+      "CV": 1,
+      "Skill": 3,
+      "Job": 1,
+      "Matching": 1,
+      "InterviewSession": 1
+    },
+    "edgeTypes": {
+      "OWNS": 1,
+      "HAS_SKILL": 3,
+      "CREATED": 1,
+      "REQUIRES": 2,
+      "MATCHES": 1,
+      "FOR": 1,
+      "BASED_ON": 1
+    }
+  }
+}

@@ -27,7 +27,7 @@ Object.entries(testFiles).forEach(([component, filePath]) => {
 
   // Analyse des zones validées uniquement via mocks ou assertions indirectes
   let inMockTest = false;
-  let mockTestLines = [];
+  const mockTestLines = [];
 
   lines.forEach((line, index) => {
     const lowerLine = line.toLowerCase();

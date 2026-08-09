@@ -1,7 +1,7 @@
 import fc from 'fast-check';
 import { bytecodeArb } from './arbitraries/bytecode';
 import { InstructionTable } from '../../../compiler/cbs/instruction-table';
-import { Opcode, OpcodeTable } from '../../../compiler/cbs/opcode-table';
+import { OpcodeTable } from '../../../compiler/cbs/opcode-table';
 
 function runStats() {
   const samples = fc.sample(bytecodeArb, { numRuns: 1000, seed: 123456789 });

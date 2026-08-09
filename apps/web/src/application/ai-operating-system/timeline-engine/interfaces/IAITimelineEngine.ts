@@ -1,4 +1,4 @@
-;
+
 /**
  * AI Timeline Engine Interfaces
  * Complete timeline of all AI decisions and evolutions

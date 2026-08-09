@@ -61,7 +61,7 @@ const realInvalidRateExcludingExpected = realInvalidRate;
 
 // Certification selon les nouveaux critères stricts
 let certification = 'REJECTED';
-let certificationReasons = [];
+const certificationReasons = [];
 
 // Critère de base: Score pondéré ≥ 95%
 if (adjustedWeightedScore >= 95) {

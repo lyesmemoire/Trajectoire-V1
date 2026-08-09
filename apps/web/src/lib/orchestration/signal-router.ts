@@ -1,4 +1,3 @@
-import { PressureSignal } from '../types/pressure.types';
 
 /**
  * Maps raw analysis results to high-level behavioral signals.

@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ExecutionContext } from '../../../compiler/cvm/execution-context';
 import { ThreadManager, ThreadState, SchedulingPolicy } from '../../../compiler/cvm/thread-manager';
-import { Stack } from '../../../compiler/cbs/stack';
 
 describe('Demo Programs - Multithreading', () => {
   let context1: ExecutionContext;

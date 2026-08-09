@@ -1,4 +1,3 @@
-import { Transaction } from '@/core/p5/transaction/transaction-contract';
 /**
  * Transaction Interface
  * Defines the contract for database transactions

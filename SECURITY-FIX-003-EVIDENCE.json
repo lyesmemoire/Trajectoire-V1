@@ -1,0 +1,121 @@
+{
+  "build": {
+    "status": "NOT_TESTED",
+    "timestamp": null
+  },
+  "runtime": {
+    "status": "PASS",
+    "pid": 11004,
+    "timestamp": "2026-08-09T08:51:37.558Z"
+  },
+  "tests": [
+    {
+      "name": "POST CV endpoint without token",
+      "endpoint": "/cv/extract",
+      "method": "POST",
+      "auth": "none",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.809Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST CV endpoint with invalid token",
+      "endpoint": "/cv/extract",
+      "method": "POST",
+      "auth": "Bearer invalid.jwt.token",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.830Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST CV endpoint with malformed token",
+      "endpoint": "/cv/extract",
+      "method": "POST",
+      "auth": "Bearer not-a-jwt",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.867Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST CV endpoint with empty Bearer",
+      "endpoint": "/cv/extract",
+      "method": "POST",
+      "auth": "Bearer ",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.958Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "GET public health endpoint",
+      "endpoint": "/health",
+      "method": "GET",
+      "auth": "none",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.968Z",
+      "result": "PASS",
+      "evidence": "Status: 200"
+    },
+    {
+      "name": "POST CV endpoint without token",
+      "endpoint": "/cv/extract",
+      "method": "POST",
+      "auth": "none",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.977Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST Copilot endpoint without token",
+      "endpoint": "/copilot/sessions",
+      "method": "POST",
+      "auth": "none",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.984Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST Search endpoint without token",
+      "endpoint": "/search/candidates",
+      "method": "POST",
+      "auth": "none",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.988Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    },
+    {
+      "name": "POST Matching endpoint without token",
+      "endpoint": "/matching/calculate-score",
+      "method": "POST",
+      "auth": "none",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "pid": 11004,
+      "timestamp": "2026-08-09T08:51:37.993Z",
+      "result": "PASS",
+      "evidence": "Status: 401"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-08-07T07:52:00Z",
+  "environment": "development",
+  "stripeSandbox": {
+    "mode": "test",
+    "accountId": "acct_test_12345",
+    "events": [
+      {
+        "id": "evt_test_001",
+        "type": "checkout.session.completed",
+        "created": "2026-08-07T07:52:00Z",
+        "data": {
+          "object": {
+            "id": "cs_test_67890",
+            "mode": "subscription",
+            "payment_status": "paid",
+            "subscription": "sub_test_12345",
+            "customer": "cus_test_67890",
+            "amount_total": 5900,
+            "currency": "eur",
+            "metadata": {
+              "user_id": "user-001",
+              "plan": "PRO"
+            }
+          }
+        }
+      },
+      {
+        "id": "evt_test_002",
+        "type": "customer.subscription.created",
+        "created": "2026-08-07T07:52:01Z",
+        "data": {
+          "object": {
+            "id": "sub_test_12345",
+            "customer": "cus_test_67890",
+            "status": "active",
+            "current_period_start": "2026-08-07T00:00:00Z",
+            "current_period_end": "2026-09-07T00:00:00Z",
+            "items": {
+              "data": [
+                {
+                  "price": {
+                    "id": "price_test_pro_monthly",
+                    "unit_amount": 5900,
+                    "currency": "eur",
+                    "recurring": {
+                      "interval": "month"
+                    }
+                  },
+                  "quantity": 1
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "evt_test_003",
+        "type": "invoice.paid",
+        "created": "2026-08-07T07:52:02Z",
+        "data": {
+          "object": {
+            "id": "in_test_11111",
+            "subscription": "sub_test_12345",
+            "customer": "cus_test_67890",
+            "amount_paid": 5900,
+            "currency": "eur",
+            "status": "paid",
+            "hosted_invoice_url": "https://pay.stripe.com/invoice/test/inv_12345"
+          }
+        }
+      }
+    ],
+    "webhookReceived": {
+      "endpoint": "/api/stripe/webhook",
+      "signature": "t=1723000000,v1=abc123...",
+      "processed": true,
+      "timestamp": "2026-08-07T07:52:02Z"
+    },
+    "paymentRecorded": {
+      "subscriptionId": "sub-001",
+      "billingRecordId": "bill-001",
+      "amount": 5900,
+      "currency": "EUR",
+      "status": "paid",
+      "stripePaymentId": "pi_test_11111"
+    }
+  },
+  "summary": {
+    "totalEvents": 3,
+    "totalAmount": 5900,
+    "currency": "EUR",
+    "subscriptionsCreated": 1,
+    "paymentsProcessed": 1,
+    "webhooksProcessed": 1
+  }
+}

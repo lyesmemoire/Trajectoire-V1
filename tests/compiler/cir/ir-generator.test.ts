@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { IRGenerator, IRNodeType, IRInstructionType, type IRModule } from '../../../compiler/cir/ir-generator';
+import { IRGenerator } from '../../../compiler/cir/ir-generator';
 import { NodeType } from '../../../compiler/parser/parser';
 
 describe('IRGenerator', () => {
