@@ -136,3 +136,6 @@ test-route.ts
 .stryker-tmp/
 # Local diagnostics
 metrics/
+# Local Antigravity backup archive
+AntigravityBackup/
+
