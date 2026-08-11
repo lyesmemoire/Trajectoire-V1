@@ -2,6 +2,10 @@
 # MONOREPO EXCLUSIONS FOR WEB DEPLOYMENT
 # ============================================
 
+# Dependencies
+node_modules/
+.pnpm-store/
+
 # Other apps not needed for web deployment
 apps/api
 apps/realtime-gateway
@@ -258,3 +262,11 @@ laboratory-convergence/
 sdks/
 services/
 providers/
+BLUEPRINT_PACKAGE/
+BLUEPRINT_GENERATED/
+BLUEPRINT_INCREMENTAL_GENERATED/
+BLUEPRINT_MULTI_LANG_GENERATED/
+BLUEPRINT_PACKAGE/
+
+# Analysis scripts
+analyze-size.ps1
