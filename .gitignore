@@ -143,3 +143,6 @@ AntigravityBackup/
 # SUPABASE TEMPORARY FILES
 # ============================================
 supabase/.temp/
+
+.vercel
+.env*
