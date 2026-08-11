@@ -139,3 +139,7 @@ metrics/
 # Local Antigravity backup archive
 AntigravityBackup/
 
+# ============================================
+# SUPABASE TEMPORARY FILES
+# ============================================
+supabase/.temp/

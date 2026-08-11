@@ -4,6 +4,11 @@ import { join } from 'path';
 import { prisma } from '@/lib/prisma';
 
 export async function POST() {
+  // Production guard: disable test CV upload via Prisma in production
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Test endpoint disabled in production" }, { status: 403 });
+  }
+
   try {
     const cvPath = join(process.cwd(), '../../test_cv.txt');
     const cvContent = await readFile(cvPath, 'utf-8');

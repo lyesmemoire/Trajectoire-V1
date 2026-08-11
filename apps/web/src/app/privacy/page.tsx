@@ -95,7 +95,7 @@ export default function PrivacyPage() {
               <li>Droit de limitation du traitement</li>
             </ul>
             <p className="text-ink-700 mt-4">
-              Pour exercer ces droits, contactez-nous à : contact@trajectoire.fr
+              Pour exercer ces droits, contactez-nous à : anislamine1980@gmail.com
             </p>
           </section>
 
@@ -142,7 +142,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative à cette politique de confidentialité,
-              contactez-nous à : contact@trajectoire.fr
+              contactez-nous à : anislamine1980@gmail.com
             </p>
           </section>
         </div>

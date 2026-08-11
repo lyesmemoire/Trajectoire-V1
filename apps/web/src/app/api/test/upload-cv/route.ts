@@ -4,6 +4,11 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 
 export async function POST() {
+  // Production guard: disable test CV upload in production
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Test endpoint disabled in production" }, { status: 403 });
+  }
+
   try {
     const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();

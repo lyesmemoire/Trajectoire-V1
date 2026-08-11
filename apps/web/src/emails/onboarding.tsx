@@ -47,7 +47,7 @@ export function OnboardingEmail({ userName, magicLink }: OnboardingEmailProps) {
 
             <Text style={footer}>
               À tout moment,{" "}
-              <Link href="mailto:support@trajectoire.io" style={footerLink}>
+              <Link href="mailto:anislamine1980@gmail.com" style={footerLink}>
                 contactez-nous
               </Link>
               .

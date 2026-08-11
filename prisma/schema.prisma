@@ -711,7 +711,7 @@ enum Plan {
 enum tx_state {
   reserved
   committed
-  failed
+  rolled_back
   expired
 
   @@schema("public")

@@ -25,9 +25,9 @@ export default function TermsPage() {
               1. Éditeur du service
             </h2>
             <p className="text-ink-700">
-              Le service Trajectoire est édité par Trajectoire SAS, société au capital
-              social de [montant] euros, immatriculée au RCS de [ville] sous le numéro
-              [numéro SIRET], dont le siège social est situé à [adresse].
+              Le service Trajectoire est édité par une société au capital
+              social de 1 €, immatriculée en Bulgarie à Sofia sous le numéro
+              d'immatriculation 203456781, numéro de TVA BG203456781, dont le siège social est situé à Sofia Center, ul. "Stara Planina" 5, 1000 Sofia, Bulgarie.
             </p>
           </section>
 
@@ -96,7 +96,7 @@ export default function TermsPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative aux présentes CGV, vous pouvez nous
-              contacter à l'adresse email : contact@trajectoire.fr
+              contacter à l'adresse email : anislamine1980@gmail.com
             </p>
           </section>
 

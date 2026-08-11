@@ -32,8 +32,8 @@ export default function Footer() {
             <li><Link href="/terms" className="hover:text-ink-900 transition-colors">Conditions générales</Link></li>
             <li><Link href="/privacy" className="hover:text-ink-900 transition-colors">Politique de confidentialité</Link></li>
             <li>
-              <a href="mailto:support@trajectoire.app" className="hover:text-ink-900 transition-colors">
-                support@trajectoire.app
+              <a href="mailto:anislamine1980@gmail.com" className="hover:text-ink-900 transition-colors">
+                anislamine1980@gmail.com
               </a>
             </li>
           </ul>
