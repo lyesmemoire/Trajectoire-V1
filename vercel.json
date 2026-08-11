@@ -61,10 +61,5 @@
       ]
     }
   ],
-  "crons": [
-    {
-      "path": "/api/cron/cleanup-transactions",
-      "schedule": "*/5 * * * *"
-    }
-  ]
+  "crons": []
 }
