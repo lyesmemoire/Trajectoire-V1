@@ -198,6 +198,7 @@ web-runtime*.log
 api-runtime*.log
 
 # Build artifacts
+apps/web/.next/
 .next/
 out/
 build/
