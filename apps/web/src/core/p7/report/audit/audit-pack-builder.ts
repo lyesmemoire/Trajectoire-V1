@@ -19,10 +19,11 @@ export function buildAuditPack(input: ReportInput): AuditPack {
     .digest("hex");
 
   // Generate deterministic replay seed from input for reproducibility
-  const replaySeed = crypto.createHash("md5")
+  const replaySeed = crypto.createHash("sha256")
     .update(JSON.stringify({
       sessionId: input.tracePointers.sessionId,
-      timestamp: Date.now(),
+      tracePointers: input.tracePointers,
+      evaluationGraphHash,
     }))
     .digest("hex");
 
