@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "corepack enable && pnpm install && pnpm run build",
+  "buildCommand": "corepack enable && pnpm run build",
   "devCommand": "pnpm run dev",
   "installCommand": "corepack enable && pnpm install",
   "functions": {
