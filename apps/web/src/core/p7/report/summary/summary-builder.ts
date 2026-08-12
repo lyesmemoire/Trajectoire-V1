@@ -1,9 +1,9 @@
-import { ReportSummary } from "../report-contract.js";
+import { ReportSummary } from "../report-contract";
 
-import { CandidateEvaluation } from "../../evaluation-contract.js";
-import { ExplanationGraph } from "../../explainability/explanation-contract.js";
-import { GlobalRankingEntry } from "../../ranking/ranking-contract.js";
-import { Verdict } from "../report-contract.js";
+import { CandidateEvaluation } from "../../evaluation-contract";
+import { ExplanationGraph } from "../../explainability/explanation-contract";
+import { GlobalRankingEntry } from "../../ranking/ranking-contract";
+import { Verdict } from "../report-contract";
 
 export function buildSummary(
   evaluation: CandidateEvaluation,

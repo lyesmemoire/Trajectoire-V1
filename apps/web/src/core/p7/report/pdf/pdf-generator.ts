@@ -1,4 +1,4 @@
-import { ReportSummary, PdfArtifact } from "../report-contract.js";
+import { ReportSummary, PdfArtifact } from "../report-contract";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import * as crypto from "crypto";
 

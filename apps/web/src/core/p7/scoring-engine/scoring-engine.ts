@@ -1,9 +1,9 @@
-import { RuntimeTrace } from "../trace-contract.js";
-import { CandidateEvaluation } from "../evaluation-contract.js";
-import { Signal, SignalExtractor, P7_WEIGHTS } from "./scoring-contract.js";
-import { TrustExtractor } from "./extractors/trust-extractor.js";
-import { StabilityExtractor } from "./extractors/stability-extractor.js";
-import { Aggregator } from "./aggregator.js";
+import { RuntimeTrace } from "../trace-contract";
+import { CandidateEvaluation } from "../evaluation-contract";
+import { Signal, SignalExtractor, P7_WEIGHTS } from "./scoring-contract";
+import { TrustExtractor } from "./extractors/trust-extractor";
+import { StabilityExtractor } from "./extractors/stability-extractor";
+import { Aggregator } from "./aggregator";
 
 export class ScoringEngine {
   private extractors: SignalExtractor[] = [

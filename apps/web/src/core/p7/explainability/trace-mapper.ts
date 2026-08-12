@@ -1,14 +1,14 @@
-import { ExplanationGraph, ExplainedScore } from "./explanation-contract.js";
+import { ExplanationGraph, ExplainedScore } from "./explanation-contract";
 
-import { RuntimeTrace } from "../trace-contract.js";
-import { CandidateEvaluation } from "../evaluation-contract.js";
-import { Signal, SignalExtractor } from "../scoring-engine/scoring-contract.js";
-import { TrustExtractor } from "../scoring-engine/extractors/trust-extractor.js";
-import { StabilityExtractor } from "../scoring-engine/extractors/stability-extractor.js";
+import { RuntimeTrace } from "../trace-contract";
+import { CandidateEvaluation } from "../evaluation-contract";
+import { Signal, SignalExtractor } from "../scoring-engine/scoring-contract";
+import { TrustExtractor } from "../scoring-engine/extractors/trust-extractor";
+import { StabilityExtractor } from "../scoring-engine/extractors/stability-extractor";
 
-import { buildEvidence } from "./evidence-builder.js";
-import { buildSignalNodes, buildScoreComponentNodes, buildExplanationGraph } from "./dag-builder.js";
-import { explainScore } from "./score-explainer.js";
+import { buildEvidence } from "./evidence-builder";
+import { buildSignalNodes, buildScoreComponentNodes, buildExplanationGraph } from "./dag-builder";
+import { explainScore } from "./score-explainer";
 
 /**
  * Trace Mapper — Main entry point for P7.4

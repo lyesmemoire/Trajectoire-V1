@@ -1,11 +1,11 @@
 
 
 import { describe, it, expect } from "vitest";
-import { ReportBuilder } from "../report/report-builder.js";
-import { ReportInput } from "../report/report-contract.js";
-import { CandidateEvaluation } from "../evaluation-contract.js";
-import { GlobalRankingEntry } from "../ranking/ranking-contract.js";
-import { ExplanationGraph } from "../explainability/explanation-contract.js";
+import { ReportBuilder } from "../report/report-builder";
+import { ReportInput } from "../report/report-contract";
+import { CandidateEvaluation } from "../evaluation-contract";
+import { GlobalRankingEntry } from "../ranking/ranking-contract";
+import { ExplanationGraph } from "../explainability/explanation-contract";
 
 function buildMockInput(): ReportInput {
   const evalData: CandidateEvaluation = {

@@ -1,4 +1,4 @@
-import { RuntimeTrace } from "../trace-contract.js";
+import { RuntimeTrace } from "../trace-contract";
 
 export interface Signal {
   id: string; // e.g. "trust_trend_1"

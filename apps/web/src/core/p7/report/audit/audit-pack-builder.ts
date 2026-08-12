@@ -1,4 +1,4 @@
-import { AuditPack, ReplayInstruction, ReportInput } from "../report-contract.js";
+import { AuditPack, ReplayInstruction, ReportInput } from "../report-contract";
 import * as crypto from "crypto";
 
 // Get actual dependency version from package.json

@@ -1,4 +1,4 @@
-import { NormalizedScore } from "./ranking-contract.js";
+import { NormalizedScore } from "./ranking-contract";
 
 /**
  * Deterministic z-score normalizer.

@@ -1,4 +1,4 @@
-export type { CompetencyName } from "./scoring-engine/scoring-contract.js";
+export type { CompetencyName } from "./scoring-engine/scoring-contract";
 
 export interface CandidateEvaluation {
   sessionId: string;

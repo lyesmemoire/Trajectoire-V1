@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { RankingEngine } from "../ranking/ranking-engine.js";
-import { computeCohortStats, labelCohort } from "../ranking/cohort-analyzer.js";
-import { CandidateEvaluation } from "../evaluation-contract.js";
+import { RankingEngine } from "../ranking/ranking-engine";
+import { computeCohortStats, labelCohort } from "../ranking/cohort-analyzer";
+import { CandidateEvaluation } from "../evaluation-contract";
 
 function buildEval(sessionId: string, score: number, stabilityScore = 50): CandidateEvaluation {
   return {

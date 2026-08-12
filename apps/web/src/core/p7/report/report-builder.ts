@@ -1,10 +1,10 @@
-import { EvaluationReport, ReportInput } from "./report-contract.js";
+import { EvaluationReport, ReportInput } from "./report-contract";
 
-import { buildSummary } from "./summary/summary-builder.js";
-import { buildExplanationEmbedding } from "./explainability/explanation-embedder.js";
-import { exportJSON } from "./json/json-exporter.js";
-import { buildAuditPack } from "./audit/audit-pack-builder.js";
-import { generatePDF } from "./pdf/pdf-generator.js";
+import { buildSummary } from "./summary/summary-builder";
+import { buildExplanationEmbedding } from "./explainability/explanation-embedder";
+import { exportJSON } from "./json/json-exporter";
+import { buildAuditPack } from "./audit/audit-pack-builder";
+import { generatePDF } from "./pdf/pdf-generator";
 import * as crypto from "crypto";
 
 export class ReportBuilder {

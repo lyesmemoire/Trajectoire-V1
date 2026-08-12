@@ -1,4 +1,4 @@
-import { ReportJSON, EmbeddedExplanationGraph, ReportInput } from "../report-contract.js";
+import { ReportJSON, EmbeddedExplanationGraph, ReportInput } from "../report-contract";
 
 
 export function exportJSON(input: ReportInput, embeddedGraph: EmbeddedExplanationGraph): ReportJSON {

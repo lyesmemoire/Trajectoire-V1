@@ -1,5 +1,5 @@
-import { CompetencyScore, Evidence } from "../evaluation-contract.js";
-import { Signal, P7_WEIGHTS, CompetencyName } from "./scoring-contract.js";
+import { CompetencyScore, Evidence } from "../evaluation-contract";
+import { Signal, P7_WEIGHTS, CompetencyName } from "./scoring-contract";
 
 export class Aggregator {
   
