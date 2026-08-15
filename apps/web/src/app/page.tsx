@@ -1,568 +1,511 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import {
+  ChangeEvent,
+  DragEvent,
+  FormEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { CVUploader } from "@/components/analyze/CVUploader"
-import { JobInput } from "@/components/analyze/JobInput"
-import { AnalyzeButton } from "@/components/analyze/AnalyzeButton"
+import { useRouter } from "next/navigation"
+import {
+  ArrowRight,
+  CheckCircle2,
+  FileText,
+  Loader2,
+  Lock,
+  Mic,
+  Target,
+  Upload,
+  X,
+} from "lucide-react"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 
 const heroImage = "/images/hero-professional.jpg"
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] },
-  }),
-} as any
+type AnalyzePreviewResponse = {
+  previewToken?: string
+  message?: string
+  error?: string
+}
 
-const fadeScale = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] },
-  }),
-} as any
+const features = [
+  { icon: Mic, label: "Simulation vocale" },
+  { icon: FileText, label: "Analyse de CV" },
+  { icon: Target, label: "Feedback personnalisé" },
+]
+
+function formatBytes(bytes: number) {
+  if (!Number.isFinite(bytes)) return ""
+
+  const units = ["B", "KB", "MB", "GB"]
+  let index = 0
+  let size = bytes
+
+  while (size >= 1024 && index < units.length - 1) {
+    size /= 1024
+    index++
+  }
+
+  return `${size.toFixed(index === 0 ? 0 : 1)} ${units[index]}`
+}
+
+function isAllowedFile(file: File) {
+  const name = file.name.toLowerCase()
+
+  return [".pdf", ".doc", ".docx"].some((extension) =>
+    name.endsWith(extension)
+  )
+}
 
 export default function HomePage() {
+  const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
   const [file, setFile] = useState<File | null>(null)
   const [job, setJob] = useState("")
   const [loading, setLoading] = useState(false)
-  const [previewToken, setPreviewToken] = useState<string | null>(null)
+  const [error, setError] = useState("")
+  const [notice, setNotice] = useState("")
 
-  const canAnalyze = !!file && !loading
+  const fileMeta = useMemo(() => {
+    if (!file) return null
 
-  // Sauvegarder le previewToken lors de la réception
-  const handleAnalyze = async () => {
-    if (!canAnalyze) return
+    const extension = file.name.split(".").pop()?.toUpperCase() ?? ""
+
+    return `${formatBytes(file.size)} · ${extension}`
+  }, [file])
+
+  const resetFile = () => {
+    setFile(null)
+    setError("")
+    setNotice("")
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  const validateFile = (nextFile: File | null) => {
+    setError("")
+    setNotice("")
+
+    if (!nextFile) {
+      setFile(null)
+      return
+    }
+
+    if (!isAllowedFile(nextFile)) {
+      setFile(null)
+      setError(
+        "Format non pris en charge. Utilisez un PDF, DOC ou DOCX."
+      )
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+
+      return
+    }
+
+    if (nextFile.size > MAX_FILE_SIZE) {
+      setFile(null)
+      setError(
+        `Votre CV ne doit pas dépasser 10 Mo (actuel : ${formatBytes(
+          nextFile.size
+        )}).`
+      )
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+
+      return
+    }
+
+    setFile(nextFile)
+  }
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    validateFile(event.target.files?.[0] ?? null)
+  }
+
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (loading) return
+
+    validateFile(event.dataTransfer.files?.[0] ?? null)
+  }
+
+  const openFilePicker = () => {
+    if (loading) return
+
+    setError("")
+    setNotice("Ajoutez votre CV pour lancer l’analyse.")
+
+    // Permet de sélectionner à nouveau exactement le même fichier.
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+      fileInputRef.current.click()
+    }
+  }
+
+  const handleAnalyze = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (loading) return
+
+    if (!file) {
+      openFilePicker()
+      return
+    }
+
     setLoading(true)
-    
+    setError("")
+    setNotice("")
+
     try {
       const formData = new FormData()
-      formData.append('cv', file!)
-      if (job) formData.append('jobDescription', job)
 
-      const response = await fetch('/api/public/analyze-preview', {
-        method: 'POST',
+      formData.append("cv", file)
+
+      const trimmedJob = job.trim()
+
+      if (trimmedJob) {
+        formData.append("jobDescription", trimmedJob)
+      }
+
+      const response = await fetch("/api/public/analyze-preview", {
+        method: "POST",
         body: formData,
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        if (data.previewToken) {
-          setPreviewToken(data.previewToken)
-          PreviewTokenManager.setSessionToken(data.previewToken)
-        }
-        // Rediriger vers la page d'analyse avec les données
-        window.location.href = `/analyze?preview=${data.previewToken}`
+      let data: AnalyzePreviewResponse | null = null
+
+      try {
+        data = (await response.json()) as AnalyzePreviewResponse
+      } catch {
+        data = null
       }
-    } catch (error) {
-      console.error('Analysis failed:', error)
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message ||
+            data?.error ||
+            "La demande n’a pas pu être traitée pour le moment."
+        )
+      }
+
+      if (!data?.previewToken) {
+        throw new Error(
+          "Réponse invalide du serveur : token de prévisualisation manquant."
+        )
+      }
+
+      PreviewTokenManager.setSessionToken(data.previewToken)
+
+      router.push(
+        `/analyze?preview=${encodeURIComponent(data.previewToken)}`
+      )
+    } catch (requestError) {
+      console.error("Preview analysis failed:", requestError)
+
+      setError(
+        requestError instanceof Error
+          ? requestError.message
+          : "Une erreur est survenue. Veuillez réessayer."
+      )
+
       setLoading(false)
     }
   }
 
+  // CTA principal fixe : il ne change jamais de libellé.
+  const ctaLabel = "Obtenir mon diagnostic"
+
   return (
-    <div
-      style={{
-        backgroundColor: "var(--color-bg)",
-        minHeight: "calc(100dvh - 72px)",
-      }}
-      className="flex items-center"
-    >
-      <main className="w-full max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">
-          {/* ─── Colonne gauche ─── */}
-          <div className="flex flex-col gap-5 lg:gap-6">
-            {/* Eyebrow */}
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0}
-              style={{
-                color: "var(--color-accent)",
-                fontSize: "11px",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                margin: 0,
-              }}
-            >
-              Votre coach d&apos;entretien intelligent
-            </motion.p>
+    <main className="relative min-h-[calc(100dvh-73px)] bg-ivoire-50 text-ink-900">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(900px 500px at 18% 12%, rgba(156,111,62,0.07), transparent 60%)," +
+            "radial-gradient(700px 450px at 85% 10%, rgba(212,184,150,0.06), transparent 55%)",
+        }}
+      />
 
-            {/* Titre */}
-            <motion.h1
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.1}
-              style={{
-                fontSize: "clamp(24px, 2.6vw, 36px)",
-                lineHeight: 1.14,
-                fontWeight: 700,
-                color: "var(--color-text-main)",
-                margin: 0,
-                fontFamily: "Georgia, serif",
-              }}
-            >
-              Pendant que les autres espèrent,
-              <br />
-              Vous vous préparez à{" "}
-              <span style={{ color: "var(--color-accent)" }}>
-                réussir.
-              </span>
-            </motion.h1>
+      <div className="relative mx-auto w-full max-w-7xl px-6 pt-6 pb-14 lg:pt-8 lg:pb-16">
+        <div className="mx-auto w-full max-w-[1120px]">
+          <div className="grid gap-8 lg:grid-cols-[540px_540px] lg:justify-center lg:gap-12 lg:items-start">
+            {/* ─────────────────────────────
+                COLONNE GAUCHE
+            ───────────────────────────── */}
+            <section className="flex w-full flex-col items-start gap-5">
+              <h1 className="font-serif text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
+                Avancez sereinement
+                <br />
+                vers votre
+                <br />
+                prochain entretien.
+              </h1>
 
-            {/* Sous-titre */}
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.2}
-              style={{
-                fontSize: "15px",
-                lineHeight: 1.65,
-                color: "var(--color-text-body)",
-                maxWidth: "460px",
-                margin: 0,
-              }}
-            >
-              Importez votre CV, décrivez le poste visé et
-              entraînez-vous avec un recruteur IA qui adapte ses
-              questions à votre profil. Recevez une analyse détaillée,
-              des conseils concrets et les compétences à renforcer
-              avant votre véritable entretien.
-            </motion.p>
-
-            {/* Séparateur */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.25}
-              style={{
-                width: "40px",
-                height: "2px",
-                backgroundColor: "var(--color-accent-soft)",
-                borderRadius: "2px",
-              }}
-            />
-
-            {/* Formulaire */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.3}
-              style={{
-                backgroundColor: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "16px",
-                padding: "18px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "12px",
-                boxShadow:
-                  "rgba(0,0,0,0.03) 0px 1px 0px 0px, " +
-                  "rgba(26,26,46,0.07) 0px 10px 28px -8px",
-              }}
-            >
-              <CVUploader file={file} onFile={setFile} />
-              <JobInput value={job} onChange={setJob} />
-
-              <AnalyzeButton
-                disabled={!canAnalyze}
-                loading={loading}
-                onClick={handleAnalyze}
-              />
-
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "var(--color-text-muted)",
-                  textAlign: "center",
-                  margin: 0,
-                  lineHeight: 1.55,
-                }}
-              >
-                🎤 Simulation vocale • 📄 Analyse de CV • 🎯 Feedback
-                personnalisé • 🧠 IA spécialisée RH
+              <p className="max-w-[46ch] leading-7 text-ink-700">
+                Importez votre CV et obtenez un diagnostic immédiat. Vous
+                pouvez aussi coller l’annonce pour rendre l’analyse encore
+                plus ciblée.
               </p>
-            </motion.div>
 
-            {/* Réassurance */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.4}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ display: "flex" }}>
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg, #d4b896, #e8d5b7)",
-                      border: "2px solid var(--color-surface)",
-                      marginLeft: i === 1 ? 0 : "-8px",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
-                    }}
-                  />
-                ))}
-              </div>
-              <div>
-                <div
-                  style={{
-                    color: "var(--color-accent)",
-                    fontSize: "12px",
-                  }}
-                >
-                  ★★★★★
-                </div>
-                <p
-                  style={{
-                    fontSize: "11px",
-                    color: "var(--color-text-muted)",
-                    margin: "2px 0 0",
-                  }}
-                >
-                  Plus de{" "}
-                  <span
-                    style={{
-                      fontWeight: 600,
-                      color: "var(--color-text-body)",
-                    }}
-                  >
-                    2 400 professionnels
-                  </span>{" "}
-                  accompagnés
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ─── Colonne droite — VERSION PREMIUM ─── */}
-          <motion.div
-            variants={fadeScale}
-            initial="hidden"
-            animate="visible"
-            custom={0.15}
-            style={{ position: "relative" }}
-          >
-            {/* Double halo premium */}
-            <div
-              style={{
-                position: "absolute",
-                inset: "-20px",
-                borderRadius: "28px",
-                background:
-                  "radial-gradient(ellipse at 30% 20%, " +
-                  "rgba(156,111,62,0.10) 0%, transparent 50%), " +
-                  "radial-gradient(ellipse at 70% 80%, " +
-                  "rgba(212,184,150,0.12) 0%, transparent 50%)",
-                zIndex: 0,
-                pointerEvents: "none",
-              }}
-            />
-
-            {/* Container image principal */}
-            <div
-              style={{
-                position: "relative",
-                zIndex: 1,
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid var(--color-border)",
-                boxShadow:
-                  "rgba(0,0,0,0.06) 0px 2px 4px, " +
-                  "rgba(26,26,46,0.12) 0px 20px 50px -12px",
-              }}
-            >
-              {/* Image */}
-              <Image
-                src={heroImage}
-                alt="Professionnel se préparant à un entretien"
-                width={440}
-                height={520}
-                className="object-cover w-full h-auto"
-                style={{ maxHeight: "480px" }}
-                priority
-              />
-
-              {/* Overlay gradient subtil en bas */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: "40%",
-                  background:
-                    "linear-gradient(to top, " +
-                    "rgba(0,0,0,0.35) 0%, transparent 100%)",
-                  borderRadius: "0 0 20px 20px",
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Badge "Simulation terminée" — sur l'image */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.7 }}
-                style={{
-                  position: "absolute",
-                  bottom: "16px",
-                  left: "16px",
-                  backgroundColor: "rgba(255,255,255,0.94)",
-                  backdropFilter: "blur(14px)",
-                  border: "1px solid rgba(255,255,255,0.6)",
-                  borderRadius: "14px",
-                  padding: "10px 14px",
-                  boxShadow:
-                    "rgba(0,0,0,0.08) 0px 8px 24px -4px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "10px",
-                    background:
-                      "linear-gradient(135deg, var(--color-accent-light), var(--color-accent-soft))",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    fontSize: "18px",
-                  }}
-                >
-                  🎯
-                </div>
-                <div>
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "var(--color-text-main)",
-                      margin: 0,
-                    }}
-                  >
-                    Simulation terminée
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "11px",
-                      color: "var(--color-text-muted)",
-                      margin: "2px 0 0",
-                    }}
-                  >
-                    Score global :{" "}
-                    <span
-                      style={{
-                        fontWeight: 700,
-                        color: "var(--color-accent)",
-                      }}
-                    >
-                      87 / 100
-                    </span>
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Badge "En cours" — coin haut droit */}
-              <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  right: "16px",
-                  backgroundColor: "rgba(255,255,255,0.92)",
-                  backdropFilter: "blur(14px)",
-                  border: "1px solid rgba(255,255,255,0.5)",
-                  borderRadius: "10px",
-                  padding: "8px 12px",
-                  boxShadow:
-                    "rgba(0,0,0,0.06) 0px 4px 16px -2px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                {/* Pastille verte "live" */}
-                <div
-                  style={{
-                    width: "8px",
-                    height: "8px",
-                    borderRadius: "50%",
-                    backgroundColor: "#22c55e",
-                    boxShadow: "0 0 6px rgba(34,197,94,0.4)",
-                  }}
-                />
-                <p
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    color: "var(--color-text-main)",
-                    margin: 0,
-                  }}
-                >
-                  Entretien en cours
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Bloc stats premium */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.5}
-              style={{
-                marginTop: "12px",
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "10px",
-              }}
-            >
-              {[
-                { value: "12 min", label: "Durée moyenne", icon: "⏱️" },
-                { value: "94 %", label: "Satisfaction", icon: "💎" },
-                { value: "3 actes", label: "Structure", icon: "📋" },
-              ].map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                  style={{
-                    backgroundColor: "var(--color-surface)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: "14px",
-                    padding: "14px 16px",
-                    textAlign: "center",
-                    boxShadow:
-                      "rgba(0,0,0,0.03) 0px 1px 0px, " +
-                      "rgba(26,26,46,0.06) 0px 8px 24px -6px",
-                    cursor: "default",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "16px",
-                      margin: "0 0 6px",
-                    }}
-                  >
-                    {stat.icon}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: 700,
-                      color: "var(--color-text-main)",
-                      margin: 0,
-                    }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "11px",
-                      color: "var(--color-text-muted)",
-                      margin: "3px 0 0",
-                    }}
-                  >
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Barre de confiance */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.6}
-              style={{
-                marginTop: "10px",
-                backgroundColor: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "12px",
-                padding: "12px 16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                boxShadow:
-                  "rgba(0,0,0,0.02) 0px 1px 0px, " +
-                  "rgba(26,26,46,0.04) 0px 6px 20px -4px",
-              }}
-            >
-              {/* Barre de progression */}
-              <div
-                style={{
-                  flex: 1,
-                  height: "6px",
-                  backgroundColor: "var(--color-border)",
-                  borderRadius: "3px",
-                  overflow: "hidden",
-                }}
-              >
-                <motion.div
-                  initial={{ width: "0%" }}
-                  animate={{ width: "87%" }}
-                  transition={{
-                    delay: 0.9,
-                    duration: 1.2,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  style={{
-                    height: "100%",
-                    background:
-                      "linear-gradient(90deg, var(--color-accent), var(--color-accent-soft))",
-                    borderRadius: "3px",
-                  }}
-                />
-              </div>
-
-              {/* Label */}
-              <p
-                style={{
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "var(--color-text-muted)",
-                  margin: 0,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Indice de préparation :{" "}
-                <span style={{ color: "var(--color-accent)" }}>
-                  87%
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-600">
+                <span className="inline-flex items-center gap-2">
+                  <Lock className="h-4 w-4" aria-hidden="true" />
+                  Confidentiel
                 </span>
-              </p>
-            </motion.div>
-          </motion.div>
+
+                <span aria-hidden="true" className="opacity-60">
+                  •
+                </span>
+
+                <span>Résultat immédiat</span>
+
+                <span aria-hidden="true" className="opacity-60">
+                  •
+                </span>
+
+                <span>Sans engagement</span>
+              </div>
+
+              {/* ─────────────────────────────
+                  FORMULAIRE PRINCIPAL
+              ───────────────────────────── */}
+              <form
+                onSubmit={handleAnalyze}
+                className="w-full rounded-2xl border border-ivoire-200 bg-white/90 p-4 shadow-premium backdrop-blur lg:border-ivoire-300"
+              >
+                {/* Upload CV */}
+                <div
+                  onDragOver={(event) => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                  }}
+                  onDrop={handleDrop}
+                  className={[
+                    "rounded-xl border border-dashed p-3 transition-colors",
+                    file
+                      ? "border-ivoire-300 bg-ivoire-50"
+                      : "border-ivoire-300 bg-ivoire-50/60 hover:bg-ivoire-50",
+                  ].join(" ")}
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-white">
+                      {file ? (
+                        <CheckCircle2
+                          className="size-5"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <Upload className="size-5" aria-hidden="true" />
+                      )}
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-medium">
+                        {file ? file.name : "Ajoutez votre CV"}
+                      </p>
+
+                      <p className="text-sm text-ink-500">
+                        {fileMeta ?? "PDF, DOC ou DOCX · 10 Mo maximum"}
+                      </p>
+                    </div>
+
+                    {file && (
+                      <button
+                        type="button"
+                        onClick={resetFile}
+                        disabled={loading}
+                        className="inline-flex items-center justify-center rounded-lg border border-ivoire-200 bg-white px-2.5 py-2 text-sm text-ink-500 transition-colors hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-50 lg:border-ivoire-300"
+                        aria-label="Retirer le fichier"
+                      >
+                        <X className="size-4" aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
+
+                  <label className="mt-3 block cursor-pointer text-sm font-medium text-ink-900">
+                    <span className="inline-flex items-center gap-2">
+                      <span className="underline underline-offset-4">
+                        Choisir un fichier
+                      </span>
+
+                      <span className="text-ink-500">
+                        (ou glisser-déposer)
+                      </span>
+                    </span>
+
+                    <input
+                      ref={fileInputRef}
+                      className="sr-only"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      disabled={loading}
+                      onChange={handleFileChange}
+                    />
+                  </label>
+                </div>
+
+                {/* Notice */}
+                {notice && !error && (
+                  <div className="mt-3 rounded-xl border border-ivoire-200 bg-ivoire-50 px-4 py-3 text-sm text-ink-700 lg:border-ivoire-300">
+                    {notice}
+                  </div>
+                )}
+
+                {/* Erreur */}
+                {error && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="mt-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                  >
+                    {error}
+                  </div>
+                )}
+
+                {/* CTA */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  aria-busy={loading}
+                  className="
+                    mt-3 flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl
+                    bg-gradient-to-b from-ink-900 to-ink-800
+                    px-5 py-3.5 text-[15px] font-semibold text-white
+                    shadow-premium-lg
+                    border border-bronze-400/18
+                    ring-1 ring-bronze-400/35
+                    transition-all duration-200 ease-premium
+                    hover:-translate-y-[1px] hover:ring-bronze-400/60 hover:border-bronze-400/28
+                    active:translate-y-0 active:shadow-premium
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400
+                    focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
+                    disabled:cursor-not-allowed disabled:opacity-70
+                    disabled:hover:translate-y-0
+                  "
+                >
+                  {loading ? (
+                    <>
+                      <Loader2
+                        className="size-4 animate-spin"
+                        aria-hidden="true"
+                      />
+                      Analyse en cours…
+                    </>
+                  ) : (
+                    <>
+                      {ctaLabel}
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+
+                <p className="mt-2 text-center text-xs text-ink-500">
+                  Ajoutez votre CV pour démarrer. L’annonce est optionnelle.
+                </p>
+
+                {/* Annonce optionnelle */}
+                <details className="mt-3 rounded-xl border border-ivoire-200 bg-white px-4 py-3 lg:border-ivoire-300">
+                  <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-bronze-400">
+                    Ajouter l’annonce (optionnel)
+                  </summary>
+
+                  <div className="mt-3">
+                    <textarea
+                      value={job}
+                      onChange={(event) => setJob(event.target.value)}
+                      placeholder="Collez l’annonce (missions, profil recherché, compétences, outils, etc.)"
+                      rows={5}
+                      disabled={loading}
+                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
+                    />
+
+                    <p className="mt-2 text-xs text-ink-500">
+                      Plus l’annonce est détaillée, plus l’analyse et les
+                      questions seront ciblées.
+                    </p>
+                  </div>
+                </details>
+
+                {/* Fonctionnalités */}
+                <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs text-ink-500">
+                  {features.map(({ icon: Icon, label }) => (
+                    <span
+                      key={label}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-ivoire-200 bg-white px-3 py-1 lg:border-ivoire-300"
+                    >
+                      <Icon className="size-3.5" aria-hidden="true" />
+                      {label}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-3 text-center text-xs text-ink-500">
+                  Vos documents restent privés. Vous gardez la main sur ce
+                  que vous partagez.
+                </p>
+              </form>
+
+              {/* Réassurance */}
+              <div className="mt-3 mb-2 flex w-full items-center justify-start">
+                <div className="inline-flex items-center gap-3 rounded-full border border-ivoire-200 bg-white/85 px-5 py-2 shadow-premium backdrop-blur lg:border-ivoire-300">
+                  <div className="flex -space-x-2" aria-hidden="true">
+                    {["A", "M", "S", "L"].map((initial) => (
+                      <span
+                        key={initial}
+                        className="flex size-8 items-center justify-center rounded-full border-2 border-ivoire-50 bg-white text-xs font-semibold text-ink-900 shadow-sm"
+                      >
+                        {initial}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-sm leading-snug text-ink-700">
+                    Conçu pour des profils{" "}
+                    <span className="font-semibold text-ink-900">
+                      juniors, seniors
+                    </span>{" "}
+                    et en{" "}
+                    <span className="font-semibold text-ink-900">
+                      reconversion
+                    </span>
+                    .
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* ─────────────────────────────
+                IMAGE HERO
+            ───────────────────────────── */}
+            <aside className="relative w-full overflow-hidden rounded-3xl border border-ivoire-200 bg-white shadow-premium lg:mt-8 lg:border-ivoire-300">
+              <div className="relative h-[340px] w-full sm:h-[420px] lg:h-[620px]">
+                <Image
+                  src={heroImage}
+                  alt="Préparation d’entretien dans un contexte professionnel"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  className="object-cover object-center"
+                  priority
+                />
+              </div>
+            </aside>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   )
 }
