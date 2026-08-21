@@ -205,7 +205,7 @@ export function CommitteeDecisionReveal({ decision, overallScore, sessionId, cts
                       : "💡 Le comité estime qu'un travail structuré permettrait d'atteindre un niveau compétitif."}
                   </p>
                   <Link 
-                    href="/dashboard/interview/session?focus=weakness"
+                    href="/simulation/new?focus=weakness"
                     onClick={() => {
                       trackEvent('committee_cta_clicked', { session_id: sessionId || 'unknown' })
                     }}

@@ -1,181 +1,350 @@
 /**
  * AI Streaming Service
- * Provides streaming capabilities for AI responses to improve UX
- * Instead of waiting 20 seconds for the full response, stream tokens as they arrive
+ *
+ * Provides streaming capabilities for AI responses.
+ *
+ * No-key behavior:
+ * - never creates an OpenAI client with a placeholder key
+ * - never performs a remote request without valid AI configuration
+ * - returns a deterministic fallback stream instead
  */
 
-import OpenAI from 'openai'
+import OpenAI from "openai";
+
+import {
+  getOptionalAIConfig,
+  hasValidOpenAIKey,
+} from "@/lib/ai/config/ai.config";
 
 export interface StreamingOptions {
-  model?: string
-  temperature?: number
-  maxTokens?: number
-  onToken?: (token: string) => void
-  onComplete?: (fullResponse: string) => void
-  onError?: (error: Error) => void
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+  onToken?: (token: string) => void;
+  onComplete?: (fullResponse: string) => void;
+  onError?: (error: Error) => void;
 }
 
 export interface StreamingResult {
-  fullResponse: string
-  tokenCount: number
-  duration: number
+  fullResponse: string;
+  tokenCount: number;
+  duration: number;
 }
 
-export class AIStreamingService {
-  private openai: OpenAI
+type ChatMessage = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
 
-  constructor(apiKey: string) {
-    this.openai = new OpenAI({ apiKey });
+const LOCAL_FALLBACK_RESPONSE =
+  "Analyse IA distante indisponible. Le mode local reste actif.";
+
+export class AIStreamingService {
+  private readonly openai: OpenAI | null;
+
+  constructor(apiKey?: string) {
+    const explicitKey =
+      apiKey?.trim();
+
+    if (
+      explicitKey &&
+      hasValidOpenAIKey(explicitKey)
+    ) {
+      this.openai =
+        new OpenAI({
+          apiKey:
+            explicitKey,
+        });
+
+      return;
+    }
+
+    const config =
+      getOptionalAIConfig();
+
+    if (!config) {
+      this.openai =
+        null;
+
+      return;
+    }
+
+    this.openai =
+      new OpenAI({
+        apiKey:
+          config.openaiApiKey,
+
+        organization:
+          config.openaiOrganization,
+
+        project:
+          config.openaiProject,
+      });
   }
 
-  /**
-   * Stream AI response
-   * @param messages - Conversation messages
-   * @param options - Streaming options
-   * @returns Promise with full response and metadata
-   */
   async streamResponse(
-    messages: Array<{ role: "user" | "assistant" | "system"; content: string }>,
-    options: StreamingOptions = {}
+    messages: ChatMessage[],
+    options: StreamingOptions = {},
   ): Promise<StreamingResult> {
     const {
-      model = "gpt-4",
+      model = "gpt-4o-mini",
       temperature = 0.7,
       maxTokens = 2000,
       onToken,
       onComplete,
       onError,
-    } = options
+    } = options;
 
-    const startTime = Date.now()
-    let fullResponse = ""
-    let tokenCount = 0
+    const startTime =
+      Date.now();
+
+    if (!this.openai) {
+      return this.streamLocalFallback(
+        startTime,
+        onToken,
+        onComplete,
+      );
+    }
+
+    let fullResponse =
+      "";
+
+    let tokenCount =
+      0;
 
     try {
-      const stream = await this.openai.chat.completions.create({
-        model,
-        messages: messages as any,
-        temperature,
-        max_tokens: maxTokens,
-        stream: true,
-      })
+      const stream =
+        await this.openai.chat.completions.create({
+          model,
 
-      for await (const chunk of stream) {
-        const token = chunk.choices[0]?.delta?.content || ""
-        
-        if (token) {
-          fullResponse += token
-          tokenCount++
-          
-          // Call token callback if provided
-          if (onToken) {
-            onToken(token)
-          }
+          messages:
+            messages as OpenAI.Chat.ChatCompletionMessageParam[],
+
+          temperature,
+
+          max_tokens:
+            maxTokens,
+
+          stream:
+            true,
+        });
+
+      for await (
+        const chunk of stream
+      ) {
+        const token =
+          chunk.choices[0]
+            ?.delta
+            ?.content ?? "";
+
+        if (!token) {
+          continue;
         }
+
+        fullResponse +=
+          token;
+
+        tokenCount += 1;
+
+        onToken?.(
+          token,
+        );
       }
 
-      const duration = Date.now() - startTime
+      const duration =
+        Date.now() -
+        startTime;
 
-      // Call complete callback if provided
-      if (onComplete) {
-        onComplete(fullResponse)
-      }
+      onComplete?.(
+        fullResponse,
+      );
 
       return {
         fullResponse,
         tokenCount,
         duration,
-      }
+      };
     } catch (error) {
-      if (onError) {
-        onError(error as Error)
-      }
-      throw error
+      const normalizedError =
+        error instanceof Error
+          ? error
+          : new Error(
+              "Unknown AI streaming error",
+            );
+
+      onError?.(
+        normalizedError,
+      );
+
+      return this.streamLocalFallback(
+        startTime,
+        onToken,
+        onComplete,
+      );
     }
   }
 
-  /**
-   * Stream response to a Node.js writable stream (for HTTP responses)
-   * @param messages - Conversation messages
-   * @param writableStream - Writable stream to send tokens to
-   * @param options - Streaming options
-   */
   async streamToWritable(
-    messages: Array<{ role: "user" | "assistant" | "system"; content: string }>,
+    messages: ChatMessage[],
     writableStream: NodeJS.WritableStream,
-    options: StreamingOptions = {}
+    options: StreamingOptions = {},
   ): Promise<StreamingResult> {
-    const result = await this.streamResponse(messages, {
-      ...options,
-      onToken: (token: string) => {
-        writableStream.write(token)
-        if (options.onToken) {
-          options.onToken(token)
-        }
-      },
-    })
+    const originalOnToken =
+      options.onToken;
 
-    writableStream.end()
-    return result
+    const result =
+      await this.streamResponse(
+        messages,
+        {
+          ...options,
+
+          onToken: (
+            token: string,
+          ) => {
+            writableStream.write(
+              token,
+            );
+
+            originalOnToken?.(
+              token,
+            );
+          },
+        },
+      );
+
+    writableStream.end();
+
+    return result;
   }
 
-  /**
-   * Stream response to a Web Response (for Next.js API routes)
-   * @param messages - Conversation messages
-   * @param options - Streaming options
-   * @returns Response object with streaming
-   */
   async streamToWebResponse(
-    messages: Array<{ role: "user" | "assistant" | "system"; content: string }>,
-    options: StreamingOptions = {}
+    messages: ChatMessage[],
+    options: StreamingOptions = {},
   ): Promise<Response> {
-    const encoder = new TextEncoder()
-    const decoder = new TextDecoder()
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this; // Capture context
+    const encoder =
+      new TextEncoder();
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          const result = await self.streamResponse(messages, {
-            ...options,
-            onToken: (token: string) => {
-              controller.enqueue(encoder.encode(token))
-            },
-          })
+    const self =
+      this;
 
-          controller.close()
-          
-          if (options.onComplete) {
-            options.onComplete(result.fullResponse)
+    const stream =
+      new ReadableStream<Uint8Array>({
+        async start(
+          controller,
+        ) {
+          try {
+            await self.streamResponse(
+              messages,
+              {
+                ...options,
+
+                onToken: (
+                  token: string,
+                ) => {
+                  controller.enqueue(
+                    encoder.encode(
+                      token,
+                    ),
+                  );
+
+                  options.onToken?.(
+                    token,
+                  );
+                },
+
+                onComplete: (
+                  fullResponse,
+                ) => {
+                  options.onComplete?.(
+                    fullResponse,
+                  );
+                },
+              },
+            );
+
+            controller.close();
+          } catch (error) {
+            const normalizedError =
+              error instanceof Error
+                ? error
+                : new Error(
+                    "Unknown AI streaming error",
+                  );
+
+            options.onError?.(
+              normalizedError,
+            );
+
+            controller.error(
+              normalizedError,
+            );
           }
-        } catch (error) {
-          controller.error(error)
-          if (options.onError) {
-            options.onError(error as Error)
-          }
-        }
-      },
-    })
+        },
+      });
 
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
+    return new Response(
+      stream,
+      {
+        headers: {
+          "Content-Type":
+            "text/event-stream; charset=utf-8",
+
+          "Cache-Control":
+            "no-cache, no-transform",
+
+          Connection:
+            "keep-alive",
+        },
       },
-    })
+    );
+  }
+
+  private streamLocalFallback(
+    startTime: number,
+    onToken?: (
+      token: string,
+    ) => void,
+    onComplete?: (
+      fullResponse: string,
+    ) => void,
+  ): StreamingResult {
+    const response =
+      LOCAL_FALLBACK_RESPONSE;
+
+    onToken?.(
+      response,
+    );
+
+    onComplete?.(
+      response,
+    );
+
+    return {
+      fullResponse:
+        response,
+
+      tokenCount:
+        0,
+
+      duration:
+        Date.now() -
+        startTime,
+    };
   }
 }
 
-/**
- * Helper function to create a streaming response for Next.js API routes
- */
 export async function createStreamingResponse(
-  messages: Array<{ role: "user" | "assistant" | "system"; content: string }>,
-  apiKey: string,
-  options?: StreamingOptions
+  messages: ChatMessage[],
+  apiKey?: string,
+  options?: StreamingOptions,
 ): Promise<Response> {
-  const service = new AIStreamingService(apiKey)
-  return service.streamToWebResponse(messages, options)
+  const service =
+    new AIStreamingService(
+      apiKey,
+    );
+
+  return service.streamToWebResponse(
+    messages,
+    options,
+  );
 }

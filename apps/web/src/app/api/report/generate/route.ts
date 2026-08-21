@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+﻿import { createClient } from "@/lib/supabase/server";
 import { Container, ServiceTokens } from "@/infrastructure/di";
 import { initializeContainer } from "@/infrastructure/di/bootstrap";
 import { ReportService } from "@/application/services";
@@ -9,7 +9,7 @@ import { IdempotencyService } from "@/core/idempotency/IdempotencyService";
 import { BillingService } from "@/lib/db/billing.service";
 import { NextRequest } from "next/server";
 
-const ENABLE_REPORT_BILLING = process.env.ENABLE_REPORT_BILLING === 'true';
+const ENABLE_REPORT_BILLING = process.env.ENABLE_REPORT_BILLING === "true";
 const REPORT_COST = 15; // credits per report
 
 export async function POST(request: NextRequest) {
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     const validatedData = validationResult.data;
-    const reportService = await Container.resolve(ServiceTokens.ReportService) as ReportService;
+    const reportService = (await Container.resolve(ServiceTokens.ReportService)) as ReportService;
 
     const generateWithBilling = async () => {
       let txId: string | undefined;
@@ -64,6 +64,41 @@ export async function POST(request: NextRequest) {
           sessionId: validatedData.sessionId,
         });
 
+        // =========================================================
+        // Dashboard KPIs + Gamification (best-effort)
+        // =========================================================
+        // 1) Persist score/feedback for KPIs
+        try {
+          const score =
+            typeof (data as any).overallScore === "number"
+              ? (data as any).overallScore
+              : typeof (data as any).score === "number"
+                ? (data as any).score
+                : null;
+
+          await supabase
+            .from("interview_sessions")
+            .upsert(
+              {
+                id: validatedData.sessionId,
+                user_id: user.id,
+                score,
+                feedback: data as any,
+              },
+              { onConflict: "id" }
+            );
+        } catch (e) {
+          console.warn("[report/generate] interview_sessions upsert failed:", e);
+        }
+
+        // 2) Award badges based on stored sessions
+        try {
+          await supabase.rpc("award_badges_for_user", { p_user_id: user.id });
+        } catch (e) {
+          console.warn("[report/generate] award_badges_for_user failed:", e);
+        }
+
+        // Commit billing if enabled
         if (txId) {
           await BillingService.commitCredits(txId, 0);
         }
@@ -87,7 +122,7 @@ export async function POST(request: NextRequest) {
         validatedData,
         async () => {
           const data = await generateWithBilling();
-          return { resultRef: data.reportId, data };
+          return { resultRef: (data as any).reportId, data };
         },
         async (resultRef) => ({
           reportId: resultRef,
@@ -98,7 +133,7 @@ export async function POST(request: NextRequest) {
           strengths: [],
           improvements: [],
           summary: "Cached report",
-          recommendation: "Please view your dashboard for details."
+          recommendation: "Please view your dashboard for details.",
         })
       );
     } else {

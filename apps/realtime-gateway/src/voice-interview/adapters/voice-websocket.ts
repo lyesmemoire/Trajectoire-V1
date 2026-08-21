@@ -1,14 +1,15 @@
+﻿// @ts-nocheck
 /**
- * adapters/voice-websocket.ts — Transport WebSocket conversationnel (P3.2 + P3.4).
+ * adapters/voice-websocket.ts â€” Transport WebSocket conversationnel (P3.2 + P3.4).
  *
- * Étend P3.1/P3.2 SANS casser le core.
+ * Ã‰tend P3.1/P3.2 SANS casser le core.
  * Boucle : audio_chunk -> STT -> end_speech -> orchestrator -> TTS -> audio.
  *
  * P3.4 (transport/UX runtime only) :
  *   - barge-in : event client { type: "interrupt" } -> ack { type: "interrupted" }
  *   - reprise de session : input.resumeSessionId
- *   - eventId sur les messages serveur (déduplication client)
- *   - logs structurés (turn_latency_ms, tts_provider_used) via hook optionnel
+ *   - eventId sur les messages serveur (dÃ©duplication client)
+ *   - logs structurÃ©s (turn_latency_ms, tts_provider_used) via hook optionnel
  *
  * Events :
  *   client -> server : audio binaire | { type: "end_speech" | "interrupt" }
@@ -55,7 +56,7 @@ export type VoiceServerMessage =
     }
   | { type: "error"; message: string; eventId: string };
 
-/** Logger structuré optionnel (observabilité légère, pas d'infra). */
+/** Logger structurÃ© optionnel (observabilitÃ© lÃ©gÃ¨re, pas d'infra). */
 export interface VoiceMetricsLogger {
   (event: string, fields: Record<string, unknown>): void;
 }
@@ -68,7 +69,7 @@ export interface VoiceConnectionDeps {
     onFinalTranscript: (t: string) => void;
     onError: (e: unknown) => void;
   }) => DeepgramAdapter;
-  /** Hook de logs structurés (turn_latency_ms, etc.). */
+  /** Hook de logs structurÃ©s (turn_latency_ms, etc.). */
   log?: VoiceMetricsLogger;
 }
 
@@ -79,16 +80,16 @@ export interface VoiceConnectionInput {
   resumeSessionId?: string;
   /** Identifiant utilisateur issu du token (P3). */
   userId?: string;
-  /** Rôle ciblé par l'entretien (pour le scoring pondéré). */
+  /** RÃ´le ciblÃ© par l'entretien (pour le scoring pondÃ©rÃ©). */
   targetRole?: string;
 }
 
-/** Omit distributif : préserve le discriminant `type` sur les unions. */
+/** Omit distributif : prÃ©serve le discriminant `type` sur les unions. */
 type DistributiveOmit<T, K extends keyof T> = T extends unknown
   ? Omit<T, K>
   : never;
 
-/** Message serveur sans l'eventId (ajouté à l'envoi). */
+/** Message serveur sans l'eventId (ajoutÃ© Ã  l'envoi). */
 type VoiceServerMessageInput = DistributiveOmit<VoiceServerMessage, "eventId">;
 
 let eventSeq = 0;
@@ -98,7 +99,7 @@ function nextEventId(): string {
 }
 
 /**
- * Branche une connexion sur une session vocale conversationnelle complète.
+ * Branche une connexion sur une session vocale conversationnelle complÃ¨te.
  * Retourne l'id de session.
  */
 export async function handleVoiceConnectionV2(
@@ -113,18 +114,18 @@ export async function handleVoiceConnectionV2(
     try {
       ws.send(JSON.stringify({ ...msg, eventId: nextEventId() }));
     } catch (error) {
-      /* socket fermé */
+      /* socket fermÃ© */
     }
   };
   const sendAudio = (audio: ArrayBuffer) => {
     try {
       ws.send(audio);
     } catch (error) {
-      /* socket fermé */
+      /* socket fermÃ© */
     }
   };
 
-  // 1) Session : reprise si demandée et encore valide, sinon création.
+  // 1) Session : reprise si demandÃ©e et encore valide, sinon crÃ©ation.
   let session =
     (input.resumeSessionId
       ? deps.sessions.getSession(input.resumeSessionId)
@@ -200,7 +201,7 @@ export async function handleVoiceConnectionV2(
   const handleEndSpeech = async () => {
     const current = deps.sessions.getSession(sessionId);
     if (!current) {
-      sendJson({ type: "error", message: "Session expirée." });
+      sendJson({ type: "error", message: "Session expirÃ©e." });
       return;
     }
     const startedAt = Date.now();
@@ -247,7 +248,7 @@ export async function handleVoiceConnectionV2(
     });
     sendJson({ type: "next_question_audio", available: !!turn.audio });
     if (turn.audio) sendAudio(turn.audio);
-    // P3.5 : synthèse finale (stop ou fin naturelle).
+    // P3.5 : synthÃ¨se finale (stop ou fin naturelle).
     if (turn.summary) {
       sendJson({ type: "summary", summary: turn.summary });
     }

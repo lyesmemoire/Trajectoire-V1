@@ -146,3 +146,58 @@ supabase/.temp/
 
 .vercel
 .env*
+
+# ============================================================
+# Trajectoire local development / repair artifacts
+# ============================================================
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Local repair backups
+.backups/
+backups/
+backup/
+.repair-backups/
+.runtime-smoke/
+
+# Ad-hoc backup files
+*.bak
+*.bak-*
+*.bak.*
+*.backup
+*.before-fix.*
+*.pass*.backup
+
+# Local payload/session artifacts
+cookies.txt
+payload.json
+payload.json.bak
+
+# Local audit output
+*-audit.txt
+typecheck-*.txt
+trajectoire-tree.txt
+app-structure.txt
+api-app-structure.txt
+components-app-structure.txt
+schema-audit.txt
+before-interview-repair.sql
+
+# Generated/cache directories
+**/.gradle/
+coverage/
+.stryker-tmp/
+
+# Supabase CLI runtime state
+supabase/.temp/
+
+/apps/web/.env.local
+*.js.map
+*.d.ts.map
+/apps/web/src/types/supabase.generated.20*.ts

@@ -1,7 +1,14 @@
 /**
  * AI Configuration
- * Centralized environment variables and AI settings
- * Single source of truth for all AI-related configuration
+ *
+ * Centralized environment variables and AI settings.
+ * Single source of truth for all AI-related configuration.
+ *
+ * IMPORTANT:
+ * - Never accepts an empty OpenAI API key.
+ * - Never accepts known placeholder/dummy keys.
+ * - Does not require OpenAI to exist merely because this module is imported.
+ * - getAIConfig() fails fast only when a real AI operation requires configuration.
  */
 
 import { InfrastructureError } from "@/core/errors";
@@ -13,56 +20,177 @@ export interface AIConfig {
   openaiProject?: string;
 
   // Provider Selection
-  aiProvider: "openai" | "anthropic" | "gemini" | "mistral";
+  aiProvider: "openai" | "anthropic" | "gemini";
 
   // Performance Settings
-  aiTimeout: number; // milliseconds
+  aiTimeout: number;
   aiMaxRetries: number;
 
   // Cost Control
-  maxCostPerSession: number; // USD
-  maxCostPerDay: number; // USD
+  maxCostPerSession: number;
+  maxCostPerDay: number;
 
   // Memory Settings
-  conversationWindow: number; // number of messages to keep in window
-  summaryThreshold: number; // number of messages before summarizing
+  conversationWindow: number;
+  summaryThreshold: number;
 }
 
-const config: AIConfig = {
-  openaiApiKey: process.env.OPENAI_API_KEY || "",
-  openaiOrganization: process.env.OPENAI_ORGANIZATION,
-  openaiProject: process.env.OPENAI_PROJECT,
-  aiProvider: (process.env.AI_PROVIDER as AIConfig["aiProvider"]) || "openai",
-  aiTimeout: parseInt(process.env.AI_TIMEOUT || "60000", 10), // 60 seconds default
-  aiMaxRetries: parseInt(process.env.AI_MAX_RETRIES || "3", 10),
-  maxCostPerSession: parseFloat(process.env.MAX_COST_PER_SESSION || "1.00"),
-  maxCostPerDay: parseFloat(process.env.MAX_COST_PER_DAY || "10.00"),
-  conversationWindow: parseInt(process.env.CONVERSATION_WINDOW || "10", 10),
-  summaryThreshold: parseInt(process.env.SUMMARY_THRESHOLD || "15", 10),
-};
+function normalizeOptionalString(
+  value: string | undefined,
+): string | undefined {
+  const normalized = value?.trim();
+
+  return normalized || undefined;
+}
+
+function isPlaceholderOpenAIKey(
+  value: string,
+): boolean {
+  const normalized = value
+    .trim()
+    .toLowerCase();
+
+  if (!normalized) {
+    return true;
+  }
+
+  const exactPlaceholders = new Set([
+    "dummy",
+    "sk-dummy",
+    "test",
+    "sk-test",
+    "placeholder",
+    "changeme",
+    "change-me",
+    "your-api-key",
+    "your-openai-api-key",
+    "your_openai_api_key",
+  ]);
+
+  if (exactPlaceholders.has(normalized)) {
+    return true;
+  }
+
+  return (
+    normalized.includes("placeholder") ||
+    normalized.includes("your-openai") ||
+    normalized.includes("changeme")
+  );
+}
+
+export function hasValidOpenAIKey(
+  value: string | undefined = process.env.OPENAI_API_KEY,
+): boolean {
+  const apiKey = value?.trim();
+
+  if (!apiKey) {
+    return false;
+  }
+
+  if (isPlaceholderOpenAIKey(apiKey)) {
+    return false;
+  }
+
+  return apiKey.startsWith("sk-");
+}
+
+function createConfig(): AIConfig {
+  return {
+    openaiApiKey:
+      process.env.OPENAI_API_KEY?.trim() || "",
+
+    openaiOrganization:
+      normalizeOptionalString(
+        process.env.OPENAI_ORGANIZATION,
+      ),
+
+    openaiProject:
+      normalizeOptionalString(
+        process.env.OPENAI_PROJECT,
+      ),
+
+    aiProvider:
+      (process.env.AI_PROVIDER as AIConfig["aiProvider"]) ||
+      "openai",
+
+    aiTimeout:
+      Number.parseInt(
+        process.env.AI_TIMEOUT || "60000",
+        10,
+      ),
+
+    aiMaxRetries:
+      Number.parseInt(
+        process.env.AI_MAX_RETRIES || "3",
+        10,
+      ),
+
+    maxCostPerSession:
+      Number.parseFloat(
+        process.env.MAX_COST_PER_SESSION || "1.00",
+      ),
+
+    maxCostPerDay:
+      Number.parseFloat(
+        process.env.MAX_COST_PER_DAY || "10.00",
+      ),
+
+    conversationWindow:
+      Number.parseInt(
+        process.env.CONVERSATION_WINDOW || "10",
+        10,
+      ),
+
+    summaryThreshold:
+      Number.parseInt(
+        process.env.SUMMARY_THRESHOLD || "15",
+        10,
+      ),
+  };
+}
 
 /**
- * Get AI configuration
- * @returns AI configuration object
+ * Returns AI configuration for code that actually requires
+ * a configured remote AI provider.
+ *
+ * Throws when OPENAI_API_KEY is absent or is a known placeholder.
  */
 export function getAIConfig(): AIConfig {
-  if (!config.openaiApiKey) {
-    throw new InfrastructureError("OPENAI_API_KEY environment variable is not set", "AIConfig");
+  const config = createConfig();
+
+  if (!hasValidOpenAIKey(config.openaiApiKey)) {
+    throw new InfrastructureError(
+      "OPENAI_API_KEY is not configured with a valid non-placeholder key",
+      "AIConfig",
+    );
   }
+
   return config;
 }
 
 /**
- * Validate AI configuration
- * @returns true if configuration is valid
+ * Safe configuration check.
+ *
+ * This function never throws and does not perform any network request.
  */
 export function validateAIConfig(): boolean {
-  try {
-    getAIConfig();
-    return true;
-  } catch {
-    return false;
-  }
+  return hasValidOpenAIKey();
 }
 
-export default config;
+/**
+ * Non-throwing configuration access.
+ *
+ * Useful for health checks and features capable of operating
+ * without remote AI.
+ */
+export function getOptionalAIConfig(): AIConfig | null {
+  const config = createConfig();
+
+  if (!hasValidOpenAIKey(config.openaiApiKey)) {
+    return null;
+  }
+
+  return config;
+}
+
+export default createConfig();

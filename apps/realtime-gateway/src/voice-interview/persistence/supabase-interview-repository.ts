@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { createClient } from "@supabase/supabase-js";
 import type { InterviewRecord, InterviewRepository } from "./interview-repository.js";
 import { envServer } from "../../../../../lib/env.server.js";

@@ -152,7 +152,6 @@ function isAllowedDomain(hostname: string): boolean {
   
   const allowed = [
     'api.openai.com',
-    'api.mistral.ai',
     '*.supabase.co',
     'api.stripe.com',
     'cdn.jsdelivr.net',

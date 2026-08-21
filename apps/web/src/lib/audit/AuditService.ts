@@ -1,10 +1,17 @@
-/**
+﻿/**
  * Audit Service
- * Logs sensitive operations for compliance and security
- * Tracks who, when, IP, action, result, before, after
+ *
+ * Logs sensitive operations for compliance and security.
+ *
+ * Canonical persistence:
+ * Prisma AdminAuditLog -> public."AdminAuditLog"
+ *
+ * Legacy Supabase `audit_logs` persistence has been removed.
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { Prisma } from "@prisma/client";
+
+import { prisma } from "@/lib/prisma";
 import { logError } from "@/lib/logger/Logger";
 
 export interface AuditLogEntry {
@@ -16,9 +23,14 @@ export interface AuditLogEntry {
   userAgent?: string;
   result: "success" | "failure" | "partial";
   errorMessage?: string;
-  beforeValue?: any;
-  afterValue?: any;
+  beforeValue?: unknown;
+  afterValue?: unknown;
   metadata?: Record<string, unknown>;
+}
+
+export interface PersistedAuditLogEntry extends AuditLogEntry {
+  id: string;
+  createdAt: Date;
 }
 
 export class AuditService {
@@ -26,158 +38,217 @@ export class AuditService {
 
   private constructor() {}
 
-  /**
-   * Get singleton instance
-   */
   static getInstance(): AuditService {
     if (!AuditService.instance) {
       AuditService.instance = new AuditService();
     }
+
     return AuditService.instance;
   }
 
   /**
-   * Log an audit entry
+   * AdminAuditLog.adminId is mandatory and references User.
+   *
+   * Entries without a user cannot safely be persisted into the
+   * canonical table, so they are logged and ignored rather than
+   * creating invalid relational data.
    */
   async log(entry: AuditLogEntry): Promise<void> {
-    try {
-      const supabase = await createClient();
+    if (!entry.userId) {
+      logError(
+        "Failed to log audit entry: userId is required by AdminAuditLog",
+        new Error("Missing audit userId")
+      );
 
-      await supabase.from("audit_logs").insert({
-        user_id: entry.userId,
-        action: entry.action,
-        entity_type: entry.entityType,
-        entity_id: entry.entityId,
-        ip_address: entry.ipAddress,
-        user_agent: entry.userAgent,
+      return;
+    }
+
+    try {
+      const metadata: Prisma.InputJsonValue = {
+        entityType: entry.entityType,
         result: entry.result,
-        error_message: entry.errorMessage,
-        before_value: entry.beforeValue,
-        after_value: entry.afterValue,
-        metadata: entry.metadata,
+
+        ...(entry.errorMessage
+          ? { errorMessage: entry.errorMessage }
+          : {}),
+
+        ...(entry.beforeValue !== undefined
+          ? {
+              beforeValue:
+                entry.beforeValue as Prisma.InputJsonValue,
+            }
+          : {}),
+
+        ...(entry.afterValue !== undefined
+          ? {
+              afterValue:
+                entry.afterValue as Prisma.InputJsonValue,
+            }
+          : {}),
+
+        ...(entry.metadata ?? {}),
+      };
+
+      await prisma.adminAuditLog.create({
+        data: {
+          adminId: entry.userId,
+          action: entry.action,
+          targetId: entry.entityId ?? null,
+          metadata,
+          ipAddress: entry.ipAddress ?? null,
+          userAgent: entry.userAgent ?? null,
+        },
       });
     } catch (error) {
       logError("Failed to log audit entry", error);
-      // Don't throw - audit logging failure shouldn't break the application
+
+      /**
+       * Audit failure must not break the business operation.
+       */
     }
   }
 
-  /**
-   * Log a successful action
-   */
-  async logSuccess(entry: Omit<AuditLogEntry, "result">): Promise<void> {
-    await this.log({ ...entry, result: "success" });
+  async logSuccess(
+    entry: Omit<AuditLogEntry, "result">
+  ): Promise<void> {
+    await this.log({
+      ...entry,
+      result: "success",
+    });
   }
 
-  /**
-   * Log a failed action
-   */
   async logFailure(
-    entry: Omit<AuditLogEntry, "result" | "errorMessage">,
+    entry: Omit<
+      AuditLogEntry,
+      "result" | "errorMessage"
+    >,
     errorMessage: string
   ): Promise<void> {
-    await this.log({ ...entry, result: "failure", errorMessage });
+    await this.log({
+      ...entry,
+      result: "failure",
+      errorMessage,
+    });
   }
 
-  /**
-   * Log a partial success action
-   */
   async logPartial(
-    entry: Omit<AuditLogEntry, "result" | "errorMessage">,
+    entry: Omit<
+      AuditLogEntry,
+      "result" | "errorMessage"
+    >,
     errorMessage?: string
   ): Promise<void> {
-    await this.log({ ...entry, result: "partial", errorMessage });
+    await this.log({
+      ...entry,
+      result: "partial",
+      errorMessage,
+    });
   }
 
-  /**
-   * Get audit logs for a user
-   */
   async getUserAuditLogs(
     userId: string,
     limit: number = 100,
     offset: number = 0
-  ): Promise<unknown[]> {
+  ): Promise<PersistedAuditLogEntry[]> {
     try {
-      const supabase = await createClient();
-      const { data, error } = await supabase
-        .from("audit_logs")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false })
-        .range(offset, offset + limit - 1);
+      const logs = await prisma.adminAuditLog.findMany({
+        where: {
+          adminId: userId,
+        },
 
-      if (error) {
-        throw error;
-      }
+        orderBy: {
+          createdAt: "desc",
+        },
 
-      return data || [];
+        skip: offset,
+        take: limit,
+      });
+
+      return logs.map((log) =>
+        this.toAuditLogEntry(log)
+      );
     } catch (error) {
-      logError("Failed to get audit logs", error);
+      logError(
+        "Failed to get audit logs",
+        error
+      );
+
       return [];
     }
   }
 
-  /**
-   * Get audit logs for an entity
-   */
   async getEntityAuditLogs(
     entityType: string,
     entityId: string,
     limit: number = 100
-  ): Promise<unknown[]> {
+  ): Promise<PersistedAuditLogEntry[]> {
     try {
-      const supabase = await createClient();
-      const { data, error } = await supabase
-        .from("audit_logs")
-        .select("*")
-        .eq("entity_type", entityType)
-        .eq("entity_id", entityId)
-        .order("created_at", { ascending: false })
-        .limit(limit);
+      const logs =
+        await prisma.adminAuditLog.findMany({
+          where: {
+            targetId: entityId,
+          },
 
-      if (error) {
-        throw error;
-      }
+          orderBy: {
+            createdAt: "desc",
+          },
 
-      return data || [];
+          take: limit,
+        });
+
+      return logs
+        .map((log) =>
+          this.toAuditLogEntry(log)
+        )
+        .filter(
+          (log) =>
+            log.entityType === entityType
+        );
     } catch (error) {
-      logError("Failed to get entity audit logs", error);
+      logError(
+        "Failed to get entity audit logs",
+        error
+      );
+
       return [];
     }
   }
 
-  /**
-   * Get audit logs by action
-   */
   async getAuditLogsByAction(
     action: string,
     limit: number = 100
-  ): Promise<unknown[]> {
+  ): Promise<PersistedAuditLogEntry[]> {
     try {
-      const supabase = await createClient();
-      const { data, error } = await supabase
-        .from("audit_logs")
-        .select("*")
-        .eq("action", action)
-        .order("created_at", { ascending: false })
-        .limit(limit);
+      const logs =
+        await prisma.adminAuditLog.findMany({
+          where: {
+            action,
+          },
 
-      if (error) {
-        throw error;
-      }
+          orderBy: {
+            createdAt: "desc",
+          },
 
-      return data || [];
+          take: limit,
+        });
+
+      return logs.map((log) =>
+        this.toAuditLogEntry(log)
+      );
     } catch (error) {
-      logError("Failed to get audit logs by action", error);
+      logError(
+        "Failed to get audit logs by action",
+        error
+      );
+
       return [];
     }
   }
 
-  /**
-   * Mask sensitive data in audit logs
-   */
-  maskSensitiveData(data: any): any {
-    if (!data) return data;
+  maskSensitiveData(data: unknown): unknown {
+    if (!data) {
+      return data;
+    }
 
     const sensitiveFields = [
       "password",
@@ -190,19 +261,96 @@ export class AuditService {
       "phone",
     ];
 
-    if (typeof data === "object") {
-      const masked = { ...data };
+    if (
+      typeof data === "object" &&
+      !Array.isArray(data)
+    ) {
+      const masked = {
+        ...(data as Record<string, unknown>),
+      };
+
       for (const field of sensitiveFields) {
         if (field in masked) {
           masked[field] = "***MASKED***";
         }
       }
+
       return masked;
     }
 
     return data;
   }
+
+  private toAuditLogEntry(log: {
+    id: string;
+    adminId: string;
+    action: string;
+    targetId: string | null;
+    metadata: Prisma.JsonValue;
+    ipAddress: string | null;
+    userAgent: string | null;
+    createdAt: Date;
+  }): PersistedAuditLogEntry {
+    const metadata =
+      log.metadata &&
+      typeof log.metadata === "object" &&
+      !Array.isArray(log.metadata)
+        ? (
+            log.metadata as Record<
+              string,
+              unknown
+            >
+          )
+        : {};
+
+    const entityType =
+      typeof metadata.entityType === "string"
+        ? metadata.entityType
+        : "unknown";
+
+    const result =
+      metadata.result === "failure" ||
+      metadata.result === "partial"
+        ? metadata.result
+        : "success";
+
+    const errorMessage =
+      typeof metadata.errorMessage === "string"
+        ? metadata.errorMessage
+        : undefined;
+
+    const beforeValue =
+      metadata.beforeValue;
+
+    const afterValue =
+      metadata.afterValue;
+
+    const {
+      entityType: _entityType,
+      result: _result,
+      errorMessage: _errorMessage,
+      beforeValue: _beforeValue,
+      afterValue: _afterValue,
+      ...customMetadata
+    } = metadata;
+
+    return {
+      id: log.id,
+      userId: log.adminId,
+      action: log.action,
+      entityType,
+      entityId: log.targetId ?? undefined,
+      ipAddress: log.ipAddress ?? undefined,
+      userAgent: log.userAgent ?? undefined,
+      result,
+      errorMessage,
+      beforeValue,
+      afterValue,
+      metadata: customMetadata,
+      createdAt: log.createdAt,
+    };
+  }
 }
 
-// Export singleton instance
-export const auditService = AuditService.getInstance();
+export const auditService =
+  AuditService.getInstance();

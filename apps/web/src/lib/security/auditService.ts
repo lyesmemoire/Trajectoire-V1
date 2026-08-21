@@ -1,16 +1,18 @@
-/**
- * Audit Service - Historisation des actions sensibles
- * 
- * Ce module fournit des fonctions pour:
- * - Enregistrer les actions sensibles
- * - Suivre les connexions
- * - Suivre les suppressions de compte
- * - Suivre les exports de données
- * - Suivre les paiements
- * - Suivre les générations de rapport
+﻿/**
+ * Security audit service.
+ *
+ * Legacy Supabase table removed:
+ *   audit_log
+ *
+ * Canonical persistence:
+ *   Prisma AdminAuditLog
+ *
+ * Public API is preserved for existing callers.
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { Prisma } from "@prisma/client";
+
+import { prisma } from "@/lib/prisma";
 import { logError } from "@/lib/logger/Logger";
 
 export type AuditAction =
@@ -27,130 +29,297 @@ export type AuditAction =
   | "rate_limit_exceeded"
   | "admin_action";
 
-export type ResourceType = "user" | "session" | "message" | "report" | "quota" | "system";
+export type ResourceType =
+  | "user"
+  | "session"
+  | "message"
+  | "report"
+  | "quota"
+  | "system";
 
-/**
- * Enregistre une action dans l'audit trail
- */
-export async function auditLog(userId: string, action: AuditAction, resourceType: ResourceType, resourceId?: string, metadata?: Record<string, unknown>): Promise<void> {
-  const supabase = await createClient();
+interface AuditMetadata {
+  resourceType: ResourceType;
+  details: Record<string, unknown>;
+}
 
+export interface AuditHistoryEntry {
+  action: string;
+  resource_type: string;
+  resource_id: string | null;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface RecentAuditEntry
+  extends AuditHistoryEntry {
+  user_id: string;
+}
+
+
+function parseMetadata(
+  value: Prisma.JsonValue
+): AuditMetadata {
+  if (
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+    const metadata =
+      value as Record<
+        string,
+        unknown
+      >;
+
+    const resourceType =
+      typeof metadata.resourceType ===
+      "string"
+        ? metadata.resourceType
+        : "system";
+
+    const details =
+      metadata.details &&
+      typeof metadata.details ===
+        "object" &&
+      !Array.isArray(metadata.details)
+        ? (
+            metadata.details as Record<
+              string,
+              unknown
+            >
+          )
+        : {};
+
+    return {
+      resourceType:
+        resourceType as ResourceType,
+      details,
+    };
+  }
+
+  return {
+    resourceType: "system",
+    details: {},
+  };
+}
+
+
+export async function auditLog(
+  userId: string,
+  action: AuditAction,
+  resourceType: ResourceType,
+  resourceId?: string,
+  metadata?: Record<string, unknown>
+): Promise<void> {
   try {
-    await supabase.from("audit_log").insert({
-      user_id: userId,
-      action,
-      resource_type: resourceType,
-      resource_id: resourceId,
-      metadata: metadata || {},
+    const auditMetadata = {
+      resourceType,
+      details: metadata ?? {},
+    } as Prisma.InputJsonObject;
+
+    await prisma.adminAuditLog.create({
+      data: {
+        adminId: userId,
+        action,
+        targetId:
+          resourceId ?? null,
+        metadata: auditMetadata,
+      },
     });
   } catch (error) {
-    logError("Audit log error", error);
+    logError(
+      "Audit log error",
+      error
+    );
   }
 }
 
-/**
- * Récupère l'historique d'audit pour un utilisateur
- */
-export async function getUserAuditHistory(userId: string, limit: number = 100): Promise<Array<{
-  action: string;
-  resource_type: string;
-  resource_id: string | null;
-  metadata: Record<string, unknown>;
-  created_at: string;
-}>> {
-  const supabase = await createClient();
 
+export async function getUserAuditHistory(
+  userId: string,
+  limit: number = 100
+): Promise<AuditHistoryEntry[]> {
   try {
-    const { data } = await supabase
-      .from("audit_log")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false })
-      .limit(limit);
+    const rows =
+      await prisma.adminAuditLog.findMany({
+        where: {
+          adminId: userId,
+        },
 
-    return data || [];
+        orderBy: {
+          createdAt: "desc",
+        },
+
+        take: limit,
+      });
+
+    return rows.map((row) => {
+      const metadata =
+        parseMetadata(row.metadata);
+
+      return {
+        action: row.action,
+        resource_type:
+          metadata.resourceType,
+        resource_id:
+          row.targetId,
+        metadata:
+          metadata.details,
+        created_at:
+          row.createdAt.toISOString(),
+      };
+    });
   } catch (error) {
-    logError("Get audit history error", error);
+    logError(
+      "Get audit history error",
+      error
+    );
+
     return [];
   }
 }
 
-/**
- * Récupère les actions récentes (admin)
- */
-export async function getRecentAuditLogs(limit: number = 100): Promise<Array<{
-  user_id: string;
-  action: string;
-  resource_type: string;
-  resource_id: string | null;
-  metadata: Record<string, unknown>;
-  created_at: string;
-}>> {
-  const supabase = await createClient();
 
+export async function getRecentAuditLogs(
+  limit: number = 100
+): Promise<RecentAuditEntry[]> {
   try {
-    const { data } = await supabase
-      .from("audit_log")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(limit);
+    const rows =
+      await prisma.adminAuditLog.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
 
-    return data || [];
+        take: limit,
+      });
+
+    return rows.map((row) => {
+      const metadata =
+        parseMetadata(row.metadata);
+
+      return {
+        user_id: row.adminId,
+        action: row.action,
+        resource_type:
+          metadata.resourceType,
+        resource_id:
+          row.targetId,
+        metadata:
+          metadata.details,
+        created_at:
+          row.createdAt.toISOString(),
+      };
+    });
   } catch (error) {
-    logError("Get recent audit logs error", error);
+    logError(
+      "Get recent audit logs error",
+      error
+    );
+
     return [];
   }
 }
 
-/**
- * Compte les actions par type pour un utilisateur
- */
-export async function getActionCounts(userId: string, days: number = 7): Promise<Record<string, number>> {
-  const supabase = await createClient();
+
+export async function getActionCounts(
+  userId: string,
+  days: number = 7
+): Promise<Record<string, number>> {
   const startDate = new Date();
-  startDate.setDate(startDate.getDate() - days);
+
+  startDate.setDate(
+    startDate.getDate() - days
+  );
 
   try {
-    const { data } = await supabase
-      .from("audit_log")
-      .select("action")
-      .eq("user_id", userId)
-      .gte("created_at", startDate.toISOString());
+    const rows =
+      await prisma.adminAuditLog.findMany({
+        where: {
+          adminId: userId,
 
-    if (!data) return {};
+          createdAt: {
+            gte: startDate,
+          },
+        },
 
-    const counts: Record<string, number> = {};
-    for (const entry of data) {
-      counts[entry.action] = (counts[entry.action] || 0) + 1;
+        select: {
+          action: true,
+        },
+      });
+
+    const counts: Record<
+      string,
+      number
+    > = {};
+
+    for (const row of rows) {
+      counts[row.action] =
+        (counts[row.action] ?? 0) +
+        1;
     }
 
     return counts;
   } catch (error) {
-    logError("Get action counts error", error);
+    logError(
+      "Get action counts error",
+      error
+    );
+
     return {};
   }
 }
 
-/**
- * Détecte les comportements anormaux
- */
-export async function detectAnomalousBehavior(userId: string): Promise<{ anomalous: boolean; reason?: string }> {
-  const actionCounts = await getActionCounts(userId, 1); // Dernière heure
 
-  // Détecter un nombre anormal de simulations
-  if (actionCounts["simulation_create"] > 20) {
-    return { anomalous: true, reason: "Too many simulations in 1 hour" };
+export async function detectAnomalousBehavior(
+  userId: string
+): Promise<{
+  anomalous: boolean;
+  reason?: string;
+}> {
+  const actionCounts =
+    await getActionCounts(
+      userId,
+      1
+    );
+
+  if (
+    (actionCounts[
+      "simulation_create"
+    ] ?? 0) > 20
+  ) {
+    return {
+      anomalous: true,
+      reason:
+        "Too many simulations in 1 hour",
+    };
   }
 
-  // Détecter un nombre anormal de messages
-  if (actionCounts["simulation_message"] > 100) {
-    return { anomalous: true, reason: "Too many messages in 1 hour" };
+  if (
+    (actionCounts[
+      "simulation_message"
+    ] ?? 0) > 100
+  ) {
+    return {
+      anomalous: true,
+      reason:
+        "Too many messages in 1 hour",
+    };
   }
 
-  // Détecter un nombre anormal de rate limits
-  if (actionCounts["rate_limit_exceeded"] > 10) {
-    return { anomalous: true, reason: "Too many rate limit violations" };
+  if (
+    (actionCounts[
+      "rate_limit_exceeded"
+    ] ?? 0) > 10
+  ) {
+    return {
+      anomalous: true,
+      reason:
+        "Too many rate limit violations",
+    };
   }
 
-  return { anomalous: false };
+  return {
+    anomalous: false,
+  };
 }
+
+

@@ -1,17 +1,15 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { getServerDb } from "@/lib/db/client";
 
 /**
  * Service Layer: CV Domain
- * Proxy Transparent pattern to centralize all CV data access.
+ *
+ * Prisma CVAnalysis is the canonical persistence model.
+ *
+ * The former Supabase `cvs` table is not present in the current
+ * production schema and its legacy accessors had no active callers.
  */
 export const CvService = {
-  /**
-   * =======================
-   * PRISMA ACCESS (CVAnalysis)
-   * =======================
-   */
   async findFirstCVAnalysis(args: Prisma.CVAnalysisFindFirstArgs) {
     return prisma.cVAnalysis.findFirst(args);
   },
@@ -20,32 +18,23 @@ export const CvService = {
     return prisma.cVAnalysis.findMany(args);
   },
 
-  /**
-   * =======================
-   * SUPABASE ACCESS (cvs)
-   * =======================
-   */
-  async getCvsByUserId(userId: string, select = "*", supabaseClient?: any) {
-    const supabase = supabaseClient || await getServerDb();
-    return supabase
-      .from("cvs")
-      .select(select)
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+  async findUniqueCVAnalysis(args: Prisma.CVAnalysisFindUniqueArgs) {
+    return prisma.cVAnalysis.findUnique(args);
   },
 
-  async getCvById(cvId: string, select = "*", supabaseClient?: any) {
-    const supabase = supabaseClient || await getServerDb();
-    return supabase.from("cvs").select(select).eq("id", cvId).single();
+  async createCVAnalysis(args: Prisma.CVAnalysisCreateArgs) {
+    return prisma.cVAnalysis.create(args);
   },
 
-  async insertCv(data: any, supabaseClient?: any) {
-    const supabase = supabaseClient || await getServerDb();
-    return supabase.from("cvs").insert(data).select();
+  async updateCVAnalysis(args: Prisma.CVAnalysisUpdateArgs) {
+    return prisma.cVAnalysis.update(args);
   },
 
-  async updateCv(cvId: string, data: any, supabaseClient?: any) {
-    const supabase = supabaseClient || await getServerDb();
-    return supabase.from("cvs").update(data).eq("id", cvId).select();
+  async deleteCVAnalysis(args: Prisma.CVAnalysisDeleteArgs) {
+    return prisma.cVAnalysis.delete(args);
+  },
+
+  async countCVAnalysis(args?: Prisma.CVAnalysisCountArgs) {
+    return prisma.cVAnalysis.count(args);
   },
 };

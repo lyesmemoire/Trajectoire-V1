@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AccountService
  * Application service for account management
  * Handles account deletion and data export
@@ -7,7 +7,7 @@
 import { SessionRepository, ReportRepository, MessageRepository, ProfileRepository } from "@/infrastructure/repositories";
 import { IAuditService, ILogger } from "@/core/interfaces";
 import { AppError, ErrorCode } from "@/core/errors";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/service";
 
 export interface DeleteAccountCommand {
   userId: string;
@@ -68,7 +68,7 @@ export class AccountService {
     }
 
     // Delete user from Supabase Auth
-    const supabase = await createClient();
+    const supabase = createAdminClient();
     const { error: deleteError } = await supabase.auth.admin.deleteUser(command.userId);
 
     if (deleteError) {
@@ -131,3 +131,4 @@ export class AccountService {
     };
   }
 }
+

@@ -1,222 +1,264 @@
+﻿import type { Prisma } from "@prisma/client";
 
-/**
- * ProfileRepository
- * Repository for profiles table
- * Handles all database operations for user profiles
- */
+import { prisma } from "@/lib/prisma";
 
-import { createClient } from "@/lib/supabase/server";
-import { IRepository, QueryOptions } from "@/core/interfaces/IRepository";
-import { AppError, ErrorCode } from "@/core/errors";
-import { ITransaction } from "@/core/database/Transaction";
-
-export interface Profile {
+export type Profile = {
   id: string;
   user_id: string;
-  firstname?: string;
-  lastname?: string;
-  consent_given?: boolean;
-  consent_date?: string | null;
+  email: string;
+  firstname: string | null;
+  lastname: string | null;
+  consent_given: boolean;
+  consent_date: string | null;
   created_at: string;
   updated_at: string;
+};
+
+function splitName(name: string | null): {
+  firstname: string | null;
+  lastname: string | null;
+} {
+  if (!name) {
+    return {
+      firstname: null,
+      lastname: null,
+    };
+  }
+
+  const normalized = name.trim();
+
+  if (!normalized) {
+    return {
+      firstname: null,
+      lastname: null,
+    };
+  }
+
+  const [firstname, ...rest] = normalized.split(/\s+/);
+
+  return {
+    firstname: firstname || null,
+    lastname: rest.length > 0 ? rest.join(" ") : null,
+  };
 }
 
-export class ProfileRepository implements IRepository<Profile> {
-  /**
-   * Find profile by ID
-   */
+function toProfile(user: {
+  id: string;
+  email: string;
+  name: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): Profile {
+  const { firstname, lastname } = splitName(user.name);
+
+  return {
+    id: user.id,
+    user_id: user.id,
+    email: user.email,
+    firstname,
+    lastname,
+
+    // The legacy profiles table no longer exists in the canonical
+    // Prisma schema. Consent data must not be fabricated from another
+    // unrelated model.
+    consent_given: false,
+    consent_date: null,
+
+    created_at: user.createdAt.toISOString(),
+    updated_at: user.updatedAt.toISOString(),
+  };
+}
+
+/**
+ * Compatibility repository for the legacy Profile contract.
+ *
+ * Canonical identity data now lives in Prisma User.
+ * CareerProfile contains career-analysis data and is NOT a replacement
+ * for the old profiles table.
+ */
+export class ProfileRepository {
   async findById(id: string): Promise<Profile | null> {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", id)
-      .single();
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
-    if (error) {
-      if (error.code === "PGRST116") {
-        return null; // Not found
-      }
-      throw new AppError(
-        `Failed to fetch profile: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
-    }
-
-    return data;
+    return user ? toProfile(user) : null;
   }
 
-  /**
-   * Find profiles matching criteria
-   */
-  async find(criteria: Partial<Profile>, options?: QueryOptions): Promise<Profile[]> {
-    const supabase = await createClient();
-    let query = supabase.from("profiles").select("*");
+  async find(
+    criteria: Partial<Profile>,
+  ): Promise<Profile[]> {
+    const where: Prisma.UserWhereInput = {};
 
-    if (criteria.user_id) {
-      query = query.eq("user_id", criteria.user_id);
+    if (criteria.id !== undefined) {
+      where.id = criteria.id;
     }
 
-    if (options?.orderBy) {
-      query = query.order(options.orderBy, { ascending: options.ascending ?? true });
+    if (criteria.user_id !== undefined) {
+      where.id = criteria.user_id;
     }
 
-    if (options?.limit) {
-      query = query.limit(options.limit);
-    }
-    if (options?.offset) {
-      query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+    if (criteria.email !== undefined) {
+      where.email = criteria.email;
     }
 
-    const { data, error } = await query;
+    const users = await prisma.user.findMany({
+      where,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
-    if (error) {
-      throw new AppError(
-        `Failed to fetch profiles: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
-    }
-
-    return data || [];
+    return users.map(toProfile);
   }
 
-  /**
-   * Find one profile matching criteria
-   */
-  async findOne(criteria: Partial<Profile>): Promise<Profile | null> {
-    const profiles = await this.find(criteria, { limit: 1 });
-    return profiles[0] || null;
+  async findOne(
+    criteria: Partial<Profile>,
+  ): Promise<Profile | null> {
+    const profiles = await this.find(criteria);
+
+    return profiles[0] ?? null;
   }
 
-  /**
-   * Create a new profile
-   * @param entity - Profile data
-   * @param transaction - Optional transaction
-   */
+  async getByUserId(userId: string): Promise<Profile | null> {
+    return this.findById(userId);
+  }
+
   async create(
-    entity: Omit<Profile, "id" | "created_at" | "updated_at">,
-    transaction?: ITransaction
+    entity: Omit<Profile, "id">,
   ): Promise<Profile> {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("profiles")
-      .insert({
-        ...entity,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
+    const name = [entity.firstname, entity.lastname]
+      .filter((value): value is string => Boolean(value?.trim()))
+      .join(" ")
+      .trim();
 
-    if (error) {
-      throw new AppError(
-        `Failed to create profile: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
-    }
+    const user = await prisma.user.create({
+      data: {
+        id: entity.user_id,
+        email: entity.email,
+        name: name || null,
+        referralCode: crypto.randomUUID(),
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
-    return data;
+    return toProfile(user);
   }
 
-  /**
-   * Update a profile
-   * @param id - Profile ID
-   * @param updates - Updates to apply
-   * @param transaction - Optional transaction
-   */
   async update(
     id: string,
     updates: Partial<Profile>,
-    transaction?: ITransaction
   ): Promise<Profile> {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("profiles")
-      .update({
-        ...updates,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", id)
-      .select()
-      .single();
+    const current = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        name: true,
+      },
+    });
 
-    if (error) {
-      throw new AppError(
-        `Failed to update profile: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
+    if (!current) {
+      throw new Error(`User not found: ${id}`);
     }
 
-    return data;
+    const currentName = splitName(current.name);
+
+    const firstname =
+      updates.firstname !== undefined
+        ? updates.firstname
+        : currentName.firstname;
+
+    const lastname =
+      updates.lastname !== undefined
+        ? updates.lastname
+        : currentName.lastname;
+
+    const name = [firstname, lastname]
+      .filter((value): value is string => Boolean(value?.trim()))
+      .join(" ")
+      .trim();
+
+    const data: Prisma.UserUpdateInput = {};
+
+    if (
+      updates.firstname !== undefined ||
+      updates.lastname !== undefined
+    ) {
+      data.name = name || null;
+    }
+
+    if (updates.email !== undefined) {
+      data.email = updates.email;
+    }
+
+    const user = await prisma.user.update({
+      where: { id },
+      data,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return toProfile(user);
   }
 
   /**
-   * Delete a profile
-   * @param id - Profile ID
-   * @param transaction - Optional transaction
+   * Deletes profile-specific application data only.
+   *
+   * IMPORTANT:
+   * The User record is deliberately NOT deleted here because the
+   * AccountService still needs the user identity until Supabase Auth
+   * deletion has completed.
    */
-  async delete(id: string, transaction?: ITransaction): Promise<boolean> {
-    const supabase = await createClient();
-    const { error } = await supabase.from("profiles").delete().eq("id", id);
-
-    if (error) {
-      throw new AppError(
-        `Failed to delete profile: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
-    }
+  async delete(id: string): Promise<boolean> {
+    await prisma.careerProfile.deleteMany({
+      where: {
+        userId: id,
+      },
+    });
 
     return true;
   }
 
-  /**
-   * Count profiles matching criteria
-   */
-  async count(criteria?: Partial<Profile>): Promise<number> {
-    const supabase = await createClient();
-    let query = supabase.from("profiles").select("*", { count: "exact", head: true });
+  async count(
+    criteria: Partial<Profile> = {},
+  ): Promise<number> {
+    const where: Prisma.UserWhereInput = {};
 
-    if (criteria?.user_id) {
-      query = query.eq("user_id", criteria.user_id);
+    if (criteria.id !== undefined) {
+      where.id = criteria.id;
     }
 
-    const { count, error } = await query;
-
-    if (error) {
-      throw new AppError(
-        `Failed to count profiles: ${error.message}`,
-        ErrorCode.DATABASE_ERROR,
-        500
-      );
+    if (criteria.user_id !== undefined) {
+      where.id = criteria.user_id;
     }
 
-    return count || 0;
-  }
-
-  /**
-   * Get profile by user ID
-   */
-  async getByUserId(userId: string): Promise<Profile | null> {
-    return this.findOne({ user_id: userId });
-  }
-
-  /**
-   * Update consent
-   */
-  async updateConsent(userId: string, consentGiven: boolean): Promise<Profile> {
-    const profile = await this.getByUserId(userId);
-    if (!profile) {
-      throw new AppError("Profile not found", ErrorCode.NOT_FOUND, 404);
+    if (criteria.email !== undefined) {
+      where.email = criteria.email;
     }
 
-    return this.update(profile.id, {
-      consent_given: consentGiven,
-      consent_date: consentGiven ? new Date().toISOString() : null,
+    return prisma.user.count({
+      where,
     });
   }
 }

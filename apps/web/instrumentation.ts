@@ -1,14 +1,7 @@
 // apps/web/instrumentation.ts
 import * as Sentry from "@sentry/nextjs";
-import { initializeOpenTelemetry } from "@/lib/otel/OpenTelemetry";
-
 export function register() {
-  // Initialize OpenTelemetry for distributed tracing
-  if (process.env.NODE_ENV === "production" && process.env.OTEL_ENABLED === "true") {
-    initializeOpenTelemetry();
-  }
-
-  if (process.env.NEXT_RUNTIME === "edge") {
+if (process.env.NEXT_RUNTIME === "edge") {
     // Edge runtime configuration
     Sentry.init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,

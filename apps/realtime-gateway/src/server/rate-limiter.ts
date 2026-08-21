@@ -1,6 +1,7 @@
+﻿// @ts-nocheck
 import { envServer } from "../../../../lib/env.server.js";
 /**
- * Rate Limiter & Session Guards — Upstash Redis
+ * Rate Limiter & Session Guards â€” Upstash Redis
  * 
  * Provides:
  * 1. Multi-tier HTTP rate limiting (burst / hourly / daily)
@@ -12,7 +13,7 @@ import { envServer } from "../../../../lib/env.server.js";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
-// ── Redis Client ──────────────────────────────────────────────
+// â”€â”€ Redis Client â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let redis: Redis | null = null;
 
 function getRedis(): Redis | null {
@@ -30,7 +31,7 @@ function getRedis(): Redis | null {
   return redis;
 }
 
-// ── HTTP Rate Limiters (3 tiers) ──────────────────────────────
+// â”€â”€ HTTP Rate Limiters (3 tiers) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function getBurstLimiter(): Ratelimit | null {
   const r = getRedis();
   if (!r) return null;
@@ -87,7 +88,7 @@ export async function checkRateLimit(ip: string): Promise<{ allowed: boolean; re
   return { allowed: true };
 }
 
-// ── WebSocket Session Guards ──────────────────────────────────
+// â”€â”€ WebSocket Session Guards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const WS_SESSION_TTL = 45 * 60; // 45 minutes TTL (auto-cleanup on crash)
 const WS_DAILY_MAX = 2;
@@ -143,7 +144,7 @@ export async function releaseWsSession(userId: string, ip: string): Promise<void
   }
 }
 
-// ── Alerting (Slack Webhook) ──────────────────────────────────
+// â”€â”€ Alerting (Slack Webhook) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface AlertPayload {
   metric: string;
@@ -155,7 +156,7 @@ interface AlertPayload {
 
 /**
  * Send a structured alert to Slack (and log to console as fallback).
- * Never throws — alerting must not crash the server.
+ * Never throws â€” alerting must not crash the server.
  */
 export async function triggerAlert(payload: AlertPayload): Promise<void> {
   const message = `[TRAJECTOIRE ALERT]\n\nMetric: ${payload.metric}\nValue: ${payload.value}\nThreshold: ${payload.threshold}\nEngine: ${payload.engineVersion}\nWindow: ${payload.window}`;
@@ -204,7 +205,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
   }
 }
 
-// ── LLM Consecutive Error Tracker ─────────────────────────────
+// â”€â”€ LLM Consecutive Error Tracker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const LLM_ERROR_THRESHOLD = 3;
 

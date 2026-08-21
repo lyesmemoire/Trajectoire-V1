@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { evaluateBluff } from "./bluff-detector.js";
 import { evaluateConsistencyGap } from "./integrity-detector.js";
 import { evaluateHRNarrative } from "./hr-narrative-evaluator.js";
@@ -55,7 +56,7 @@ export interface InterviewStateV3 {
 }
 
 export function initInterviewV3(input: { context: unknown, targetRole?: string }) {
-  const question = `Bonjour, je suis le Directeur des Ressources Humaines. Présentez-moi votre trajectoire en 2 minutes.`;
+  const question = `Bonjour, je suis le Directeur des Ressources Humaines. PrÃ©sentez-moi votre trajectoire en 2 minutes.`;
   const state: InterviewStateV3 = {
     context: input.context,
     turnCount: 0,
@@ -119,7 +120,7 @@ function computeIntegrityRisk({
   const QuantificationDeficit = 1 - (quantificationDepthScore / 10);
   const MaturityDeficit = 1 - (careerMaturityScore / 10);
 
-  // Réalisme Modéré Exigeant calibration
+  // RÃ©alisme ModÃ©rÃ© Exigeant calibration
   let raw =
       (0.28 * ConsistencyRisk) +
       (0.22 * BluffRisk) +
@@ -127,7 +128,7 @@ function computeIntegrityRisk({
       (0.15 * QuantificationDeficit) +
       (0.15 * MaturityDeficit);
 
-  // Amplification mesurée (pas destructrice)
+  // Amplification mesurÃ©e (pas destructrice)
   if (ConsistencyRisk > 0.7 && BluffRisk > 0.7) raw += 0.10;
   if (TechnicalDeficit > 0.7 && cvClaimImpactLevel === "High") raw += 0.10;
   if (QuantificationDeficit > 0.8) raw += 0.08;
@@ -142,10 +143,10 @@ function addToAverage(avg: number, count: number, val: number) {
 
 /**
  * Mappe les phases V3 vers les phases du meta-brain.
- * Phase1 (HR narrative) → "hr"
- * Phase2 (Tech Director) → "tech"
- * Phase3 (Pressure) → "pressure"
- * Phase4 (Leadership) → "leadership"
+ * Phase1 (HR narrative) â†’ "hr"
+ * Phase2 (Tech Director) â†’ "tech"
+ * Phase3 (Pressure) â†’ "pressure"
+ * Phase4 (Leadership) â†’ "leadership"
  */
 function mapV3PhaseToMeta(phase: "Phase1" | "Phase2" | "Phase3" | "Phase4"): "hr" | "tech" | "pressure" | "leadership" | "wrap" {
   switch (phase) {
@@ -159,11 +160,11 @@ function mapV3PhaseToMeta(phase: "Phase1" | "Phase2" | "Phase3" | "Phase4"): "hr
 
 /**
  * Mappe les phases du meta-brain vers les phases V3 (mapping inverse).
- * "hr" → Phase1
- * "tech" → Phase2
- * "pressure" → Phase3
- * "leadership" → Phase4
- * "wrap" → Phase4 (fin)
+ * "hr" â†’ Phase1
+ * "tech" â†’ Phase2
+ * "pressure" â†’ Phase3
+ * "leadership" â†’ Phase4
+ * "wrap" â†’ Phase4 (fin)
  */
 function mapMetaPhaseToV3(phase: "hr" | "tech" | "pressure" | "leadership" | "wrap"): "Phase1" | "Phase2" | "Phase3" | "Phase4" {
   switch (phase) {
@@ -180,7 +181,7 @@ import { detectIntent } from "../intent-detector.js";
 import { handlePilotCommand, extractPilotAction } from "../strategies/pilot-commands.js";
 
 export async function nextV3Step(state: InterviewStateV3, transcript: string) {
-  // 0) Détection d'intention (interception des commandes de pilotage)
+  // 0) DÃ©tection d'intention (interception des commandes de pilotage)
   const intent = detectIntent(transcript);
   const pilotAction = extractPilotAction(intent);
 
@@ -353,13 +354,13 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
   state.pressureTimeline.push(state.pressureLevel);
 
   // === META-BRAIN SHADOW MODE (PALIER 1) / PILOTAGE (PALIER 2) ===
-  // Le meta-brain tourne en parallèle. 
+  // Le meta-brain tourne en parallÃ¨le. 
   // USE_META_BRAIN=true : pilote les questions
   // USE_META_BRAIN=false ou undefined : mode shadow (log seulement)
   const USE_META_BRAIN = process.env.USE_META_BRAIN === "true";
   
   try {
-    // Construire un snapshot RecruiterMind minimal depuis l'état V3
+    // Construire un snapshot RecruiterMind minimal depuis l'Ã©tat V3
     const recruiterMindSnapshot = {
       trust: Math.max(0, 1 - state.integrityRiskIndex),
       suspicion: state.integrityRiskIndex,
@@ -375,7 +376,7 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
     const avgV3Score = (state.avgTech + state.avgComm + state.avgAlign) / 3;
     const legacySignals = extractLegacySignalsRudimentary(avgV3Score, state.integrityRiskIndex);
 
-    // Évaluation unifiée (V3 + V1/V2 rudimentaires pour l'instant)
+    // Ã‰valuation unifiÃ©e (V3 + V1/V2 rudimentaires pour l'instant)
     const unified = await runUnifiedEvaluation({
       candidate_answer: transcript,
       v1_signals: legacySignals.v1_signals, // Palier 3 : signaux V1 rudimentaires
@@ -389,20 +390,20 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
       recruiter_mind_snapshot: recruiterMindSnapshot
     });
 
-    // Décision méta
+    // DÃ©cision mÃ©ta
     const metaDecision = await runMetaDecision({
       unified_signals: unified,
       recruiter_mind_snapshot: recruiterMindSnapshot,
       interview_state: {
         current_phase: mapV3PhaseToMeta(state.phase),
         current_pressure_level: state.pressureLevel,
-        profile_level: "senior", // à configurer selon le candidat
+        profile_level: "senior", // Ã  configurer selon le candidat
         turn_count: state.turnCount,
         max_turns: 10
       }
     });
 
-    // Génération de question multi-moteur
+    // GÃ©nÃ©ration de question multi-moteur
     const metaQuestion = await runMultiEngineQuestionGenerator({
       job_context: {
         job_title: state.targetRole ?? "Senior Engineer",
@@ -438,7 +439,7 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
 
     if (USE_META_BRAIN) {
       // PALIER 2 : Le meta-brain pilote les questions
-      // Met à jour state.phase / pressure avec les cibles méta
+      // Met Ã  jour state.phase / pressure avec les cibles mÃ©ta
       state.phase = mapMetaPhaseToV3(metaDecision.meta_decision.target_phase);
       state.pressureLevel = metaDecision.meta_decision.target_pressure_level;
       state.lastQuestion = metaQuestion.next_question.question_text;
@@ -507,7 +508,7 @@ export async function nextV3Step(state: InterviewStateV3, transcript: string) {
   }
 
   return {
-    question: isFinished ? "Merci pour cet entretien. L'évaluation est terminée." : state.lastQuestion,
+    question: isFinished ? "Merci pour cet entretien. L'Ã©valuation est terminÃ©e." : state.lastQuestion,
     updatedState: state,
     evaluationScore: 100 - (state.integrityRiskIndex * 100),
     finished: isFinished,

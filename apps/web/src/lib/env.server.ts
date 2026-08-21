@@ -28,17 +28,14 @@ const EnvServerSchema = z.object({
 
   // ── LLM ───────────────────────────────────────────────────────────────────
   OPENAI_API_KEY: z
-    .string()
-    .startsWith("sk-", "OPENAI_API_KEY doit commencer par sk-"),
+  .string()
+  .startsWith("sk-", "OPENAI_API_KEY doit commencer par sk-")
+  .optional(),
 
-  OPENAI_BASE_URL: z
-    .string()
-    .url()
-    .optional(), // Proxy OpenAI — optionnel
-
-  MISTRAL_API_KEY: z
-    .string()
-    .min(1, "MISTRAL_API_KEY manquante"),
+OPENAI_BASE_URL: z
+  .string()
+  .url()
+  .optional(),
 
   // ── Voice (ElevenLabs) ────────────────────────────────────────────────────
   ELEVENLABS_API_KEY: z

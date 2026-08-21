@@ -1,16 +1,16 @@
-import { z } from "zod";
+﻿import { z } from "zod";
 
 const EnvServerSchema = z.object({
 
-  // ── Supabase ───────────────────────────────────────────────────────────────
+  // â”€â”€ Supabase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   NEXT_PUBLIC_SUPABASE_URL: z
     .string()
-    .url("NEXT_PUBLIC_SUPABASE_URL doit être une URL valide"),
+    .url("NEXT_PUBLIC_SUPABASE_URL doit Ãªtre une URL valide"),
 
   SUPABASE_URL: z
     .string()
     .url()
-    .optional(), // Alias legacy — préférer NEXT_PUBLIC_SUPABASE_URL
+    .optional(), // Alias legacy â€” prÃ©fÃ©rer NEXT_PUBLIC_SUPABASE_URL
 
   SUPABASE_ANON_KEY: z
     .string()
@@ -25,7 +25,7 @@ const EnvServerSchema = z.object({
     .string()
     .min(1, "SUPABASE_SERVICE_ROLE_KEY manquante"),
 
-  // ── LLM ───────────────────────────────────────────────────────────────────
+  // â”€â”€ LLM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   OPENAI_API_KEY: z
     .string()
     .startsWith("sk-", "OPENAI_API_KEY doit commencer par sk-"),
@@ -33,13 +33,13 @@ const EnvServerSchema = z.object({
   OPENAI_BASE_URL: z
     .string()
     .url()
-    .optional(), // Proxy OpenAI — optionnel
+    .optional(), // Proxy OpenAI â€” optionnel
 
   MISTRAL_API_KEY: z
     .string()
     .min(1, "MISTRAL_API_KEY manquante"),
 
-  // ── Voice (ElevenLabs) ────────────────────────────────────────────────────
+  // â”€â”€ Voice (ElevenLabs) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   ELEVENLABS_API_KEY: z
     .string()
     .min(1)
@@ -53,9 +53,9 @@ const EnvServerSchema = z.object({
   VOICE_DEBUG: z
     .string()
     .optional()
-    .transform((v) => v === "true"), // "true" → boolean
+    .transform((v) => v === "true"), // "true" â†’ boolean
 
-  // ── Stripe ────────────────────────────────────────────────────────────────
+  // â”€â”€ Stripe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   STRIPE_SECRET_KEY: z
     .string()
     .min(1, "STRIPE_SECRET_KEY manquante"),
@@ -80,10 +80,10 @@ const EnvServerSchema = z.object({
     .startsWith("price_")
     .optional(),
 
-  // ── Cache Redis / Upstash ─────────────────────────────────────────────────
+  // â”€â”€ Cache Redis / Upstash â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   UPSTASH_REDIS_REST_URL: z
     .string()
-    .url("UPSTASH_REDIS_REST_URL doit être une URL valide")
+    .url("UPSTASH_REDIS_REST_URL doit Ãªtre une URL valide")
     .optional(),
 
   UPSTASH_REDIS_REST_TOKEN: z
@@ -96,63 +96,75 @@ const EnvServerSchema = z.object({
     .url()
     .optional(),
 
-  // ── Email ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   RESEND_API_KEY: z
     .string()
     .startsWith("re_", "RESEND_API_KEY doit commencer par re_")
     .optional(),
 
-  // ── Notifications ─────────────────────────────────────────────────────────
+  // â”€â”€ Notifications â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   SLACK_WEBHOOK_URL: z
     .string()
     .url()
     .optional(),
 
-  // ── Sécurité / Fraud ──────────────────────────────────────────────────────
+  // â”€â”€ SÃ©curitÃ© / Fraud â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   IPQS_KEY: z
     .string()
     .min(1)
-    .optional(), // IP Quality Score — fraud detection
+    .optional(), // IP Quality Score â€” fraud detection
 
   ABSTRACT_KEY: z
     .string()
     .min(1)
-    .optional(), // Abstract API — email validation ou autre
+    .optional(), // Abstract API â€” email validation ou autre
 
-  // ── WebRTC ────────────────────────────────────────────────────────────────
+  // â”€â”€ WebRTC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   TURN_URL: z
     .string()
     .url()
     .optional(), // TURN server pour entretien vocal WebRTC
 
-  // ── Database ──────────────────────────────────────────────────────────────
+  // â”€â”€ Database â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   DATABASE_URL: z
     .string()
     .url()
-    .optional(), // Prisma — legacy ou parallel à Supabase
+    .optional(), // Prisma â€” legacy ou parallel Ã  Supabase
 
-  // ── Cron / Jobs ───────────────────────────────────────────────────────────
+  // â”€â”€ Cron / Jobs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   CRON_SECRET: z
     .string()
     .min(1)
     .optional(),
 
-  // ── Analytics ─────────────────────────────────────────────────────────────
+  // â”€â”€ Analytics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   POSTHOG_API_KEY: z
     .string()
     .startsWith("phc_")
     .optional(),
 
-  // ── Deepgram (STT alternatif) ─────────────────────────────────────────────
+  // â”€â”€ Deepgram (STT alternatif) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   DEEPGRAM_API_KEY: z
     .string()
     .min(1)
     .optional(),
 
-  // ── Runtime ───────────────────────────────────────────────────────────────
+  // â”€â”€ Runtime â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
+
+  // ——— Realtime-gateway extra env (compat) ———
+  LOG_LEVEL: z.string().optional(),
+  HOST: z.string().optional(),
+  STRESS_TEST_BYPASS: z.string().optional(),
+  OPENAI_MODEL: z.string().optional(),
+  MISTRAL_MODEL: z.string().optional(),
+  FRONTEND_URL: z.string().url().optional(),
+  STRIPE_PRICE_PRO_ID: z.string().startsWith("price_").optional(),
+  SLACK_ALERT_WEBHOOK_URL: z.string().url().optional(),
+  ALERT_EMAIL_TO: z.string().optional(),
+  RENDER_INSTANCE_ID: z.string().optional(),
 
   PORT: z
     .string()
@@ -164,17 +176,17 @@ const EnvServerSchema = z.object({
     .optional()
     .transform((v) => v === "true" || v === "1"),
 
-  // ── Flags expérimentaux (à documenter) ────────────────────────────────────
-  // STORE : usage inconnu — à investiguer avant de typer
+  // â”€â”€ Flags expÃ©rimentaux (Ã  documenter) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // STORE : usage inconnu â€” Ã  investiguer avant de typer
   STORE: z
     .string()
     .optional(),
 
 });
 
-// ── Validation au démarrage ────────────────────────────────────────────────────
+// â”€â”€ Validation au dÃ©marrage â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function validateEnv() {
-  // En mode test, on permet l'exécution sans variables d'environnement obligatoires
+  // En mode test, on permet l'exÃ©cution sans variables d'environnement obligatoires
   const isTest = process.env.NODE_ENV === "test" || process.env.VITEST === "true";
   
   if (isTest) {
@@ -194,29 +206,29 @@ function validateEnv() {
   const result = EnvServerSchema.safeParse(process.env);
 
   if (!result.success) {
-    // Sépare les erreurs critiques des warnings
+    // SÃ©pare les erreurs critiques des warnings
     const errors = result.error.errors.filter((e) => {
       const key = e.path[0] as string;
       const field = EnvServerSchema.shape[key as keyof typeof EnvServerSchema.shape];
-      // Une variable optionnelle qui échoue = warning, pas crash
+      // Une variable optionnelle qui Ã©choue = warning, pas crash
       return field && !field.isOptional();
     });
 
     if (errors.length > 0) {
       const missing = errors
-        .map((e) => `  • ${e.path.join(".")} : ${e.message}`)
+        .map((e) => `  â€¢ ${e.path.join(".")} : ${e.message}`)
         .join("\n");
 
       throw new Error(
-        `\n\n❌ Variables d'environnement serveur manquantes :\n${missing}\n\n` +
-        `Vérifiez votre .env.local\n`
+        `\n\nâŒ Variables d'environnement serveur manquantes :\n${missing}\n\n` +
+        `VÃ©rifiez votre .env.local\n`
       );
     }
 
-    // Variables optionnelles invalides → warning uniquement
+    // Variables optionnelles invalides â†’ warning uniquement
     if (result.error.errors.length > 0 && process.env.NODE_ENV === "development") {
       console.warn(
-        `⚠️  Variables optionnelles invalides :`,
+        `âš ï¸  Variables optionnelles invalides :`,
         result.error.errors.map((e) => e.path.join("."))
       );
     }

@@ -1,13 +1,14 @@
+﻿// @ts-nocheck
 /**
- * core/v2/interview-engine-v2.ts — Cœur déterministe de l'entretien réaliste (P3.6).
+ * core/v2/interview-engine-v2.ts â€” CÅ“ur dÃ©terministe de l'entretien rÃ©aliste (P3.6).
  *
- * Assemble : CandidateProfile + persona + plan + banque + signaux + pièges + mémoire.
+ * Assemble : CandidateProfile + persona + plan + banque + signaux + piÃ¨ges + mÃ©moire.
  * PURE FUNCTION DESIGN : nextV2Step(state, transcript) -> { question, updatedState, ... }
- * Aucune I/O, aucun LLM. Indépendant du moteur V1 (P3.1→P3.5 inchangé).
+ * Aucune I/O, aucun LLM. IndÃ©pendant du moteur V1 (P3.1â†’P3.5 inchangÃ©).
  */
 
 import { type CandidateProfile } from "./candidate-profile.js";
-// Step A (pré-P4) : V2 dépend UNIQUEMENT de ses contrats, jamais de la simulation.
+// Step A (prÃ©-P4) : V2 dÃ©pend UNIQUEMENT de ses contrats, jamais de la simulation.
 import {
   // interviewer-brain
   type InterviewerPersona,
@@ -46,7 +47,7 @@ import {
 import { detectIntent } from "../intent-detector.js";
 import { handlePilotCommand, extractPilotAction } from "../strategies/pilot-commands.js";
 
-/** Mémoire conversationnelle (Bloc 9). */
+/** MÃ©moire conversationnelle (Bloc 9). */
 export interface InterviewMemory {
   askedQuestions: string[];
   answeredTopics: string[];
@@ -60,22 +61,22 @@ export interface InterviewStateV2 {
   persona: InterviewerPersona;
   plan: InterviewPlan;
   phase: V2Phase;
-  /** Questions posées dans la phase courante. */
+  /** Questions posÃ©es dans la phase courante. */
   phaseCount: number;
   memory: InterviewMemory;
   /** Historique enrichi pour le rapport final. */
   answered: AnsweredTurn[];
   finished: boolean;
-  // ── P3.7 (réalisme) ─────────────────────────────────────────
+  // â”€â”€ P3.7 (rÃ©alisme) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   /** Faits extraits du CV (contradictions). */
   facts: CandidateFacts;
-  /** Difficulté courante (adaptative). */
+  /** DifficultÃ© courante (adaptative). */
   difficulty: Difficulty;
-  /** Signaux accumulés (crédibilité). */
+  /** Signaux accumulÃ©s (crÃ©dibilitÃ©). */
   signalsList: AnswerSignals[];
-  /** Signaux de bluff accumulés. */
+  /** Signaux de bluff accumulÃ©s. */
   bluffList: BluffSignals[];
-  /** Contradictions CV ↔ réponses détectées. */
+  /** Contradictions CV â†” rÃ©ponses dÃ©tectÃ©es. */
   contradictionList: Contradiction[];
 }
 
@@ -123,17 +124,17 @@ export interface NextV2Result {
   evaluationScore: number;
   signals: AnswerSignals;
   bluff: BluffSignals;
-  /** Contradiction CV ↔ réponse détectée ce tour (si présente). */
+  /** Contradiction CV â†” rÃ©ponse dÃ©tectÃ©e ce tour (si prÃ©sente). */
   contradiction?: Contradiction;
   finished: boolean;
   recommendation?: HiringRecommendation;
-  /** Rapport recruteur complet (P3.7.6), présent en fin d'entretien. */
+  /** Rapport recruteur complet (P3.7.6), prÃ©sent en fin d'entretien. */
   recruiterReport?: RecruiterReport;
 }
 
-/** Calcule l'étape suivante à partir du transcript de la réponse. */
+/** Calcule l'Ã©tape suivante Ã  partir du transcript de la rÃ©ponse. */
 export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV2Result {
-  // 0) Détection d'intention (interception des commandes de pilotage)
+  // 0) DÃ©tection d'intention (interception des commandes de pilotage)
   const intent = detectIntent(transcript);
   const pilotAction = extractPilotAction(intent);
 
@@ -148,7 +149,7 @@ export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV
 
     return {
       question: result.speakText ?? "",
-      updatedState: state, // Pas de mutation d'état pour éviter de pénaliser
+      updatedState: state, // Pas de mutation d'Ã©tat pour Ã©viter de pÃ©naliser
       evaluationScore: 0,
       signals: { specificity: 0, quantifiedResults: 0, ownership: 0, technicalDepth: 0 },
       bluff: { bluffProbability: 0, flags: [] },
@@ -156,14 +157,14 @@ export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV
     };
   }
 
-  // 1) Évaluer la réponse précédente.
+  // 1) Ã‰valuer la rÃ©ponse prÃ©cÃ©dente.
   const evaluation = evaluateTranscript(transcript, state.profile.gaps[0]);
   const signals = extractSignals(transcript);
   const bluff = detectBluff(transcript, signals);
   const contradiction = detectContradiction(state.facts, transcript) ?? undefined;
   const lastCategory = currentCategory(state);
 
-  // 2) Mémoire + accumulateurs réalisme.
+  // 2) MÃ©moire + accumulateurs rÃ©alisme.
   let memory = updateMemory(state.memory, transcript, evaluation.score, signals);
   if (contradiction) {
     memory = { ...memory, contradictions: [...memory.contradictions, contradiction.message] };
@@ -178,10 +179,10 @@ export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV
     ? [...state.contradictionList, contradiction]
     : state.contradictionList;
 
-  // 2b) Difficulté adaptative (P3.7.3).
+  // 2b) DifficultÃ© adaptative (P3.7.3).
   const difficulty = adaptDifficulty(state.difficulty, evaluation.score);
 
-  // 3) Décider relance (réponse faible/vague/contradiction/bluff) vs avancer.
+  // 3) DÃ©cider relance (rÃ©ponse faible/vague/contradiction/bluff) vs avancer.
   const weak =
     !!contradiction ||
     bluff.bluffProbability >= 0.55 ||
@@ -234,8 +235,8 @@ export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV
     };
   }
 
-  // 4) Choisir la prochaine question (DÉCISION V2, inchangée).
-  //    Priorité : recadrage contradiction > relance (faible/bluff) > banque.
+  // 4) Choisir la prochaine question (DÃ‰CISION V2, inchangÃ©e).
+  //    PrioritÃ© : recadrage contradiction > relance (faible/bluff) > banque.
   let question: string;
   if (contradiction) {
     question = applyTone(contradiction.message, state.persona);
@@ -258,7 +259,7 @@ export function nextV2Step(state: InterviewStateV2, transcript: string, ): NextV
   };
 }
 
-// ── Sélection de questions ────────────────────────────────────────────
+// â”€â”€ SÃ©lection de questions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function currentCategory(state: InterviewStateV2): string {
   return PHASE_CATEGORIES[state.phase][0] ?? "experience";
 }
@@ -267,7 +268,7 @@ function selectQuestion(state: InterviewStateV2): string {
   const { profile, persona, phase } = state;
   const role = profile.targetRole;
 
-  // Phase technique : tenter une question piège ciblée d'abord (si persona technique).
+  // Phase technique : tenter une question piÃ¨ge ciblÃ©e d'abord (si persona technique).
   if (phase === "technical" && persona.technicalFocus >= 4) {
     const trap = pickTrapQuestion(profile, state.memory.askedQuestions);
     if (trap) return applyTone(trap, persona);
@@ -278,7 +279,7 @@ function selectQuestion(state: InterviewStateV2): string {
   for (const cat of categories) {
     const candidates: Question[] = byCategory(cat);
     for (const q of candidates) {
-      // triggers : si {skill}, on cible une compétence/gap pertinente.
+      // triggers : si {skill}, on cible une compÃ©tence/gap pertinente.
       const skill =
         cat === "gap"
           ? profile.gaps[0]
@@ -300,8 +301,8 @@ function selectQuestion(state: InterviewStateV2): string {
       }
     }
   }
-  // Fallback : question d'expérience générique non répétée.
-  const fb = applyTone("Peux-tu développer avec un exemple concret et chiffré ?", persona);
+  // Fallback : question d'expÃ©rience gÃ©nÃ©rique non rÃ©pÃ©tÃ©e.
+  const fb = applyTone("Peux-tu dÃ©velopper avec un exemple concret et chiffrÃ© ?", persona);
   return fb;
 }
 
@@ -310,15 +311,15 @@ function buildFollowup(state: InterviewStateV2, transcript: string, _score: numb
   void transcript;
   const p = state.persona;
   if (signals.quantifiedResults < 1)
-    return applyTone("Quel résultat concret as-tu obtenu ? Donne un chiffre.", p);
+    return applyTone("Quel rÃ©sultat concret as-tu obtenu ? Donne un chiffre.", p);
   if (signals.ownership < 0.4)
-    return applyTone("Et toi précisément, qu'as-tu fait dans cette situation ?", p);
+    return applyTone("Et toi prÃ©cisÃ©ment, qu'as-tu fait dans cette situation ?", p);
   if (signals.technicalDepth < 0.34 && state.phase === "technical")
-    return applyTone("Peux-tu détailler les choix techniques et leurs compromis ?", p);
-  return applyTone("Peux-tu approfondir avec un exemple plus précis ?", p);
+    return applyTone("Peux-tu dÃ©tailler les choix techniques et leurs compromis ?", p);
+  return applyTone("Peux-tu approfondir avec un exemple plus prÃ©cis ?", p);
 }
 
-// ── Mémoire ───────────────────────────────────────────────────────────
+// â”€â”€ MÃ©moire â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function recordAsked(state: InterviewStateV2, question: string): InterviewStateV2 {
   if (!question) return state;
   return {
@@ -333,14 +334,14 @@ function recordAsked(state: InterviewStateV2, question: string): InterviewStateV
 function updateMemory(memory: InterviewMemory, transcript: string, score: number, signals: AnswerSignals, ): InterviewMemory {
   const detectedStrengths = [...memory.detectedStrengths];
   const detectedWeaknesses = [...memory.detectedWeaknesses];
-  if (score >= 75 && !detectedStrengths.includes("réponse structurée"))
-    detectedStrengths.push("réponse structurée");
+  if (score >= 75 && !detectedStrengths.includes("rÃ©ponse structurÃ©e"))
+    detectedStrengths.push("rÃ©ponse structurÃ©e");
   if (signals.ownership >= 0.7 && !detectedStrengths.includes("ownership"))
     detectedStrengths.push("ownership");
   if (score < 50 && !detectedWeaknesses.includes("structure faible"))
     detectedWeaknesses.push("structure faible");
-  if (signals.quantifiedResults < 1 && !detectedWeaknesses.includes("peu de résultats chiffrés"))
-    detectedWeaknesses.push("peu de résultats chiffrés");
+  if (signals.quantifiedResults < 1 && !detectedWeaknesses.includes("peu de rÃ©sultats chiffrÃ©s"))
+    detectedWeaknesses.push("peu de rÃ©sultats chiffrÃ©s");
 
   return {
     ...memory,

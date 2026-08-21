@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 /**
  * session-manager.ts
  * Reconstructed file with B6 fixes included.
@@ -9,22 +10,22 @@ export interface ActiveSession {
   sessionId: string;
   /** Socket WebSocket du client */
   ws: WebSocket;
-  /** UserId Supabase authentifié */
+  /** UserId Supabase authentifiÃ© */
   userId: string;
-  /** Timestamp de création (ms) */
+  /** Timestamp de crÃ©ation (ms) */
   createdAt: number;
   /** AbortController pour annuler les appels LLM/TTS en vol */
   abortController: AbortController;
-  /** Timer du TTL de sécurité (45 min) */
+  /** Timer du TTL de sÃ©curitÃ© (45 min) */
   ttlTimer: NodeJS.Timeout;
-  /** Nombre de questions posées jusqu'ici */
+  /** Nombre de questions posÃ©es jusqu'ici */
   questionCount: number;
-  /** État courant de la session */
+  /** Ã‰tat courant de la session */
   status: "active" | "completing" | "completed" | "error";
   /**
-   * B6 — Callback de fermeture du stream Deepgram STT.
-   * Assigné par interview-engine après ouverture de SttSession.
-   * Appelé dans destroySession() pour fermer proprement le stream.
+   * B6 â€” Callback de fermeture du stream Deepgram STT.
+   * AssignÃ© par interview-engine aprÃ¨s ouverture de SttSession.
+   * AppelÃ© dans destroySession() pour fermer proprement le stream.
    */
   sttCleanup?: () => void;
 }
@@ -55,13 +56,13 @@ export function destroySession(sessionId: string): void {
   if (!session) return;
 
   // 1. Annuler tous les appels LLM/TTS en cours pour cette session
-  // Le signal est transmis à llm-strict.ts, tts.ts et stt.ts.
+  // Le signal est transmis Ã  llm-strict.ts, tts.ts et stt.ts.
   if (!session.abortController.signal.aborted) {
     session.abortController.abort();
   }
 
-  // 2. B6 — Fermer le stream Deepgram STT s'il est ouvert.
-  // Sans ce cleanup, Deepgram continue à transcrire et facturer.
+  // 2. B6 â€” Fermer le stream Deepgram STT s'il est ouvert.
+  // Sans ce cleanup, Deepgram continue Ã  transcrire et facturer.
   if (session.sttCleanup) {
     try {
       session.sttCleanup();

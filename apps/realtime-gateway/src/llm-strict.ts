@@ -1,55 +1,55 @@
-import { envServer } from "../../../lib/env.server.js";
+﻿import { envServer } from "../../../lib/env.server.js";
 /**
- * llm-strict.ts — Appels LLM robustes (OpenAI / Mistral)
- * Fonctionnalités existantes conservées :
- * Multi-provider avec basculement automatique OpenAI → Mistral
- * Forçage JSON (response_format: { type: "json_object" })
+ * llm-strict.ts â€” Appels LLM robustes (OpenAI / Mistral)
+ * FonctionnalitÃ©s existantes conservÃ©es :
+ * Multi-provider avec basculement automatique OpenAI â†’ Mistral
+ * ForÃ§age JSON (response_format: { type: "json_object" })
  * Validation Zod avec retry auto-correction (1 tentative)
  * Timeout strict de 15 secondes via Promise.race
  * Correction B7 :
- * callLLMStrict() accepte désormais un AbortSignal optionnel.
+ * callLLMStrict() accepte dÃ©sormais un AbortSignal optionnel.
  * Ce signal est :
- * 1. Passé au fetch() OpenAI/Mistral → la requête HTTP est annulée
- *    immédiatement si la session est détruite
- * 2. Ajouté comme 3e concurrent dans Promise.race → le race se résout
- *    en rejet dès l'abort, sans attendre les 15s de timeout interne
+ * 1. PassÃ© au fetch() OpenAI/Mistral â†’ la requÃªte HTTP est annulÃ©e
+ *    immÃ©diatement si la session est dÃ©truite
+ * 2. AjoutÃ© comme 3e concurrent dans Promise.race â†’ le race se rÃ©sout
+ *    en rejet dÃ¨s l'abort, sans attendre les 15s de timeout interne
  * Sans ce correctif :
- * Session détruite à T+14s → appel OpenAI continue jusqu'à T+15s
- * 50 sessions interrompues simultanément = 50 × 1s d'appels inutiles
- * Coût et occupation mémoire non annulables
+ * Session dÃ©truite Ã  T+14s â†’ appel OpenAI continue jusqu'Ã  T+15s
+ * 50 sessions interrompues simultanÃ©ment = 50 Ã— 1s d'appels inutiles
+ * CoÃ»t et occupation mÃ©moire non annulables
  */
 import { type ZodSchema } from "zod";
 import { captureError } from "../../../lib/sentry-context.js";
 
-// ── Configuration ─────────────────────────────────────────────────────────
+// â”€â”€ Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 const MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions";
 
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RETRY_ATTEMPTS = 1; // 1 retry Zod auto-correction
-const DEFAULT_TEMPERATURE = 0.3; // Réponses déterministes pour JSON strict
+const DEFAULT_TEMPERATURE = 0.3; // RÃ©ponses dÃ©terministes pour JSON strict
 
-// ── Types ─────────────────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 type Provider = "openai" | "mistral";
 
 export interface LLMCallOptions<T> {
-  /** Prompt système (instructions, persona de l'IA) */
+  /** Prompt systÃ¨me (instructions, persona de l'IA) */
   systemPrompt: string;
-  /* Prompt utilisateur (contexte, données à analyser) */
+  /* Prompt utilisateur (contexte, donnÃ©es Ã  analyser) */
   userPrompt: string;
-  /* Schéma Zod de validation de la réponse JSON */
+  /* SchÃ©ma Zod de validation de la rÃ©ponse JSON */
   schema: ZodSchema<T>;
-  /* Modèle à utiliser (défaut: gpt-4o-mini / mistral-small-latest) */
+  /* ModÃ¨le Ã  utiliser (dÃ©faut: gpt-4o-mini / mistral-small-latest) */
   model?: string;
-  /* Provider préféré (défaut: openai, fallback: mistral) */
+  /* Provider prÃ©fÃ©rÃ© (dÃ©faut: openai, fallback: mistral) */
   provider?: Provider;
-  /* Timeout en ms (défaut: 15 000) */
+  /* Timeout en ms (dÃ©faut: 15 000) */
   timeoutMs?: number;
   /*
-   * B7 — Signal d'annulation de la session.
-   * Passé au fetch() et au Promise.race pour annulation immédiate.
+   * B7 â€” Signal d'annulation de la session.
+   * PassÃ© au fetch() et au Promise.race pour annulation immÃ©diate.
    */
   signal?: AbortSignal;
 }
@@ -58,19 +58,19 @@ interface OpenAIMessage {
   content: string;
 }
 
-// ── Appel LLM principal ───────────────────────────────────────────────────
+// â”€â”€ Appel LLM principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Effectue un appel LLM avec validation Zod et retry auto-correction.
- * @returns La réponse validée et typée selon le schéma fourni.
- * @throws ZodError si la réponse est invalide après retry.
- * @throws DOMException (AbortError) si le signal est déclenché.
- * @throws Error si le timeout est dépassé ou si l'API est indisponible.
+ * @returns La rÃ©ponse validÃ©e et typÃ©e selon le schÃ©ma fourni.
+ * @throws ZodError si la rÃ©ponse est invalide aprÃ¨s retry.
+ * @throws DOMException (AbortError) si le signal est dÃ©clenchÃ©.
+ * @throws Error si le timeout est dÃ©passÃ© ou si l'API est indisponible.
  */
 export async function callLLMStrict<T>(
   options: LLMCallOptions<T>
 ): Promise<T> {
-  const { systemPrompt, userPrompt, schema, _provider = "openai", _timeoutMs = DEFAULT_TIMEOUT_MS, signal,  } = options;
+  const { systemPrompt, userPrompt, schema, provider = "openai", timeoutMs = DEFAULT_TIMEOUT_MS, signal } = options;
   const messages: OpenAIMessage[] = [
     { role: "system", content: systemPrompt },
     { role: "user", content: userPrompt },
@@ -79,7 +79,7 @@ export async function callLLMStrict<T>(
   return attemptCall(messages, schema, provider, timeoutMs, signal, 0);
 }
 
-// ── Tentative d'appel avec retry ──────────────────────────────────────────
+// â”€â”€ Tentative d'appel avec retry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function attemptCall<T>(
   messages: OpenAIMessage[],
@@ -89,8 +89,8 @@ async function attemptCall<T>(
   signal: AbortSignal | undefined,
   attempt: number
 ): Promise<T> {
-  // Vérification préalable : si le signal est déjà aborted, on ne lance
-  // même pas la requête réseau
+  // VÃ©rification prÃ©alable : si le signal est dÃ©jÃ  aborted, on ne lance
+  // mÃªme pas la requÃªte rÃ©seau
   if (signal?.aborted) {
     throw new DOMException("Signal aborted before LLM call", "AbortError");
   }
@@ -116,30 +116,30 @@ async function attemptCall<T>(
     return result.data;
   }
 
-  // ── Retry auto-correction ─────────────────────────────────────────────
+  // â”€â”€ Retry auto-correction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (attempt < MAX_RETRY_ATTEMPTS) {
     const zodErrors = result.error.errors
       .map((e) => `${e.path.join(".")}: ${e.message}`)
       .join("; ");
 
     console.warn(
-      `[LLM] Réponse invalide (tentative ${attempt + 1}/${MAX_RETRY_ATTEMPTS + 1}) — réinjection erreurs Zod: ${zodErrors}`
+      `[LLM] RÃ©ponse invalide (tentative ${attempt + 1}/${MAX_RETRY_ATTEMPTS + 1}) â€” rÃ©injection erreurs Zod: ${zodErrors}`
     );
 
-    // Réinjection des erreurs dans le contexte pour auto-correction
+    // RÃ©injection des erreurs dans le contexte pour auto-correction
     const correctionMessages: OpenAIMessage[] = [
       ...messages,
       { role: "assistant", content },
       {
         role: "user",
-        content: `Ta réponse JSON est invalide. Erreurs: ${zodErrors}. Corrige et retourne uniquement le JSON valide.`,
+        content: `Ta rÃ©ponse JSON est invalide. Erreurs: ${zodErrors}. Corrige et retourne uniquement le JSON valide.`,
       },
     ];
 
     return attemptCall(
       correctionMessages,
       schema,
-      // Fallback sur Mistral si OpenAI a échoué
+      // Fallback sur Mistral si OpenAI a Ã©chouÃ©
       attempt === 0 && provider === "openai" ? "mistral" : provider,
       timeoutMs,
       signal,
@@ -150,28 +150,28 @@ async function attemptCall<T>(
   throw result.error;
 }
 
-// ── Fetch avec race (timeout + signal) ───────────────────────────────────
+// â”€â”€ Fetch avec race (timeout + signal) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function fetchWithRace(messages: OpenAIMessage[], provider: Provider, timeoutMs: number, signal: AbortSignal | undefined): Promise<{
   choices: Array<{ message: { content: string } }>;
 }> {
-  // ── Promise 1 : appel LLM ───────────────────────────────────────────────
+  // â”€â”€ Promise 1 : appel LLM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const llmPromise = fetchLLM(messages, provider, signal);
 
-  // ── Promise 2 : timeout interne (15s) ───────────────────────────────────
+  // â”€â”€ Promise 2 : timeout interne (15s) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const timeoutPromise = new Promise<never>((_, reject) => {
     const timer = setTimeout(
-      () => reject(new Error(`LLM_TIMEOUT après ${timeoutMs}ms (provider: ${provider})`)),
+      () => reject(new Error(`LLM_TIMEOUT aprÃ¨s ${timeoutMs}ms (provider: ${provider})`)),
       timeoutMs
     );
-    // Si le signal est déclenché, on annule aussi le timer pour ne pas
+    // Si le signal est dÃ©clenchÃ©, on annule aussi le timer pour ne pas
     // laisser de ressources pendantes
     signal?.addEventListener("abort", () => clearTimeout(timer), { once: true });
   });
 
-  // ── Promise 3 : B7 — abort de session ───────────────────────────────────
-  // Résout immédiatement si le signal est déjà aborted,
-  // sinon écoute l'événement "abort" pour rejeter sans attendre le timeout.
+  // â”€â”€ Promise 3 : B7 â€” abort de session â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // RÃ©sout immÃ©diatement si le signal est dÃ©jÃ  aborted,
+  // sinon Ã©coute l'Ã©vÃ©nement "abort" pour rejeter sans attendre le timeout.
   const abortPromise = signal
     ? new Promise<never>((_, reject) => {
         if (signal.aborted) {
@@ -198,7 +198,7 @@ async function fetchWithRace(messages: OpenAIMessage[], provider: Provider, time
   }>;
 }
 
-// ── Fetch vers le provider ────────────────────────────────────────────────
+// â”€â”€ Fetch vers le provider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function fetchLLM(messages: OpenAIMessage[], provider: Provider, signal: AbortSignal | undefined): Promise<{ choices: Array<{ message: { content: string } }> }> {
   const isOpenAI = provider === "openai";
@@ -208,7 +208,7 @@ async function fetchLLM(messages: OpenAIMessage[], provider: Provider, signal: A
     : envServer.MISTRAL_API_KEY;
 
   if (!apiKey) {
-    throw new Error(`Clé API manquante pour le provider: ${provider}`);
+    throw new Error(`ClÃ© API manquante pour le provider: ${provider}`);
   }
 
   const url = isOpenAI ? OPENAI_API_URL : MISTRAL_API_URL;
@@ -218,7 +218,7 @@ async function fetchLLM(messages: OpenAIMessage[], provider: Provider, signal: A
 
   const response = await fetch(url, {
     method: "POST",
-    // B7 : signal transmis au fetch — null si absent (RequestInit attend AbortSignal | null)
+    // B7 : signal transmis au fetch â€” null si absent (RequestInit attend AbortSignal | null)
     signal: signal ?? null,
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -235,7 +235,7 @@ async function fetchLLM(messages: OpenAIMessage[], provider: Provider, signal: A
   if (!response.ok) {
     const body = await response.text().catch(() => "");
     const err = new Error(
-      `${provider} API error: ${response.status} ${response.statusText} — ${body.slice(0, 300)}`
+      `${provider} API error: ${response.status} ${response.statusText} â€” ${body.slice(0, 300)}`
     );
     captureError(err, { component: 'llm-strict', provider, model, status: response.status });
     throw err;

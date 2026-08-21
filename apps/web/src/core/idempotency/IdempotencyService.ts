@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Idempotency Service
  * Prevents duplicate execution of operations using idempotency keys
  * Ensures that the same request with the same key produces the same result
@@ -76,7 +76,7 @@ export class IdempotencyService {
         userId,
       });
 
-      return { isCached: true, resultRef: data.result_ref };
+      return { isCached: true, resultRef: data.result_ref ?? undefined };
     }
 
     // Operation is still pending
@@ -295,3 +295,4 @@ export class IdempotencyService {
     return 1;
   }
 }
+

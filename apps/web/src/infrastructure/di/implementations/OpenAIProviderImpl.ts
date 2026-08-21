@@ -1,111 +1,292 @@
 /**
  * OpenAIProvider Implementation
- * Implements IAIProvider interface for OpenAI
+ *
+ * Infrastructure adapter implementing IAIProvider.
+ *
+ * IMPORTANT:
+ * - Never reads OPENAI_API_KEY directly.
+ * - Never creates a client with a dummy/placeholder key.
+ * - AI configuration comes from the centralized AI config layer.
+ * - Fails fast when AI configuration is invalid.
  */
 
-import { IAIProvider, ChatCompletionParams, ChatCompletionResponse, AudioTranscriptionParams, AudioTranscriptionResponse, AudioSpeechParams, AudioSpeechResponse } from "@/core/interfaces";
-import { InfrastructureError, ExternalServiceError, TimeoutError } from "@/core/errors";
-import { withTimeout, TIMEOUT_CONFIG } from "@/lib/timeout/withTimeout";
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
-export class OpenAIProviderImpl implements IAIProvider {
-  private client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'dummy' });
+import type {
+  IAIProvider,
+  ChatCompletionParams,
+  ChatCompletionResponse,
+  AudioTranscriptionParams,
+  AudioTranscriptionResponse,
+  AudioSpeechParams,
+  AudioSpeechResponse,
+} from "@/core/interfaces";
 
-  constructor() {
-    // Client is now managed by resilience layer
+import {
+  ExternalServiceError,
+  TimeoutError,
+} from "@/core/errors";
+
+import {
+  getAIConfig,
+} from "@/lib/ai/config/ai.config";
+
+import {
+  withTimeout,
+  TIMEOUT_CONFIG,
+} from "@/lib/timeout/withTimeout";
+
+export class OpenAIProviderImpl
+  implements IAIProvider
+{
+  private readonly client: OpenAI;
+
+  constructor(
+    client?: OpenAI,
+  ) {
+    if (client) {
+      this.client =
+        client;
+
+      return;
+    }
+
+    const aiConfig =
+      getAIConfig();
+
+    this.client =
+      new OpenAI({
+        apiKey:
+          aiConfig.openaiApiKey,
+
+        organization:
+          aiConfig.openaiOrganization,
+
+        project:
+          aiConfig.openaiProject,
+      });
   }
 
-  async chatCompletion(params: ChatCompletionParams): Promise<ChatCompletionResponse> {
+  async chatCompletion(
+    params: ChatCompletionParams,
+  ): Promise<ChatCompletionResponse> {
     try {
-      const response = await withTimeout(
-        this.client.chat.completions.create({
-          model: params.model,
-          messages: params.messages.map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
-          temperature: params.temperature,
-          max_tokens: params.maxTokens,
-          response_format: params.responseFormat,
-        }),
-        TIMEOUT_CONFIG.OPENAI,
-        "OpenAI.chatCompletion"
-      );
+      const response =
+        await withTimeout(
+          this.client.chat.completions.create({
+            model:
+              params.model,
 
-      const choice = response.choices[0];
+            messages:
+              params.messages.map(
+                (message) => ({
+                  role:
+                    message.role,
+
+                  content:
+                    message.content,
+                }),
+              ),
+
+            temperature:
+              params.temperature,
+
+            max_tokens:
+              params.maxTokens,
+
+            response_format:
+              params.responseFormat,
+          }),
+
+          TIMEOUT_CONFIG.OPENAI,
+
+          "OpenAI.chatCompletion",
+        );
+
+      const choice =
+        response.choices[0];
+
       if (!choice) {
-        throw new ExternalServiceError("No response from AI", "OpenAI");
+        throw new ExternalServiceError(
+          "OpenAI returned no completion choice",
+          "OpenAI",
+        );
       }
 
       return {
-        content: choice.message.content || "",
-        promptTokens: response.usage?.prompt_tokens || 0,
-        completionTokens: response.usage?.completion_tokens || 0,
-        totalTokens: response.usage?.total_tokens || 0,
+        content:
+          choice.message.content ?? "",
+
+        promptTokens:
+          response.usage
+            ?.prompt_tokens ?? 0,
+
+        completionTokens:
+          response.usage
+            ?.completion_tokens ?? 0,
+
+        totalTokens:
+          response.usage
+            ?.total_tokens ?? 0,
       };
     } catch (error) {
-      if (error instanceof TimeoutError) {
+      if (
+        error instanceof TimeoutError
+      ) {
         throw error;
       }
+
+      if (
+        error instanceof ExternalServiceError
+      ) {
+        throw error;
+      }
+
       throw new ExternalServiceError(
-        `OpenAI chat completion failed: ${error instanceof Error ? error.message : String(error)}`,
-        "OpenAI"
+        `OpenAI chat completion failed: ${this.getErrorMessage(error)}`,
+        "OpenAI",
       );
     }
   }
 
-  async transcribeAudio(params: AudioTranscriptionParams): Promise<AudioTranscriptionResponse> {
+  async transcribeAudio(
+    params: AudioTranscriptionParams,
+  ): Promise<AudioTranscriptionResponse> {
     try {
-      const response = await withTimeout(
-        this.client.audio.transcriptions.create({
-          file: params.file as File,
-          model: params.model,
-          language: params.language,
-        }),
-        TIMEOUT_CONFIG.OPENAI,
-        "OpenAI.transcribeAudio"
-      );
+      const response =
+        await withTimeout(
+          this.client.audio.transcriptions.create({
+            file:
+              params.file as File,
+
+            model:
+              params.model,
+
+            language:
+              params.language,
+          }),
+
+          TIMEOUT_CONFIG.OPENAI,
+
+          "OpenAI.transcribeAudio",
+        );
 
       return {
-        text: response.text,
-        duration: 0, // OpenAI API doesn't return duration in the response
+        text:
+          response.text,
+
+        duration: 0,
       };
     } catch (error) {
-      if (error instanceof TimeoutError) {
+      if (
+        error instanceof TimeoutError
+      ) {
         throw error;
       }
+
+      if (
+        error instanceof ExternalServiceError
+      ) {
+        throw error;
+      }
+
       throw new ExternalServiceError(
-        `OpenAI audio transcription failed: ${error instanceof Error ? error.message : String(error)}`,
-        "OpenAI"
+        `OpenAI audio transcription failed: ${this.getErrorMessage(error)}`,
+        "OpenAI",
       );
     }
   }
 
-  async synthesizeSpeech(params: AudioSpeechParams): Promise<AudioSpeechResponse> {
+  async synthesizeSpeech(
+    params: AudioSpeechParams,
+  ): Promise<AudioSpeechResponse> {
     try {
-      const response = await withTimeout(
-        this.client.audio.speech.create({
-          model: params.model,
-          voice: (params.voice  as any) || "alloy",
-          input: params.text,
-        }),
-        TIMEOUT_CONFIG.OPENAI,
-        "OpenAI.synthesizeSpeech"
-      );
+      const response =
+        await withTimeout(
+          this.client.audio.speech.create({
+            model:
+              params.model,
 
-      const buffer = Buffer.from(await response.arrayBuffer());
+            voice:
+              this.normalizeVoice(
+                params.voice,
+              ),
+
+            input:
+              params.text,
+          }),
+
+          TIMEOUT_CONFIG.OPENAI,
+
+          "OpenAI.synthesizeSpeech",
+        );
+
+      const arrayBuffer =
+        await response.arrayBuffer();
+
+      const audio =
+        Buffer.from(
+          arrayBuffer,
+        );
 
       return {
-        audio: buffer,
+        audio,
       };
     } catch (error) {
-      if (error instanceof TimeoutError) {
+      if (
+        error instanceof TimeoutError
+      ) {
         throw error;
       }
+
+      if (
+        error instanceof ExternalServiceError
+      ) {
+        throw error;
+      }
+
       throw new ExternalServiceError(
-        `OpenAI speech synthesis failed: ${error instanceof Error ? error.message : String(error)}`,
-        "OpenAI"
+        `OpenAI speech synthesis failed: ${this.getErrorMessage(error)}`,
+        "OpenAI",
       );
+    }
+  }
+
+  private normalizeVoice(
+    voice?: string,
+  ): OpenAI.Audio.Speech.SpeechCreateParams["voice"] {
+    const normalized =
+      voice?.trim();
+
+    if (!normalized) {
+      return "alloy";
+    }
+
+    return normalized as OpenAI.Audio.Speech.SpeechCreateParams["voice"];
+  }
+
+  private getErrorMessage(
+    error: unknown,
+  ): string {
+    if (
+      error instanceof Error
+    ) {
+      return error.message;
+    }
+
+    if (
+      typeof error ===
+      "string"
+    ) {
+      return error;
+    }
+
+    try {
+      return JSON.stringify(
+        error,
+      );
+    } catch {
+      return "Unknown OpenAI error";
     }
   }
 }

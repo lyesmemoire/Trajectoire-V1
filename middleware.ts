@@ -1,28 +1,20 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { updateSession } from "@/lib/supabase/middleware";
-import {
-  getOrCreateRequestId,
-  attachRequestId,
-} from "@/lib/security/request-id";
+"use client"
 
-export async function middleware(request: NextRequest) {
-  const requestId = getOrCreateRequestId(request);
-  const response = (await updateSession(request)) as NextResponse;
-  // Attach both lowercase and capitalized headers for compatibility
-  attachRequestId(response, requestId);
-  response.headers.set("X-Request-ID", requestId);
-  return response;
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase"
+
+export default function LogoutPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    ;(async () => {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.replace("/login")
+      router.refresh()
+    })()
+  }, [router])
+
+  return <div className="min-h-screen bg-ivoire-50" />
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
-};

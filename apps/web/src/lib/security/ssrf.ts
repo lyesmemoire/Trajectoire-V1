@@ -50,7 +50,6 @@ const PRIVATE_IP_RANGES = [
  */
 const ALLOWED_DOMAINS = [
   'api.openai.com',
-  'api.mistral.ai',
   '*.supabase.co',
   'api.stripe.com',
   'cdn.jsdelivr.net',

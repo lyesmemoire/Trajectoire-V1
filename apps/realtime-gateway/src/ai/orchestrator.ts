@@ -1,4 +1,4 @@
-import { bus } from "../events/bus.js";
+﻿import { bus } from "../events/bus.js";
 import { SessionMemory } from "./memory.js";
 import { buildPrompt } from "./promptBuilder.js";
 import { streamChat } from "./openai.js";
@@ -21,7 +21,7 @@ bus.on("transcript", async (msg) => {
   // Retrieve or create session state
   let state = sessions.get(sessionId);
   if (!state) {
-    // Placeholder system prompt – can be enriched later
+    // Placeholder system prompt â€“ can be enriched later
     const memory = new SessionMemory("You are an interview assistant.");
     state = { memory, controller: null };
     sessions.set(sessionId, state);
@@ -75,12 +75,12 @@ bus.on("transcript", async (msg) => {
       },
       abortController.signal,
     );
-  } catch (error) {
+  } catch (err) {
     // If aborted, simply silence; otherwise forward error
-    if ((err as unknown).name === "AbortError") {
+    if ((err as any).name === "AbortError") {
       bus.emit("ai_error", { sessionId, error: "aborted" });
     } else {
-      bus.emit("ai_error", { sessionId, error: (err as Error).message });
+      bus.emit("ai_error", { sessionId, error: (err as any).message });
     }
   }
 });

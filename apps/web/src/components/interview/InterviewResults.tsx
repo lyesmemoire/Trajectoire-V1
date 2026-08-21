@@ -106,7 +106,7 @@ export function InterviewResults({ session }: { session: any }) {
               <div className="flex items-center gap-2 text-sm font-bold text-ink-400 uppercase tracking-widest">
                 <ChevronRight className="w-4 h-4" /> Moins de 5 minutes
               </div>
-              <Link href="/dashboard/interview/session">
+              <Link href="/simulation/new">
                 <Button
                   size="lg"
                   className="h-16 px-12 rounded-2xl bg-ivoire-50 text-ink-900 font-black text-xl hover:bg-ivoire-100 shadow-premium w-full md:w-auto"

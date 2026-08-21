@@ -1,191 +1,472 @@
-// apps/web/src/app/api/cv/upload/route.ts
-// CRÉATION L2.2 — 19 juillet 2026
-// SOURCE : Adapté depuis /api/product/upload (legacy n'a pas cette route)
-// RAISON : Séparation des responsabilités upload / analyze
+import { NextRequest, NextResponse } from "next/server";
 
-import { NextResponse, NextRequest } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-import { logger } from '@/lib/logger'
+import { logger } from "@/lib/logger";
+import { createClient } from "@/lib/supabase/server";
 
-// ============================================================
-// CONSTANTES
-// ============================================================
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
-const MAX_FILE_SIZE = 8 * 1024 * 1024  // 8 Mo — aligné sur /api/product/upload
+const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const MIN_TEXT_LENGTH = 50;
+const MAX_TEXT_LENGTH = 50_000;
 
-const ALLOWED_TYPES: Record<string, string> = {
-  'application/pdf': 'PDF',
-  'text/plain': 'TXT',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOCX',
+const PDF_MIME = "application/pdf";
+const DOCX_MIME =
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const TXT_MIME = "text/plain";
+
+type SupportedFileType =
+  | "PDF"
+  | "DOCX"
+  | "TXT";
+
+interface UploadSuccessResponse {
+  success: true;
+  fileName: string;
+  fileSize: number;
+  fileType: SupportedFileType;
+  textLength: number;
+  extractedText: string;
 }
 
-// ============================================================
-// HANDLER
-// ============================================================
-
-export async function POST(request: NextRequest) {
-
-  // 1. Authentification
-  const supabase = await createClient()
-  const { data: { user }, error: authError } = await supabase.auth.getUser()
-
-  if (authError || !user) {
-    return NextResponse.json(
-      { error: 'Non authentifié' },
-      { status: 401 }
+function sanitizeFileName(
+  fileName: string,
+): string {
+  return fileName
+    .replace(/\.\./g, "")
+    .replace(
+      /[<>:"/\\|?*\u0000-\u001f]/g,
+      "_",
     )
+    .slice(0, 160);
+}
+
+function detectFileType(
+  file: File,
+): SupportedFileType | null {
+  const name =
+    file.name.toLowerCase();
+
+  if (
+    file.type === PDF_MIME ||
+    name.endsWith(".pdf")
+  ) {
+    return "PDF";
   }
 
-  // 2. Récupération du fichier
-  let formData: FormData
+  if (
+    file.type === DOCX_MIME ||
+    name.endsWith(".docx")
+  ) {
+    return "DOCX";
+  }
 
+  if (
+    file.type === TXT_MIME ||
+    name.endsWith(".txt")
+  ) {
+    return "TXT";
+  }
+
+  return null;
+}
+
+function isPdfBuffer(
+  buffer: Buffer,
+): boolean {
+  return (
+    buffer.length >= 4 &&
+    buffer[0] === 0x25 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x44 &&
+    buffer[3] === 0x46
+  );
+}
+
+function isZipBuffer(
+  buffer: Buffer,
+): boolean {
+  if (buffer.length < 4) {
+    return false;
+  }
+
+  return (
+    buffer[0] === 0x50 &&
+    buffer[1] === 0x4b &&
+    (
+      (
+        buffer[2] === 0x03 &&
+        buffer[3] === 0x04
+      ) ||
+      (
+        buffer[2] === 0x05 &&
+        buffer[3] === 0x06
+      ) ||
+      (
+        buffer[2] === 0x07 &&
+        buffer[3] === 0x08
+      )
+    )
+  );
+}
+
+async function extractPdf(
+  buffer: Buffer,
+): Promise<string> {
   try {
-    formData = await request.formData()
+    const module =
+      await import("pdf-parse");
+
+    const pdfParse =
+      module.default;
+
+    const result =
+      await pdfParse(buffer);
+
+    const text =
+      result.text?.trim() ?? "";
+
+    if (
+      text.length >=
+      MIN_TEXT_LENGTH
+    ) {
+      return text;
+    }
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Requête multipart invalide' },
-      { status: 400 }
-    )
+    logger.warn({
+      event:
+        "CV upload - pdf-parse failed",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Unknown pdf-parse error",
+    });
   }
-
-  const file = formData.get('file') as File | null
-
-  if (!file) {
-    return NextResponse.json(
-      { error: 'Champ "file" absent de la requête' },
-      { status: 400 }
-    )
-  }
-
-  // 3. Validation type MIME
-  if (!ALLOWED_TYPES[file.type]) {
-    return NextResponse.json(
-      {
-        error: 'Format non supporté',
-        accepted: Object.values(ALLOWED_TYPES),
-        received: file.type || 'inconnu',
-      },
-      { status: 400 }
-    )
-  }
-
-  // 4. Validation taille
-  if (file.size > MAX_FILE_SIZE) {
-    return NextResponse.json(
-      {
-        error: 'Fichier trop volumineux',
-        maxSize: '8 Mo',
-        receivedSize: `${(file.size / 1024 / 1024).toFixed(2)} Mo`,
-      },
-      { status: 400 }
-    )
-  }
-
-  if (file.size === 0) {
-    return NextResponse.json(
-      { error: 'Le fichier est vide' },
-      { status: 400 }
-    )
-  }
-
-  // 5. Extraction du texte
-  let extractedText = ''
 
   try {
-    if (file.type === 'application/pdf') {
-      extractedText = await extractPDF(file)
-    } else {
-      // TXT et DOCX : lecture directe
-      extractedText = await file.text()
+    const pdfjs =
+      await import(
+        "pdfjs-dist/legacy/build/pdf.mjs"
+      );
+
+    const loadingTask =
+      pdfjs.getDocument({
+        data:
+          new Uint8Array(
+            buffer,
+          ),
+      });
+
+    const pdf =
+      await loadingTask.promise;
+
+    const pages: string[] = [];
+
+    for (
+      let index = 1;
+      index <= pdf.numPages;
+      index += 1
+    ) {
+      const page =
+        await pdf.getPage(index);
+
+      const content =
+        await page.getTextContent();
+
+      const pageText =
+        content.items
+          .map((item) =>
+            "str" in item
+              ? String(item.str)
+              : "",
+          )
+          .join(" ");
+
+      pages.push(pageText);
     }
-  } catch (err: any) {
+
+    return pages.join("\n");
+  } catch (error) {
     logger.error({
-      userId: user.id,
-      fileType: file.type,
-      message: err instanceof Error ? err.message : 'Unknown error',
-      event: 'CV upload — extraction failed'
-    })
-    return NextResponse.json(
-      { error: 'Impossible de lire le fichier. Vérifiez qu\'il n\'est pas corrompu.' },
-      { status: 422 }
-    )
+      event:
+        "CV upload - pdfjs extraction failed",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Unknown PDF extraction error",
+    });
+
+    throw new Error(
+      "Impossible d'extraire le texte du PDF.",
+    );
   }
-
-  // 6. Validation du contenu extrait
-  const cleanText = extractedText.trim()
-
-  if (!cleanText || cleanText.length < 50) {
-    return NextResponse.json(
-      {
-        error: 'Le fichier semble vide ou son contenu est illisible',
-        hint: 'Assurez-vous que le PDF contient du texte sélectionnable (pas une image scannée)',
-      },
-      { status: 422 }
-    )
-  }
-
-  // 7. Réponse — le texte extrait est prêt pour /api/cv/analyze
-  return NextResponse.json({
-    success: true,
-    fileName: file.name,
-    fileSize: file.size,
-    fileType: ALLOWED_TYPES[file.type],
-    textLength: cleanText.length,
-    extractedText: cleanText,
-  })
 }
 
-// ============================================================
-// EXTRACTION PDF
-// Utilise pdfjs-dist (installé) avec fallback pdf-parse
-// ============================================================
-
-async function extractPDF(file: File): Promise<string> {
-  const buffer = Buffer.from(await file.arrayBuffer())
-
-  // Tentative 1 : pdf-parse (plus simple, synchrone)
+async function extractDocx(
+  buffer: Buffer,
+): Promise<string> {
   try {
-    const pdfParse = (await import('pdf-parse')).default
-    const result = await pdfParse(buffer)
+    const mammoth =
+      await import("mammoth");
 
-    if (result.text && result.text.trim().length > 10) {
-      return result.text
+    const result =
+      await mammoth.extractRawText({
+        buffer,
+      });
+
+    return result.value ?? "";
+  } catch (error) {
+    logger.error({
+      event:
+        "CV upload - DOCX extraction failed",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Unknown DOCX extraction error",
+    });
+
+    throw new Error(
+      "Impossible d'extraire le texte du fichier Word.",
+    );
+  }
+}
+
+async function extractText(
+  file: File,
+  fileType: SupportedFileType,
+): Promise<string> {
+  const buffer =
+    Buffer.from(
+      await file.arrayBuffer(),
+    );
+
+  if (fileType === "PDF") {
+    if (!isPdfBuffer(buffer)) {
+      throw new Error(
+        "Le fichier ne semble pas être un PDF valide.",
+      );
     }
-  } catch (err: any) {
-    logger.warn({
-      message: err instanceof Error ? err.message : 'Unknown',
-      event: 'CV upload — pdf-parse failed, trying pdfjs-dist'
-    })
+
+    return extractPdf(buffer);
   }
 
-  // Tentative 2 : pdfjs-dist (fallback)
-  try {
-    const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs')
-
-    const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) })
-    const pdfDocument = await loadingTask.promise
-
-    const textParts: string[] = []
-
-    for (let i = 1; i <= pdfDocument.numPages; i++) {
-      const page = await pdfDocument.getPage(i)
-      const textContent = await page.getTextContent()
-      if (!textContent || !textContent.items) {
-        continue
-      }
-      const pageText = textContent.items
-        .map((item) => ('str' in item ? item.str : ''))
-        .join(' ')
-      textParts.push(pageText)
+  if (fileType === "DOCX") {
+    if (!isZipBuffer(buffer)) {
+      throw new Error(
+        "Le fichier ne semble pas être un DOCX valide.",
+      );
     }
 
-    return textParts.join('\n')
+    return extractDocx(buffer);
+  }
 
-  } catch (err: any) {
+  return buffer.toString("utf8");
+}
+
+function cleanExtractedText(
+  value: string,
+): string {
+  return value
+    .replace(/\u0000/g, "")
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+    .slice(
+      0,
+      MAX_TEXT_LENGTH,
+    );
+}
+
+export async function POST(
+  request: NextRequest,
+) {
+  try {
+    const supabase =
+      await createClient();
+
+    const {
+      data: { user },
+      error: authError,
+    } =
+      await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        {
+          error: "Non authentifié",
+        },
+        {
+          status: 401,
+        },
+      );
+    }
+
+    let formData: FormData;
+
+    try {
+      formData =
+        await request.formData();
+    } catch {
+      return NextResponse.json(
+        {
+          error:
+            "Requête multipart invalide.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const uploaded =
+      formData.get("file");
+
+    if (!(uploaded instanceof File)) {
+      return NextResponse.json(
+        {
+          error:
+            'Champ "file" absent de la requête.',
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const file = uploaded;
+
+    if (file.size === 0) {
+      return NextResponse.json(
+        {
+          error:
+            "Le fichier est vide.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    if (
+      file.size >
+      MAX_FILE_SIZE
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Fichier trop volumineux. Maximum 8 Mo.",
+        },
+        {
+          status: 413,
+        },
+      );
+    }
+
+    const fileType =
+      detectFileType(file);
+
+    if (!fileType) {
+      return NextResponse.json(
+        {
+          error:
+            "Format non supporté. Utilisez un PDF ou DOCX.",
+          accepted: [
+            "PDF",
+            "DOCX",
+          ],
+        },
+        {
+          status: 415,
+        },
+      );
+    }
+
+    let extractedText: string;
+
+    try {
+      extractedText =
+        await extractText(
+          file,
+          fileType,
+        );
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Impossible de lire le CV.",
+        },
+        {
+          status: 422,
+        },
+      );
+    }
+
+    const cleanText =
+      cleanExtractedText(
+        extractedText,
+      );
+
+    if (
+      cleanText.length <
+      MIN_TEXT_LENGTH
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Le CV semble vide ou son contenu n'est pas lisible.",
+          hint:
+            fileType === "PDF"
+              ? "Si le PDF est scanné comme une image, utilisez un PDF contenant du texte sélectionnable."
+              : "Vérifiez que le fichier Word contient bien du texte.",
+        },
+        {
+          status: 422,
+        },
+      );
+    }
+
+    const response:
+      UploadSuccessResponse = {
+        success: true,
+        fileName:
+          sanitizeFileName(
+            file.name,
+          ),
+        fileSize: file.size,
+        fileType,
+        textLength:
+          cleanText.length,
+        extractedText:
+          cleanText,
+      };
+
+    return NextResponse.json(
+      response,
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
     logger.error({
-      message: err instanceof Error ? err.message : 'Unknown',
-      event: 'CV upload — pdfjs-dist failed'
-    })
-    throw new Error('Échec de l\'extraction PDF avec les deux parsers disponibles')
+      event:
+        "CV upload - unexpected error",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Unknown error",
+    });
+
+    return NextResponse.json(
+      {
+        error:
+          "Erreur inattendue lors de la lecture du CV.",
+      },
+      {
+        status: 500,
+      },
+    );
   }
 }

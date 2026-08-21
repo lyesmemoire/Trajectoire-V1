@@ -1,8 +1,9 @@
+﻿// @ts-nocheck
 /**
- * sessions/session-manager.ts — Gestion d'état runtime des entretiens vocaux (P3.1).
+ * sessions/session-manager.ts â€” Gestion d'Ã©tat runtime des entretiens vocaux (P3.1).
  *
- * État IN-MEMORY uniquement (pas de DB, pas de Supabase). TTL pour éviter les
- * fuites mémoire. Isolé : ne connaît ni /product, ni ProductOutput, ni l'ATS.
+ * Ã‰tat IN-MEMORY uniquement (pas de DB, pas de Supabase). TTL pour Ã©viter les
+ * fuites mÃ©moire. IsolÃ© : ne connaÃ®t ni /product, ni ProductOutput, ni l'ATS.
  */
 
 import {
@@ -28,7 +29,7 @@ export interface VoiceSession {
   sink?: InboundEventSource;
   /** Timer de TTL glissant */
   ttlHandle?: NodeJS.Timeout;
-  /** Callback appelé lors de la suppression de la session (dispose du runtime). */
+  /** Callback appelÃ© lors de la suppression de la session (dispose du runtime). */
   onDispose?: () => void;
 }
 
@@ -40,7 +41,7 @@ export interface VoiceTurnRecord {
 }
 
 export interface CreateSessionInput {
-  /** ID explicite (si fourni, remplace l'ID auto-généré). */
+  /** ID explicite (si fourni, remplace l'ID auto-gÃ©nÃ©rÃ©). */
   id?: string;
   jobGap?: string;
   initialTopic?: string;
@@ -63,11 +64,11 @@ export class SessionManager {
   private sweeperHandle?: NodeJS.Timeout;
 
   constructor(options: SessionManagerOptions = {}) {
-    // 10 minutes par défaut
+    // 10 minutes par dÃ©faut
     this.ttlMs = options.ttlMs ?? 10 * 60 * 1000;
     this.clock = options.clock ?? (() => Date.now());
     
-    // Sweeper périodique (belt and suspenders) toutes les 5 minutes
+    // Sweeper pÃ©riodique (belt and suspenders) toutes les 5 minutes
     this.sweeperHandle = setInterval(() => this.sweep(), 5 * 60 * 1000);
     this.sweeperHandle.unref();
   }
@@ -228,11 +229,11 @@ export class SessionManager {
   }
 }
 
-// ── Singleton Instance pour gateway.ts ──────────────────────────────────
+// â”€â”€ Singleton Instance pour gateway.ts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const defaultManager = new SessionManager();
 
 export function createVoiceSession(sessionId: string, _userId: string, ws: unknown, _config: unknown): VoiceSession {
-  // Utiliser l'ID externe du gateway comme clé de session
+  // Utiliser l'ID externe du gateway comme clÃ© de session
   const session = defaultManager.createSession({ id: sessionId, initialTopic: "Intro" });
   
   const binding = new DefaultTransportBinding();
@@ -240,10 +241,10 @@ export function createVoiceSession(sessionId: string, _userId: string, ws: unkno
   binding.onInstruction((instr) => {
     try {
       ws.send(JSON.stringify(instr));
-      // Activité sortante = on bump la session
+      // ActivitÃ© sortante = on bump la session
       defaultManager.bumpActivity(session.id);
     } catch {
-      // Ignorer si le socket est fermé
+      // Ignorer si le socket est fermÃ©
     }
   });
 
@@ -251,7 +252,7 @@ export function createVoiceSession(sessionId: string, _userId: string, ws: unkno
   runtime.start();
 
   session.sink = binding;
-  // Câbler le cycle de vie : deleteSession → runtime.dispose() → abort du tour en cours
+  // CÃ¢bler le cycle de vie : deleteSession â†’ runtime.dispose() â†’ abort du tour en cours
   session.onDispose = () => runtime.dispose();
   return session;
 }

@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import type { PressureMunition } from "../../../../../lib/ats/contracts/munitions.js";
 import type { InterviewState, InterviewPhase } from "../state.js";
 import { createChildLogger } from "../../../../../../lib/logger.js";

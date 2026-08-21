@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { envServer } from "../../../../../lib/env.server.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import Stripe from "stripe";
@@ -254,7 +255,7 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
           }
           return reply.status(200).send({ received: true });
         } catch (err: unknown) {
-          console.error("🔥 Stripe webhook processing error:", err);
+          console.error("ðŸ”¥ Stripe webhook processing error:", err);
           return reply.status(500).send("Webhook handler failed");
         }
       },

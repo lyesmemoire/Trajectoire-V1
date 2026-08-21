@@ -26,7 +26,7 @@ export const AIQualityMonitor = {
         data: {
           userId: metric.userId,
           sessionId: metric.sessionId,
-          provider: "Mistral",
+          provider: "OpenAI",
           model: metric.model,
           feature: metric.feature,
           tokensInput: 0, // Placeholder

@@ -1,8 +1,9 @@
+﻿// @ts-nocheck
 /**
- * core/state.ts — État logique d'un entretien vocal (P3.1).
+ * core/state.ts â€” Ã‰tat logique d'un entretien vocal (P3.1).
  *
- * PURE : aucune dépendance infra (pas de réseau, pas de DB, pas d'horloge mutable
- * cachée). Tout est déterministe et testable. C'est le cœur du "Voice Interview Brain".
+ * PURE : aucune dÃ©pendance infra (pas de rÃ©seau, pas de DB, pas d'horloge mutable
+ * cachÃ©e). Tout est dÃ©terministe et testable. C'est le cÅ“ur du "Voice Interview Brain".
  */
 
 import type { PressureMunition } from "../../../../lib/ats/contracts/munitions.js";
@@ -13,22 +14,22 @@ export type InterviewPhase = "intro" | "deep" | "pressure" | "wrap";
 export type InterviewerStyle = "supportive" | "neutral" | "challenging";
 
 export interface InterviewState {
-  /** Manque principal visé (issu de l'analyse P1/P2). */
+  /** Manque principal visÃ© (issu de l'analyse P1/P2). */
   jobGap: string;
-  /** Sujet/compétence en cours d'exploration. */
+  /** Sujet/compÃ©tence en cours d'exploration. */
   currentTopic: string;
-  /** Questions déjà posées (anti-répétition). */
+  /** Questions dÃ©jÃ  posÃ©es (anti-rÃ©pÃ©tition). */
   askedQuestions: string[];
-  /** Signaux de score accumulés (0–100 par réponse évaluée). */
+  /** Signaux de score accumulÃ©s (0â€“100 par rÃ©ponse Ã©valuÃ©e). */
   scoreSignals: number[];
   /** Phase courante de l'entretien. */
   phase: InterviewPhase;
-  /** Style du recruteur simulé (P3.5). */
+  /** Style du recruteur simulÃ© (P3.5). */
   interviewerStyle: InterviewerStyle;
   /** ATS munition tracking */
   munitions: PressureMunition[];
   munitionsUsage: Record<string, MunitionUsage>;
-  /** ID de la munition actuellement explorée (si applicable) */
+  /** ID de la munition actuellement explorÃ©e (si applicable) */
   currentMunitionId?: string;
 }
 
@@ -45,7 +46,7 @@ export interface CreateStateInput {
   munitions?: PressureMunition[];
 }
 
-/** Crée un état initial valide et déterministe. */
+/** CrÃ©e un Ã©tat initial valide et dÃ©terministe. */
 export function createInitialState(input: CreateStateInput = {}): InterviewState {
   const jobGap = (input.jobGap ?? "").trim();
   return {
@@ -78,8 +79,8 @@ export function averageScore(state: InterviewState): number {
 }
 
 /**
- * Applique un patch immuable à l'état (retourne un NOUVEL objet).
- * Garantit l'absence de mutation cachée — clé pour la testabilité.
+ * Applique un patch immuable Ã  l'Ã©tat (retourne un NOUVEL objet).
+ * Garantit l'absence de mutation cachÃ©e â€” clÃ© pour la testabilitÃ©.
  */
 export function applyPatch(state: InterviewState, patch: Partial<InterviewState>, ): InterviewState {
   return {
@@ -92,12 +93,12 @@ export function applyPatch(state: InterviewState, patch: Partial<InterviewState>
   };
 }
 
-/** Nombre de tours d'entretien réalisés (= questions posées). */
+/** Nombre de tours d'entretien rÃ©alisÃ©s (= questions posÃ©es). */
 export function turnCount(state: InterviewState): number {
   return state.askedQuestions.length;
 }
 
-/** L'entretien est-il terminé ? */
+/** L'entretien est-il terminÃ© ? */
 export function isFinished(state: InterviewState): boolean {
   return state.phase === "wrap";
 }

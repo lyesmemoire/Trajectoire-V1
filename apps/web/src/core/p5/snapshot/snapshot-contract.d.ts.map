@@ -1,1 +1,0 @@
-{"version":3,"file":"snapshot-contract.d.ts","sourceRoot":"","sources":["snapshot-contract.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,0BAA0B,CAAC;AAErD;;;;;;GAMG;AACH,MAAM,WAAW,YAAY;IAC3B,QAAQ,CAAC,EAAE,EAAE,MAAM,CAAC;IACpB,QAAQ,CAAC,OAAO,EAAE,CAAC,CAAC;IACpB,QAAQ,CAAC,SAAS,EAAE,MAAM,CAAC;IAC3B,QAAQ,CAAC,KAAK,EAAE,SAAS,CAAC;CAC3B"}

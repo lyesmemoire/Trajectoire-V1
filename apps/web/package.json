@@ -18,6 +18,7 @@
     "test:check": "tsx src/e2e/simple-api-test.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.44",
     "@napi-rs/canvas": "^1.0.2",
     "@opentelemetry/semantic-conventions": "^1.43.0",
     "@supabase/ssr": "^0.12.3",
@@ -30,6 +31,7 @@
     "geist": "^1.7.2",
     "jose": "^6.2.8",
     "lucide-react": "0.460.0",
+    "mammoth": "^1.6.0",
     "next": "15.5.21",
     "openai": "^6.39.0",
     "pdf-lib": "^1.17.1",

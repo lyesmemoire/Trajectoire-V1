@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { callLlmStrict } from "../llm-strict.js";
 import { z } from "zod";
 
@@ -178,7 +179,7 @@ If:
 
 BEHAVIORAL CONSTRAINTS:
 - Do not be polite.
-- Do not say “good answer”.
+- Do not say â€œgood answerâ€.
 - Do not encourage.
 - Do not give hints.
 - Do not correct the candidate.

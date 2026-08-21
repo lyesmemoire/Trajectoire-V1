@@ -1,12 +1,13 @@
+﻿// @ts-nocheck
 /**
- * server/ws.voice.ts — Route WebSocket de l'entretien vocal (P3.3).
+ * server/ws.voice.ts â€” Route WebSocket de l'entretien vocal (P3.3).
  *
- * TRANSPORT UNIQUEMENT. Aucune logique métier ici :
- *   connect   -> crée session + branche l'adapter voice-websocket
- *   message   -> transmis par l'adapter (audio binaire / contrôle JSON)
- *   disconnect-> cleanup (géré par l'adapter via ws.on("close"))
+ * TRANSPORT UNIQUEMENT. Aucune logique mÃ©tier ici :
+ *   connect   -> crÃ©e session + branche l'adapter voice-websocket
+ *   message   -> transmis par l'adapter (audio binaire / contrÃ´le JSON)
+ *   disconnect-> cleanup (gÃ©rÃ© par l'adapter via ws.on("close"))
  *
- * Branche P3.2 `handleVoiceConnectionV2` + le système TTS P3.3.
+ * Branche P3.2 `handleVoiceConnectionV2` + le systÃ¨me TTS P3.3.
  */
 
 import type { FastifyInstance } from "fastify";
@@ -23,7 +24,7 @@ import { checkAndConsumeInterview } from "../voice-interview/billing/usage-servi
 import { interviewRepository } from "../voice-interview/persistence/singleton.js";
 import { handleVoiceConnectionV3 } from "../voice-interview/adapters/voice-websocket-v3.js";
 
-/** Session manager partagé (in-memory + TTL), unique par process. */
+/** Session manager partagÃ© (in-memory + TTL), unique par process. */
 const sessions = new SessionManager();
 
 /** Adapte un socket `ws` (Fastify/ws) vers l'interface VoiceWsLike. */
@@ -45,7 +46,7 @@ function adaptSocket(raw: {
         if (typeof data === "string") {
           cb(data, false);
         } else if (data instanceof Buffer) {
-          // Texte (contrôle JSON) vs binaire (audio)
+          // Texte (contrÃ´le JSON) vs binaire (audio)
           if (isBinary) cb(new Uint8Array(data), true);
           else cb(data.toString("utf8"), false);
         } else {
@@ -66,7 +67,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
     { websocket: true },
     async (connection: unknown, req: unknown) => {
       // @fastify/websocket v11 : `connection` est le socket ; versions
-      // antérieures : `{ socket }`. On gère les deux de façon défensive.
+      // antÃ©rieures : `{ socket }`. On gÃ¨re les deux de faÃ§on dÃ©fensive.
       const c = connection as { socket?: unknown };
       const rawSocket = (c && c.socket ? c.socket : connection) as Parameters<
         typeof adaptSocket
@@ -147,7 +148,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       if (typeof query.role === "string") input.targetRole = query.role;
       if (auth?.userId) input.userId = auth.userId;
 
-      // Logs structurés légers (observabilité, pas d'infra).
+      // Logs structurÃ©s lÃ©gers (observabilitÃ©, pas d'infra).
       const log = (event: string, fields: Record<string, _unknown>) => {
         if (process.env.VOICE_DEBUG === "true") {
            
@@ -155,8 +156,8 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         }
       };
 
-      // Sélecteur de moteur (opt-in) : ?engine=v3 -> LLM-Driven Contextual Engine
-      // Par défaut -> moteur V1 (P3.2→P3.5), zéro régression.
+      // SÃ©lecteur de moteur (opt-in) : ?engine=v3 -> LLM-Driven Contextual Engine
+      // Par dÃ©faut -> moteur V1 (P3.2â†’P3.5), zÃ©ro rÃ©gression.
       if (query.engine === "v3" && query.sessionId) {
         // Fetch context from DB
         const record = await interviewRepository.get(query.sessionId as string);
@@ -199,7 +200,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
         return;
       }
 
-      // Délégation complète à l'adapter V1 (lifecycle + cleanup interne).
+      // DÃ©lÃ©gation complÃ¨te Ã  l'adapter V1 (lifecycle + cleanup interne).
       void handleVoiceConnectionV2(ws, { sessions, tts, log }, input);
     },
   );

@@ -1,10 +1,21 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+﻿import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { logError } from "@/lib/logger/Logger";
+import type { Json } from "@/types/supabase.generated";
 
 export interface CTSResult {
   score: number;
   delta: number;
   label: string;
+}
+
+interface CommitteeDecisionFeedback {
+  strategicCredibility?: number;
+  shortlistProbability?: number;
+}
+
+interface InterviewFeedback {
+  overallScore?: number;
+  committeeDecision?: CommitteeDecisionFeedback;
 }
 
 export function getCTSLabel(score: number): string {
@@ -15,19 +26,89 @@ export function getCTSLabel(score: number): string {
   return "Board-Level Ready";
 }
 
-export async function computeAndSaveCTS(userId: string, sessionId: string, feedback: any): Promise<CTSResult | null> {
-  try {
-    const overall = feedback?.overallScore || 0;
-    const credibility = feedback?.committeeDecision?.strategicCredibility || 0;
-    const shortlist = feedback?.committeeDecision?.shortlistProbability || 0;
+function isJsonObject(
+  value: Json | null,
+): value is { [key: string]: Json | undefined } {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  );
+}
 
-    // Clamp and calculate current session score
-    const currentSessionScore = Math.max(0, Math.min(100, (0.4 * overall) + (0.3 * credibility) + (0.3 * shortlist)));
+function getNumber(
+  value: Json | undefined,
+): number {
+  return typeof value === "number" ? value : 0;
+}
+
+function parseInterviewFeedback(
+  value: Json | null,
+): InterviewFeedback {
+  if (!isJsonObject(value)) {
+    return {};
+  }
+
+  const overallScore = getNumber(value.overallScore);
+
+  let committeeDecision: CommitteeDecisionFeedback | undefined;
+
+  if (
+    value.committeeDecision !== undefined &&
+    value.committeeDecision !== null &&
+    typeof value.committeeDecision === "object" &&
+    !Array.isArray(value.committeeDecision)
+  ) {
+    committeeDecision = {
+      strategicCredibility: getNumber(
+        value.committeeDecision.strategicCredibility,
+      ),
+      shortlistProbability: getNumber(
+        value.committeeDecision.shortlistProbability,
+      ),
+    };
+  }
+
+  return {
+    overallScore,
+    committeeDecision,
+  };
+}
+
+function calculateSessionScore(
+  feedback: InterviewFeedback,
+): number {
+  const overall = feedback.overallScore ?? 0;
+  const credibility =
+    feedback.committeeDecision?.strategicCredibility ?? 0;
+  const shortlist =
+    feedback.committeeDecision?.shortlistProbability ?? 0;
+
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      (0.4 * overall) +
+        (0.3 * credibility) +
+        (0.3 * shortlist),
+    ),
+  );
+}
+
+export async function computeAndSaveCTS(
+  userId: string,
+  sessionId: string,
+  feedback: InterviewFeedback,
+): Promise<CTSResult | null> {
+  try {
+    const currentSessionScore = calculateSessionScore(feedback);
 
     const supabase = await createSupabaseServerClient();
 
-    // Fetch last completed sessions to compute WMA
-    // We get 4 to include the current one in the 5 max limit.
+    /*
+     * Fetch the previous four completed sessions.
+     * Together with the current score this gives a five-session WMA.
+     */
     const { data: history, error } = await supabase
       .from("interview_sessions")
       .select("id, career_trajectory_score, feedback_json")
@@ -41,37 +122,62 @@ export async function computeAndSaveCTS(userId: string, sessionId: string, feedb
       return null;
     }
 
-    const sessionScores = [currentSessionScore];
-    
-    if (history) {
-      history.forEach(s => {
-        const sOverall = s.feedback_json?.overallScore || 0;
-        const sCred = s.feedback_json?.committeeDecision?.strategicCredibility || 0;
-        const sShort = s.feedback_json?.committeeDecision?.shortlistProbability || 0;
-        const sScore = Math.max(0, Math.min(100, (0.4 * sOverall) + (0.3 * sCred) + (0.3 * sShort)));
-        sessionScores.push(sScore);
-      });
+    const sessionScores: number[] = [currentSessionScore];
+
+    for (const session of history ?? []) {
+      const parsedFeedback = parseInterviewFeedback(
+        session.feedback_json,
+      );
+
+      sessionScores.push(
+        calculateSessionScore(parsedFeedback),
+      );
     }
 
-    // WMA formula with descending weights [5, 4, 3, 2, 1]
-    const weights = [5, 4, 3, 2, 1].slice(0, sessionScores.length);
-    const weightedSum = sessionScores.reduce((acc, score, i) => acc + (score * weights[i]), 0);
-    const weightTotal = weights.reduce((a, b) => a + b, 0);
-    
-    const cts = weightTotal > 0 ? weightedSum / weightTotal : currentSessionScore;
+    // WMA formula with descending weights [5, 4, 3, 2, 1].
+    const weights = [5, 4, 3, 2, 1].slice(
+      0,
+      sessionScores.length,
+    );
+
+    const weightedSum = sessionScores.reduce(
+      (accumulator, score, index) =>
+        accumulator + score * weights[index],
+      0,
+    );
+
+    const weightTotal = weights.reduce(
+      (accumulator, weight) => accumulator + weight,
+      0,
+    );
+
+    const cts =
+      weightTotal > 0
+        ? weightedSum / weightTotal
+        : currentSessionScore;
+
     const finalCts = Math.round(cts * 10) / 10;
 
-    // Delta calculation
-    const previousCts = history && history.length > 0 ? history[0].career_trajectory_score : null;
+    const previousCts =
+      history && history.length > 0
+        ? history[0].career_trajectory_score
+        : null;
+
     let delta = 0;
-    if (previousCts !== null && previousCts !== undefined) {
-      delta = Math.round((finalCts - previousCts) * 10) / 10;
+
+    if (
+      previousCts !== null &&
+      previousCts !== undefined
+    ) {
+      delta =
+        Math.round((finalCts - previousCts) * 10) / 10;
     }
 
-    // Save CTS to current session
     const { error: updateError } = await supabase
       .from("interview_sessions")
-      .update({ career_trajectory_score: finalCts })
+      .update({
+        career_trajectory_score: finalCts,
+      })
       .eq("id", sessionId);
 
     if (updateError) {
@@ -81,7 +187,7 @@ export async function computeAndSaveCTS(userId: string, sessionId: string, feedb
     return {
       score: finalCts,
       delta,
-      label: getCTSLabel(finalCts)
+      label: getCTSLabel(finalCts),
     };
   } catch (error) {
     logError("[CTS] computeAndSaveCTS error", error);

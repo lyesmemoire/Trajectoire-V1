@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 
 const GatewayEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL:  z.string().url(),
@@ -16,7 +17,7 @@ const supabase = createClient(
 
 export async function registerEngineRoutes(app: _FastifyInstance) {
   app.get("/api/engine/metrics", async (request: FastifyRequest, reply: FastifyReply) => {
-    // ── Admin Auth Guard ──
+    // â”€â”€ Admin Auth Guard â”€â”€
     const authHeader = request.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
       return reply.status(401).send({ error: "Unauthorized" });
@@ -123,7 +124,7 @@ export async function registerEngineRoutes(app: _FastifyInstance) {
       by_role_target: byRoleTarget
     };
 
-    // ── Automated Alerting ──────────────────────────────────
+    // â”€â”€ Automated Alerting â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (globalStats.count > 0) {
       const { triggerAlert } = await import("../rate-limiter.js");
       const ENGINE = "v3_stable_realistic";

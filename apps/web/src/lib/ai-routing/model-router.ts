@@ -1,4 +1,8 @@
-import { mistralModel, mistralSmallModel } from "@/lib/mistral";
+import {
+  getFastAIModel,
+  getReasoningAIModel,
+} from "@/lib/ai/ai-models";
+import type { LanguageModel } from "ai";
 
 export type TaskType =
   | "interruption"
@@ -8,23 +12,24 @@ export type TaskType =
   | "coaching";
 
 /**
- * Intelligent Model Router to optimize costs and performance.
+ * Intelligent model router.
+ *
+ * Business code selects a capability/tier rather than a vendor.
+ * Provider selection is delegated to the central AI gateway.
  */
-export function getModelForTask(task: TaskType) {
+export function getModelForTask(task: TaskType): LanguageModel {
   switch (task) {
     case "interruption":
     case "scoring":
-      // Speed and cost are priority
-      return mistralSmallModel;
+      return getFastAIModel();
 
     case "dna_analysis":
     case "replay":
     case "coaching":
-      // Depth and reasoning are priority
-      return mistralModel;
+      return getReasoningAIModel();
 
     default:
-      return mistralSmallModel;
+      return getFastAIModel();
   }
 }
 
@@ -35,11 +40,27 @@ export interface InferenceConfig {
 
 export function getConfigForTask(task: TaskType): InferenceConfig {
   const configs: Record<TaskType, InferenceConfig> = {
-    interruption: { maxTokens: 50, temperature: 0.1 },
-    scoring: { maxTokens: 200, temperature: 0 },
-    replay: { maxTokens: 1000, temperature: 0.3 },
-    dna_analysis: { maxTokens: 1500, temperature: 0.2 },
-    coaching: { maxTokens: 800, temperature: 0.7 },
+    interruption: {
+      maxTokens: 50,
+      temperature: 0.1,
+    },
+    scoring: {
+      maxTokens: 200,
+      temperature: 0,
+    },
+    replay: {
+      maxTokens: 1000,
+      temperature: 0.3,
+    },
+    dna_analysis: {
+      maxTokens: 1500,
+      temperature: 0.2,
+    },
+    coaching: {
+      maxTokens: 800,
+      temperature: 0.7,
+    },
   };
+
   return configs[task];
 }

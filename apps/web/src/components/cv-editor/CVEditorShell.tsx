@@ -17,7 +17,7 @@ const handleProceed = async (router: any) => {
     toast.error("Veuillez exporter votre CV avant de commencer l'entretien.")
     return
   }
-  router.push("/interview-lab")
+  router.push("/interview")
 }
 
 export function CVEditorShell({

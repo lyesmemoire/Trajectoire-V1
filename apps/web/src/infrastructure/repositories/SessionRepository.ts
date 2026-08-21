@@ -1,4 +1,4 @@
-
+﻿
 /**
  * SessionRepository
  * Repository for interview_sessions table
@@ -26,7 +26,7 @@ export interface InterviewSession {
 }
 
 export class	SessionRepository implements IRepository<InterviewSession> {
-  // Colonnes optimisées pour éviter SELECT *
+  // Colonnes optimisÃ©es pour Ã©viter SELECT *
   private readonly SESSION_COLUMNS = [
     "id",
     "user_id",
@@ -148,7 +148,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
       );
     }
 
-    return data;
+    return data as any;
   }
 
   /**
@@ -180,6 +180,16 @@ export class	SessionRepository implements IRepository<InterviewSession> {
       updates.version = current.version;
     }
 
+    const expectedVersion = updates.version;
+
+    if (expectedVersion === undefined) {
+      throw new AppError(
+        "Unable to determine current version",
+        ErrorCode.DATABASE_ERROR,
+        500
+      );
+    }
+
     // Increment version for update
     const newVersion = (updates.version || 0) + 1;
 
@@ -191,7 +201,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
         version: newVersion,
       })
       .eq("id", id)
-      .eq("version", updates.version)
+      .eq("version", expectedVersion)
       .select()
       .single();
 
@@ -210,7 +220,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
       );
     }
 
-    return data;
+    return data as any;
   }
 
   /**
@@ -282,3 +292,6 @@ export class	SessionRepository implements IRepository<InterviewSession> {
     return data?.reduce((sum, session) => sum + (session.duration_seconds || 0), 0) || 0;
   }
 }
+
+
+

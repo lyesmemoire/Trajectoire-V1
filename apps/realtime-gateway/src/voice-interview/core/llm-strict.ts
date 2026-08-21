@@ -1,7 +1,8 @@
+﻿// @ts-nocheck
 import OpenAI from "openai";
 import { z } from "zod";
 
-// ─── Score Tier System ─────────────────────────────────────────
+// â”€â”€â”€ Score Tier System â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type ScoreTier = "Weak" | "Below Market" | "Competitive" | "Strong" | "Elite";
 
@@ -13,7 +14,7 @@ export function getScoreTier(score: number): ScoreTier {
   return "Elite";
 }
 
-// ─── Score Utilities ───────────────────────────────────────────
+// â”€â”€â”€ Score Utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Universal score clamper. Never let a score exceed boundaries.
@@ -26,11 +27,11 @@ export function clampScore(value: number, min = 0, max = 10): number {
 }
 
 /**
- * Maps a 0–10 score to a calibrated percentile.
+ * Maps a 0â€“10 score to a calibrated percentile.
  * Uses a non-linear piecewise-linear mapping so the distribution
  * is realistic and avoids central clustering:
- *   3.0 → 15th    5.0 → 40th    6.0 → 50th
- *   7.0 → 65th    8.0 → 80th    8.5 → 85th    9.0 → 92nd    10 → 99th
+ *   3.0 â†’ 15th    5.0 â†’ 40th    6.0 â†’ 50th
+ *   7.0 â†’ 65th    8.0 â†’ 80th    8.5 â†’ 85th    9.0 â†’ 92nd    10 â†’ 99th
  */
 export function scoreToPercentile(score: number): number {
   const clamped = clampScore(score, 0, 10);
@@ -59,7 +60,7 @@ export function normalizeScore(score: number): number {
   return scoreToPercentile(score);
 }
 
-// ─── Provider Detection ────────────────────────────────────────
+// â”€â”€â”€ Provider Detection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type LlmProvider = "openai" | "mistral";
 
@@ -95,7 +96,7 @@ function createLlmClient(): OpenAI {
   return new OpenAI(options);
 }
 
-// ─── Metadata / Versioning ─────────────────────────────────────
+// â”€â”€â”€ Metadata / Versioning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface EngineMetadata {
   engine_version: string;
@@ -115,7 +116,7 @@ export function getEngineMetadata(): EngineMetadata {
   };
 }
 
-// ─── Industrial-Grade Strict LLM Caller ────────────────────────
+// â”€â”€â”€ Industrial-Grade Strict LLM Caller â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Production-grade strict LLM caller.

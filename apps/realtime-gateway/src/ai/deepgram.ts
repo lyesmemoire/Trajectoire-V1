@@ -1,10 +1,10 @@
-import { createClient, LiveTranscriptionEvents } from "@deepgram/sdk";
+﻿import { createClient, LiveTranscriptionEvents } from "@deepgram/sdk";
 import { logger } from "../telemetry/logger.js";
 import { bus } from "../events/bus.js";
 import { TranscriptMessage } from "../contracts/transcript.js";
 
 export class DeepgramWrapper {
-  private connection: unknown;
+  private connection: any;
 
   constructor() {
     const apiKey = process.env.DEEPGRAM_API_KEY!;
@@ -22,7 +22,7 @@ export class DeepgramWrapper {
     this.connection.keepAlive?.();
 
     // forward transcripts to the event bus
-    this.connection.on(LiveTranscriptionEvents.Transcript, (data: unknown) => {
+    this.connection.on(LiveTranscriptionEvents.Transcript, (data: any) => {
       // Validate with zod
       try {
         const msg = TranscriptMessage.parse({
@@ -34,7 +34,7 @@ export class DeepgramWrapper {
           endMs: (data.end ?? 0) * 1000,
         });
         bus.emit("transcript", msg);
-      } catch (error) {
+      } catch (err) {
         logger.error({ err, data }, "Failed to parse Deepgram transcript");
       }
     });

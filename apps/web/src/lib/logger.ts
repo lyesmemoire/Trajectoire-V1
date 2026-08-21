@@ -1,4 +1,4 @@
-import { envServer } from "../lib/env.server.js";
+import { envServer } from "@/lib/env.server";
 import pino from 'pino';
 
 const isDev = envServer.NODE_ENV !== 'production';

@@ -9,7 +9,7 @@ export async function sendWeeklyBehavioralInsights(_userId: string, insights: an
         <ul>
             ${insights.map((i) => `<li><strong>${i.title}</strong>: ${i.content}</li>`).join("")}
         </ul>
-        <a href="https://studioentretien.fr/dashboard/progress">Voir ma progression complète</a>
+        <a href="https://trajectoire.app/dashboard">Voir ma progression complète</a>
     `;
 
   // Logic to send via Resend

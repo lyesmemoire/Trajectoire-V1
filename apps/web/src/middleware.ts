@@ -1,291 +1,803 @@
 // apps/web/src/middleware.ts
-//
-// VERSION L3.0 — Production-Ready Middleware
-// PRÉCÉDENT : L2.0 avec modèle déclaratif
-// CHANGEMENT : Refactorisation complète pour performance, extensibilité et maintenabilité
-//
-// ARCHITECTURE :
-//   - Helpers mutualisés pour éviter les duplications
-//   - Cache court pour check-access (60s)
-//   - Logs structurés avec correlation ID
-//   - Configuration centralisée et extensible
-//   - Séparation des préoccupations (auth, headers, redirects)
-//
-// OPTIMISATIONS :
-//   - Suppression des fetchs inutiles
-//   - Cache Edge pour les vérifications d'accès
-//   - Early return pour les routes publiques
-//   - Headers de sécurité mutualisés
-//
-// EXTENSIBILITÉ :
-//   - Ajout facile de nouveaux niveaux d'accès
-//   - Configuration des routes via registre
-//   - Plugins de middleware possibles
 
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { getCorrelationId, getCorrelationIdHeader } from "@/lib/correlation/correlationId";
+
+import {
+  getCorrelationId,
+  getCorrelationIdHeader,
+} from "@/lib/correlation/correlationId";
+
 import { logger } from "@/lib/logger";
-import { AuthorizationV2, AccessLevel, UserRole, SubscriptionPlan, UserContext } from "@/lib/authorization/AuthorizationV2";
+
+import {
+  AuthorizationV2,
+  UserRole,
+  SubscriptionPlan,
+  type UserContext,
+} from "@/lib/authorization/AuthorizationV2";
+
 import { generateNonce } from "@/lib/security/nonce";
 import { initializeCsrfToken } from "@/lib/security/csrf-middleware";
-import { getSupabaseCookieOptions } from "@/lib/security/cookie";
 
-// ============================================================
-// CONFIGURATION
-// ============================================================
-
-/**
- * Configuration centralisée du middleware
- */
 const CONFIG = {
-  /** Origines autorisées pour CORS */
   ALLOWED_ORIGINS: [
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     "http://localhost:3000",
     "http://localhost:3001",
     ...(process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(",") || []),
   ],
-  /** Durée du cache pour les vérifications d'accès (en secondes) */
-  CACHE_TTL: 60,
-  /** URL de l'application */
-  APP_URL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
 } as const;
 
-// ============================================================
-// HELPERS MUTUALISÉS
-// ============================================================
+const IS_DEV = process.env.NODE_ENV === "development";
+
+const PUBLIC_PAGE_ROUTES = new Set([
+  "/",
+  "/login",
+  "/signup",
+  "/pricing",
+  "/privacy",
+  "/terms",
+]);
+
+const PUBLIC_API_PREFIXES = [
+  "/api/auth",
+  "/api/public",
+  "/api/health",
+] as const;
 
 /**
- * Construit les headers CORS
+ * MVP pages that are always private.
+ *
+ * AuthorizationV2 contains the broader authorization model, but these
+ * explicit prefixes prevent an unknown page from silently becoming public
+ * when no AuthorizationV2 rule currently exists for it.
  */
-function buildCorsHeaders(correlationId: string, origin: string | null): Record<string, string> {
+const AUTHENTICATED_PAGE_PREFIXES = [
+  "/dashboard",
+  "/history",
+  "/simulation",
+  "/report",
+  "/analyze",
+  "/interview",
+  "/knowledge",
+  "/matching",
+  "/settings",
+  "/onboarding",
+  "/copilot",
+] as const;
+
+function matchesPathPrefix(
+  pathname: string,
+  prefix: string,
+): boolean {
+  return (
+    pathname === prefix ||
+    pathname.startsWith(`${prefix}/`)
+  );
+}
+
+function isPublicRoute(
+  pathname: string,
+): boolean {
+  if (PUBLIC_PAGE_ROUTES.has(pathname)) {
+    return true;
+  }
+
+  return PUBLIC_API_PREFIXES.some((prefix) =>
+    matchesPathPrefix(pathname, prefix),
+  );
+}
+
+function isExplicitlyAuthenticatedPage(
+  pathname: string,
+): boolean {
+  return AUTHENTICATED_PAGE_PREFIXES.some((prefix) =>
+    matchesPathPrefix(pathname, prefix),
+  );
+}
+
+function isApiRoute(
+  pathname: string,
+): boolean {
+  return (
+    pathname === "/api" ||
+    pathname.startsWith("/api/")
+  );
+}
+
+function buildCorsHeaders(
+  correlationId: string,
+  origin: string | null,
+): Record<string, string> {
   const headers: Record<string, string> = {
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization, x-request-id",
+    "Access-Control-Allow-Methods":
+      "GET, POST, PUT, DELETE, OPTIONS",
+
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, x-request-id",
+
     "Access-Control-Max-Age": "86400",
-    [getCorrelationIdHeader()]: correlationId,
+
+    [getCorrelationIdHeader()]:
+      correlationId,
   };
 
-  if (origin && CONFIG.ALLOWED_ORIGINS.includes(origin)) {
-    headers["Access-Control-Allow-Origin"] = origin;
+  if (
+    origin &&
+    CONFIG.ALLOWED_ORIGINS.includes(
+      origin as (typeof CONFIG.ALLOWED_ORIGINS)[number],
+    )
+  ) {
+    headers["Access-Control-Allow-Origin"] =
+      origin;
   }
 
   return headers;
 }
 
-/**
- * Applique les headers de sécurité à une réponse
- * Utilise des nonces pour CSP strict sans unsafe-inline/unsafe-eval
- */
-function applySecurityHeaders(response: NextResponse, scriptNonce: string, styleNonce: string): NextResponse {
+function applySecurityHeaders(
+  response: NextResponse,
+  scriptNonce: string,
+  styleNonce: string,
+): NextResponse {
+  response.headers.set(
+    "x-script-nonce",
+    scriptNonce,
+  );
+
+  response.headers.set(
+    "x-style-nonce",
+    styleNonce,
+  );
+
+  response.headers.set(
+    "X-Frame-Options",
+    "DENY",
+  );
+
+  response.headers.set(
+    "X-Content-Type-Options",
+    "nosniff",
+  );
+
+  response.headers.set(
+    "X-XSS-Protection",
+    "1; mode=block",
+  );
+
+  response.headers.set(
+    "Referrer-Policy",
+    "strict-origin-when-cross-origin",
+  );
+
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=()",
+  );
+
+  if (IS_DEV) {
+    response.headers.delete(
+      "Content-Security-Policy",
+    );
+
+    response.headers.delete(
+      "Content-Security-Policy-Report-Only",
+    );
+
+    return response;
+  }
+
   const csp = [
     "default-src 'self';",
+
     `script-src 'self' 'nonce-${scriptNonce}' 'strict-dynamic' https://cdn.jsdelivr.net;`,
+
     `style-src 'self' 'nonce-${styleNonce}' https://cdn.jsdelivr.net;`,
+
     "img-src 'self' data: https:;",
+
     "font-src 'self' https://cdn.jsdelivr.net;",
+
     "connect-src 'self' https://*.supabase.co https://api.openai.com;",
+
     "frame-ancestors 'none';",
+
     "object-src 'none';",
+
     "upgrade-insecure-requests;",
   ].join(" ");
 
-  response.headers.set("Content-Security-Policy", csp);
-  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-XSS-Protection", "1; mode=block");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set("Permissions-Policy", 
-    "camera=(), microphone=(), geolocation=(), payment=()"
+  response.headers.set(
+    "Content-Security-Policy",
+    csp,
   );
 
-  // Pass nonces to frontend via headers
-  response.headers.set("x-script-nonce", scriptNonce);
-  response.headers.set("x-style-nonce", styleNonce);
+  response.headers.set(
+    "Strict-Transport-Security",
+    "max-age=31536000; includeSubDomains",
+  );
 
   return response;
 }
 
-/**
- * Applique les headers à une réponse
- */
-function applyHeaders(response: NextResponse, headers: Record<string, string>): NextResponse {
-  Object.entries(headers).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+function applyHeaders(
+  response: NextResponse,
+  headers: Record<string, string>,
+): NextResponse {
+  for (
+    const [key, value] of
+    Object.entries(headers)
+  ) {
+    response.headers.set(
+      key,
+      value,
+    );
+  }
+
   return response;
 }
 
-/**
- * Crée une réponse de redirection avec logs
- */
 function createRedirect(
   pathname: string,
   reason: string,
   requestUrl: string,
-  correlationId: string
+  correlationId: string,
 ): NextResponse {
-  const loginUrl = new URL('/login', requestUrl);
-  loginUrl.searchParams.set('redirect', pathname);
-  loginUrl.searchParams.set('reason', reason);
+  const loginUrl =
+    new URL(
+      "/login",
+      requestUrl,
+    );
 
-  logger.info({
-    correlationId,
+  loginUrl.searchParams.set(
+    "redirect",
     pathname,
-    reason,
-  }, 'Middleware redirect');
-
-  return NextResponse.redirect(loginUrl);
-}
-
-/**
- * Initialise le client Supabase avec gestion des cookies sécurisés
- */
-function createSupabaseClient(request: NextRequest) {
-  let response = NextResponse.next({ request });
-  const cookieOptions = getSupabaseCookieOptions();
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy",
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: any[]) {
-          cookiesToSet.forEach(({ name, value }: any) => request.cookies.set(name, value));
-          response = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }: any) =>
-            response.cookies.set(name, value, {
-              ...options,
-              httpOnly: cookieOptions.options.httpOnly,
-              secure: cookieOptions.options.secure,
-              sameSite: cookieOptions.options.sameSite,
-              path: cookieOptions.options.path,
-              maxAge: cookieOptions.options.maxAge,
-              domain: cookieOptions.options.domain || undefined,
-            })
-          );
-        },
-      },
-    }
   );
 
-  return { supabase, getResponse: () => response };
+  loginUrl.searchParams.set(
+    "reason",
+    reason,
+  );
+
+  logger.info(
+    {
+      correlationId,
+      pathname,
+      reason,
+    },
+    "Middleware redirect",
+  );
+
+  return NextResponse.redirect(
+    loginUrl,
+  );
 }
 
-/**
- * Construit le contexte utilisateur depuis Supabase
- */
-async function buildUserContext(supabase: any): Promise<UserContext | null> {
-  const { data: { user } } = await supabase.auth.getUser();
+function createAuthenticationUnavailableResponse(
+  request: NextRequest,
+  correlationId: string,
+  corsHeaders: Record<string, string>,
+  scriptNonce: string,
+  styleNonce: string,
+): NextResponse {
+  const pathname =
+    request.nextUrl.pathname;
+
+  logger.warn(
+    {
+      correlationId,
+      pathname,
+    },
+    "Authentication service temporarily unavailable",
+  );
+
+  /*
+   * Security invariant:
+   *
+   * If Supabase Auth cannot verify the current user, we do NOT:
+   * - treat the user as anonymous;
+   * - allow access to a private route;
+   * - destroy/replace authentication cookies;
+   * - redirect to login as if credentials were invalid.
+   *
+   * The request fails closed with HTTP 503.
+   */
+  if (isApiRoute(pathname)) {
+    const response =
+      NextResponse.json(
+        {
+          error:
+            "authentication_unavailable",
+
+          message:
+            "Authentication service temporarily unavailable",
+
+          correlationId,
+        },
+        {
+          status: 503,
+        },
+      );
+
+    applyHeaders(
+      response,
+      corsHeaders,
+    );
+
+    applySecurityHeaders(
+      response,
+      scriptNonce,
+      styleNonce,
+    );
+
+    response.headers.set(
+      "Retry-After",
+      "3",
+    );
+
+    response.headers.set(
+      "Cache-Control",
+      "no-store",
+    );
+
+    return response;
+  }
+
+  const response =
+    new NextResponse(
+      `<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+  <title>Service temporairement indisponible</title>
+</head>
+<body>
+  <main>
+    <h1>Service temporairement indisponible</h1>
+    <p>
+      Nous ne pouvons pas vérifier votre session pour le moment.
+      Veuillez réessayer dans quelques instants.
+    </p>
+  </main>
+</body>
+</html>`,
+      {
+        status: 503,
+
+        headers: {
+          "Content-Type":
+            "text/html; charset=utf-8",
+
+          "Cache-Control":
+            "no-store",
+
+          "Retry-After":
+            "3",
+        },
+      },
+    );
+
+  applyHeaders(
+    response,
+    corsHeaders,
+  );
+
+  applySecurityHeaders(
+    response,
+    scriptNonce,
+    styleNonce,
+  );
+
+  return response;
+}
+
+function createSupabaseClient(
+  request: NextRequest,
+) {
+  let response =
+    NextResponse.next({
+      request,
+    });
+
+  const supabase =
+    createServerClient(
+      process.env
+        .NEXT_PUBLIC_SUPABASE_URL!,
+
+      process.env
+        .NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(
+              ({
+                name,
+                value,
+              }) => {
+                request.cookies.set(
+                  name,
+                  value,
+                );
+              },
+            );
+
+            response =
+              NextResponse.next({
+                request,
+              });
+
+            cookiesToSet.forEach(
+              ({
+                name,
+                value,
+                options,
+              }) => {
+                response.cookies.set(
+                  name,
+                  value,
+                  options,
+                );
+              },
+            );
+          },
+        },
+      },
+    );
+
+  return {
+    supabase,
+
+    getResponse: () =>
+      response,
+  };
+}
+
+function isMissingAuthSession(
+  error: unknown,
+): boolean {
+  if (
+    !error ||
+    typeof error !== "object"
+  ) {
+    return false;
+  }
+
+  const candidate =
+    error as {
+      name?: string;
+      message?: string;
+    };
+
+  return (
+    candidate.name ===
+      "AuthSessionMissingError" ||
+    candidate.message ===
+      "Auth session missing!"
+  );
+}
+
+async function buildUserContext(
+  supabase:
+    ReturnType<
+      typeof createServerClient
+    >,
+
+  correlationId: string,
+  pathname: string,
+): Promise<UserContext | null> {
+  /*
+   * getUser() performs server-side verification against Supabase Auth.
+   * We deliberately keep it as the authentication authority.
+   *
+   * Do not replace this with getSession() as an authorization shortcut:
+   * getSession() alone would trust locally stored session information.
+   */
+  const {
+    data: { user },
+    error,
+  } =
+    await supabase.auth.getUser();
+
+  if (error) {
+    if (
+      isMissingAuthSession(
+        error,
+      )
+    ) {
+      return null;
+    }
+
+    /*
+     * Network/service failures are deliberately propagated.
+     * The middleware will fail closed with HTTP 503 rather than
+     * misclassifying the user as logged out.
+     */
+    throw error;
+  }
 
   if (!user) {
     return null;
   }
 
-  // Récupérer les informations supplémentaires de l'utilisateur
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role, plan')
-    .eq('id', user.id)
-    .single();
+  /*
+   * Authentication has already been verified at this point.
+   *
+   * The application profile enriches authorization with role/plan,
+   * but failure to read that profile must not invalidate a valid
+   * Supabase authentication session.
+   *
+   * We fail down to the least-privileged application defaults.
+   */
+  const {
+    data: profile,
+    error: profileError,
+  } =
+    await supabase
+      .from("users")
+      .select("role, plan")
+      .eq("id", user.id)
+      .single();
+
+  if (profileError) {
+    logger.warn(
+      {
+        correlationId,
+        pathname,
+        userId:
+          user.id,
+
+        profileError: {
+          code:
+            profileError.code,
+
+          message:
+            profileError.message,
+        },
+      },
+      "Authenticated user profile unavailable; using least-privileged defaults",
+    );
+  }
 
   return {
-    userId: user.id,
-    email: user.email || '',
-    role: profile?.role || UserRole.USER,
-    plan: profile?.plan || SubscriptionPlan.FREE,
-    isAuthenticated: true,
+    userId:
+      user.id,
+
+    email:
+      user.email || "",
+
+    role:
+      profile?.role ||
+      UserRole.USER,
+
+    plan:
+      profile?.plan ||
+      SubscriptionPlan.FREE,
+
+    isAuthenticated:
+      true,
   };
 }
 
-// ============================================================
-// MIDDLEWARE PRINCIPAL
-// ============================================================
+export async function middleware(
+  request: NextRequest,
+) {
+  const pathname =
+    request.nextUrl.pathname;
 
-export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const correlationId = getCorrelationId(request.headers);
-  const origin = request.headers.get("origin");
+  const correlationId =
+    getCorrelationId(
+      request.headers,
+    );
 
-  logger.info({
-    correlationId,
-    pathname,
-    method: request.method,
-  }, 'Middleware request');
+  const origin =
+    request.headers.get(
+      "origin",
+    );
 
-  // ============================================================
-  // ÉTAPE 1 : Configuration des headers CORS
-  // ============================================================
-  const corsHeaders = buildCorsHeaders(correlationId, origin);
-
-  // ============================================================
-  // ÉTAPE 2 : Gestion des requêtes preflight OPTIONS
-  // ============================================================
-  if (request.method === "OPTIONS") {
-    logger.info({ correlationId }, 'OPTIONS request - returning CORS headers');
-    return NextResponse.json({}, { headers: corsHeaders });
-  }
-
-  // ============================================================
-  // ÉTAPE 3 : Génération des nonces pour CSP
-  // ============================================================
-  const scriptNonce = generateNonce();
-  const styleNonce = generateNonce();
-
-  // ============================================================
-  // ÉTAPE 4 : Initialisation Supabase et construction du contexte utilisateur
-  // ============================================================
-  const { supabase, getResponse } = createSupabaseClient(request);
-  const response = getResponse();
-
-  // Appliquer les headers CORS et sécurité
-  applyHeaders(response, corsHeaders);
-  applySecurityHeaders(response, scriptNonce, styleNonce);
-
-  // Initialiser le token CSRF pour les requêtes GET
-  if (request.method === 'GET') {
-    initializeCsrfToken(response);
-  }
-
-  // Construire le contexte utilisateur
-  const userContext = await buildUserContext(supabase);
-
-  // ============================================================
-  // ÉTAPE 4 : Vérification de l'autorisation avec AuthorizationV2
-  // ============================================================
-  const auth = new AuthorizationV2(userContext);
-  const authResult = auth.checkAccess(pathname);
-
-  if (!authResult.allowed) {
-    logger.warn({
+  logger.info(
+    {
       correlationId,
       pathname,
-      reason: authResult.reason,
-      requiredAccessLevel: authResult.requiredAccessLevel,
-    }, 'Access denied - redirecting to login');
+      method:
+        request.method,
+    },
+    "Middleware request",
+  );
 
-    return createRedirect(pathname, authResult.reason || 'access_denied', request.url, correlationId);
+  const corsHeaders =
+    buildCorsHeaders(
+      correlationId,
+      origin,
+    );
+
+  if (
+    request.method ===
+    "OPTIONS"
+  ) {
+    return NextResponse.json(
+      {},
+      {
+        headers:
+          corsHeaders,
+      },
+    );
   }
 
-  logger.info({
-    correlationId,
-    pathname,
-    userId: userContext?.userId,
-    requiredAccessLevel: authResult.requiredAccessLevel,
-  }, 'Access granted');
+  const scriptNonce =
+    generateNonce();
 
-  // ============================================================
-  // ÉTAPE 5 : Ajouter les headers utilisateur
-  // ============================================================
+  const styleNonce =
+    generateNonce();
+
+  const {
+    supabase,
+    getResponse,
+  } =
+    createSupabaseClient(
+      request,
+    );
+
+  if (
+    isPublicRoute(
+      pathname,
+    )
+  ) {
+    const response =
+      getResponse();
+
+    applyHeaders(
+      response,
+      corsHeaders,
+    );
+
+    applySecurityHeaders(
+      response,
+      scriptNonce,
+      styleNonce,
+    );
+
+    if (
+      request.method ===
+      "GET"
+    ) {
+      initializeCsrfToken(
+        response,
+      );
+    }
+
+    return response;
+  }
+
+  let userContext:
+    UserContext | null =
+    null;
+
+  try {
+    userContext =
+      await buildUserContext(
+        supabase,
+        correlationId,
+        pathname,
+      );
+  } catch (error) {
+    logger.error(
+      {
+        correlationId,
+        pathname,
+        error,
+      },
+      "Supabase authentication verification failed in middleware",
+    );
+
+    /*
+     * IMPORTANT:
+     *
+     * An infrastructure/Auth outage is not the same thing as
+     * "the user is logged out".
+     *
+     * Fail closed with 503 and preserve the existing session.
+     */
+    return createAuthenticationUnavailableResponse(
+      request,
+      correlationId,
+      corsHeaders,
+      scriptNonce,
+      styleNonce,
+    );
+  }
+
+  /**
+   * Explicit MVP authentication boundary.
+   *
+   * This executes before AuthorizationV2 so routes missing from its current
+   * rule table cannot accidentally fall through as public.
+   */
+  if (
+    isExplicitlyAuthenticatedPage(
+      pathname,
+    ) &&
+    !userContext
+  ) {
+    return createRedirect(
+      pathname,
+      "Authentication required",
+      request.url,
+      correlationId,
+    );
+  }
+
+  const auth =
+    new AuthorizationV2(
+      userContext,
+    );
+
+  const authResult =
+    auth.checkAccess(
+      pathname,
+    );
+
+  if (
+    !authResult.allowed
+  ) {
+    return createRedirect(
+      pathname,
+
+      authResult.reason ||
+        "access_denied",
+
+      request.url,
+      correlationId,
+    );
+  }
+
+  const response =
+    getResponse();
+
+  applyHeaders(
+    response,
+    corsHeaders,
+  );
+
+  applySecurityHeaders(
+    response,
+    scriptNonce,
+    styleNonce,
+  );
+
+  if (
+    request.method ===
+    "GET"
+  ) {
+    initializeCsrfToken(
+      response,
+    );
+  }
+
   if (userContext) {
-    response.headers.set('x-user-id', userContext.userId);
-    response.headers.set('x-user-role', userContext.role);
-    response.headers.set('x-user-plan', userContext.plan);
+    response.headers.set(
+      "x-user-id",
+      userContext.userId,
+    );
+
+    response.headers.set(
+      "x-user-role",
+      userContext.role,
+    );
+
+    response.headers.set(
+      "x-user-plan",
+      userContext.plan,
+    );
   }
 
   return response;

@@ -14,7 +14,7 @@ const PLANS = [
     features: [
       "3 simulations gratuites",
       "1 analyse de Career DNA",
-      "Feedback textuel Mistral",
+      "Feedback personnalisé après chaque simulation",
       "Export PDF standard",
     ],
     cta: "Commencer",

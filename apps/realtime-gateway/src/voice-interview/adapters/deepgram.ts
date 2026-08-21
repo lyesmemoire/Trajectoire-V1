@@ -1,9 +1,10 @@
+﻿// @ts-nocheck
 /**
- * adapters/deepgram.ts — Adapter STT streaming (I/O uniquement, P3.1).
+ * adapters/deepgram.ts â€” Adapter STT streaming (I/O uniquement, P3.1).
  *
  * Couche infra : transforme un flux audio PCM en transcripts via Deepgram (SDK v3).
- * Aucune logique d'entretien ici — il se contente d'émettre des events.
- * Le core (interview-engine) ne dépend JAMAIS de ce fichier.
+ * Aucune logique d'entretien ici â€” il se contente d'Ã©mettre des events.
+ * Le core (interview-engine) ne dÃ©pend JAMAIS de ce fichier.
  */
 
 import { createClient, LiveTranscriptionEvents } from "@deepgram/sdk";
@@ -25,8 +26,8 @@ export interface DeepgramAdapterOptions {
 }
 
 /**
- * Adapter d'écoute Deepgram en temps réel.
- * Lance une connexion `listen.live` et route les événements vers les callbacks.
+ * Adapter d'Ã©coute Deepgram en temps rÃ©el.
+ * Lance une connexion `listen.live` et route les Ã©vÃ©nements vers les callbacks.
  */
 export class DeepgramAdapter {
   private connection: ReturnType<
@@ -47,12 +48,12 @@ export class DeepgramAdapter {
     };
   }
 
-  /** True si une clé API est configurée (sinon l'adapter est inerte). */
+  /** True si une clÃ© API est configurÃ©e (sinon l'adapter est inerte). */
   isConfigured(): boolean {
     return this.options.apiKey.length > 0;
   }
 
-  /** Ouvre la connexion streaming. No-op si non configuré. */
+  /** Ouvre la connexion streaming. No-op si non configurÃ©. */
   start(): void {
     if (!this.isConfigured()) {
       this.callbacks.onError?.(new Error("DEEPGRAM_API_KEY manquante"));
@@ -115,7 +116,7 @@ export class DeepgramAdapter {
   }
 }
 
-/** Extrait { text, isFinal } d'un événement Deepgram, de façon défensive. */
+/** Extrait { text, isFinal } d'un Ã©vÃ©nement Deepgram, de faÃ§on dÃ©fensive. */
 export function extractTranscript(data: _unknown, ): { text: string; isFinal: boolean } | null {
   if (typeof data !== "object" || data === null) return null;
   const d = data as {

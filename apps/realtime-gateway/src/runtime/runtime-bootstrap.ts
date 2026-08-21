@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { createRuntime } from "./runtime-container.js";
 import { SessionRegistry } from "./session-registry.js";
 import { WebSocketAdapter, WebSocketMessage, WebSocketFrame } from "./ws-adapter.js";

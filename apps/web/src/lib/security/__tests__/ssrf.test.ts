@@ -11,10 +11,6 @@ describe('SSRF URL Validation', () => {
       expect(validateUrl('https://api.openai.com/v1/chat/completions')).toBe(true);
     });
 
-    it('should allow Mistral API', () => {
-      expect(validateUrl('https://api.mistral.ai/v1/chat/completions')).toBe(true);
-    });
-
     it('should allow Supabase domains', () => {
       expect(validateUrl('https://xxx.supabase.co/auth/v1/user')).toBe(true);
     });
@@ -226,15 +222,13 @@ describe('Multiple URL Validation', () => {
     const urls = [
       'https://api.openai.com',
       'http://localhost:3000',
-      'https://api.mistral.ai',
     ];
     
     const result = validateUrls(urls);
     
-    expect(result.valid).toHaveLength(2);
+    expect(result.valid).toHaveLength(1);
     expect(result.invalid).toHaveLength(1);
     expect(result.valid).toContain('https://api.openai.com');
-    expect(result.valid).toContain('https://api.mistral.ai');
     expect(result.invalid).toContain('http://localhost:3000');
   });
 });
@@ -268,7 +262,6 @@ describe('Allowed Domains Configuration', () => {
     const domains = getAllowedDomains();
     
     expect(domains).toContain('api.openai.com');
-    expect(domains).toContain('api.mistral.ai');
     expect(domains).toContain('*.supabase.co');
     expect(domains).toContain('api.stripe.com');
     expect(domains).toContain('cdn.jsdelivr.net');

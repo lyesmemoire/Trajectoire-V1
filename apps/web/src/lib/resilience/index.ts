@@ -34,10 +34,6 @@ export {
   resilientOpenAIClient,
 } from './ResilientOpenAIClient';
 
-export {
-  ResilientMistralClient,
-  resilientMistralClient,
-} from './ResilientMistralClient';
 
 export {
   ResilientStripeClient,

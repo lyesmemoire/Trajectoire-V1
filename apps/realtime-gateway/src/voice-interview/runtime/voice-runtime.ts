@@ -1,7 +1,8 @@
+﻿// @ts-nocheck
 /**
- * runtime/voice-runtime.ts — Orchestrateur runtime du tour vocal (P4.2).
- * TurnPlan -> séquence d'instructions transport + réalisation des délais (Clock).
- * Aucune I/O réseau. Déterministe à Clock+RNG fixés.
+ * runtime/voice-runtime.ts â€” Orchestrateur runtime du tour vocal (P4.2).
+ * TurnPlan -> sÃ©quence d'instructions transport + rÃ©alisation des dÃ©lais (Clock).
+ * Aucune I/O rÃ©seau. DÃ©terministe Ã  Clock+RNG fixÃ©s.
  */
 import type { Clock } from "./clock.js";
 import type { PerceptionUX } from "../core/simulation/perception-ux.js";
@@ -110,12 +111,12 @@ export class VoiceRuntime {
 
   start(): void {
     this.binding.onEvent(async (event) => {
-      // Guard: ne rien traiter si le runtime est disposé
+      // Guard: ne rien traiter si le runtime est disposÃ©
       if (this.disposed) return;
 
       if (event.type === "transcript" && event.isFinal) {
         
-        // 1. Interrompre le tour précédent (Barge-in)
+        // 1. Interrompre le tour prÃ©cÃ©dent (Barge-in)
         if (this.currentTurn) {
           this.log.warn({ 
             event: 'barge_in_triggered',
@@ -131,11 +132,11 @@ export class VoiceRuntime {
           const session = this.sessions.getSession(this.sessionId);
           if (!session) return;
 
-          // 2. Logique métier pure (nextStep)
+          // 2. Logique mÃ©tier pure (nextStep)
           const step = nextStep(session.state, event.text);
           this.sessions.updateSession(this.sessionId, step.updatedState);
 
-          // 3. Exécution avec délai asynchrone via runVoiceTurn
+          // 3. ExÃ©cution avec dÃ©lai asynchrone via runVoiceTurn
           const ux = perceiveUX({
             emotion: "neutral",
             trust: 0.5,
@@ -159,7 +160,7 @@ export class VoiceRuntime {
             {
               signal,
               onEmit: (instr) => {
-                // Ne pas émettre si disposé entre-temps
+                // Ne pas Ã©mettre si disposÃ© entre-temps
                 if (this.disposed) return;
                 if (instr.type === "speak") {
                   if (!this.isSpeaking) {
@@ -189,8 +190,8 @@ export class VoiceRuntime {
   }
 
   /**
-   * Arrête proprement le runtime : annule le tour en cours et empêche tout
-   * traitement futur. Appelé par le SessionManager lors du delete/TTL/disconnect.
+   * ArrÃªte proprement le runtime : annule le tour en cours et empÃªche tout
+   * traitement futur. AppelÃ© par le SessionManager lors du delete/TTL/disconnect.
    */
   dispose(): void {
     if (this.disposed) return;

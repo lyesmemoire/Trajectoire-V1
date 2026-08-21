@@ -1,5 +1,8 @@
-import "server-only";
-import { createAdminClient } from "@/lib/supabase/service";
+﻿import "server-only";
+
+import { Prisma } from "@prisma/client";
+
+import { prisma } from "@/lib/prisma";
 import { logError } from "@/lib/logger/Logger";
 
 export type AuditAction =
@@ -19,22 +22,45 @@ export type AuditAction =
   | "AI_ERROR";
 
 export interface AuditDetails {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-export async function logEvent(userId: string, action: AuditAction, details: AuditDetails = {}, ip?: string, userAgent?: string, requestId?: string, ): Promise<void> {
+export async function logEvent(
+  userId: string,
+  action: AuditAction,
+  details: AuditDetails = {},
+  ip?: string,
+  userAgent?: string,
+  requestId?: string
+): Promise<void> {
   try {
-    const supabase = createAdminClient();
-    await (supabase  as any).from("audit_logs").insert({
-      user_id: userId,
-      action,
+    const metadata = {
+      resourceType: "system",
       details,
-      ip,
-      user_agent: userAgent,
-      request_id: requestId,
-      created_at: new Date().toISOString(),
+      ...(requestId
+        ? {
+            requestId,
+          }
+        : {}),
+    } as Prisma.InputJsonObject;
+
+    await prisma.adminAuditLog.create({
+      data: {
+        adminId: userId,
+        action,
+        targetId: null,
+        metadata,
+        ipAddress: ip ?? null,
+        userAgent:
+          userAgent ?? null,
+      },
     });
   } catch (error) {
-    logError("[AUDIT_LOG_ERROR]", error);
+    logError(
+      "[AUDIT_LOG_ERROR]",
+      error
+    );
   }
 }
+
+

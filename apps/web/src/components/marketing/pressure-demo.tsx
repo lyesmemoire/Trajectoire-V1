@@ -60,7 +60,7 @@ export function PressureDemo() {
               </span>
             </div>
             <span className="text-[10px] font-black text-ink-500 uppercase tracking-widest">
-              Model: Mistral-Large-v2
+              Analyse comportementale en temps réel
             </span>
           </div>
 

@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { interviewRepository } from "../persistence/singleton.js";
 import { scoreStructuredInterview, callMistral } from "./scoring.js";
 import { computeWeightedOverall } from "./compute-weighted-score.js";

@@ -1,4 +1,4 @@
-import { envServer } from "../lib/env.server.js";
+﻿import { envServer } from "../lib/env.server.js";
 import pino from 'pino';
 
 const isDev = envServer.NODE_ENV !== 'production';
@@ -48,6 +48,6 @@ export function logWarn(prefix: string, message: string, context?: LogContext) {
 }
 
 export function logError(prefix: string, error: unknown, context?: LogContext) {
-  logger.error({ ...context, prefix, err: error }, error?.message || "Unknown error");
+  logger.error({ ...context, prefix, err: error }, (error as any)?.message || "Unknown error");
 }
 

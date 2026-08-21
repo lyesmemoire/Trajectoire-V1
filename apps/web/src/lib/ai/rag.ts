@@ -1,40 +1,147 @@
-import { logError } from "@/lib/logger/Logger";
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
-function getOpenAI() {
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'dummy' });
+import {
+  logError,
+} from "@/lib/logger/Logger";
+
+function getConfiguredOpenAI():
+  | OpenAI
+  | null {
+  const apiKey =
+    process.env
+      .OPENAI_API_KEY
+      ?.trim();
+
+  if (!apiKey) {
+    return null;
+  }
+
+  const normalized =
+    apiKey.toLowerCase();
+
+  const isPlaceholder =
+    normalized === "dummy" ||
+    normalized === "sk-dummy" ||
+    normalized === "test" ||
+    normalized === "sk-test" ||
+    normalized.includes(
+      "placeholder",
+    ) ||
+    normalized.includes(
+      "your-openai",
+    );
+
+  if (isPlaceholder) {
+    return null;
+  }
+
+  const baseURL =
+    process.env
+      .OPENAI_BASE_URL
+      ?.trim();
+
+  return new OpenAI({
+    apiKey,
+    baseURL:
+      baseURL || undefined,
+  });
 }
 
 export async function getRelevantCVSections({
-  supabaseAdmin, cvId, jobDescription, topK = 5}: {
+  supabaseAdmin,
+  cvId,
+  jobDescription,
+  topK = 5,
+}: {
   supabaseAdmin: any;
   cvId: string;
   jobDescription: string;
   topK?: number;
-}) {
+}): Promise<string> {
   try {
-    const ai = getOpenAI();
-    const embeddingResponse = await ai.embeddings.create({
-      model: "text-embedding-3-small",
-      input: jobDescription,
-    });
+    const ai =
+      getConfiguredOpenAI();
 
-    const jobEmbedding = embeddingResponse.data[0]!.embedding;
+    if (!ai) {
+      return "";
+    }
 
-    // ✅ Query pgvector RPC
-    const { data, error } = await supabaseAdmin.rpc("match_cv_sections", {
-      query_embedding: jobEmbedding,
-      match_cv_id: cvId,
-      match_count: topK,
-    });
+    const normalizedJobDescription =
+      jobDescription
+        .trim();
 
-    if (error || !data || data.length === 0) return "";
+    if (!normalizedJobDescription) {
+      return "";
+    }
 
-    const combined = data.map((row: any) => row.section_text).join("\n\n");
+    const embeddingResponse =
+      await ai.embeddings.create({
+        model:
+          "text-embedding-3-small",
+
+        input:
+          normalizedJobDescription,
+      });
+
+    const jobEmbedding =
+      embeddingResponse
+        .data[0]
+        ?.embedding;
+
+    if (
+      !jobEmbedding ||
+      jobEmbedding.length === 0
+    ) {
+      return "";
+    }
+
+    const {
+      data,
+      error,
+    } =
+      await supabaseAdmin.rpc(
+        "match_cv_sections",
+        {
+          query_embedding:
+            jobEmbedding,
+
+          match_cv_id:
+            cvId,
+
+          match_count:
+            topK,
+        },
+      );
+
+    if (
+      error ||
+      !Array.isArray(data) ||
+      data.length === 0
+    ) {
+      return "";
+    }
+
+    const combined =
+      data
+        .map(
+          (row: any) =>
+            typeof row
+              ?.section_text ===
+              "string"
+              ? row.section_text
+                  .trim()
+              : "",
+        )
+        .filter(Boolean)
+        .join("\n\n");
 
     return combined;
-  } catch (err) {
-    logError("RAG Error", err);
+  } catch (error) {
+    logError(
+      "RAG Error",
+      error,
+    );
+
     return "";
   }
 }

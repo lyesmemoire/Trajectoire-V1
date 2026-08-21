@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase"
@@ -14,39 +14,53 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
 
   useEffect(() => {
     const supabase = createClient()
+    let mounted = true
 
-    // Lecture initiale
-    supabase
-      .from("profiles")
-      .select("credits")
-      .eq("id", userId)
-      .single()
-      .then(({ data }) => {
-        const profile = data  as any
-        setCredits(profile?.credits ?? 0)
-        setLoading(false)
-      })
+    async function loadCredits() {
+      const { data, error } = await supabase
+        .from("users")
+        .select("credits")
+        .eq("id", userId)
+        .maybeSingle()
 
-    // Abonnement temps réel aux changements de crédits
+      if (!mounted) return
+
+      if (error) {
+        console.error("[CreditBadge] Failed to load credits:", error)
+        setCredits(0)
+      } else {
+        const userRow = data as { credits: number } | null
+        setCredits(userRow?.credits ?? 0)
+      }
+
+      setLoading(false)
+    }
+
+    void loadCredits()
+
     const channel = supabase
-      .channel(`profile-credits-${userId}`)
+      .channel(`user-credits-${userId}`)
       .on(
         "postgres_changes",
         {
           event: "UPDATE",
           schema: "public",
-          table: "profiles",
+          table: "users",
           filter: `id=eq.${userId}`,
         },
         (payload) => {
-          const newCredits = (payload.new as { credits: number }).credits
-          setCredits(newCredits)
+          const updatedUser = payload.new as { credits?: number }
+
+          if (typeof updatedUser.credits === "number") {
+            setCredits(updatedUser.credits)
+          }
         },
       )
       .subscribe()
 
     return () => {
-      supabase.removeChannel(channel)
+      mounted = false
+      void supabase.removeChannel(channel)
     }
   }, [userId])
 
@@ -58,8 +72,9 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
     )
   }
 
-  const isLow = (credits ?? 0) <= 1
-  const isEmpty = (credits ?? 0) === 0
+  const balance = credits ?? 0
+  const isLow = balance <= 1
+  const isEmpty = balance === 0
 
   return (
     <div
@@ -76,10 +91,11 @@ export function CreditBadge({ userId, className = "" }: CreditBadgeProps) {
       `}
     >
       <span className="text-base leading-none">
-        {isEmpty ? "⚠️" : isLow ? "🟡" : "✨"}
+        {isEmpty ? "âš ï¸" : isLow ? "ðŸŸ¡" : "âœ¨"}
       </span>
+
       <span>
-        {credits} crédit{credits !== 1 ? "s" : ""}
+        {balance} crÃ©dit{balance !== 1 ? "s" : ""}
       </span>
     </div>
   )

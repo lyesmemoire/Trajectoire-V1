@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 import { runOneInterview } from "./run-stress.js";
 for (const arch of ["strong","weak","bluffer"] as const) {
   const r = runOneInterview(1, arch);

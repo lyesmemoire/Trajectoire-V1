@@ -1,4 +1,4 @@
-
+﻿
 /**
  * ReportRepository
  * Repository for reports table
@@ -27,7 +27,7 @@ export interface Report {
 }
 
 export class ReportRepository implements IRepository<Report> {
-  // Colonnes optimisées pour éviter SELECT *
+  // Colonnes optimisÃ©es pour Ã©viter SELECT *
   private readonly REPORT_COLUMNS = [
     "id",
     "session_id",
@@ -147,7 +147,7 @@ export class ReportRepository implements IRepository<Report> {
           .single();
         
         if (existing) {
-          return existing;
+          return existing as any;
         }
       }
       
@@ -158,7 +158,7 @@ export class ReportRepository implements IRepository<Report> {
       );
     }
 
-    return data;
+    return data as any;
   }
 
   /**
@@ -190,6 +190,16 @@ export class ReportRepository implements IRepository<Report> {
       updates.version = current.version;
     }
 
+    const expectedVersion = updates.version;
+
+    if (expectedVersion === undefined) {
+      throw new AppError(
+        "Unable to determine current version",
+        ErrorCode.DATABASE_ERROR,
+        500
+      );
+    }
+
     // Increment version for update
     const newVersion = (updates.version || 0) + 1;
 
@@ -201,7 +211,7 @@ export class ReportRepository implements IRepository<Report> {
         version: newVersion,
       })
       .eq("id", id)
-      .eq("version", updates.version)
+      .eq("version", expectedVersion)
       .select()
       .single();
 
@@ -220,7 +230,7 @@ export class ReportRepository implements IRepository<Report> {
       );
     }
 
-    return data;
+    return data as any;
   }
 
   /**
@@ -274,3 +284,7 @@ export class ReportRepository implements IRepository<Report> {
     return this.findOne({ session_id: sessionId });
   }
 }
+
+
+
+

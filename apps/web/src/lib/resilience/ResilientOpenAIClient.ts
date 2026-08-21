@@ -1,64 +1,190 @@
 /**
- * Resilient OpenAI Client - SPRINT-4.4
- * 
- * Wraps OpenAI client with resilience patterns
+ * Resilient OpenAI Client
+ *
+ * Centralized resilient access to the OpenAI SDK.
+ *
+ * Responsibilities:
+ * - use the centralized AI configuration
+ * - never create dummy / placeholder clients
+ * - preserve resilienceManager execution
+ * - lazily instantiate the OpenAI client
+ * - expose chat completions and embeddings
+ *
+ * This client is intentionally infrastructure-only.
+ * Business services should depend on higher-level AI abstractions.
  */
 
-import OpenAI from 'openai';
-import { resilienceManager } from './ResilienceManager';
+import OpenAI from "openai";
+
+import {
+  getAIConfig,
+} from "@/lib/ai/config/ai.config";
+
+import {
+  resilienceManager,
+} from "./ResilienceManager";
 
 export class ResilientOpenAIClient {
-  private static instance: ResilientOpenAIClient;
-  private client: OpenAI;
+  private static instance:
+    | ResilientOpenAIClient
+    | null = null;
 
-  private constructor() {
-    const apiKey = process.env.OPENAI_API_KEY;
-    
-    if (!apiKey || apiKey === 'dummy') {
-      // Don't throw during build, just use a dummy client
-      this.client = new OpenAI({
-        apiKey: 'sk-dummy',
-        timeout: 30000,
-      });
+  private readonly client: OpenAI;
+
+  private constructor(
+    client?: OpenAI,
+  ) {
+    if (client) {
+      this.client = client;
       return;
     }
 
-    this.client = new OpenAI({
-      apiKey,
-      timeout: 30000, // Default timeout
-    });
+    const config =
+      getAIConfig();
+
+    this.client =
+      new OpenAI({
+        apiKey:
+          config.openaiApiKey,
+
+        organization:
+          config.openaiOrganization,
+
+        project:
+          config.openaiProject,
+
+        timeout:
+          config.aiTimeout,
+      });
   }
 
-  static getInstance(): ResilientOpenAIClient {
-    if (!ResilientOpenAIClient.instance) {
-      ResilientOpenAIClient.instance = new ResilientOpenAIClient();
+  /**
+   * Lazily creates the singleton.
+   *
+   * No OpenAI client is instantiated merely because this module
+   * was imported.
+   */
+  public static getInstance():
+    ResilientOpenAIClient {
+    if (
+      !ResilientOpenAIClient.instance
+    ) {
+      ResilientOpenAIClient.instance =
+        new ResilientOpenAIClient();
     }
+
     return ResilientOpenAIClient.instance;
   }
 
-  get chat() {
+  /**
+   * Reset is useful for tests and explicit runtime reconfiguration.
+   */
+  public static reset():
+    void {
+    ResilientOpenAIClient.instance =
+      null;
+  }
+
+  /**
+   * Explicit dependency injection for tests.
+   */
+  public static setInstance(
+    client: OpenAI,
+  ): void {
+    ResilientOpenAIClient.instance =
+      new ResilientOpenAIClient(
+        client,
+      );
+  }
+
+  /**
+   * Resilient chat-completion facade.
+   *
+   * The OpenAI request parameters are forwarded untouched,
+   * including signal/options supported by the SDK payload.
+   */
+  public get chat() {
     return {
       completions: {
-        create: (params: any) => resilienceManager.execute(
-          'openai.chat.completions.create',
-          () => this.client.chat.completions.create(params)
-        ),
+        create: <
+          TParams extends
+            OpenAI.Chat.ChatCompletionCreateParams
+        >(
+          params: TParams,
+        ) =>
+          resilienceManager.execute(
+            "openai.chat.completions.create",
+
+            () =>
+              this.client
+                .chat
+                .completions
+                .create(
+                  params,
+                ),
+          ),
       },
     };
   }
-
-  get embeddings() {
+  /**
+   * Resilient embeddings facade.
+   */
+  public get embeddings() {
     return {
-      create: (params: any) => resilienceManager.execute(
-        'openai.embeddings.create',
-        () => this.client.embeddings.create(params)
-      ),
+      create: (
+        params:
+          OpenAI.Embeddings.EmbeddingCreateParams,
+      ) =>
+        resilienceManager.execute(
+          "openai.embeddings.create",
+
+          () =>
+            this.client
+              .embeddings
+              .create(
+                params,
+              ),
+        ),
     };
   }
 
-  getClient(): OpenAI {
+  /**
+   * Low-level escape hatch.
+   *
+   * Prefer the resilient facades above whenever possible.
+   */
+  public getClient():
+    OpenAI {
     return this.client;
   }
 }
 
-export const resilientOpenAIClient = ResilientOpenAIClient.getInstance();
+/**
+ * Lazy compatibility facade.
+ *
+ * Previous code could use:
+ *
+ * resilientOpenAIClient.chat.completions.create(...)
+ *
+ * We preserve that API without instantiating OpenAI during module load.
+ */
+export const resilientOpenAIClient = {
+  get chat() {
+    return ResilientOpenAIClient
+      .getInstance()
+      .chat;
+  },
+
+  get embeddings() {
+    return ResilientOpenAIClient
+      .getInstance()
+      .embeddings;
+  },
+
+  getClient():
+    OpenAI {
+    return ResilientOpenAIClient
+      .getInstance()
+      .getClient();
+  },
+};
