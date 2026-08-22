@@ -50,6 +50,7 @@ describe('Microcode Engine - Priority 6', () => {
 
       // ADD should pop two values, add them, and push result
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(8);
     });
 
     it('should execute ALU_SUB operation', () => {
@@ -60,6 +61,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.SUB, [0]);
 
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(6);
     });
 
     it('should execute ALU_MUL operation', () => {
@@ -70,6 +72,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.MUL, [0]);
 
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(42);
     });
 
     it('should execute ALU_DIV operation', () => {
@@ -80,6 +83,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.DIV, [0]);
 
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(5);
     });
 
     it('should execute MEM_READ operation', () => {
@@ -91,6 +95,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.LOAD, [alloc.address]);
 
       expect(context.getStack().getSize()).toBe(1);
+      expect(context.getStack().peek()).toBe(0x01020304);
     });
 
     it('should execute MEM_WRITE operation', () => {
@@ -106,6 +111,12 @@ describe('Microcode Engine - Priority 6', () => {
 
       // STORE sequence: POP, MEM_WRITE - pops one value
       expect(stack.getSize()).toBe(1);
+      expect(Array.from(heap.read(alloc.address, 4))).toEqual([
+        0,
+        0,
+        0,
+        42,
+      ]);
     });
 
     it('should execute STACK_PUSH operation', () => {
@@ -184,6 +195,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.ADD, [0]);
 
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(8);
     });
 
     it('should handle multiple dispatches', () => {
@@ -196,6 +208,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.ADD, [0]);
 
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(13);
     });
 
     it('should dispatch with operands', () => {
@@ -326,6 +339,7 @@ describe('Microcode Engine - Priority 6', () => {
 
       // ADD sequence: POP, POP, ALU_ADD, PUSH
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(8);
     });
 
     it('should maintain sequence order', () => {
@@ -337,6 +351,7 @@ describe('Microcode Engine - Priority 6', () => {
 
       // SUB sequence should execute in order
       expect(stack.getSize()).toBe(1);
+      expect(stack.peek()).toBe(5);
     });
 
     it('should handle empty sequence', () => {
@@ -422,6 +437,7 @@ describe('Microcode Engine - Priority 6', () => {
       engine.execute(Opcode.ADD, [0]);
 
       const result = stack.peek();
+      expect(result).toBe(3);
 
       context.reset();
       stack.push(1);
