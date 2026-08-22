@@ -201,3 +201,6 @@ supabase/.temp/
 *.js.map
 *.d.ts.map
 /apps/web/src/types/supabase.generated.20*.ts
+
+# Local package-manager state
+.local/
