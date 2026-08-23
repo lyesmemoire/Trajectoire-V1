@@ -1,4 +1,4 @@
-import { envServer } from "../../../lib/env.server.js";
+import { envServer } from "./config/env.js";
 import { createHttpServer } from "./server/http.js";
 import { registerSignaling } from "./server/signaling.js";
 import { registerVoiceWs } from "./server/ws.voice.js";

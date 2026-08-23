@@ -1,8 +1,8 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import { createClient } from "@supabase/supabase-js";
 import type { InterviewRecord, InterviewRepository } from "./interview-repository.js";
-import { envServer } from "../../../../../lib/env.server.js";
-import { captureError } from "../../../../../lib/sentry-context.js";
+import { envServer } from "../../config/env.js";
+import { captureError } from "../../infrastructure/error-telemetry.js";
 
 const supabase = createClient(
   envServer.SUPABASE_URL,

@@ -1,0 +1,39 @@
+{
+    "name":  "@trajectoire/realtime-core",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "scripts":  {
+                    "build":  "tsc -p tsconfig.json",
+                    "typecheck":  "tsc -p tsconfig.json --noEmit"
+                },
+    "dependencies":  {
+                         "@trajectoire/execution-core":  "workspace:*"
+                     },
+    "exports":  {
+                    "./types":  {
+                                    "types":  "./dist/types.d.ts",
+                                    "import":  "./dist/types.js"
+                                },
+                    "./trace-contract":  {
+                                             "types":  "./dist/trace-contract.d.ts",
+                                             "import":  "./dist/trace-contract.js"
+                                         },
+                    "./orchestrator/runtime-orchestrator":  {
+                                                                "types":  "./dist/orchestrator/runtime-orchestrator.d.ts",
+                                                                "import":  "./dist/orchestrator/runtime-orchestrator.js"
+                                                            },
+                    "./orchestrator/orchestrator-contract":  {
+                                                                 "types":  "./dist/orchestrator/orchestrator-contract.d.ts",
+                                                                 "import":  "./dist/orchestrator/orchestrator-contract.js"
+                                                             },
+                    "./voice/voice-contract":  {
+                                                   "types":  "./dist/voice/voice-contract.d.ts",
+                                                   "import":  "./dist/voice/voice-contract.js"
+                                               },
+                    "./transport/transport-contract":  {
+                                                           "types":  "./dist/transport/transport-contract.d.ts",
+                                                           "import":  "./dist/transport/transport-contract.js"
+                                                       }
+                }
+}

@@ -1,4 +1,4 @@
-﻿import { envServer } from "../../../lib/env.server.js";
+import { envServer } from "./config/env.js";
 /**
  * llm-strict.ts â€” Appels LLM robustes (OpenAI / Mistral)
  * FonctionnalitÃ©s existantes conservÃ©es :
@@ -19,7 +19,7 @@
  * CoÃ»t et occupation mÃ©moire non annulables
  */
 import { type ZodSchema } from "zod";
-import { captureError } from "../../../lib/sentry-context.js";
+import { captureError } from "./infrastructure/error-telemetry.js";
 
 // â”€â”€ Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 

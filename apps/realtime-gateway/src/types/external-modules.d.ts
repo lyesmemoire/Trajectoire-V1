@@ -1,36 +1,10 @@
-// Temporary type declarations for external modules (core/p5, core/p6, lib)
-// This allows the build to proceed while the monorepo architecture is being restructured
-
-declare module '@core-p5/*' {
-  const value: any;
-  export default value;
-  export { value };
-}
-
-declare module '@core-p6/*' {
-  const value: any;
-  export default value;
-  export { value };
-}
-
-declare module '@lib/*' {
-  const value: any;
-  export default value;
-  export { value };
-}
-
-declare module '../../core/p5/*' {
-  const value: any;
-  export default value;
-  export { value };
-}
-
-declare module '../../core/p6/*' {
-  const value: any;
-  export default value;
-  export { value };
-}
-
+/**
+ * Temporary compatibility declaration for repository-level lib imports.
+ *
+ * TODO:
+ * Remove this shim once the remaining ATS contracts consumed by the
+ * realtime gateway are exposed through a proper workspace package.
+ */
 declare module '../../lib/*' {
   const value: any;
   export default value;

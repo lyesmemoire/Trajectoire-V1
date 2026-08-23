@@ -1,10 +1,10 @@
-import { RuntimeOrchestrator } from "../../../../core/p6/orchestrator/runtime-orchestrator.js";
-import { ExecutionFacade } from "../../../../core/p5/integration/execution-facade.js";
-import { SessionGovernor, CandidateMessage } from "../../../../core/p6/types.js";
-import { VoiceUXCalculator } from "../../../../core/p6/orchestrator/orchestrator-contract.js";
-import { MindState } from "../../../../core/p5/execution-contract.js";
-import { RuntimeDecision } from "../../../../core/p5/integration/integration-contract.js";
-import { VoiceInput } from "../../../../core/p6/voice/voice-contract.js";
+import { RuntimeOrchestrator } from "@trajectoire/realtime-core/orchestrator/runtime-orchestrator";
+import { ExecutionFacade } from "@trajectoire/execution-core/integration/execution-facade";
+import { SessionGovernor, CandidateMessage } from "@trajectoire/realtime-core/types";
+import { VoiceUXCalculator } from "@trajectoire/realtime-core/orchestrator/orchestrator-contract";
+import { MindState } from "@trajectoire/execution-core/execution-contract";
+import { RuntimeDecision } from "@trajectoire/execution-core/integration/integration-contract";
+import { VoiceInput } from "@trajectoire/realtime-core/voice/voice-contract";
 
 // Mocks for concrete implementation placeholders
 class ConcreteGovernor implements SessionGovernor {

@@ -1,4 +1,4 @@
-import { envServer } from "../../../../lib/env.server.js";
+import { envServer } from "../config/env.js";
 import { createClient } from "@supabase/supabase-js";
 
 export interface VoiceTokenPayload {

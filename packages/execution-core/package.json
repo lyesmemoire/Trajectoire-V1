@@ -1,0 +1,24 @@
+{
+  "name": "@trajectoire/execution-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "exports": {
+    "./execution-contract": {
+      "types": "./dist/execution-contract.d.ts",
+      "import": "./dist/execution-contract.js"
+    },
+    "./integration/execution-facade": {
+      "types": "./dist/integration/execution-facade.d.ts",
+      "import": "./dist/integration/execution-facade.js"
+    },
+    "./integration/integration-contract": {
+      "types": "./dist/integration/integration-contract.d.ts",
+      "import": "./dist/integration/integration-contract.js"
+    }
+  }
+}

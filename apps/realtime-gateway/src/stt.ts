@@ -1,4 +1,4 @@
-import { envServer } from "../../../lib/env.server.js";
+import { envServer } from "./config/env.js";
 /**
  * stt.ts — Wrapper Deepgram Live Transcription (Speech-to-Text)
  * Correction B6 :

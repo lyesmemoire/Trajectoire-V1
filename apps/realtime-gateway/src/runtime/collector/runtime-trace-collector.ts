@@ -1,5 +1,5 @@
 import { RuntimeWireEvent } from "./runtime-wire-event.js";
-import { RuntimeTrace } from "../../../../../core/p6/trace-contract.js";
+import { RuntimeTrace } from "@trajectoire/realtime-core/trace-contract";
 
 export class RuntimeTraceCollector {
   private traces = new Map<string, RuntimeTrace>();

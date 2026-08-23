@@ -1,4 +1,4 @@
-﻿import { envServer } from "../../../lib/env.server.js";
+import { envServer } from "./config/env.js";
 /**
  * gateway.ts â€” Realtime Gateway (Fastify + WebSocket)
  *

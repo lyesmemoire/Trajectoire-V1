@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 /**
  * runtime/voice-runtime.ts â€” Orchestrateur runtime du tour vocal (P4.2).
  * TurnPlan -> sÃ©quence d'instructions transport + rÃ©alisation des dÃ©lais (Clock).
@@ -8,7 +8,7 @@ import type { Clock } from "./clock.js";
 import type { PerceptionUX } from "../core/simulation/perception-ux.js";
 import type { Rng } from "./rng.js";
 import { buildTurnPlan, type TurnPlan } from "./turn-timing.js";
-import { createChildLogger } from "../../../../../lib/logger";
+import { createChildLogger } from "../../telemetry/logger.js";
 
 export type VoiceInstruction =
   | { type: "wait"; ms: number }

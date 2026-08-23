@@ -4,7 +4,7 @@
  * PURE, sans LLM. Repère des intentions de pilotage de l'entretien dans le
  * transcript de l'utilisateur (FR principalement), avant toute évaluation.
  */
-import { createChildLogger } from "../../../../../lib/logger.js";
+import { createChildLogger } from "../../telemetry/logger.js";
 
 export type UserCommand = "repeat" | "clarify" | "next" | "stop" | "slower";
 
