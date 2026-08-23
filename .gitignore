@@ -204,3 +204,13 @@ supabase/.temp/
 
 # Local package-manager state
 .local/
+# Generated TypeScript siblings
+/core/p5/**/*.js
+/core/p5/**/*.d.ts
+/core/p6/**/*.js
+/core/p6/**/*.d.ts
+/lib/**/*.js
+/lib/**/*.d.ts
+
+# Intentional AudioWorklet runtime source
+!/lib/realtime/audio/audio-worklet.js

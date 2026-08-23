@@ -1,1 +1,0 @@
-{"version":3,"file":"benchmark-engine.d.ts","sourceRoot":"","sources":["benchmark-engine.ts"],"names":[],"mappings":"AAEA,MAAM,WAAW,eAAe;IAC9B,UAAU,EAAE,MAAM,CAAC;IACnB,QAAQ,EAAE,MAAM,CAAC;CAClB;AAED;;GAEG;AACH,wBAAsB,gBAAgB,CAAC,MAAM,EAAE,OAAO,EAAE,MAAM,EAAE,SAAS,GAAG,YAAY,GAAG,WAAW,GAAK,OAAO,CAAC,eAAe,CAAC,CAsBlI"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"email-templates.d.ts","sourceRoot":"","sources":["email-templates.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,mBAAmB,GAAG;IAChC,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;IACpB,eAAe,EAAE,MAAM,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC;IACpB,cAAc,EAAE,MAAM,CAAC;CACxB,CAAC;AAEF;;GAEG;AACH,wBAAgB,yBAAyB,CAAC,MAAM,EAAE,oBAAoB,GAAG,MAAM,CA8B9E"}

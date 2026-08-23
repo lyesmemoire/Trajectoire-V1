@@ -1,1 +1,0 @@
-{"version":3,"file":"adaptive-recommendation.d.ts","sourceRoot":"","sources":["adaptive-recommendation.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,cAAc;IAC7B,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;IACpB,QAAQ,EAAE,MAAM,CAAC;IACjB,SAAS,EAAE,MAAM,CAAC;CACnB;AAED;;GAEG;AACH,wBAAgB,yBAAyB,CAAC,QAAQ,EAAE,QAAQ,GAAG,cAAc,CAiC5E"}

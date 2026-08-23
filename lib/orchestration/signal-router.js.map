@@ -1,1 +1,0 @@
-{"version":3,"file":"signal-router.js","sourceRoot":"","sources":["signal-router.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,MAAM,UAAU,YAAY,CAAC,QAAyB;IACpD,OAAO;QACL,SAAS,EAAE,QAAQ,CAAC,SAAS;QAC7B,WAAW,EAAE,QAAQ,CAAC,WAAW;QACjC,aAAa,EAAE,QAAQ,CAAC,aAAa;QACrC,cAAc,EAAE,QAAQ,CAAC,cAAc;QACvC,aAAa,EAAE,QAAQ,CAAC,aAAa;KACtC,CAAC;AACJ,CAAC"}

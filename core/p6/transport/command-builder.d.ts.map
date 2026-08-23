@@ -1,1 +1,0 @@
-{"version":3,"file":"command-builder.d.ts","sourceRoot":"","sources":["command-builder.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAE,MAAM,4BAA4B,CAAC;AAChE,OAAO,EAAE,gBAAgB,EAAE,MAAM,yBAAyB,CAAC;AAE3D,wBAAgB,sBAAsB,CAAC,IAAI,EAAE,kBAAkB,GAAG,SAAS,gBAAgB,EAAE,CA0B5F"}

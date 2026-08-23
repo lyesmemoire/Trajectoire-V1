@@ -1,1 +1,0 @@
-{"version":3,"file":"modern.d.ts","sourceRoot":"","sources":["modern.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAS1B,OAAO,EAAE,MAAM,EAAE,aAAa,EAAE,MAAM,UAAU,CAAC;AA4djD,MAAM,WAAW,mBAAmB;IAClC,IAAI,EAAE,MAAM,CAAC;IACb,OAAO,EAAE,aAAa,CAAC;CACxB;AAED,eAAO,MAAM,cAAc,GAAI,mBAAmB,mBAAmB,sBA6OpE,CAAC;AAEF,eAAe,cAAc,CAAC"}

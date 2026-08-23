@@ -1,1 +1,0 @@
-{"version":3,"file":"transaction-verifier.d.ts","sourceRoot":"","sources":["transaction-verifier.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,0BAA0B,CAAC;AAIrD;;;;;;;GAOG;AACH,MAAM,WAAW,uBAAuB;IACtC,QAAQ,CAAC,KAAK,EAAE,OAAO,CAAC;IACxB,QAAQ,CAAC,IAAI,EAAE,MAAM,EAAE,CAAC;CACzB;AAED,wBAAgB,iBAAiB,CAAC,EAAE,EAAE,YAAY,EAAE,cAAc,EAAE,SAAS,GAAK,uBAAuB,CAUxG"}

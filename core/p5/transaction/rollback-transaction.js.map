@@ -1,1 +1,0 @@
-{"version":3,"file":"rollback-transaction.js","sourceRoot":"","sources":["rollback-transaction.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,eAAe,EAAE,MAAM,iCAAiC,CAAC;AAElE;;;;;;;;;GASG;AACH,MAAM,UAAU,mBAAmB,CAAC,EAAgB;IAClD,OAAO,eAAe,CAAC,EAAE,CAAC,QAAQ,CAAC,CAAC;AACtC,CAAC"}
