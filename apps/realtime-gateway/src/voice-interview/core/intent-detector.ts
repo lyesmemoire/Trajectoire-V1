@@ -60,7 +60,7 @@ const PATTERNS: Array<{ intent: UserCommand; markers: string[] }> = [
  * Heuristique de sûreté : on n'active une intention que si la phrase est COURTE
  * (commande), pour éviter de confondre une vraie réponse mentionnant un mot-clé.
  */
-export function detectIntent(transcript: _string): UserIntent {
+export function detectIntent(transcript: string): UserIntent {
   const text = (transcript ?? "").trim().toLowerCase();
   if (!text) return { kind: "silence" };
 

@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  // PDF extraction runs only in the Node.js runtime.
+  // Keep PDF libraries outside the Next server bundle so their
+  // internal module resolution remains Node-native.
+  serverExternalPackages: [
+    "pdf-parse",
+    "pdfjs-dist",
+    "pino",
+    "pino-pretty",
+    "thread-stream",
+  ],
   devIndicators: false,
   // Rewrites vers la realtime-gateway et l'API NestJS en développement.
   // En production ces URLs sont remplacées par les variables d'environnement.

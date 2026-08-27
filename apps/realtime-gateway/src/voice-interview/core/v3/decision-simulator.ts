@@ -14,7 +14,7 @@ export interface DecisionSimulation {
  * Deterministic rules engine to simulate the final hiring decision
  * across 3 typical executive interview rounds.
  */
-export function simulateDecision(scores: _DecisionSimulationScores): DecisionSimulation {
+export function simulateDecision(scores: DecisionSimulationScores): DecisionSimulation {
   const { technicalDepth, integrityRisk, leadership } = scores;
 
   const hr =

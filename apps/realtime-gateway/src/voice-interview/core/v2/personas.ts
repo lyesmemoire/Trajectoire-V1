@@ -32,7 +32,7 @@ export const PERSONAS: Record<PersonaName, InterviewerPersona> = {
   startup_founder: { name: "startup_founder", tone: "incisive", pressureLevel: 4, followupDepth: 2, technicalFocus: 3 },
 };
 
-export function getPersona(name: _PersonaName): InterviewerPersona {
+export function getPersona(name: PersonaName): InterviewerPersona {
   return PERSONAS[name] ?? PERSONAS.neutral;
 }
 

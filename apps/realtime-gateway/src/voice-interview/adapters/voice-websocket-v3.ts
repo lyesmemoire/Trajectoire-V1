@@ -1,7 +1,7 @@
-﻿// @ts-nocheck
-import { z } from "zod";
+// @ts-nocheck
 import { SessionManager, VoiceTurnRecord } from "../sessions/session-manager.js";
 import { DeepgramAdapter } from "./deepgram.js";
+import { handleVoiceV3TextMessage } from "./voice-v3-text-message.js";
 import { TTSAdapter, DefaultTTSAdapter } from "./tts/index.js";
 import { now } from "../core/metrics.js";
 import { interviewRepository as repository } from "../persistence/singleton.js";
@@ -9,10 +9,10 @@ import { initInterviewV3, nextV3Step, InterviewStateV3 } from "../core/v3/interv
 import { generateExecutiveImpression } from "../core/v3/executive-impression.js";
 import { simulateDecision } from "../core/v3/decision-simulator.js";
 import { createClient } from "@supabase/supabase-js";
-import { createChildLogger } from "../../../../../lib/logger.js";
-import { envServer } from "../../../../../lib/env.server.js";
-import { withTimeout, CircuitBreaker, SessionRateLimiter } from "../../../../../lib/resilience.js";
-import { captureError, setSentryContext } from "../../../../../lib/sentry-context.js";
+import { createChildLogger } from "../../telemetry/logger.js";
+import { envServer } from "../../config/env.js";
+import { withTimeout, CircuitBreaker, SessionRateLimiter } from "../../infrastructure/resilience.js";
+import { captureError, setSentryContext } from "../../infrastructure/error-telemetry.js";
 
 const redisCircuit = new CircuitBreaker({ failureThreshold: 3, resetTimeoutMs: 30000 });
 const intentRateLimiter = new SessionRateLimiter(500, 1);
@@ -46,11 +46,6 @@ function nextEventId(): string {
   return `e${Date.now().toString(36)}_${eventSeq}`;
 }
 
-const WebSocketMessageSchema = z.object({
-  type: z.string(),
-  text: z.string().optional(),
-}).passthrough();
-
 export async function handleVoiceConnectionV3(
   ws: _VoiceWsLike,
   input: VoiceConnectionV3Input,
@@ -79,8 +74,8 @@ export async function handleVoiceConnectionV3(
       true
     );
   } catch (error) {
-    log.warn({ event: 'redis_circuit_breaker_open', err });
-    captureError(err, { component: 'voice-websocket-v3', event: 'redis_acquire_session', sessionId: input.sessionId });
+    log.warn({ event: 'redis_circuit_breaker_open', err: error });
+    captureError(error, { component: 'voice-websocket-v3', event: 'redis_acquire_session', sessionId: input.sessionId });
     sessionAcquired = true;
   }
 
@@ -109,7 +104,7 @@ export async function handleVoiceConnectionV3(
     if (res.error) throw res.error;
     settings = res.data;
   } catch (error) {
-    log.warn({ event: 'db_kill_switch_failed_or_timeout', fallback: 'engine_enabled=true', err });
+    log.warn({ event: 'db_kill_switch_failed_or_timeout', fallback: 'engine_enabled=true', err: error });
     settings = { engine_enabled: true };
   }
 
@@ -210,7 +205,7 @@ export async function handleVoiceConnectionV3(
           const { resetLlmErrors } = await import("../../server/rate-limiter.js");
           await redisCircuit.execute(() => withTimeout(resetLlmErrors(session.id), 500));
         } catch (error) {
-          log.warn({ event: 'redis_reset_llm_errors_failed', err });
+          log.warn({ event: 'redis_reset_llm_errors_failed', err: error });
         }
 
         session.state = result.updatedState;
@@ -324,8 +319,8 @@ export async function handleVoiceConnectionV3(
               5000
             );
           } catch (error) {
-            log.error({ err: dbErr, event: 'db_final_save_failed' });
-            captureError(dbErr, { component: 'voice-websocket-v3', event: 'db_final_save_failed', sessionId: session.id });
+            log.error({ err: error, event: 'db_final_save_failed' });
+            captureError(error, { component: 'voice-websocket-v3', event: 'db_final_save_failed', sessionId: session.id });
           }
 
           safeSend({
@@ -363,8 +358,8 @@ export async function handleVoiceConnectionV3(
               role_target: session.targetRole || "Unknown"
             });
           } catch (error) {
-            log.error({ err: logErr, event: 'db_health_log_failed' });
-            captureError(logErr, { component: 'voice-websocket-v3', event: 'db_health_log_failed', sessionId: session.id });
+            log.error({ err: error, event: 'db_health_log_failed' });
+            captureError(error, { component: 'voice-websocket-v3', event: 'db_health_log_failed', sessionId: session.id });
           }
           
           setTimeout(() => ws.close(), 1000);
@@ -372,20 +367,20 @@ export async function handleVoiceConnectionV3(
 
       } catch (error) {
         // â”€â”€ LLM Fail Safe: track consecutive errors â”€â”€
-        captureError(err, { component: 'voice-websocket-v3', event: 'llm_turn_failed', sessionId: session.id });
+        captureError(error, { component: 'voice-websocket-v3', event: 'llm_turn_failed', sessionId: session.id });
         let shouldKill = false;
         try {
           const { trackLlmError } = await import("../../server/rate-limiter.js");
           shouldKill = await redisCircuit.execute(() => withTimeout(trackLlmError(session.id), 500), false);
         } catch (error) {
-          log.warn({ event: 'redis_track_llm_error_failed', err: err2 });
+          log.warn({ event: 'redis_track_llm_error_failed', err: error });
         }
 
         if (shouldKill) {
           safeSend({ type: "error", message: "Technical interruption. Please restart the session." });
           ws.close(1011, "LLM fail safe");
         } else {
-          safeSend({ type: "error", message: (err as Error).message });
+          safeSend({ type: "error", message: error instanceof Error ? error.message : "Voice processing failed." });
         }
       } finally {
         processing = false;
@@ -418,20 +413,18 @@ export async function handleVoiceConnectionV3(
         stt.sendAudio(data);
       }
     } else if (typeof data === "string") {
-      try {
-        const msg = JSON.parse(data);
-        const parsed = WebSocketMessageSchema.safeParse(msg);
-        if (!parsed.success) return;
-
-        if (parsed.data.type === "end_speech") {
-          // just ignore or signal end of speech manually if needed
-        } else if (parsed.data.type === "mock_transcript" && sttCallbacks) {
-          // E2E testing hook
-          sttCallbacks.onFinalTranscript(parsed.data.text!);
-        }
-      } catch (error) {
-        // ignore
-      }
+      handleVoiceV3TextMessage(data, {
+        nodeEnv: process.env.NODE_ENV,
+        sessionId: session.id,
+        userId: input.userId,
+        sttCallbacks: sttCallbacks
+          ? {
+              onFinalTranscript: sttCallbacks.onFinalTranscript,
+            }
+          : undefined,
+        send: safeSend,
+        warn: (payload) => log.warn(payload),
+      });
     }
   });
 
@@ -446,7 +439,7 @@ export async function handleVoiceConnectionV3(
       const { releaseWsSession } = await import("../../server/rate-limiter.js");
       await redisCircuit.execute(() => withTimeout(releaseWsSession(connUserId, connIp), 500));
     } catch (error) {
-      log.warn({ event: 'redis_release_failed', err });
+      log.warn({ event: 'redis_release_failed', err: error });
     }
     intentRateLimiter.cleanup(session.id);
   });

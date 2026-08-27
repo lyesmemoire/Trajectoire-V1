@@ -22,7 +22,7 @@ import {
   getUser 
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('AUTH REAL WORKFLOW', () => {
   test.describe.configure({ mode: 'serial' });
@@ -31,7 +31,17 @@ test.describe('AUTH REAL WORKFLOW', () => {
   let userEmail: string;
   let userPassword: string;
   let userId: string;
-  let accessToken: string;
+  let authCookieHeader: string;
+  let authStorageCookies: Array<{
+    name: string;
+    value: string;
+    domain: string;
+    path: string;
+    expires: number;
+    httpOnly: boolean;
+    secure: boolean;
+    sameSite: 'Strict' | 'Lax' | 'None';
+  }> = [];
 
   test('Step 1: CREATE USER - Create real user via Supabase Auth', async () => {
     runId = generateRunId();
@@ -56,7 +66,16 @@ test.describe('AUTH REAL WORKFLOW', () => {
   test('Step 2: LOGIN - Authenticate with real credentials', async ({ page }) => {
     // Navigate to login page
     await page.goto(`${BASE_URL}/login`);
-    await page.waitForLoadState('networkidle');
+
+    // The login page may keep background requests active.
+    // Wait for the controls required by this workflow instead.
+    await expect(
+      page.locator('input[type="email"]').first()
+    ).toBeVisible({ timeout: 30000 });
+
+    await expect(
+      page.locator('input[type="password"]').first()
+    ).toBeVisible({ timeout: 30000 });
 
     // Fill login form with real credentials
     const emailInput = page.locator('input[type="email"]').first();
@@ -65,10 +84,25 @@ test.describe('AUTH REAL WORKFLOW', () => {
 
     await emailInput.fill(userEmail);
     await passwordInput.fill(userPassword);
+
+    // Prove that the real login request succeeds before asserting navigation.
+    const loginResponsePromise = page.waitForResponse(
+      response =>
+        response.url().includes('/api/auth/login') &&
+        response.request().method() === 'POST',
+      { timeout: 15000 }
+    );
+
     await submitButton.click();
 
-    // Wait for redirect to dashboard or welcome
-    await page.waitForURL(/\/(dashboard|welcome)/, { timeout: 10000 });
+    const loginResponse = await loginResponsePromise;
+    expect(loginResponse.status()).toBe(200);
+
+    // Next.js may cold-compile the authenticated dashboard in development.
+    // Assert the final URL without coupling the test to the browser "load" event.
+    await expect(page).toHaveURL(/\/(dashboard|welcome)/, {
+      timeout: 30000
+    });
 
     const url = page.url();
     console.log(`After login, redirected to: ${url}`);
@@ -77,33 +111,62 @@ test.describe('AUTH REAL WORKFLOW', () => {
     expect(url).toMatch(/\/(dashboard|welcome)/);
 
     // Get session cookies
-    const cookies = await page.context().cookies();
-    const sessionCookie = cookies.find(c => c.name.includes('sb-') || c.name.includes('session'));
-    
-    expect(sessionCookie).toBeTruthy();
-    accessToken = sessionCookie?.value || '';
-    
-    console.log(`Session cookie found: ${sessionCookie?.name}`);
+    const cookies = await page.context().cookies(BASE_URL);
+
+    const authCookies = cookies.filter(
+      cookie =>
+        cookie.name.startsWith('sb-') ||
+        cookie.name.toLowerCase().includes('session')
+    );
+
+    authStorageCookies = authCookies.map((cookie) => ({
+      name: cookie.name,
+      value: cookie.value,
+      domain: cookie.domain,
+      path: cookie.path,
+      expires: cookie.expires,
+      httpOnly: cookie.httpOnly,
+      secure: cookie.secure,
+      sameSite: cookie.sameSite,
+    }));
+    expect(authCookies.length).toBeGreaterThan(0);
+
+    authCookieHeader = authCookies
+      .map(cookie => `${cookie.name}=${cookie.value}`)
+      .join('; ');
+
+    console.log(
+      `Session cookie(s) found: ${authCookies
+        .map(cookie => cookie.name)
+        .join(', ')}`
+    );
   });
 
   test('Step 3: SESSION - Verify session is valid via API', async () => {
-    // Use the access token to call a protected API
-    const response = await fetch(`${BASE_URL}/api/auth/check-access`, {
-      headers: { 
-        'Content-Type': 'application/json',
-        'Cookie': `sb-access-token=${accessToken}`
+    // /api/auth/me is the public session-introspection contract.
+    // /api/auth/check-access is intentionally reserved for internal calls.
+    expect(authCookieHeader).toBeTruthy();
+
+    const response = await fetch(`${BASE_URL}/api/auth/me`, {
+      headers: {
+        Cookie: authCookieHeader
       }
     });
 
-    // Should return 200 with authenticated user data
     expect(response.status).toBe(200);
 
     const data = await response.json();
-    expect(data.authenticated).toBe(true);
-    expect(data.accessLevel).toBeTruthy();
-    expect(data.role).toBeTruthy();
 
-    console.log('Session verified via API:', data);
+    expect(data.authenticated).toBe(true);
+    expect(data.user).toBeTruthy();
+    expect(data.user.id).toBe(userId);
+    expect(data.user.email).toBe(userEmail);
+
+    console.log('Session verified via /api/auth/me:', {
+      authenticated: data.authenticated,
+      userId: data.user.id,
+      email: data.user.email
+    });
   });
 
   test('Step 4: DATABASE USER - Verify user exists in database', async () => {
@@ -122,23 +185,49 @@ test.describe('AUTH REAL WORKFLOW', () => {
   });
 
   test('Step 5: PROTECTED API - Access protected endpoint with real session', async ({ page }) => {
-    // Navigate to dashboard with authenticated session
+    /*
+     * Playwright creates an isolated BrowserContext for this test.
+     * Restore the exact cookies captured after the real Step 2 login.
+     */
+    expect(authStorageCookies.length).toBeGreaterThan(0);
+
+    await page.context().addCookies(authStorageCookies);
+
+    const restoredCookies =
+      await page.context().cookies(BASE_URL);
+
+    const restoredAuthCookies = restoredCookies.filter(
+      cookie =>
+        cookie.name.startsWith('sb-') ||
+        cookie.name.toLowerCase().includes('session')
+    );
+
+    expect(restoredAuthCookies.length).toBeGreaterThan(0);
+
+    console.log(
+      `Restored session cookie(s): ${restoredAuthCookies
+        .map(cookie => cookie.name)
+        .join(', ')}`
+    );
+
     await page.goto(`${BASE_URL}/dashboard`);
-    await page.waitForLoadState('networkidle');
 
-    const url = page.url();
-    
-    // Should NOT be redirected to login (session is valid)
-    expect(url).toContain('/dashboard');
-    expect(url).not.toContain('/login');
+    await expect(page).toHaveURL(
+      /\/dashboard(?:[/?#]|$)/,
+      {
+        timeout: 30000
+      }
+    );
 
-    console.log('Protected endpoint accessible with valid session');
+    expect(page.url()).not.toContain('/login');
+
+    console.log(
+      'Protected dashboard accessible with restored real session'
+    );
   });
-
   test('Step 6: LOGOUT - Perform real logout', async ({ page }) => {
     // Navigate to logout
     await page.goto(`${BASE_URL}/logout`);
-    await page.waitForLoadState('networkidle');
 
     // Should redirect to login or home
     await page.waitForURL(/\/(login|\/)/, { timeout: 5000 });
@@ -162,7 +251,10 @@ test.describe('AUTH REAL WORKFLOW', () => {
   test('Step 7: ACCESS DENIED - Verify protected endpoint is inaccessible after logout', async ({ page }) => {
     // Try to access dashboard without authentication
     await page.goto(`${BASE_URL}/dashboard`);
-    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(
+      /\/login(?:[/?#]|$)/,
+      { timeout: 30000 }
+    );
 
     const url = page.url();
     

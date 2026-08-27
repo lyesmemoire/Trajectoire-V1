@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 /**
  * server/ws.voice.ts â€” Route WebSocket de l'entretien vocal (P3.3).
  *
@@ -149,7 +149,7 @@ export async function registerVoiceWs(app: FastifyInstance): Promise<void> {
       if (auth?.userId) input.userId = auth.userId;
 
       // Logs structurÃ©s lÃ©gers (observabilitÃ©, pas d'infra).
-      const log = (event: string, fields: Record<string, _unknown>) => {
+      const log = (event: string, fields: Record<string, unknown>) => {
         if (process.env.VOICE_DEBUG === "true") {
            
           console.log(JSON.stringify({ ts: Date.now(), event, ...fields }));

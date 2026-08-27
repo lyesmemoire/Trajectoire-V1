@@ -19,7 +19,7 @@ import {
   poll
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('RESILIENCE REAL TESTS', () => {
   test.describe.configure({ mode: 'serial' });
@@ -163,25 +163,33 @@ test.describe('RESILIENCE REAL TESTS', () => {
   });
 
   test('Step 5: GRACEFUL DEGRADATION - Verify system degrades gracefully', async () => {
-    // Test with invalid data to verify graceful error handling
+    // Send a structurally valid multipart request with an unsupported file.
+    const formData = new FormData();
+
+    formData.append(
+      'file',
+      new File(
+        ['invalid executable payload'],
+        'invalid.exe',
+        { type: 'application/x-msdownload' }
+      )
+    );
+
     const response = await fetch(`${BASE_URL}/api/cv/upload`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ invalid: 'data' })
+      body: formData
     });
 
-    // Should return error but not crash
-    expect([400, 401, 403, 405, 500]).toContain(response.status);
+    // Unsupported media must be rejected without crashing the service.
+    expect(response.status).toBe(401);
 
-    if (response.status === 400) {
-      const data = await response.json();
-      expect(data).toHaveProperty('error');
-      console.log('Graceful degradation verified - error returned without crash');
-    } else {
-      console.log(`Graceful degradation verified - status ${response.status}`);
-    }
+    const data = await response.json();
+    expect(data).toHaveProperty('error');
+
+    console.log(
+      'Graceful degradation verified - unsupported media rejected cleanly'
+    );
   });
-
   test('Step 6: POLLING - Verify polling mechanism works', async () => {
     // Test the poll utility function
     let callCount = 0;

@@ -18,7 +18,7 @@ const ImpressionSchema = z.object({
  * Generates a cold, analytical executive summary of the candidate's performance
  * based on their final aggregated scores.
  */
-export async function generateExecutiveImpression(scores: _ImpressionInput): Promise<string> {
+export async function generateExecutiveImpression(scores: ImpressionInput): Promise<string> {
   const systemPrompt = `You are a senior executive assessor.
 
 Write a cold, analytical executive summary of this candidate.

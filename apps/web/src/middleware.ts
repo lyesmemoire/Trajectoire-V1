@@ -274,6 +274,57 @@ function createRedirect(
   );
 }
 
+function createApiAuthorizationErrorResponse(
+  reason: string,
+  correlationId: string,
+  corsHeaders: Record<string, string>,
+  scriptNonce: string,
+  styleNonce: string,
+): NextResponse {
+  const isAuthenticationRequired =
+    reason === "Authentication required";
+
+  const status =
+    isAuthenticationRequired
+      ? 401
+      : 403;
+
+  const response =
+    NextResponse.json(
+      {
+        error:
+          isAuthenticationRequired
+            ? "authentication_required"
+            : "access_denied",
+
+        message:
+          reason,
+
+        correlationId,
+      },
+      {
+        status,
+      },
+    );
+
+  applyHeaders(
+    response,
+    corsHeaders,
+  );
+
+  applySecurityHeaders(
+    response,
+    scriptNonce,
+    styleNonce,
+  );
+
+  response.headers.set(
+    "Cache-Control",
+    "no-store",
+  );
+
+  return response;
+}
 function createAuthenticationUnavailableResponse(
   request: NextRequest,
   correlationId: string,
@@ -749,12 +800,36 @@ export async function middleware(
   if (
     !authResult.allowed
   ) {
+    const reason =
+      authResult.reason ||
+      "access_denied";
+
+    /*
+     * API contract:
+     *
+     * API consumers must receive an HTTP/JSON authorization response.
+     * Redirecting an API request to /login causes HTTP clients to follow
+     * the redirect and receive a misleading 200 text/html response.
+     *
+     * Browser page requests keep the existing login redirect behavior.
+     */
+    if (
+      isApiRoute(
+        pathname,
+      )
+    ) {
+      return createApiAuthorizationErrorResponse(
+        reason,
+        correlationId,
+        corsHeaders,
+        scriptNonce,
+        styleNonce,
+      );
+    }
+
     return createRedirect(
       pathname,
-
-      authResult.reason ||
-        "access_denied",
-
+      reason,
       request.url,
       correlationId,
     );

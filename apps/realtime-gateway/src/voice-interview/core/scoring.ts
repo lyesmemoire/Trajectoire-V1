@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 
 export interface StructuredScore {
   overall: number;
@@ -51,20 +51,9 @@ ${transcript}
 export async function callMistral(prompt: string): Promise<string> {
   // Uses OpenAI client configured with gpt-4o-mini as a robust fallback/default LLM for scoring.
   if (!process.env.OPENAI_API_KEY) {
-    console.warn("No OPENAI_API_KEY found, returning mock structured score.");
-    return JSON.stringify({
-      overall: 82,
-      competencies: {
-        communication: 78,
-        technical_depth: 85,
-        clarity: 80,
-        problem_solving: 84,
-        confidence: 73
-      },
-      strengths: ["Excellente maîtrise technique", "Résolution de problème méthodique"],
-      improvements: ["Pourrait être plus concis (clarté)", "Laisser transparaître plus de confiance"],
-      summary: "Candidat très solide techniquement, l'expression orale est bonne mais manque de conviction sur certains points."
-    });
+    throw new Error(
+      "OPENAI_API_KEY is required for structured interview scoring",
+    );
   }
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });

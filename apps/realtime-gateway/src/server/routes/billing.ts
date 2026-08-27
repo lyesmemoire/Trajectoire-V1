@@ -1,5 +1,5 @@
-﻿// @ts-nocheck
-import { envServer } from "../../../../../lib/env.server.js";
+// @ts-nocheck
+import { envServer } from "../../config/env.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import Stripe from "stripe";
 import { verifyVoiceToken } from "../auth.js";
@@ -27,7 +27,7 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
       return reply.status(401).send({ error: "Unauthorized" });
     }
 
-    const frontendUrl = envServer.FRONTEND_URL || "http://localhost:3000";
+    const frontendUrl = (envServer.FRONTEND_URL ?? (envServer.NODE_ENV === "production" ? undefined : "http://localhost:3000"));
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -72,7 +72,7 @@ export async function registerBillingRoutes(app: _FastifyInstance) {
       return reply.status(400).send({ error: "No active subscription found." });
     }
 
-    const frontendUrl = envServer.FRONTEND_URL || "http://localhost:3000";
+    const frontendUrl = (envServer.FRONTEND_URL ?? (envServer.NODE_ENV === "production" ? undefined : "http://localhost:3000"));
 
     const session = await stripe.billingPortal.sessions.create({
       customer: usage.stripe_customer_id,

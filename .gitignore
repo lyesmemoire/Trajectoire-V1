@@ -147,6 +147,8 @@ supabase/.temp/
 .vercel
 .env*
 
+!**/.env.example
+
 # ============================================================
 # Trajectoire local development / repair artifacts
 # ============================================================

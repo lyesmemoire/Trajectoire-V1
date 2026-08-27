@@ -19,7 +19,7 @@ import {
   prisma
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('OBSERVABILITY REAL TEST', () => {
   test.describe.configure({ mode: 'serial' });

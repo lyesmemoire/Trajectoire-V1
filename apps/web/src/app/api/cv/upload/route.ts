@@ -114,36 +114,6 @@ async function extractPdf(
   buffer: Buffer,
 ): Promise<string> {
   try {
-    const module =
-      await import("pdf-parse");
-
-    const pdfParse =
-      module.default;
-
-    const result =
-      await pdfParse(buffer);
-
-    const text =
-      result.text?.trim() ?? "";
-
-    if (
-      text.length >=
-      MIN_TEXT_LENGTH
-    ) {
-      return text;
-    }
-  } catch (error) {
-    logger.warn({
-      event:
-        "CV upload - pdf-parse failed",
-      message:
-        error instanceof Error
-          ? error.message
-          : "Unknown pdf-parse error",
-    });
-  }
-
-  try {
     const pdfjs =
       await import(
         "pdfjs-dist/legacy/build/pdf.mjs"
@@ -157,10 +127,13 @@ async function extractPdf(
           ),
       });
 
-    const pdf =
-      await loadingTask.promise;
+    let pdf;
 
-    const pages: string[] = [];
+    try {
+      pdf =
+        await loadingTask.promise;
+
+      const pages: string[] = [];
 
     for (
       let index = 1;
@@ -185,7 +158,10 @@ async function extractPdf(
       pages.push(pageText);
     }
 
-    return pages.join("\n");
+      return pages.join("\n");
+    } finally {
+      await loadingTask.destroy();
+    }
   } catch (error) {
     logger.error({
       event:

@@ -18,7 +18,7 @@ import {
   prisma
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('SEARCH REAL WORKFLOW', () => {
   test.describe.configure({ mode: 'serial' });
@@ -167,7 +167,6 @@ test.describe('SEARCH REAL WORKFLOW', () => {
 
   test('Step 5: SEARCH UI - Test search page loads', async ({ page }) => {
     await page.goto(`${BASE_URL}/search`);
-    await page.waitForLoadState('networkidle');
 
     const url = page.url();
     

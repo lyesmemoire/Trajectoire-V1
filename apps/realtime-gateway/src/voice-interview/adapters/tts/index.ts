@@ -47,18 +47,48 @@ export class ChainTTSAdapter implements TTSAdapter {
     return this.providers.some((p) => p.isConfigured());
   }
 
-  async synthesize(text: string): Promise<ArrayBuffer> {
+  async synthesize(
+    text: string,
+    options?: { signal?: AbortSignal },
+  ): Promise<ArrayBuffer> {
+    const errors: string[] = [];
+
     for (const provider of this.providers) {
       if (!provider.isConfigured()) continue;
+
       try {
-        const audio = await provider.synthesize(text);
-        if (audio && audio.byteLength > 0) return audio;
-      } catch {
-        // provider en échec -> on tente le suivant
+        const audio = await provider.synthesize(text, options);
+
+        if (audio && audio.byteLength > 0) {
+          return audio;
+        }
+
+        errors.push(`${provider.name}: empty audio`);
+      } catch (error) {
+        if (options?.signal?.aborted) {
+          throw error;
+        }
+
+        errors.push(
+          `${provider.name}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
       }
     }
-    // Dernier recours : silence déterministe.
-    return this.mock.synthesize(text);
+
+    if (process.env.NODE_ENV === "production") {
+      const details =
+        errors.length > 0
+          ? ` Providers attempted: ${errors.join(" | ")}`
+          : " No real TTS provider is configured.";
+
+      throw new Error(
+        `TTS unavailable in production.${details}`,
+      );
+    }
+
+    return this.mock.synthesize(text, options);
   }
 }
 
@@ -78,8 +108,11 @@ export class DefaultTTSAdapter implements TTSAdapter {
   isConfigured(): boolean {
     return this.inner.isConfigured();
   }
-  synthesize(text: string): Promise<ArrayBuffer> {
-    return this.inner.synthesize(text);
+  synthesize(
+    text: string,
+    options?: { signal?: AbortSignal },
+  ): Promise<ArrayBuffer> {
+    return this.inner.synthesize(text, options);
   }
 }
 

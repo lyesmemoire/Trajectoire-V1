@@ -5,7 +5,7 @@
  * pour vérifier la profondeur réelle. Déterministe.
  */
 
-import { claimsSkill } from "./candidate-profile.js";
+import { claimsSkill, type CandidateProfile } from "./candidate-profile.js";
 
 interface TrapDef {
   skill: string;
@@ -24,7 +24,7 @@ const TRAPS: TrapDef[] = [
 ];
 
 /** Renvoie une question piège pertinente non encore posée, sinon null. */
-export function pickTrapQuestion(profile: _CandidateProfile, askedQuestions: string[], ): string | null {
+export function pickTrapQuestion(profile: CandidateProfile, askedQuestions: string[], ): string | null {
   for (const trap of TRAPS) {
     if (claimsSkill(profile, trap.skill) && !askedQuestions.includes(trap.question)) {
       return trap.question;

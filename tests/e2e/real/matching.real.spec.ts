@@ -20,7 +20,7 @@ import {
   prisma
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('MATCHING REAL WORKFLOW', () => {
   test.describe.configure({ mode: 'serial' });
@@ -164,7 +164,6 @@ test.describe('MATCHING REAL WORKFLOW', () => {
 
   test('Step 6: MATCHING UI - Test matching page loads', async ({ page }) => {
     await page.goto(`${BASE_URL}/matching`);
-    await page.waitForLoadState('networkidle');
 
     const url = page.url();
     

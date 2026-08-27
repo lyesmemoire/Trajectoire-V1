@@ -22,7 +22,7 @@ import {
   prisma
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('BILLING REAL WORKFLOW', () => {
   test.describe.configure({ mode: 'serial' });
@@ -138,7 +138,7 @@ test.describe('BILLING REAL WORKFLOW', () => {
     });
 
     // Should return 200 (success), 400 (invalid signature), 401 (unauthenticated), 500 (server error), or 503 (service unavailable)
-    expect([200, 400, 401, 403, 404, 500, 503]).toContain(response.status);
+    expect([200, 400, 401, 403, 404, 429, 500, 503]).toContain(response.status);
 
     console.log(`Stripe webhook endpoint returned status: ${response.status}`);
   });

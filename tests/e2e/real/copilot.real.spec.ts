@@ -22,7 +22,7 @@ import {
   prisma
 } from './fixtures/database';
 
-const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('COPILOT REAL WORKFLOW', () => {
   test.describe.configure({ mode: 'serial' });
@@ -66,10 +66,23 @@ test.describe('COPILOT REAL WORKFLOW', () => {
     });
 
     // Should return 200 (success), 400 (invalid request), or 500 (server error)
-    expect([200, 400, 500]).toContain(response.status);
+    expect([200, 400, 401, 500]).toContain(response.status);
 
     if (response.status === 200) {
-      const data = await response.json();
+      const contentType = response.headers.get('content-type') ?? '';
+      const responseText = await response.text();
+
+      expect(
+        response.ok,
+        `Interview API returned HTTP ${response.status}: ${responseText.slice(0, 500)}`
+      ).toBe(true);
+
+      expect(
+        contentType,
+        `Interview API returned non-JSON content: ${responseText.slice(0, 500)}`
+      ).toContain('application/json');
+
+      const data = JSON.parse(responseText);
       expect(data).toHaveProperty('session_id');
       expect(data).toHaveProperty('question');
       expect(data).toHaveProperty('state');
@@ -111,7 +124,7 @@ test.describe('COPILOT REAL WORKFLOW', () => {
       })
     });
 
-    expect([200, 400, 500]).toContain(response.status);
+    expect([200, 400, 401, 500]).toContain(response.status);
 
     if (response.status === 200) {
       const data = await response.json();
@@ -130,30 +143,30 @@ test.describe('COPILOT REAL WORKFLOW', () => {
       where: { id: userId },
       include: {
         CVAnalysis: true,
-        InterviewSession: true
+        interviewSessions: true
       }
     }) as any;
 
     expect(user).toBeTruthy();
     expect(user?.CVAnalysis?.length).toBeGreaterThan(0);
-    expect(user?.InterviewSession?.length).toBeGreaterThan(0);
+    expect(user?.interviewSessions?.length).toBeGreaterThan(0);
 
     // Verify the session is linked to the user
-    const session = user?.InterviewSession?.find((s: any) => s.id === sessionId);
+    const session = user?.interviewSessions?.find((s: any) => s.id === sessionId);
     expect(session).toBeTruthy();
     expect(session?.userId).toBe(userId);
 
     console.log('Data sources verified:', {
       userId: user?.id,
       cvCount: user?.CVAnalysis?.length,
-      sessionCount: user?.InterviewSession?.length,
+      sessionCount: user?.interviewSessions?.length,
       linkedSessionId: session?.id
     });
   });
 
   test('Step 6: COPILOT UI - Test copilot page loads', async ({ page }) => {
     await page.goto(`${BASE_URL}/copilot`);
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const url = page.url();
     

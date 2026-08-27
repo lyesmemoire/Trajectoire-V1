@@ -29,7 +29,7 @@ export class OpenAITTSProvider implements TTSProvider {
     return this.apiKey.length > 0;
   }
 
-  async synthesize(text: string): Promise<ArrayBuffer> {
+  async synthesize(text: string, options?: { signal?: AbortSignal }): Promise<ArrayBuffer> {
     if (!this.isConfigured()) throw new Error("OpenAI TTS non configuré");
 
     const res = await fetch("https://api.openai.com/v1/audio/speech", {
@@ -44,6 +44,7 @@ export class OpenAITTSProvider implements TTSProvider {
         input: text,
         format: "mp3",
       }),
+      signal: options?.signal ?? null,
     });
 
     if (!res.ok) {

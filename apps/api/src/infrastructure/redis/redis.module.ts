@@ -16,9 +16,32 @@ import Redis from 'ioredis';
           return null;
         }
 
+        const isProduction =
+          configService.get<string>('NODE_ENV') === 'production';
+
+        const host =
+          configService.get<string>('REDIS_HOST') ||
+          (isProduction ? undefined : 'localhost');
+
+        const portValue =
+          configService.get<string | number>('REDIS_PORT') ??
+          (isProduction ? undefined : 6379);
+
+        if (!host || portValue === undefined) {
+          throw new Error(
+            'REDIS_HOST and REDIS_PORT are required in production',
+          );
+        }
+
+        const port = Number(portValue);
+
+        if (!Number.isInteger(port) || port < 1 || port > 65535) {
+          throw new Error('REDIS_PORT must be a valid TCP port');
+        }
+
         const redis = new Redis({
-          host: configService.get('REDIS_HOST') || 'localhost',
-          port: configService.get('REDIS_PORT') || 6379,
+          host,
+          port,
           password: configService.get('REDIS_PASSWORD'),
           db: configService.get('REDIS_DB') || 0,
           retryStrategy: (times) => {

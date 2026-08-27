@@ -1,5 +1,5 @@
-﻿// @ts-nocheck
-import { envServer } from "../../../../lib/env.server.js";
+// @ts-nocheck
+import { envServer } from "../config/env.js";
 /**
  * Rate Limiter & Session Guards â€” Upstash Redis
  * 
@@ -18,6 +18,12 @@ let redis: Redis | null = null;
 
 function getRedis(): Redis | null {
   if (!envServer.UPSTASH_REDIS_REST_URL || !envServer.UPSTASH_REDIS_REST_TOKEN) {
+    if (envServer.NODE_ENV === "production") {
+      throw new Error(
+        "UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are required for realtime rate limiting in production",
+      );
+    }
+
     return null;
   }
 
@@ -178,7 +184,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
         }),
       });
     } catch (error) {
-      console.error("Slack alert failed:", err);
+      console.error("Slack alert failed:", error);
     }
   }
 
@@ -200,7 +206,7 @@ export async function triggerAlert(payload: AlertPayload): Promise<void> {
         }),
       });
     } catch (error) {
-      console.error("Email alert failed:", err);
+      console.error("Email alert failed:", error);
     }
   }
 }

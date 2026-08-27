@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import type { ChatCompletionMessageParam, ChatCompletion } from "openai/resources/chat/completions";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });

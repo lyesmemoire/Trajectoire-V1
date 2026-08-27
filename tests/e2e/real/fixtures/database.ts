@@ -43,7 +43,7 @@ export function generateRunId(): string {
  * Generate test email with run ID
  */
 export function generateTestEmail(runId: string, suffix: string = 'user'): string {
-  return `test-${runId}-${suffix}@e2e.trajectoire.test`;
+  return `test-${runId}-${suffix}@example.com`;
 }
 
 /**
@@ -61,40 +61,27 @@ export async function createTestUser(runId: string, suffix: string = 'user') {
   const password = generateTestPassword();
 
   const admin = getSupabaseAdmin();
-  const { data, error } = await admin.auth.signUp({
+
+  const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
-    options: {
-      emailRedirectTo: `${(globalThis as any).process?.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard`,
-      data: { skip_email_confirmation: true }
-    }
+    email_confirm: true
   });
 
   if (error) {
-    // If user already exists, try to sign in
-    if (error.message.includes('already registered')) {
-      const { data: signInData, error: signInError } = await admin.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (signInError) {
-        throw new Error(`Failed to sign in existing test user: ${signInError.message}`);
-      }
-      return {
-        email,
-        password,
-        userId: signInData.user?.id,
-        session: signInData.session
-      };
-    }
     throw new Error(`Failed to create test user: ${error.message}`);
+  }
+
+  if (!data.user) {
+    throw new Error('Failed to create test user: Supabase returned no user');
   }
 
   return {
     email,
     password,
-    userId: data.user?.id,
-    session: data.session
+    userId: data.user.id,
+    user: data.user,
+    session: null
   };
 }
 
@@ -129,6 +116,15 @@ export async function createTestCV(userId: string, fileName: string = 'test-cv.p
         skills: ['JavaScript', 'TypeScript', 'React'],
         experience: '5 years',
         education: 'Computer Science'
+      },
+      keywords: {
+        technical: ['JavaScript', 'TypeScript', 'React'],
+        matched: ['JavaScript', 'TypeScript', 'React'],
+        missing: []
+      },
+      improvements: {
+        strengths: ['JavaScript', 'TypeScript', 'React'],
+        recommendations: ['Keep technical skills aligned with the target role']
       },
       atsScoreBefore: 50,
       atsScoreAfter: 75
@@ -176,7 +172,8 @@ export async function createTestSubscription(userId: string, plan: 'FREE' | 'PRO
       stripeSubId: `sub_test_${userId}`,
       status: 'active',
       currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-      plan
+      plan,
+      updatedAt: new Date()
     }
   });
 

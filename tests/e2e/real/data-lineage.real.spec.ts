@@ -122,14 +122,14 @@ test.describe('DATA LINEAGE VERIFICATION', () => {
       where: { id: userId },
       include: {
         CVAnalysis: true,
-        InterviewSession: true,
+        interviewSessions: true,
         Subscription: true
       }
     }) as any;
 
     expect(user).toBeTruthy();
     expect(user?.CVAnalysis?.length).toBeGreaterThan(0);
-    expect(user?.InterviewSession?.length).toBeGreaterThan(0);
+    expect(user?.interviewSessions?.length).toBeGreaterThan(0);
     expect(user?.Subscription).toBeTruthy();
 
     // Verify CV belongs to user
@@ -138,7 +138,7 @@ test.describe('DATA LINEAGE VERIFICATION', () => {
     expect(userCV?.userId).toBe(userId);
 
     // Verify session belongs to user
-    const userSession = user?.InterviewSession?.find((s: any) => s.id === sessionId);
+    const userSession = user?.interviewSessions?.find((s: any) => s.id === sessionId);
     expect(userSession).toBeTruthy();
     expect(userSession?.userId).toBe(userId);
 
@@ -179,7 +179,7 @@ test.describe('DATA LINEAGE VERIFICATION', () => {
   });
 
   test('Step 7: HTTP RESPONSE IDs - Verify API responses contain IDs', async () => {
-    const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3001';
+    const BASE_URL = (globalThis as any).process?.env.E2E_BASE_URL || 'http://localhost:3000';
 
     // Test auth check endpoint returns user data
     const response = await fetch(`${BASE_URL}/api/auth/check-access`, {

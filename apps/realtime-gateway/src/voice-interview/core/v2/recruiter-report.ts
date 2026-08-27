@@ -40,7 +40,7 @@ export interface BuildRecruiterReportInput {
   contradictions: Contradiction[];
 }
 
-export function buildRecruiterReport(input: _BuildRecruiterReportInput, ): RecruiterReport {
+export function buildRecruiterReport(input: BuildRecruiterReportInput, ): RecruiterReport {
   const report = buildInterviewReport(input.answered);
   const credibility = buildCredibilityScore(
     input.signalsList,

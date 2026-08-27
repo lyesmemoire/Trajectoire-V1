@@ -6,8 +6,9 @@
  */
 
 import type { AnswerEvaluation } from "./evaluation.js";
+import type { FeedbackSignal } from "./interview-engine.js";
 
-export function buildFeedbackText(signal: _FeedbackSignal, evaluation: AnswerEvaluation, ): string {
+export function buildFeedbackText(signal: FeedbackSignal, evaluation: AnswerEvaluation, ): string {
   // Pointe la dimension STAR la plus utile à travailler.
   const missing: string | null = !evaluation.star.result
     ? "le résultat obtenu"

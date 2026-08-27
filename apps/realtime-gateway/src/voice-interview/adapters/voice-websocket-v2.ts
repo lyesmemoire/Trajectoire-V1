@@ -13,7 +13,7 @@
 import { DeepgramAdapter } from "./deepgram.js";
 import type { TTSAdapter } from "./tts/index.js";
 import { DefaultTTSAdapter } from "./tts/index.js";
-import type { VoiceMetricsLogger } from "./voice-websocket.js";
+import type { VoiceMetricsLogger, VoiceWsLike } from "./voice-websocket.js";
 import {
   buildCandidateProfile,
   type BuildProfileInput,
@@ -98,7 +98,7 @@ const eid = () => `e${Date.now().toString(36)}_${++evSeq}`;
  * Branche une connexion sur le moteur V2. Retourne l'id de session V2.
  */
 export async function handleVoiceConnectionV2Engine(
-  ws: _VoiceWsLike,
+  ws: VoiceWsLike,
   deps: VoiceV2Deps,
   input: VoiceV2Input = {},
 ): Promise<string> {

@@ -32,9 +32,32 @@ export class HealthController {
   @Public()
   @HealthCheck()
   async checkRedis() {
+    const isProduction =
+      this.configService.get<string>('NODE_ENV') === 'production';
+
+    const host =
+      this.configService.get<string>('REDIS_HOST') ||
+      (isProduction ? undefined : 'localhost');
+
+    const portValue =
+      this.configService.get<string | number>('REDIS_PORT') ??
+      (isProduction ? undefined : 6379);
+
+    if (!host || portValue === undefined) {
+      throw new Error(
+        'REDIS_HOST and REDIS_PORT are required in production',
+      );
+    }
+
+    const port = Number(portValue);
+
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+      throw new Error('REDIS_PORT must be a valid TCP port');
+    }
+
     const redis = new Redis({
-      host: this.configService.get('REDIS_HOST', 'localhost'),
-      port: this.configService.get('REDIS_PORT', 6379),
+      host,
+      port,
       password: this.configService.get('REDIS_PASSWORD'),
       db: this.configService.get('REDIS_DB', 0),
     });

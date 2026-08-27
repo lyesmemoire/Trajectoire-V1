@@ -108,7 +108,7 @@ export class CopilotController {
     }
   }
 
-  @Post('sessions')
+  @Get('sessions')
   @RateLimitApi()
   async getAllSessions(@Req() req) {
     try {

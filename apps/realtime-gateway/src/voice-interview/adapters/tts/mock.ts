@@ -35,8 +35,12 @@ export class MockTTSProvider implements TTSProvider {
   isConfigured(): boolean {
     return true;
   }
-  async synthesize(_text: string): Promise<ArrayBuffer> {
+  async synthesize(
+    _text: string,
+    options?: { signal?: AbortSignal },
+  ): Promise<ArrayBuffer> {
     void _text;
+    void options;
     return createSilentWav();
   }
 }

@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 const EnvServerSchema = z.object({
 
@@ -161,6 +161,10 @@ const EnvServerSchema = z.object({
   OPENAI_MODEL: z.string().optional(),
   MISTRAL_MODEL: z.string().optional(),
   FRONTEND_URL: z.string().url().optional(),
+
+  ALLOWED_ORIGINS: z
+    .string()
+    .optional(),
   STRIPE_PRICE_PRO_ID: z.string().startsWith("price_").optional(),
   SLACK_ALERT_WEBHOOK_URL: z.string().url().optional(),
   ALERT_EMAIL_TO: z.string().optional(),
@@ -203,7 +207,67 @@ function validateEnv() {
     } as z.infer<typeof EnvServerSchema>;
   }
 
-  const result = EnvServerSchema.safeParse(process.env);
+    // Realtime production environment validation.
+  // Development/test keep local fallbacks; production fails closed.
+  if (process.env.NODE_ENV === "production") {
+    const frontendUrl = process.env.FRONTEND_URL?.trim();
+    const allowedOriginsRaw = process.env.ALLOWED_ORIGINS?.trim();
+    const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.trim();
+    const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
+
+    const missing: string[] = [];
+
+    if (!frontendUrl) missing.push("FRONTEND_URL");
+    if (!allowedOriginsRaw) missing.push("ALLOWED_ORIGINS");
+    if (!redisUrl) missing.push("UPSTASH_REDIS_REST_URL");
+    if (!redisToken) missing.push("UPSTASH_REDIS_REST_TOKEN");
+
+    if (missing.length > 0) {
+      throw new Error(
+        `[ENV SERVER] Missing production environment variables: ${missing.join(", ")}`
+      );
+    }
+
+    const assertProductionHttpUrl = (name: string, value: string) => {
+      let parsed: URL;
+
+      try {
+        parsed = new URL(value);
+      } catch {
+        throw new Error(`[ENV SERVER] ${name} must be a valid URL`);
+      }
+
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        throw new Error(`[ENV SERVER] ${name} must use http or https`);
+      }
+
+      if (
+        parsed.hostname === "localhost" ||
+        parsed.hostname === "127.0.0.1" ||
+        parsed.hostname === "::1"
+      ) {
+        throw new Error(`[ENV SERVER] ${name} must not use localhost in production`);
+      }
+    };
+
+    assertProductionHttpUrl("FRONTEND_URL", frontendUrl!);
+
+    for (const origin of allowedOriginsRaw!
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean)) {
+      assertProductionHttpUrl("ALLOWED_ORIGINS", origin);
+    }
+
+    try {
+      new URL(redisUrl!);
+    } catch {
+      throw new Error(
+        "[ENV SERVER] UPSTASH_REDIS_REST_URL must be a valid URL"
+      );
+    }
+  }
+const result = EnvServerSchema.safeParse(process.env);
 
   if (!result.success) {
     // SÃ©pare les erreurs critiques des warnings

@@ -20,7 +20,7 @@ export function now(): number {
   return Date.now();
 }
 
-export function logMetrics(m: _VoiceMetrics) {
+export function logMetrics(m: VoiceMetrics) {
   const sttMs = m.sttEnd && m.sttStart ? m.sttEnd - m.sttStart : undefined;
   const llmMs = m.llmEnd && m.llmStart ? m.llmEnd - m.llmStart : undefined;
   const ttsMs = m.ttsEnd && m.ttsStart ? m.ttsEnd - m.ttsStart : undefined;
