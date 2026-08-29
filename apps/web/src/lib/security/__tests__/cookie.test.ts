@@ -249,7 +249,9 @@ describe('Cookie Operations', () => {
     deleteCookie(response, 'test');
     
     const cookie = response.cookies.get('test');
-    expect(cookie).toBeUndefined();
+    expect(cookie).toBeDefined();
+    expect(cookie?.value).toBe('');
+    expect(new Date(cookie!.expires!).getTime()).toBe(0);
   });
 
   it('should delete cookie with prefix', () => {
@@ -258,7 +260,9 @@ describe('Cookie Operations', () => {
     deleteCookieWithPrefix(response, 'session');
     
     const cookie = response.cookies.get('__Secure-session');
-    expect(cookie).toBeUndefined();
+    expect(cookie).toBeDefined();
+    expect(cookie?.value).toBe('');
+    expect(new Date(cookie!.expires!).getTime()).toBe(0);
   });
 
   it('should set Supabase cookie', () => {
@@ -276,6 +280,8 @@ describe('Cookie Operations', () => {
     deleteSupabaseCookie(response);
     
     const cookie = response.cookies.get('sb-session-token');
-    expect(cookie).toBeUndefined();
+    expect(cookie).toBeDefined();
+    expect(cookie?.value).toBe('');
+    expect(new Date(cookie!.expires!).getTime()).toBe(0);
   });
 });
