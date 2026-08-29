@@ -65,20 +65,50 @@ export function extractCsrfToken(
  * @param allowedOrigins Array of allowed origins
  * @returns true if origin is valid
  */
-export function validateOrigin(origin: string | null, allowedOrigins: string[]): boolean {
-  if (!origin) return false;
-  
-  return allowedOrigins.some(allowed => {
-    // Exact match
-    if (origin === allowed) return true;
-    
-    // Subdomain match (e.g., *.example.com)
-    if (allowed.startsWith('*.')) {
-      const domain = allowed.slice(2);
-      return origin.endsWith(domain) || origin === domain;
-    }
-    
+export function validateOrigin(
+  origin: string | null,
+  allowedOrigins: string[]
+): boolean {
+  if (!origin) {
     return false;
+  }
+
+  let parsedOrigin: URL;
+
+  try {
+    parsedOrigin = new URL(origin);
+  } catch {
+    return false;
+  }
+
+  return allowedOrigins.some((allowedOrigin) => {
+    if (!allowedOrigin.includes("*")) {
+      return origin === allowedOrigin;
+    }
+
+    let parsedAllowed: URL;
+
+    try {
+      parsedAllowed = new URL(allowedOrigin.replace("*.", ""));
+    } catch {
+      return false;
+    }
+
+    if (parsedOrigin.protocol !== parsedAllowed.protocol) {
+      return false;
+    }
+
+    const allowedHostname = parsedAllowed.hostname.toLowerCase();
+    const originHostname = parsedOrigin.hostname.toLowerCase();
+
+    const hostnameMatches =
+      originHostname === allowedHostname ||
+      originHostname.endsWith(`.${allowedHostname}`);
+
+    const portMatches =
+      parsedOrigin.port === parsedAllowed.port;
+
+    return hostnameMatches && portMatches;
   });
 }
 

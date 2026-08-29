@@ -93,6 +93,8 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/analyze", accessLevel: AccessLevel.AUTHENTICATED, comment: "Analyse CV" },
   { pattern: "/search", accessLevel: AccessLevel.AUTHENTICATED, comment: "Recherche" },
   { pattern: "/copilot", accessLevel: AccessLevel.AUTHENTICATED, comment: "Copilot" },
+  { pattern: "/opportunities", accessLevel: AccessLevel.AUTHENTICATED, comment: "Opportunités" },
+  { pattern: "/api/opportunities", accessLevel: AccessLevel.AUTHENTICATED, comment: "API opportunités" },
 
   // ============================================================
   // ROUTES PREMIUM (AccessLevel.PREMIUM)

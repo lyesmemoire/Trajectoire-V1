@@ -140,12 +140,12 @@ export function PremiumATSResult({
             ].map((item) => (
               <div key={item.label} className="text-center">
                 <item.icon className="w-8 h-8 mx-auto mb-2 text-slate-600" />
-                <div className="text-2xl font-bold text-slate-900">{item.value}%</div>
+                <div className="text-2xl font-bold text-slate-900">{Math.round(item.value)}%</div>
                 <div className="text-sm text-slate-600">{item.label}</div>
                 <div className="mt-2 h-2 bg-slate-200 rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: `${item.value}%` }}
+                    animate={{ width: `${Math.round(item.value)}%` }}
                     transition={{ delay: 0.6, duration: 1 }}
                     className="h-full bg-indigo-600"
                   />
@@ -174,7 +174,7 @@ export function PremiumATSResult({
           ].map((item) => (
             <div key={item.label} className="bg-white rounded-xl shadow-md p-4">
               <item.icon className="w-6 h-6 text-slate-600 mb-2" />
-              <div className="text-2xl font-bold text-slate-900">{item.value}%</div>
+              <div className="text-2xl font-bold text-slate-900">{Math.round(item.value)}%</div>
               <div className="text-sm text-slate-600">{item.label}</div>
             </div>
           ))}

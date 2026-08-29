@@ -11,9 +11,11 @@ import {
   LayoutDashboard,
   LogOut,
   Mic2,
+  Radar,
   Settings,
   Sparkles,
   Target,
+  BriefcaseBusiness,
 } from "lucide-react"
 
 const NAV = [
@@ -21,6 +23,16 @@ const NAV = [
     label: "Vue d’ensemble",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    label: "Opportunités",
+    href: "/opportunities",
+    icon: BriefcaseBusiness,
+  },
+  {
+    label: "Discovery",
+    href: "/discovery",
+    icon: Radar,
   },
   {
     label: "Simulation IA",
