@@ -65,6 +65,10 @@ const AUTHENTICATED_PAGE_PREFIXES = [
   "/settings",
   "/onboarding",
   "/copilot",
+
+  "/opportunities",
+
+  "/discovery",
 ] as const;
 
 function matchesPathPrefix(

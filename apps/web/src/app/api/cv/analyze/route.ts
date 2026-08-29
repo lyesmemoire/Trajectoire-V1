@@ -1480,6 +1480,7 @@ export const POST =
                     dbRecordId,
 
                   data: {
+                    analysisId: dbRecordId,
                     structured,
                     hiiosContext,
                   },
@@ -1509,6 +1510,9 @@ export const POST =
                 }
 
                 return {
+                  analysisId:
+                    analysis.id,
+
                   structured:
                     analysis.cvData as unknown as CvAnalysis,
 
@@ -1527,6 +1531,9 @@ export const POST =
             {
               success:
                 true,
+
+              analysisId:
+                finalResult.analysisId,
 
               data:
                 finalResult.structured,

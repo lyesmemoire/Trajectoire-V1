@@ -28,6 +28,10 @@ model User {
   monthlyResetDate       DateTime                 @default(dbgenerated("(now() + '1 mon'::interval)"))
   credits                Int                      @default(100)
   onboardingCompleted    Boolean                  @default(false)
+  opportunities          Opportunity[]
+  applicationWorkspaces  ApplicationWorkspace[]
+  careerStories          CareerStory[]
+  careerMemories         CareerMemory[]
   AIUsageLog             AIUsageLog[]
   Account                Account[]
   AdminAuditLog          AdminAuditLog[]
@@ -45,6 +49,9 @@ model User {
   UserBehaviorProfile    UserBehaviorProfile?
   UserPredictionSnapshot UserPredictionSnapshot[]
   WaitlistEntry          WaitlistEntry?
+  discoveredJobs         DiscoveredJob[]
+
+  discoverySources DiscoverySource[]
 
   @@index([email])
   @@index([stripeCustomerId])
@@ -72,7 +79,7 @@ model CareerProfile {
 }
 
 model InterviewSession {
-  id                    String                @id @default(dbgenerated("gen_random_uuid()"))
+  id                    String                 @id @default(dbgenerated("gen_random_uuid()"))
   userId                String
   persona               String
   currentState          String
@@ -80,24 +87,29 @@ model InterviewSession {
   confidenceScore       Float?
   ownershipScore        Float?
   specificityScore      Float?
-  pressureLevel         Int                   @default(0)
-  authenticityScore     Float                 @default(1.0)
+  pressureLevel         Int                    @default(0)
+  authenticityScore     Float                  @default(1.0)
   jobTitle              String?
   company               String?
   score                 Int?
-  status                String                @default("active")
+  status                String                 @default("active")
   questions             Json?
   answers               Json?
   analysis              Json?
-  startedAt             DateTime              @default(now())
+  startedAt             DateTime               @default(now())
   completedAt           DateTime?
-  createdAt             DateTime              @default(now())
-  careerTrajectoryScore Float?                @map("career_trajectory_score")
+  createdAt             DateTime               @default(now())
+  careerTrajectoryScore Float?                 @map("career_trajectory_score")
   challengeEntryId      String?
   BehaviorEvent         BehaviorEvent[]
   InterviewEvent        InterviewEvent[]
-  PublicChallengeEntry  PublicChallengeEntry? @relation(fields: [challengeEntryId], references: [id])
-  user                  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  PublicChallengeEntry  PublicChallengeEntry?  @relation(fields: [challengeEntryId], references: [id])
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationWorkspaces ApplicationWorkspace[]
+
+  careerStories CareerStory[]
+
+  careerMemories CareerMemory[]
 
   @@index([userId])
   @@index([createdAt])
@@ -198,18 +210,23 @@ model BehavioralPattern {
 }
 
 model CVAnalysis {
-  id             String   @id @default(cuid())
-  userId         String
-  fileName       String
-  originalText   String
-  optimizedText  String
-  cvData         Json
-  atsScoreBefore Int?
-  atsScoreAfter  Int?
-  improvements   Json?
-  keywords       Json?
-  createdAt      DateTime @default(now())
-  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String                 @id @default(cuid())
+  userId                String
+  fileName              String
+  originalText          String
+  optimizedText         String
+  cvData                Json
+  atsScoreBefore        Int?
+  atsScoreAfter         Int?
+  improvements          Json?
+  keywords              Json?
+  createdAt             DateTime               @default(now())
+  User                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationWorkspaces ApplicationWorkspace[]
+
+  careerStories CareerStory[]
+
+  careerMemories CareerMemory[]
 
   @@index([userId])
   @@schema("public")
@@ -692,6 +709,69 @@ model DataLineage {
   @@schema("public")
 }
 
+model Opportunity {
+  id                  String                @id @default(cuid())
+  userId              String
+  title               String
+  company             String?
+  location            String?
+  sourceUrl           String?
+  source              String?
+  description         String
+  status              OpportunityStatus     @default(DISCOVERED)
+  matchScore          Int?
+  skillsScore         Int?
+  experienceScore     Int?
+  seniorityScore      Int?
+  relevanceScore      Int?
+  recommendation      String?
+  recommendationLabel String?
+  strengths           Json?
+  gaps                Json?
+  analysis            Json?
+  metadata            Json?
+  discoveredAt        DateTime              @default(now())
+  analyzedAt          DateTime?
+  appliedAt           DateTime?
+  interviewAt         DateTime?
+  offerAt             DateTime?
+  rejectedAt          DateTime?
+  archivedAt          DateTime?
+  nextAction          String?
+  nextActionAt        DateTime?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace           ApplicationWorkspace?
+
+  stories OpportunityStory[]
+
+  memories       OpportunityMemory[]
+  discoveredJobs DiscoveredJob[]
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, matchScore])
+  @@index([userId, updatedAt(sort: Desc)])
+  @@index([status])
+  @@index([createdAt])
+  @@map("opportunities")
+  @@schema("public")
+}
+
+enum OpportunityStatus {
+  DISCOVERED
+  TO_ANALYZE
+  TO_APPLY
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+  ARCHIVED
+
+  @@schema("public")
+}
+
 enum UserRole {
   USER
   ADMIN_SUPPORT
@@ -715,5 +795,254 @@ enum tx_state {
   rolled_back
   expired
 
+  @@schema("public")
+}
+
+model ApplicationWorkspace {
+  id                   String             @id @default(cuid())
+  userId               String
+  opportunityId        String             @unique
+  selectedCVAnalysisId String?
+  interviewSessionId   String?
+  readiness            WorkspaceReadiness @default(SETUP)
+  companyResearch      Json?
+  preparation          Json?
+  tasks                Json?
+  notes                String?
+  metadata             Json?
+  lastActivityAt       DateTime           @default(now())
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity        Opportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  selectedCVAnalysis CVAnalysis?       @relation(fields: [selectedCVAnalysisId], references: [id], onDelete: SetNull)
+  interviewSession   InterviewSession? @relation(fields: [interviewSessionId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([userId, updatedAt(sort: Desc)])
+  @@index([selectedCVAnalysisId])
+  @@index([interviewSessionId])
+  @@map("application_workspaces")
+  @@schema("public")
+}
+
+enum WorkspaceReadiness {
+  SETUP
+  IN_PROGRESS
+  READY
+  INTERVIEWING
+  COMPLETED
+  ARCHIVED
+
+  @@schema("public")
+}
+
+model CareerStory {
+  id         String   @id @default(cuid())
+  userId     String
+  title      String
+  situation  String
+  task       String
+  action     String
+  result     String
+  skills     String[]
+  tags       String[]
+  metrics    Json?
+  source     String?
+  confidence Int      @default(100)
+  isFavorite Boolean  @default(false)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunities      OpportunityStory[]
+  InterviewSession   InterviewSession?  @relation(fields: [interviewSessionId], references: [id])
+  interviewSessionId String?
+  CVAnalysis         CVAnalysis?        @relation(fields: [cVAnalysisId], references: [id])
+  cVAnalysisId       String?
+
+  @@index([userId])
+  @@index([userId, isFavorite])
+  @@index([userId, updatedAt(sort: Desc)])
+  @@map("career_stories")
+  @@schema("public")
+}
+
+model OpportunityStory {
+  id            String   @id @default(cuid())
+  opportunityId String
+  storyId       String
+  relevance     Int?
+  reason        String?
+  selected      Boolean  @default(true)
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  story       CareerStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@unique([opportunityId, storyId])
+  @@index([opportunityId])
+  @@index([storyId])
+  @@index([opportunityId, selected])
+  @@map("opportunity_stories")
+  @@schema("public")
+}
+
+model CareerMemory {
+  id         String             @id @default(cuid())
+  userId     String
+  category   String
+  key        String
+  value      String
+  origin     CareerMemoryOrigin @default(USER_CONFIRMED)
+  status     CareerMemoryStatus @default(CONFIRMED)
+  confidence Int                @default(100)
+  evidence   Json?
+  sourceType String?
+  sourceId   String?
+  isFavorite Boolean            @default(false)
+  metadata   Json?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunities      OpportunityMemory[]
+  InterviewSession   InterviewSession?   @relation(fields: [interviewSessionId], references: [id])
+  interviewSessionId String?
+  CVAnalysis         CVAnalysis?         @relation(fields: [cVAnalysisId], references: [id])
+  cVAnalysisId       String?
+
+  @@unique([userId, category, key])
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, category])
+  @@index([userId, isFavorite])
+  @@index([userId, updatedAt(sort: Desc)])
+  @@map("career_memories")
+  @@schema("public")
+}
+
+model OpportunityMemory {
+  id            String   @id @default(cuid())
+  opportunityId String
+  memoryId      String
+  relevance     Int?
+  reason        String?
+  selected      Boolean  @default(false)
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  opportunity Opportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  memory      CareerMemory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@unique([opportunityId, memoryId])
+  @@index([opportunityId])
+  @@index([memoryId])
+  @@index([opportunityId, selected])
+  @@map("opportunity_memories")
+  @@schema("public")
+}
+
+enum CareerMemoryOrigin {
+  USER_CONFIRMED
+  AI_DERIVED
+  IMPORTED
+
+  @@schema("public")
+}
+
+enum CareerMemoryStatus {
+  SUGGESTED
+  CONFIRMED
+  REJECTED
+  ARCHIVED
+
+  @@schema("public")
+}
+
+enum DiscoveryProvider {
+  GREENHOUSE
+  LEVER
+  ASHBY
+  OTHER
+
+  @@schema("public")
+}
+
+enum DiscoveryJobStatus {
+  LIVE
+  STALE
+  CLOSED
+
+  @@schema("public")
+}
+
+model DiscoverySource {
+  id             String            @id @default(cuid())
+  userId         String
+  provider       DiscoveryProvider
+  company        String
+  boardKey       String
+  enabled        Boolean           @default(true)
+  lastSyncAt     DateTime?
+  lastSyncStatus String?
+  lastSyncError  String?
+  metadata       Json?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, boardKey])
+  @@index([userId])
+  @@index([userId, enabled])
+  @@index([provider, boardKey])
+  @@map("discovery_sources")
+  @@schema("public")
+}
+
+model DiscoveredJob {
+  id             String             @id @default(cuid())
+  userId         String
+  opportunityId  String?
+  provider       DiscoveryProvider
+  sourceKey      String
+  externalId     String
+  boardKey       String
+  title          String
+  company        String
+  location       String?
+  department     String?
+  employmentType String?
+  workplaceType  String?
+  description    String
+  sourceUrl      String
+  applyUrl       String?
+  fingerprint    String
+  status         DiscoveryJobStatus @default(LIVE)
+  publishedAt    DateTime?
+  firstSeenAt    DateTime           @default(now())
+  lastSeenAt     DateTime           @default(now())
+  closedAt       DateTime?
+  rawPayload     Json?
+  metadata       Json?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, provider, sourceKey])
+  @@index([userId])
+  @@index([userId, status, lastSeenAt(sort: Desc)])
+  @@index([userId, fingerprint])
+  @@index([opportunityId])
+  @@index([provider, boardKey])
+  @@map("discovered_jobs")
   @@schema("public")
 }

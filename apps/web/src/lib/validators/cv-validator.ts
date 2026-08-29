@@ -73,7 +73,7 @@ async function extractCVContent(file: File, _options?: { signal?: AbortSignal })
   // MVP : on retourne le texte brut si possible, sinon une erreur
   if (file.type === "application/pdf") {
     // Pour MVP, on utilise pdfjs-dist déjà installé
-    const pdfjs = await import("pdfjs-dist")
+    const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs")
     const arrayBuffer = await file.arrayBuffer()
     const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise
     let text = ""

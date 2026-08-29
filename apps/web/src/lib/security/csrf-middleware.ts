@@ -52,7 +52,7 @@ export function csrfProtect<T extends (...args: any[]) => Promise<NextResponse>>
     if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method) && response.ok) {
       const newToken = generateCsrfToken();
       response.cookies.set(CSRF_COOKIE_NAME, newToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: CSRF_TOKEN_AGE,
@@ -104,19 +104,22 @@ async function validateCsrfRequest(req: NextRequest): Promise<{ valid: boolean; 
  */
 async function tryParseBody(req: NextRequest): Promise<any> {
   try {
-    const contentType = req.headers.get('content-type');
+    // Parse a clone so CSRF validation never consumes the body that the
+    // actual route handler still needs to read.
+    const requestClone = req.clone();
+    const contentType = requestClone.headers.get('content-type');
     
     if (contentType?.includes('application/json')) {
-      return await req.json();
+      return await requestClone.json();
     }
     
     if (contentType?.includes('multipart/form-data')) {
-      const formData = await req.formData();
+      const formData = await requestClone.formData();
       return Object.fromEntries(formData);
     }
     
     if (contentType?.includes('application/x-www-form-urlencoded')) {
-      const formData = await req.formData();
+      const formData = await requestClone.formData();
       return Object.fromEntries(formData);
     }
     
@@ -134,7 +137,7 @@ export function initializeCsrfToken(response: NextResponse): NextResponse {
   const token = generateCsrfToken();
   
   response.cookies.set(CSRF_COOKIE_NAME, token, {
-    httpOnly: true,
+    httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: CSRF_TOKEN_AGE,
