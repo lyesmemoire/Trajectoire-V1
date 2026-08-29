@@ -19,6 +19,13 @@ const sessions = new Map<string, KernelState>();
 // ──────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { error: 'Not found' },
+      { status: 404 }
+    );
+  }
+
   try {
     const body = await req.json() as InterviewRequest;
     const { action } = body;
