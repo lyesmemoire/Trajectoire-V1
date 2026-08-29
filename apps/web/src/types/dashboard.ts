@@ -199,6 +199,14 @@ export interface DashboardOpportunitySummary {
   activeCount: number
   discoveredCount: number
   highMatchCount: number
+  pipeline: {
+    discovered: number
+    toAnalyze: number
+    toApply: number
+    applied: number
+    interview: number
+    offer: number
+  }
   bestMatch: {
     id: string
     title: string

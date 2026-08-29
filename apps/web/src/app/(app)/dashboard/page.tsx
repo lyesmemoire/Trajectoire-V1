@@ -153,6 +153,32 @@ export default async function DashboardPage() {
         (opportunity) =>
           (opportunity.matchScore ?? 0) >= 75,
       ).length,
+    pipeline: {
+      discovered: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "DISCOVERED",
+      ).length,
+      toAnalyze: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "TO_ANALYZE",
+      ).length,
+      toApply: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "TO_APPLY",
+      ).length,
+      applied: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "APPLIED",
+      ).length,
+      interview: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "INTERVIEW",
+      ).length,
+      offer: activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "OFFER",
+      ).length,
+    },
     bestMatch: bestMatch
       ? {
           id: bestMatch.id,
