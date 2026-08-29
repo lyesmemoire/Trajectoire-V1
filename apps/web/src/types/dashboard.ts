@@ -1,19 +1,19 @@
 // apps/web/src/types/dashboard.ts
 //
 // Types pour le Dashboard Premium
-// MVP-011 — Dashboard WOW
+// MVP-011 â€” Dashboard WOW
 
 /**
- * Données utilisateur pour le dashboard
+ * DonnÃ©es utilisateur pour le dashboard
  */
 export interface DashboardUserData {
   /** Nom de l'utilisateur */
   name: string
-  /** Prénom de l'utilisateur */
+  /** PrÃ©nom de l'utilisateur */
   firstName: string
   /** Avatar URL */
   avatar?: string
-  /** Date de dernière connexion */
+  /** Date de derniÃ¨re connexion */
   lastLogin?: Date
 }
 
@@ -23,30 +23,30 @@ export interface DashboardUserData {
 export interface DashboardScore {
   /** Score actuel (0-100) */
   currentScore: number
-  /** Score précédent */
+  /** Score prÃ©cÃ©dent */
   previousScore?: number
   /** Progression en pourcentage */
   progressPercentage: number
-  /** Évolution (up, down, stable) */
+  /** Ã‰volution (up, down, stable) */
   trend: 'up' | 'down' | 'stable'
 }
 
 /**
- * Compétence
+ * CompÃ©tence
  */
 export interface DashboardSkill {
-  /** Nom de la compétence */
+  /** Nom de la compÃ©tence */
   name: string
   /** Niveau (0-100) */
   level: number
-  /** Catégorie */
+  /** CatÃ©gorie */
   category: 'technical' | 'soft' | 'language'
-  /** Évolution */
+  /** Ã‰volution */
   trend?: 'up' | 'down' | 'stable'
 }
 
 /**
- * Progression carrière
+ * Progression carriÃ¨re
  */
 export interface DashboardCareer {
   /** Niveau actuel */
@@ -55,9 +55,9 @@ export interface DashboardCareer {
   nextLevel: string
   /** Progression vers le niveau suivant (0-100) */
   progressToNext: number
-  /** Évolution carrière */
+  /** Ã‰volution carriÃ¨re */
   evolution: {
-    /** Score d'employabilité */
+    /** Score d'employabilitÃ© */
     employabilityScore: number
     /** Tendance */
     trend: 'up' | 'down' | 'stable'
@@ -76,9 +76,9 @@ export interface DashboardRecommendation {
   description: string
   /** Type d'action */
   actionType: 'improve' | 'add' | 'remove' | 'highlight'
-  /** Priorité */
+  /** PrioritÃ© */
   priority: 'high' | 'medium' | 'low'
-  /** Impact estimé */
+  /** Impact estimÃ© */
   estimatedImpact: number
 }
 
@@ -108,7 +108,7 @@ export interface DashboardAction {
   title: string
   /** Description */
   description: string
-  /** Icône */
+  /** IcÃ´ne */
   icon: string
   /** URL de destination */
   href: string
@@ -120,17 +120,17 @@ export interface DashboardAction {
  * Progression globale
  */
 export interface DashboardProgress {
-  /** Étapes complétées */
+  /** Ã‰tapes complÃ©tÃ©es */
   completedSteps: number
-  /** Total des étapes */
+  /** Total des Ã©tapes */
   totalSteps: number
   /** Pourcentage */
   percentage: number
-  /** Étapes */
+  /** Ã‰tapes */
   steps: {
-    /** Nom de l'étape */
+    /** Nom de l'Ã©tape */
     name: string
-    /** Complétée */
+    /** ComplÃ©tÃ©e */
     completed: boolean
   }[]
 }
@@ -147,17 +147,17 @@ export interface DashboardInsight {
   description: string
   /** Valeur */
   value?: number
-  /** Unité */
+  /** UnitÃ© */
   unit?: string
 }
 
 /**
- * Événement timeline
+ * Ã‰vÃ©nement timeline
  */
 export interface DashboardTimelineEvent {
   /** ID unique */
   id: string
-  /** Type d'événement */
+  /** Type d'Ã©vÃ©nement */
   type: 'analysis' | 'interview' | 'matching' | 'milestone'
   /** Titre */
   title: string
@@ -179,30 +179,54 @@ export interface DashboardWidget {
   title: string
   /** Position (grid) */
   position: {
-    /** Colonne de début */
+    /** Colonne de dÃ©but */
     colStart: number
     /** Colonne de fin */
     colEnd: number
-    /** Ligne de début */
+    /** Ligne de dÃ©but */
     rowStart: number
     /** Ligne de fin */
     rowEnd: number
   }
-  /** Priorité d'affichage */
+  /** PrioritÃ© d'affichage */
   priority: 'high' | 'medium' | 'low'
 }
 
 /**
  * Props du dashboard principal
  */
+export interface DashboardOpportunitySummary {
+  activeCount: number
+  discoveredCount: number
+  highMatchCount: number
+  bestMatch: {
+    id: string
+    title: string
+    company: string | null
+    matchScore: number | null
+    status: string
+  } | null
+  nextAction: {
+    id: string
+    title: string
+    company: string | null
+    action: string
+    at: Date | null
+  } | null
+}
+
+export interface DashboardDiscoverySummary {
+  liveCount: number
+  sourceCount: number
+}
 export interface DashboardProps {
-  /** Données utilisateur */
+  /** DonnÃ©es utilisateur */
   userData: DashboardUserData
   /** Score ATS */
   score: DashboardScore
-  /** Compétences */
+  /** CompÃ©tences */
   skills: DashboardSkill[]
-  /** Progression carrière */
+  /** Progression carriÃ¨re */
   career: DashboardCareer
   /** Recommandations */
   recommendations: DashboardRecommendation[]
@@ -216,8 +240,10 @@ export interface DashboardProps {
   insights: DashboardInsight[]
   /** Timeline */
   timeline: DashboardTimelineEvent[]
-  /** Widgets à afficher */
+  opportunitySummary: DashboardOpportunitySummary
+  discoverySummary: DashboardDiscoverySummary
+  /** Widgets Ã  afficher */
   widgets?: DashboardWidget[]
-  /** Preview analysis revendiquée (si applicable) */
+  /** Preview analysis revendiquÃ©e (si applicable) */
   claimedPreview?: unknown
 }

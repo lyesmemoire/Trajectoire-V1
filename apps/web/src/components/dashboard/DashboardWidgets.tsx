@@ -9,6 +9,8 @@ import {
   BarChart3,
   BrainCircuit,
   BriefcaseBusiness,
+  CalendarClock,
+  Radar,
   Check,
   ChevronRight,
   Circle,
@@ -233,6 +235,8 @@ export function DashboardWidgets({
   progress,
   insights,
   timeline,
+  opportunitySummary,
+  discoverySummary,
 }: DashboardProps) {
   const firstName = getFirstName(userData.firstName || userData.name)
 
@@ -269,7 +273,7 @@ export function DashboardWidgets({
         <div>
           <div className="flex items-center gap-2">
             <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-violet-500">
-              Votre espace carrière
+              Votre espace carriÃ¨re
             </p>
 
             <Sparkles className="size-3.5 text-violet-500" />
@@ -280,7 +284,7 @@ export function DashboardWidgets({
           </h1>
 
           <p className="mt-1 text-[13px] text-slate-500">
-            Votre trajectoire professionnelle, pilotée par vos données.
+            Votre trajectoire professionnelle, pilotÃ©e par vos donnÃ©es.
           </p>
         </div>
 
@@ -326,8 +330,8 @@ export function DashboardWidgets({
             </h2>
 
             <p className="mt-3 max-w-[660px] text-[13px] leading-6 text-white/72 sm:text-sm">
-              Analysez votre profil, améliorez votre CV et entraînez-vous
-              aux entretiens avec un parcours personnalisé par l’IA.
+              Analysez votre profil, amÃ©liorez votre CV et entraÃ®nez-vous
+              aux entretiens avec un parcours personnalisÃ© par lâ€™IA.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -343,7 +347,7 @@ export function DashboardWidgets({
                 href="/matching"
                 className="inline-flex h-11 items-center gap-2 rounded-xl bg-white/10 px-5 text-xs font-bold text-white ring-1 ring-white/20 backdrop-blur transition hover:bg-white/15"
               >
-                Explorer mes opportunités
+                Explorer mes opportunitÃ©s
               </Link>
             </div>
           </div>
@@ -353,7 +357,7 @@ export function DashboardWidgets({
 
             <div className="min-w-[150px]">
               <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/55">
-                Score carrière
+                Score carriÃ¨re
               </p>
 
               <div className="mt-2 flex items-center gap-2">
@@ -370,14 +374,14 @@ export function DashboardWidgets({
                   {trendPositive
                     ? "En progression"
                     : score.trend === "down"
-                      ? "À renforcer"
+                      ? "Ã€ renforcer"
                       : "Stable"}
                 </span>
               </div>
 
               <p className="mt-3 text-[11px] leading-5 text-white/60">
-                Objectif recommandé : atteindre 80/100 pour renforcer
-                votre attractivité.
+                Objectif recommandÃ© : atteindre 80/100 pour renforcer
+                votre attractivitÃ©.
               </p>
             </div>
           </div>
@@ -390,8 +394,8 @@ export function DashboardWidgets({
           value={`${score.currentScore}/100`}
           description={
             score.previousScore !== undefined
-              ? `Précédent : ${score.previousScore}/100`
-              : "Première référence enregistrée"
+              ? `PrÃ©cÃ©dent : ${score.previousScore}/100`
+              : "PremiÃ¨re rÃ©fÃ©rence enregistrÃ©e"
           }
           icon={Target}
           accent="violet"
@@ -400,7 +404,7 @@ export function DashboardWidgets({
         <StatCard
           eyebrow="Analyses"
           value={String(history.length)}
-          description="CV analysés récemment"
+          description="CV analysÃ©s rÃ©cemment"
           icon={FileSearch}
           accent="sky"
         />
@@ -408,28 +412,217 @@ export function DashboardWidgets({
         <StatCard
           eyebrow="Parcours"
           value={`${progress.percentage}%`}
-          description={`${progress.completedSteps} étapes complétées sur ${progress.totalSteps}`}
+          description={`${progress.completedSteps} Ã©tapes complÃ©tÃ©es sur ${progress.totalSteps}`}
           icon={BarChart3}
           accent="emerald"
         />
 
         <StatCard
-          eyebrow="Entretiens"
-          value={String(interviewCount)}
-          description={`${completedCount} activité(s) terminée(s)`}
-          icon={Mic2}
+          eyebrow="Opportunités"
+          value={String(opportunitySummary.activeCount)}
+          description={`${opportunitySummary.highMatchCount} match(es) fort(s)`}
+          icon={BriefcaseBusiness}
           accent="amber"
         />
       </div>
 
+      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
+        <div className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
+          <SectionHeader
+            title="Career Command Center"
+            subtitle="Pilotez vos meilleures opportunités depuis un seul endroit."
+            href="/opportunities"
+            action="Voir le pipeline"
+          />
+
+          {opportunitySummary.bestMatch ? (
+            <div className="mt-5 rounded-[22px] bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-5 ring-1 ring-violet-100">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 text-violet-600">
+                    <Target className="size-4" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em]">
+                      Meilleur match actif
+                    </span>
+                  </div>
+
+                  <h3 className="mt-3 truncate text-lg font-bold tracking-tight text-slate-950">
+                    {opportunitySummary.bestMatch.title}
+                  </h3>
+
+                  <p className="mt-1 text-xs text-slate-500">
+                    {opportunitySummary.bestMatch.company ??
+                      "Entreprise non renseignée"}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500 ring-1 ring-slate-200">
+                      {opportunitySummary.bestMatch.status}
+                    </span>
+
+                    <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700 ring-1 ring-emerald-100">
+                      {opportunitySummary.highMatchCount} match(es) fort(s)
+                    </span>
+                  </div>
+                </div>
+
+                <div className="shrink-0 rounded-[20px] bg-white px-5 py-4 text-center shadow-sm ring-1 ring-violet-100">
+                  <p className="text-[30px] font-bold tracking-[-0.05em] text-violet-700">
+                    {opportunitySummary.bestMatch.matchScore ?? "—"}
+                  </p>
+
+                  <p className="mt-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                    Match / 100
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link
+                  href={`/opportunities/${opportunitySummary.bestMatch.id}`}
+                  className="inline-flex h-10 items-center gap-2 rounded-xl bg-slate-950 px-4 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                  Ouvrir l&apos;opportunité
+                  <ArrowRight className="size-4" />
+                </Link>
+
+                <Link
+                  href={`/opportunities/${opportunitySummary.bestMatch.id}/workspace`}
+                  className="inline-flex h-10 items-center gap-2 rounded-xl bg-white px-4 text-xs font-bold text-violet-700 ring-1 ring-violet-200 transition hover:bg-violet-50"
+                >
+                  Préparer ma candidature
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-5 rounded-[22px] border border-dashed border-slate-200 bg-slate-50/70 p-7 text-center">
+              <BriefcaseBusiness className="mx-auto size-6 text-slate-300" />
+
+              <p className="mt-3 text-sm font-bold text-slate-900">
+                Votre pipeline est prêt
+              </p>
+
+              <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-slate-500">
+                Ajoutez une offre ou explorez le radar pour identifier votre prochaine opportunité.
+              </p>
+
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                <Link
+                  href="/opportunities/new"
+                  className="rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white"
+                >
+                  Ajouter une offre
+                </Link>
+
+                <Link
+                  href="/discovery"
+                  className="rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-violet-700 ring-1 ring-violet-200"
+                >
+                  Explorer le radar
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-1">
+          <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                  Radar emploi
+                </p>
+
+                <p className="mt-2 text-[30px] font-bold tracking-[-0.05em] text-slate-950">
+                  {discoverySummary.liveCount}
+                </p>
+
+                <p className="text-xs text-slate-500">
+                  offres live détectées
+                </p>
+              </div>
+
+              <span className="grid size-11 place-items-center rounded-2xl bg-violet-50 text-violet-600 ring-1 ring-violet-100">
+                <Radar className="size-5" />
+              </span>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100">
+              <span className="text-xs text-slate-500">
+                Sources actives
+              </span>
+
+              <span className="text-sm font-bold text-slate-950">
+                {discoverySummary.sourceCount}
+              </span>
+            </div>
+
+            <Link
+              href="/discovery"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violet-50 px-4 py-3 text-xs font-bold text-violet-700 transition hover:bg-violet-100"
+            >
+              Explorer le radar
+              <ArrowRight className="size-4" />
+            </Link>
+          </section>
+
+          <section className="rounded-[26px] bg-slate-950 p-5 text-white shadow-[0_20px_50px_rgba(15,23,42,0.17)]">
+            <div className="flex items-center gap-2 text-violet-300">
+              <CalendarClock className="size-4" />
+
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em]">
+                Prochaine action
+              </p>
+            </div>
+
+            <h3 className="mt-4 text-base font-bold tracking-tight">
+              {opportunitySummary.nextAction?.action ??
+                "Identifier votre prochaine cible"}
+            </h3>
+
+            {opportunitySummary.nextAction ? (
+              <>
+                <p className="mt-2 text-xs leading-5 text-slate-400">
+                  {opportunitySummary.nextAction.title}
+                  {opportunitySummary.nextAction.company
+                    ? ` · ${opportunitySummary.nextAction.company}`
+                    : ""}
+                </p>
+
+                <Link
+                  href={`/opportunities/${opportunitySummary.nextAction.id}`}
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-slate-950 transition hover:bg-violet-50"
+                >
+                  Continuer
+                  <ArrowRight className="size-4" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="mt-2 text-xs leading-5 text-slate-400">
+                  Priorisez une opportunité et Trajectoire fera remonter votre prochaine action ici.
+                </p>
+
+                <Link
+                  href="/opportunities"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-slate-950 transition hover:bg-violet-50"
+                >
+                  Voir mes opportunités
+                  <ArrowRight className="size-4" />
+                </Link>
+              </>
+            )}
+          </section>
+        </div>
+      </section>
       <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,.75fr)]">
         <div className="space-y-5">
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="Priorités recommandées"
+              title="PrioritÃ©s recommandÃ©es"
               subtitle="Les actions avec le plus fort impact sur votre progression."
               href="/analyze"
-              action="Voir l’analyse"
+              action="Voir lâ€™analyse"
             />
 
             {recommendations.length > 0 ? (
@@ -484,7 +677,7 @@ export function DashboardWidgets({
                           +{recommendation.estimatedImpact}
                         </p>
                         <p className="text-[10px] text-slate-400">
-                          impact estimé
+                          impact estimÃ©
                         </p>
                       </div>
                     </motion.div>
@@ -499,12 +692,12 @@ export function DashboardWidgets({
                   </div>
 
                   <p className="mt-3 text-sm font-bold text-slate-900">
-                    Vos recommandations apparaîtront ici
+                    Vos recommandations apparaÃ®tront ici
                   </p>
 
                   <p className="mx-auto mt-1 max-w-[380px] text-xs leading-5 text-slate-500">
                     Analysez un CV pour obtenir des recommandations
-                    personnalisées et classées par impact.
+                    personnalisÃ©es et classÃ©es par impact.
                   </p>
                 </div>
               </div>
@@ -513,8 +706,8 @@ export function DashboardWidgets({
 
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="Activité récente"
-              subtitle="Vos dernières analyses et simulations."
+              title="ActivitÃ© rÃ©cente"
+              subtitle="Vos derniÃ¨res analyses et simulations."
               href="/history"
               action="Historique"
             />
@@ -559,10 +752,10 @@ export function DashboardWidgets({
                           ].join(" ")}
                         >
                           {event.status === "completed"
-                            ? "Terminé"
+                            ? "TerminÃ©"
                             : event.status === "in-progress"
                               ? "En cours"
-                              : "À venir"}
+                              : "Ã€ venir"}
                         </span>
                       </div>
                     </div>
@@ -575,11 +768,11 @@ export function DashboardWidgets({
                   <History className="mx-auto size-6 text-slate-300" />
 
                   <p className="mt-3 text-sm font-bold text-slate-900">
-                    Aucune activité pour le moment
+                    Aucune activitÃ© pour le moment
                   </p>
 
                   <p className="mt-1 text-xs text-slate-500">
-                    Votre parcours commencera dès votre première action.
+                    Votre parcours commencera dÃ¨s votre premiÃ¨re action.
                   </p>
                 </div>
               </div>
@@ -588,8 +781,8 @@ export function DashboardWidgets({
 
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="Compétences clés"
-              subtitle="Les compétences détectées dans votre profil."
+              title="CompÃ©tences clÃ©s"
+              subtitle="Les compÃ©tences dÃ©tectÃ©es dans votre profil."
             />
 
             {skills.length > 0 ? (
@@ -627,8 +820,8 @@ export function DashboardWidgets({
               </div>
             ) : (
               <p className="mt-5 rounded-[18px] bg-slate-50 p-4 text-xs leading-5 text-slate-500">
-                Vos compétences seront automatiquement détectées après
-                votre première analyse de CV.
+                Vos compÃ©tences seront automatiquement dÃ©tectÃ©es aprÃ¨s
+                votre premiÃ¨re analyse de CV.
               </p>
             )}
           </section>
@@ -638,7 +831,7 @@ export function DashboardWidgets({
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100">
             <SectionHeader
               title="Votre progression"
-              subtitle={`${progress.completedSteps}/${progress.totalSteps} étapes`}
+              subtitle={`${progress.completedSteps}/${progress.totalSteps} Ã©tapes`}
             />
 
             <div className="mt-5">
@@ -703,8 +896,8 @@ export function DashboardWidgets({
           <section className="overflow-hidden rounded-[26px] border border-white bg-white shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100">
             <div className="p-5">
               <SectionHeader
-                title="Trajectoire carrière"
-                subtitle="Votre niveau actuel et votre prochaine étape."
+                title="Trajectoire carriÃ¨re"
+                subtitle="Votre niveau actuel et votre prochaine Ã©tape."
               />
 
               <div className="mt-5 rounded-[20px] bg-gradient-to-br from-violet-50 to-indigo-50 p-4 ring-1 ring-violet-100">
@@ -756,12 +949,12 @@ export function DashboardWidgets({
 
             <h3 className="mt-4 text-lg font-bold tracking-[-0.025em]">
               {topRecommendation?.title ??
-                "Lancez votre première simulation"}
+                "Lancez votre premiÃ¨re simulation"}
             </h3>
 
             <p className="mt-2 text-xs leading-5 text-slate-400">
               {topRecommendation?.description ??
-                "Obtenez un feedback personnalisé sur vos réponses et améliorez votre performance."}
+                "Obtenez un feedback personnalisÃ© sur vos rÃ©ponses et amÃ©liorez votre performance."}
             </p>
 
             <Link

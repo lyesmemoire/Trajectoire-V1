@@ -25,15 +25,15 @@ export default async function DashboardPage() {
     redirect("/login")
   }
 
-  // Vérifier si l'utilisateur a complété l'onboarding
+  // VÃ©rifier si l'utilisateur a complÃ©tÃ© l'onboarding
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
     select: { name: true },
   })
 
-  // Si l'utilisateur n'a pas complété l'onboarding, rediriger vers onboarding
+  // Si l'utilisateur n'a pas complÃ©tÃ© l'onboarding, rediriger vers onboarding
 
-  // Récupérer les analyses CV
+  // RÃ©cupÃ©rer les analyses CV
   const analyses = await prisma.cVAnalysis.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
@@ -43,25 +43,147 @@ export default async function DashboardPage() {
   const lastAnalysis = analyses[0]
   const previousAnalysis = analyses[1]
 
-  // Récupérer le profil carrière
+  // RÃ©cupÃ©rer le profil carriÃ¨re
   const careerProfile = await prisma.careerProfile.findUnique({
     where: { userId: user.id },
   })
 
-  // Récupérer les sessions d'entretien
+  // RÃ©cupÃ©rer les sessions d'entretien
   const interviewSessions = await prisma.interviewSession.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
     take: 3,
   })
 
-  // Vérifier quota
+  // VÃ©rifier quota
+
+  // Career Command Center
+  const [
+    dashboardOpportunities,
+    liveDiscoveryCount,
+    activeDiscoverySourceCount,
+  ] = await Promise.all([
+    prisma.opportunity.findMany({
+      where: {
+        userId: user.id,
+      },
+      orderBy: [
+        {
+          matchScore: "desc",
+        },
+        {
+          updatedAt: "desc",
+        },
+      ],
+      take: 50,
+      select: {
+        id: true,
+        title: true,
+        company: true,
+        status: true,
+        matchScore: true,
+        nextAction: true,
+        nextActionAt: true,
+        updatedAt: true,
+      },
+    }),
+    prisma.discoveredJob.count({
+      where: {
+        userId: user.id,
+        status: "LIVE",
+      },
+    }),
+    prisma.discoverySource.count({
+      where: {
+        userId: user.id,
+        enabled: true,
+      },
+    }),
+  ])
+
+  const terminalOpportunityStatuses = new Set([
+    "REJECTED",
+    "ARCHIVED",
+  ])
+
+  const activeOpportunities =
+    dashboardOpportunities.filter(
+      (opportunity) =>
+        !terminalOpportunityStatuses.has(opportunity.status),
+    )
+
+  const bestMatch =
+    activeOpportunities.find(
+      (opportunity) =>
+        opportunity.matchScore !== null,
+    ) ?? null
+
+  const nextActionOpportunity =
+    [...activeOpportunities]
+      .filter(
+        (opportunity) =>
+          Boolean(opportunity.nextAction),
+      )
+      .sort((a, b) => {
+        if (a.nextActionAt && b.nextActionAt) {
+          return (
+            a.nextActionAt.getTime() -
+            b.nextActionAt.getTime()
+          )
+        }
+
+        if (a.nextActionAt) return -1
+        if (b.nextActionAt) return 1
+
+        return (
+          b.updatedAt.getTime() -
+          a.updatedAt.getTime()
+        )
+      })[0] ?? null
+
+  const opportunitySummary = {
+    activeCount: activeOpportunities.length,
+    discoveredCount:
+      activeOpportunities.filter(
+        (opportunity) =>
+          opportunity.status === "DISCOVERED",
+      ).length,
+    highMatchCount:
+      activeOpportunities.filter(
+        (opportunity) =>
+          (opportunity.matchScore ?? 0) >= 75,
+      ).length,
+    bestMatch: bestMatch
+      ? {
+          id: bestMatch.id,
+          title: bestMatch.title,
+          company: bestMatch.company,
+          matchScore: bestMatch.matchScore,
+          status: bestMatch.status,
+        }
+      : null,
+    nextAction: nextActionOpportunity?.nextAction
+      ? {
+          id: nextActionOpportunity.id,
+          title: nextActionOpportunity.title,
+          company: nextActionOpportunity.company,
+          action: nextActionOpportunity.nextAction,
+          at: nextActionOpportunity.nextActionAt,
+        }
+      : null,
+  }
+
+  const discoverySummary = {
+    liveCount: liveDiscoveryCount,
+    sourceCount: activeDiscoverySourceCount,
+  }
+
   const quota = await checkUserQuota(user.id)
 
-  // Vérifier si l'utilisateur a une preview analysis revendiquée
+  // VÃ©rifier si l'utilisateur a une preview analysis revendiquÃ©e
   const claimedPreview = await previewAnalysisService.getUserClaimedPreview(user.id)
 
-  // Transformer les données pour le nouveau dashboard
+  // Transformer les donnÃ©es pour le nouveau dashboard
   const userData: DashboardUserData = {
     name: dbUser?.name || user.email?.split("@")[0] || "Utilisateur",
     firstName: dbUser?.name?.split(" ")[0] || user.email?.split("@")[0] || "Utilisateur",
@@ -79,7 +201,7 @@ export default async function DashboardPage() {
 
   const cvData = lastAnalysis?.cvData as any || claimedPreview?.cvExtract as any
   const skills: DashboardSkill[] = cvData?.skills?.slice(0, 6).map((skill: any, index: number) => ({
-    name: skill.name || `Compétence ${index + 1}`,
+    name: skill.name || `CompÃ©tence ${index + 1}`,
     level: skill.level || 50,
     category: index % 2 === 0 ? 'technical' : 'soft',
     trend: index % 3 === 0 ? 'up' : undefined,
@@ -98,7 +220,7 @@ export default async function DashboardPage() {
   const improvements = cvData?.improvements as any[] || claimedPreview?.recommendations as any[] || []
   const recommendations: DashboardRecommendation[] = improvements.slice(0, 4).map((imp: any, index: number) => ({
     id: `rec-${index}`,
-    title: imp.title || `Amélioration ${index + 1}`,
+    title: imp.title || `AmÃ©lioration ${index + 1}`,
     description: imp.description || "Optimisez cette section de votre CV",
     actionType: 'improve',
     priority: index === 0 ? 'high' : 'medium',
@@ -141,7 +263,7 @@ export default async function DashboardPage() {
     {
       id: 'action-4',
       title: 'Entretien IA',
-      description: 'Préparez-vous',
+      description: 'PrÃ©parez-vous',
       icon: 'Mic',
       href: '/interview',
       color: 'brick',
@@ -165,26 +287,26 @@ export default async function DashboardPage() {
     {
       type: 'strength',
       title: 'Score en progression',
-      description: 'Votre score ATS a augmenté de 15 points',
+      description: 'Votre score ATS a augmentÃ© de 15 points',
       value: 15,
       unit: 'pts',
     },
     {
       type: 'opportunity',
-      title: 'Compétences recherchées',
-      description: '3 compétences sont très demandées',
+      title: 'CompÃ©tences recherchÃ©es',
+      description: '3 compÃ©tences sont trÃ¨s demandÃ©es',
       value: 3,
     },
     {
       type: 'achievement',
-      title: 'Analyses complétées',
-      description: 'Vous avez analysé votre CV plusieurs fois',
+      title: 'Analyses complÃ©tÃ©es',
+      description: 'Vous avez analysÃ© votre CV plusieurs fois',
       value: analyses.length,
     },
     {
       type: 'weakness',
-      title: 'Section à améliorer',
-      description: 'La section expérience peut être optimisée',
+      title: 'Section Ã  amÃ©liorer',
+      description: 'La section expÃ©rience peut Ãªtre optimisÃ©e',
     },
   ]
 
@@ -200,7 +322,7 @@ export default async function DashboardPage() {
     ...(interviewSessions.slice(0, 2).map((session, index) => ({
       id: `timeline-interview-${index}`,
       type: 'interview' as const,
-      title: 'Entretien simulé',
+      title: 'Entretien simulÃ©',
       description: `Score: ${session.score || 0}/100`,
       date: session.createdAt,
       status: session.completedAt ? 'completed' as const : 'in-progress' as const,
@@ -219,6 +341,8 @@ export default async function DashboardPage() {
       progress={progress}
       insights={insights}
       timeline={timeline}
+      opportunitySummary={opportunitySummary}
+      discoverySummary={discoverySummary}
       claimedPreview={claimedPreview}
     />
   )
