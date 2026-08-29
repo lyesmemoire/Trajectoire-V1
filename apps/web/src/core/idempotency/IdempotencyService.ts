@@ -1,10 +1,10 @@
-﻿/**
+/**
  * Idempotency Service
  * Prevents duplicate execution of operations using idempotency keys
  * Ensures that the same request with the same key produces the same result
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/service";
 import { AppError, ErrorCode } from "@/core/errors";
 import { logger } from "@/lib/logger/Logger";
 
@@ -43,7 +43,7 @@ export class IdempotencyService {
     userId: string,
     operation: string
   ): Promise<IdempotencyResult<T>> {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // Check for existing record
     const { data, error } = await supabase
@@ -100,7 +100,7 @@ export class IdempotencyService {
     operation: string,
     requestParams: any
   ): Promise<void> {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const expiresAt = new Date();
     expiresAt.setHours(expiresAt.getHours() + IdempotencyService.EXPIRY_HOURS);
@@ -150,7 +150,7 @@ export class IdempotencyService {
     operation: string,
     resultRef: string
   ): Promise<void> {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const { error } = await supabase
       .from(IdempotencyService.TABLE_NAME)
@@ -194,7 +194,7 @@ export class IdempotencyService {
     operation: string,
     error: Error
   ): Promise<void> {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const { error: updateError } = await supabase
       .from(IdempotencyService.TABLE_NAME)
@@ -279,7 +279,7 @@ export class IdempotencyService {
    * Should be called periodically (e.g., via cron job)
    */
   async cleanup(): Promise<number> {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const { error } = await supabase
       .from(IdempotencyService.TABLE_NAME)

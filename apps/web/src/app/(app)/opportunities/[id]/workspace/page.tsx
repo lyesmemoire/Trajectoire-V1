@@ -129,6 +129,112 @@ export default async function ApplicationWorkspacePage({
     (completedSteps / preparationSteps.length) * 100,
   )
 
+  const pipelineStages = [
+    {
+      key: "DISCOVERED",
+      label: "Découverte",
+    },
+    {
+      key: "TO_ANALYZE",
+      label: "Analyse",
+    },
+    {
+      key: "TO_APPLY",
+      label: "Candidature",
+    },
+    {
+      key: "APPLIED",
+      label: "Envoyée",
+    },
+    {
+      key: "INTERVIEW",
+      label: "Entretien",
+    },
+    {
+      key: "OFFER",
+      label: "Offre",
+    },
+  ] as const
+
+  const currentPipelineIndex = pipelineStages.findIndex(
+    (stage) => stage.key === opportunity.status,
+  )
+
+  const recommendedAction = (() => {
+    if (opportunity.matchScore === null) {
+      return {
+        eyebrow: "Priorité 1",
+        title: "Analyser cette opportunité",
+        description:
+          "Commence par mesurer ton alignement avec le poste pour identifier les écarts et les arguments à renforcer.",
+        action: "Analyser maintenant",
+        href: `/opportunities/${opportunity.id}`,
+      }
+    }
+
+    if (!latestCV) {
+      return {
+        eyebrow: "Priorité 1",
+        title: "Adapter ton CV à cette offre",
+        description:
+          "Ton opportunité est analysée. La prochaine étape est de créer une version du CV alignée sur les exigences du poste.",
+        action: "Optimiser mon CV",
+        href: `/analyze?opportunity=${opportunity.id}`,
+      }
+    }
+
+    if (
+      ["DISCOVERED", "TO_ANALYZE", "TO_APPLY"].includes(
+        opportunity.status,
+      )
+    ) {
+      return {
+        eyebrow: "Priorité candidature",
+        title: "Renforcer ta candidature",
+        description:
+          "Ton analyse et ton CV sont disponibles. Consolide maintenant tes preuves, tes histoires STAR et ta compréhension de l’entreprise.",
+        action: "Préparer mes arguments",
+        href: `/opportunities/${opportunity.id}/workspace#story-bank`,
+      }
+    }
+
+    if (
+      ["APPLIED", "INTERVIEW"].includes(opportunity.status) &&
+      !latestInterview
+    ) {
+      return {
+        eyebrow: "Priorité entretien",
+        title: "Préparer ton prochain entretien",
+        description:
+          "Ta candidature est engagée. Lance une simulation contextualisée pour préparer tes réponses et réduire les zones de risque.",
+        action: "Lancer une simulation",
+        href: `/simulation/new?opportunity=${opportunity.id}`,
+      }
+    }
+
+    if (opportunity.status === "OFFER") {
+      return {
+        eyebrow: "Décision",
+        title: "Préparer ta décision",
+        description:
+          "Tu as atteint l’étape offre. Reviens sur les éléments clés de l’opportunité avant de décider de la prochaine étape.",
+        action: "Voir l’opportunité",
+        href: `/opportunities/${opportunity.id}`,
+      }
+    }
+
+    return {
+      eyebrow: "Prochaine action",
+      title:
+        opportunity.nextAction ||
+        "Renforcer ta préparation",
+      description:
+        "Trajectoire te recommande de consolider les éléments de preuve et la préparation spécifique à cette opportunité.",
+      action: "Continuer la préparation",
+      href: `/opportunities/${opportunity.id}/workspace#story-bank`,
+    }
+  })()
+
   return (
     <main className="mx-auto w-full max-w-[1500px] space-y-6 px-4 pb-16 pt-5 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -137,7 +243,7 @@ export default async function ApplicationWorkspacePage({
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-900"
         >
           <ArrowLeft className="h-4 w-4" />
-          Retour à l&apos;opportunité
+          Voir la fiche opportunité
         </Link>
 
         <div className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 shadow-sm">
@@ -198,6 +304,126 @@ export default async function ApplicationWorkspacePage({
                 style={{ width: `${readiness}%` }}
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="overflow-hidden rounded-[30px] border border-violet-100 bg-white shadow-[0_20px_60px_rgba(76,29,149,0.08)]">
+        <div className="grid gap-0 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)]">
+          <div className="p-6 sm:p-7 lg:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 ring-1 ring-violet-100">
+                <Sparkles className="h-3.5 w-3.5" />
+                Prochaine meilleure action
+              </div>
+
+              <span className="rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">
+                {recommendedAction.eyebrow}
+              </span>
+            </div>
+
+            <h2 className="mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
+              {recommendedAction.title}
+            </h2>
+
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+              {recommendedAction.description}
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href={recommendedAction.href}
+                className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/10 transition hover:bg-violet-700"
+              >
+                {recommendedAction.action}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href={`/opportunities/${opportunity.id}`}
+                className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-50"
+              >
+                Voir l&apos;opportunité
+              </Link>
+            </div>
+          </div>
+
+          <div className="border-t border-violet-100 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-6 sm:p-7 lg:border-l lg:border-t-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-500">
+              Niveau de préparation
+            </p>
+
+            <div className="mt-3 flex items-end gap-2">
+              <span className="text-5xl font-semibold tracking-[-0.05em] text-slate-950">
+                {readiness}
+              </span>
+              <span className="pb-1.5 text-lg font-semibold text-slate-400">
+                %
+              </span>
+            </div>
+
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              {completedSteps}/{preparationSteps.length} étapes clés sont déjà complétées.
+            </p>
+
+            <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white ring-1 ring-violet-100">
+              <div
+                className="h-full rounded-full bg-violet-600 transition-all"
+                style={{ width: `${readiness}%` }}
+              />
+            </div>
+
+            <p className="mt-4 text-xs font-medium text-slate-500">
+              {readiness >= 75
+                ? "Candidature fortement préparée"
+                : readiness >= 50
+                  ? "Bonne base, encore quelques leviers"
+                  : "Plusieurs leviers peuvent encore être activés"}
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-5 sm:px-7">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
+            {pipelineStages.map((stage, index) => {
+              const isActive =
+                index === currentPipelineIndex
+
+              const isComplete =
+                currentPipelineIndex >= 0 &&
+                index < currentPipelineIndex
+
+              return (
+                <div
+                  key={stage.key}
+                  className={
+                    isActive
+                      ? "rounded-2xl bg-violet-600 px-3 py-3 text-white shadow-sm"
+                      : isComplete
+                        ? "rounded-2xl bg-white px-3 py-3 text-emerald-700 ring-1 ring-emerald-100"
+                        : "rounded-2xl bg-white px-3 py-3 text-slate-400 ring-1 ring-slate-200"
+                  }
+                >
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={
+                        isActive
+                          ? "grid h-5 w-5 place-items-center rounded-full bg-white/20 text-[10px] font-bold"
+                          : isComplete
+                            ? "grid h-5 w-5 place-items-center rounded-full bg-emerald-50 text-[10px] font-bold text-emerald-600"
+                            : "grid h-5 w-5 place-items-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-400"
+                      }
+                    >
+                      {isComplete ? "✓" : index + 1}
+                    </span>
+
+                    <span className="text-[10px] font-bold uppercase tracking-[0.08em]">
+                      {stage.label}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>

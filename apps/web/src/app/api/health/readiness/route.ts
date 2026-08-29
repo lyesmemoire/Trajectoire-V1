@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 interface ReadinessCheck {
   name: string;
@@ -28,20 +29,12 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal {
 
 async function checkDatabase(): Promise<ReadinessCheck> {
   try {
-    const { PrismaClient } = await import("@prisma/client");
-    const prisma = new PrismaClient();
+    await prisma.$queryRaw`SELECT 1`;
 
-    try {
-      await prisma.$connect();
-      await prisma.$queryRaw`SELECT 1`;
-
-      return {
-        name: "database",
-        status: "ok",
-      };
-    } finally {
-      await prisma.$disconnect();
-    }
+    return {
+      name: "database",
+      status: "ok",
+    };
   } catch (error) {
     return {
       name: "database",

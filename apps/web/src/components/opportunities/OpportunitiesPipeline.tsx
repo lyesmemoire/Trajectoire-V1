@@ -144,7 +144,7 @@ function OpportunityCard({
         )}
 
         <Link
-          href={`/opportunities/${opportunity.id}`}
+          href={`/opportunities/${opportunity.id}/workspace`}
           className="inline-flex items-center gap-1 text-xs font-bold text-violet-700"
         >
           Ouvrir

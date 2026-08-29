@@ -551,10 +551,10 @@ function OpportunityCard({
           {promoted &&
           cluster.opportunityId ? (
             <Link
-              href={`/opportunities/${cluster.opportunityId}`}
+              href={`/opportunities/${cluster.opportunityId}/workspace`}
               className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-3.5 py-2.5 text-[11px] font-bold text-white transition hover:bg-slate-800"
             >
-              Ouvrir l'opportunité
+              Préparer ma candidature
 
               <ArrowRight className="size-3.5" />
             </Link>
@@ -839,7 +839,9 @@ export function DiscoveryFeed({
           ),
       )
 
-      router.refresh()
+      router.push(
+        `/opportunities/${opportunityId}/workspace`,
+      )
     }
     catch (caught) {
       setError(

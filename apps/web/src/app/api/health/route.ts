@@ -7,6 +7,7 @@
  */
 
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 // Application version (should be managed by CI/CD)
 const APP_VERSION = process.env.APP_VERSION || "1.0.0";
@@ -53,10 +54,7 @@ export async function GET() {
 
   // Check database connection
   try {
-    const { PrismaClient } = await import("@prisma/client");
-    const prisma = new PrismaClient();
-    await prisma.$connect();
-    await prisma.$disconnect();
+    await prisma.$queryRaw`SELECT 1`;
   } catch (error) {
     health.database = "error";
     health.status = "degraded";
