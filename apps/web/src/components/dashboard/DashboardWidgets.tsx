@@ -435,6 +435,47 @@ export function DashboardWidgets({
             action="Voir le pipeline"
           />
 
+          <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
+            {[
+              {
+                label: "Découvertes",
+                value: opportunitySummary.pipeline.discovered,
+              },
+              {
+                label: "À analyser",
+                value: opportunitySummary.pipeline.toAnalyze,
+              },
+              {
+                label: "À candidater",
+                value: opportunitySummary.pipeline.toApply,
+              },
+              {
+                label: "Candidatures",
+                value: opportunitySummary.pipeline.applied,
+              },
+              {
+                label: "Entretiens",
+                value: opportunitySummary.pipeline.interview,
+              },
+              {
+                label: "Offres",
+                value: opportunitySummary.pipeline.offer,
+              },
+            ].map((stage) => (
+              <div
+                key={stage.label}
+                className="rounded-2xl bg-slate-50 px-3 py-3 ring-1 ring-slate-100"
+              >
+                <p className="text-xl font-bold tracking-tight text-slate-950">
+                  {stage.value}
+                </p>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                  {stage.label}
+                </p>
+              </div>
+            ))}
+          </div>
+
           {opportunitySummary.bestMatch ? (
             <div className="mt-5 rounded-[22px] bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-5 ring-1 ring-violet-100">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -590,7 +631,7 @@ export function DashboardWidgets({
                 </p>
 
                 <Link
-                  href={`/opportunities/${opportunitySummary.nextAction.id}`}
+                  href={`/opportunities/${opportunitySummary.nextAction.id}/workspace`}
                   className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-slate-950 transition hover:bg-violet-50"
                 >
                   Continuer
