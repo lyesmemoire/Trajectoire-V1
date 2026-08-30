@@ -7,8 +7,8 @@ on:
     branches: [main, develop]
 
 env:
-  NODE_VERSION: '18'
-  PNPM_VERSION: '8'
+  NODE_VERSION: '22'
+  PNPM_VERSION: '9.15.9'
 
 jobs:
   # Lint
@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
 
@@ -58,7 +58,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
 
@@ -91,7 +91,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
 
@@ -142,7 +142,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
 
@@ -176,7 +176,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
 
@@ -261,7 +261,8 @@ jobs:
       - name: Build and push Web image
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/web
+          context: .
+          file: ./apps/web/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/trajectoire-web:${{ github.sha }}
@@ -334,23 +335,22 @@ jobs:
     if: github.event_name == 'pull_request'
     environment:
       name: preview
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.preview-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Deploy to Vercel Preview
         id: deploy
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42.3.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prebuilt'
 
       - name: Run smoke tests on preview
         run: |
-          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+          curl -f ${{ steps.deploy.outputs.preview-url }} || exit 1
 
   # Deploy Staging
   deploy-staging:
@@ -360,34 +360,45 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     environment:
       name: staging
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.preview-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Vercel Staging
-        id: deploy
-        uses: amondnet/vercel-action@v25
+      - name: Setup Node.js for migrations
+        uses: actions/setup-node@v4
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prebuilt --prod'
-          working-directory: ./apps/web
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm for migrations
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install migration dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Prisma migrations
         run: pnpm migration:up
         env:
           DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
 
+      - name: Deploy to Vercel Staging
+        id: deploy
+        uses: amondnet/vercel-action@v42.3.0
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+
       - name: Run smoke tests on staging
         run: |
-          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+          curl -f ${{ steps.deploy.outputs.preview-url }} || exit 1
 
       - name: Store deployment info for rollback
         run: |
           echo "${{ github.sha }}" > deployment-sha.txt
-          echo "${{ steps.deploy.outputs.url }}" > deployment-url.txt
+          echo "${{ steps.deploy.outputs.preview-url }}" > deployment-url.txt
 
   # Deploy Production
   deploy-production:
@@ -397,38 +408,50 @@ jobs:
     if: github.ref == 'refs/heads/main'
     environment:
       name: production
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.preview-url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Vercel Production
-        id: deploy
-        uses: amondnet/vercel-action@v25
+      - name: Setup Node.js for migrations
+        uses: actions/setup-node@v4
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prebuilt --prod'
-          working-directory: ./apps/web
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm for migrations
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install migration dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Prisma migrations
         run: pnpm migration:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Deploy to Vercel Production
+        id: deploy
+        uses: amondnet/vercel-action@v42.3.0
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+
       - name: Run smoke tests on production
         run: |
-          curl -f ${{ steps.deploy.outputs.url }} || exit 1
+          curl -f ${{ steps.deploy.outputs.preview-url }} || exit 1
 
       - name: Run health checks
         run: |
-          curl -f ${{ steps.deploy.outputs.url }}/api/health || exit 1
+          curl -f ${{ steps.deploy.outputs.preview-url }}/api/health/liveness || exit 1
 
       - name: Store deployment info for rollback
         run: |
           echo "${{ github.sha }}" > deployment-sha.txt
-          echo "${{ steps.deploy.outputs.url }}" > deployment-url.txt
+          echo "${{ steps.deploy.outputs.preview-url }}" > deployment-url.txt
           echo "${{ github.sha }}" > last-successful-deployment.txt
 
       - name: Notify deployment
@@ -466,18 +489,13 @@ jobs:
           ref: ${{ github.event.before }}
 
       - name: Deploy previous version
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42.3.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prebuilt --prod'
-          working-directory: ./apps/web
+          vercel-args: '--prod'
 
-      - name: Rollback Prisma migrations
-        run: pnpm migration:down
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Notify rollback
         uses: 8398a7/action-slack@v3
@@ -485,4 +503,3 @@ jobs:
           status: 'failure'
           text: 'Automatic rollback initiated due to deployment failure'
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-

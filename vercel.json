@@ -1,32 +1,15 @@
 {
   "framework": "nextjs",
-  "buildCommand": "corepack enable && pnpm run build",
-  "devCommand": "pnpm run dev",
-  "installCommand": "corepack enable && pnpm install",
+  "buildCommand": "corepack enable && pnpm --dir apps/web build",
+  "devCommand": "corepack enable && pnpm --dir apps/web dev",
+  "installCommand": "corepack enable && pnpm install --frozen-lockfile",
   "functions": {
-    "app/api/stripe/webhook/route.ts": {
+    "apps/web/src/app/api/stripe/webhook/route.ts": {
       "maxDuration": 10
     },
-    "app/api/upload/route.ts": {
-      "maxDuration": 30,
-      "memory": 512
-    },
-    "app/api/interview/generate/route.ts": {
-      "maxDuration": 30
-    },
-    "app/api/interview/feedback/route.ts": {
-      "maxDuration": 30
-    },
-    "app/api/optimize/route.ts": {
-      "maxDuration": 30
-    },
-    "app/api/public/analyze-preview/route.ts": {
+    "apps/web/src/app/api/public/analyze-preview/route.ts": {
       "maxDuration": 15,
       "memory": 512
-    },
-    "app/api/analyze/route.ts": {
-      "maxDuration": 30,
-      "memory": 1024
     }
   },
   "headers": [
