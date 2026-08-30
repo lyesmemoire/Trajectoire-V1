@@ -18,6 +18,7 @@
     "test:check": "tsx src/e2e/simple-api-test.ts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.61.0",
     "@ai-sdk/openai": "^4.0.44",
     "@napi-rs/canvas": "^1.0.2",
     "@opentelemetry/semantic-conventions": "^1.43.0",
