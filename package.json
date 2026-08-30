@@ -109,7 +109,7 @@
         "motion": "^12.40.0",
         "motion-dom": "^12.40.0",
         "motion-utils": "^12.39.0",
-        "next": "15.5.21",
+        "next": "15.5.24",
         "next-auth": "^5.0.0-beta.25",
         "openai": "^6.39.0",
         "pdf-parse": "^1.1.1",
