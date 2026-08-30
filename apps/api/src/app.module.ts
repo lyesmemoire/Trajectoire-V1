@@ -15,6 +15,7 @@ import { SearchModule } from './search/search.module';
 import { CopilotModule } from './copilot/copilot.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { RateLimitingMiddleware } from './resilience/rate-limiting.middleware';
+import { OpenTelemetryLifecycleService } from './telemetry/open-telemetry-lifecycle.service';
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { RateLimitingMiddleware } from './resilience/rate-limiting.middleware';
     HealthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, OpenTelemetryLifecycleService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

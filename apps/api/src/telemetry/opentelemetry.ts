@@ -8,7 +8,10 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
 import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 
 const traceExporter = new OTLPTraceExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || process.env.JAEGER_ENDPOINT || 'http://localhost:4317',
+  url:
+    process.env.OTEL_EXPORTER_OTLP_ENDPOINT ||
+    process.env.JAEGER_ENDPOINT ||
+    'http://localhost:4317',
 });
 
 const prometheusExporter = new PrometheusExporter({
@@ -28,6 +31,14 @@ const sdk = new NodeSDK({
   ],
 });
 
+let shutdownPromise: Promise<void> | null = null;
+
 sdk.start();
 
-export { sdk, prometheusExporter };
+export function shutdownOpenTelemetry(): Promise<void> {
+  if (!shutdownPromise) {
+    shutdownPromise = sdk.shutdown();
+  }
+
+  return shutdownPromise;
+}
