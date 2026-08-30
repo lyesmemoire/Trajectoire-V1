@@ -29,10 +29,9 @@ export interface EvidenceEvent extends BaseEvent<AnalyzedEvidence> {
 }
 
 // Input for the Engine
-export interface EvidenceContext {
-  // Can include things like the current phase or known competencies, 
-  // but strictly avoiding full global state as per constraints.
-}
+// No contextual fields are currently supported.
+// Add explicit properties here when the evidence engine requires them.
+export type EvidenceContext = Record<string, never>;
 
 export interface EvidencePayload {
   observations: PerceptionEvent[];

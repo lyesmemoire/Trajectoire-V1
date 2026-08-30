@@ -224,8 +224,7 @@ export class AIStreamingService {
     const encoder =
       new TextEncoder();
 
-    const self =
-      this;
+    const streamResponse = this.streamResponse.bind(this);
 
     const stream =
       new ReadableStream<Uint8Array>({
@@ -233,7 +232,7 @@ export class AIStreamingService {
           controller,
         ) {
           try {
-            await self.streamResponse(
+            await streamResponse(
               messages,
               {
                 ...options,

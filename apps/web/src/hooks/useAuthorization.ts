@@ -90,8 +90,8 @@ export function useAuthorization(userId?: string): UseAuthorizationReturn {
           return
         }
 
-        const module = await AuthorizationModule.create(targetUserId)
-        setAuthModule(module)
+        const authorizationModule = await AuthorizationModule.create(targetUserId)
+        setAuthModule(authorizationModule)
         setCurrentUserId(targetUserId)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load authorization')

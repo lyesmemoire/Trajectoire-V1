@@ -42,9 +42,9 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
+      const authorizationModule = await AuthorizationModule.create(userId)
       
-      expect(module).toBeInstanceOf(AuthorizationModule)
+      expect(authorizationModule).toBeInstanceOf(AuthorizationModule)
       expect(vi.mocked(SubscriptionResolver.create)).toHaveBeenCalledWith(userId)
     })
 
@@ -65,9 +65,9 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
+      const authorizationModule = await AuthorizationModule.create(userId)
       
-      expect(module).toBeInstanceOf(AuthorizationModule)
+      expect(authorizationModule).toBeInstanceOf(AuthorizationModule)
     })
   })
 
@@ -83,8 +83,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const result = module.can(Permission.EXPORT_REPORT_PDF)
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const result = authorizationModule.can(Permission.EXPORT_REPORT_PDF)
       
       expect(typeof result).toBe('boolean')
     })
@@ -102,8 +102,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const result = module.isAdmin()
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const result = authorizationModule.isAdmin()
       
       expect(result).toBe(true)
     })
@@ -119,8 +119,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const result = module.isAdmin()
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const result = authorizationModule.isAdmin()
       
       expect(result).toBe(false)
     })
@@ -138,8 +138,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const result = module.canAll([
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const result = authorizationModule.canAll([
         Permission.USE_COPILOT,
         Permission.RUN_INTERVIEW,
       ])
@@ -160,8 +160,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const result = module.canAny([
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const result = authorizationModule.canAny([
         Permission.USE_COPILOT,
         Permission.EXPORT_REPORT_PDF,
       ])
@@ -182,8 +182,8 @@ describe('AuthorizationModule', () => {
 
       vi.mocked(SubscriptionResolver.create).mockResolvedValue(mockResolver as any)
 
-      const module = await AuthorizationModule.create(userId)
-      const info = module.getUserInfo()
+      const authorizationModule = await AuthorizationModule.create(userId)
+      const info = authorizationModule.getUserInfo()
       
       expect(info).toHaveProperty('userId')
       expect(info).toHaveProperty('plan')
