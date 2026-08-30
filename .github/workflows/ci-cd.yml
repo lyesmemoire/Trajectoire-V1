@@ -98,6 +98,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Run runtime harness
+        run: pnpm test:run
+
+      - name: Verify generated runtime trace
+        run: pnpm test:verify
+
+      - name: Run architecture invariant
+        run: pnpm exec vitest run --globals tests/architecture-invariant.test.ts
+
       - name: Run tests with coverage
         run: pnpm test:cov
         env:
