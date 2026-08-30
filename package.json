@@ -13,13 +13,13 @@
     "scripts": {
         "build": "pnpm --dir apps/web build",
         "build:web": "pnpm --dir apps/web build",
-        "build:gateway": "pnpm --filter realtime-gateway build",
-        "build:all": "pnpm --filter web build && pnpm --filter realtime-gateway build",
+        "build:gateway": "pnpm --dir apps/realtime-gateway build",
+        "build:all": "pnpm --dir apps/web build && pnpm --dir apps/realtime-gateway build",
         "build:graph": "pnpm exec tsc -b",
         "build:clean": "pnpm exec tsc -b --clean",
         "dev": "pnpm --dir apps/web dev",
-        "dev:gateway": "pnpm --filter realtime-gateway dev",
-        "typecheck": "pnpm --filter web exec tsc --noEmit",
+        "dev:gateway": "pnpm --dir apps/realtime-gateway dev",
+        "typecheck": "tsc --project apps/web/tsconfig.json --noEmit",
         "type-check": "pnpm exec tsc -b --pretty",
         "type-check:watch": "pnpm exec tsc -b -w",
         "type-check:tests:api": "pnpm exec tsc -p apps/api/tsconfig.test.json --noEmit",
@@ -65,10 +65,10 @@
         "test:pbt:full": "cross-env PBT_RUNS=10000 vitest run tests/vm/properties",
         "lab:pbt": "node laboratory/pbt-lab.cjs",
         "qualify:pbt": "pnpm test:pbt:full && pnpm lab:pbt",
-        "typecheck:all": "pnpm --filter web exec tsc --noEmit",
-        "typecheck:web": "pnpm --filter web exec tsc --noEmit",
-        "typecheck:gateway": "pnpm --filter realtime-gateway exec tsc --noEmit",
-        "typecheck:all:strict": "pnpm --filter web exec tsc --noEmit && pnpm --filter realtime-gateway exec tsc --noEmit"
+        "typecheck:all": "tsc --project apps/web/tsconfig.json --noEmit",
+        "typecheck:web": "tsc --project apps/web/tsconfig.json --noEmit",
+        "typecheck:gateway": "tsc --project apps/realtime-gateway/tsconfig.json --noEmit",
+        "typecheck:all:strict": "tsc --project apps/web/tsconfig.json --noEmit && tsc --project apps/realtime-gateway/tsconfig.json --noEmit"
     },
     "dependencies": {
         "@fingerprintjs/fingerprintjs": "^5.2.0",
