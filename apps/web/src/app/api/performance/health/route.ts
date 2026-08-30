@@ -5,13 +5,24 @@
  */
 
 import { NextResponse } from 'next/server';
-import { performanceMonitor, autoOptimizer } from '@/lib/performance';
+import { performanceMonitor } from '@/lib/performance/PerformanceMonitor';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const metrics = performanceMonitor.getCurrentMetrics();
-  const optimizerStatus = autoOptimizer.getStatus();
+  const currentMetrics = performanceMonitor.getCurrentMetrics();
+    const targetP95 = 300;
+    const slowOperations = performanceMonitor.getSlowOperations(targetP95);
+
+    const optimizerStatus = {
+      targetP95,
+      currentP95: currentMetrics.latency.p95,
+      isUnderTarget: currentMetrics.latency.p95 < targetP95,
+      slowOperations,
+      isOptimizing: false,
+      needsOptimization: currentMetrics.latency.p95 > targetP95,
+    };
 
   return NextResponse.json({
     metrics,
