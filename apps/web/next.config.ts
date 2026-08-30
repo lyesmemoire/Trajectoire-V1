@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   // PDF extraction runs only in the Node.js runtime.
   // Keep PDF libraries outside the Next server bundle so their
   // internal module resolution remains Node-native.
