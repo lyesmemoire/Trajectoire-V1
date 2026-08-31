@@ -32,6 +32,16 @@ on:
           - rolling
           - blue-green
           - canary
+      dr_test:
+        description: 'Run disaster recovery test'
+        required: false
+        default: false
+        type: boolean
+      rollback:
+        description: 'Rollback the current Helm release to its previous revision'
+        required: false
+        default: false
+        type: boolean
 
 env:
   NODE_VERSION: '22'
@@ -342,7 +352,7 @@ jobs:
   disaster-recovery:
     name: Disaster Recovery
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.dr_test == 'true'
+    if: github.event_name == 'workflow_dispatch' && inputs.dr_test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -379,7 +389,7 @@ jobs:
   rollback:
     name: Rollback
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.rollback == 'true'
+    if: github.event_name == 'workflow_dispatch' && inputs.rollback
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -408,10 +418,6 @@ jobs:
         run: |
           kubectl rollout status deployment/trajectoire-api -n trajectoire --timeout=5m
 
-      - name: Rollback migrations
-        run: pnpm migration:down
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Notify rollback
         uses: 8398a7/action-slack@v3

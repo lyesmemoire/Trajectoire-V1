@@ -500,20 +500,6 @@ jobs:
           text: 'Production deployment successful - SHA: ${{ github.sha }}'
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Rollback on failure
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            core.setFailed('Deployment failed, initiating rollback...');
-            // Trigger rollback workflow
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'rollback.yml',
-              ref: 'main'
-            });
-
   # Rollback Job
   rollback:
     name: Automatic Rollback
