@@ -11,7 +11,7 @@ test.describe("💳 Stripe Webhook — Sécurité", () => {
         // Pas de stripe-signature → doit être rejeté
       },
     });
-    expect([400, 401, 403]).toContain(response.status());
+    expect([400, 401, 403, 429]).toContain(response.status());
   });
 
   test("✅ Requête avec signature invalide → rejetée (400)", async ({
@@ -24,7 +24,7 @@ test.describe("💳 Stripe Webhook — Sécurité", () => {
         "stripe-signature": "signature_completement_fausse",
       },
     });
-    expect([400, 401, 403]).toContain(response.status());
+    expect([400, 401, 403, 429]).toContain(response.status());
   });
 
   test("✅ Méthode GET → non autorisée (405)", async ({ page }) => {

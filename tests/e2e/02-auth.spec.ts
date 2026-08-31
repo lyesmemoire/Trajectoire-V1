@@ -12,7 +12,7 @@ test.describe("Authentication Flow Audit", () => {
   test("signout should work and clear session", async ({ page }) => {
     // This requires a mock session or real login first.
     // For now, testing if the route is at least reachable.
-    await page.goto("/logout", { waitUntil: "networkidle" });
+    await page.goto("/logout", { waitUntil: "domcontentloaded" });
     await expect(page).toHaveURL(/\/(login|\/)/);
   });
 });
