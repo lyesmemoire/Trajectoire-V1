@@ -7,7 +7,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install pnpm
-RUN npm install -g pnpm@8
+RUN npm install -g pnpm@9.15.9
 
 # Copy dependency files
 COPY package.json pnpm-lock.yaml ./
@@ -24,7 +24,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Install pnpm
-RUN npm install -g pnpm@8
+RUN npm install -g pnpm@9.15.9
 
 # Build API
 WORKDIR /app/apps/api
