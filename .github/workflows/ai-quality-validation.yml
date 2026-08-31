@@ -26,26 +26,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          version: 9.15.9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: |
-          cd apps/web
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: TypeScript compilation
         run: |
-          cd apps/web
-          npm run build
+          pnpm build
 
       - name: Run AI Quality Validation
         run: |
-          npm install -g ts-node
-          ts-node scripts/ai-quality-validation.ts
+          pnpm exec tsx scripts/ai-quality-validation.ts
         env:
           CURRENT_VERSION: ${{ github.sha }}
           PREVIOUS_VERSION: ${{ github.event.before }}

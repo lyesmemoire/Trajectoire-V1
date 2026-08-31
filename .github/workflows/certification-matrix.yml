@@ -51,7 +51,7 @@ jobs:
           echo "SOURCE_DATE_EPOCH=$EPOCH" >> $GITHUB_ENV
           
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           
@@ -60,8 +60,10 @@ jobs:
         with:
           python-version: '3.13' # Version stable figée
           
-      - name: Install pnpm
-        run: npm install -g pnpm@9.15.9
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
         
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -124,7 +126,7 @@ jobs:
           path: all-artifacts
           
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           

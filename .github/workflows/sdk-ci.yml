@@ -33,14 +33,14 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -48,13 +48,13 @@ jobs:
       
       - name: Generate all SDKs
         run: |
-          npx tsx bin/blueprint sdk generate typescript --output ./sdks
-          npx tsx bin/blueprint sdk generate rust --output ./sdks
-          npx tsx bin/blueprint sdk generate go --output ./sdks
-          npx tsx bin/blueprint sdk generate python --output ./sdks
-          npx tsx bin/blueprint sdk generate java --output ./sdks
-          npx tsx bin/blueprint sdk generate kotlin --output ./sdks
-          npx tsx bin/blueprint sdk generate csharp --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate typescript --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate rust --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate go --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate python --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate java --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate kotlin --output ./sdks
+          pnpm exec tsx bin/blueprint sdk generate csharp --output ./sdks
       
       - name: Upload SDKs
         uses: actions/upload-artifact@v4
@@ -76,21 +76,21 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate TypeScript SDK
-        run: npx tsx bin/blueprint sdk generate typescript --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate typescript --output ./sdks
       
       - name: Install TypeScript SDK dependencies
         run: cd sdks/typescript && pnpm install
@@ -138,21 +138,21 @@ jobs:
           toolchain: stable
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate Rust SDK
-        run: npx tsx bin/blueprint sdk generate rust --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate rust --output ./sdks
       
       - name: Build Rust SDK
         run: cd sdks/rust && cargo build --release
@@ -200,21 +200,21 @@ jobs:
           go-version: '1.21'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate Go SDK
-        run: npx tsx bin/blueprint sdk generate go --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate go --output ./sdks
       
       - name: Tidy Go modules
         run: cd sdks/go && go mod tidy
@@ -254,14 +254,14 @@ jobs:
           python-version: '3.11'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -271,7 +271,7 @@ jobs:
         run: pip install build pytest
       
       - name: Generate Python SDK
-        run: npx tsx bin/blueprint sdk generate python --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate python --output ./sdks
       
       - name: Build Python SDK
         run: cd sdks/python && python -m build
@@ -317,21 +317,21 @@ jobs:
           java-version: '11'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate Java SDK
-        run: npx tsx bin/blueprint sdk generate java --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate java --output ./sdks
       
       - name: Build Java SDK
         run: cd sdks/java && mvn package
@@ -377,21 +377,21 @@ jobs:
           java-version: '11'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate Kotlin SDK
-        run: npx tsx bin/blueprint sdk generate kotlin --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate kotlin --output ./sdks
       
       - name: Build Kotlin SDK
         run: cd sdks/kotlin && gradle build
@@ -436,21 +436,21 @@ jobs:
           dotnet-version: '6.0.x'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.9
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'pnpm'
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
       - name: Generate C# SDK
-        run: npx tsx bin/blueprint sdk generate csharp --output ./sdks
+        run: pnpm exec tsx bin/blueprint sdk generate csharp --output ./sdks
       
       - name: Build C# SDK
         run: cd sdks/csharp && dotnet build
