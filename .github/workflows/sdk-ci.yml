@@ -93,7 +93,7 @@ jobs:
         run: pnpm exec tsx bin/blueprint sdk generate typescript --output ./sdks
       
       - name: Install TypeScript SDK dependencies
-        run: cd sdks/typescript && pnpm install
+        run: cd sdks/typescript && pnpm install --no-lockfile
       
       - name: Build TypeScript SDK
         run: cd sdks/typescript && pnpm build

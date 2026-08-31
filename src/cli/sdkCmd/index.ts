@@ -61,6 +61,11 @@ async function generateTypeScriptSDK(sdkDir: string): Promise<void> {
     description: 'Blueprint SDK for TypeScript',
     main: 'dist/index.js',
     types: 'dist/index.d.ts',
+    packageManager: 'pnpm@9.15.9',
+    engines: {
+      node: '>=22',
+      pnpm: '>=9.15.9 <10',
+    },
     scripts: {
       build: 'tsc',
       test: 'vitest',
