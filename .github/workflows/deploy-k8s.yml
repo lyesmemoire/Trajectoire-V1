@@ -5,6 +5,14 @@ on:
     branches: [main, develop]
     tags:
       - 'v*'
+    paths:
+      - 'k8s/**'
+      - 'deploy/**'
+      - 'apps/api/**'
+      - 'apps/web/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/deploy-k8s.yml'
   workflow_dispatch:
     inputs:
       environment:

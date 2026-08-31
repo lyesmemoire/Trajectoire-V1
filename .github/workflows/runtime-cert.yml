@@ -2,7 +2,15 @@ name: Runtime Certification Gate
 
 on:
   push:
+    paths:
+      - 'apps/realtime-gateway/**'
+      - 'docs/runtime/**'
+      - '.github/workflows/runtime-cert.yml'
   pull_request:
+    paths:
+      - 'apps/realtime-gateway/**'
+      - 'docs/runtime/**'
+      - '.github/workflows/runtime-cert.yml'
 
 jobs:
   certify:

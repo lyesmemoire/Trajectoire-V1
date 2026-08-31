@@ -3,8 +3,22 @@ name: Industrial Certification Matrix
 on:
   push:
     branches: [main]
+    paths:
+      - 'certification/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/certification-matrix.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'certification/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/certification-matrix.yml'
   workflow_dispatch:
 
 jobs:

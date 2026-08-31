@@ -3,8 +3,20 @@ name: CLI CI Matrix
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'bin/**'
+      - 'tests/cli/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/cli-ci.yml'
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - 'bin/**'
+      - 'tests/cli/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/cli-ci.yml'
   workflow_dispatch:
 
 jobs:

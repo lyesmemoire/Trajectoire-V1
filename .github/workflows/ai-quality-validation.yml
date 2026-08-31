@@ -3,8 +3,20 @@ name: AI Quality Validation
 on:
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - 'scripts/ai-quality-validation.ts'
+      - 'apps/web/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/ai-quality-validation.yml'
   push:
     branches: [ main, develop ]
+    paths:
+      - 'scripts/ai-quality-validation.ts'
+      - 'apps/web/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/ai-quality-validation.yml'
 
 jobs:
   validate:

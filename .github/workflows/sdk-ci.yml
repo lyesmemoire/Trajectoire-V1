@@ -3,8 +3,20 @@ name: SDK CI Matrix - Full Toolchain Validation
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'sdks/**'
+      - 'bin/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/sdk-ci.yml'
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - 'sdks/**'
+      - 'bin/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/sdk-ci.yml'
   workflow_dispatch:
 
 jobs:

@@ -4,8 +4,22 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+    paths:
+      - 'certification/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/certification.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'certification/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/certification.yml'
 
 jobs:
   certify:
