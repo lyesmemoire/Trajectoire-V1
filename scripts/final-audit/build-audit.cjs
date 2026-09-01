@@ -47,14 +47,14 @@ class BuildAuditor {
       // Installer les dépendances
       console.log('\nInstalling dependencies...');
       const startTime = Date.now();
-      this.report.commands.push('pnpm install');
+      this.report.commands.push('pnpm install --frozen-lockfile');
       
       try {
-        this.exec('pnpm install', { stdio: 'pipe' });
+        this.exec('pnpm install --frozen-lockfile', { stdio: 'pipe' });
         this.report.elapsedTimes.install = Date.now() - startTime;
         console.log(`Dependencies installed in ${this.report.elapsedTimes.install}ms`);
       } catch (error) {
-        this.report.errors.push(`pnpm install failed: ${error.message}`);
+        this.report.errors.push(`pnpm install --frozen-lockfile failed: ${error.message}`);
         this.report.exitCode = 1;
         this.saveReport();
         throw error;
