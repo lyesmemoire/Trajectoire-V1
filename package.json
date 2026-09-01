@@ -81,7 +81,7 @@
         "@nestjs/websockets": "^11.1.24",
         "@prisma/client": "6.1.0",
         "@radix-ui/react-slot": "^1.2.4",
-        "@react-email/components": "^1.0.12",
+        "react-email": "^6.9.3",
         "@react-pdf/renderer": "^4.5.1",
         "@supabase/ssr": "^0.5.0",
         "@supabase/supabase-js": "^2.50.0",

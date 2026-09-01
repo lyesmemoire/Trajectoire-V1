@@ -1,4 +1,4 @@
-import { Html, Head, Body, Container, Text, Link, Section } from "@react-email/components"
+import { Html, Head, Body, Container, Text, Link, Section } from "react-email"
 
 interface AnalysisRecapEmailProps {
   userName: string
