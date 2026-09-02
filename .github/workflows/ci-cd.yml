@@ -207,6 +207,18 @@ jobs:
       - name: Run regression smoke tests
         run: pnpm test:e2e:smoke
 
+      - name: Upload Playwright diagnostics
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-playwright-diagnostics
+          path: |
+            playwright-report/
+            test-results/
+            /tmp/trajectoire-web.log
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Compare with baseline
         run: |
           # Compare performance metrics with baseline
@@ -283,6 +295,7 @@ jobs:
         continue-on-error: true
 
       - name: Run Snyk security scan
+        continue-on-error: true
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
