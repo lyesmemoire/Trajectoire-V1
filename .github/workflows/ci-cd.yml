@@ -166,6 +166,8 @@ jobs:
         run: pnpm build
 
       - name: Start Web application
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           node apps/web/.next/standalone/apps/web/server.js > /tmp/trajectoire-web.log 2>&1 &
           echo $! > /tmp/trajectoire-web.pid
@@ -507,6 +509,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deploy-production]
     if: failure() && github.ref == 'refs/heads/main'
+    environment:
+      name: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
