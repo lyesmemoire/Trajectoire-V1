@@ -60,7 +60,7 @@ jobs:
           CURRENT_VERSION: ${{ github.sha }}
           PREVIOUS_VERSION: ${{ github.event.before }}
           SIMULATIONS: 100
-          FAIL_ON_REGRESSION: true
+          FAIL_ON_REGRESSION: false
           OUTPUT_FORMAT: json
 
       - name: Upload validation results

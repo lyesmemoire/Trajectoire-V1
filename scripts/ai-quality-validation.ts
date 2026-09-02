@@ -3,6 +3,8 @@
  * Runs automated quality validation for CI/CD pipeline
  */
 
+import { pathToFileURL } from "node:url";
+
 import { regressionSuite } from "../apps/web/src/application/ai-quality/RegressionSuite";
 
 // ============================================================================
@@ -139,7 +141,11 @@ export { runValidation, VALIDATION_CONFIG };
 // RUN IF EXECUTED DIRECTLY
 // ============================================================================
 
-if (require.main === module) {
+const isDirectExecution =
+  process.argv[1] !== undefined &&
+  import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isDirectExecution) {
   runValidation()
     .then(result => {
       process.exit(result.success ? 0 : 1);
