@@ -144,7 +144,7 @@ jobs:
     needs: [test]
     services:
       postgres:
-        image: postgres:16
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_USER: ci
           POSTGRES_PASSWORD: ci
@@ -175,9 +175,12 @@ jobs:
 
       - name: Prepare regression database
         env:
+          PGPASSWORD: ci
           DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/trajectoire_ci
           DIRECT_URL: postgresql://ci:ci@127.0.0.1:5432/trajectoire_ci
-        run: pnpm exec prisma db push --schema=prisma/schema.prisma --skip-generate
+        run: |
+          psql -h 127.0.0.1 -U ci -d trajectoire_ci -v ON_ERROR_STOP=1 -c "CREATE EXTENSION IF NOT EXISTS vector;"
+          pnpm exec prisma db push --schema=prisma/schema.prisma --skip-generate
 
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
