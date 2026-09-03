@@ -10,7 +10,7 @@ WORKDIR /app
 RUN npm install -g pnpm@9.15.9
 
 # Copy dependency files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 

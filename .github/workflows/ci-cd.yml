@@ -352,7 +352,8 @@ jobs:
       - name: Build and push API image
         uses: docker/build-push-action@v7
         with:
-          context: ./apps/api
+          context: .
+          file: ./apps/api/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/trajectoire-api:${{ github.sha }}
