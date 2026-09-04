@@ -35,9 +35,14 @@ RUN pnpm exec prisma generate --schema=prisma/schema.prisma
 WORKDIR /app/apps/api
 RUN pnpm build
 
-# Build Web
+# Build Web with schema-valid CI placeholders.
+# Real production secrets are injected at runtime, never baked into the image.
 WORKDIR /app/apps/web
-RUN pnpm build
+RUN NEXT_PUBLIC_SUPABASE_URL=https://ci-placeholder.supabase.co \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=ci-placeholder-anon-key \
+    SUPABASE_SERVICE_ROLE_KEY=ci-placeholder-service-role-key \
+    STRIPE_SECRET_KEY=sk_test_ci_placeholder \
+    pnpm build
 
 # Production image
 FROM base AS runner
