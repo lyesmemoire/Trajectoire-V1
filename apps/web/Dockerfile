@@ -19,7 +19,13 @@ RUN pnpm install --frozen-lockfile
 
 COPY apps/web ./apps/web
 
-RUN pnpm --dir apps/web build
+# Schema-valid build placeholders only.
+# Real production secrets are injected at runtime.
+RUN NEXT_PUBLIC_SUPABASE_URL=https://ci-placeholder.supabase.co \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=ci-placeholder-anon-key \
+    SUPABASE_SERVICE_ROLE_KEY=ci-placeholder-service-role-key \
+    STRIPE_SECRET_KEY=sk_test_ci_placeholder \
+    pnpm --dir apps/web build
 
 
 FROM node:22-alpine AS runner
