@@ -25,6 +25,9 @@ COPY --from=deps /app/apps/api/node_modules ./apps/api/node_modules
 COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 COPY . .
 
+# Generate Prisma Client from the repository schema
+RUN pnpm exec prisma generate --schema=prisma/schema.prisma
+
 # Install pnpm
 RUN npm install -g pnpm@9.15.9
 
