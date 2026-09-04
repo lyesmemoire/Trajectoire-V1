@@ -532,6 +532,7 @@ jobs:
         run: pnpm migration:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
 
       - name: Deploy to Vercel Production
         id: deploy
