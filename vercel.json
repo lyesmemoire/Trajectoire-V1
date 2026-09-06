@@ -3,15 +3,6 @@
   "buildCommand": "corepack enable && pnpm --dir apps/web build",
   "devCommand": "corepack enable && pnpm --dir apps/web dev",
   "installCommand": "corepack enable && pnpm install --frozen-lockfile",
-  "functions": {
-    "apps/web/src/app/api/stripe/webhook/route.ts": {
-      "maxDuration": 10
-    },
-    "apps/web/src/app/api/public/analyze-preview/route.ts": {
-      "maxDuration": 15,
-      "memory": 512
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",

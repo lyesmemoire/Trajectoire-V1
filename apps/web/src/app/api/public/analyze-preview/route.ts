@@ -7,6 +7,8 @@ import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisSe
 import { logger } from "@/lib/logger"
 import * as Sentry from "@sentry/nextjs"
 
+export const maxDuration = 15;
+
 export async function POST(req: NextRequest) {
   const fingerprint = generateFingerprint(req)
   

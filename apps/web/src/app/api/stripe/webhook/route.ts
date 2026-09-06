@@ -10,6 +10,8 @@ import { z }                         from "zod";
 import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
 import { RouteType, RateLimitScope } from "@/lib/rate-limiting/centralized-rate-limit.service";
 
+export const maxDuration = 10;
+
 const StripeMetadataSchema = z.object({
   user_id:        z.string().uuid(),
   resolved_price: z.string().optional(),
