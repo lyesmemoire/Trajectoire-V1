@@ -15,7 +15,7 @@ apps/realtime-gateway-v2/
 *.md
 docs/
 reports/
-audit/
+/audit/
 certification/
 certification-audit/
 production-proof/
