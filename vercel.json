@@ -3,6 +3,11 @@
   "buildCommand": "prisma generate && pnpm --dir apps/web build",
   "devCommand": "pnpm --dir apps/web dev",
   "installCommand": "pnpm install --frozen-lockfile",
+  "build": {
+    "env": {
+      "SKIP_ENV_VALIDATION": "1"
+    }
+  },
   "headers": [
     {
       "source": "/api/(.*)",

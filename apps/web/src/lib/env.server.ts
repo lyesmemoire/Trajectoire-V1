@@ -208,6 +208,10 @@ OPENAI_BASE_URL: z
 
 // ── Validation au démarrage ────────────────────────────────────────────────────
 function validateEnv() {
+  if (process.env.SKIP_ENV_VALIDATION === "1" || process.env.SKIP_ENV_VALIDATION === "true") {
+    return process.env as any;
+  }
+
   const result = EnvServerSchema.safeParse(process.env);
 
   if (!result.success) {
