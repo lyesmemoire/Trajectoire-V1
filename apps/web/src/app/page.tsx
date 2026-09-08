@@ -500,6 +500,7 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 100vw, 540px"
                   className="object-cover object-center"
                   priority
+                  unoptimized
                 />
               </div>
             </aside>
