@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 export const runtime = "nodejs";
@@ -11,18 +11,31 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ authenticated: false, error: "Supabase env missing" }, { status: 500 });
   }
 
+  const cookiesToSetList: { name: string; value: string; options: any }[] = [];
+
   const supabase = createServerClient(url, key, {
     cookies: {
       getAll: () => request.cookies.getAll(),
-      setAll: () => {},
+      setAll: (cookiesToSet) => {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          request.cookies.set(name, value);
+          cookiesToSetList.push({ name, value, options });
+        });
+      },
     },
   });
 
   const { data } = await supabase.auth.getUser();
   const user = data.user;
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     authenticated: Boolean(user),
     user: user ? { id: user.id, email: user.email } : null,
   });
+
+  cookiesToSetList.forEach(({ name, value, options }) => {
+    response.cookies.set(name, value, options);
+  });
+
+  return response;
 }

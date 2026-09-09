@@ -242,11 +242,22 @@ function applyHeaders(
   return response;
 }
 
+function copyCookies(
+  sourceResponse: NextResponse,
+  destinationResponse: NextResponse,
+) {
+  const setCookies = sourceResponse.headers.getSetCookie();
+  setCookies.forEach((cookie) => {
+    destinationResponse.headers.append("Set-Cookie", cookie);
+  });
+}
+
 function createRedirect(
   pathname: string,
   reason: string,
   requestUrl: string,
   correlationId: string,
+  sourceResponse?: NextResponse,
 ): NextResponse {
   const loginUrl =
     new URL(
@@ -273,9 +284,15 @@ function createRedirect(
     "Middleware redirect",
   );
 
-  return NextResponse.redirect(
+  const response = NextResponse.redirect(
     loginUrl,
   );
+
+  if (sourceResponse) {
+    copyCookies(sourceResponse, response);
+  }
+
+  return response;
 }
 
 function createApiAuthorizationErrorResponse(
@@ -284,6 +301,7 @@ function createApiAuthorizationErrorResponse(
   corsHeaders: Record<string, string>,
   scriptNonce: string,
   styleNonce: string,
+  sourceResponse?: NextResponse,
 ): NextResponse {
   const isAuthenticationRequired =
     reason === "Authentication required";
@@ -322,6 +340,10 @@ function createApiAuthorizationErrorResponse(
     styleNonce,
   );
 
+  if (sourceResponse) {
+    copyCookies(sourceResponse, response);
+  }
+
   response.headers.set(
     "Cache-Control",
     "no-store",
@@ -335,6 +357,7 @@ function createAuthenticationUnavailableResponse(
   corsHeaders: Record<string, string>,
   scriptNonce: string,
   styleNonce: string,
+  sourceResponse?: NextResponse,
 ): NextResponse {
   const pathname =
     request.nextUrl.pathname;
@@ -385,6 +408,10 @@ function createAuthenticationUnavailableResponse(
       scriptNonce,
       styleNonce,
     );
+
+    if (sourceResponse) {
+      copyCookies(sourceResponse, response);
+    }
 
     response.headers.set(
       "Retry-After",
@@ -447,6 +474,10 @@ function createAuthenticationUnavailableResponse(
     scriptNonce,
     styleNonce,
   );
+
+  if (sourceResponse) {
+    copyCookies(sourceResponse, response);
+  }
 
   return response;
 }
@@ -768,6 +799,7 @@ export async function middleware(
       corsHeaders,
       scriptNonce,
       styleNonce,
+      getResponse(),
     );
   }
 
@@ -788,6 +820,7 @@ export async function middleware(
       "Authentication required",
       request.url,
       correlationId,
+      getResponse(),
     );
   }
 
@@ -828,6 +861,7 @@ export async function middleware(
         corsHeaders,
         scriptNonce,
         styleNonce,
+        getResponse(),
       );
     }
 
@@ -836,6 +870,7 @@ export async function middleware(
       reason,
       request.url,
       correlationId,
+      getResponse(),
     );
   }
 
