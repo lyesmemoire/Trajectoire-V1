@@ -1,4 +1,5 @@
 import { fileTypeFromBuffer } from "file-type"
+import { PDFParse } from "pdf-parse"
 
 export async function validateCVUpload(file: File | null): Promise<{
   valid: boolean
@@ -72,22 +73,17 @@ async function extractCVContent(file: File, _options?: { signal?: AbortSignal })
   // Pour PDF/DOCX, on utilise une implémentation simplifiée
   // MVP : on retourne le texte brut si possible, sinon une erreur
   if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
-    // Pour MVP, on utilise pdfjs-dist déjà installé
-    const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs")
     const arrayBuffer = await file.arrayBuffer()
-    const pdf = await pdfjs.getDocument({
-      data: new Uint8Array(arrayBuffer),
-      useSystemFonts: true
-    }).promise
-    let text = ""
+    const parser = new PDFParse({
+      data: new Uint8Array(arrayBuffer)
+    })
     
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i)
-      const content = await page.getTextContent()
-      text += content.items.map((item: any) => item.str).join(" ") + "\n"
+    try {
+      const result = await parser.getText()
+      return result.text
+    } finally {
+      await parser.destroy()
     }
-    
-    return text
   }
 
   // DOCX : MVP - retourne placeholder

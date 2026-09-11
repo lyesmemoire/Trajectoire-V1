@@ -18,10 +18,10 @@
     "test:check": "tsx src/e2e/simple-api-test.ts"
   },
   "dependencies": {
-    "@sentry/nextjs": "^10.61.0",
     "@ai-sdk/openai": "^4.0.44",
     "@napi-rs/canvas": "^1.0.2",
     "@opentelemetry/semantic-conventions": "^1.43.0",
+    "@sentry/nextjs": "^10.61.0",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.7",
     "@upstash/redis": "^1.38.0",
@@ -36,6 +36,7 @@
     "next": "15.5.24",
     "openai": "^6.39.0",
     "pdf-lib": "^1.17.1",
+    "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^6.2.108",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
