@@ -176,26 +176,28 @@ export default async function NewSimulationPage({
         >
           <ArrowLeft className="h-4 w-4" />
           {opportunity
-            ? "Retour Ã  l'opportunitÃ©"
+            ? "Retour à l'opportunité"
             : "Retour"}
         </Link>
       </div>
 
       <section className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-sm">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_320px]">
+          {/* ── Formulaire ── */}
           <div className="p-6 sm:p-8">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-50 text-violet-700">
               <BrainCircuit className="h-5 w-5" />
             </div>
 
             <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-950">
-              PrÃ©parer mon entretien
+              Préparez votre entretien
             </h1>
 
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              Lance une simulation d'entretien adaptÃ©e au poste que tu vises.
+              Créez une simulation personnalisée à partir de l&apos;offre que vous visez.
             </p>
 
+            {/* Bandeau opportunité connectée */}
             {opportunity ? (
               <div className="mt-6 rounded-[22px] border border-violet-100 bg-violet-50/60 p-5">
                 <div className="flex items-start gap-3">
@@ -203,7 +205,7 @@ export default async function NewSimulationPage({
 
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-600">
-                      OpportunitÃ© connectÃ©e
+                      Opportunité connectée
                     </p>
 
                     <p className="mt-2 font-bold text-slate-950">
@@ -222,22 +224,22 @@ export default async function NewSimulationPage({
                       <p className="mt-2 text-xs font-semibold text-violet-700">
                         {applicationContext.evidenceCount}{" "}
                         {applicationContext.evidenceCount === 1
-                          ? "preuve sÃ©lectionnÃ©e"
-                          : "preuves sÃ©lectionnÃ©es"}{" "}
-                        seront utilisÃ©es pendant la prÃ©paration.
+                          ? "preuve sélectionnée"
+                          : "preuves sélectionnées"}{" "}
+                        seront utilisées pendant la préparation.
                       </p>
                     ) : null}
 
                     {opportunity.matchScore !== null ? (
                       <p className="mt-3 text-sm font-semibold text-violet-800">
-                        Trajectoire utilisera ton score de compatibilitÃ© de{" "}
-                        {opportunity.matchScore}/100, tes preuves sÃ©lectionnÃ©es
-                        et les Ã©carts dÃ©tectÃ©s pour contextualiser l'entretien.
+                        Trajectoire utilisera votre score de compatibilité de{" "}
+                        {opportunity.matchScore}/100, vos preuves sélectionnées
+                        et les écarts détectés pour contextualiser l&apos;entretien.
                       </p>
                     ) : (
                       <p className="mt-3 text-sm text-violet-800">
                         La description de cette offre sera automatiquement
-                        transmise Ã  la simulation.
+                        transmise à la simulation.
                       </p>
                     )}
                   </div>
@@ -250,12 +252,13 @@ export default async function NewSimulationPage({
               method="POST"
               className="mt-8 space-y-6"
             >
+              {/* Poste visé */}
               <div>
                 <label
                   htmlFor="jobTitle"
                   className="mb-2 block text-sm font-bold text-slate-800"
                 >
-                  Poste ciblÃ©
+                  Poste visé
                 </label>
 
                 <input
@@ -269,38 +272,44 @@ export default async function NewSimulationPage({
                 />
               </div>
 
+              {/* Description de l'offre */}
               <div>
                 <label
                   htmlFor="jobDescription"
-                  className="mb-2 block text-sm font-bold text-slate-800"
+                  className="mb-1 block text-sm font-bold text-slate-800"
                 >
-                  Description de l'offre
+                  Description de l&apos;offre
                 </label>
+
+                <p className="mb-2 text-xs leading-5 text-slate-400">
+                  Collez l&apos;offre complète pour que l&apos;entretien soit adapté au poste.
+                </p>
 
                 <textarea
                   id="jobDescription"
                   name="jobDescription"
                   rows={10}
                   defaultValue={contextualDescription}
-                  placeholder="Colle ici la description du poste..."
+                  placeholder="Collez ici la description du poste..."
                   className="w-full resize-y rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-100"
                 />
 
                 {opportunity ? (
                   <p className="mt-2 text-xs leading-5 text-slate-500">
-                    L'offre, les Story Bank sÃ©lectionnÃ©es et les Career Memories
-                    confirmÃ©es ont Ã©tÃ© prÃ©remplies automatiquement.
+                    L&apos;offre, les Story Bank sélectionnées et les Career Memories
+                    confirmées ont été préremplies automatiquement.
                   </p>
                 ) : null}
               </div>
 
+              {/* Niveau + Type */}
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="level"
                     className="mb-2 block text-sm font-bold text-slate-800"
                   >
-                    Niveau
+                    Niveau d&apos;expérience
                   </label>
 
                   <select
@@ -311,7 +320,7 @@ export default async function NewSimulationPage({
                     className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition focus:border-violet-400 focus:ring-4 focus:ring-violet-100"
                   >
                     <option value="Junior">Junior</option>
-                    <option value="IntermÃ©diaire">IntermÃ©diaire</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
                     <option value="Senior">Senior</option>
                     <option value="Lead">Lead</option>
                     <option value="Manager">Manager</option>
@@ -323,7 +332,7 @@ export default async function NewSimulationPage({
                     htmlFor="interviewType"
                     className="mb-2 block text-sm font-bold text-slate-800"
                   >
-                    Type d'entretien
+                    Type d&apos;entretien
                   </label>
 
                   <select
@@ -340,12 +349,13 @@ export default async function NewSimulationPage({
                 </div>
               </div>
 
+              {/* Durée */}
               <div>
                 <label
                   htmlFor="duration"
                   className="mb-2 block text-sm font-bold text-slate-800"
                 >
-                  DurÃ©e
+                  Durée
                 </label>
 
                 <select
@@ -362,51 +372,51 @@ export default async function NewSimulationPage({
                 </select>
               </div>
 
+              {/* CTA */}
               <button
                 type="submit"
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-violet-600 px-5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700"
+                className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-violet-600 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 active:scale-[0.98]"
               >
                 <Sparkles className="h-4 w-4" />
-                DÃ©marrer l'entretien contextualisÃ©
+                Commencer l&apos;entretien
               </button>
             </form>
           </div>
 
+          {/* ── Panneau droit ── */}
           <aside className="bg-slate-950 p-6 text-white sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-300">
               Career Intelligence
             </p>
 
-            <h2 className="mt-4 text-xl font-bold">
-              Une simulation qui connaÃ®t le poste.
+            <h2 className="mt-4 text-xl font-bold leading-snug">
+              Une simulation qui connaît le poste.
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-slate-300">
-              L'entretien utilise le poste ciblÃ© et la description de l'offre
-              comme contexte au lieu de dÃ©marrer Ã  zÃ©ro.
+              L&apos;entretien utilise l&apos;offre et votre profil pour poser des questions
+              réellement adaptées au contexte.
             </p>
 
-            <div className="mt-7 space-y-4">
+            <div className="mt-7 space-y-5">
               <div className="flex gap-3">
                 <FileText className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm text-slate-300">
-                  Description de l'offre transmise Ã  la session.
+                <p className="text-sm leading-6 text-slate-300">
+                  L&apos;offre est transmise à la simulation.
                 </p>
               </div>
 
               <div className="flex gap-3">
                 <Target className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm text-slate-300">
-                  Forces et Ã©carts de l'Opportunity Score disponibles comme
-                  contexte.
+                <p className="text-sm leading-6 text-slate-300">
+                  Vos forces et axes d&apos;amélioration sont utilisés comme contexte.
                 </p>
               </div>
 
               <div className="flex gap-3">
                 <BrainCircuit className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm text-slate-300">
-                  Le cerveau unifiÃ© existant continue d'enrichir la simulation
-                  avec le contexte candidat.
+                <p className="text-sm leading-6 text-slate-300">
+                  Votre profil enrichit les questions posées pendant l&apos;entretien.
                 </p>
               </div>
             </div>
