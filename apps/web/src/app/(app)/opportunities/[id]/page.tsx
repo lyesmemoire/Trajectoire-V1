@@ -18,6 +18,7 @@ import {
   OpportunityStatusActions,
   RecommendationIcon,
 } from "@/components/opportunities/OpportunityAnalysisActions"
+import { EditOpportunityForm } from "@/components/opportunities/EditOpportunityForm"
 
 export const dynamic = "force-dynamic"
 
@@ -171,16 +172,29 @@ export default async function OpportunityDetailPage({
       <section className="overflow-hidden rounded-[30px] border border-slate-200/70 bg-white shadow-sm">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_300px]">
           <div className="p-6 sm:p-8">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-violet-50 px-3 py-1.5 text-xs font-bold text-violet-700">
-                Opportunity Intelligence
-              </span>
-
-              {opportunity.source ? (
-                <span className="rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500">
-                  {opportunity.source}
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-violet-50 px-3 py-1.5 text-xs font-bold text-violet-700">
+                  Opportunity Intelligence
                 </span>
-              ) : null}
+
+                {opportunity.source ? (
+                  <span className="rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500">
+                    {opportunity.source}
+                  </span>
+                ) : null}
+              </div>
+
+              <EditOpportunityForm
+                opportunity={{
+                  id: opportunity.id,
+                  title: opportunity.title,
+                  company: opportunity.company,
+                  location: opportunity.location,
+                  sourceUrl: opportunity.sourceUrl,
+                  description: opportunity.description,
+                }}
+              />
             </div>
 
             <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
