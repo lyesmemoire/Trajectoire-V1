@@ -190,7 +190,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="my-4 border-t border-ivoire-200" />
 
             <Link
-              href="/auth/login"
+              href="/login"
               className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-ink-500 hover:bg-ivoire-100 transition-colors"
             >
               <span className="text-xl">🚪</span>

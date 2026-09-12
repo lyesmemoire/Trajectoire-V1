@@ -1,5 +1,5 @@
-export const signupHref = "/auth/signup";
-export const loginHref = "/auth/login";
+export const signupHref = "/signup";
+export const loginHref = "/login";
 
 export interface StatItem {
   value: string;

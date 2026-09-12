@@ -46,13 +46,13 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-4">
             <Link
-              href="/auth/login"
+              href="/login"
               className="hidden sm:block text-sm font-bold text-ink-600 hover:text-ink-900"
             >
               Connexion
             </Link>
             <Link
-              href="/auth/signup"
+              href="/signup"
               className="px-5 py-2.5 bg-gradient-to-r from-ink-700 to-ink-900 text-white font-bold rounded-full text-sm shadow-lg shadow-ink-500/25 hover:shadow-xl transition-all"
             >
               Essai gratuit →

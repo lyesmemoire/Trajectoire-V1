@@ -127,7 +127,7 @@ export function Pricing() {
                 </ul>
               </div>
 
-              <Link href="/auth/signup">
+              <Link href="/signup">
                 <Button
                   className={cn(
                     "mt-10 h-16 rounded-2xl font-black text-lg w-full",

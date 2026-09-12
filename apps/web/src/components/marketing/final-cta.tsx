@@ -28,7 +28,7 @@ export function FinalCTA() {
         </p>
 
         <div className="pt-10">
-          <Link href="/auth/signup">
+          <Link href="/signup">
             <Button
               size="lg"
               className="h-24 px-16 rounded-[2.5rem] bg-bronze-600 text-ivoire-50 hover:bg-bronze-700 font-black text-2xl shadow-[0_0_50px_rgba(166,124,61,0.3)] transition-all hover:scale-105 active:scale-95 group w-full"

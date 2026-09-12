@@ -61,7 +61,7 @@ export function PricingPreview() {
             </ul>
 
             <div className="pt-8 border-t border-white/5 space-y-4">
-              <Link href="/auth/signup">
+              <Link href="/signup">
                 <Button
                   size="lg"
                   className="w-full h-16 rounded-2xl bg-white text-ink-900 hover:bg-ivoire-100 font-black text-lg"
