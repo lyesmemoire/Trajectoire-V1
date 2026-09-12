@@ -420,7 +420,7 @@ export function DashboardWidgets({
         <StatCard
           eyebrow="Opportunités"
           value={String(opportunitySummary.activeCount)}
-          description={`${opportunitySummary.highMatchCount} match(es) fort(s)`}
+          description={`${opportunitySummary.highMatchCount} ${opportunitySummary.highMatchCount > 1 ? "correspondances fortes" : "correspondance forte"}`}
           icon={BriefcaseBusiness}
           accent="amber"
         />
@@ -429,7 +429,7 @@ export function DashboardWidgets({
       <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
         <div className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
           <SectionHeader
-            title="Career Command Center"
+            title="Centre de pilotage"
             subtitle="Pilotez vos meilleures opportunités depuis un seul endroit."
             href="/opportunities"
             action="Voir le pipeline"
@@ -502,7 +502,7 @@ export function DashboardWidgets({
                     </span>
 
                     <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700 ring-1 ring-emerald-100">
-                      {opportunitySummary.highMatchCount} match(es) fort(s)
+                      {opportunitySummary.highMatchCount} {opportunitySummary.highMatchCount > 1 ? "correspondances fortes" : "correspondance forte"}
                     </span>
                   </div>
                 </div>
@@ -579,7 +579,7 @@ export function DashboardWidgets({
                 </p>
 
                 <p className="text-xs text-slate-500">
-                  offres live détectées
+                  offres actives détectées
                 </p>
               </div>
 
@@ -984,7 +984,7 @@ export function DashboardWidgets({
               <Sparkles className="size-4" />
 
               <p className="text-[10px] font-bold uppercase tracking-[0.15em]">
-                Prochaine meilleure action
+                Prochaine action clé
               </p>
             </div>
 
@@ -1051,7 +1051,7 @@ export function DashboardWidgets({
                 <Award className="size-4" />
 
                 <p className="text-[10px] font-bold uppercase tracking-[0.14em]">
-                  Insight IA
+                  Analyse IA
                 </p>
               </div>
 
