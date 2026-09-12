@@ -48,6 +48,28 @@ export class SubscriptionService {
     })
 
     // ============================================================
+    // STARTER PLAN
+    // ============================================================
+    this.planCapabilities.set(SubscriptionPlan.STARTER, {
+      name: 'Starter',
+      monthlyQuota: {
+        cvAnalysis: 3,
+        jobAnalysis: 5,
+        simulations: 2,
+      },
+      historyRetention: 30, // jours
+      features: {
+        basicAnalysis: true,
+        matching: true,
+        copilotBasic: true,
+        export: false,
+        advancedReports: false,
+        unlimitedHistory: false,
+        apiAccess: 'basic',
+      },
+    })
+
+    // ============================================================
     // PRO PLAN
     // ============================================================
     this.planCapabilities.set(SubscriptionPlan.PRO, {
@@ -211,6 +233,21 @@ export class SubscriptionService {
 
     switch (plan) {
       case SubscriptionPlan.FREE:
+        permissions.push(
+          Permission.USE_COPILOT_BASIC,
+          Permission.USE_COPILOT,
+          Permission.RUN_INTERVIEW,
+          Permission.ACCESS_INTERVIEW_REPORTS,
+          Permission.ANALYZE_CV,
+          Permission.ANALYZE_JOB,
+          Permission.ACCESS_MATCHING,
+          Permission.ACCESS_HISTORY_LIMITED,
+          Permission.ACCESS_REPORTS_BASIC,
+          Permission.ACCESS_API_BASIC,
+        )
+        break
+
+      case SubscriptionPlan.STARTER:
         permissions.push(
           Permission.USE_COPILOT_BASIC,
           Permission.USE_COPILOT,

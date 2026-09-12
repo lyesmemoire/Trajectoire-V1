@@ -783,6 +783,7 @@ enum UserRole {
 
 enum Plan {
   FREE
+  STARTER
   PRO
   EXPERT
 

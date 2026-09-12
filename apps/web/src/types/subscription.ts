@@ -13,6 +13,8 @@
 export enum SubscriptionPlan {
   /** Plan gratuit - accès aux fonctionnalités de base */
   FREE = 'FREE',
+  /** Plan Starter - fonctionnalités essentielles */
+  STARTER = 'STARTER',
   /** Plan Pro - fonctionnalités avancées pour les particuliers */
   PRO = 'PRO',
   /** Plan Team - fonctionnalités collaboratives pour les équipes */

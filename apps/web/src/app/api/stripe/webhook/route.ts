@@ -170,9 +170,8 @@ export const POST = rateLimit(
         break;
     }
   } catch (error) {
-    // Log l'erreur mais retourne 200 pour éviter que Stripe re-tente indéfiniment
-    // sur des erreurs applicatives (pas des erreurs réseau)
     logger.error(`[Webhook] Erreur sur event ${event.type}`, { error: error, eventType: event.type });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });
