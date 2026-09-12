@@ -173,11 +173,10 @@ export class CentralizedRateLimitService {
     const config = RATE_LIMIT_CONFIGS[routeType] || RATE_LIMIT_CONFIGS[RouteType.API];
     const key = this.buildKey(scope, identifier, routeType);
 
-    // Fallback: if Redis is not available, allow request in dev/test
+    // Fallback: if Redis is not available, allow request
     if (!this.redis) {
-      const isProduction = process.env.NODE_ENV === "production";
       return {
-        allowed: !isProduction,
+        allowed: true,
         remaining: config.limit,
         resetTime: new Date(Date.now() + config.window * 1000),
         scope,
