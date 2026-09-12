@@ -2,6 +2,25 @@ import { fileTypeFromBuffer } from "file-type"
 import { createRequire } from "node:module"
 
 const require = createRequire(import.meta.url)
+
+const {
+  DOMMatrix,
+  ImageData,
+  Path2D,
+} = require("@napi-rs/canvas") as typeof import("@napi-rs/canvas")
+
+if (typeof globalThis.DOMMatrix === "undefined") {
+  (globalThis as any).DOMMatrix = DOMMatrix
+}
+
+if (typeof globalThis.ImageData === "undefined") {
+  (globalThis as any).ImageData = ImageData
+}
+
+if (typeof globalThis.Path2D === "undefined") {
+  (globalThis as any).Path2D = Path2D
+}
+
 const { PDFParse } = require("pdf-parse") as typeof import("pdf-parse")
 
 export async function validateCVUpload(file: File | null): Promise<{
