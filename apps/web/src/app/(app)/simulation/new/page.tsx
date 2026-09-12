@@ -5,6 +5,8 @@ import {
   BrainCircuit,
   Building2,
   FileText,
+  Lightbulb,
+  Lock,
   Sparkles,
   Target,
 } from "lucide-react"
@@ -165,6 +167,7 @@ export default async function NewSimulationPage({
 
   return (
     <div className="mx-auto max-w-5xl space-y-6 pb-12">
+      {/* Breadcrumb */}
       <div>
         <Link
           href={
@@ -182,18 +185,25 @@ export default async function NewSimulationPage({
       </div>
 
       <section className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-sm">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_320px]">
-          {/* ── Formulaire ── */}
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_300px]">
+
+          {/* ── Formulaire (colonne gauche) ── */}
           <div className="p-6 sm:p-8">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-50 text-violet-700">
-              <BrainCircuit className="h-5 w-5" />
+            {/* Icône + eyebrow */}
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
+                <BrainCircuit className="h-5 w-5" />
+              </div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-600">
+                Simulation d&apos;entretien
+              </p>
             </div>
 
-            <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-950">
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
               Préparez votre entretien
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
               Créez une simulation personnalisée à partir de l&apos;offre que vous visez.
             </p>
 
@@ -373,54 +383,89 @@ export default async function NewSimulationPage({
               </div>
 
               {/* CTA */}
-              <button
-                type="submit"
-                className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-violet-600 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 active:scale-[0.98]"
-              >
-                <Sparkles className="h-4 w-4" />
-                Commencer l&apos;entretien
-              </button>
+              <div className="space-y-3">
+                <button
+                  type="submit"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-violet-600 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 active:scale-[0.98]"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Commencer l&apos;entretien
+                </button>
+
+                {/* Mention confidentialité discrète */}
+                <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+                  <Lock className="h-3 w-3 shrink-0" />
+                  Vos informations servent à personnaliser cette simulation.
+                </p>
+              </div>
             </form>
           </div>
 
-          {/* ── Panneau droit ── */}
-          <aside className="bg-slate-950 p-6 text-white sm:p-8">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-300">
-              Career Intelligence
+          {/* ── Panneau contexte (colonne droite) — fond clair premium ── */}
+          <aside className="border-t border-slate-100 bg-violet-50/50 p-6 sm:p-7 lg:border-l lg:border-t-0">
+            {/* Header */}
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-600">
+              Trajectoire AI
             </p>
 
-            <h2 className="mt-4 text-xl font-bold leading-snug">
-              Une simulation qui connaît le poste.
+            <h2 className="mt-3 text-lg font-bold leading-snug tracking-tight text-slate-900">
+              Une simulation qui<br />connaît le poste.
             </h2>
 
-            <p className="mt-3 text-sm leading-6 text-slate-300">
+            <p className="mt-3 text-sm leading-6 text-slate-600">
               L&apos;entretien utilise l&apos;offre et votre profil pour poser des questions
               réellement adaptées au contexte.
             </p>
 
+            {/* Les 3 bénéfices */}
             <div className="mt-7 space-y-5">
-              <div className="flex gap-3">
-                <FileText className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm leading-6 text-slate-300">
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+                  <FileText className="h-4 w-4" />
+                </span>
+                <p className="pt-1.5 text-sm leading-5 text-slate-700">
                   L&apos;offre est transmise à la simulation.
                 </p>
               </div>
 
-              <div className="flex gap-3">
-                <Target className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm leading-6 text-slate-300">
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+                  <Target className="h-4 w-4" />
+                </span>
+                <p className="pt-1.5 text-sm leading-5 text-slate-700">
                   Vos forces et axes d&apos;amélioration sont utilisés comme contexte.
                 </p>
               </div>
 
-              <div className="flex gap-3">
-                <BrainCircuit className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
-                <p className="text-sm leading-6 text-slate-300">
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+                  <BrainCircuit className="h-4 w-4" />
+                </span>
+                <p className="pt-1.5 text-sm leading-5 text-slate-700">
                   Votre profil enrichit les questions posées pendant l&apos;entretien.
                 </p>
               </div>
             </div>
+
+            {/* Séparateur + bloc conseil */}
+            <div className="mt-7 border-t border-violet-100 pt-6">
+              <div className="rounded-xl border border-violet-100 bg-white/70 p-4">
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-500">
+                    <Lightbulb className="h-3.5 w-3.5" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-bold text-slate-800">Conseil</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                      Plus la description de l&apos;offre est complète, plus la simulation
+                      sera pertinente et réaliste.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </aside>
+
         </div>
       </section>
     </div>
