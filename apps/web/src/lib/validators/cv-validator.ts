@@ -3,24 +3,7 @@ import { createRequire } from "node:module"
 
 const require = createRequire(import.meta.url)
 
-const {
-  DOMMatrix,
-  ImageData,
-  Path2D,
-} = require("@napi-rs/canvas") as typeof import("@napi-rs/canvas")
-
-if (typeof globalThis.DOMMatrix === "undefined") {
-  (globalThis as any).DOMMatrix = DOMMatrix
-}
-
-if (typeof globalThis.ImageData === "undefined") {
-  (globalThis as any).ImageData = ImageData
-}
-
-if (typeof globalThis.Path2D === "undefined") {
-  (globalThis as any).Path2D = Path2D
-}
-
+const { CanvasFactory } = require("pdf-parse/worker") as typeof import("pdf-parse/worker")
 const { PDFParse } = require("pdf-parse") as typeof import("pdf-parse")
 
 export async function validateCVUpload(file: File | null): Promise<{
@@ -97,7 +80,8 @@ async function extractCVContent(file: File, _options?: { signal?: AbortSignal })
   if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
     const arrayBuffer = await file.arrayBuffer()
     const parser = new PDFParse({
-      data: new Uint8Array(arrayBuffer)
+      data: new Uint8Array(arrayBuffer),
+      CanvasFactory,
     })
     
     try {
