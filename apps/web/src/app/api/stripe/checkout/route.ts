@@ -17,24 +17,26 @@ function getStripe() {
   return stripe;
 }
 
-// ── Plans autorisés — source de vérité côté serveur ──────────────────────────
-// Ces IDs doivent correspondre exactement aux Price IDs dans le Stripe Dashboard
-function getAllowedPriceIds(): string[] {
-  return [
-    envServer.STRIPE_PRICE_STARTER_MONTHLY,
-    envServer.STRIPE_PRO_PRICE_ID,
-    envServer.STRIPE_EXPERT_PRICE_ID,
-    envServer.STRIPE_PRICE_EARLY,
-  ].filter((id): id is string => typeof id === "string" && id.length > 0);
+// ── Mapping slug frontend → Stripe Price ID (source de vérité serveur) ────────
+// Le frontend envoie 'starter' | 'pro' | 'expert'.
+// Le backend résout le slug vers le vrai Price ID configuré en environnement.
+function resolveStripePriceId(planSlug: string): string | null {
+  switch (planSlug) {
+    case "starter": return envServer.STRIPE_PRICE_STARTER_MONTHLY ?? null;
+    case "pro":     return envServer.STRIPE_PRO_PRICE_ID           ?? null;
+    case "expert":  return envServer.STRIPE_EXPERT_PRICE_ID        ?? null;
+    default:        return null;
+  }
 }
 
-// ── Résolution plan depuis price ID ──────────────────────────────────────────
-function resolvePlanLabel(priceId: string): string {
-  if (priceId === envServer.STRIPE_EXPERT_PRICE_ID)       return "EXPERT";
-  if (priceId === envServer.STRIPE_PRO_PRICE_ID)          return "PRO";
-  if (priceId === envServer.STRIPE_PRICE_EARLY)           return "PRO";
-  if (priceId === envServer.STRIPE_PRICE_STARTER_MONTHLY) return "STARTER";
-  return "FREE";
+// ── Résolution label plan depuis slug frontend ────────────────────────────────
+function resolvePlanLabel(planSlug: string): string {
+  switch (planSlug) {
+    case "starter": return "STARTER";
+    case "pro":     return "PRO";
+    case "expert":  return "EXPERT";
+    default:        return "FREE";
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -42,13 +44,6 @@ export async function POST(request: NextRequest) {
   // ── Guard : Stripe configuré ──────────────────────────────────────────
   if (!envServer.STRIPE_SECRET_KEY) {
     return NextResponse.json({ error: "Stripe non configuré." }, { status: 500 });
-  }
-
-  // ── Guard : au moins un prix configuré ───────────────────────────────
-  const allowedPriceIds = getAllowedPriceIds();
-  if (allowedPriceIds.length === 0) {
-    logError("[Checkout]", "Aucun STRIPE_PRICE_* configuré dans les variables d'environnement");
-    return NextResponse.json({ error: "Configuration paiement invalide." }, { status: 503 });
   }
 
   // ── Authentification ──────────────────────────────────────────────────
@@ -69,12 +64,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // ── Validation payload ────────────────────────────────────────────────
+  // ── Validation payload — accepte les slugs frontend ──────────────────
   const RequestSchema = z.object({
-    priceId: z.string().refine(
-      (id) => allowedPriceIds.includes(id),
-      { message: "Plan invalide." }
-    ),
+    priceId: z.enum(["starter", "pro", "expert"]),
   });
 
   const body   = await request.json().catch(() => null);
@@ -85,7 +77,19 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
-  const { priceId } = parsed.data;
+
+  const planSlug = parsed.data.priceId;
+
+  // ── Résolution Price ID Stripe depuis le slug ─────────────────────────
+  const stripePriceId = resolveStripePriceId(planSlug);
+  if (!stripePriceId) {
+    logError("[Checkout]", `Price ID non configuré pour le plan : ${planSlug}`);
+    return NextResponse.json({ error: "Configuration paiement invalide." }, { status: 503 });
+  }
+
+  const planLabel = resolvePlanLabel(planSlug);
+  // priceId est maintenant le vrai Price ID Stripe
+  const priceId = stripePriceId;
 
   // ── Récupérer profil utilisateur ──────────────────────────────────────
   const userProfile = await prisma.user.findUnique({
@@ -110,9 +114,6 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
-
-  // ── Résolution plan ───────────────────────────────────────────────────
-  const planLabel = resolvePlanLabel(priceId);
 
   logInfo("[STRIPE_CHECKOUT]", "Création session checkout", {
     userId:  user.id,
