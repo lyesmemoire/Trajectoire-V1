@@ -273,7 +273,7 @@ export function DashboardWidgets({
         <div>
           <div className="flex items-center gap-2">
             <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-violet-500">
-              Votre espace carriÃ¨re
+              Votre espace carrière
             </p>
 
             <Sparkles className="size-3.5 text-violet-500" />
@@ -284,7 +284,7 @@ export function DashboardWidgets({
           </h1>
 
           <p className="mt-1 text-[13px] text-slate-500">
-            Votre trajectoire professionnelle, pilotÃ©e par vos donnÃ©es.
+            Votre trajectoire professionnelle, pilotée par vos données.
           </p>
         </div>
 
@@ -330,8 +330,8 @@ export function DashboardWidgets({
             </h2>
 
             <p className="mt-3 max-w-[660px] text-[13px] leading-6 text-white/72 sm:text-sm">
-              Analysez votre profil, amÃ©liorez votre CV et entraÃ®nez-vous
-              aux entretiens avec un parcours personnalisÃ© par lâ€™IA.
+              Analysez votre profil, améliorez votre CV et entraînez-vous
+              aux entretiens avec un parcours personnalisé par l'IA.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -347,7 +347,7 @@ export function DashboardWidgets({
                 href="/matching"
                 className="inline-flex h-11 items-center gap-2 rounded-xl bg-white/10 px-5 text-xs font-bold text-white ring-1 ring-white/20 backdrop-blur transition hover:bg-white/15"
               >
-                Explorer mes opportunitÃ©s
+                Explorer mes opportunités
               </Link>
             </div>
           </div>
@@ -357,7 +357,7 @@ export function DashboardWidgets({
 
             <div className="min-w-[150px]">
               <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/55">
-                Score carriÃ¨re
+                Score carrière
               </p>
 
               <div className="mt-2 flex items-center gap-2">
@@ -374,14 +374,14 @@ export function DashboardWidgets({
                   {trendPositive
                     ? "En progression"
                     : score.trend === "down"
-                      ? "Ã€ renforcer"
+                      ? "À renforcer"
                       : "Stable"}
                 </span>
               </div>
 
               <p className="mt-3 text-[11px] leading-5 text-white/60">
-                Objectif recommandÃ© : atteindre 80/100 pour renforcer
-                votre attractivitÃ©.
+                Objectif recommandé : atteindre 80/100 pour renforcer
+                votre attractivité.
               </p>
             </div>
           </div>
@@ -394,8 +394,8 @@ export function DashboardWidgets({
           value={`${score.currentScore}/100`}
           description={
             score.previousScore !== undefined
-              ? `PrÃ©cÃ©dent : ${score.previousScore}/100`
-              : "PremiÃ¨re rÃ©fÃ©rence enregistrÃ©e"
+              ? `Précédent : ${score.previousScore}/100`
+              : "Première référence enregistrée"
           }
           icon={Target}
           accent="violet"
@@ -404,7 +404,7 @@ export function DashboardWidgets({
         <StatCard
           eyebrow="Analyses"
           value={String(history.length)}
-          description="CV analysÃ©s rÃ©cemment"
+          description="CV analysés récemment"
           icon={FileSearch}
           accent="sky"
         />
@@ -412,7 +412,7 @@ export function DashboardWidgets({
         <StatCard
           eyebrow="Parcours"
           value={`${progress.percentage}%`}
-          description={`${progress.completedSteps} Ã©tapes complÃ©tÃ©es sur ${progress.totalSteps}`}
+          description={`${progress.completedSteps} étapes complétées sur ${progress.totalSteps}`}
           icon={BarChart3}
           accent="emerald"
         />
@@ -660,10 +660,10 @@ export function DashboardWidgets({
         <div className="space-y-5">
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="PrioritÃ©s recommandÃ©es"
+              title="Priorités recommandées"
               subtitle="Les actions avec le plus fort impact sur votre progression."
               href="/analyze"
-              action="Voir lâ€™analyse"
+              action="Voir l'analyse"
             />
 
             {recommendations.length > 0 ? (
@@ -718,7 +718,7 @@ export function DashboardWidgets({
                           +{recommendation.estimatedImpact}
                         </p>
                         <p className="text-[10px] text-slate-400">
-                          impact estimÃ©
+                          impact estimé
                         </p>
                       </div>
                     </motion.div>
@@ -733,12 +733,12 @@ export function DashboardWidgets({
                   </div>
 
                   <p className="mt-3 text-sm font-bold text-slate-900">
-                    Vos recommandations apparaÃ®tront ici
+                    Vos recommandations apparaîtront ici
                   </p>
 
                   <p className="mx-auto mt-1 max-w-[380px] text-xs leading-5 text-slate-500">
                     Analysez un CV pour obtenir des recommandations
-                    personnalisÃ©es et classÃ©es par impact.
+                    personnalisées et classées par impact.
                   </p>
                 </div>
               </div>
@@ -747,8 +747,8 @@ export function DashboardWidgets({
 
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="ActivitÃ© rÃ©cente"
-              subtitle="Vos derniÃ¨res analyses et simulations."
+              title="Activité récente"
+              subtitle="Vos dernières analyses et simulations."
               href="/history"
               action="Historique"
             />
@@ -793,10 +793,10 @@ export function DashboardWidgets({
                           ].join(" ")}
                         >
                           {event.status === "completed"
-                            ? "TerminÃ©"
+                            ? "Terminé"
                             : event.status === "in-progress"
                               ? "En cours"
-                              : "Ã€ venir"}
+                              : "À venir"}
                         </span>
                       </div>
                     </div>
@@ -809,11 +809,11 @@ export function DashboardWidgets({
                   <History className="mx-auto size-6 text-slate-300" />
 
                   <p className="mt-3 text-sm font-bold text-slate-900">
-                    Aucune activitÃ© pour le moment
+                    Aucune activité pour le moment
                   </p>
 
                   <p className="mt-1 text-xs text-slate-500">
-                    Votre parcours commencera dÃ¨s votre premiÃ¨re action.
+                    Votre parcours commencera dès votre première action.
                   </p>
                 </div>
               </div>
@@ -822,8 +822,8 @@ export function DashboardWidgets({
 
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100 sm:p-6">
             <SectionHeader
-              title="CompÃ©tences clÃ©s"
-              subtitle="Les compÃ©tences dÃ©tectÃ©es dans votre profil."
+              title="Compétences clés"
+              subtitle="Les compétences détectées dans votre profil."
             />
 
             {skills.length > 0 ? (
@@ -861,8 +861,8 @@ export function DashboardWidgets({
               </div>
             ) : (
               <p className="mt-5 rounded-[18px] bg-slate-50 p-4 text-xs leading-5 text-slate-500">
-                Vos compÃ©tences seront automatiquement dÃ©tectÃ©es aprÃ¨s
-                votre premiÃ¨re analyse de CV.
+                Vos compétences seront automatiquement détectées après
+                votre première analyse de CV.
               </p>
             )}
           </section>
@@ -872,7 +872,7 @@ export function DashboardWidgets({
           <section className="rounded-[26px] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100">
             <SectionHeader
               title="Votre progression"
-              subtitle={`${progress.completedSteps}/${progress.totalSteps} Ã©tapes`}
+              subtitle={`${progress.completedSteps}/${progress.totalSteps} étapes`}
             />
 
             <div className="mt-5">
@@ -937,8 +937,8 @@ export function DashboardWidgets({
           <section className="overflow-hidden rounded-[26px] border border-white bg-white shadow-[0_14px_42px_rgba(54,44,90,0.055)] ring-1 ring-slate-100">
             <div className="p-5">
               <SectionHeader
-                title="Trajectoire carriÃ¨re"
-                subtitle="Votre niveau actuel et votre prochaine Ã©tape."
+                title="Trajectoire carrière"
+                subtitle="Votre niveau actuel et votre prochaine étape."
               />
 
               <div className="mt-5 rounded-[20px] bg-gradient-to-br from-violet-50 to-indigo-50 p-4 ring-1 ring-violet-100">
@@ -990,12 +990,12 @@ export function DashboardWidgets({
 
             <h3 className="mt-4 text-lg font-bold tracking-[-0.025em]">
               {topRecommendation?.title ??
-                "Lancez votre premiÃ¨re simulation"}
+                "Lancez votre première simulation"}
             </h3>
 
             <p className="mt-2 text-xs leading-5 text-slate-400">
               {topRecommendation?.description ??
-                "Obtenez un feedback personnalisÃ© sur vos rÃ©ponses et amÃ©liorez votre performance."}
+                "Obtenez un feedback personnalisé sur vos réponses et améliorez votre performance."}
             </p>
 
             <Link
