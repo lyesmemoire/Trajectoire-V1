@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "prisma generate && pnpm --dir apps/web build",
+  "buildCommand": "cd ../.. && prisma generate && pnpm --dir apps/web build",
   "devCommand": "pnpm --dir apps/web dev",
   "installCommand": "pnpm install --frozen-lockfile",
   "build": {
