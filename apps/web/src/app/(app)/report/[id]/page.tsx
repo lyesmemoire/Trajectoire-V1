@@ -102,8 +102,8 @@ export default async function ReportPage({
 
   // Formater les recommandations réelles
   let realRecommendations: any[] = []
-  if (Array.isArray(report.recommendations)) {
-    realRecommendations = report.recommendations.map(
+  if (Array.isArray((report as any).recommendations)) {
+    realRecommendations = (report as any).recommendations.map(
       (rec: any, index: number) => {
         if (typeof rec === "string") {
           return {
