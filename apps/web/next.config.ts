@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   // internal module resolution remains Node-native.
   serverExternalPackages: [
     "pdf-parse",
+    "@napi-rs/canvas",
     "pdfjs-dist",
     "pino",
     "pino-pretty",
