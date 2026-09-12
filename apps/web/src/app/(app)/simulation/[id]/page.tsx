@@ -52,7 +52,8 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const formData = new FormData(form)
     const content = formData.get("content") as string
 
     if (!content.trim()) return
@@ -76,7 +77,7 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
       await fetchSession(id)
       
       // Réinitialiser le formulaire
-      e.currentTarget.reset()
+      form.reset()
     } catch (err: any) {
       setError(err instanceof Error ? err.message : "Erreur inconnue")
     } finally {
