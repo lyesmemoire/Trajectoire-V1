@@ -1,5 +1,8 @@
 import { fileTypeFromBuffer } from "file-type"
-import { PDFParse } from "pdf-parse"
+import { createRequire } from "node:module"
+
+const require = createRequire(import.meta.url)
+const { PDFParse } = require("pdf-parse") as typeof import("pdf-parse")
 
 export async function validateCVUpload(file: File | null): Promise<{
   valid: boolean
