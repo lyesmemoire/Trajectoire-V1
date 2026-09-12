@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import {
   Suspense,
@@ -153,8 +153,7 @@ function LoginContent() {
       }
 
       // Authentication cookies are now available to middleware.
-      router.replace(redirectTo)
-      router.refresh()
+      window.location.href = redirectTo
     } catch {
       setError(
         "Une erreur critique est survenue. Veuillez réessayer."
