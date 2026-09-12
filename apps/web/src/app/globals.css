@@ -12,8 +12,8 @@
   }
 
   ::selection {
-    background-color: theme('colors.bronze.100');
-    color: theme('colors.ink.900');
+    background-color: theme('colors.primary.50');
+    color: theme('colors.primary.700');
   }
 
   /* Scrollbar discrète et premium */
@@ -62,7 +62,7 @@
     border-radius: 4px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: #1A3C34;
+    background: theme('colors.primary.600');
   }
 }
 

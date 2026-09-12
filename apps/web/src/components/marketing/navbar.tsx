@@ -9,7 +9,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 bg-gradient-to-br from-ink-700 to-ink-900 rounded-xl flex items-center justify-center shadow-lg shadow-ink-500/20 transition-transform group-hover:scale-105 duration-200">
+          <div className="w-9 h-9 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/20 transition-transform group-hover:scale-105 duration-200">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <span className="font-black text-white text-lg tracking-tight font-display">
@@ -49,7 +49,7 @@ export default function Navbar() {
           </Link>
           <Link
             href={signupHref}
-            className="text-sm bg-gradient-to-r from-ink-700 to-ink-900 hover:from-ink-800 hover:to-ink-900 text-white px-5 py-2.5 rounded-full transition-all duration-200 shadow-md shadow-ink-500/10 font-bold hover:shadow-lg hover:shadow-ink-500/20 transform hover:-translate-y-0.5"
+            className="text-sm bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 text-white px-5 py-2.5 rounded-full transition-all duration-200 shadow-md shadow-primary-600/10 font-bold hover:shadow-lg hover:shadow-primary-600/20 transform hover:-translate-y-0.5"
           >
             Essai gratuit
           </Link>

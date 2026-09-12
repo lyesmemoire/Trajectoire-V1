@@ -138,17 +138,17 @@ export default function PricingPage() {
             </div>
 
             {/* Expert */}
-            <div className="p-12 bg-ink-900 border-2 border-ink-900 rounded-2xl text-left shadow-premium-lg">
-              <h3 className="text-lg font-serif font-semibold text-bronze-400 mb-2">
+            <div className="p-12 bg-primary-600 border-2 border-primary-600 rounded-2xl text-left shadow-premium-lg">
+              <h3 className="text-lg font-serif font-semibold text-white mb-2">
                 Expert
               </h3>
-              <p className="text-sm text-ink-400 mb-8">
+              <p className="text-sm text-white/80 mb-8">
                 Pour dominer.
               </p>
-              <p className="text-4xl font-serif font-semibold text-bronze-400 mb-2">
+              <p className="text-4xl font-serif font-semibold text-white mb-2">
                 99€
               </p>
-              <p className="text-ink-500 text-sm mb-10">
+              <p className="text-white/70 text-sm mb-10">
                 / mois
               </p>
               <Button 

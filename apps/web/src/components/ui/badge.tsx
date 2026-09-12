@@ -2,8 +2,8 @@ type BadgeVariant = 'free' | 'pro' | 'expert'
 
 const styles: Record<BadgeVariant, string> = {
   free: 'bg-ivoire-100 text-ink-600 border border-ivoire-200',
-  pro: 'bg-bronze-50 text-bronze-700 border border-bronze-100',
-  expert: 'bg-ink-900 text-bronze-400 border border-ink-900',
+  pro: 'bg-primary-50 text-primary-700 border border-primary-50',
+  expert: 'bg-primary-600 text-white border border-primary-600',
 }
 
 const labels: Record<BadgeVariant, string> = {

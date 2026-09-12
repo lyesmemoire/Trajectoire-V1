@@ -12,12 +12,12 @@ interface ProgressProps {
   label?: string
   showValue?: boolean
   size?: "sm" | "md" | "lg"
-  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink"
+  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink" | "primary"
   className?: string
 }
 
 export function Progress({
-  value, max = 100, label, showValue = true, size = "md", color = "bronze", className }: ProgressProps) {
+  value, max = 100, label, showValue = true, size = "md", color = "primary", className }: ProgressProps) {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
 
   const sizes = {
@@ -27,11 +27,12 @@ export function Progress({
   }
 
   const colors = {
-    bronze: "bg-gradient-to-r from-forest-500 to-forest-600",
+    primary: "bg-gradient-to-r from-primary-400 to-primary-600",
+    bronze: "bg-gradient-to-r from-primary-400 to-primary-600",
     forest: "bg-gradient-to-r from-forest-500 to-forest-600",
     terracotta: "bg-gradient-to-r from-terracotta-500 to-terracotta-600",
     brick: "bg-gradient-to-r from-brick-500 to-brick-600",
-    ink: "bg-gradient-to-r from-ink-500 to-ink-600",
+    ink: "bg-gradient-to-r from-primary-600 to-primary-700",
   }
 
   return (
@@ -78,23 +79,24 @@ interface CircularProgressProps {
   size?: number
   strokeWidth?: number
   label?: string
-  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink"
+  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink" | "primary"
   className?: string
 }
 
 export function CircularProgress({
-  value, max = 100, size = 120, strokeWidth = 8, label, color = "bronze", className }: CircularProgressProps) {
+  value, max = 100, size = 120, strokeWidth = 8, label, color = "primary", className }: CircularProgressProps) {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
   const radius = (size - strokeWidth) / 2
   const circumference = radius * 2 * Math.PI
   const offset = circumference - (percentage / 100) * circumference
 
   const colors = {
-    bronze: "#A67C3D",
+    primary: "#7C3AED",
+    bronze: "#7C3AED",
     forest: "#2F6844",
     terracotta: "#C25E00",
     brick: "#8B3A3A",
-    ink: "#1C1917",
+    ink: "#6D28D9",
   }
 
   return (

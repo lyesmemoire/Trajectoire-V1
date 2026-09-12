@@ -59,7 +59,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </button>
 
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center text-white font-black text-sm">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center text-white font-black text-sm">
                 ✦
               </div>
               <span className="font-black tracking-tight hidden sm:block">
@@ -99,14 +99,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
             <Link
               href="/dashboard/credits"
-              className="hidden sm:block px-4 py-2 bg-ink-900 text-white font-bold rounded-full text-sm hover:bg-ink-800 transition-colors"
+              className="hidden sm:block px-4 py-2 bg-primary-600 text-white font-bold rounded-full text-sm hover:bg-primary-700 transition-colors"
             >
               Acheter
             </Link>
 
             {/* User Menu */}
             <div className="relative">
-              <button className="w-9 h-9 rounded-full bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center text-white font-bold text-sm">
+              <button className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center text-white font-bold text-sm">
                 JD
               </button>
             </div>

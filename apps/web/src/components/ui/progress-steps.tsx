@@ -23,7 +23,7 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
                   step.completed
                     ? "bg-forest-500 text-white"
                     : step.current
-                      ? "bg-ink-900 text-white ring-4 ring-ink-100"
+                      ? "bg-primary-600 text-white ring-4 ring-primary-50"
                       : "bg-ivoire-100 text-ink-400"
                 }
               `}
@@ -33,7 +33,7 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
             <span
               className={`
                 mt-1 text-xs font-medium
-                ${step.current ? "text-ink-900" : step.completed ? "text-forest-600" : "text-ink-400"}
+                ${step.current ? "text-primary-700 font-bold" : step.completed ? "text-forest-600" : "text-ink-400"}
               `}
             >
               {step.label}

@@ -6,6 +6,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        primary: {
+          50: '#F5F3FF',
+          400: '#A78BFA',
+          600: '#7C3AED',
+          700: '#6D28D9',
+        },
         ivoire: {
           50: '#FBF9F6',
           100: '#F5F2EC',

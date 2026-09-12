@@ -15,7 +15,7 @@ export function StatCard({
     blue: "bg-ivoire-50 border-ivoire-200 text-ink-600",
     green: "bg-forest-50 border-forest-100 text-forest-600",
     amber: "bg-terracotta-50 border-terracotta-100 text-terracotta-600",
-    violet: "bg-ivoire-50 border-ivoire-200 text-ink-600",
+    violet: "bg-primary-50 border-primary-100 text-primary-600",
     slate: "bg-ivoire-50 border-ivoire-200 text-ink-600",
   }
 

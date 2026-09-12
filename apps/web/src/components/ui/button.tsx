@@ -11,15 +11,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-ink-900 text-ivoire-50 hover:bg-ink-800 shadow-premium hover:shadow-premium-lg',
+    'bg-primary-600 text-white hover:bg-primary-700 shadow-premium hover:shadow-premium-lg',
   secondary:
-    'bg-white text-ink-900 border border-ivoire-300 hover:border-ink-900',
+    'bg-white text-ink-900 border border-ivoire-300 hover:border-primary-600 hover:text-primary-700',
   ghost:
-    'bg-transparent text-ink-600 hover:text-ink-900 hover:bg-ivoire-100',
+    'bg-transparent text-ink-600 hover:text-primary-700 hover:bg-primary-50',
   premium:
-    'bg-bronze-600 text-white hover:bg-bronze-700 shadow-premium hover:shadow-premium-lg',
+    'bg-primary-600 text-white hover:bg-primary-700 shadow-premium hover:shadow-premium-lg',
   link:
-    'bg-transparent text-ink-900 underline-offset-4 hover:underline p-0 h-auto',
+    'bg-transparent text-ink-900 underline-offset-4 hover:underline hover:text-primary-700 p-0 h-auto',
   danger:
     'bg-brick-600 text-white hover:bg-brick-700 shadow-premium hover:shadow-premium-lg',
 }

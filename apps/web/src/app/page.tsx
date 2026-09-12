@@ -302,7 +302,7 @@ export default function HomePage() {
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-white">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white">
                       {file ? (
                         <CheckCircle2
                           className="size-5"
@@ -383,15 +383,15 @@ export default function HomePage() {
                   aria-busy={loading}
                   className="
                     mt-3 flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl
-                    bg-gradient-to-b from-ink-900 to-ink-800
+                    bg-gradient-to-b from-primary-600 to-primary-700
                     px-5 py-3.5 text-[15px] font-semibold text-white
                     shadow-premium-lg
-                    border border-bronze-400/18
-                    ring-1 ring-bronze-400/35
+                    border border-primary-400/18
+                    ring-1 ring-primary-400/35
                     transition-all duration-200 ease-premium
-                    hover:-translate-y-[1px] hover:ring-bronze-400/60 hover:border-bronze-400/28
+                    hover:-translate-y-[1px] hover:ring-primary-400/60 hover:border-primary-400/28
                     active:translate-y-0 active:shadow-premium
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400
                     focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
                     disabled:cursor-not-allowed disabled:opacity-70
                     disabled:hover:translate-y-0
@@ -419,7 +419,7 @@ export default function HomePage() {
 
                 {/* Annonce optionnelle */}
                 <details className="mt-3 rounded-xl border border-ivoire-200 bg-white px-4 py-3 lg:border-ivoire-300">
-                  <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-bronze-400">
+                  <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-primary-400">
                     Ajouter l’annonce (optionnel)
                   </summary>
 
@@ -430,7 +430,7 @@ export default function HomePage() {
                       placeholder="Collez l’annonce (missions, profil recherché, compétences, outils, etc.)"
                       rows={5}
                       disabled={loading}
-                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
+                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-primary-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
                     />
 
                     <p className="mt-2 text-xs text-ink-500">
