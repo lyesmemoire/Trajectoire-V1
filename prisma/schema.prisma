@@ -52,6 +52,7 @@ model User {
   discoveredJobs         DiscoveredJob[]
 
   discoverySources DiscoverySource[]
+  UserPurchase     UserPurchase[]
 
   @@index([email])
   @@index([stripeCustomerId])
@@ -1045,5 +1046,19 @@ model DiscoveredJob {
   @@index([opportunityId])
   @@index([provider, boardKey])
   @@map("discovered_jobs")
+  @@schema("public")
+}
+
+model UserPurchase {
+  id                      String   @id @default(cuid())
+  userId                  String
+  type                    String // e.g., 'INTERVIEW_PACK'
+  stripeCheckoutSessionId String?  @unique
+  status                  String   @default("ACTIVE") // ACTIVE, REFUNDED
+  activatedAt             DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
   @@schema("public")
 }

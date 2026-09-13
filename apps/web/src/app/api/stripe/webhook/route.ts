@@ -1,4 +1,4 @@
-// apps/web/src/app/api/stripe/webhook/route.ts
+﻿// apps/web/src/app/api/stripe/webhook/route.ts
 
 import { NextResponse, NextRequest } from 'next/server';
 import { stripe }                    from "@/lib/stripe";
@@ -44,13 +44,13 @@ export const POST = rateLimit(
   try {
     switch (event.type) {
 
-      // ── Démarrage abonnement via Checkout ─────────────────────────────
+      // â”€â”€ DÃ©marrage abonnement via Checkout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       case "checkout.session.completed": {
         const session  = event.data.object as Stripe.Checkout.Session;
 
         const metadata = StripeMetadataSchema.safeParse(session.metadata);
         if (!metadata.success) {
-          logger.error("[Webhook] checkout.session.completed — metadata invalide");
+          logger.error("[Webhook] checkout.session.completed â€” metadata invalide");
           break;
         }
 
@@ -87,22 +87,22 @@ export const POST = rateLimit(
         break;
       }
 
-      // ── Création abonnement ───────────────────────────────────────────
+      // â”€â”€ CrÃ©ation abonnement â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       case "customer.subscription.created":
-      // ── Mise à jour abonnement ────────────────────────────────────────
+      // â”€â”€ Mise Ã  jour abonnement â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       // eslint-disable-next-line no-fallthrough
       case "customer.subscription.updated": {
         const sub     = event.data.object as Stripe.Subscription;
         const user_id = sub.metadata?.user_id;
         if (!user_id) {
-          logger.error(`[Webhook] ${event.type} — user_id manquant dans metadata`, { eventType: event.type });
+          logger.error(`[Webhook] ${event.type} â€” user_id manquant dans metadata`, { eventType: event.type });
           break;
         }
         await upsertSubscriptionAndPlan(user_id, sub, event.created);
         break;
       }
 
-      // ── Paiement réussi → s'assurer que status = active ───────────────
+      // â”€â”€ Paiement rÃ©ussi â†’ s'assurer que status = active â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       case "invoice.payment_succeeded": {
         const invoice    = event.data.object as Stripe.Invoice;
         const customerId = invoice.customer as string;
@@ -117,7 +117,7 @@ export const POST = rateLimit(
           data:  { status: "active" },
         });
 
-        // S'assurer que User.plan est cohérent
+        // S'assurer que User.plan est cohÃ©rent
         const plan = resolvePlanFromPriceId(
           (invoice as any).lines?.data?.[0]?.price?.id ?? ""
         );
@@ -130,7 +130,7 @@ export const POST = rateLimit(
         break;
       }
 
-      // ── Fin d'abonnement ──────────────────────────────────────────────
+      // â”€â”€ Fin d'abonnement â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       case "customer.subscription.deleted": {
         const sub     = event.data.object as Stripe.Subscription;
         const user_id = sub.metadata?.user_id;
@@ -149,7 +149,7 @@ export const POST = rateLimit(
         break;
       }
 
-      // ── Paiement échoué ───────────────────────────────────────────────
+      // â”€â”€ Paiement Ã©chouÃ© â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       case "invoice.payment_failed": {
         const invoice    = event.data.object as Stripe.Invoice;
         const customerId = invoice.customer as string;
@@ -179,7 +179,7 @@ export const POST = rateLimit(
   { scopes: [RateLimitScope.IP] }
 );
 
-// ── Upsert Subscription + mise à jour User.plan (atomique) ───────────────────
+// â”€â”€ Upsert Subscription + mise Ã  jour User.plan (atomique) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscription, eventCreatedTimestamp: number): Promise<void> {
   const plan             = resolvePlanFromSubscription(sub);
   const currentPeriodEnd = new Date((sub as any).current_period_end * 1000);
@@ -220,13 +220,13 @@ async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscriptio
   ]);
 }
 
-// ── Résolution plan depuis un objet Subscription Stripe ──────────────────────
+// â”€â”€ RÃ©solution plan depuis un objet Subscription Stripe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function resolvePlanFromSubscription(sub: Stripe.Subscription): string {
   const priceId = sub.items.data[0]?.price.id ?? "";
   return resolvePlanFromPriceId(priceId);
 }
 
-// ── Résolution plan depuis un price ID ───────────────────────────────────────
+// â”€â”€ RÃ©solution plan depuis un price ID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function resolvePlanFromPriceId(priceId: string): string {
   if (!priceId) return "FREE";
   if (priceId === envServer.STRIPE_EXPERT_PRICE_ID)  return "EXPERT";

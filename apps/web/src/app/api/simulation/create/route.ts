@@ -39,6 +39,10 @@ import {
 } from "@/lib/auth/verified-user";
 
 import {
+  checkSimulationQuota,
+} from "@/lib/quota/simulation-quota";
+
+import {
   UnifiedInterviewContextService,
 } from "@/application/interview-context/UnifiedInterviewContextService";
 
@@ -306,6 +310,22 @@ export async function POST(
     ) {
       return ApiResponseBuilder
         .unauthorized();
+    }
+
+    // --- Quota check : bloque la création si le plafond mensuel est atteint ---
+    const quota = await checkSimulationQuota(user.id);
+    if (!quota.allowed) {
+      return NextResponse.json(
+        {
+          error: "SIMULATION_QUOTA_EXCEEDED",
+          message: "Vous avez utilisé toutes vos simulations disponibles pour cette période.",
+          used: quota.used,
+          limit: quota.limit,
+          remaining: 0,
+          periodEnd: quota.periodEnd,
+        },
+        { status: 403 },
+      );
     }
 
     const formData =

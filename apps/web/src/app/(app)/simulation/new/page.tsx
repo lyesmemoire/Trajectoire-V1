@@ -1,4 +1,4 @@
-import Link from "next/link"
+﻿import Link from "next/link"
 import { redirect } from "next/navigation"
 import {
   ArrowLeft,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 
 import { buildApplicationContext } from "@/lib/opportunities/buildApplicationContext"
+import { checkSimulationQuota } from "@/lib/quota/simulation-quota"
 import { prisma } from "@/lib/prisma"
 import { createClient } from "@/lib/supabase/server"
 
@@ -165,6 +166,29 @@ export default async function NewSimulationPage({
   const contextualDescription =
     applicationContext?.plainText ?? ""
 
+  const quota = await checkSimulationQuota(user.id)
+
+  function quotaBadgeText(): string {
+    if (quota.isUnlimited) return "Simulations illimitÃ©es"
+
+    if (quota.plan === "FREE") {
+      return quota.remaining === 0
+        ? "Simulation dÃ©couverte utilisÃ©e"
+        : "1 simulation dÃ©couverte disponible"
+    }
+
+    if (quota.plan === "INTERVIEW_PACK") {
+      return quota.remaining === 0
+        ? "Quota Ã©puisÃ©"
+        : `${quota.remaining} simulations restantes`
+    }
+
+    // PRO
+    return quota.remaining === 0
+      ? "Quota Ã©puisÃ© ce mois-ci"
+      : `${quota.remaining} simulations restantes`
+  }
+
   return (
     <div className="mx-auto max-w-5xl space-y-6 pb-12">
       {/* Breadcrumb */}
@@ -179,7 +203,7 @@ export default async function NewSimulationPage({
         >
           <ArrowLeft className="h-4 w-4" />
           {opportunity
-            ? "Retour à l'opportunité"
+            ? "Retour Ã  l'opportunitÃ©"
             : "Retour"}
         </Link>
       </div>
@@ -187,27 +211,37 @@ export default async function NewSimulationPage({
       <section className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-sm">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_300px]">
 
-          {/* ── Formulaire (colonne gauche) ── */}
+          {/* â”€â”€ Formulaire (colonne gauche) â”€â”€ */}
           <div className="p-6 sm:p-8">
-            {/* Icône + eyebrow */}
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
-                <BrainCircuit className="h-5 w-5" />
+            {/* IcÃ´ne + eyebrow */}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
+                  <BrainCircuit className="h-5 w-5" />
+                </div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-600">
+                  Simulation d&apos;entretien
+                </p>
               </div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-600">
-                Simulation d&apos;entretien
-              </p>
+              {/* Badge quota discret */}
+              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                quota.remaining === 0 && !quota.isUnlimited
+                  ? "bg-red-50 text-red-600"
+                  : "bg-slate-100 text-slate-500"
+              }`}>
+                {quotaBadgeText()}
+              </span>
             </div>
 
             <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
-              Préparez votre entretien
+              PrÃ©parez votre entretien
             </h1>
 
             <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-              Créez une simulation personnalisée à partir de l&apos;offre que vous visez.
+              CrÃ©ez une simulation personnalisÃ©e Ã  partir de l&apos;offre que vous visez.
             </p>
 
-            {/* Bandeau opportunité connectée */}
+            {/* Bandeau opportunitÃ© connectÃ©e */}
             {opportunity ? (
               <div className="mt-6 rounded-[22px] border border-violet-100 bg-violet-50/60 p-5">
                 <div className="flex items-start gap-3">
@@ -215,7 +249,7 @@ export default async function NewSimulationPage({
 
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-600">
-                      Opportunité connectée
+                      OpportunitÃ© connectÃ©e
                     </p>
 
                     <p className="mt-2 font-bold text-slate-950">
@@ -234,22 +268,22 @@ export default async function NewSimulationPage({
                       <p className="mt-2 text-xs font-semibold text-violet-700">
                         {applicationContext.evidenceCount}{" "}
                         {applicationContext.evidenceCount === 1
-                          ? "preuve sélectionnée"
-                          : "preuves sélectionnées"}{" "}
-                        seront utilisées pendant la préparation.
+                          ? "preuve sÃ©lectionnÃ©e"
+                          : "preuves sÃ©lectionnÃ©es"}{" "}
+                        seront utilisÃ©es pendant la prÃ©paration.
                       </p>
                     ) : null}
 
                     {opportunity.matchScore !== null ? (
                       <p className="mt-3 text-sm font-semibold text-violet-800">
-                        Trajectoire utilisera votre score de compatibilité de{" "}
-                        {opportunity.matchScore}/100, vos preuves sélectionnées
-                        et les écarts détectés pour contextualiser l&apos;entretien.
+                        Trajectoire utilisera votre score de compatibilitÃ© de{" "}
+                        {opportunity.matchScore}/100, vos preuves sÃ©lectionnÃ©es
+                        et les Ã©carts dÃ©tectÃ©s pour contextualiser l&apos;entretien.
                       </p>
                     ) : (
                       <p className="mt-3 text-sm text-violet-800">
                         La description de cette offre sera automatiquement
-                        transmise à la simulation.
+                        transmise Ã  la simulation.
                       </p>
                     )}
                   </div>
@@ -262,13 +296,13 @@ export default async function NewSimulationPage({
               method="POST"
               className="mt-8 space-y-6"
             >
-              {/* Poste visé */}
+              {/* Poste visÃ© */}
               <div>
                 <label
                   htmlFor="jobTitle"
                   className="mb-2 block text-sm font-bold text-slate-800"
                 >
-                  Poste visé
+                  Poste visÃ©
                 </label>
 
                 <input
@@ -292,7 +326,7 @@ export default async function NewSimulationPage({
                 </label>
 
                 <p className="mb-2 text-xs leading-5 text-slate-400">
-                  Collez l&apos;offre complète pour que l&apos;entretien soit adapté au poste.
+                  Collez l&apos;offre complÃ¨te pour que l&apos;entretien soit adaptÃ© au poste.
                 </p>
 
                 <textarea
@@ -306,8 +340,8 @@ export default async function NewSimulationPage({
 
                 {opportunity ? (
                   <p className="mt-2 text-xs leading-5 text-slate-500">
-                    L&apos;offre, les Story Bank sélectionnées et les Career Memories
-                    confirmées ont été préremplies automatiquement.
+                    L&apos;offre, les Story Bank sÃ©lectionnÃ©es et les Career Memories
+                    confirmÃ©es ont Ã©tÃ© prÃ©remplies automatiquement.
                   </p>
                 ) : null}
               </div>
@@ -319,7 +353,7 @@ export default async function NewSimulationPage({
                     htmlFor="level"
                     className="mb-2 block text-sm font-bold text-slate-800"
                   >
-                    Niveau d&apos;expérience
+                    Niveau d&apos;expÃ©rience
                   </label>
 
                   <select
@@ -330,7 +364,7 @@ export default async function NewSimulationPage({
                     className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition focus:border-violet-400 focus:ring-4 focus:ring-violet-100"
                   >
                     <option value="Junior">Junior</option>
-                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="IntermÃ©diaire">IntermÃ©diaire</option>
                     <option value="Senior">Senior</option>
                     <option value="Lead">Lead</option>
                     <option value="Manager">Manager</option>
@@ -359,13 +393,13 @@ export default async function NewSimulationPage({
                 </div>
               </div>
 
-              {/* Durée */}
+              {/* DurÃ©e */}
               <div>
                 <label
                   htmlFor="duration"
                   className="mb-2 block text-sm font-bold text-slate-800"
                 >
-                  Durée
+                  DurÃ©e
                 </label>
 
                 <select
@@ -392,16 +426,16 @@ export default async function NewSimulationPage({
                   Commencer l&apos;entretien
                 </button>
 
-                {/* Mention confidentialité discrète */}
+                {/* Mention confidentialitÃ© discrÃ¨te */}
                 <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
                   <Lock className="h-3 w-3 shrink-0" />
-                  Vos informations servent à personnaliser cette simulation.
+                  Vos informations servent Ã  personnaliser cette simulation.
                 </p>
               </div>
             </form>
           </div>
 
-          {/* ── Panneau contexte (colonne droite) — fond clair premium ── */}
+          {/* â”€â”€ Panneau contexte (colonne droite) â€” fond clair premium â”€â”€ */}
           <aside className="border-t border-slate-100 bg-violet-50/50 p-6 sm:p-7 lg:border-l lg:border-t-0">
             {/* Header */}
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-600">
@@ -409,22 +443,22 @@ export default async function NewSimulationPage({
             </p>
 
             <h2 className="mt-3 text-lg font-bold leading-snug tracking-tight text-slate-900">
-              Une simulation qui<br />connaît le poste.
+              Une simulation qui<br />connaÃ®t le poste.
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-slate-600">
               L&apos;entretien utilise l&apos;offre et votre profil pour poser des questions
-              réellement adaptées au contexte.
+              rÃ©ellement adaptÃ©es au contexte.
             </p>
 
-            {/* Les 3 bénéfices */}
+            {/* Les 3 bÃ©nÃ©fices */}
             <div className="mt-7 space-y-5">
               <div className="flex items-start gap-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
                   <FileText className="h-4 w-4" />
                 </span>
                 <p className="pt-1.5 text-sm leading-5 text-slate-700">
-                  L&apos;offre est transmise à la simulation.
+                  L&apos;offre est transmise Ã  la simulation.
                 </p>
               </div>
 
@@ -433,7 +467,7 @@ export default async function NewSimulationPage({
                   <Target className="h-4 w-4" />
                 </span>
                 <p className="pt-1.5 text-sm leading-5 text-slate-700">
-                  Vos forces et axes d&apos;amélioration sont utilisés comme contexte.
+                  Vos forces et axes d&apos;amÃ©lioration sont utilisÃ©s comme contexte.
                 </p>
               </div>
 
@@ -442,12 +476,12 @@ export default async function NewSimulationPage({
                   <BrainCircuit className="h-4 w-4" />
                 </span>
                 <p className="pt-1.5 text-sm leading-5 text-slate-700">
-                  Votre profil enrichit les questions posées pendant l&apos;entretien.
+                  Votre profil enrichit les questions posÃ©es pendant l&apos;entretien.
                 </p>
               </div>
             </div>
 
-            {/* Séparateur + bloc conseil */}
+            {/* SÃ©parateur + bloc conseil */}
             <div className="mt-7 border-t border-violet-100 pt-6">
               <div className="rounded-xl border border-violet-100 bg-white/70 p-4">
                 <div className="flex items-start gap-3">
@@ -457,8 +491,8 @@ export default async function NewSimulationPage({
                   <div>
                     <p className="text-xs font-bold text-slate-800">Conseil</p>
                     <p className="mt-1 text-xs leading-5 text-slate-500">
-                      Plus la description de l&apos;offre est complète, plus la simulation
-                      sera pertinente et réaliste.
+                      Plus la description de l&apos;offre est complÃ¨te, plus la simulation
+                      sera pertinente et rÃ©aliste.
                     </p>
                   </div>
                 </div>

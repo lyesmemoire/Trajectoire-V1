@@ -1,5 +1,3 @@
-// apps/web/src/app/api/stripe/checkout/route.ts
-
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse }  from "next/server";
@@ -12,36 +10,38 @@ import { checkRateLimit }             from "@/lib/rate-limit";
 import { stripe }                    from "@/lib/stripe";
 import Stripe from 'stripe';
 
-// ── Client Stripe (resilient) ──────────────────────────────────────────────────────
+// ── Client Stripe (resilient) ──────────────────────────────────────────────────────────
 function getStripe() {
   return stripe;
 }
 
-// ── Mapping slug frontend → Stripe Price ID (source de vérité serveur) ────────
-// Le frontend envoie 'starter' | 'pro' | 'expert'.
+// ── Mapping slug frontend à Stripe Price ID (source de vérité serveur) ─────────
+// Le frontend envoie 'starter' | 'pro' | 'expert' | 'interview_pack'.
 // Le backend résout le slug vers le vrai Price ID configuré en environnement.
 function resolveStripePriceId(planSlug: string): string | null {
   switch (planSlug) {
-    case "starter": return envServer.STRIPE_PRICE_STARTER_MONTHLY ?? null;
-    case "pro":     return envServer.STRIPE_PRO_PRICE_ID           ?? null;
-    case "expert":  return envServer.STRIPE_EXPERT_PRICE_ID        ?? null;
-    default:        return null;
+    case "starter":        return envServer.STRIPE_PRICE_STARTER_MONTHLY ?? null;
+    case "pro":            return envServer.STRIPE_PRO_PRICE_ID           ?? null;
+    case "expert":         return envServer.STRIPE_EXPERT_PRICE_ID        ?? null;
+    case "interview_pack": return envServer.STRIPE_PRICE_INTERVIEW_PACK   ?? null;
+    default:               return null;
   }
 }
 
-// ── Résolution label plan depuis slug frontend ────────────────────────────────
+// ── Résolution label plan depuis slug frontend ──────────────────────────────
 function resolvePlanLabel(planSlug: string): string {
   switch (planSlug) {
-    case "starter": return "STARTER";
-    case "pro":     return "PRO";
-    case "expert":  return "EXPERT";
-    default:        return "FREE";
+    case "starter":        return "STARTER";
+    case "pro":            return "PRO";
+    case "expert":         return "EXPERT";
+    case "interview_pack": return "INTERVIEW_PACK";
+    default:               return "FREE";
   }
 }
 
 export async function POST(request: NextRequest) {
 
-  // ── Guard : Stripe configuré ──────────────────────────────────────────
+  // ── Guard : Stripe configuré ───────────────────────────────────────────
   if (!envServer.STRIPE_SECRET_KEY) {
     return NextResponse.json({ error: "Stripe non configuré." }, { status: 500 });
   }
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
   // ── Validation payload — accepte les slugs frontend ──────────────────
   const RequestSchema = z.object({
-    priceId: z.enum(["starter", "pro", "expert"]),
+    priceId: z.enum(["starter", "pro", "expert", "interview_pack"]),
   });
 
   const body   = await request.json().catch(() => null);
@@ -108,7 +108,8 @@ export async function POST(request: NextRequest) {
     existingSubscription?.status === "active" &&
     existingSubscription?.stripeSubId;
 
-  if (hasActiveSubscription) {
+  // Ne pas bloquer l'achat du pack si on a déjà un abonnement.
+  if (hasActiveSubscription && planSlug !== "interview_pack") {
     return NextResponse.json(
       { error: "Vous avez déjà un abonnement actif. Utilisez le portail client pour le modifier." },
       { status: 400 }
@@ -122,25 +123,32 @@ export async function POST(request: NextRequest) {
   });
 
   try {
+    const isPaymentMode = planSlug === "interview_pack";
+    const mode = isPaymentMode ? "payment" : "subscription";
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
-      mode:                 "subscription",  // ← TOUJOURS subscription
+      mode,
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
-      // Métadonnées signées par Stripe — source de vérité pour le webhook
-      subscription_data: {
-        metadata: {
-          user_id: user.id,
-          plan:    planLabel,
-        },
-      },
       metadata: {
         user_id: user.id,
-        plan:    planLabel,
+        type:    planLabel, // e.g. "INTERVIEW_PACK" pour le webhook
+        plan:    planLabel, // legacy
       },
       success_url: `${envServer.NEXT_PUBLIC_APP_URL}/dashboard?checkout=success`,
       cancel_url:  `${envServer.NEXT_PUBLIC_APP_URL}/pricing?checkout=cancelled`,
       expires_at:  Math.floor(Date.now() / 1000) + 30 * 60,
     };
+
+    if (!isPaymentMode) {
+      sessionParams.subscription_data = {
+        metadata: {
+          user_id: user.id,
+          type:    planLabel,
+          plan:    planLabel,
+        },
+      };
+    }
 
     // Réutiliser le customer Stripe existant si disponible
     if (userProfile?.stripeCustomerId) {
