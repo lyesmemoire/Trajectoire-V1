@@ -1,4 +1,4 @@
-﻿
+
 /**
  * SessionRepository
  * Repository for interview_sessions table
@@ -23,10 +23,11 @@ export interface InterviewSession {
   created_at: string;
   updated_at: string;
   version: number;
+  analysis?: any;
 }
 
 export class	SessionRepository implements IRepository<InterviewSession> {
-  // Colonnes optimisÃ©es pour Ã©viter SELECT *
+  // Colonnes optimisées pour éviter SELECT *
   private readonly SESSION_COLUMNS = [
     "id",
     "user_id",
@@ -40,6 +41,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
     "created_at",
     "updated_at",
     "version",
+    "analysis",
   ].join(",");
 
   /**
@@ -136,7 +138,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         version: 1,
-      })
+      } as any)
       .select()
       .single();
 
@@ -199,7 +201,7 @@ export class	SessionRepository implements IRepository<InterviewSession> {
         ...updates,
         updated_at: new Date().toISOString(),
         version: newVersion,
-      })
+      } as any)
       .eq("id", id)
       .eq("version", expectedVersion)
       .select()
@@ -292,6 +294,3 @@ export class	SessionRepository implements IRepository<InterviewSession> {
     return data?.reduce((sum, session) => sum + (session.duration_seconds || 0), 0) || 0;
   }
 }
-
-
-

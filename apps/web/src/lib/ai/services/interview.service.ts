@@ -28,7 +28,9 @@ import type {
   UnifiedInterviewContext,
 } from "@/application/interview-context/UnifiedInterviewContextService";
 
-import { InterviewStrategyService, selectTargetSkill } from "@/application/interview-strategy/InterviewStrategyService";
+import { InterviewStrategyService } from "@/application/interview-strategy/InterviewStrategyService";
+import { InterviewStateService } from "@/application/interview-strategy/InterviewStateService";
+import type { InterviewState } from "@/lib/ai/schemas/interview-state.schema";
 import { AnswerEvaluator } from "./answer-evaluator";
 
 import type {
@@ -74,6 +76,7 @@ export interface InterviewInput {
   userResponse?: string;
 
   strategy?: InterviewStrategy;
+  state?: InterviewState;
 }
 
 const MAX_CV_PROMPT_CHARS =
@@ -371,21 +374,30 @@ ${strategyPrompt}
 
 async function resolveStrategy(
   input: InterviewInput,
-): Promise<InterviewStrategy | undefined> {
+): Promise<{ strategy: InterviewStrategy | undefined; nextState?: InterviewState }> {
   if (input.strategy) {
-    return input.strategy;
+    return { strategy: input.strategy };
   }
 
   const unifiedContext = input.context.unifiedContext;
   if (!unifiedContext) {
-    return undefined;
+    return { strategy: undefined };
   }
 
   const messages = input.lastMessages ?? [];
-  const turnNumber = messages.filter(m => m.role === "user").length + 1;
-  const targetCompetency = selectTargetSkill(unifiedContext, turnNumber);
-
   const lastCandidateAnswer = input.userResponse ?? [...messages].reverse().find(m => m.role === "user")?.content ?? "";
+
+  // Build or restore interview state
+  const targetSkills = [
+    ...unifiedContext.matching.missingSkills,
+    ...unifiedContext.matching.matchedSkills,
+  ].filter(Boolean);
+  const currentState = input.state
+    ? InterviewStateService.parse(input.state, targetSkills)
+    : InterviewStateService.initializeState(targetSkills);
+
+  // Determine current competency for evaluation
+  const targetCompetency = currentState.currentCompetency;
 
   const evaluation = lastCandidateAnswer ? await AnswerEvaluator.evaluate({
     currentQuestion: [...messages].reverse().find(m => m.role === "assistant")?.content ?? "",
@@ -395,12 +407,24 @@ async function resolveStrategy(
     signal: input.context.signal,
   }) : undefined;
 
-  return InterviewStrategyService.build({
+  // Update state with evaluation result
+  const stateAfterEval = evaluation
+    ? InterviewStateService.updateState(currentState, evaluation)
+    : { ...currentState, turnNumber: currentState.turnNumber + 1 };
+
+  // Advance to next competency
+  const nextCompetency = InterviewStateService.selectNextCompetency(stateAfterEval, evaluation);
+  const nextState: InterviewState = { ...stateAfterEval, currentCompetency: nextCompetency };
+
+  const strategy = InterviewStrategyService.build({
     context: unifiedContext,
     messages: input.lastMessages,
     lastCandidateAnswer: input.userResponse,
     evaluation,
+    state: nextState,
   });
+
+  return { strategy, nextState };
 }
 
 function buildLocalFirstQuestion(
@@ -696,13 +720,13 @@ Règles:
 
   public static async generateNextResponse(
     input: InterviewInput,
-  ): Promise<string> {
+  ): Promise<{ response: string; nextState?: InterviewState }> {
     const history =
       buildConversationMessages(
         input.lastMessages,
       );
 
-    const strategy =
+    const { strategy, nextState } =
       await resolveStrategy({
         ...input,
 
@@ -713,16 +737,19 @@ Règles:
     if (
       !isRemoteAIAvailable()
     ) {
-      return buildLocalNextQuestion(
-        {
-          ...input,
+      return {
+        response: buildLocalNextQuestion(
+          {
+            ...input,
 
-          lastMessages:
-            history,
-        },
+            lastMessages:
+              history,
+          },
 
-        strategy,
-      );
+          strategy,
+        ),
+        nextState,
+      };
     }
 
     const client =
@@ -835,7 +862,7 @@ Règles:
       );
     }
 
-    return response;
+    return { response, nextState };
   }
 
   public static async generateSummary(

@@ -63,6 +63,10 @@ import type {
   UnifiedInterviewContext,
 } from "@/application/interview-context/UnifiedInterviewContextService";
 
+import {
+  InterviewStateService,
+} from "@/application/interview-strategy/InterviewStateService";
+
 export interface SendMessageCommand {
   userId: string;
   sessionId: string;
@@ -422,6 +426,7 @@ export class ConversationService {
     // =========================================================
 
     let aiResponse: string;
+    let nextInterviewState: import("@/lib/ai/schemas/interview-state.schema").InterviewState | undefined;
 
     const controller =
       new AbortController();
@@ -435,8 +440,7 @@ export class ConversationService {
       );
 
     try {
-      aiResponse =
-        await InterviewService
+      const result = await InterviewService
           .generateNextResponse({
             context: {
               jobTitle:
@@ -482,7 +486,18 @@ export class ConversationService {
 
             lastMessages:
               conversationHistory,
+
+            /*
+             * Pass the current interview state so the strategy engine
+             * can select the next competency based on evidence collected,
+             * not on a modulo of the turn number.
+             */
+            state:
+              sessionData.analysis?.interviewState ?? undefined,
           });
+
+      aiResponse = result.response;
+      nextInterviewState = result.nextState;
 
       if (
         !aiResponse ||
@@ -577,6 +592,27 @@ export class ConversationService {
         aiMessage
           .toPersistence() as any,
       );
+
+    /*
+     * Persist the updated interview state into the session analysis JSON.
+     * This ensures state survives between HTTP calls without a new migration:
+     * the existing JSONB `analysis` column is reused.
+     */
+    if (nextInterviewState) {
+      const currentAnalysis =
+        (sessionData.analysis as Record<string, unknown>) ?? {};
+
+      await this.sessionRepository.update(
+        command.sessionId,
+        {
+          analysis: {
+            ...currentAnalysis,
+            interviewState: nextInterviewState,
+          },
+          version: sessionData.version,
+        },
+      );
+    }
 
     // =========================================================
     // 10. COMMIT QUOTA

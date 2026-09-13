@@ -2,6 +2,8 @@ import type {
   UnifiedInterviewContext,
 } from "@/application/interview-context/UnifiedInterviewContextService";
 import type { AnswerEvaluation } from "@/lib/ai/schemas/answer-evaluation.schema";
+import { InterviewStateService } from "./InterviewStateService";
+import type { InterviewState } from "@/lib/ai/schemas/interview-state.schema";
 
 export type InterviewPhase =
   | "opening"
@@ -50,6 +52,7 @@ export interface InterviewStrategy {
   reasoning: string[];
   turnNumber: number;
   evaluation?: AnswerEvaluation;
+  state?: InterviewState;
 }
 
 export interface BuildInterviewStrategyInput {
@@ -57,6 +60,7 @@ export interface BuildInterviewStrategyInput {
   messages?: StrategyConversationMessage[];
   lastCandidateAnswer?: string;
   evaluation?: AnswerEvaluation;
+  state?: InterviewState;
 }
 
 const SHORT_ANSWER_THRESHOLD = 80;
@@ -131,22 +135,7 @@ function isShortAnswer(answer: string): boolean {
   return normalize(answer).length < SHORT_ANSWER_THRESHOLD;
 }
 
-export function selectTargetSkill(
-  context: UnifiedInterviewContext,
-  turnNumber: number,
-): string | null {
-  const missing = context.matching.missingSkills;
-  if (missing.length > 0) {
-    const index = Math.max(0, turnNumber - 2) % missing.length;
-    return missing[index] ?? null;
-  }
-  const matched = context.matching.matchedSkills;
-  if (matched.length > 0) {
-    const index = Math.max(0, turnNumber - 2) % matched.length;
-    return matched[index] ?? null;
-  }
-  return null;
-}
+
 
 function determineFocus(
   context: UnifiedInterviewContext,
@@ -358,7 +347,7 @@ export class InterviewStrategyService {
 
     const turnNumber = getTurnNumber(messages);
     const phase = determinePhase(turnNumber);
-    const targetSkill = selectTargetSkill(input.context, turnNumber);
+    const targetSkill = input.state ? InterviewStateService.selectNextCompetency(input.state, input.evaluation) : null;
 
     const focus = determineFocus(input.context, phase, targetSkill, lastCandidateAnswer, input.evaluation);
     const objective = buildObjective({ phase, focus, targetSkill, context: input.context, evaluation: input.evaluation });
@@ -378,4 +367,3 @@ export class InterviewStrategyService {
     };
   }
 }
-
