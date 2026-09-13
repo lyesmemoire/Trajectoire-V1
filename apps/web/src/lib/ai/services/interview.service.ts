@@ -51,6 +51,8 @@ export interface InterviewContext {
   sessionId?: string;
   userId?: string;
 
+  durationSeconds?: number;
+
   signal?: AbortSignal;
 
   unifiedContext?:
@@ -420,6 +422,7 @@ async function resolveStrategy(
 
   const strategy = InterviewStrategyService.build({
     context: unifiedContext,
+    durationSeconds: input.context.durationSeconds,
     messages: input.lastMessages,
     lastCandidateAnswer: input.userResponse,
     evaluation,
@@ -734,9 +737,7 @@ Règles:
     const { strategy, nextState } =
       await resolveStrategy({
         ...input,
-
-        lastMessages:
-          history,
+        lastMessages: history,
       });
 
     if (

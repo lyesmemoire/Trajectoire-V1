@@ -452,6 +452,9 @@ export class ConversationService {
               interviewType:
                 sessionData.interview_type,
 
+              durationSeconds:
+                sessionData.duration_seconds,
+
               sessionId:
                 command.sessionId,
 

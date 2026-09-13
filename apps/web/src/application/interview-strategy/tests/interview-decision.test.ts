@@ -138,3 +138,121 @@ describe("Interview Decision Flow (Structured Evaluation)", () => {
   });
 });
 
+
+describe("Interview Decision (End Interview Condition)", () => {
+  it("NOT_TESTED restant -> CONTINUE", () => {
+    const state = {
+      competencies: [
+        { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
+        { name: "B", status: "NOT_TESTED", evidenceCount: 0, bestScore: 0, missingEvidence: [], attempts: 0, lastEvaluatedAtTurn: null },
+      ],
+      currentCompetency: "A",
+      completedCompetencies: ["A"],
+      weakCompetencies: [],
+      turnNumber: 5,
+      claims: [],
+      conflicts: [],
+    } as any;
+
+    const strategy = InterviewStrategyService.build({
+      context: mockContext,
+      state,
+      durationSeconds: 900 // 15 min -> 7 turns
+    });
+
+    expect(strategy.decision).toBe("CONTINUE");
+  });
+
+  it("compétences suffisamment couvertes (all PROVEN) -> END_INTERVIEW", () => {
+    const state = {
+      competencies: [
+        { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
+      ],
+      currentCompetency: "A",
+      completedCompetencies: ["A"],
+      weakCompetencies: [],
+      turnNumber: 5,
+      claims: [],
+      conflicts: [],
+    } as any;
+
+    const strategy = InterviewStrategyService.build({
+      context: mockContext,
+      state,
+      durationSeconds: 900
+    });
+
+    expect(strategy.decision).toBe("END_INTERVIEW");
+  });
+
+  it("contradiction MEDIUM/HIGH OPEN -> CONTINUE même si PROVEN", () => {
+    const state = {
+      competencies: [
+        { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
+      ],
+      currentCompetency: "A",
+      completedCompetencies: ["A"],
+      weakCompetencies: [],
+      turnNumber: 8,
+      claims: [],
+      conflicts: [
+        { key: "exp", previousValue: "1", newValue: "2", previousStatement: "", newStatement: "", previousTurn: 1, currentTurn: 8, severity: "HIGH", reason: "", status: "OPEN" }
+      ],
+    } as any;
+
+    const strategy = InterviewStrategyService.build({
+      context: mockContext,
+      state,
+      durationSeconds: 900
+    });
+
+    expect(strategy.decision).toBe("CONTINUE");
+  });
+
+  it("contradiction CLARIFIED + couverture suffisante -> END_INTERVIEW", () => {
+    const state = {
+      competencies: [
+        { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
+      ],
+      currentCompetency: "A",
+      completedCompetencies: ["A"],
+      weakCompetencies: [],
+      turnNumber: 8,
+      claims: [],
+      conflicts: [
+        { key: "exp", previousValue: "1", newValue: "2", previousStatement: "", newStatement: "", previousTurn: 1, currentTurn: 8, severity: "HIGH", reason: "", status: "CLARIFIED" }
+      ],
+    } as any;
+
+    const strategy = InterviewStrategyService.build({
+      context: mockContext,
+      state,
+      durationSeconds: 900
+    });
+
+    expect(strategy.decision).toBe("END_INTERVIEW");
+  });
+
+  it("garde-fou maximum atteint -> END_INTERVIEW même avec NOT_TESTED", () => {
+    const state = {
+      competencies: [
+        { name: "A", status: "NOT_TESTED", evidenceCount: 0, bestScore: 0, missingEvidence: [], attempts: 0, lastEvaluatedAtTurn: null },
+      ],
+      currentCompetency: "A",
+      completedCompetencies: [],
+      weakCompetencies: [],
+      turnNumber: 25,
+      claims: [],
+      conflicts: [],
+    } as any;
+
+    const strategy = InterviewStrategyService.build({
+      context: mockContext,
+      state,
+      durationSeconds: 900 // max turns for 900s is Math.max(10, 15 * 1.5) = 22
+    });
+
+    expect(strategy.decision).toBe("END_INTERVIEW");
+  });
+});
+

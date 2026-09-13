@@ -41,6 +41,8 @@ export interface RecruiterBehavior {
   allowTopicChange: boolean;
 }
 
+export type InterviewStrategyDecision = "CONTINUE" | "END_INTERVIEW";
+
 export interface InterviewStrategy {
   phase: InterviewPhase;
   objective: string;
@@ -51,12 +53,14 @@ export interface InterviewStrategy {
   instructions: string[];
   reasoning: string[];
   turnNumber: number;
+  decision: InterviewStrategyDecision;
   evaluation?: AnswerEvaluation;
   state?: InterviewState;
 }
 
 export interface BuildInterviewStrategyInput {
   context: UnifiedInterviewContext;
+  durationSeconds?: number;
   messages?: StrategyConversationMessage[];
   lastCandidateAnswer?: string;
   evaluation?: AnswerEvaluation;
@@ -340,6 +344,44 @@ function buildReasoning(
   return reasoning;
 }
 
+function determineInterviewDecision(
+  state: InterviewState | undefined,
+  durationSeconds?: number
+): InterviewStrategyDecision {
+  if (!state) return "CONTINUE";
+
+  const turnNumber = state.turnNumber;
+  const maxGuardTurns = durationSeconds ? Math.max(10, Math.floor((durationSeconds / 60) * 1.5)) : 20;
+
+  if (turnNumber >= maxGuardTurns) {
+    return "END_INTERVIEW";
+  }
+
+  const hasSevereOpenConflict = state.conflicts.some(
+    (c) => c.status === "OPEN" && (c.severity === "MEDIUM" || c.severity === "HIGH")
+  );
+  if (hasSevereOpenConflict) {
+    return "CONTINUE";
+  }
+
+  const hasNotTested = state.competencies.some(c => c.status === "NOT_TESTED");
+  if (hasNotTested) {
+    return "CONTINUE";
+  }
+
+  const allProven = state.competencies.every(c => c.status === "PROVEN");
+  if (allProven) {
+    return "END_INTERVIEW";
+  }
+
+  const targetTurns = durationSeconds ? Math.floor(durationSeconds / 120) : 10;
+  if (turnNumber >= targetTurns) {
+    return "END_INTERVIEW";
+  }
+
+  return "CONTINUE";
+}
+
 export class InterviewStrategyService {
   static build(input: BuildInterviewStrategyInput): InterviewStrategy {
     const messages = input.messages ?? [];
@@ -364,6 +406,8 @@ export class InterviewStrategyService {
       }
     }
 
+    const decision = determineInterviewDecision(input.state, input.durationSeconds);
+
     return {
       phase,
       objective,
@@ -374,6 +418,7 @@ export class InterviewStrategyService {
       instructions: baseInstructions,
       reasoning: buildReasoning({ context: input.context, phase, targetSkill, lastAnswer: lastCandidateAnswer, evaluation: input.evaluation }),
       turnNumber,
+      decision,
       evaluation: input.evaluation,
     };
   }
