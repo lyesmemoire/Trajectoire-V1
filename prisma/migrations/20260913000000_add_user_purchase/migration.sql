@@ -13,4 +13,4 @@ CREATE UNIQUE INDEX "UserPurchase_stripeCheckoutSessionId_key" ON "public"."User
 
 CREATE INDEX "UserPurchase_userId_type_idx" ON "public"."UserPurchase"("userId", "type");
 
-ALTER TABLE "public"."UserPurchase" ADD CONSTRAINT "UserPurchase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."UserPurchase" ADD CONSTRAINT "UserPurchase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
