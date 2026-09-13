@@ -28,9 +28,8 @@ import type {
   UnifiedInterviewContext,
 } from "@/application/interview-context/UnifiedInterviewContextService";
 
-import {
-  InterviewStrategyService,
-} from "@/application/interview-strategy/InterviewStrategyService";
+import { InterviewStrategyService, selectTargetSkill } from "@/application/interview-strategy/InterviewStrategyService";
+import { AnswerEvaluator } from "./answer-evaluator";
 
 import type {
   InterviewStrategy,
@@ -370,32 +369,37 @@ ${strategyPrompt}
 `.trim();
 }
 
-function resolveStrategy(
+async function resolveStrategy(
   input: InterviewInput,
-):
-  | InterviewStrategy
-  | undefined {
+): Promise<InterviewStrategy | undefined> {
   if (input.strategy) {
     return input.strategy;
   }
 
-  const unifiedContext =
-    input.context
-      .unifiedContext;
-
+  const unifiedContext = input.context.unifiedContext;
   if (!unifiedContext) {
     return undefined;
   }
 
+  const messages = input.lastMessages ?? [];
+  const turnNumber = messages.filter(m => m.role === "user").length + 1;
+  const targetCompetency = selectTargetSkill(unifiedContext, turnNumber);
+
+  const lastCandidateAnswer = input.userResponse ?? [...messages].reverse().find(m => m.role === "user")?.content ?? "";
+
+  const evaluation = lastCandidateAnswer ? await AnswerEvaluator.evaluate({
+    currentQuestion: [...messages].reverse().find(m => m.role === "assistant")?.content ?? "",
+    candidateAnswer: lastCandidateAnswer,
+    targetCompetency,
+    unifiedContext,
+    signal: input.context.signal,
+  }) : undefined;
+
   return InterviewStrategyService.build({
-    context:
-      unifiedContext,
-
-    messages:
-      input.lastMessages,
-
-    lastCandidateAnswer:
-      input.userResponse,
+    context: unifiedContext,
+    messages: input.lastMessages,
+    lastCandidateAnswer: input.userResponse,
+    evaluation,
   });
 }
 
@@ -699,7 +703,7 @@ Règles:
       );
 
     const strategy =
-      resolveStrategy({
+      await resolveStrategy({
         ...input,
 
         lastMessages:
