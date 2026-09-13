@@ -35,6 +35,15 @@ TYPE DE RELANCE (followUpType) - Si FOLLOW_UP :
 - "ASK_RESULT" : Action détaillée, mais la fin/le résultat est manquant.
 - "DEEPEN" : Réponse solide, mais on veut tester la profondeur technique ou stratégique.
 
+EXTRACTION DES AFFIRMATIONS FACTUELLES (extractedClaims) :
+Extrais les affirmations factuelles importantes énoncées par le candidat (ex: entreprise, poste, taille d'équipe, durée, métriques, réalisations techniques).
+Règles strictes d'extraction :
+- N'extrais QUE ce qui est explicitement affirmé. N'invente pas.
+- "statement" doit être une courte phrase descriptive (ex: "A dirigé une équipe de 8 développeurs").
+- "value" est la valeur brute (ex: "8").
+- "key" est un identifiant court (ex: "team_size").
+- Si aucun fait pertinent n'est présent, renvoie une liste vide [].
+
 Tu dois répondre UNIQUEMENT avec un objet JSON valide respectant la structure demandée.`;
 
 function cleanText(text?: string | null, maxLength = 2000): string {
@@ -88,6 +97,7 @@ function fallbackEvaluation(answer: string, competency: string | null): AnswerEv
     recommendedAction,
     followUpType,
     shortReason: "Évaluation via Regex (Fallback technique)",
+    extractedClaims: [],
   };
 }
 

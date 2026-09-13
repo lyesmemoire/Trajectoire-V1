@@ -1,4 +1,17 @@
 import { z } from "zod";
+import { CandidateClaimCategorySchema } from "./answer-evaluation.schema";
+
+export const CandidateClaimSchema = z.object({
+  key: z.string(),
+  value: z.string(),
+  statement: z.string(),
+  category: CandidateClaimCategorySchema,
+  sourceTurn: z.number().int().min(0),
+  competency: z.string().nullable(),
+});
+
+export type CandidateClaim = z.infer<typeof CandidateClaimSchema>;
+
 
 export const CompetencyStateSchema = z.object({
   name: z.string(),
@@ -25,6 +38,7 @@ export const InterviewStateSchema = z.object({
   completedCompetencies: z.array(z.string()),
   weakCompetencies: z.array(z.string()),
   turnNumber: z.number().int().min(0),
+  claims: z.array(CandidateClaimSchema).default([]),
 });
 
 export type CompetencyState = z.infer<typeof CompetencyStateSchema>;

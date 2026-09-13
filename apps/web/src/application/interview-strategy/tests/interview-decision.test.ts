@@ -33,6 +33,7 @@ function buildMockEvaluation(overrides: Partial<AnswerEvaluation>): AnswerEvalua
     recommendedAction: "NEXT_QUESTION",
     followUpType: null,
     shortReason: "OK",
+    extractedClaims: [],
     ...overrides
   };
 }

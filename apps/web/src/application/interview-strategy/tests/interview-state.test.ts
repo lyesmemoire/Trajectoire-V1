@@ -21,6 +21,7 @@ function makeEval(overrides: Partial<AnswerEvaluation> = {}): AnswerEvaluation {
     recommendedAction: "NEXT_QUESTION",
     followUpType: null,
     shortReason: "OK",
+    extractedClaims: [],
     ...overrides,
   };
 }
@@ -179,9 +180,107 @@ describe("G. Invalid/absent state → safe fallback", () => {
       completedCompetencies: ["React"],
       weakCompetencies: [],
       turnNumber: 5,
+      claims: [],
     };
     const parsed = InterviewStateService.parse(valid, ["React"]);
     expect(parsed.competencies[0].status).toBe("PROVEN");
     expect(parsed.turnNumber).toBe(5);
+  });
+});
+
+describe("InterviewStateService - Factual Memory", () => {
+  it("A. Evaluation contenant extractedClaims -> updateState les ajoute dans claims", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    const evalClaim = makeEval({
+      extractedClaims: [{
+        key: "team_size",
+        value: "8",
+        statement: "A managé 8 personnes",
+        category: "team_size"
+      }]
+    });
+    state = InterviewStateService.updateState(state, evalClaim);
+
+    expect(state.claims.length).toBe(1);
+    expect(state.claims[0].key).toBe("team_size");
+    expect(state.claims[0].value).toBe("8");
+    expect(state.claims[0].sourceTurn).toBe(1); // turnNumber starts at 0, updated to 1
+    expect(state.claims[0].competency).toBe("React");
+  });
+
+  it("B. Deux tours successifs -> claims du premier tour toujours présents", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    state = InterviewStateService.updateState(state, makeEval({
+      extractedClaims: [{ key: "team_size", value: "8", statement: "", category: "team_size" }]
+    }));
+
+    state = InterviewStateService.updateState(state, makeEval({
+      extractedClaims: [{ key: "metric", value: "40%", statement: "", category: "metric" }]
+    }));
+
+    expect(state.claims.length).toBe(2);
+    expect(state.claims[0].key).toBe("team_size");
+    expect(state.claims[1].key).toBe("metric");
+  });
+
+  it("C. Même claim identique répété -> pas de duplication inutile", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    const claim = { key: "team_size", value: "8", statement: "8 devs", category: "team_size" as const };
+
+    state = InterviewStateService.updateState(state, makeEval({ extractedClaims: [claim] }));
+    state = InterviewStateService.updateState(state, makeEval({ extractedClaims: [claim] })); // Repetition
+
+    expect(state.claims.length).toBe(1);
+  });
+
+  it("D. Même key avec valeurs différentes -> les deux restent présents (pas de contradiction detection yet)", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    state = InterviewStateService.updateState(state, makeEval({
+      extractedClaims: [{ key: "team_size", value: "8", statement: "8 devs", category: "team_size" }]
+    }));
+    state = InterviewStateService.updateState(state, makeEval({
+      extractedClaims: [{ key: "team_size", value: "3", statement: "3 devs", category: "team_size" }]
+    }));
+
+    expect(state.claims.length).toBe(2);
+    expect(state.claims[0].value).toBe("8");
+    expect(state.claims[1].value).toBe("3");
+  });
+
+  it("E. État historique sans claims -> parse sûr avec claims=[]", () => {
+    const rawState = {
+      competencies: [],
+      currentCompetency: null,
+      completedCompetencies: [],
+      weakCompetencies: [],
+      turnNumber: 5
+      // No claims array
+    };
+    const parsed = InterviewStateService.parse(rawState, []);
+    expect(parsed.claims).toEqual([]);
+  });
+
+  it("F. Aucun claim extrait -> aucun crash et état inchangé", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    state.claims = [{ key: "test", value: "1", statement: "", category: "other", sourceTurn: 0, competency: "React" }];
+
+    // Evaluate with empty claims
+    const nextState = InterviewStateService.updateState(state, makeEval({ extractedClaims: [] }));
+    expect(nextState.claims.length).toBe(1);
+
+    // Evaluate with undefined claims (if AI missed the field entirely)
+    const nextState2 = InterviewStateService.updateState(nextState, makeEval({ extractedClaims: undefined as any }));
+    expect(nextState2.claims.length).toBe(1);
+  });
+
+  it("G. sourceTurn est fourni par le moteur et non par le LLM", () => {
+    let state = InterviewStateService.initializeState(["React"]);
+    state.turnNumber = 4;
+
+    state = InterviewStateService.updateState(state, makeEval({
+      extractedClaims: [{ key: "test", value: "val", statement: "", category: "other" }]
+    }));
+
+    expect(state.claims[0].sourceTurn).toBe(5); // 4 + 1
   });
 });

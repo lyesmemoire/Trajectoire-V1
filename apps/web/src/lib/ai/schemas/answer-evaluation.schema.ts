@@ -9,6 +9,29 @@ import { z } from "zod";
 
 const scoreField = z.number().int().min(0).max(100);
 
+export const CandidateClaimCategorySchema = z.enum([
+  "company",
+  "role",
+  "team_size",
+  "duration",
+  "date",
+  "metric",
+  "achievement",
+  "responsibility",
+  "technology",
+  "other",
+]);
+
+export const CandidateClaimWithoutTurnSchema = z.object({
+  key: z.string(),
+  value: z.string(),
+  statement: z.string(),
+  category: CandidateClaimCategorySchema,
+});
+
+export type CandidateClaimWithoutTurn = z.infer<typeof CandidateClaimWithoutTurnSchema>;
+export type CandidateClaimCategory = z.infer<typeof CandidateClaimCategorySchema>;
+
 export const AnswerEvaluationSchema = z.object({
   /**
    * Does the answer address the question that was asked? (0-100)
@@ -115,6 +138,11 @@ export const AnswerEvaluationSchema = z.object({
    * One-sentence recruiter reasoning for the decision. Not surfaced to candidate.
    */
   shortReason: z.string().min(1).max(300),
+
+  /**
+   * Explicit factual claims made by the candidate in their answer.
+   */
+  extractedClaims: z.array(CandidateClaimWithoutTurnSchema).default([]),
 });
 
 export type AnswerEvaluation = z.infer<typeof AnswerEvaluationSchema>;

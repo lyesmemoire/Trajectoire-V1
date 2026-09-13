@@ -1,4 +1,4 @@
-import { InterviewState, CompetencyState, InterviewStateSchema } from "@/lib/ai/schemas/interview-state.schema";
+import { InterviewState, CompetencyState, InterviewStateSchema, CandidateClaim } from "@/lib/ai/schemas/interview-state.schema";
 import type { AnswerEvaluation } from "@/lib/ai/schemas/answer-evaluation.schema";
 
 export class InterviewStateService {
@@ -21,6 +21,7 @@ export class InterviewStateService {
       completedCompetencies: [],
       weakCompetencies: [],
       turnNumber: 0,
+      claims: [],
     };
   }
 
@@ -70,6 +71,29 @@ export class InterviewStateService {
     if (comp.status === "WEAK" && !newState.weakCompetencies.includes(comp.name)) {
       newState.weakCompetencies.push(comp.name);
     }
+
+    // Process and deduplicate claims
+    const existingClaims = newState.claims || [];
+    const newClaims: CandidateClaim[] = [];
+
+    if (evaluation.extractedClaims && evaluation.extractedClaims.length > 0) {
+      for (const extracted of evaluation.extractedClaims) {
+        // Simple deduplication: avoid adding if key AND value are identical
+        const isDuplicate = existingClaims.some(
+          (c) => c.key === extracted.key && c.value === extracted.value
+        );
+
+        if (!isDuplicate) {
+          newClaims.push({
+            ...extracted,
+            sourceTurn: newState.turnNumber,
+            competency: newState.currentCompetency,
+          });
+        }
+      }
+    }
+
+    newState.claims = [...existingClaims, ...newClaims];
 
     return newState;
   }
