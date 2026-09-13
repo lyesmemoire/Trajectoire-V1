@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && prisma migrate deploy && prisma generate && pnpm --dir apps/web build",
+  "buildCommand": "cd ../.. && DIRECT_URL=$DATABASE_URL prisma migrate deploy && prisma generate && pnpm --dir apps/web build",
   "devCommand": "pnpm --dir apps/web dev",
   "installCommand": "pnpm install --frozen-lockfile",
   "build": {
