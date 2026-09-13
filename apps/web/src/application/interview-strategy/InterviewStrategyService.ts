@@ -148,7 +148,7 @@ function determineFocus(
 
   if (evaluation) {
     if (evaluation.recommendedAction === "FOLLOW_UP") {
-      if (evaluation.followUpType === "CLARIFY") return "clarification";
+      if (evaluation.followUpType === "CLARIFY" || evaluation.followUpType === "CLARIFY_CONTRADICTION") return "clarification";
       return "follow_up";
     }
   } else {
@@ -185,6 +185,7 @@ function buildObjective(
       case "ASK_METRIC": return "Obtenir un ordre de grandeur ou une métrique chiffrée pour évaluer l'impact.";
       case "ASK_RESULT": return "Comprendre quel a été le résultat final de l'action décrite.";
       case "DEEPEN": return "Challenger le candidat pour vérifier la profondeur de son expertise.";
+      case "CLARIFY_CONTRADICTION": return "Demander une clarification neutre concernant une contradiction détectée avec une affirmation précédente.";
     }
   }
 
@@ -286,6 +287,7 @@ function buildInstructions(
     if (evaluation.followUpType === "ASK_METRIC") instructions.push("Demander des métriques ou des ordres de grandeur mesurables.");
     if (evaluation.followUpType === "ASK_RESULT") instructions.push("S'enquérir du résultat final ou de l'impact métier de son action.");
     if (evaluation.followUpType === "DEEPEN") instructions.push("Poser une question plus pointue pour challenger sa compréhension approfondie.");
+    if (evaluation.followUpType === "CLARIFY_CONTRADICTION") instructions.push("Mentionner l'affirmation précédente et la nouvelle affirmation, puis demander au candidat de clarifier cette différence de manière neutre, sans l'accuser de mentir ni utiliser le mot 'contradiction'.");
   }
 
   if (behavior.requireConcreteExample && (!evaluation || !evaluation.missingEvidence.includes("example"))) {
@@ -353,6 +355,15 @@ export class InterviewStrategyService {
     const objective = buildObjective({ phase, focus, targetSkill, context: input.context, evaluation: input.evaluation });
     const behavior = buildRecruiterBehavior({ phase, lastAnswer: lastCandidateAnswer, evaluation: input.evaluation });
 
+    // Inject conflict details in instructions if applicable
+    const baseInstructions = buildInstructions({ phase, focus, targetSkill, behavior, evaluation: input.evaluation });
+    if (input.evaluation?.followUpType === "CLARIFY_CONTRADICTION" && input.state?.conflicts) {
+      const openSevereConflict = input.state.conflicts.find(c => c.status === "OPEN" && (c.severity === "MEDIUM" || c.severity === "HIGH"));
+      if (openSevereConflict) {
+        baseInstructions.push(`[CONTEXTE CONFLIT] Le candidat avait affirmé: "${openSevereConflict.previousStatement}". Il affirme maintenant: "${openSevereConflict.newStatement}". (Sujet: ${openSevereConflict.key}).`);
+      }
+    }
+
     return {
       phase,
       objective,
@@ -360,7 +371,7 @@ export class InterviewStrategyService {
       targetSkill,
       expectedEvidence: buildExpectedEvidence(focus, targetSkill, input.evaluation),
       recruiterBehavior: behavior,
-      instructions: buildInstructions({ phase, focus, targetSkill, behavior, evaluation: input.evaluation }),
+      instructions: baseInstructions,
       reasoning: buildReasoning({ context: input.context, phase, targetSkill, lastAnswer: lastCandidateAnswer, evaluation: input.evaluation }),
       turnNumber,
       evaluation: input.evaluation,

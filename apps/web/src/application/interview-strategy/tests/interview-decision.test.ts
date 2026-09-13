@@ -34,6 +34,8 @@ function buildMockEvaluation(overrides: Partial<AnswerEvaluation>): AnswerEvalua
     followUpType: null,
     shortReason: "OK",
     extractedClaims: [],
+    claimConflicts: [],
+    resolvedConflicts: [],
     ...overrides
   };
 }

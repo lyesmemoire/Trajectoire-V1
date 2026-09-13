@@ -1,4 +1,4 @@
-import { InterviewState, CompetencyState, InterviewStateSchema, CandidateClaim } from "@/lib/ai/schemas/interview-state.schema";
+import { InterviewState, CompetencyState, InterviewStateSchema, CandidateClaim, ClaimConflict } from "@/lib/ai/schemas/interview-state.schema";
 import type { AnswerEvaluation } from "@/lib/ai/schemas/answer-evaluation.schema";
 
 export class InterviewStateService {
@@ -22,6 +22,7 @@ export class InterviewStateService {
       weakCompetencies: [],
       turnNumber: 0,
       claims: [],
+      conflicts: [],
     };
   }
 
@@ -94,6 +95,61 @@ export class InterviewStateService {
     }
 
     newState.claims = [...existingClaims, ...newClaims];
+
+    // Process conflicts
+    const existingConflicts = newState.conflicts || [];
+    const newConflicts: ClaimConflict[] = [];
+
+    if (evaluation.claimConflicts && evaluation.claimConflicts.length > 0) {
+      for (const conflict of evaluation.claimConflicts) {
+        // Prevent duplicate conflicts
+        const isDuplicate = existingConflicts.some(
+          (c) => c.key === conflict.key && c.newValue === conflict.newValue
+        );
+
+        if (!isDuplicate) {
+          // Find the previous claim to get its statement and turn
+          const previousClaim = existingClaims.find((c) => c.key === conflict.key && c.value === conflict.previousValue);
+          const newClaim = newClaims.find((c) => c.key === conflict.key && c.value === conflict.newValue) || existingClaims.find((c) => c.key === conflict.key && c.value === conflict.newValue);
+
+          if (previousClaim) {
+            newConflicts.push({
+              key: conflict.key,
+              previousValue: conflict.previousValue,
+              newValue: conflict.newValue,
+              previousStatement: previousClaim.statement,
+              newStatement: newClaim ? newClaim.statement : conflict.newValue,
+              previousTurn: previousClaim.sourceTurn,
+              currentTurn: newState.turnNumber,
+              severity: conflict.severity,
+              reason: conflict.reason,
+              status: "OPEN",
+            });
+          }
+        }
+      }
+    }
+
+    newState.conflicts = [...existingConflicts, ...newConflicts];
+
+    // Mark resolved conflicts
+    if (evaluation.resolvedConflicts && evaluation.resolvedConflicts.length > 0) {
+      newState.conflicts.forEach((conflict) => {
+        if (conflict.status === "OPEN" && evaluation.resolvedConflicts!.includes(conflict.key)) {
+          conflict.status = "CLARIFIED";
+        }
+      });
+    }
+
+    // Priority to follow-up on severe contradictions
+    const hasSevereOpenConflict = newState.conflicts.some(
+      (c) => c.status === "OPEN" && (c.severity === "MEDIUM" || c.severity === "HIGH")
+    );
+
+    if (hasSevereOpenConflict) {
+      evaluation.recommendedAction = "FOLLOW_UP";
+      evaluation.followUpType = "CLARIFY_CONTRADICTION";
+    }
 
     return newState;
   }

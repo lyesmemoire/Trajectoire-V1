@@ -4,12 +4,15 @@ import { RetryManager } from "../retry/RetryManager";
 import { ExternalServiceError } from "@/core/errors";
 import type { UnifiedInterviewContext } from "@/application/interview-context/UnifiedInterviewContextService";
 import { AnswerEvaluationSchema, type AnswerEvaluation } from "../schemas/answer-evaluation.schema";
+import type { CandidateClaim, ClaimConflict } from "../schemas/interview-state.schema";
 
 export interface EvaluateAnswerInput {
   currentQuestion: string;
   candidateAnswer: string;
   targetCompetency: string | null;
   unifiedContext?: UnifiedInterviewContext | null;
+  existingClaims?: CandidateClaim[];
+  openConflicts?: ClaimConflict[];
   signal?: AbortSignal;
 }
 
@@ -44,6 +47,17 @@ Règles strictes d'extraction :
 - "key" est un identifiant court (ex: "team_size").
 - Si aucun fait pertinent n'est présent, renvoie une liste vide [].
 
+DÉTECTION DE CONTRADICTIONS (claimConflicts) :
+Compare les NOUVELLES affirmations extraites avec les faits précédents fournis.
+S'il y a une incohérence manifeste et sérieuse (ex: équipe de 8 vs équipe de 3 pour le MÊME contexte), signale-la.
+ATTENTION : Protège contre les faux positifs. "J'ai managé 8 personnes chez Orange" puis "3 chez SFR" ne sont pas contradictoires.
+En cas de doute ou changement de contexte apparent, severity="LOW" ou pas de conflit du tout.
+Si aucun conflit n'est détecté, renvoie une liste vide [].
+
+RÉSOLUTION DE CONFLITS (resolvedConflicts) :
+Si des CONFLITS EN COURS sont fournis, évalue si la nouvelle réponse du candidat apporte une explication valable à ces incohérences (ex: il s'agit d'une entreprise différente, d'un contexte différent, ou il s'est corrigé).
+Si oui, retourne la liste des clés ("key") des conflits résolus dans "resolvedConflicts". Sinon, renvoie [].
+
 Tu dois répondre UNIQUEMENT avec un objet JSON valide respectant la structure demandée.`;
 
 function cleanText(text?: string | null, maxLength = 2000): string {
@@ -53,13 +67,13 @@ function cleanText(text?: string | null, maxLength = 2000): string {
 // Fallback regex evaluation in case of AI failure
 function fallbackEvaluation(answer: string, competency: string | null): AnswerEvaluation {
   const normalizedAnswer = answer.trim().toLowerCase();
-  
+
   const hasMetrics = /\b(\d+(?:[.,]\d+)?\s?(?:%|€|k€|m€|jours?|heures?|mois|ans?|utilisateurs?|clients?|projets?|personnes?))\b/i.test(normalizedAnswer);
   const hasExample = /\b(exemple|situation|projet|mission|contexte|équipe|client|résultat|objectif|problème|incident|livraison|migration|déploiement)\b/i.test(normalizedAnswer);
   const hasImpact = /\b(résultat|impact|amélior|réduit|augment|gagn|économ|optimis|accélér|performance|conversion|revenu|coût|délai)\b/i.test(normalizedAnswer);
-  
+
   const isShort = normalizedAnswer.length < 80;
-  
+
   let recommendedAction: "FOLLOW_UP" | "NEXT_QUESTION" = "FOLLOW_UP";
   let followUpType: AnswerEvaluation["followUpType"] = null;
   let missingEvidence: AnswerEvaluation["missingEvidence"] = [];
@@ -98,6 +112,8 @@ function fallbackEvaluation(answer: string, competency: string | null): AnswerEv
     followUpType,
     shortReason: "Évaluation via Regex (Fallback technique)",
     extractedClaims: [],
+    claimConflicts: [],
+    resolvedConflicts: [],
   };
 }
 
@@ -121,6 +137,18 @@ export class AnswerEvaluator {
       }
       if (input.unifiedContext?.candidate) {
         contextParts.push(`CV DU CANDIDAT : ${cleanText(input.unifiedContext.candidate.cvText, 3000)}`);
+      }
+      if (input.existingClaims && input.existingClaims.length > 0) {
+        const claimsText = input.existingClaims
+          .map(c => `- [${c.key}] ${c.statement} (Valeur: ${c.value})`)
+          .join("\n");
+        contextParts.push(`AFFIRMATIONS PRÉCÉDENTES DU CANDIDAT (POUR DÉTECTION DE CONTRADICTION) :\n${claimsText}`);
+      }
+      if (input.openConflicts && input.openConflicts.length > 0) {
+        const conflictsText = input.openConflicts
+          .map(c => `- Clé "${c.key}": "${c.previousStatement}" vs "${c.newStatement}"`)
+          .join("\n");
+        contextParts.push(`CONFLITS EN COURS À CLARIFIER :\n${conflictsText}`);
       }
 
       const promptUser = `

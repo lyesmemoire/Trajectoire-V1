@@ -12,6 +12,22 @@ export const CandidateClaimSchema = z.object({
 
 export type CandidateClaim = z.infer<typeof CandidateClaimSchema>;
 
+export const ClaimConflictSchema = z.object({
+  key: z.string(),
+  previousValue: z.string(),
+  newValue: z.string(),
+  previousStatement: z.string(),
+  newStatement: z.string(),
+  previousTurn: z.number().int().min(0),
+  currentTurn: z.number().int().min(0),
+  severity: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  reason: z.string(),
+  status: z.enum(["OPEN", "CLARIFIED"]),
+});
+
+export type ClaimConflict = z.infer<typeof ClaimConflictSchema>;
+
+
 
 export const CompetencyStateSchema = z.object({
   name: z.string(),
@@ -39,6 +55,7 @@ export const InterviewStateSchema = z.object({
   weakCompetencies: z.array(z.string()),
   turnNumber: z.number().int().min(0),
   claims: z.array(CandidateClaimSchema).default([]),
+  conflicts: z.array(ClaimConflictSchema).default([]),
 });
 
 export type CompetencyState = z.infer<typeof CompetencyStateSchema>;

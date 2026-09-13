@@ -131,6 +131,7 @@ export const AnswerEvaluationSchema = z.object({
       "ASK_METRIC",
       "ASK_RESULT",
       "DEEPEN",
+      "CLARIFY_CONTRADICTION",
     ])
     .nullable(),
 
@@ -143,6 +144,24 @@ export const AnswerEvaluationSchema = z.object({
    * Explicit factual claims made by the candidate in their answer.
    */
   extractedClaims: z.array(CandidateClaimWithoutTurnSchema).default([]),
+
+  /**
+   * Potential contradictions detected between new claims and existing claims.
+   */
+  claimConflicts: z.array(
+    z.object({
+      key: z.string(),
+      previousValue: z.string(),
+      newValue: z.string(),
+      reason: z.string(),
+      severity: z.enum(["LOW", "MEDIUM", "HIGH"]),
+    })
+  ).default([]),
+
+  /**
+   * Keys of the open conflicts that were successfully clarified by this answer.
+   */
+  resolvedConflicts: z.array(z.string()).default([]),
 });
 
 export type AnswerEvaluation = z.infer<typeof AnswerEvaluationSchema>;

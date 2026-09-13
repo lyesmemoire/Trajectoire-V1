@@ -404,6 +404,8 @@ async function resolveStrategy(
     candidateAnswer: lastCandidateAnswer,
     targetCompetency,
     unifiedContext,
+    existingClaims: currentState.claims,
+    openConflicts: currentState.conflicts.filter(c => c.status === "OPEN"),
     signal: input.context.signal,
   }) : undefined;
 
@@ -502,6 +504,9 @@ function buildLocalNextQuestion(
     strategy.focus ===
     "clarification"
   ) {
+    if (strategy.evaluation?.followUpType === "CLARIFY_CONTRADICTION") {
+      return "J'aimerais revenir sur un point. Il me semble avoir noté une information différente précédemment concernant cette expérience. Pouvez-vous clarifier ce point pour moi ?";
+    }
     if (
       strategy.recruiterBehavior
         .requireConcreteExample
