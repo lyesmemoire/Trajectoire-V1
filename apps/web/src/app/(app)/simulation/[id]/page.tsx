@@ -194,6 +194,7 @@ export default function SimulationSessionPage({
     startRecording,
     stopRecording,
     speakText,
+    cancelSpeaking,
     markBrainResponse,
     isRecording,
     isTranscribing,
@@ -329,13 +330,16 @@ export default function SimulationSessionPage({
 
   // ── Mic button handler ────────────────────────────────────────────────────
 
-  function handleMicClick() {
+  async function handleMicClick() {
     if (isRecording) {
       stopRecording()
     } else {
+      if (isSpeaking) {
+        cancelSpeaking()
+      }
       setVoiceEnabled(true)
       setVoiceError(null)
-      startRecording()
+      await startRecording()
     }
   }
 
