@@ -168,9 +168,22 @@ export function useVoiceInterview({
       }
 
       setVoiceState("recording");
-    } catch {
+    } catch (err: unknown) {
       setVoiceState("error");
-      onError?.("Microphone inaccessible. Vérifiez les permissions.");
+      console.error("[voice] microphone start failed", {
+        name: err instanceof DOMException ? err.name : undefined,
+        message: err instanceof Error ? err.message : String(err),
+      });
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        onError?.("Le microphone n'est pas disponible dans ce navigateur ou ce contexte.");
+      } else if (err instanceof DOMException && err.name === "NotAllowedError") {
+        onError?.("Accès au microphone refusé. Autorisez le microphone dans votre navigateur.");
+      } else if (err instanceof DOMException && err.name === "NotFoundError") {
+        onError?.("Aucun microphone détecté.");
+      } else {
+        onError?.("Impossible de démarrer le microphone. Consultez la console pour le diagnostic.");
+      }
     }
   }, [voiceState, onError, onPartialTranscript, onTranscript]);
 
