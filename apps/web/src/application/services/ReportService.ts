@@ -26,6 +26,16 @@ export interface GenerateReportResult {
   improvements: string[];
   summary: string;
   recommendation: string;
+  questionByQuestion?: Array<{
+    question: string;
+    answer: string;
+    competency: string | null;
+    score: number;
+    whatWentWell: string[];
+    whatWasMissing: string[];
+    howToImprove: string[];
+    betterAnswer: string;
+  }>;
 }
 
 export class ReportService {
@@ -186,6 +196,7 @@ export class ReportService {
       improvements: analysis.improvements,
       summary: analysis.summary,
       recommendation: analysis.recommendation,
+      questionByQuestion: analysis.questionByQuestion,
     };
   }
 

@@ -6,6 +6,7 @@ import { StrengthsWeaknessesSection } from "@/components/dashboard/StrengthsWeak
 import { RecommendationsSection } from "@/components/dashboard/RecommendationsSection"
 import { UpgradeCTA } from "@/components/premium/UpgradeCTA"
 import { checkUserSubscription } from "@/lib/subscription/check-subscription"
+import { QuestionByQuestionSection } from "@/components/report/QuestionByQuestionSection"
 
 export const metadata: Metadata = {
   title: "Rapport – Trajectoire",
@@ -43,7 +44,8 @@ export default async function ReportPage({
         level,
         interview_type,
         created_at,
-        user_id
+        user_id,
+        feedback
       )
     `,
     )
@@ -91,6 +93,41 @@ export default async function ReportPage({
     interview_type: "Non spécifié",
     created_at: new Date().toISOString(),
   }
+
+  // Extraire questionByQuestion depuis interview_sessions.feedback (upserted lors de la génération)
+  const sessionFeedback = (session as any)?.feedback
+  const rawQna = Array.isArray(sessionFeedback?.questionByQuestion)
+    ? sessionFeedback.questionByQuestion
+    : []
+  const questionByQuestion: Array<{
+    question: string
+    answer: string
+    competency: string | null
+    score: number
+    whatWentWell: string[]
+    whatWasMissing: string[]
+    howToImprove: string[]
+    betterAnswer: string
+  }> = rawQna
+    .filter(
+      (q: any) =>
+        q &&
+        typeof q.question === "string" &&
+        q.question.length > 0 &&
+        typeof q.answer === "string" &&
+        typeof q.score === "number" &&
+        Number.isFinite(q.score),
+    )
+    .map((q: any) => ({
+      question: q.question,
+      answer: q.answer,
+      competency: typeof q.competency === "string" ? q.competency : null,
+      score: q.score,
+      whatWentWell: Array.isArray(q.whatWentWell) ? q.whatWentWell.filter((s: any) => typeof s === "string") : [],
+      whatWasMissing: Array.isArray(q.whatWasMissing) ? q.whatWasMissing.filter((s: any) => typeof s === "string") : [],
+      howToImprove: Array.isArray(q.howToImprove) ? q.howToImprove.filter((s: any) => typeof s === "string") : [],
+      betterAnswer: typeof q.betterAnswer === "string" ? q.betterAnswer : "",
+    }))
 
   // Pour les utilisateurs FREE, limiter les données envoyées
   const limitedStrengths = isPremium ? strengths : strengths.slice(0, 1)
@@ -257,6 +294,29 @@ export default async function ReportPage({
         <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
           <h3 className="mb-4 text-lg font-semibold text-slate-900">Résumé</h3>
           <p className="leading-relaxed text-slate-700">{report.summary}</p>
+        </div>
+      )}
+
+      {/* Question by question — Premium only */}
+      {isPremium && questionByQuestion.length > 0 && (
+        <QuestionByQuestionSection items={questionByQuestion} />
+      )}
+      {!isPremium && questionByQuestion.length > 0 && (
+        <div className="mb-6 rounded-xl border border-ivoire-200 bg-white/70 backdrop-blur-xl p-6 relative overflow-hidden">
+          <h2 className="text-xl font-serif font-semibold text-ink-900 mb-1">
+            Analyse de vos réponses
+          </h2>
+          <p className="text-sm text-ink-500 mb-4">
+            Analyse détaillée question par question avec exemples de meilleures réponses.
+          </p>
+          <div className="pointer-events-none select-none blur-sm opacity-40 space-y-3">
+            {questionByQuestion.slice(0, 2).map((_, i) => (
+              <div key={i} className="h-16 rounded-xl bg-slate-100" />
+            ))}
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <UpgradeCTA feature="l'analyse question par question" />
+          </div>
         </div>
       )}
 
