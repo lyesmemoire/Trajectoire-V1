@@ -32,6 +32,7 @@ import { InterviewStrategyService } from "@/application/interview-strategy/Inter
 import { InterviewStateService } from "@/application/interview-strategy/InterviewStateService";
 import type { InterviewState } from "@/lib/ai/schemas/interview-state.schema";
 import { AnswerEvaluator } from "./answer-evaluator";
+import type { AnswerEvaluation } from "@/lib/ai/schemas/answer-evaluation.schema";
 
 import type {
   InterviewStrategy,
@@ -376,7 +377,7 @@ ${strategyPrompt}
 
 async function resolveStrategy(
   input: InterviewInput,
-): Promise<{ strategy: InterviewStrategy | undefined; nextState?: InterviewState }> {
+): Promise<{ strategy: InterviewStrategy | undefined; nextState?: InterviewState; evaluation?: AnswerEvaluation; evaluatedCompetency?: string | null }> {
   if (input.strategy) {
     return { strategy: input.strategy };
   }
@@ -429,7 +430,7 @@ async function resolveStrategy(
     state: nextState,
   });
 
-  return { strategy, nextState };
+  return { strategy, nextState, evaluation, evaluatedCompetency: targetCompetency };
 }
 
 function buildLocalFirstQuestion(
@@ -728,13 +729,13 @@ Règles:
 
   public static async generateNextResponse(
     input: InterviewInput,
-  ): Promise<{ response: string; nextState?: InterviewState }> {
+  ): Promise<{ response: string; nextState?: InterviewState; evaluation?: AnswerEvaluation; evaluatedCompetency?: string | null }> {
     const history =
       buildConversationMessages(
         input.lastMessages,
       );
 
-    const { strategy, nextState } =
+    const { strategy, nextState, evaluation, evaluatedCompetency } =
       await resolveStrategy({
         ...input,
         lastMessages: history,
@@ -755,6 +756,8 @@ Règles:
           strategy,
         ),
         nextState,
+        evaluation,
+        evaluatedCompetency,
       };
     }
 
@@ -868,7 +871,7 @@ Règles:
       );
     }
 
-    return { response, nextState };
+    return { response, nextState, evaluation, evaluatedCompetency };
   }
 
   public static async generateSummary(

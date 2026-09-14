@@ -427,6 +427,8 @@ export class ConversationService {
 
     let aiResponse: string;
     let nextInterviewState: import("@/lib/ai/schemas/interview-state.schema").InterviewState | undefined;
+    let answerEvaluation: import("@/lib/ai/schemas/answer-evaluation.schema").AnswerEvaluation | undefined;
+    let evaluatedCompetency: string | null | undefined;
 
     const controller =
       new AbortController();
@@ -501,6 +503,8 @@ export class ConversationService {
 
       aiResponse = result.response;
       nextInterviewState = result.nextState;
+      answerEvaluation = result.evaluation;
+      evaluatedCompetency = result.evaluatedCompetency;
 
       if (
         !aiResponse ||
@@ -601,17 +605,64 @@ export class ConversationService {
      * This ensures state survives between HTTP calls without a new migration:
      * the existing JSONB `analysis` column is reused.
      */
-    if (nextInterviewState) {
+    if (nextInterviewState || answerEvaluation) {
       const currentAnalysis =
-        (sessionData.analysis as Record<string, unknown>) ?? {};
+        (sessionData.analysis as Record<string, any>) ?? {};
+
+      let qnaEvaluations = Array.isArray(currentAnalysis.qnaEvaluations)
+        ? [...currentAnalysis.qnaEvaluations]
+        : [];
+
+      if (answerEvaluation) {
+        // Prevent duplicates based on messageId
+        const existingIndex = qnaEvaluations.findIndex(
+          (qna: any) => qna.messageId === persistedUserMessage.id
+        );
+
+        const question = [...persistedMessages].reverse().find(m => m.role === "assistant")?.content ?? "";
+        const newQna = {
+          messageId: persistedUserMessage.id,
+          turnNumber: nextInterviewState?.turnNumber ?? 0,
+          question,
+          answer: validatedContent,
+          competency: evaluatedCompetency ?? null,
+          evaluation: {
+            relevance: answerEvaluation.relevanceScore,
+            specificity: answerEvaluation.specificityScore,
+            evidence: answerEvaluation.evidenceScore,
+            competencyScore: answerEvaluation.competencyScore,
+
+            hasConcreteExample: answerEvaluation.hasConcreteExample,
+            hasPersonalOwnership: answerEvaluation.hasPersonalOwnership,
+            hasMetrics: answerEvaluation.hasMetrics,
+            hasOutcome: answerEvaluation.hasOutcome,
+
+            demonstratedCompetency: answerEvaluation.demonstratedCompetency,
+            missingEvidence: answerEvaluation.missingEvidence,
+            recommendedAction: answerEvaluation.recommendedAction,
+            followUpType: answerEvaluation.followUpType,
+            shortReason: answerEvaluation.shortReason
+          },
+          createdAt: new Date().toISOString()
+        };
+
+        if (existingIndex >= 0) {
+          qnaEvaluations[existingIndex] = newQna;
+        } else {
+          qnaEvaluations.push(newQna);
+        }
+      }
+
+      const updatedAnalysis = {
+        ...currentAnalysis,
+        ...(nextInterviewState ? { interviewState: nextInterviewState } : {}),
+        qnaEvaluations,
+      };
 
       await this.sessionRepository.update(
         command.sessionId,
         {
-          analysis: {
-            ...currentAnalysis,
-            interviewState: nextInterviewState,
-          },
+          analysis: updatedAnalysis,
           version: sessionData.version,
         },
       );
