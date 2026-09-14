@@ -46,7 +46,7 @@ export default function SignupPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${window.location.origin}/simulation/new`,
           // Skip email confirmation in development
           ...(process.env.NODE_ENV === 'development' ? { data: { skip_email_confirmation: true } } : {}),
         },
@@ -61,7 +61,7 @@ export default function SignupPage() {
           password,
         })
         if (!signInError) {
-          window.location.href = '/dashboard'
+          window.location.href = '/simulation/new'
           return
         }
       }
