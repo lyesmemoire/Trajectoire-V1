@@ -168,6 +168,8 @@ export default function SimulationSessionPage({
   const [error, setError] = useState<string | null>(null)
   const [voiceError, setVoiceError] = useState<string | null>(null)
   const [textContent, setTextContent] = useState("")
+  // Live partial transcript from Web Speech API (display only, never sent to brain)
+  const [partialTranscript, setPartialTranscript] = useState("")
   const [voiceEnabled, setVoiceEnabled] = useState(false)
   // PREPARATION state — shown before first interaction
   const [phase, setPhase] = useState<"PREPARATION" | "INTERVIEW">("PREPARATION")
@@ -192,13 +194,16 @@ export default function SimulationSessionPage({
     startRecording,
     stopRecording,
     speakText,
+    markBrainResponse,
     isRecording,
     isTranscribing,
     isSpeaking,
   } = useVoiceInterview({
     onTranscript: handleTranscript,
+    onPartialTranscript: (partial) => setPartialTranscript(partial),
     onError: (msg) => {
       setVoiceError(msg)
+      setPartialTranscript("")
       setTimeout(() => setVoiceError(null), 6000)
     },
   })
@@ -255,14 +260,23 @@ export default function SimulationSessionPage({
 
       if (!response.ok) {
         const data = await response.json()
-        throw new Error(data.error || "Erreur lors de l'envoi")
+        const errorMessage =
+          typeof data?.error === "string"
+            ? data.error
+            : typeof data?.error?.message === "string"
+              ? data.error.message
+              : "Erreur lors de l'envoi"
+        throw new Error(errorMessage)
       }
 
       await fetchSession(sessionId)
       setTextContent("")
+      setPartialTranscript("")
 
       // TTS: read the latest assistant response aloud if voice is enabled
       if (voiceEnabled) {
+        // Mark brain response timestamp for latency telemetry
+        markBrainResponse()
         const updatedRes = await fetch(`/api/simulation/${sessionId}`)
         if (updatedRes.ok) {
           const updated = await updatedRes.json()
@@ -460,6 +474,15 @@ export default function SimulationSessionPage({
         ) : (
           <div className="text-center text-slate-400 py-8">
             <p>Préparation de votre entretien...</p>
+          </div>
+        )}
+
+        {/* Live partial transcript bubble (Web Speech API — display only) */}
+        {isRecording && partialTranscript && (
+          <div className="flex justify-end mt-3">
+            <div className="max-w-[70%] rounded-2xl p-4 bg-slate-200 text-slate-500 italic text-sm leading-relaxed animate-pulse">
+              {partialTranscript}
+            </div>
           </div>
         )}
       </div>
