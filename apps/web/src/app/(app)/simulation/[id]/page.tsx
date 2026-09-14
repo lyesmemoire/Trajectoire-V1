@@ -21,15 +21,156 @@ type Session = {
   status: string
 }
 
-export default function SimulationSessionPage({ params }: { params: Promise<{ id: string }> }) {
+type MatchingContext = {
+  matchedSkills: string[]
+  missingSkills: string[]
+  suggestions: string[]
+}
+
+type PrepContext = {
+  job: { title: string }
+  matching: MatchingContext
+  priorities: string[]
+} | null
+
+// ── Preparation card (shown before first message) ─────────────────────────────
+
+function PrepCard({
+  session,
+  context,
+  onStart,
+}: {
+  session: Session
+  context: PrepContext
+  onStart: () => void
+}) {
+  const matchedSkills = (context?.matching?.matchedSkills ?? []).slice(0, 2)
+  const pointsToVerify = (context?.priorities ?? []).slice(0, 3)
+  const hasPersonalization =
+    matchedSkills.length > 0 || pointsToVerify.length > 0
+
+  return (
+    <div className="mx-auto max-w-[680px] py-8 px-4 sm:px-0">
+      <div className="rounded-[24px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900">
+            <svg
+              className="h-6 w-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900">
+            Votre entretien est prêt
+          </h1>
+          <p className="mt-1 text-slate-600">{session.job_title}</p>
+        </div>
+
+        {hasPersonalization ? (
+          <>
+            <p className="mb-6 text-center text-sm text-slate-500">
+              Voici ce que Trajectoire a compris de votre profil pour cet entretien.
+            </p>
+
+            <div className="space-y-5">
+              {/* Points déjà présents */}
+              {matchedSkills.length > 0 && (
+                <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
+                  <p className="mb-3 text-xs font-bold uppercase tracking-wider text-emerald-700">
+                    Points déjà présents dans votre profil
+                  </p>
+                  <ul className="space-y-2">
+                    {matchedSkills.map((skill) => (
+                      <li
+                        key={skill}
+                        className="flex items-center gap-2 text-sm text-slate-700"
+                      >
+                        <span className="text-emerald-600">✓</span>
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Points à vérifier */}
+              {pointsToVerify.length > 0 && (
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-600">
+                    Points à explorer pendant l'entretien
+                  </p>
+                  <ul className="space-y-2">
+                    {pointsToVerify.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-2 text-sm text-slate-700"
+                      >
+                        <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-violet-500" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <p className="mb-6 text-center text-sm leading-relaxed text-slate-500">
+            Je vais adapter les questions à votre poste et approfondir vos
+            réponses au fur et à mesure.
+          </p>
+        )}
+
+        {/* Phrase cerveau */}
+        <p className="mt-6 text-center text-sm text-slate-500 italic">
+          &ldquo;Je vais adapter mes questions à vos réponses et approfondir les
+          points qui manquent de preuves concrètes.&rdquo;
+        </p>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={onStart}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg shadow-slate-200 transition hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[280px]"
+          >
+            Commencer mon entretien
+          </button>
+          <p className="mt-3 text-xs text-slate-400">
+            Vous pourrez arrêter l'entretien à tout moment.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Main page ─────────────────────────────────────────────────────────────────
+
+export default function SimulationSessionPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const [session, setSession] = useState<Session | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
+  const [prepContext, setPrepContext] = useState<PrepContext>(null)
   const [loading, setLoading] = useState(true)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [voiceError, setVoiceError] = useState<string | null>(null)
   const [textContent, setTextContent] = useState("")
   const [voiceEnabled, setVoiceEnabled] = useState(false)
+  // PREPARATION state — shown before first interaction
+  const [phase, setPhase] = useState<"PREPARATION" | "INTERVIEW">("PREPARATION")
   const router = useRouter()
   const sessionIdRef = useRef<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
@@ -38,7 +179,6 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
 
   const handleTranscript = useCallback(
     async (text: string) => {
-      // Fill the text area with the transcript and auto-submit
       setTextContent(text)
       if (sessionIdRef.current) {
         await submitMessage(text, sessionIdRef.current)
@@ -48,15 +188,20 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
     []
   )
 
-  const { voiceState, startRecording, stopRecording, speakText, isRecording, isTranscribing, isSpeaking } =
-    useVoiceInterview({
-      onTranscript: handleTranscript,
-      onError: (msg) => {
-        setVoiceError(msg)
-        // Auto-clear voice error after 6s
-        setTimeout(() => setVoiceError(null), 6000)
-      },
-    })
+  const {
+    startRecording,
+    stopRecording,
+    speakText,
+    isRecording,
+    isTranscribing,
+    isSpeaking,
+  } = useVoiceInterview({
+    onTranscript: handleTranscript,
+    onError: (msg) => {
+      setVoiceError(msg)
+      setTimeout(() => setVoiceError(null), 6000)
+    },
+  })
 
   // ── Data fetching ─────────────────────────────────────────────────────────
 
@@ -79,6 +224,10 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
       const data = await response.json()
       setSession(data.session)
       setMessages(data.messages || [])
+      // Capture context for prep card (best effort)
+      if (data.context) {
+        setPrepContext(data.context as PrepContext)
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur de chargement")
     } finally {
@@ -181,7 +330,7 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto py-16 text-center">
-        <p className="text-ink-600">Chargement de la simulation...</p>
+        <p className="text-slate-500">Chargement de la simulation...</p>
       </div>
     )
   }
@@ -189,8 +338,8 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
   if (error && !session) {
     return (
       <div className="max-w-4xl mx-auto py-16 text-center">
-        <p className="text-brick-600 mb-4">{error}</p>
-        <Link href="/dashboard" className="text-ink-700 hover:underline">
+        <p className="text-red-600 mb-4">{error}</p>
+        <Link href="/dashboard" className="text-slate-700 hover:underline">
           Retour au tableau de bord
         </Link>
       </div>
@@ -198,6 +347,20 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
   }
 
   if (!session) return null
+
+  // ── PREPARATION phase ─────────────────────────────────────────────────────
+
+  if (phase === "PREPARATION") {
+    return (
+      <PrepCard
+        session={session}
+        context={prepContext}
+        onStart={() => setPhase("INTERVIEW")}
+      />
+    )
+  }
+
+  // ── INTERVIEW phase ───────────────────────────────────────────────────────
 
   const micLabel = isRecording
     ? "Arrêter"
@@ -213,19 +376,22 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
         <div>
           <Link
             href="/dashboard"
-            className="inline-flex items-center text-sm text-ink-600 hover:text-ink-900 mb-2"
+            className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-2"
           >
             ← Retour au tableau de bord
           </Link>
-          <h1 className="text-2xl font-bold text-ink-900">{session.job_title}</h1>
-          <p className="text-ink-600">
-            {session.interview_type} · {session.level} · {Math.floor(session.duration_seconds / 60)} minutes
+          <h1 className="text-2xl font-bold text-slate-900">
+            {session.job_title}
+          </h1>
+          <p className="text-slate-600">
+            {session.interview_type} · {session.level} ·{" "}
+            {Math.floor(session.duration_seconds / 60)} minutes
           </p>
         </div>
         <button
           onClick={handleEndSession}
           disabled={sending}
-          className="px-4 py-2 bg-brick-100 text-brick-700 rounded-lg hover:bg-brick-200 transition-colors text-sm font-medium disabled:opacity-50"
+          className="px-4 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium disabled:opacity-50"
         >
           Terminer
         </button>
@@ -233,7 +399,7 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
 
       {/* Text error */}
       {error && (
-        <div className="mb-4 p-4 bg-brick-50 border border-brick-200 rounded-lg text-brick-600">
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
           {error}
         </div>
       )}
@@ -242,66 +408,82 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
       {voiceError && (
         <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm flex justify-between items-center">
           <span>🎙 {voiceError}</span>
-          <button onClick={() => setVoiceError(null)} className="ml-4 text-amber-500 hover:text-amber-700">✕</button>
+          <button
+            onClick={() => setVoiceError(null)}
+            className="ml-4 text-amber-500 hover:text-amber-700"
+          >
+            ✕
+          </button>
         </div>
       )}
 
       {/* Progress Bar */}
       <div className="mb-6">
-        <div className="flex justify-between text-sm text-ink-600 mb-2">
+        <div className="flex justify-between text-sm text-slate-500 mb-2">
           <span>Progression</span>
           <span>{messages.length} messages</span>
         </div>
-        <div className="w-full bg-ivoire-200 rounded-full h-2">
+        <div className="w-full bg-slate-100 rounded-full h-2">
           <div
-            className="bg-ink-800 h-2 rounded-full transition-all"
-            style={{ width: `${Math.min(messages.length / 20 * 100, 100)}%` }}
+            className="bg-slate-900 h-2 rounded-full transition-all"
+            style={{ width: `${Math.min((messages.length / 20) * 100, 100)}%` }}
           />
         </div>
       </div>
 
       {/* Conversation */}
-      <div className="bg-white rounded-lg border border-ivoire-200 p-6 mb-6 min-h-[400px] max-h-[600px] overflow-y-auto">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6 min-h-[400px] max-h-[600px] overflow-y-auto">
         {messages.length > 0 ? (
           <div className="space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
               >
                 <div
-                  className={`max-w-[70%] rounded-lg p-4 ${
+                  className={`max-w-[70%] rounded-2xl p-4 ${
                     message.role === "user"
-                      ? "bg-ink-600 text-white"
-                      : "bg-ivoire-100 text-ink-900"
+                      ? "bg-slate-900 text-white"
+                      : "bg-slate-50 text-slate-900"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{message.content}</p>
+                  <p className="whitespace-pre-wrap text-sm leading-relaxed">
+                    {message.content}
+                  </p>
                 </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
         ) : (
-          <div className="text-center text-ink-500 py-8">
+          <div className="text-center text-slate-400 py-8">
             <p>Préparation de votre entretien...</p>
           </div>
         )}
       </div>
 
       {/* Input Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-ivoire-200 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-2xl border border-slate-200 p-6"
+      >
         <div className="flex gap-3">
           {/* Microphone button */}
           <button
             type="button"
             onClick={handleMicClick}
             disabled={sending || isTranscribing || isSpeaking}
-            title={isRecording ? "Cliquez pour arrêter l'enregistrement" : "Cliquez pour parler"}
-            className={`px-4 py-3 rounded-lg font-semibold transition-colors self-end text-sm shrink-0 disabled:opacity-50 ${
+            title={
               isRecording
-                ? "bg-brick-500 text-white hover:bg-brick-600 animate-pulse"
-                : "bg-ivoire-200 text-ink-600 hover:bg-ivoire-300"
+                ? "Cliquez pour arrêter l'enregistrement"
+                : "Cliquez pour parler"
+            }
+            className={`px-4 py-3 rounded-xl font-semibold transition-colors self-end text-sm shrink-0 disabled:opacity-50 ${
+              isRecording
+                ? "bg-red-500 text-white hover:bg-red-600 animate-pulse"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
             }`}
           >
             {micLabel}
@@ -311,16 +493,18 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
             name="content"
             value={textContent}
             onChange={(e) => setTextContent(e.target.value)}
-            placeholder={isRecording ? "Enregistrement en cours…" : "Votre réponse…"}
+            placeholder={
+              isRecording ? "Enregistrement en cours…" : "Votre réponse…"
+            }
             disabled={sending || isRecording}
-            className="flex-1 px-4 py-3 border border-ivoire-300 rounded-lg focus:ring-2 focus:ring-ink-400 focus:border-transparent outline-none resize-none disabled:opacity-50"
+            className="flex-1 px-4 py-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-slate-300 focus:bg-white focus:border-transparent outline-none resize-none disabled:opacity-50 text-sm"
             rows={3}
           />
 
           <button
             type="submit"
             disabled={sending || !textContent.trim() || isRecording}
-            className="px-6 py-3 bg-ink-600 text-white font-semibold rounded-lg hover:bg-ink-700 transition-colors self-end disabled:opacity-50"
+            className="px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition-colors self-end disabled:opacity-50"
           >
             {sending ? "Envoi…" : "Envoyer"}
           </button>
@@ -328,7 +512,7 @@ export default function SimulationSessionPage({ params }: { params: Promise<{ id
 
         {/* Voice state indicator */}
         {(isTranscribing || isSpeaking || isRecording) && (
-          <p className="mt-2 text-xs text-ink-400">
+          <p className="mt-2 text-xs text-slate-400">
             {isRecording && "🔴 Enregistrement en cours — cliquez sur 🎙 pour terminer"}
             {isTranscribing && "⏳ Transcription en cours…"}
             {isSpeaking && "🔊 Lecture de la réponse du recruteur…"}
