@@ -126,6 +126,7 @@ export class ReportService {
         conversationHistory,
         sessionId: command.sessionId,
         userId: command.userId,
+        analysis: sessionData.analysis,
       });
     } catch (error) {
       this.logger.error("AI report generation failed", { error });

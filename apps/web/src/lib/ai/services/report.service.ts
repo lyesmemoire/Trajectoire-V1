@@ -22,6 +22,7 @@ export interface ReportInput {
   userContext?: string;
   sessionId?: string;
   userId?: string;
+  analysis?: any;
 }
 
 export interface ReportAnalysis {
@@ -33,6 +34,16 @@ export interface ReportAnalysis {
   improvements: string[];
   summary: string;
   recommendation: string;
+  questionByQuestion?: Array<{
+    question: string;
+    answer: string;
+    competency: string | null;
+    score: number;
+    whatWentWell: string[];
+    whatWasMissing: string[];
+    howToImprove: string[];
+    betterAnswer: string;
+  }>;
 }
 
 export class ReportService {
@@ -43,15 +54,65 @@ export class ReportService {
    */
   public static async generateReport(input: ReportInput): Promise<ReportAnalysis> {
     const client = AIClient.getInstance();
-    const sessionId = input.sessionId || "default";
-    const userId = input.userId;
+
+    // Build qnaContext from persisted evaluations if available
+    const sessionAnalysis = input.analysis as Record<string, any> | null | undefined;
+    const qnaEvaluations: any[] = Array.isArray(sessionAnalysis?.qnaEvaluations)
+      ? sessionAnalysis!.qnaEvaluations
+      : [];
+    const interviewState = sessionAnalysis?.interviewState ?? null;
+    const claims: any[] = Array.isArray(sessionAnalysis?.claims)
+      ? sessionAnalysis!.claims
+      : (Array.isArray(interviewState?.claims) ? interviewState.claims : []);
+    const conflicts: any[] = Array.isArray(sessionAnalysis?.conflicts)
+      ? sessionAnalysis!.conflicts
+      : (Array.isArray(interviewState?.conflicts) ? interviewState.conflicts : []);
+
+    let qnaContext = "";
+
+    if (qnaEvaluations.length > 0) {
+      const evalLines = qnaEvaluations.map((qna: any, i: number) => {
+        const e = qna.evaluation ?? {};
+        const scores = [e.relevance, e.specificity, e.evidence, e.competencyScore]
+          .filter((v) => typeof v === "number") as number[];
+        const avg = scores.length > 0
+          ? Math.round(scores.reduce((sum, v) => sum + v, 0) / scores.length)
+          : null;
+        return [
+          `[Exchange ${i + 1}]`,
+          `Competency: ${qna.competency ?? "N/A"}`,
+          avg !== null ? `Pre-computed score: ${avg}` : "Pre-computed score: unavailable",
+          `ConcreteExample: ${e.hasConcreteExample}`,
+          `PersonalOwnership: ${e.hasPersonalOwnership}`,
+          `Metrics: ${e.hasMetrics}`,
+          `Outcome: ${e.hasOutcome}`,
+          `CompetencyLevel: ${e.demonstratedCompetency}`,
+          `MissingEvidence: ${(e.missingEvidence ?? []).join(", ") || "none"}`,
+          `Reason: ${e.shortReason ?? ""}`,
+        ].join("\n");
+      });
+
+      qnaContext += `\nEVALUATION DATA (pre-computed per answer — use these to derive scores):\n${evalLines.join("\n\n")}`;
+    }
+
+    if (claims.length > 0) {
+      qnaContext += `\n\nCANDIDATE CLAIMS:\n${claims.map((c: any) => `- ${c.key}: "${c.value}" (turn ${c.sourceTurn})`).join("\n")}`;
+    }
+
+    if (conflicts.length > 0) {
+      const openConflicts = conflicts.filter((c: any) => c.status === "OPEN");
+      if (openConflicts.length > 0) {
+        qnaContext += `\n\nCONTRADICTIONS DETECTED:\n${openConflicts.map((c: any) => `- ${c.key}: first said "${c.previousValue}" (turn ${c.previousTurn}), then "${c.newValue}" (turn ${c.currentTurn}) — severity: ${c.severity}`).join("\n")}`;
+      }
+    }
 
     const systemPrompt = REPORT_SYSTEM_PROMPT;
     const generationPrompt = REPORT_GENERATION_PROMPT(
       input.jobTitle,
       input.level,
       input.interviewType,
-      input.durationMinutes
+      input.durationMinutes,
+      qnaContext,
     );
 
     const fullPrompt = `${systemPrompt}
@@ -62,8 +123,6 @@ ${input.conversationHistory}
 ${input.userContext ? `User Context: ${input.userContext}` : ''}
 
 ${input.cv ? `CV: ${input.cv}` : ''}`;
-
-    const startTime = Date.now();
 
     const result = await RetryManager.execute(
       async () => {
