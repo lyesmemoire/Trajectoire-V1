@@ -275,4 +275,46 @@ export class OpenAIProvider
       );
     }
   }
+
+  public async streamAudioSpeech(
+    params: AudioSpeechParams,
+  ): Promise<ReadableStream<Uint8Array>> {
+    try {
+      const response =
+        await this.client.audio.speech.create(
+          {
+            model:
+              params.model,
+
+            voice:
+              params.voice as
+                | "alloy"
+                | "echo"
+                | "fable"
+                | "onyx"
+                | "nova"
+                | "shimmer",
+
+            input:
+              params.input,
+
+            response_format: "pcm",
+          },
+          {
+            stream: false,
+          }
+        ).asResponse();
+
+      if (!response.body) {
+        throw new Error("No response body available for streaming");
+      }
+
+      return response.body;
+    } catch (error) {
+      throw new ExternalServiceError(
+        `OpenAI audio streaming failed: ${getErrorMessage(error)}`,
+        "OpenAI",
+      );
+    }
+  }
 }

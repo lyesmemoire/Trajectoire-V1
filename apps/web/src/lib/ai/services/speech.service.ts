@@ -90,6 +90,38 @@ export class SpeechService {
   }
 
   /**
+   * Stream text to audio (Text-to-Speech)
+   * @param input - Text and optional voice/language
+   * @returns ReadableStream of PCM audio chunks
+   */
+  public static async streamSpeech(input: TextToSpeechInput): Promise<ReadableStream<Uint8Array>> {
+    const client = AIClient.getInstance();
+    const sessionId = input.sessionId || "default";
+    const userId = input.userId;
+
+    const startTime = Date.now();
+
+    const result = await RetryManager.execute(
+      async () => {
+        const stream = await client.streamAudioSpeech({
+          model: AI_MODELS.TEXT_TO_SPEECH,
+          voice: input.voice || "alloy",
+          input: input.text,
+        });
+
+        return stream;
+      },
+      { maxRetries: 3, initialDelay: 2000 }
+    );
+
+    if (!result.success || !result.data) {
+      throw new ExternalServiceError(result.error || "Stream text-to-speech failed", "SpeechService");
+    }
+
+    return result.data;
+  }
+
+  /**
    * Get available voices for TTS
    * @returns List of available voices
    */

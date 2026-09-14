@@ -37,21 +37,17 @@ export async function POST(request: NextRequest) {
     // Truncate to a safe length (OpenAI TTS max ~4096 chars)
     const safeText = text.slice(0, 4000);
 
-    const audioBuffer = await SpeechService.textToSpeech({
+    const stream = await SpeechService.streamSpeech({
       text: safeText,
       voice: "alloy",
       language: "fr",
       userId: user.id,
     });
 
-    // Convert Buffer to Uint8Array for Web-standard BodyInit compatibility
-    const bytes = new Uint8Array(audioBuffer);
-
-    return new NextResponse(bytes, {
+    return new NextResponse(stream, {
       status: 200,
       headers: {
-        "Content-Type": "audio/mpeg",
-        "Content-Length": String(audioBuffer.length),
+        "Content-Type": "audio/pcm",
         "Cache-Control": "no-store",
       },
     });

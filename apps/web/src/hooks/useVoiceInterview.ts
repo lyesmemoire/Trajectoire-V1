@@ -241,91 +241,170 @@ export function useVoiceInterview({
 
   }, [voiceState, onTranscript, onError]);
 
-  // ── TTS ─────────────────────────────────────────────────────────────────────
+  // WebAudio TTS
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const nextPlaybackTimeRef = useRef<number>(0);
+  const activeSourcesRef = useRef<AudioBufferSourceNode[]>([]);
+  const ttsAbortControllerRef = useRef<AbortController | null>(null);
+
+  // ── TTS STREAMING ───────────────────────────────────────────────────────────
   const speakText = useCallback(
     async (text: string) => {
       if (!text.trim()) return;
 
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      // Stop any existing playback
+      cancelSpeaking();
 
       setVoiceState("speaking");
       metricsRef.current.ttsRequestStartedAt = performance.now();
+      metricsRef.current.ttsFirstByteAt = undefined;
+      metricsRef.current.audioPlaybackStartedAt = undefined;
+
+      const abortController = new AbortController();
+      ttsAbortControllerRef.current = abortController;
 
       try {
         const res = await fetch("/api/interview/speak", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text }),
+          signal: abortController.signal,
         });
 
         if (!res.ok) throw new Error("Erreur TTS");
+        if (!res.body) throw new Error("No response body");
 
-        metricsRef.current.ttsFirstByteAt = performance.now();
+        // Initialize AudioContext if needed
+        if (!audioContextRef.current || audioContextRef.current.state === "closed") {
+          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        }
+        const audioCtx = audioContextRef.current;
+        if (audioCtx.state === "suspended") await audioCtx.resume();
 
-        const arrayBuffer = await res.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-        const url = URL.createObjectURL(blob);
+        nextPlaybackTimeRef.current = audioCtx.currentTime;
 
-        const audio = new Audio(url);
-        audioRef.current = audio;
+        const reader = res.body.getReader();
+        let firstByteRecorded = false;
+        let playbackStarted = false;
+        let leftoverByte: number | null = null;
 
-        audio.onplay = () => {
-          metricsRef.current.audioPlaybackStartedAt = performance.now();
+        while (true) {
+          const { done, value } = await reader.read();
 
-          if (process.env.NODE_ENV === "development") {
-            const m = metricsRef.current;
-            const metrics: VoiceLatencyMetrics = {
-              speechStartedAt: m.speechStartedAt ?? 0,
-              speechEndedAt: m.speechEndedAt ?? 0,
-              transcriptFinalAt: m.transcriptFinalAt ?? 0,
-              brainRequestStartedAt: m.brainRequestStartedAt ?? 0,
-              brainResponseAt: m.brainResponseAt ?? 0,
-              ttsRequestStartedAt: m.ttsRequestStartedAt ?? 0,
-              ttsFirstByteAt: m.ttsFirstByteAt ?? 0,
-              audioPlaybackStartedAt: m.audioPlaybackStartedAt ?? 0,
-              sttFinalizeMs: Math.round((m.transcriptFinalAt ?? 0) - (m.speechEndedAt ?? 0)),
-              brainLatencyMs: Math.round((m.brainResponseAt ?? m.ttsRequestStartedAt ?? 0) - (m.brainRequestStartedAt ?? 0)),
-              ttsFirstByteMs: Math.round((m.ttsFirstByteAt ?? 0) - (m.ttsRequestStartedAt ?? 0)),
-              endToAudioMs: Math.round((m.audioPlaybackStartedAt ?? 0) - (m.speechEndedAt ?? 0)),
-            };
-            console.debug("[VoiceLatency] Full turn metrics:", metrics);
+          if (!firstByteRecorded && value && value.byteLength > 0) {
+            firstByteRecorded = true;
+            metricsRef.current.ttsFirstByteAt = performance.now();
           }
-        };
 
-        audio.onended = () => {
-          URL.revokeObjectURL(url);
-          setVoiceState("idle");
-        };
+          if (done) break;
 
-        audio.onerror = () => {
-          URL.revokeObjectURL(url);
-          setVoiceState("error");
-          onError?.("Erreur de lecture audio.");
-        };
+          // Process chunks (16-bit PCM little-endian)
+          let bufferToProcess = value;
+          if (leftoverByte !== null) {
+            bufferToProcess = new Uint8Array(value.byteLength + 1);
+            bufferToProcess[0] = leftoverByte;
+            bufferToProcess.set(value, 1);
+            leftoverByte = null;
+          }
 
-        await audio.play();
+          if (bufferToProcess.byteLength % 2 !== 0) {
+            leftoverByte = bufferToProcess[bufferToProcess.byteLength - 1]!;
+            bufferToProcess = bufferToProcess.slice(0, -1);
+          }
+
+          if (bufferToProcess.byteLength > 0) {
+            const length = bufferToProcess.byteLength / 2;
+            const float32 = new Float32Array(length);
+            const dataView = new DataView(bufferToProcess.buffer, bufferToProcess.byteOffset, bufferToProcess.byteLength);
+
+            for (let i = 0; i < length; i++) {
+              const int16 = dataView.getInt16(i * 2, true);
+              float32[i] = int16 < 0 ? int16 / 32768 : int16 / 32767;
+            }
+
+            const audioBuffer = audioCtx.createBuffer(1, length, 24000);
+            audioBuffer.getChannelData(0).set(float32);
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioCtx.destination);
+
+            const startAt = Math.max(audioCtx.currentTime, nextPlaybackTimeRef.current);
+
+            // Record playback start before source.start() — one time only for the first chunk
+            if (!playbackStarted) {
+              playbackStarted = true;
+              // audioPlaybackStartedAt = wall-clock time when the first audio sample is scheduled
+              metricsRef.current.audioPlaybackStartedAt =
+                performance.now() + (startAt - audioCtx.currentTime) * 1000;
+
+              if (process.env.NODE_ENV === "development") {
+                source.onended = () => {
+                  const m = metricsRef.current;
+                  const metrics: VoiceLatencyMetrics = {
+                    speechStartedAt: m.speechStartedAt ?? 0,
+                    speechEndedAt: m.speechEndedAt ?? 0,
+                    transcriptFinalAt: m.transcriptFinalAt ?? 0,
+                    brainRequestStartedAt: m.brainRequestStartedAt ?? 0,
+                    brainResponseAt: m.brainResponseAt ?? 0,
+                    ttsRequestStartedAt: m.ttsRequestStartedAt ?? 0,
+                    ttsFirstByteAt: m.ttsFirstByteAt ?? 0,
+                    audioPlaybackStartedAt: m.audioPlaybackStartedAt ?? 0,
+                    sttFinalizeMs: Math.round((m.transcriptFinalAt ?? 0) - (m.speechEndedAt ?? 0)),
+                    brainLatencyMs: Math.round(
+                      (m.brainResponseAt ?? m.ttsRequestStartedAt ?? 0) - (m.brainRequestStartedAt ?? 0)
+                    ),
+                    ttsFirstByteMs: Math.round((m.ttsFirstByteAt ?? 0) - (m.ttsRequestStartedAt ?? 0)),
+                    endToAudioMs: Math.round((m.audioPlaybackStartedAt ?? 0) - (m.speechEndedAt ?? 0)),
+                  };
+                  console.debug("[VoiceLatency] Full turn metrics:", metrics);
+                };
+              }
+            }
+
+            source.start(startAt);
+
+            nextPlaybackTimeRef.current = startAt + audioBuffer.duration;
+            activeSourcesRef.current.push(source);
+
+            source.addEventListener("ended", () => {
+              activeSourcesRef.current = activeSourcesRef.current.filter((s) => s !== source);
+              if (activeSourcesRef.current.length === 0 && voiceState === "speaking") {
+                setVoiceState("idle");
+              }
+            });
+          }
+        }
       } catch (err: unknown) {
+        if (err instanceof Error && err.name === "AbortError") {
+          // Normal cancellation
+          return;
+        }
         setVoiceState("error");
         onError?.(err instanceof Error ? err.message : "Synthèse vocale indisponible.");
       }
     },
-    [onError]
+    [voiceState, onError, cancelSpeaking]
   );
 
   const markBrainResponse = useCallback(() => {
     metricsRef.current.brainResponseAt = performance.now();
   }, []);
 
-  const cancelSpeaking = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
+  function cancelSpeaking() {
+    if (ttsAbortControllerRef.current) {
+      ttsAbortControllerRef.current.abort();
+      ttsAbortControllerRef.current = null;
     }
+
+    activeSourcesRef.current.forEach((source) => {
+      try { source.stop(); } catch (e) {}
+    });
+    activeSourcesRef.current = [];
+    nextPlaybackTimeRef.current = 0;
+
     setVoiceState("idle");
-  }, []);
+  }
 
   return {
     voiceState,

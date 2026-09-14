@@ -68,4 +68,9 @@ export interface AIProvider {
    * Audio speech (text-to-speech)
    */
   audioSpeech(params: AudioSpeechParams): Promise<AudioSpeechResponse>;
+
+  /**
+   * Stream audio speech (text-to-speech)
+   */
+  streamAudioSpeech(params: AudioSpeechParams): Promise<ReadableStream<Uint8Array>>;
 }
