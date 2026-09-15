@@ -154,10 +154,7 @@ export class InterviewStateService {
     return newState;
   }
 
-  /**
-   * Détermine la prochaine compétence à tester.
-   */
-  static selectNextCompetency(state: InterviewState, evaluation?: AnswerEvaluation): string | null {
+  static selectNextCompetency(state: InterviewState, evaluation?: AnswerEvaluation, topRisks: any[] = []): string | null {
     // Si la réponse précédente exige une relance, on reste sur la compétence
     if (evaluation && evaluation.recommendedAction === "FOLLOW_UP") {
       return state.currentCompetency;
@@ -166,28 +163,52 @@ export class InterviewStateService {
     const { competencies } = state;
     if (competencies.length === 0) return null;
 
-    // A. Priorité absolue: NOT_TESTED
+    const getComp = (name: string) => competencies.find(c => c.name === name);
+
+    // C & D: topRisk non suffisamment prouvé
+    const activeTopRisks = topRisks
+      .filter(r => r.competency)
+      .filter(r => {
+        const comp = getComp(r.competency);
+        if (!comp) return false; // La compétence doit exister dans l'état
+        // On considère un risque actif si la compétence n'est pas PROVEN et qu'on n'a pas trop essayé (anti-acharnement)
+        return comp.status !== "PROVEN" && comp.attempts < 3;
+      })
+      .sort((a, b) => {
+        if (a.severity === b.severity) return 0;
+        return a.severity === "HIGH" ? -1 : 1;
+      });
+
+    if (activeTopRisks.length > 0) {
+      return activeTopRisks[0].competency;
+    }
+
+    // E. Priorité 3: NOT_TESTED
     const notTested = competencies.find(c => c.status === "NOT_TESTED");
     if (notTested) return notTested.name;
 
-    // B. Priorité 2: PARTIAL (pour donner une chance de valider)
-    // On trie par lastEvaluatedAtTurn (le plus ancien d'abord)
+    // F. Priorité 4: PARTIAL
     const partial = competencies
-      .filter(c => c.status === "PARTIAL")
+      .filter(c => c.status === "PARTIAL" && c.attempts < 3)
       .sort((a, b) => (a.lastEvaluatedAtTurn || 0) - (b.lastEvaluatedAtTurn || 0));
     if (partial.length > 0) return partial[0].name;
 
-    // C. Priorité 3: WEAK
+    // G. Priorité 5: WEAK
     const weak = competencies
-      .filter(c => c.status === "WEAK")
+      .filter(c => c.status === "WEAK" && c.attempts < 3)
       .sort((a, b) => (a.lastEvaluatedAtTurn || 0) - (b.lastEvaluatedAtTurn || 0));
     if (weak.length > 0) return weak[0].name;
 
-    // D. Si tout est PROVEN, on boucle (comportement fallback)
+    // H. Si tout est PROVEN ou épuisé, on boucle (comportement fallback)
     const proven = competencies
       .filter(c => c.status === "PROVEN")
       .sort((a, b) => (a.lastEvaluatedAtTurn || 0) - (b.lastEvaluatedAtTurn || 0));
     if (proven.length > 0) return proven[0].name;
+
+    // Si vraiment tout est bloqué par anti-acharnement (attempts >= 3) mais pas PROVEN
+    const fallback = competencies
+      .sort((a, b) => (a.lastEvaluatedAtTurn || 0) - (b.lastEvaluatedAtTurn || 0));
+    if (fallback.length > 0) return fallback[0].name;
 
     return null;
   }

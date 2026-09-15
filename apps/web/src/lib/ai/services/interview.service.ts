@@ -215,18 +215,26 @@ ${
   "Non disponible"
 }
 
-PRIORITÉS D'ENTRETIEN
+PRIORITÉS À TESTER POUR CETTE OFFRE
 
 ${
-  context.priorities.length > 0
-    ? context.priorities
+  context.topRisks.length > 0
+    ? context.topRisks
         .map(
-          (priority, index) =>
-            `${index + 1}. ${priority}`,
+          (risk, index) =>
+            `${index + 1}. [${risk.severity}] ${risk.title}\nPourquoi : ${risk.reason}${risk.competency ? `\nCompétence : ${risk.competency}` : ''}`
         )
-        .join("\n")
+        .join("\n\n")
     : "Aucune priorité spécifique."
-}`;
+}
+
+INSTRUCTIONS SUR CES PRIORITÉS:
+- Ces priorités sont des hypothèses à tester, pas des faits établis.
+- Cherche des preuves concrètes.
+- Ne révèle pas au candidat les scores internes, les statuts internes ou la mécanique du système.
+- Ne dis pas : "Votre ATS indique..." ou "J'ai détecté un risque..."
+- Pose des questions naturelles de recruteur.
+- Pas de coaching pendant l'entretien. Pas de "bonne réponse", "vous devriez...", "essayez de...", "voici comment améliorer...". Le recruteur interviewe, le rapport coachera après.`;
 }
 
 function buildStrategyPrompt(
@@ -394,7 +402,8 @@ async function resolveStrategy(
   const targetSkills = [
     ...unifiedContext.matching.missingSkills,
     ...unifiedContext.matching.matchedSkills,
-  ].filter(Boolean);
+    ...(unifiedContext.topRisks ? unifiedContext.topRisks.map(r => r.competency) : []),
+  ].filter((c): c is string => Boolean(c));
   const currentState = input.state
     ? InterviewStateService.parse(input.state, targetSkills)
     : InterviewStateService.initializeState(targetSkills);

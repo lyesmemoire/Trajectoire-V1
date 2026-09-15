@@ -229,9 +229,10 @@ function buildRecruiterBehavior(
     phase: InterviewPhase;
     lastAnswer: string;
     evaluation?: AnswerEvaluation;
+    topRisks?: any[];
   },
 ): RecruiterBehavior {
-  const { phase, lastAnswer, evaluation } = params;
+  const { phase, lastAnswer, evaluation, topRisks = [] } = params;
 
   let requireConcreteExample = false;
   let requireMetrics = false;
@@ -245,9 +246,10 @@ function buildRecruiterBehavior(
     const short = Boolean(lastAnswer) && normalize(lastAnswer).length < MEDIUM_ANSWER_THRESHOLD;
     const hasExample = !lastAnswer || answerHasConcreteExample(lastAnswer);
     const hasMetrics = !lastAnswer || answerHasMetrics(lastAnswer);
+    const hasNoMetricsRisk = topRisks.some((r: any) => r.category === "no_metrics");
 
     requireConcreteExample = !hasExample || phase === "deep_dive" || phase === "challenge";
-    requireMetrics = !hasMetrics && phase !== "opening";
+    requireMetrics = (!hasMetrics || hasNoMetricsRisk) && phase !== "opening";
     allowTopicChange = !short;
   }
 
@@ -391,11 +393,11 @@ export class InterviewStrategyService {
 
     const turnNumber = getTurnNumber(messages);
     const phase = determinePhase(turnNumber);
-    const targetSkill = input.state ? InterviewStateService.selectNextCompetency(input.state, input.evaluation) : null;
+    const targetSkill = input.state ? InterviewStateService.selectNextCompetency(input.state, input.evaluation, input.context.topRisks) : null;
 
     const focus = determineFocus(input.context, phase, targetSkill, lastCandidateAnswer, input.evaluation);
     const objective = buildObjective({ phase, focus, targetSkill, context: input.context, evaluation: input.evaluation });
-    const behavior = buildRecruiterBehavior({ phase, lastAnswer: lastCandidateAnswer, evaluation: input.evaluation });
+    const behavior = buildRecruiterBehavior({ phase, lastAnswer: lastCandidateAnswer, evaluation: input.evaluation, topRisks: input.context.topRisks });
 
     // Inject conflict details in instructions if applicable
     const baseInstructions = buildInstructions({ phase, focus, targetSkill, behavior, evaluation: input.evaluation });

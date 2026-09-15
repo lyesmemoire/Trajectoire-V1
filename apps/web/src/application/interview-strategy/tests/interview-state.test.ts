@@ -431,3 +431,88 @@ describe("InterviewStateService - Contradiction Detection", () => {
     expect(evalObj.recommendedAction).toBe("NEXT_QUESTION");
   });
 });
+
+// ---------------------------------------------------------------
+// TOP RISKS PRIORITY TESTS
+// ---------------------------------------------------------------
+describe("InterviewStateService - Top Risks Priority", () => {
+  it("1. HIGH topRisk + competency NOT_TESTED → priorisée", () => {
+    const state = InterviewStateService.initializeState(["React", "Leadership"]);
+    const topRisks = [
+      { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    expect(next).toBe("Leadership");
+  });
+
+  it("2. HIGH topRisk competency PROVEN → ne monopolise plus", () => {
+    let state = InterviewStateService.initializeState(["React", "Leadership"]);
+    state.competencies[1].status = "PROVEN"; // Leadership is PROVEN
+    const topRisks = [
+      { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    expect(next).toBe("React");
+  });
+
+  it("3. MEDIUM topRisk vs compétence normale NOT_TESTED → topRisk priorisé", () => {
+    const state = InterviewStateService.initializeState(["React", "Leadership"]);
+    const topRisks = [
+      { category: "weak_evidence", competency: "Leadership", severity: "MEDIUM", evidenceStatus: "WEAK", id: "1", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    expect(next).toBe("Leadership");
+  });
+
+  it("4. conflit ouvert → conflit reste prioritaire sur topRisk (via recommendedAction)", () => {
+    const state = { ...InterviewStateService.initializeState(["React", "Leadership"]), currentCompetency: "React" };
+    const topRisks = [
+      { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
+    ];
+    const eval_ = makeEval({ recommendedAction: "FOLLOW_UP", followUpType: "CLARIFY_CONTRADICTION" });
+    const next = InterviewStateService.selectNextCompetency(state, eval_, topRisks);
+    expect(next).toBe("React"); // Stays on current to resolve conflict
+  });
+
+  it("5. follow-up actif → follow-up reste prioritaire", () => {
+    const state = { ...InterviewStateService.initializeState(["React", "Leadership"]), currentCompetency: "React" };
+    const topRisks = [
+      { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
+    ];
+    const eval_ = makeEval({ recommendedAction: "FOLLOW_UP", followUpType: "ASK_EXAMPLE" });
+    const next = InterviewStateService.selectNextCompetency(state, eval_, topRisks);
+    expect(next).toBe("React"); // Stays on current
+  });
+
+  it("6. topRisk sans competency → aucun crash / aucune fausse compétence", () => {
+    const state = InterviewStateService.initializeState(["React", "Leadership"]);
+    const topRisks = [
+      { category: "no_metrics", competency: null, severity: "MEDIUM", evidenceStatus: "WEAK", id: "1", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    // Should fallback to first NOT_TESTED (React)
+    expect(next).toBe("React");
+  });
+
+  it("7. plusieurs topRisks → HIGH avant MEDIUM", () => {
+    const state = InterviewStateService.initializeState(["React", "Leadership", "Node"]);
+    const topRisks = [
+      { category: "weak_evidence", competency: "React", severity: "MEDIUM", evidenceStatus: "WEAK", id: "1", title: "", reason: "", source: "" },
+      { category: "missing_skill", competency: "Node", severity: "HIGH", evidenceStatus: "MISSING", id: "2", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    expect(next).toBe("Node"); // HIGH wins
+  });
+
+  it("8. attempts élevés → pas de boucle infinie", () => {
+    let state = InterviewStateService.initializeState(["React", "Leadership"]);
+    state.competencies[1].attempts = 3; // Max attempts reached for Leadership
+    state.competencies[1].status = "WEAK";
+    const topRisks = [
+      { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
+    ];
+    const next = InterviewStateService.selectNextCompetency(state, undefined, topRisks);
+    // Should fallback to React because Leadership has max attempts
+    expect(next).toBe("React");
+  });
+});
