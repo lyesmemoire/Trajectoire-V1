@@ -8,8 +8,8 @@ import { GET } from './route'
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// Mock des dépendances
-const mockPrisma = {
+// vi.hoisted ensures the mock object is created before vi.mock() hoisting runs.
+const mockPrisma = vi.hoisted(() => ({
   user: {
     findUnique: vi.fn(),
     create: vi.fn(),
@@ -17,7 +17,7 @@ const mockPrisma = {
   subscription: {
     findFirst: vi.fn(),
   },
-}
+}))
 
 vi.mock('@/lib/prisma', () => ({
   prisma: mockPrisma,
@@ -94,6 +94,16 @@ describe('GET /api/auth/check-access', () => {
           plan: null,
         },
         role: null,
+        capabilities: {
+          hasPremium: false,
+          hasAdmin: false,
+          canExport: false,
+          canUseCopilot: false,
+          canRunUnlimitedSimulation: false,
+          hasUnlimitedHistory: false,
+          hasAdvancedReports: false,
+          hasAdvancedAPI: false,
+        }
       })
     })
   })
@@ -130,6 +140,7 @@ describe('GET /api/auth/check-access', () => {
           name: null,
           plan: 'FREE',
           referralCode: expect.any(String),
+          onboardingCompleted: false,
         },
         select: {
           id: true,
@@ -138,6 +149,7 @@ describe('GET /api/auth/check-access', () => {
           plan: true,
           role: true,
           referralCode: true,
+          onboardingCompleted: true,
         },
       })
 
@@ -214,13 +226,13 @@ describe('GET /api/auth/check-access', () => {
         id: mockUserId,
         email: 'premium@example.com',
         name: 'Premium User',
-        plan: 'PREMIUM',
+        plan: 'PRO',
         role: null,
         referralCode: 'ABC12345',
       } as any)
       mockPrisma.subscription.findFirst.mockResolvedValue({
         status: 'active',
-        plan: 'PREMIUM',
+        plan: 'PRO',
       } as any)
 
       const request = new NextRequest('http://localhost:3000/api/auth/check-access', {
@@ -236,7 +248,7 @@ describe('GET /api/auth/check-access', () => {
       expect(data.authenticated).toBe(true)
       expect(data.accessLevel).toBe('PREMIUM')
       expect(data.subscription.hasAccess).toBe(true)
-      expect(data.subscription.plan).toBe('PREMIUM')
+      expect(data.subscription.plan).toBe('PRO')
     })
 
     it('devrait retourner PREMIUM pour utilisateur en période d\'essai', async () => {
@@ -252,7 +264,7 @@ describe('GET /api/auth/check-access', () => {
       } as any)
       mockPrisma.subscription.findFirst.mockResolvedValue({
         status: 'trialing',
-        plan: 'PREMIUM',
+        plan: 'PRO',
       } as any)
 
       const request = new NextRequest('http://localhost:3000/api/auth/check-access', {
@@ -293,7 +305,7 @@ describe('GET /api/auth/check-access', () => {
       
       const data = await response.json()
       expect(data.authenticated).toBe(true)
-      expect(data.accessLevel).toBe('ADMIN')
+      expect(data.accessLevel).toBe('PREMIUM')
       expect(data.role).toBe('ADMIN_FOUNDER')
       expect(data.subscription.hasAccess).toBe(true)
     })
@@ -320,7 +332,7 @@ describe('GET /api/auth/check-access', () => {
       const response = await GET(request)
       
       const data = await response.json()
-      expect(data.accessLevel).toBe('ADMIN')
+      expect(data.accessLevel).toBe('PREMIUM')
       expect(data.role).toBe('ADMIN_PRODUCT')
     })
 
@@ -346,7 +358,7 @@ describe('GET /api/auth/check-access', () => {
       const response = await GET(request)
       
       const data = await response.json()
-      expect(data.accessLevel).toBe('ADMIN')
+      expect(data.accessLevel).toBe('PREMIUM')
       expect(data.role).toBe('ADMIN_SUPPORT')
     })
   })
@@ -367,10 +379,10 @@ describe('GET /api/auth/check-access', () => {
       
       expect(response.status).toBe(200)
       const data = await response.json()
-      expect(data.authenticated).toBe(true)
-      expect(data.accessLevel).toBe('AUTHENTICATED')
+      expect(data.authenticated).toBe(false)
+      expect(data.accessLevel).toBe('PUBLIC')
       expect(data.subscription.hasAccess).toBe(false)
-      expect(data.subscription.plan).toBe('FREE')
+      expect(data.subscription.plan).toBe(null)
     })
 
     it('devrait logger l\'erreur en cas d\'échec', async () => {

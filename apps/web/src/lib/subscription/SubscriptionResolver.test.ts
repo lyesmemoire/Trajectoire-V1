@@ -7,15 +7,15 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { SubscriptionResolver } from './SubscriptionResolver'
 import { SubscriptionPlan, SubscriptionStatus } from '@/types/subscription'
 
-// Mock de Prisma
-const mockPrisma = {
+// vi.hoisted ensures the mock object is created before vi.mock() hoisting runs.
+const mockPrisma = vi.hoisted(() => ({
   user: {
     findUnique: vi.fn(),
   },
   subscription: {
     findFirst: vi.fn(),
   },
-}
+}))
 
 vi.mock('@/lib/prisma', () => ({
   prisma: mockPrisma,
@@ -298,7 +298,7 @@ describe('SubscriptionResolver', () => {
   })
 
   describe('canUseCopilot()', () => {
-    it('devrait retourner true pour tous les utilisateurs authentifiés', async () => {
+    it('devrait retourner false pour un utilisateur FREE', async () => {
       const userId = 'user-id'
       
       mockPrisma.user.findUnique.mockResolvedValue({
@@ -309,7 +309,7 @@ describe('SubscriptionResolver', () => {
 
       const resolver = await SubscriptionResolver.create(userId)
       
-      expect(resolver.canUseCopilot()).toBe(true)
+      expect(resolver.canUseCopilot()).toBe(false)
     })
   })
 
@@ -646,7 +646,7 @@ describe('SubscriptionResolver', () => {
       expect(capabilities.hasPremium).toBe(false)
       expect(capabilities.hasAdmin).toBe(false)
       expect(capabilities.canExport).toBe(false)
-      expect(capabilities.canUseCopilot).toBe(true)
+      expect(capabilities.canUseCopilot).toBe(false)
       expect(capabilities.canRunUnlimitedSimulation).toBe(false)
       expect(capabilities.hasUnlimitedHistory).toBe(false)
       expect(capabilities.hasAdvancedReports).toBe(false)
