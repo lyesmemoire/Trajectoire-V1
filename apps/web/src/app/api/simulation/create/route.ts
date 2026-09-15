@@ -50,6 +50,8 @@ import {
   InterviewService,
 } from "@/lib/ai/services/interview.service";
 
+import { prisma } from "@/lib/prisma";
+
 const MAX_JOB_DESCRIPTION_LENGTH =
   20_000;
 
@@ -372,6 +374,10 @@ export async function POST(
           ),
           10,
         ),
+
+      opportunityId:
+        formData.get("opportunityId") ??
+        undefined,
     };
 
     const validationResult =
@@ -559,6 +565,79 @@ export async function POST(
         console.warn(
           "[simulation/create] job_description update failed:",
           contextUpdateError,
+        );
+      }
+    }
+
+    /*
+     * OPPORTUNITY LINK — server-side ownership validation.
+     *
+     * Never trust the opportunityId from the client directly.
+     * Re-fetch from DB to verify it belongs to the authenticated user.
+     * Only then persist the FK on InterviewSession.
+     */
+    const rawOpportunityId =
+      typeof validatedData.opportunityId === "string" &&
+      validatedData.opportunityId.trim().length > 0
+        ? validatedData.opportunityId.trim()
+        : null;
+
+    if (rawOpportunityId) {
+      const verifiedOpportunity =
+        await prisma.opportunity.findFirst({
+          where: {
+            id: rawOpportunityId,
+            userId: user.id, // ownership check
+          },
+          select: { id: true },
+        });
+
+      if (verifiedOpportunity) {
+        const {
+          error: opportunityLinkError,
+        } =
+          await supabase
+            .from(
+              "interview_sessions",
+            )
+            .update({
+              // Cast needed: Supabase typed client doesn't reflect the new column
+              // until types are regenerated after migration deployment.
+              opportunityId:
+                verifiedOpportunity.id,
+            } as any)
+            .eq(
+              "id",
+              result.sessionId,
+            )
+            .eq(
+              "user_id",
+              user.id,
+            );
+
+        if (opportunityLinkError) {
+          // Non-blocking: link failure does not abort the simulation.
+          console.warn(
+            "[simulation/create] opportunityId link failed:",
+            opportunityLinkError,
+          );
+        } else {
+          console.info(
+            "[simulation/create] session linked to opportunity",
+            {
+              sessionId: result.sessionId,
+              opportunityId: verifiedOpportunity.id,
+            },
+          );
+        }
+      } else {
+        // opportunityId sent by client does not belong to this user — silently refuse.
+        console.warn(
+          "[simulation/create] opportunityId ownership check failed — link refused",
+          {
+            userId: user.id,
+            opportunityIdAttempted: rawOpportunityId,
+          },
         );
       }
     }

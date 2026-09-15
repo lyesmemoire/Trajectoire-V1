@@ -12,6 +12,11 @@ export const CreateSessionSchema = z.object({
     message: "Interview type must be RH, Technique, or Manager",
   }),
   duration: z.number().int().min(1, "Duration must be at least 1 minute").max(120, "Duration cannot exceed 120 minutes"),
+  /**
+   * Optional. When the simulation is started from an Opportunity page, the server
+   * will validate ownership and persist this FK on InterviewSession.
+   */
+  opportunityId: z.string().optional(),
 });
 
 export type CreateSessionInput = z.infer<typeof CreateSessionSchema>;

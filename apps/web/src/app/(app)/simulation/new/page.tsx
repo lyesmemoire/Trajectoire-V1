@@ -233,6 +233,10 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           method="POST"
           className="space-y-10"
         >
+          {/* Hidden field: stable link to the Opportunity, validated server-side */}
+          {opportunity && (
+            <input type="hidden" name="opportunityId" value={opportunity.id} />
+          )}
           {/* Section 1 : Poste visé */}
           <section>
             <div className="mb-4 flex items-center gap-2">

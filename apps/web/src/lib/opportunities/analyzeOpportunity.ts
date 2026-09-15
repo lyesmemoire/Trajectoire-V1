@@ -1,3 +1,8 @@
+import { analyzeOpportunitySemantic } from "./semanticAnalysis";
+import type { SemanticAnalysisResult } from "./semanticAnalysisSchema";
+
+export type { SemanticAnalysisResult };
+
 export type OpportunityRecommendation =
   | "APPLY"
   | "CAUTION"
@@ -17,6 +22,8 @@ export type OpportunityAnalysisResult = {
   missingKeywords: string[]
   summary: string
   potentialScore: number
+  /** Present when the LLM semantic engine succeeded. Used for interview handoff. */
+  semanticAnalysis?: SemanticAnalysisResult
 }
 
 const STOP_WORDS = new Set([
@@ -378,7 +385,11 @@ function calculateExperienceScore(
   )
 }
 
-export function analyzeOpportunity(input: {
+/**
+ * Deterministic fallback — fast, offline-compatible, no LLM.
+ * Exported for direct use in tests and as a guaranteed fallback.
+ */
+export function analyzeOpportunityDeterministic(input: {
   cvText: string
   jobTitle: string
   jobDescription: string
@@ -535,5 +546,42 @@ export function analyzeOpportunity(input: {
     ]).slice(0, 20),
     summary,
     potentialScore,
+  }
+}
+
+/**
+ * analyzeOpportunity — async wrapper.
+ *
+ * Attempts LLM-based semantic analysis first (single generateObject call).
+ * On any failure (AI unavailable, timeout, Zod validation error, network error)
+ * falls back silently to the deterministic engine.
+ *
+ * The caller always receives an OpportunityAnalysisResult.
+ * When the LLM succeeded, `semanticAnalysis` is populated for rich handoff.
+ */
+export async function analyzeOpportunity(input: {
+  cvText: string
+  jobTitle: string
+  jobDescription: string
+}): Promise<OpportunityAnalysisResult> {
+  // Start the deterministic analysis immediately — it is always needed
+  // for the legacy score fields, and acts as the fallback.
+  const deterministicResult = analyzeOpportunityDeterministic(input);
+
+  try {
+    const semantic = await analyzeOpportunitySemantic(input);
+    return {
+      ...deterministicResult,
+      semanticAnalysis: semantic,
+    };
+  } catch (err) {
+    // LLM unavailable, timed out, or returned invalid JSON — degrade gracefully.
+    const reason =
+      err instanceof Error ? err.message : String(err);
+    console.warn(
+      "[analyzeOpportunity] LLM semantic analysis failed, using deterministic fallback:",
+      reason,
+    );
+    return deterministicResult;
   }
 }

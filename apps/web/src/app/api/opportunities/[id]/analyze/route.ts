@@ -98,7 +98,7 @@ export async function POST(
     )
   }
 
-  const result = analyzeOpportunity({
+  const result = await analyzeOpportunity({
     cvText,
     jobTitle: opportunity.title,
     jobDescription: opportunity.description,
@@ -120,13 +120,18 @@ export async function POST(
       gaps: result.gaps,
       analysis: {
         version: 1,
-        engine: "trajectoire-opportunity-intelligence",
+        engine: result.semanticAnalysis
+          ? "trajectoire-semantic-llm"
+          : "trajectoire-opportunity-intelligence",
         summary: result.summary,
         potentialScore: result.potentialScore,
         matchedKeywords: result.matchedKeywords,
         missingKeywords: result.missingKeywords,
         cvAnalysisId: cv.id,
         cvAnalyzedAt: cv.createdAt.toISOString(),
+        ...(result.semanticAnalysis
+          ? { semanticAnalysis: result.semanticAnalysis }
+          : {}),
       },
       analyzedAt: new Date(),
       nextAction:

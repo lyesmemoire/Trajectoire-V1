@@ -1,12 +1,10 @@
-import {
+﻿import {
   describe,
   expect,
   it,
 } from "vitest"
 
-import {
-  analyzeOpportunity,
-} from "./analyzeOpportunity"
+import { analyzeOpportunityDeterministic as analyzeOpportunity } from "./analyzeOpportunity"
 
 describe("analyzeOpportunity", () => {
   it("is deterministic for identical inputs", () => {

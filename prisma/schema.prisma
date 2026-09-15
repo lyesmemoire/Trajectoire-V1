@@ -112,6 +112,9 @@ model InterviewSession {
 
   careerMemories CareerMemory[]
 
+  opportunityId String?
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
   @@index([userId])
   @@index([createdAt])
   @@index([userId, createdAt(sort: Desc)])
@@ -749,6 +752,7 @@ model Opportunity {
 
   memories       OpportunityMemory[]
   discoveredJobs DiscoveredJob[]
+  interviewSessions InterviewSession[]
 
   @@index([userId])
   @@index([userId, status])

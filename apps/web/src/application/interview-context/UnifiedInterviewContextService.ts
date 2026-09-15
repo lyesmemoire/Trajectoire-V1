@@ -1,4 +1,6 @@
-import { buildTopRisks, type InterviewRisk } from "./InterviewRiskEngine";
+﻿import { buildTopRisks, type InterviewRisk } from "./InterviewRiskEngine";
+import { prisma } from "@/lib/prisma";
+import type { SemanticAnalysisResult } from "@/lib/opportunities/semanticAnalysisSchema";
 
 export interface InterviewCandidateContext {
   cvId: string | null;
@@ -55,6 +57,8 @@ interface SessionRow {
   job_description?: string | null;
   level?: string | null;
   interview_type?: string | null;
+  /** Stable FK to Opportunity — populated only for sessions created from an Opportunity page */
+  opportunityId?: string | null;
 }
 
 interface CvAnalysisRow {
@@ -359,7 +363,7 @@ export class UnifiedInterviewContextService {
       await this.supabase
         .from("interview_sessions")
         .select(
-          "id,user_id,job_title,job_description,level,interview_type",
+          "id,user_id,job_title,job_description,level,interview_type,opportunityId",
         )
         .eq("id", sessionId)
         .eq("user_id", userId)
@@ -614,7 +618,51 @@ export class UnifiedInterviewContextService {
       };
 
     // Build topRisks now that we have the full context shape
-    context.topRisks = buildTopRisks({
+    //
+    // If the session is linked to an Opportunity (via opportunityId) and that
+    // Opportunity has a semanticAnalysis stored in its `analysis` JSON,
+    // we use the pre-computed candidateRisks directly — bypassing the
+    // deterministic heuristic. No title/text matching is used.
+    //
+    // Old sessions without opportunityId always use the deterministic engine.
+    let preComputedRisks: InterviewRisk[] | null = null;
+
+    if (sessionRow.opportunityId) {
+      try {
+        const opp = await prisma.opportunity.findFirst({
+          where: {
+            id: sessionRow.opportunityId,
+            userId, // re-verify ownership even here
+          },
+          select: { analysis: true },
+        });
+
+        const rawAnalysis = opp?.analysis as Record<string, unknown> | null;
+        const semantic = rawAnalysis?.semanticAnalysis as SemanticAnalysisResult | undefined;
+
+        if (semantic?.candidateRisks && semantic.candidateRisks.length > 0) {
+          preComputedRisks = semantic.candidateRisks
+            .slice(0, 3)
+            .map((r, i) => ({
+              id: `semantic_risk_${i}`,
+              title: r.title,
+              reason: r.reasoning,
+              category: "missing_skill" as const,
+              severity: r.severity,
+              competency: r.competency,
+              evidenceStatus: r.status,
+              source: "semantic_llm",
+            }));
+        }
+      } catch (err) {
+        console.warn(
+          "[UnifiedInterviewContext] Failed to load semantic risks from opportunity:",
+          err,
+        );
+      }
+    }
+
+    context.topRisks = preComputedRisks ?? buildTopRisks({
       cvText: getCvText(cv),
       jobTitle: sessionRow.job_title ?? "",
       matching: {
