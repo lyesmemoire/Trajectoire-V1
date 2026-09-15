@@ -12,6 +12,7 @@ const mockContext: UnifiedInterviewContext = {
   matching: { reportId: null, score: 80, matchedSkills: [], missingSkills: ["React"], suggestions: [] },
   history: { previousSessionCount: 0, previousScores: [], averageScore: null },
   priorities: [],
+  topRisks: [],
   generatedAt: new Date().toISOString()
 };
 
@@ -163,7 +164,7 @@ describe("Interview Decision (End Interview Condition)", () => {
     expect(strategy.decision).toBe("CONTINUE");
   });
 
-  it("compétences suffisamment couvertes (all PROVEN) -> END_INTERVIEW", () => {
+  it("compï¿½tences suffisamment couvertes (all PROVEN) -> END_INTERVIEW", () => {
     const state = {
       competencies: [
         { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
@@ -185,7 +186,7 @@ describe("Interview Decision (End Interview Condition)", () => {
     expect(strategy.decision).toBe("END_INTERVIEW");
   });
 
-  it("contradiction MEDIUM/HIGH OPEN -> CONTINUE même si PROVEN", () => {
+  it("contradiction MEDIUM/HIGH OPEN -> CONTINUE mï¿½me si PROVEN", () => {
     const state = {
       competencies: [
         { name: "A", status: "PROVEN", evidenceCount: 1, bestScore: 90, missingEvidence: [], attempts: 1, lastEvaluatedAtTurn: 1 },
@@ -233,7 +234,7 @@ describe("Interview Decision (End Interview Condition)", () => {
     expect(strategy.decision).toBe("END_INTERVIEW");
   });
 
-  it("garde-fou maximum atteint -> END_INTERVIEW même avec NOT_TESTED", () => {
+  it("garde-fou maximum atteint -> END_INTERVIEW mï¿½me avec NOT_TESTED", () => {
     const state = {
       competencies: [
         { name: "A", status: "NOT_TESTED", evidenceCount: 0, bestScore: 0, missingEvidence: [], attempts: 0, lastEvaluatedAtTurn: null },

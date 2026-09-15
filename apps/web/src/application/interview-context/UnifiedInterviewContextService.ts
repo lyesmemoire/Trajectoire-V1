@@ -1,3 +1,5 @@
+import { buildTopRisks, type InterviewRisk } from "./InterviewRiskEngine";
+
 export interface InterviewCandidateContext {
   cvId: string | null;
   fileName: string | null;
@@ -37,6 +39,7 @@ export interface UnifiedInterviewContext {
   history: InterviewHistoryContext;
 
   priorities: string[];
+  topRisks: InterviewRisk[];
 
   generatedAt: string;
 }
@@ -604,9 +607,23 @@ export class UnifiedInterviewContextService {
             matching,
           ),
 
+        topRisks: [],
+
         generatedAt:
           new Date().toISOString(),
       };
+
+    // Build topRisks now that we have the full context shape
+    context.topRisks = buildTopRisks({
+      cvText: getCvText(cv),
+      jobTitle: sessionRow.job_title ?? "",
+      matching: {
+        matchedSkills,
+        missingSkills,
+        suggestions,
+        score: matching.score,
+      },
+    });
 
     return context;
   }
