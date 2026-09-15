@@ -40,11 +40,13 @@ export default async function ReportPage({
       `
       *,
       interview_sessions!inner (
+        id,
         job_title,
         level,
         interview_type,
         created_at,
         user_id,
+        analysis,
         feedback
       )
     `,
@@ -77,10 +79,12 @@ export default async function ReportPage({
   }
 
   const session = (report as any).interview_sessions as {
+    id: string
     job_title: string
     level: string
     interview_type: string
     created_at: string
+    analysis?: Record<string, any>
   } | null
 
   const strengths = (report.strengths as string[]) || []
@@ -99,7 +103,15 @@ export default async function ReportPage({
   const rawQna = Array.isArray(sessionFeedback?.questionByQuestion)
     ? sessionFeedback.questionByQuestion
     : []
+
+  const qnaEvaluations = Array.isArray(session?.analysis?.qnaEvaluations)
+    ? session.analysis.qnaEvaluations
+    : []
+
   const questionByQuestion: Array<{
+    messageId?: string
+    sessionId?: string
+    hasAudio?: boolean
     question: string
     answer: string
     competency: string | null
@@ -118,16 +130,24 @@ export default async function ReportPage({
         typeof q.score === "number" &&
         Number.isFinite(q.score),
     )
-    .map((q: any) => ({
-      question: q.question,
-      answer: q.answer,
+    .map((q: any) => {
+      const qnaEval = qnaEvaluations.find((e: any) => e.messageId === q.messageId)
+      const hasAudio = !!(qnaEval && qnaEval.audio && qnaEval.audio.path)
+
+      return {
+        messageId: typeof q.messageId === "string" ? q.messageId : undefined,
+        sessionId: session?.id,
+        hasAudio,
+        question: q.question,
+        answer: q.answer,
       competency: typeof q.competency === "string" ? q.competency : null,
       score: q.score,
       whatWentWell: Array.isArray(q.whatWentWell) ? q.whatWentWell.filter((s: any) => typeof s === "string") : [],
       whatWasMissing: Array.isArray(q.whatWasMissing) ? q.whatWasMissing.filter((s: any) => typeof s === "string") : [],
       howToImprove: Array.isArray(q.howToImprove) ? q.howToImprove.filter((s: any) => typeof s === "string") : [],
       betterAnswer: typeof q.betterAnswer === "string" ? q.betterAnswer : "",
-    }))
+    }
+  })
 
   // Pour les utilisateurs FREE, limiter les données envoyées
   const limitedStrengths = isPremium ? strengths : strengths.slice(0, 1)

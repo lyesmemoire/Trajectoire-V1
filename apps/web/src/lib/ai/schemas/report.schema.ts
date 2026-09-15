@@ -6,6 +6,7 @@ import { z } from "zod";
  */
 
 export const ReportQuestionSchema = z.object({
+  messageId: z.string().optional(), // echoed from EVALUATION DATA by LLM, validated server-side
   question: z.string(),
   answer: z.string(),
   competency: z.string().nullable(),

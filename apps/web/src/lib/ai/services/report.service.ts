@@ -35,6 +35,7 @@ export interface ReportAnalysis {
   summary: string;
   recommendation: string;
   questionByQuestion?: Array<{
+    messageId?: string; // propagated from qnaEvaluations, validated server-side
     question: string;
     answer: string;
     competency: string | null;
@@ -71,6 +72,9 @@ export class ReportService {
     let qnaContext = "";
 
     if (qnaEvaluations.length > 0) {
+      // Build the trusted set of valid messageIds from persisted evaluations.
+      // This is the only source of truth — the LLM is instructed to copy
+      // these IDs verbatim but we validate them after generation.
       const evalLines = qnaEvaluations.map((qna: any, i: number) => {
         const e = qna.evaluation ?? {};
         const scores = [e.relevance, e.specificity, e.evidence, e.competencyScore]
@@ -80,6 +84,9 @@ export class ReportService {
           : null;
         return [
           `[Exchange ${i + 1}]`,
+          // messageId is injected verbatim so the LLM can echo it back.
+          // Server-side validation (below) ensures only known IDs survive.
+          `MessageId: ${qna.messageId ?? "none"}`,
           `Competency: ${qna.competency ?? "N/A"}`,
           avg !== null ? `Pre-computed score: ${avg}` : "Pre-computed score: unavailable",
           `ConcreteExample: ${e.hasConcreteExample}`,
@@ -152,7 +159,47 @@ ${input.cv ? `CV: ${input.cv}` : ''}`;
       throw new ExternalServiceError(result.error || "Report generation failed", "ReportService");
     }
 
-    return result.data;
+    const llmOutput = result.data;
+
+    // ── messageId validation ───────────────────────────────────────────────
+    // The LLM is instructed to echo MessageId values from the context.
+    // We NEVER trust what the LLM returned — we validate against the
+    // trusted set built from qnaEvaluations. Unknown or duplicate IDs
+    // are stripped so that no wrong audio can appear under a question.
+    if (llmOutput.questionByQuestion && llmOutput.questionByQuestion.length > 0 && qnaEvaluations.length > 0) {
+      // Build a map: messageId → qnaEvaluation (only those with a messageId)
+      const validIdSet = new Set<string>(
+        qnaEvaluations
+          .map((qna: any) => qna.messageId)
+          .filter((id: any): id is string => typeof id === "string" && id.length > 0)
+      );
+
+      const seenIds = new Set<string>();
+
+      llmOutput.questionByQuestion = llmOutput.questionByQuestion.map((item: any) => {
+        const llmId: unknown = (item as any).messageId;
+
+        // Only accept a messageId if:
+        // 1. It is a non-empty string
+        // 2. It belongs to the trusted set from qnaEvaluations
+        // 3. It has not already been used for another item (no duplicates)
+        if (
+          typeof llmId === "string" &&
+          llmId.length > 0 &&
+          validIdSet.has(llmId) &&
+          !seenIds.has(llmId)
+        ) {
+          seenIds.add(llmId);
+          return { ...item, messageId: llmId };
+        }
+
+        // Invalid / duplicate / hallucinated → replay disabled for this item
+        const { messageId: _dropped, ...rest } = item as any;
+        return rest;
+      });
+    }
+
+    return llmOutput;
   }
 
   /**

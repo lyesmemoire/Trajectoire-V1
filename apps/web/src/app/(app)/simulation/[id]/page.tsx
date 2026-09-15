@@ -180,10 +180,24 @@ export default function SimulationSessionPage({
   // ── Voice pipeline ────────────────────────────────────────────────────────
 
   const handleTranscript = useCallback(
-    async (text: string, durationMs?: number) => {
+    async (text: string, durationMs?: number, audioBlob?: Blob | null) => {
       setTextContent(text)
       if (sessionIdRef.current) {
-        await submitMessage(text, sessionIdRef.current, durationMs)
+        const messageId = await submitMessage(text, sessionIdRef.current, durationMs)
+
+        if (messageId && audioBlob) {
+          const formData = new FormData()
+          formData.append("sessionId", sessionIdRef.current)
+          formData.append("messageId", messageId)
+          formData.append("audio", audioBlob, "recording.webm")
+
+          fetch("/api/simulation/audio-upload", {
+            method: "POST",
+            body: formData,
+          }).catch((err) => {
+            console.error("[Audio Replay] Upload failed non-fatally", err)
+          })
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -273,6 +287,9 @@ export default function SimulationSessionPage({
         throw new Error(errorMessage)
       }
 
+      const responseData = await response.json()
+      const messageId = responseData?.data?.resultRef || responseData?.data?.data?.resultRef || responseData?.data?.messageId
+
       await fetchSession(sessionId)
       setTextContent("")
       setPartialTranscript("")
@@ -293,11 +310,15 @@ export default function SimulationSessionPage({
           }
         }
       }
+
+      return messageId
+
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur inconnue")
     } finally {
       setSending(false)
     }
+    return undefined
   }
 
   // ── Form submit (text mode) ───────────────────────────────────────────────

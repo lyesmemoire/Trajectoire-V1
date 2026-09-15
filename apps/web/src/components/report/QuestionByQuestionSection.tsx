@@ -1,8 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 interface QnaItem {
+  messageId?: string
+  sessionId?: string
+  hasAudio?: boolean
   question: string
   answer: string
   competency: string | null
@@ -64,6 +67,74 @@ function ChevronIcon({ open }: { open: boolean }) {
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>
+  )
+}
+
+function ReplayButton({ messageId, sessionId, isOpen }: { messageId: string; sessionId: string; isOpen: boolean }) {
+  const [state, setState] = useState<"idle" | "loading" | "playing" | "error">("idle")
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  // Cleanup on unmount or when accordion closes
+  useEffect(() => {
+    if (!isOpen) {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+      setState("idle")
+    }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.src = ""
+      }
+    }
+  }, [isOpen])
+
+  const togglePlay = async () => {
+    if (state === "playing") {
+      audioRef.current?.pause()
+      setState("idle")
+      return
+    }
+
+    if (state === "idle" && !audioRef.current?.src) {
+      setState("loading")
+      try {
+        const res = await fetch(`/api/simulation/audio-replay?sessionId=${sessionId}&messageId=${messageId}`)
+        if (!res.ok) throw new Error("Replay unavailable")
+        const data = await res.json()
+        if (!data.signedUrl) throw new Error("No URL")
+
+        const audio = new Audio(data.signedUrl)
+        audioRef.current = audio
+        audio.onended = () => setState("idle")
+        audio.onerror = () => setState("error")
+        await audio.play()
+        setState("playing")
+      } catch (err) {
+        console.error(err)
+        setState("error")
+      }
+    } else if (audioRef.current) {
+      await audioRef.current.play().catch(() => setState("error"))
+      setState("playing")
+    }
+  }
+
+  if (state === "error") {
+    return <span className="text-[10px] text-terracotta-600 font-medium bg-terracotta-50 px-2 py-1 rounded">Replay indisponible</span>
+  }
+
+  return (
+    <button
+      onClick={togglePlay}
+      disabled={state === "loading"}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-violet-700 bg-violet-100 hover:bg-violet-200 rounded-full transition-colors disabled:opacity-50"
+      aria-label={state === "playing" ? "Mettre en pause" : "Écouter ma réponse"}
+    >
+      {state === "playing" ? "⏸ Pause" : state === "loading" ? "⏳ Chargement..." : "▶ Écouter ma réponse"}
+    </button>
   )
 }
 
@@ -142,9 +213,14 @@ function QuestionCard({
             <p className="text-sm leading-relaxed text-ink-700">{item.question}</p>
           </div>
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-400">
-              Votre réponse
-            </p>
+            <div className="mb-1.5 flex items-center justify-between">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-ink-400">
+                Votre réponse
+              </p>
+              {item.hasAudio && item.messageId && item.sessionId && (
+                <ReplayButton messageId={item.messageId} sessionId={item.sessionId} isOpen={isOpen} />
+              )}
+            </div>
             <p className="text-sm leading-relaxed text-ink-700">{item.answer}</p>
           </div>
         </div>

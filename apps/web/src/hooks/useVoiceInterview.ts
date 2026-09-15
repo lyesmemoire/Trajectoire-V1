@@ -11,7 +11,7 @@ export type VoiceState =
   | "error";
 
 export interface UseVoiceInterviewOptions {
-  onTranscript: (text: string, durationMs?: number) => void;
+  onTranscript: (text: string, durationMs?: number, audioBlob?: Blob | null) => void;
   onPartialTranscript?: (text: string) => void;
   onError?: (message: string) => void;
 }
@@ -134,7 +134,8 @@ export function useVoiceInterview({
               const durationMs = (m.speechEndedAt && m.speechStartedAt)
                 ? m.speechEndedAt - m.speechStartedAt
                 : undefined;
-              onTranscript(final, durationMs);
+              const audioBlob = chunksRef.current.length > 0 ? new Blob(chunksRef.current, { type: "audio/webm" }) : null;
+              onTranscript(final, durationMs, audioBlob);
             }
           }
         });
@@ -242,7 +243,8 @@ export function useVoiceInterview({
             const durationMs = (m.speechEndedAt && m.speechStartedAt)
               ? m.speechEndedAt - m.speechStartedAt
               : undefined;
-            onTranscript(text.trim(), durationMs);
+            const audioBlob = chunksRef.current.length > 0 ? new Blob(chunksRef.current, { type: "audio/webm" }) : null;
+            onTranscript(text.trim(), durationMs, audioBlob);
           }
         } catch (err: unknown) {
           if (!transcriptSentRef.current) {

@@ -25,6 +25,7 @@ Always respond in JSON format with the following structure:
   "recommendation": string,
   "questionByQuestion": [
     {
+      "messageId": string (copy EXACTLY from the MessageId field in EVALUATION DATA — do not generate, modify, or invent),
       "question": string (exact recruiter question from transcript),
       "answer": string (exact candidate answer from transcript),
       "competency": string | null (competency being tested, or null),
@@ -41,6 +42,7 @@ CRITICAL RULES for questionByQuestion:
 - Only include exchanges where the candidate actually answered (skip pure pleasantries or one-word responses)
 - Each exchange in EVALUATION DATA contains a field "Pre-computed score". When present, you MUST copy that exact integer as the "score" field — do NOT recalculate or change it
 - If no EVALUATION DATA exists for an exchange, infer the score from the transcript quality
+- Each exchange in EVALUATION DATA contains a field "MessageId". You MUST copy that exact value into the "messageId" field — do NOT generate a new ID, do NOT omit it if present, do NOT modify it
 - Do NOT expose internal field names (relevance, specificity, etc.) to the user in any output field
 - betterAnswer must stay grounded in what the candidate actually said — extend and improve it, do not fabricate a fictional profile
 - If betterAnswer lacks specific metrics, explicitly suggest what the candidate could quantify, without inventing numbers
