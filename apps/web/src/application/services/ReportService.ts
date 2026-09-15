@@ -10,6 +10,7 @@ import { IRateLimiter, IQuotaService, IAuditService, ILogger } from "@/core/inte
 import { AppError, ErrorCode, QuotaError } from "@/core/errors";
 import { RateLimitRules, EndpointType } from "@/domain/valueObjects";
 import { ReportService as AIReportService } from "@/lib/ai/services/report.service";
+import { OralPerformanceService } from "./OralPerformanceService";
 
 export interface GenerateReportCommand {
   userId: string;
@@ -36,6 +37,16 @@ export interface GenerateReportResult {
     howToImprove: string[];
     betterAnswer: string;
   }>;
+  oralSummary?: {
+    analyzedResponses: number;
+    averageWordsPerMinute: number | null;
+    totalFillerWords: number;
+    fillerRatePer100Words: number;
+    averageResponseDurationMs: number | null;
+    rushedResponses: number;
+    slowResponses: number;
+    tooLongResponses: number;
+  };
 }
 
 export class ReportService {
@@ -125,6 +136,14 @@ export class ReportService {
       .map((m) => `${m.role === "assistant" ? "Interviewer" : "Candidate"}: ${m.content}`)
       .join("\n\n");
 
+    // Aggregate Oral Performance
+    let oralSummary = undefined;
+    if (sessionData.analysis?.qnaEvaluations) {
+      oralSummary = OralPerformanceService.aggregateSummary(
+        sessionData.analysis.qnaEvaluations.map((q: any) => q.oralPerformance)
+      );
+    }
+
     // Generate AI report
     let analysis;
     try {
@@ -197,6 +216,7 @@ export class ReportService {
       summary: analysis.summary,
       recommendation: analysis.recommendation,
       questionByQuestion: analysis.questionByQuestion,
+      oralSummary,
     };
   }
 

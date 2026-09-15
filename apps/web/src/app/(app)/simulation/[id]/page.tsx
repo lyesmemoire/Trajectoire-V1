@@ -180,10 +180,10 @@ export default function SimulationSessionPage({
   // ── Voice pipeline ────────────────────────────────────────────────────────
 
   const handleTranscript = useCallback(
-    async (text: string) => {
+    async (text: string, durationMs?: number) => {
       setTextContent(text)
       if (sessionIdRef.current) {
-        await submitMessage(text, sessionIdRef.current)
+        await submitMessage(text, sessionIdRef.current, durationMs)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,7 +243,7 @@ export default function SimulationSessionPage({
 
   // ── Message submission (shared by text + voice) ───────────────────────────
 
-  async function submitMessage(content: string, sessionId: string) {
+  async function submitMessage(content: string, sessionId: string, durationMs?: number) {
     if (!content.trim() || sending) return
 
     setSending(true)
@@ -252,6 +252,9 @@ export default function SimulationSessionPage({
     const formData = new FormData()
     formData.append("content", content)
     formData.append("sessionId", sessionId)
+    if (durationMs) {
+      formData.append("durationMs", durationMs.toString())
+    }
 
     try {
       const response = await fetch("/api/simulation/message", {

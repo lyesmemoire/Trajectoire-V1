@@ -11,7 +11,7 @@ export type VoiceState =
   | "error";
 
 export interface UseVoiceInterviewOptions {
-  onTranscript: (text: string) => void;
+  onTranscript: (text: string, durationMs?: number) => void;
   onPartialTranscript?: (text: string) => void;
   onError?: (message: string) => void;
 }
@@ -130,7 +130,11 @@ export function useVoiceInterview({
                 });
               }
               setVoiceState("idle");
-              onTranscript(final);
+              const m = metricsRef.current;
+              const durationMs = (m.speechEndedAt && m.speechStartedAt)
+                ? m.speechEndedAt - m.speechStartedAt
+                : undefined;
+              onTranscript(final, durationMs);
             }
           }
         });
@@ -169,6 +173,8 @@ export function useVoiceInterview({
 
       setVoiceState("recording");
     } catch (err: unknown) {
+      // Reset metrics so a stale speechStartedAt cannot bleed into the next turn
+      metricsRef.current = {};
       setVoiceState("error");
       console.error("[voice] microphone start failed", {
         name: err instanceof DOMException ? err.name : undefined,
@@ -232,7 +238,11 @@ export function useVoiceInterview({
           if (text?.trim() && !transcriptSentRef.current) {
             transcriptSentRef.current = true;
             setVoiceState("idle");
-            onTranscript(text.trim());
+            const m = metricsRef.current;
+            const durationMs = (m.speechEndedAt && m.speechStartedAt)
+              ? m.speechEndedAt - m.speechStartedAt
+              : undefined;
+            onTranscript(text.trim(), durationMs);
           }
         } catch (err: unknown) {
           if (!transcriptSentRef.current) {

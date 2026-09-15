@@ -67,10 +67,16 @@ import {
   InterviewStateService,
 } from "@/application/interview-strategy/InterviewStateService";
 
+import {
+  OralPerformanceService,
+} from "./OralPerformanceService";
+
 export interface SendMessageCommand {
   userId: string;
   sessionId: string;
   content: string;
+  durationMs?: number;
+
 
   /**
    * Optional by design.
@@ -626,6 +632,7 @@ export class ConversationService {
           question,
           answer: validatedContent,
           competency: evaluatedCompetency ?? null,
+          oralPerformance: OralPerformanceService.analyze(validatedContent, command.durationMs) ?? null,
           evaluation: {
             relevance: answerEvaluation.relevanceScore,
             specificity: answerEvaluation.specificityScore,

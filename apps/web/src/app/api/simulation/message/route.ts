@@ -241,6 +241,11 @@ export const POST =
             formData.get(
               "content",
             ) as string,
+
+          durationMs:
+            formData.has("durationMs")
+              ? Number(formData.get("durationMs"))
+              : undefined,
         };
 
         const validationResult =
@@ -348,8 +353,12 @@ export const POST =
                       content:
                         validatedData.content,
 
+                      durationMs:
+                        rawData.durationMs,
+
                       /*
                        * New contextual brain input.
+
                        *
                        * ConversationService remains backward compatible
                        * when this value is null.
@@ -400,6 +409,9 @@ export const POST =
 
                   content:
                     validatedData.content,
+
+                  durationMs:
+                    rawData.durationMs,
 
                   unifiedContext,
                 });
