@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -37,28 +37,28 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-violet-100 selection:text-violet-900">
 
-      {/* â”€â”€ HERO â”€â”€ */}
+      {/* ── HERO ── */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-5xl px-5 md:px-6 text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-600 mb-6">
-            PRÃ‰PARATION D'ENTRETIEN PAR IA
+            PRÉPARATION D&apos;ENTRETIEN PAR IA
           </p>
 
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-[1.15]">
-            Un entretien peut changer votre carriÃ¨re.<br className="hidden sm:block" /> PrÃ©parez-le comme tel.
+            Un entretien peut changer votre carrière.<br className="hidden sm:block" /> Préparez-le comme tel.
           </h1>
 
           <p className="mt-6 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Trajectoire analyse votre CV et l'offre que vous visez, identifie vos points faibles et vous entraÃ®ne sur les questions qui comptent vraiment.
+            Trajectoire analyse votre CV et l&apos;offre que vous visez, identifie vos points faibles et vous entraîne sur les questions qui comptent vraiment.
           </p>
 
           <div className="mt-8 flex items-center justify-center gap-2 text-xs font-medium text-slate-400">
             <Lock className="h-3.5 w-3.5 shrink-0" />
-            <span>Paiement sÃ©curisÃ©</span>
-            <span className="mx-1.5 opacity-50">Â·</span>
+            <span>Paiement sécurisé</span>
+            <span className="mx-1.5 opacity-50">·</span>
             <span>Sans engagement</span>
-            <span className="mx-1.5 opacity-50">Â·</span>
-            <span>Vos donnÃ©es restent privÃ©es</span>
+            <span className="mx-1.5 opacity-50">·</span>
+            <span>Vos données restent privées</span>
           </div>
 
           {error && (
@@ -69,31 +69,31 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ CARDS â”€â”€ */}
+      {/* ── CARDS ── */}
       <section className="pb-24">
         <div className="mx-auto max-w-5xl px-5 md:px-6">
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 items-start">
 
-            {/* 1. DÃ‰COUVERTE */}
+            {/* 1. DÉCOUVERTE */}
             <div className="order-2 md:order-1 flex flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-md">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-4">
-                  DÃ‰COUVERTE
+                  DÉCOUVERTE
                 </p>
                 <div className="flex items-end gap-1.5">
                   <span className="text-4xl font-extrabold tracking-tight text-slate-950">
-                    0 â‚¬
+                    0 €
                   </span>
                 </div>
                 <p className="mt-4 text-sm font-medium text-slate-950">
-                  DÃ©couvrez Trajectoire et testez votre premiÃ¨re simulation.
+                  Découvrez Trajectoire et testez votre première simulation.
                 </p>
 
                 <ul className="mt-8 space-y-4">
                   {[
-                    "1 simulation dÃ©couverte",
-                    "PrÃ©paration personnalisÃ©e",
-                    "Questions adaptÃ©es au poste",
+                    "1 simulation découverte",
+                    "Préparation personnalisée",
+                    "Questions adaptées au poste",
                   ].map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
@@ -128,24 +128,24 @@ export default function PricingPage() {
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-5xl font-extrabold tracking-tight text-violet-600">
-                    29 â‚¬
+                    29 €
                   </span>
                   <span className="text-sm font-medium text-slate-500">paiement unique</span>
                 </div>
                 <p className="mt-4 text-sm font-bold text-slate-900">
-                  PrÃ©parez l'entretien qui compte.
+                  Préparez l&apos;entretien qui compte.
                 </p>
                 <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                  Pour un entretien prÃ©cis, Trajectoire analyse votre CV et l'offre, identifie les points qui peuvent vous fragiliser et vous permet de vous entraÃ®ner jusqu'Ã  Ãªtre prÃªt.
+                  Pour un entretien précis, Trajectoire analyse votre CV et l&apos;offre, identifie les points qui peuvent vous fragiliser et vous permet de vous entraîner jusqu&apos;à être prêt.
                 </p>
 
                 <ul className="mt-8 space-y-4">
                   {[
-                    "Analyse de votre CV face Ã  l'offre",
+                    "Analyse de votre CV face à l'offre",
                     "Identification de vos forces et points faibles",
-                    "5 simulations personnalisÃ©es",
-                    "Questions adaptÃ©es au poste visÃ©",
-                    "Rapport aprÃ¨s chaque entretien",
+                    "5 simulations personnalisées",
+                    "Questions adaptées au poste visé",
+                    "Rapport après chaque entretien",
                     "Retravail de vos points faibles",
                   ].map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -163,10 +163,10 @@ export default function PricingPage() {
                   className="w-full flex flex-col items-center justify-center gap-1 rounded-2xl bg-violet-600 px-5 py-4 shadow-lg shadow-violet-200 transition hover:bg-violet-700 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 disabled:opacity-70 disabled:hover:bg-violet-600 disabled:active:scale-100"
                 >
                   <span className="text-sm font-bold text-white">
-                    {loading === 'interview_pack' ? 'Redirection...' : 'PrÃ©parer mon entretien â€” 29 â‚¬'}
+                    {loading === 'interview_pack' ? 'Redirection...' : 'Préparer mon entretien – 29 €'}
                   </span>
                   <span className="text-[10px] font-medium text-violet-200 uppercase tracking-wider">
-                    Paiement unique Â· Aucun abonnement
+                    Paiement unique · Aucun abonnement
                   </span>
                 </button>
               </div>
@@ -183,18 +183,18 @@ export default function PricingPage() {
                 </p>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-4xl font-extrabold tracking-tight text-slate-950">
-                    39 â‚¬
+                    39 €
                   </span>
                   <span className="text-sm font-medium text-slate-500">/ mois</span>
                 </div>
                 <p className="mt-4 text-sm font-medium text-slate-950">
-                  Pour prÃ©parer plusieurs opportunitÃ©s et progresser entretien aprÃ¨s entretien.
+                  Pour préparer plusieurs opportunités et progresser entretien après entretien.
                 </p>
 
                 <ul className="mt-8 space-y-4">
                   {[
                     "20 simulations par mois",
-                    "PrÃ©paration pour plusieurs opportunitÃ©s",
+                    "Préparation pour plusieurs opportunités",
                     "Rapports de simulation",
                     "Suivi de votre progression",
                   ].map((feature, i) => (
@@ -221,23 +221,23 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ QUELLE FORMULE CHOISIR ? â”€â”€ */}
+      {/* ── QUELLE FORMULE CHOISIR ? ── */}
       <section className="py-20 bg-white border-y border-slate-100">
         <div className="mx-auto max-w-4xl px-5 md:px-6">
           <h2 className="text-2xl font-bold text-center text-slate-950 mb-12">Quelle formule choisir ?</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50">
-              <p className="text-sm font-medium text-slate-600 mb-3">Je veux dÃ©couvrir Trajectoire</p>
+              <p className="text-sm font-medium text-slate-600 mb-3">Je veux découvrir Trajectoire</p>
               <ArrowRight className="h-5 w-5 text-slate-300 mb-3" />
-              <span className="text-sm font-bold text-slate-900">DÃ©couverte</span>
+              <span className="text-sm font-bold text-slate-900">Découverte</span>
             </div>
             <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-violet-50">
-              <p className="text-sm font-medium text-violet-700 mb-3">J'ai un entretien important Ã  prÃ©parer</p>
+              <p className="text-sm font-medium text-violet-700 mb-3">J&apos;ai un entretien important à préparer</p>
               <ArrowRight className="h-5 w-5 text-violet-300 mb-3" />
               <span className="text-sm font-bold text-violet-900">Pack Entretien</span>
             </div>
             <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50">
-              <p className="text-sm font-medium text-slate-600 mb-3">Je suis activement en recherche et j'ai plusieurs entretiens</p>
+              <p className="text-sm font-medium text-slate-600 mb-3">Je suis activement en recherche et j&apos;ai plusieurs entretiens</p>
               <ArrowRight className="h-5 w-5 text-slate-300 mb-3" />
               <span className="text-sm font-bold text-slate-900">Pro</span>
             </div>
@@ -245,12 +245,12 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ SECTION VALEUR â”€â”€ */}
+      {/* ── SECTION VALEUR ── */}
       <section className="py-24 bg-slate-50">
         <div className="mx-auto max-w-4xl px-5 md:px-6 text-center">
-          <h2 className="text-3xl font-bold text-slate-950 mb-6">Vous ne prÃ©parez pas un entretien gÃ©nÃ©rique.</h2>
+          <h2 className="text-3xl font-bold text-slate-950 mb-6">Vous ne préparez pas un entretien générique.</h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-16">
-            Trajectoire utilise votre CV et l'offre que vous ciblez pour personnaliser votre prÃ©paration autour de votre expÃ©rience, du poste et des points qui mÃ©ritent rÃ©ellement d'Ãªtre travaillÃ©s.
+            Trajectoire utilise votre CV et l&apos;offre que vous ciblez pour personnaliser votre préparation autour de votre expérience, du poste et des points qui méritent réellement d&apos;être travaillés.
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
@@ -272,7 +272,7 @@ export default function PricingPage() {
               <div className="h-12 w-12 rounded-xl bg-white border border-violet-200 flex items-center justify-center shadow-sm mb-3">
                 <MessageSquare className="h-6 w-6 text-violet-600" />
               </div>
-              <span className="text-xs font-bold text-violet-700">Simulation personnalisÃ©e</span>
+              <span className="text-xs font-bold text-violet-700">Simulation personnalisée</span>
             </div>
             <ArrowRight className="hidden md:block h-5 w-5 text-slate-300" />
             <div className="flex flex-col items-center p-4">
@@ -292,33 +292,33 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ FAQ â”€â”€ */}
+      {/* ── FAQ ── */}
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-3xl px-5 md:px-6">
-          <h2 className="text-2xl font-bold text-center text-slate-950 mb-12">Questions frÃ©quentes</h2>
+          <h2 className="text-2xl font-bold text-center text-slate-950 mb-12">Questions fréquentes</h2>
           <div className="space-y-8">
             <div>
               <h3 className="text-base font-bold text-slate-900">Le Pack Entretien est-il un abonnement ?</h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Non. Vous payez 29 â‚¬ une seule fois pour 5 simulations.
+                Non. Vous payez 29 € une seule fois pour 5 simulations.
               </p>
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Mes 5 simulations expirent-elles Ã  la fin du mois ?</h3>
+              <h3 className="text-base font-bold text-slate-900">Mes 5 simulations expirent-elles à la fin du mois ?</h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
                 Non. Le Pack Entretien ne se renouvelle pas mensuellement.
               </p>
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Que se passe-t-il lorsque j'ai utilisÃ© mes 5 simulations ?</h3>
+              <h3 className="text-base font-bold text-slate-900">Que se passe-t-il lorsque j&apos;ai utilisé mes 5 simulations ?</h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Vous pourrez choisir l'offre adaptÃ©e Ã  la suite de votre prÃ©paration.
+                Vous pourrez choisir l&apos;offre adaptée à la suite de votre préparation.
               </p>
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Quelle diffÃ©rence avec Pro ?</h3>
+              <h3 className="text-base font-bold text-slate-900">Quelle différence avec Pro ?</h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Le Pack est conÃ§u pour prÃ©parer un entretien prÃ©cis. Pro est destinÃ© aux candidats en recherche active avec plusieurs opportunitÃ©s.
+                Le Pack est conçu pour préparer un entretien précis. Pro est destiné aux candidats en recherche active avec plusieurs opportunités.
               </p>
             </div>
           </div>
