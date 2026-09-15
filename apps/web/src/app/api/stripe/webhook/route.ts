@@ -1,4 +1,4 @@
-﻿// apps/web/src/app/api/stripe/webhook/route.ts
+// apps/web/src/app/api/stripe/webhook/route.ts
 
 import { NextResponse, NextRequest } from 'next/server';
 import { stripe }                    from "@/lib/stripe";
@@ -76,6 +76,40 @@ export const POST = rateLimit(
                  logger.error(`[Webhook] Failed to add credits for ${user_id}: ${result.error}`);
               }
            }
+        }
+
+        // ── Pack Entretien (one-off payment) ───────────────────────────────────
+        if (session.mode === "payment" && type === "INTERVIEW_PACK") {
+          if (!session.id) {
+            logger.error("[Webhook] INTERVIEW_PACK — missing checkout session id");
+            break;
+          }
+          // Idempotent upsert: stripeCheckoutSessionId has a UNIQUE constraint.
+          // If this event fires twice only one row will ever be created.
+          const existing = await prisma.userPurchase.findUnique({
+            where: { stripeCheckoutSessionId: session.id },
+          });
+          if (!existing) {
+            await prisma.userPurchase.create({
+              data: {
+                userId:                 user_id,
+                type:                   "INTERVIEW_PACK",
+                stripeCheckoutSessionId: session.id,
+                status:                 "ACTIVE",
+                activatedAt:            new Date(event.created * 1000),
+              },
+            });
+            logger.info("[Webhook] INTERVIEW_PACK purchase persisted", {
+              userId:    user_id,
+              sessionId: session.id,
+            });
+          } else {
+            logger.info("[Webhook] INTERVIEW_PACK already persisted — idempotent skip", {
+              userId:    user_id,
+              sessionId: session.id,
+            });
+          }
+          break;
         }
 
         if (session.mode !== "subscription") break;
