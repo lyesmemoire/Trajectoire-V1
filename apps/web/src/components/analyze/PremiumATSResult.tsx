@@ -1,12 +1,6 @@
-// apps/web/src/components/analyze/PremiumATSResult.tsx
-//
-// Composant PremiumATSResult
-// MVP-013 — Premium ATS Result UI
-
 'use client'
 
-import { motion } from 'framer-motion'
-import { Check, X, TrendingUp, AlertCircle, Lightbulb, Target, Eye, FileText, Key, Briefcase, GraduationCap, Globe, Heart } from 'lucide-react'
+import { Check, Target, FileText, Key, TrendingUp, Eye, Layers, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 interface PremiumATSResultProps {
@@ -32,16 +26,47 @@ interface PremiumATSResultProps {
   education?: number
   languages?: number
   softSkills?: number
+  isAuthenticated?: boolean
+  hasPremiumAccess?: boolean
 }
+
+function getScoreLabel(score: number) {
+  if (score >= 80) return 'Excellent'
+  if (score >= 60) return 'Bon'
+  if (score >= 40) return 'Moyen'
+  return 'À améliorer'
+}
+
+function getScoreTheme(score: number) {
+  if (score >= 80) return { bar: 'bg-emerald-500', text: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' }
+  if (score >= 60) return { bar: 'bg-violet-500', text: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-200' }
+  return { bar: 'bg-amber-500', text: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200' }
+}
+
+function MiniBar({ value, color = 'bg-violet-500' }: { value: number; color?: string }) {
+  return (
+    <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-border/40">
+      <div className={`h-full rounded-full ${color} transition-all`} style={{ width: `${Math.round(value)}%` }} />
+    </div>
+  )
+}
+
+const dimensionConfig = [
+  { key: 'structure', label: 'Structure', icon: Layers },
+  { key: 'keywords', label: 'Mots-clés', icon: Key },
+  { key: 'impact', label: 'Impact', icon: TrendingUp },
+  { key: 'clarity', label: 'Lisibilité', icon: Eye },
+  { key: 'relevance', label: 'Compatibilité', icon: Target },
+] as const
 
 export function PremiumATSResult({
   score,
   radarDimensions = { structure: 70, keywords: 65, impact: 75, clarity: 80, relevance: 70 },
-  strengths = ['Expérience professionnelle variée', 'Compétences techniques solides', 'Formation pertinente'],
-  weaknesses = ['Section objectifs vague', 'Manque de mots-clés spécifiques', 'Formation peu détaillée'],
-  recommendations = ['Ajouter des métriques chiffrées', 'Inclure les technologies spécifiques', 'Détaillez vos projets'],
-  detectedSkills = ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Git'],
-  missingSkills = ['Docker', 'Kubernetes', 'AWS', 'CI/CD'],
+  strengths = [],
+  weaknesses = [],
+  recommendations = [],
+  detectedSkills = [],
+  missingSkills = [],
   interviewProbability = 65,
   compatibility = 72,
   readability = 78,
@@ -50,295 +75,264 @@ export function PremiumATSResult({
   experience = 85,
   education = 60,
   languages = 70,
-  softSkills = 75,
+  isAuthenticated = false,
+  hasPremiumAccess = false,
 }: PremiumATSResultProps) {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#22c55e' // green
-    if (score >= 60) return '#f59e0b' // amber
-    return '#ef4444' // red
-  }
-
-  const getScoreLabel = (score: number) => {
-    if (score >= 80) return 'Excellent'
-    if (score >= 60) return 'Bon'
-    if (score >= 40) return 'Moyen'
-    return 'À améliorer'
-  }
+  const theme = getScoreTheme(score)
+  const label = getScoreLabel(score)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">
-            Analyse ATS
-          </h1>
-          <p className="text-slate-600">
-            Votre CV a été analysé par notre IA
-          </p>
-        </motion.div>
+    <div className="space-y-6">
 
-        {/* Score Circle */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex justify-center mb-8"
-        >
-          <div className="relative w-48 h-48">
-            <svg className="w-full h-full transform -rotate-90">
-              <circle
-                cx="96"
-                cy="96"
-                r="88"
-                fill="none"
-                stroke="#e2e8f0"
-                strokeWidth="12"
-              />
-              <motion.circle
-                cx="96"
-                cy="96"
-                r="88"
-                fill="none"
-                stroke={getScoreColor(score)}
-                strokeWidth="12"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: score / 100 }}
-                transition={{ duration: 1.5, ease: 'easeOut' }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-5xl font-bold text-slate-900">{score}</span>
-              <span className="text-sm text-slate-600">/ 100</span>
-              <span className="text-sm font-medium mt-1" style={{ color: getScoreColor(score) }}>
-                {getScoreLabel(score)}
-              </span>
+      {/* ===== HERO RÉSULTAT ===== */}
+      <div className={`rounded-xl border ${theme.border} ${theme.bg} p-6 sm:p-8`}>
+        <p className="text-xs font-bold uppercase tracking-widest text-foreground-muted">
+          Diagnostic ATS
+        </p>
+
+        <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex items-baseline gap-3">
+            <span className={`font-serif text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
+              {score}
+            </span>
+            <div>
+              <span className="text-2xl font-medium text-foreground-muted">/100</span>
+              <p className={`mt-1 text-base font-bold ${theme.text}`}>{label}</p>
             </div>
           </div>
-        </motion.div>
 
-        {/* Radar Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white rounded-2xl shadow-lg p-6 mb-6"
-        >
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">Analyse multidimensionnelle</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {[
-              { label: 'Structure', value: radarDimensions.structure, icon: FileText },
-              { label: 'Mots-clés', value: radarDimensions.keywords, icon: Key },
-              { label: 'Impact', value: radarDimensions.impact, icon: TrendingUp },
-              { label: 'Lisibilité', value: radarDimensions.clarity, icon: Eye },
-              { label: 'Compatibilité', value: radarDimensions.relevance, icon: Target },
-            ].map((item) => (
-              <div key={item.label} className="text-center">
-                <item.icon className="w-8 h-8 mx-auto mb-2 text-slate-600" />
-                <div className="text-2xl font-bold text-slate-900">{Math.round(item.value)}%</div>
-                <div className="text-sm text-slate-600">{item.label}</div>
-                <div className="mt-2 h-2 bg-slate-200 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.round(item.value)}%` }}
-                    transition={{ delay: 0.6, duration: 1 }}
-                    className="h-full bg-indigo-600"
-                  />
-                </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3 rounded-lg bg-white/60 px-5 py-3">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-sky-100">
+                <Target className="size-5 text-sky-600" />
               </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Metrics Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
-        >
-          {[
-            { label: 'Probabilité entretien', value: interviewProbability, icon: Target },
-            { label: 'Compatibilité', value: compatibility, icon: Heart },
-            { label: 'Lisibilité', value: readability, icon: Eye },
-            { label: 'Structure', value: structure, icon: FileText },
-            { label: 'Mots-clés ATS', value: keywords, icon: Key },
-            { label: 'Expérience', value: experience, icon: Briefcase },
-            { label: 'Formation', value: education, icon: GraduationCap },
-            { label: 'Langues', value: languages, icon: Globe },
-          ].map((item) => (
-            <div key={item.label} className="bg-white rounded-xl shadow-md p-4">
-              <item.icon className="w-6 h-6 text-slate-600 mb-2" />
-              <div className="text-2xl font-bold text-slate-900">{Math.round(item.value)}%</div>
-              <div className="text-sm text-slate-600">{item.label}</div>
+              <div>
+                <p className="text-xs font-medium text-foreground-muted">Probabilité entretien</p>
+                <p className="text-xl font-bold text-foreground">{Math.round(interviewProbability)}%</p>
+              </div>
             </div>
-          ))}
-        </motion.div>
-
-        {/* Skills */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="grid md:grid-cols-2 gap-6 mb-6"
-        >
-          {/* Detected Skills */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-600" />
-              Compétences détectées
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {detectedSkills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
+            <div className="flex items-center gap-3 rounded-lg bg-white/60 px-5 py-3">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-violet-100">
+                <Layers className="size-5 text-violet-600" />
+              </div>
+              <div>
+                <p className="text-xs font-medium text-foreground-muted">Compatibilité profil</p>
+                <p className="text-xl font-bold text-foreground">{Math.round(compatibility)}%</p>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Missing Skills */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <X className="w-5 h-5 text-red-600" />
-              Compétences manquantes
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {missingSkills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+        <div className="mt-8 h-2.5 overflow-hidden rounded-full bg-white/50">
+          <div
+            className={`h-full rounded-full ${theme.bar} transition-all duration-1000`}
+            style={{ width: `${score}%` }}
+          />
+        </div>
+      </div>
+
+      {/* ===== VOTRE PROFIL FACE À L'OFFRE (Dimensions + Métriques) ===== */}
+      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+        <div className="mb-8 flex items-center gap-3">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
+            <Eye className="size-4 text-violet-600" />
           </div>
-        </motion.div>
+          <h2 className="font-serif text-2xl font-medium text-foreground">Votre profil face à l'offre</h2>
+        </div>
 
-        {/* Strengths, Weaknesses, Recommendations */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="grid md:grid-cols-3 gap-6 mb-6"
-        >
-          {/* Strengths */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
-              Points forts
-            </h3>
-            <ul className="space-y-2">
-              {strengths.map((strength, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-slate-700">
-                  <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  {strength}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
 
-          {/* Weaknesses */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              Points faibles
-            </h3>
-            <ul className="space-y-2">
-              {weaknesses.map((weakness, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-slate-700">
-                  <X className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                  {weakness}
-                </li>
-              ))}
-            </ul>
+          {/* LEFT: Dimensions Principales */}
+          <div className="space-y-6">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-foreground-muted">
+              Dimensions principales
+            </p>
+            {dimensionConfig.map(({ key, label }) => {
+              const val = radarDimensions[key]
+              const dim = getScoreTheme(val)
+              return (
+                <div key={key} className="flex items-center gap-4">
+                  <div className="w-32 shrink-0">
+                    <p className="text-sm font-semibold text-foreground">{label}</p>
+                  </div>
+                  <div className="flex-1">
+                    <MiniBar value={val} color={dim.bar} />
+                  </div>
+                  <div className="w-12 shrink-0 text-right">
+                    <span className={`font-serif text-lg font-medium ${dim.text}`}>{Math.round(val)}</span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
 
-          {/* Recommendations */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-amber-600" />
-              Conseils immédiats
-            </h3>
-            <ul className="space-y-2">
-              {recommendations.map((rec, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-slate-700">
-                  <Lightbulb className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                  {rec}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.div>
-
-        {/* Blurred Content (70%) */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="relative bg-white rounded-2xl shadow-lg p-6 mb-8 overflow-hidden"
-        >
-          <div className="backdrop-blur-sm bg-white/30 p-8 rounded-xl">
-            {/* Blurred placeholder content */}
-            <div className="space-y-4 opacity-30">
-              <div className="h-8 bg-slate-300 rounded animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-3/4 animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-1/2 animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-5/6 animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-2/3 animate-pulse" />
-              <div className="h-8 bg-slate-300 rounded animate-pulse mt-4" />
-              <div className="h-4 bg-slate-300 rounded w-full animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-4/5 animate-pulse" />
-              <div className="h-4 bg-slate-300 rounded w-3/5 animate-pulse" />
+          {/* RIGHT: Métriques complémentaires */}
+          <div>
+            <p className="mb-6 text-[11px] font-bold uppercase tracking-widest text-foreground-muted">
+              Métriques complémentaires
+            </p>
+            <div className="space-y-4">
+              {[
+                { label: 'Lisibilité', value: readability },
+                { label: 'Structure', value: structure },
+                { label: 'Mots-clés', value: keywords },
+                { label: 'Expérience', value: experience },
+                { label: 'Formation', value: education },
+                { label: 'Langues', value: languages },
+              ].map(({ label, value }) => {
+                const t = getScoreTheme(value)
+                return (
+                  <div key={label} className="flex items-center justify-between border-b border-border/40 pb-3 last:border-0 last:pb-0">
+                    <span className="text-sm text-foreground-muted">{label}</span>
+                    <span className={`font-serif text-lg font-medium ${t.text}`}>{Math.round(value)}</span>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
-          {/* CTA Overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-white/95">
-            <div className="text-center max-w-md px-6">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">
-                Débloquez le rapport complet gratuitement
-              </h2>
-              <ul className="text-left space-y-3 mb-6 text-slate-700">
-                {[
-                  'Rapport complet',
-                  'Matching IA',
-                  'Copilot RH',
-                  'Simulation d\'entretien',
-                  'Historique',
-                  'Recommandations personnalisées',
-                ].map((benefit) => (
-                  <li key={benefit} className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-green-600" />
-                    {benefit}
+        </div>
+      </div>
+
+      {/* ===== CE QUE LE RECRUTEUR VERRA (Forces / Gaps) ===== */}
+      {(strengths.length > 0 || (weaknesses.length > 0 && weaknesses[0])) && (
+        <div className="grid gap-4 lg:grid-cols-2">
+
+          {/* Forces */}
+          {strengths.length > 0 && (
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6 sm:p-8">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-100">
+                  <Check className="size-4 text-emerald-600" />
+                </div>
+                <h2 className="font-serif text-xl font-medium text-emerald-900">Vos forces pour ce poste</h2>
+              </div>
+              <ul className="space-y-4">
+                {strengths.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-emerald-800">
+                    <span className="mt-1.5 size-2 shrink-0 rounded-full bg-emerald-500" />
+                    {item}
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* Vigilance */}
+          {weaknesses.length > 0 && weaknesses[0] && (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+              <div className="mb-2 flex items-center gap-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100">
+                  <AlertTriangle className="size-4 text-amber-600" />
+                </div>
+                <h2 className="font-serif text-xl font-medium text-amber-900">À renforcer</h2>
+              </div>
+              <p className="mb-6 text-xs text-amber-700">
+                Ce qui mérite votre attention avant de candidater.
+              </p>
+              <ul className="space-y-4">
+                {weaknesses.filter(Boolean).map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-amber-800">
+                    <span className="mt-1.5 size-2 shrink-0 rounded-full bg-amber-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+        </div>
+      )}
+
+      {/* ===== COMPÉTENCES DETECTÉES ===== */}
+      {(detectedSkills.length > 0 || missingSkills.length > 0) && (
+        <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Mapping des compétences</h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {detectedSkills.length > 0 && (
+              <div>
+                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-emerald-700">Détectées</p>
+                <div className="flex flex-wrap gap-2">
+                  {detectedSkills.map((skill) => (
+                    <span key={skill} className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-800">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {missingSkills.length > 0 && (
+              <div>
+                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-amber-700">Manquantes</p>
+                <div className="flex flex-wrap gap-2">
+                  {missingSkills.map((skill) => (
+                    <span key={skill} className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-800">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ===== RECOMMANDATIONS TRAJECTOIRE ===== */}
+      {recommendations.length > 0 && (
+        <div className="rounded-xl border border-violet-200 bg-violet-50 p-6 sm:p-8">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
+              <Sparkles className="size-4 text-violet-600" />
+            </div>
+            <h2 className="font-serif text-xl font-medium text-violet-900">Recommandations Trajectoire</h2>
+          </div>
+          <ul className="space-y-4">
+            {recommendations.map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-violet-800">
+                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-violet-400" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* ===== PAYWALL (Secondaire si non premium) ===== */}
+      {!hasPremiumAccess && (
+        <div className="mt-12 rounded-xl border border-border bg-surface p-6 shadow-sm">
+          {!isAuthenticated ? (
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Préparation premium</p>
+                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Débloquez l'analyse complète</h3>
+                <p className="mt-1 text-sm text-foreground-muted">Matching IA, simulations d'entretien, recommandations illimitées.</p>
+              </div>
               <Link
                 href="/signup-conversion"
-                className="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl"
+                className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-surface-muted px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-border/60"
               >
-                Créer mon compte gratuitement
+                Créer mon compte
+                <ChevronRight className="size-4" />
               </Link>
-              <p className="text-sm text-slate-500 mt-3">
-                Aucune carte bancaire requise
-              </p>
-              <p className="text-xs text-slate-400 mt-1">
-                Conservez toutes vos données après inscription
-              </p>
             </div>
-          </div>
-        </motion.div>
-      </div>
+          ) : (
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Préparation premium</p>
+                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Allez plus loin dans votre préparation</h3>
+                <p className="mt-1 text-sm text-foreground-muted">Matching IA, simulations d'entretien, suivi avancé.</p>
+              </div>
+              <Link
+                href="/pricing"
+                className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-surface-muted px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-border/60"
+              >
+                Voir les offres
+                <ChevronRight className="size-4" />
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
