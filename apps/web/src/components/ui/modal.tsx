@@ -1,7 +1,8 @@
 "use client"
 
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { X } from "lucide-react"
 
 interface ModalProps {
   isOpen: boolean
@@ -14,7 +15,24 @@ interface ModalProps {
 }
 
 export function Modal({
-  isOpen, onClose, title, description, children, size = "md", showClose = true }: ModalProps) {
+  isOpen,
+  onClose,
+  title,
+  description,
+  children,
+  size = "md",
+  showClose = true,
+}: ModalProps) {
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    document.addEventListener("keydown", handler)
+    return () => document.removeEventListener("keydown", handler)
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
   const sizes = {
@@ -28,17 +46,16 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-foreground/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal */}
+      {/* Modal panel */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           className={cn(
-            "relative w-full bg-white rounded-3xl shadow-2xl transform transition-all",
-            "border border-ivoire-200",
+            "relative w-full bg-white rounded-2xl shadow-elevated border border-border/70",
             sizes[size],
           )}
           role="dialog"
@@ -47,39 +64,27 @@ export function Modal({
         >
           {/* Header */}
           {(title || showClose) && (
-            <div className="flex items-start justify-between p-6 pb-0">
-              <div>
+            <div className="flex items-start justify-between gap-4 px-6 pt-5 pb-0">
+              <div className="min-w-0">
                 {title && (
                   <h2
                     id="modal-title"
-                    className="text-xl font-serif font-bold text-ink-900"
+                    className="text-base font-semibold text-foreground leading-snug"
                   >
                     {title}
                   </h2>
                 )}
                 {description && (
-                  <p className="mt-1 text-sm text-ink-600">{description}</p>
+                  <p className="mt-1 text-sm text-foreground-muted">{description}</p>
                 )}
               </div>
               {showClose && (
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-xl hover:bg-ivoire-100 transition-colors text-ink-400 hover:text-ink-600"
+                  className="shrink-0 rounded-lg p-1.5 text-foreground-muted transition-colors hover:bg-surface-muted hover:text-foreground"
                   aria-label="Fermer"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <X className="size-4" />
                 </button>
               )}
             </div>
@@ -92,6 +97,8 @@ export function Modal({
     </div>
   )
 }
+
+// ── Confirm Modal ──────────────────────────────────────────────────────────
 
 interface ConfirmModalProps {
   isOpen: boolean
@@ -106,20 +113,29 @@ interface ConfirmModalProps {
 }
 
 export function ConfirmModal({
-  isOpen, onClose, onConfirm, title, message, confirmText = "Confirmer", cancelText = "Annuler", variant = "danger", isLoading = false }: ConfirmModalProps) {
-  const variantStyles = {
-    danger: "bg-brick-600 hover:bg-brick-700",
-    warning: "bg-terracotta-600 hover:bg-terracotta-700",
-    info: "bg-ink-900 hover:bg-ink-800",
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = "Confirmer",
+  cancelText = "Annuler",
+  variant = "danger",
+  isLoading = false,
+}: ConfirmModalProps) {
+  const confirmStyles = {
+    danger: "bg-danger text-white hover:bg-red-600",
+    warning: "bg-warning text-white hover:bg-amber-600",
+    info: "bg-primary text-white hover:bg-primary-700",
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-ink-600 mb-6">{message}</p>
-      <div className="flex gap-3">
+      <p className="text-sm text-foreground-muted mb-5">{message}</p>
+      <div className="flex gap-2.5">
         <button
           onClick={onClose}
-          className="flex-1 py-3 bg-ivoire-100 text-ink-700 font-bold rounded-xl hover:bg-ivoire-200 transition-colors"
+          className="flex-1 py-2.5 bg-surface-muted text-foreground text-sm font-medium rounded-lg hover:bg-border/40 transition-colors disabled:opacity-50"
           disabled={isLoading}
         >
           {cancelText}
@@ -127,12 +143,12 @@ export function ConfirmModal({
         <button
           onClick={onConfirm}
           className={cn(
-            "flex-1 py-3 text-white font-bold rounded-xl transition-colors",
-            variantStyles[variant],
+            "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-colors disabled:opacity-50",
+            confirmStyles[variant],
           )}
           disabled={isLoading}
         >
-          {isLoading ? "Chargement..." : confirmText}
+          {isLoading ? "Chargement…" : confirmText}
         </button>
       </div>
     </Modal>

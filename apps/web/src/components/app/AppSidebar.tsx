@@ -4,7 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   BarChart3,
-  ChevronRight,
   CreditCard,
   FileText,
   History,
@@ -17,63 +16,25 @@ import {
   Target,
   BriefcaseBusiness,
 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const NAV = [
-  {
-    label: "Vue d’ensemble",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Opportunités",
-    href: "/opportunities",
-    icon: BriefcaseBusiness,
-  },
-  {
-    label: "Discovery",
-    href: "/discovery",
-    icon: Radar,
-  },
-  {
-    label: "Simulation IA",
-    href: "/simulation/new",
-    icon: Mic2,
-  },
-  {
-    label: "Historique",
-    href: "/history",
-    icon: History,
-  },
-  {
-    label: "Analyse CV",
-    href: "/analyze",
-    icon: FileText,
-  },
-  {
-    label: "Progression",
-    href: "/knowledge",
-    icon: BarChart3,
-  },
+  { label: "Aperçu", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Opportunités", href: "/opportunities", icon: BriefcaseBusiness },
+  { label: "Discovery", href: "/discovery", icon: Radar },
+  { label: "Simulation", href: "/simulation/new", icon: Mic2 },
+  { label: "Historique", href: "/history", icon: History },
+  { label: "Analyse CV", href: "/analyze", icon: FileText },
+  { label: "Progression", href: "/knowledge", icon: BarChart3 },
 ]
 
 const SECONDARY_NAV = [
-  {
-    label: "Abonnement",
-    href: "/pricing",
-    icon: CreditCard,
-  },
-  {
-    label: "Paramètres",
-    href: "/settings",
-    icon: Settings,
-  },
+  { label: "Abonnement", href: "/pricing", icon: CreditCard },
+  { label: "Paramètres", href: "/settings", icon: Settings },
 ]
 
 function isActive(pathname: string, href: string) {
-  if (href === "/dashboard") {
-    return pathname === "/dashboard"
-  }
-
+  if (href === "/dashboard") return pathname === "/dashboard"
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
@@ -81,130 +42,116 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="sticky top-[93px] hidden h-[calc(100dvh-113px)] w-[252px] shrink-0 lg:block">
-      <div className="flex h-full flex-col overflow-hidden rounded-[28px] border border-white/80 bg-white/90 shadow-[0_20px_55px_rgba(63,46,107,0.08)] backdrop-blur-xl">
-        <div className="px-5 pb-4 pt-5">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="grid size-10 place-items-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/20">
-              <Target className="size-5" />
-            </div>
+    <aside className="sticky top-0 hidden h-dvh w-[240px] shrink-0 lg:flex flex-col">
+      <div className="flex h-full flex-col bg-white border-r border-border/60">
 
-            <div className="min-w-0">
-              <p className="truncate text-[15px] font-bold tracking-tight text-slate-950">
-                Trajectoire
-              </p>
-              <p className="text-[11px] font-medium text-slate-400">
-                Career intelligence
-              </p>
+        {/* ── Logo ── */}
+        <div className="flex items-center gap-2.5 px-5 pt-5 pb-4">
+          <Link href="/dashboard" className="group flex items-center gap-2.5 min-w-0">
+            <div className="grid size-[30px] shrink-0 place-items-center rounded-lg bg-primary text-white shadow-sm">
+              <Target className="size-[15px]" strokeWidth={2} />
             </div>
+            <span className="font-semibold text-[15px] tracking-tight text-foreground truncate">
+              Trajectoire
+            </span>
           </Link>
         </div>
 
-        <div className="mx-4 h-px bg-slate-100" />
+        {/* ── Navigation ── */}
+        <nav className="flex-1 overflow-y-auto px-3 py-1 space-y-5">
 
-        <nav className="flex-1 px-3 py-4">
-          <p className="mb-2 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
-            Espace personnel
-          </p>
-
-          <div className="space-y-1">
-            {NAV.map(({ label, href, icon: Icon }) => {
-              const active = isActive(pathname, href)
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={[
-                    "group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[13px] font-semibold transition-all",
-                    active
-                      ? "bg-violet-50 text-violet-700 shadow-sm ring-1 ring-violet-100"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-950",
-                  ].join(" ")}
-                >
-                  <span
-                    className={[
-                      "grid size-8 place-items-center rounded-xl transition",
+          {/* Section Principale */}
+          <div>
+            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-foreground-muted/50 select-none">
+              Personnel
+            </p>
+            <div className="space-y-0.5">
+              {NAV.map(({ label, href, icon: Icon }) => {
+                const active = isActive(pathname, href)
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-2.5 rounded-lg h-9 px-2.5 text-[13px] transition-all duration-150",
                       active
-                        ? "bg-white text-violet-600 shadow-sm"
-                        : "text-slate-400 group-hover:bg-white group-hover:text-slate-700",
-                    ].join(" ")}
+                        ? "bg-primary-50 text-primary font-semibold"
+                        : "text-foreground-muted font-medium hover:bg-slate-50 hover:text-foreground"
+                    )}
                   >
-                    <Icon className="size-4" />
-                  </span>
-
-                  <span className="flex-1 truncate">{label}</span>
-
-                  {active ? (
-                    <ChevronRight className="size-3.5 text-violet-400" />
-                  ) : null}
-                </Link>
-              )
-            })}
+                    <Icon
+                      className={cn(
+                        "size-[17px] shrink-0 transition-colors duration-150",
+                        active ? "text-primary" : "text-foreground-muted/60"
+                      )}
+                      strokeWidth={active ? 2.5 : 2}
+                    />
+                    <span className="truncate">{label}</span>
+                  </Link>
+                )
+              })}
+            </div>
           </div>
 
-          <p className="mb-2 mt-6 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
-            Compte
-          </p>
-
-          <div className="space-y-1">
-            {SECONDARY_NAV.map(({ label, href, icon: Icon }) => {
-              const active = isActive(pathname, href)
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={[
-                    "group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[13px] font-semibold transition-all",
-                    active
-                      ? "bg-violet-50 text-violet-700"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-950",
-                  ].join(" ")}
-                >
-                  <span className="grid size-8 place-items-center rounded-xl text-slate-400 group-hover:bg-white group-hover:text-slate-700">
-                    <Icon className="size-4" />
-                  </span>
-
-                  {label}
-                </Link>
-              )
-            })}
+          {/* Section Système */}
+          <div>
+            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-foreground-muted/50 select-none">
+              Système
+            </p>
+            <div className="space-y-0.5">
+              {SECONDARY_NAV.map(({ label, href, icon: Icon }) => {
+                const active = isActive(pathname, href)
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-2.5 rounded-lg h-9 px-2.5 text-[13px] transition-all duration-150",
+                      active
+                        ? "bg-primary-50 text-primary font-semibold"
+                        : "text-foreground-muted font-medium hover:bg-slate-50 hover:text-foreground"
+                    )}
+                  >
+                    <Icon
+                      className={cn(
+                        "size-[17px] shrink-0 transition-colors duration-150",
+                        active ? "text-primary" : "text-foreground-muted/60"
+                      )}
+                      strokeWidth={active ? 2.5 : 2}
+                    />
+                    <span className="truncate">{label}</span>
+                  </Link>
+                )
+              })}
+            </div>
           </div>
         </nav>
 
-        <div className="p-3">
-          <div className="mb-3 overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-indigo-700 p-4 text-white shadow-lg shadow-violet-500/10">
-            <div className="flex items-center gap-2">
-              <Sparkles className="size-4" />
-              <p className="text-xs font-bold">
-                Trajectoire AI
-              </p>
+        {/* ── Bottom ── */}
+        <div className="border-t border-border/60 px-3 py-3 space-y-0.5">
+          {/* Trajectoire AI shortcut */}
+          <Link
+            href="/simulation/new"
+            className="group flex items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-slate-50 transition-colors duration-150"
+          >
+            <div className="grid size-7 shrink-0 place-items-center rounded-md bg-primary-50">
+              <Sparkles className="size-3.5 text-primary" />
             </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-foreground truncate">Trajectoire AI</p>
+              <p className="text-[10px] text-foreground-muted truncate">Simulation · Analyse</p>
+            </div>
+          </Link>
 
-            <p className="mt-2 text-[11px] leading-5 text-white/75">
-              Transformez chaque analyse en prochaine action concrète.
-            </p>
-
-            <Link
-              href="/simulation/new"
-              className="mt-3 inline-flex items-center text-[11px] font-bold text-white"
-            >
-              Lancer une simulation
-              <ChevronRight className="ml-1 size-3" />
-            </Link>
-          </div>
-
+          {/* Logout */}
           <Link
             href="/logout"
-            className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-[13px] font-semibold text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+            className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-foreground-muted/60 transition-colors hover:bg-slate-50 hover:text-foreground"
           >
-            <span className="grid size-8 place-items-center">
-              <LogOut className="size-4" />
-            </span>
-
-            Déconnexion
+            <LogOut className="size-[14px] shrink-0" />
+            Se déconnecter
           </Link>
         </div>
       </div>

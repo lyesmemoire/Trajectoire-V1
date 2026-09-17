@@ -1,10 +1,10 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { AppTopbar } from "@/components/app/AppTopbar"
+import { AppTopbar, TopbarPrimary } from "@/components/app/AppTopbar"
 import { KpiCard } from "@/components/app/KpiCard"
-import { Clock3, Mic, Trophy, TrendingUp } from "lucide-react"
+import { Clock3, Mic, Play, Trophy, TrendingUp } from "lucide-react"
 
 type DashboardData = {
   sessionsTotal: number
@@ -34,17 +34,24 @@ export function DashboardClient() {
         if (!cancelled) setLoading(false)
       }
     })()
-    return () => {
-      cancelled = true
-    }
+    return () => { cancelled = true }
   }, [])
 
   return (
     <div className="space-y-6">
-      <AppTopbar title="Tableau de bord" subtitle="Vue d’ensemble & progression" />
+      <AppTopbar
+        title="Tableau de bord"
+        subtitle="Vue d'ensemble & progression"
+        actions={
+          <TopbarPrimary href="/simulation/new">
+            <Play className="size-4" />
+            Démarrer un entretien
+          </TopbarPrimary>
+        }
+      />
 
       {error ? (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm text-danger">
           {error}
         </div>
       ) : null}
@@ -56,16 +63,20 @@ export function DashboardClient() {
         <KpiCard label="Badges" value={loading ? "…" : `${data?.badgesUnlocked ?? 0}/${data?.badgesTotal ?? 0}`} icon={<Trophy className="size-5" />} tone="bronze" />
       </div>
 
-      <section className="rounded-3xl border border-ivoire-200 bg-gradient-to-br from-ink-900 to-ink-800 p-6 text-white shadow-premium-lg ring-1 ring-bronze-400/25">
-        <h2 className="font-serif text-2xl font-bold tracking-tight">Démarrer une simulation</h2>
-        <p className="mt-2 max-w-[62ch] text-sm text-white/80">
+      {/* Simulation CTA card */}
+      <section className="rounded-xl border border-foreground/10 bg-foreground p-6 text-white shadow-sm">
+        <h2 className="font-sans text-xl font-semibold tracking-tight">
+          Démarrer une simulation
+        </h2>
+        <p className="mt-2 max-w-[62ch] text-sm text-white/75">
           Lancez un entretien guidé, obtenez un feedback instantané et suivez votre progression.
         </p>
         <div className="mt-5">
           <Link
             href="/simulation/new"
-            className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-ink-900 shadow-sm transition hover:-translate-y-[1px]"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-px hover:shadow-md active:scale-[0.98]"
           >
+            <Play className="size-4 text-primary" />
             Démarrer maintenant
           </Link>
         </div>

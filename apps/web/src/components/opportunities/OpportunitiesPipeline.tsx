@@ -23,6 +23,7 @@ import {
   type OpportunityListItem,
   type OpportunityStatus,
 } from "./types"
+import { Button } from "@/components/ui/button"
 
 type Props = {
   initialOpportunities: OpportunityListItem[]
@@ -30,153 +31,127 @@ type Props = {
 
 function scoreClasses(score: number) {
   if (score >= 85) {
-    return "bg-emerald-50 text-emerald-700 ring-emerald-100"
+    return "text-emerald-700 bg-emerald-50/50"
   }
-
   if (score >= 70) {
-    return "bg-violet-50 text-violet-700 ring-violet-100"
+    return "text-violet-700 bg-violet-50/50"
   }
-
   if (score >= 50) {
-    return "bg-amber-50 text-amber-700 ring-amber-100"
+    return "text-amber-700 bg-amber-50/50"
   }
-
-  return "bg-slate-100 text-slate-600 ring-slate-200"
+  return "text-foreground-muted bg-surface-muted"
 }
 
 function formatDate(value: string | null) {
   if (!value) return null
-
   const date = new Date(value)
-
   if (Number.isNaN(date.getTime())) return null
-
   return new Intl.DateTimeFormat("fr-FR", {
     day: "numeric",
     month: "short",
   }).format(date)
 }
 
-function OpportunityCard({
-  opportunity,
-}: {
-  opportunity: OpportunityListItem
-}) {
+function getStatusLabel(status: string) {
+  const col = opportunityColumns.find(c => c.status === status)
+  return col?.label || status
+}
+
+function OpportunityRow({ opportunity }: { opportunity: OpportunityListItem }) {
   const nextActionDate = formatDate(opportunity.nextActionAt)
+  const discoveredDate = formatDate(opportunity.discoveredAt)
 
   return (
-    <article className="group rounded-[22px] border border-slate-200/80 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-50 text-slate-600 ring-1 ring-slate-100">
-          <Building2 className="h-5 w-5" />
+    <Link
+      href={`/opportunities/${opportunity.id}/workspace`}
+      className="group block border-b border-border/40 bg-surface px-6 py-5 transition-colors hover:bg-surface-muted/50 last:border-0"
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+        <div className="min-w-0 flex-1 space-y-2">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-foreground-muted">
+              {opportunity.company || "Entreprise inconnue"}
+            </span>
+            <span className="h-1 w-1 rounded-full bg-border" />
+            <span className="text-[10px] font-medium text-foreground-muted">
+              {getStatusLabel(opportunity.status)}
+            </span>
+          </div>
+
+          <h3 className="truncate font-serif text-xl font-medium text-foreground">
+            {opportunity.title}
+          </h3>
+
+          <div className="flex flex-wrap items-center gap-3 text-xs text-foreground-muted">
+            {opportunity.location && (
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="size-3" />
+                {opportunity.location}
+              </span>
+            )}
+            {opportunity.location && <span className="h-3 w-px bg-border" />}
+
+            <span className="inline-flex items-center gap-1">
+              <CalendarClock className="size-3" />
+              Ajouté le {discoveredDate}
+            </span>
+
+            {opportunity.sourceUrl && (
+              <>
+                <span className="h-3 w-px bg-border" />
+                <span className="inline-flex items-center gap-1 font-medium transition-colors hover:text-foreground">
+                  Lien source
+                  <ExternalLink className="size-3" />
+                </span>
+              </>
+            )}
+          </div>
         </div>
 
-        {opportunity.matchScore !== null ? (
-          <div
-            className={`rounded-full px-2.5 py-1 text-xs font-bold ring-1 ${scoreClasses(
-              opportunity.matchScore,
-            )}`}
-          >
-            {opportunity.matchScore}% match
-          </div>
-        ) : (
-          <div className="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-500 ring-1 ring-slate-100">
-            Non analysée
-          </div>
-        )}
-      </div>
+        <div className="flex flex-col items-start gap-4 sm:items-end">
+          {opportunity.matchScore !== null ? (
+            <div className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${scoreClasses(opportunity.matchScore)}`}>
+              <Target className="size-3" />
+              Score {opportunity.matchScore}
+            </div>
+          ) : (
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-foreground-muted">
+              <Sparkles className="size-3" />
+              À analyser
+            </div>
+          )}
 
-      <div className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-600">
-          {opportunity.company || "Entreprise"}
-        </p>
-
-        <h3 className="mt-1 line-clamp-2 text-[15px] font-bold leading-5 text-slate-950">
-          {opportunity.title}
-        </h3>
-
-        {opportunity.location ? (
-          <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500">
-            <MapPin className="h-3.5 w-3.5" />
-            <span className="truncate">{opportunity.location}</span>
-          </div>
-        ) : null}
-      </div>
-
-      {opportunity.recommendationLabel ? (
-        <div className="mt-4 flex items-start gap-2 rounded-2xl bg-violet-50/70 p-3">
-          <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-violet-600" />
-          <p className="text-xs font-medium leading-5 text-violet-900">
-            {opportunity.recommendationLabel}
-          </p>
+          {opportunity.nextAction && (
+            <div className="text-right">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground-muted">
+                Prochaine étape {nextActionDate ? `(${nextActionDate})` : ""}
+              </p>
+              <p className="mt-1 max-w-[200px] truncate text-xs text-foreground">
+                {opportunity.nextAction}
+              </p>
+            </div>
+          )}
         </div>
-      ) : null}
 
-      {opportunity.nextAction ? (
-        <div className="mt-3 rounded-2xl border border-slate-100 p-3">
-          <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-            <CalendarClock className="h-3 w-3" />
-            Prochaine action
-            {nextActionDate ? ` · ${nextActionDate}` : ""}
-          </div>
-
-          <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-5 text-slate-700">
-            {opportunity.nextAction}
-          </p>
-        </div>
-      ) : null}
-
-      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-        {opportunity.sourceUrl ? (
-          <a
-            href={opportunity.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 transition hover:text-slate-900"
-          >
-            Offre
-            <ExternalLink className="h-3 w-3" />
-          </a>
-        ) : (
-          <span className="text-xs text-slate-400">
-            {opportunity.source || "Ajout manuel"}
-          </span>
-        )}
-
-        <Link
-          href={`/opportunities/${opportunity.id}/workspace`}
-          className="inline-flex items-center gap-1 text-xs font-bold text-violet-700"
-        >
-          Ouvrir
-          <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-        </Link>
       </div>
-    </article>
+    </Link>
   )
 }
 
-export function OpportunitiesPipeline({
-  initialOpportunities,
-}: Props) {
+export function OpportunitiesPipeline({ initialOpportunities }: Props) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("fr")
-
-    if (!normalizedQuery) {
-      return initialOpportunities
-    }
+    if (!normalizedQuery) return initialOpportunities
 
     return initialOpportunities.filter((opportunity) => {
       const haystack = [
         opportunity.title,
         opportunity.company,
         opportunity.location,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLocaleLowerCase("fr")
-
+      ].filter(Boolean).join(" ").toLocaleLowerCase("fr")
       return haystack.includes(normalizedQuery)
     })
   }, [initialOpportunities, query])
@@ -197,188 +172,149 @@ export function OpportunitiesPipeline({
     (opportunity) => opportunity.status === "INTERVIEW",
   ).length
 
-  const offers = activeOpportunities.filter(
-    (opportunity) => opportunity.status === "OFFER",
-  ).length
-
   return (
-    <div className="space-y-6 pb-12">
-      <section className="overflow-hidden rounded-[30px] bg-gradient-to-br from-violet-700 via-violet-600 to-indigo-600 p-6 text-white shadow-[0_22px_70px_-28px_rgba(109,40,217,0.55)] sm:p-8">
-        <div className="flex flex-col gap-7 xl:flex-row xl:items-end xl:justify-between">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1.5 text-xs font-semibold ring-1 ring-white/15">
-              <Sparkles className="h-3.5 w-3.5" />
-              Opportunity Intelligence
+    <div className="mx-auto max-w-[1100px] space-y-12 pb-16">
+
+      {/* HEADER ÉDITORIAL */}
+      <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between border-b border-border/60 pb-8">
+        <div className="space-y-3">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+            Opportunités
+          </p>
+          <h1 className="font-serif text-4xl font-medium tracking-tight text-foreground sm:text-5xl">
+            Vos pistes actives.
+          </h1>
+          <p className="max-w-md text-sm leading-relaxed text-foreground-muted">
+            Centralisez vos offres et transformez chaque candidature en décision stratégique.
+          </p>
+        </div>
+
+        <div className="shrink-0 pb-1">
+          <Link href="/opportunities/new">
+            <Button variant="primary">
+              Ajouter une opportunité
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      {initialOpportunities.length > 0 ? (
+        <div className="grid gap-12 lg:grid-cols-12">
+
+          <div className="space-y-8 lg:col-span-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+                Dossiers en cours
+              </h2>
+
+              <div className="relative w-64">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-foreground-muted" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Rechercher une offre..."
+                  className="h-8 w-full rounded border border-border bg-surface pl-9 pr-3 text-xs text-foreground outline-none transition focus:border-foreground"
+                />
+              </div>
             </div>
 
-            <h1 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">
-              Les bonnes opportunités,
-              <br />
-              au bon moment.
-            </h1>
+            <div className="overflow-hidden rounded-md border border-border/60 bg-surface">
+              {filtered.length > 0 ? (
+                <div className="flex flex-col">
+                  {filtered.map((opportunity) => (
+                    <OpportunityRow
+                      key={opportunity.id}
+                      opportunity={opportunity}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="flex min-h-[200px] items-center justify-center p-8 text-center">
+                  <p className="text-sm text-foreground-muted">Aucune opportunité ne correspond à votre recherche.</p>
+                </div>
+              )}
+            </div>
 
-            <p className="mt-3 max-w-xl text-sm leading-6 text-violet-100 sm:text-base">
-              Centralise tes offres, priorise celles qui méritent vraiment ton
-              temps et transforme chaque candidature en plan d&apos;action.
-            </p>
+            {initialOpportunities.some(
+              (opportunity) =>
+                opportunity.status === "REJECTED" ||
+                opportunity.status === "ARCHIVED",
+            ) && (
+              <div className="flex items-center gap-2 text-[11px] text-foreground-muted">
+                <CheckCircle2 className="size-3.5" />
+                Les opportunités refusées ou archivées restent conservées dans l'historique de votre profil.
+              </div>
+            )}
           </div>
 
-          <Link
-            href="/opportunities/new"
-            className="inline-flex h-12 items-center justify-center gap-2 self-start rounded-2xl bg-white px-5 text-sm font-bold text-violet-700 shadow-lg shadow-violet-950/10 transition hover:-translate-y-0.5 hover:bg-violet-50 xl:self-auto"
-          >
-            <Plus className="h-4 w-4" />
-            Ajouter une opportunité
-          </Link>
-        </div>
+          <div className="lg:col-span-4">
+            {/* OVERVIEW COMPACT (STYLE SNAPSHOT) */}
+            <div className="sticky top-12">
+              <h2 className="mb-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+                Vue d'ensemble
+              </h2>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {[
-            {
-              label: "Actives",
-              value: activeOpportunities.length,
-              icon: BriefcaseBusiness,
-            },
-            {
-              label: "Match ≥ 80",
-              value: highMatches,
-              icon: Target,
-            },
-            {
-              label: "Entretiens",
-              value: interviews,
-              icon: CircleDot,
-            },
-            {
-              label: "Offres reçues",
-              value: offers,
-              icon: Trophy,
-            },
-          ].map((metric) => {
-            const Icon = metric.icon
+              <div className="rounded-md border border-border/60 bg-surface">
 
-            return (
-              <div
-                key={metric.label}
-                className="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur"
-              >
-                <div className="flex items-center gap-2 text-violet-100">
-                  <Icon className="h-4 w-4" />
-                  <span className="text-xs font-semibold">{metric.label}</span>
+                <div className="p-6">
+                  <div className="mb-4 flex items-center justify-between text-foreground-muted">
+                    <BriefcaseBusiness className="size-4" strokeWidth={1.5} />
+                    <span className="text-[10px] font-semibold uppercase tracking-widest">Actives</span>
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-serif text-3xl text-foreground">{activeOpportunities.length}</span>
+                  </div>
                 </div>
 
-                <p className="mt-2 text-2xl font-bold">{metric.value}</p>
-              </div>
-            )
-          })}
-        </div>
-      </section>
+                <div className="mx-6 h-px bg-border/40" />
 
-      <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-950">
-            Pipeline
-          </h2>
-          <p className="mt-1 text-sm text-slate-500">
-            De la découverte jusqu&apos;à l&apos;offre.
-          </p>
-        </div>
-
-        <div className="relative w-full sm:w-72">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Rechercher..."
-            className="h-11 w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
-          />
-        </div>
-      </section>
-
-      {initialOpportunities.length === 0 ? (
-        <section className="rounded-[28px] border border-dashed border-violet-200 bg-white px-6 py-14 text-center shadow-sm">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
-            <BriefcaseBusiness className="h-6 w-6" />
-          </div>
-
-          <h2 className="mt-5 text-xl font-bold text-slate-950">
-            Ton pipeline commence ici
-          </h2>
-
-          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-            Ajoute une première offre. Trajectoire pourra ensuite l&apos;analyser,
-            la comparer à ton profil et te proposer la meilleure prochaine action.
-          </p>
-
-          <Link
-            href="/opportunities/new"
-            className="mt-6 inline-flex h-11 items-center gap-2 rounded-2xl bg-violet-600 px-5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700"
-          >
-            Ajouter ma première offre
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </section>
-      ) : (
-        <div className="overflow-x-auto pb-4">
-          <div className="grid min-w-[1480px] grid-cols-6 gap-4">
-            {opportunityColumns.map((column) => {
-              const items = filtered.filter(
-                (opportunity) => opportunity.status === column.status,
-              )
-
-              return (
-                <section
-                  key={column.status}
-                  className="rounded-[26px] bg-slate-100/70 p-3 ring-1 ring-slate-200/70"
-                >
-                  <header className="px-1 pb-3 pt-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-bold text-slate-900">
-                        {column.label}
-                      </h3>
-
-                      <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-[11px] font-bold text-slate-600 shadow-sm">
-                        {items.length}
-                      </span>
-                    </div>
-
-                    <p className="mt-1 text-[11px] leading-4 text-slate-500">
-                      {column.description}
-                    </p>
-                  </header>
-
-                  <div className="space-y-3">
-                    {items.map((opportunity) => (
-                      <OpportunityCard
-                        key={opportunity.id}
-                        opportunity={opportunity}
-                      />
-                    ))}
-
-                    {items.length === 0 ? (
-                      <div className="flex min-h-24 items-center justify-center rounded-[20px] border border-dashed border-slate-200 bg-white/50 px-4 text-center text-xs text-slate-400">
-                        Aucune opportunité
-                      </div>
-                    ) : null}
+                <div className="p-6">
+                  <div className="mb-4 flex items-center justify-between text-foreground-muted">
+                    <Target className="size-4" strokeWidth={1.5} />
+                    <span className="text-[10px] font-semibold uppercase tracking-widest">Match ≥ 80</span>
                   </div>
-                </section>
-              )
-            })}
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-serif text-3xl text-foreground">{highMatches}</span>
+                  </div>
+                </div>
+
+                <div className="mx-6 h-px bg-border/40" />
+
+                <div className="p-6">
+                  <div className="mb-4 flex items-center justify-between text-foreground-muted">
+                    <CircleDot className="size-4" strokeWidth={1.5} />
+                    <span className="text-[10px] font-semibold uppercase tracking-widest">Entretiens</span>
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-serif text-3xl text-foreground">{interviews}</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
+
+        </div>
+      ) : (
+        /* EMPTY STATE PREMIUM */
+        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-sm bg-surface p-8 text-center ring-1 ring-border/50">
+          <div className="mb-6 grid size-12 place-items-center rounded-full bg-surface-muted text-foreground-muted">
+            <BriefcaseBusiness className="size-5" />
+          </div>
+          <h2 className="mb-3 font-serif text-2xl font-medium text-foreground">
+            Votre dossier est prêt.
+          </h2>
+          <p className="mb-8 max-w-md text-sm leading-relaxed text-foreground-muted">
+            Ajoutez votre première offre. Trajectoire pourra l'analyser,
+            la comparer à votre profil et vous proposer la meilleure stratégie.
+          </p>
+          <Link href="/opportunities/new">
+            <Button variant="primary" className="shadow-none">
+              Ajouter ma première offre
+            </Button>
+          </Link>
         </div>
       )}
-
-      {initialOpportunities.some(
-        (opportunity) =>
-          opportunity.status === "REJECTED" ||
-          opportunity.status === "ARCHIVED",
-      ) ? (
-        <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
-          <CheckCircle2 className="h-4 w-4" />
-          Les opportunités refusées ou archivées restent conservées dans ton
-          historique.
-        </div>
-      ) : null}
     </div>
   )
 }

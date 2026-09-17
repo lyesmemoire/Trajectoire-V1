@@ -250,8 +250,11 @@ export interface DashboardProps {
   timeline: DashboardTimelineEvent[]
   opportunitySummary: DashboardOpportunitySummary
   discoverySummary: DashboardDiscoverySummary
-  /** Widgets Ã  afficher */
-  widgets?: DashboardWidget[]
-  /** Preview analysis revendiquÃ©e (si applicable) */
+  /** Statistiques réelles agrégées */
+  stats?: {
+    analysesCount: number
+    simulationsCount: number
+  }
+  /** Preview analysis revendiquée (si applicable) */
   claimedPreview?: unknown
 }

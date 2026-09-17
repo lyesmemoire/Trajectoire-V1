@@ -1,53 +1,87 @@
-import { forwardRef } from 'react'
-import type { ButtonHTMLAttributes } from 'react'
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'premium' | 'link' | 'danger'
-type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "premium" | "danger";
+export type ButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant
-  size?: ButtonSize
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  isLoading?: boolean;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary-600 text-white hover:bg-primary-700 shadow-premium hover:shadow-premium-lg',
+    "bg-primary text-white hover:bg-violet-700 active:bg-violet-800 border border-transparent shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]",
   secondary:
-    'bg-white text-ink-900 border border-ivoire-300 hover:border-primary-600 hover:text-primary-700',
+    "bg-white text-foreground border border-border hover:bg-slate-50 active:bg-slate-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
+  outline:
+    "bg-transparent text-foreground border border-border hover:bg-slate-50 active:bg-slate-100",
   ghost:
-    'bg-transparent text-ink-600 hover:text-primary-700 hover:bg-primary-50',
+    "bg-transparent text-foreground hover:bg-slate-100/80 active:bg-slate-200/60",
   premium:
-    'bg-primary-600 text-white hover:bg-primary-700 shadow-premium hover:shadow-premium-lg',
-  link:
-    'bg-transparent text-ink-900 underline-offset-4 hover:underline hover:text-primary-700 p-0 h-auto',
+    "bg-primary text-white hover:bg-violet-700 active:bg-violet-800 border border-transparent shadow-[0_2px_8px_-1px_rgba(124,58,237,0.25)]",
   danger:
-    'bg-brick-600 text-white hover:bg-brick-700 shadow-premium hover:shadow-premium-lg',
-}
+    "bg-danger text-white hover:bg-red-600 active:bg-red-700 border border-transparent shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]",
+};
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-sm',
-  md: 'px-6 py-3 text-sm',
-  lg: 'px-8 py-4 text-base',
-}
+  sm: "h-8 px-3 text-xs font-medium",
+  md: "h-10 px-4 text-sm font-medium",
+  lg: "h-11 px-5 text-sm font-medium",
+};
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', className = '', ...props }, ref) => {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      isLoading = false,
+      disabled,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         ref={ref}
-        className={`
-          inline-flex items-center justify-center gap-2
-          rounded-full font-medium tracking-wide
-          transition-all duration-300 ease-premium
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-ink-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
-          disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none
-          ${variantStyles[variant]}
-          ${variant !== 'link' ? sizeStyles[size] : ''}
-          ${className}
-        `}
+        disabled={disabled || isLoading}
+        className={cn(
+          "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+          variantStyles[variant],
+          sizeStyles[size],
+          className
+        )}
         {...props}
-      />
-    )
+      >
+        {isLoading && (
+          <svg
+            className="mr-2 h-4 w-4 animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
+        )}
+        {children}
+      </button>
+    );
   }
-)
-Button.displayName = 'Button'
+);
+Button.displayName = "Button";

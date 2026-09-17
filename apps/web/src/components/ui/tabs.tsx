@@ -9,7 +9,10 @@ const TabsContext = React.createContext<{
 } | null>(null)
 
 export function Tabs({
-  value, onValueChange, children }: {
+  value,
+  onValueChange,
+  children,
+}: {
   value: string
   onValueChange: (value: string) => void
   children: React.ReactNode
@@ -22,19 +25,29 @@ export function Tabs({
 }
 
 export function TabsList({
-  className, children }: {
+  className,
+  children,
+}: {
   className?: string
   children: React.ReactNode
 }) {
   return (
-    <div className={cn("flex rounded-xl bg-ivoire-100 p-1", className)}>
+    <div
+      className={cn(
+        "inline-flex items-center rounded-xl bg-surface-muted p-1 gap-0.5",
+        className,
+      )}
+    >
       {children}
     </div>
   )
 }
 
 export function TabsTrigger({
-  value, className, children }: {
+  value,
+  className,
+  children,
+}: {
   value: string
   className?: string
   children: React.ReactNode
@@ -45,11 +58,13 @@ export function TabsTrigger({
   return (
     <button
       onClick={() => context?.onValueChange(value)}
+      role="tab"
+      aria-selected={isActive}
       className={cn(
-        "flex flex-1 items-center justify-center rounded-lg px-3 py-2 text-sm font-black transition-all",
+        "flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-all duration-150",
         isActive
-          ? "bg-white text-ink-900 shadow-sm"
-          : "text-ink-500 hover:text-ink-700",
+          ? "bg-white text-foreground shadow-sm"
+          : "text-foreground-muted hover:bg-white/60 hover:text-foreground",
         className,
       )}
     >
@@ -59,13 +74,15 @@ export function TabsTrigger({
 }
 
 export function TabsContent({
-  value, className, children }: {
+  value,
+  className,
+  children,
+}: {
   value: string
   className?: string
   children: React.ReactNode
 }) {
   const context = React.useContext(TabsContext)
   if (context?.value !== value) return null
-
-  return <div className={cn("mt-2", className)}>{children}</div>
+  return <div className={cn("mt-3", className)}>{children}</div>
 }

@@ -1,74 +1,81 @@
 /**
- * Design tokens — Trajectoire (Premium Professionnel)
- * Source de vérité unique. Toute nouvelle page/composant DOIT s'y référer.
- * Ne jamais introduire slate/indigo/blue/stone brut ailleurs.
+ * Design tokens — Trajectoire (Career Intelligence Workspace)
+ *
+ * Ce fichier documente le système de tokens SÉMANTIQUES.
+ * Toutes les pages et composants de l'espace authentifié DOIVENT utiliser
+ * ces tokens plutôt que des couleurs hardcodées.
+ *
+ * Les couleurs Tailwind old-school (ivoire, ink, bronze, terracotta, forest)
+ * restent disponibles dans tailwind.config.ts pour la compatibilité avec
+ * les composants marketing et landing — ne pas les supprimer.
  */
 
+// ─── Palette sémantique applicative ───────────────────────────────────────
 export const colors = {
   bg: {
-    primary: '#FBF9F6',   // ivoire-50 — fond global
-    elevated: '#F5F2EC',  // ivoire-100 — sections alternées
-    card: '#FFFFFF',
+    primary: "hsl(var(--background))",    // #FAFAFC — fond global
+    surface: "hsl(var(--surface))",       // #FFFFFF — fond carte
+    muted: "hsl(var(--surface-muted))",   // #F3F4F6 — fond subtil
   },
   text: {
-    primary: '#1C1917',   // ink-900
-    secondary: '#57534E', // ink-600
-    muted: '#A8A29E',     // ink-400
-    inverse: '#FBF9F6',
+    primary: "hsl(var(--foreground))",         // #0F172A — texte principal
+    secondary: "hsl(var(--foreground-muted))", // #64748B — texte secondaire
   },
   accent: {
-    bronze: '#A67C3D',
-    bronzeHover: '#8B6529',
-    bronzeSoft: '#F0E4CC',
+    violet: "#7C3AED",      // primary — Trajectoire brand
+    violetLight: "#F5F3FF", // primary-50
   },
   border: {
-    default: '#E7E2DB',
-    hover: '#D6CFC3',
-  },
-  cta: {
-    primary: '#1C1917',
-    primaryHover: '#292524',
+    default: "hsl(var(--border))",  // #E2E8F0
   },
   state: {
-    success: {
-      bg: '#F0F5F1',
-      text: '#2F6844',
-      border: '#CDE0D1',
-    },
-    warning: {
-      bg: '#FBF0EA',
-      text: '#B7472A',   // terracotta — distinct du bronze
-      border: '#F0D9CC',
-    },
-    error: {
-      bg: '#FAEEEE',
-      text: '#9B2C2C',
-      border: '#EBCFCF',
-    },
-    info: {
-      bg: '#F5F2EC',
-      text: '#57534E',
-      border: '#E7E2DB',
-    },
+    success: "hsl(var(--success))", // #10B981 Emerald
+    warning: "hsl(var(--warning))", // #F59E0B Amber
+    danger: "hsl(var(--danger))",   // #EF4444 Rose
+    info: "hsl(var(--info))",       // #0EA5E9 Sky
   },
 } as const
 
+// ─── Radius ───────────────────────────────────────────────────────────────
 export const radius = {
-  sm: 'rounded-lg',
-  md: 'rounded-xl',
-  lg: 'rounded-2xl',
-  full: 'rounded-full',
+  sm: "rounded-md",   // 0.5rem  — inputs, badges
+  md: "rounded-lg",   // 0.75rem — buttons, small cards
+  lg: "rounded-xl",   // 1rem    — standard cards
+  xl: "rounded-2xl",  // 1.5rem  — modals, hero sections
 } as const
 
+// ─── Shadow ───────────────────────────────────────────────────────────────
 export const shadow = {
-  card: 'shadow-premium',
-  cardHover: 'shadow-premium-lg',
+  subtle:   "shadow-[0_1px_2px_0_rgba(0,0,0,0.04)]",
+  card:     "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]",
+  elevated: "shadow-[0_4px_12px_-2px_rgba(30,27,75,0.08),0_2px_4px_-2px_rgba(30,27,75,0.04)]",
 } as const
 
+// ─── Typography ───────────────────────────────────────────────────────────
 export const fonts = {
-  heading: 'font-serif', // Fraunces / Georgia
-  body: 'font-sans',     // Inter / system-ui
+  /** App : tous les titres fonctionnels */
+  heading: "font-sans",
+  /** Corps de texte */
+  body: "font-sans",
+  /** Marketing / moments de marque uniquement */
+  brand: "font-serif",
 } as const
 
-/** Règle : le bronze est un accent RARE (CTA secondaire, badge PRO, hover discret).
- * Le CTA principal reste toujours ink-900. Ne jamais mettre le bronze en fond large. */
+// ─── Spacing scale (px) ───────────────────────────────────────────────────
+// Rythme recommandé : 8 / 12 / 16 / 20 / 24 / 32 / 48
+export const spacing = {
+  cardPadding: "p-5",       // standard card inner padding
+  sectionGap: "gap-6",      // gap between page sections
+  pageHeader: "pb-5",       // page header bottom spacing
+} as const
+
+/**
+ * RÈGLES FONDAMENTALES
+ *
+ * 1. Espace app : font-sans partout (titres, labels, valeurs)
+ * 2. Fraunces (font-serif) : UNIQUEMENT marketing/landing et
+ *    moments de marque explicitement justifiés (ex: logo sidebar)
+ * 3. CTA primaire : bg-primary text-white (violet) — jamais bg-ink-900 dans l'app
+ * 4. Densité : paddings 20–24px pour les cartes, 16–20px pour les items de liste
+ * 5. Ombres ultra-subtiles — max shadow-sm sur cards normales
+ */

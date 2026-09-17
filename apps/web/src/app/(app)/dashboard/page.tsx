@@ -17,6 +17,232 @@ import type {
   DashboardTimelineEvent
 } from "@/types/dashboard"
 
+type NormalizedSkill = {
+  name: string
+  level?: number
+  category?: 'technical' | 'soft' | 'language'
+  trend?: 'up' | 'down' | 'stable'
+}
+
+type NormalizedImprovement = {
+  title: string
+  description: string
+  impact?: number
+}
+
+function parseJsonSafely(data: unknown): unknown {
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data)
+    } catch {
+      return null
+    }
+  }
+  return data
+}
+
+function normalizeSkills(raw: unknown): NormalizedSkill[] {
+  if (!raw) return []
+
+  // Shape 1: Tableau direct (ex: string[] ou array of objects)
+  if (Array.isArray(raw)) {
+    const result: NormalizedSkill[] = []
+    for (const item of raw) {
+      if (typeof item === 'string') {
+        const trimmed = item.trim()
+        if (trimmed) result.push({ name: trimmed })
+      } else if (item && typeof item === 'object') {
+        const obj = item as Record<string, unknown>
+        const name =
+          typeof obj.name === 'string'
+            ? obj.name
+            : typeof obj.title === 'string'
+            ? obj.title
+            : typeof obj.skill === 'string'
+            ? obj.skill
+            : ''
+        if (name.trim()) {
+          const level = typeof obj.level === 'number' ? obj.level : undefined
+          const category =
+            obj.category === 'technical' ||
+            obj.category === 'soft' ||
+            obj.category === 'language'
+              ? obj.category
+              : undefined
+          const trend =
+            obj.trend === 'up' || obj.trend === 'down' || obj.trend === 'stable'
+              ? obj.trend
+              : undefined
+          result.push({ name: name.trim(), level, category, trend })
+        }
+      }
+    }
+    return result
+  }
+
+  // Shape 2: Chaîne délimitée par des virgules ou retours à la ligne
+  if (typeof raw === 'string') {
+    return raw
+      .split(/[,;\n]+/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((name) => ({ name }))
+  }
+
+  // Shape 3: Objet catégorisé ({ technical: string[], soft: string[], languages: string[] })
+  // Forme standard issue de api/cv/analyze/route.ts (CvAnalysis) et lib/pdf/types.ts (CVData)
+  if (typeof raw === 'object') {
+    const result: NormalizedSkill[] = []
+    const obj = raw as Record<string, unknown>
+
+    const categories: Array<{
+      key: string
+      category: 'technical' | 'soft' | 'language'
+    }> = [
+      { key: 'technical', category: 'technical' },
+      { key: 'soft', category: 'soft' },
+      { key: 'languages', category: 'language' },
+      { key: 'language', category: 'language' },
+    ]
+
+    for (const { key, category } of categories) {
+      const val = obj[key]
+      if (Array.isArray(val)) {
+        for (const item of val) {
+          if (typeof item === 'string') {
+            const trimmed = item.trim()
+            if (trimmed) result.push({ name: trimmed, category })
+          } else if (item && typeof item === 'object') {
+            const itemObj = item as Record<string, unknown>
+            const name =
+              typeof itemObj.name === 'string'
+                ? itemObj.name
+                : typeof itemObj.title === 'string'
+                ? itemObj.title
+                : typeof itemObj.skill === 'string'
+                ? itemObj.skill
+                : ''
+            if (name.trim()) {
+              const level =
+                typeof itemObj.level === 'number' ? itemObj.level : undefined
+              result.push({ name: name.trim(), category, level })
+            }
+          }
+        }
+      } else if (typeof val === 'string') {
+        const parts = val.split(/[,;\n]+/).map((s) => s.trim()).filter(Boolean)
+        for (const p of parts) {
+          result.push({ name: p, category })
+        }
+      }
+    }
+
+    // Autres clés éventuelles contenant des tableaux
+    const handledKeys = new Set(['technical', 'soft', 'languages', 'language'])
+    for (const [k, val] of Object.entries(obj)) {
+      if (handledKeys.has(k)) continue
+      if (Array.isArray(val)) {
+        for (const item of val) {
+          if (typeof item === 'string') {
+            const trimmed = item.trim()
+            if (trimmed) result.push({ name: trimmed, category: 'technical' })
+          }
+        }
+      }
+    }
+
+    return result
+  }
+
+  return []
+}
+
+function normalizeImprovements(
+  rawImprovements: unknown,
+  rawRecommendations: unknown
+): NormalizedImprovement[] {
+  const source = rawImprovements ?? rawRecommendations
+  if (!source) return []
+
+  if (Array.isArray(source)) {
+    return source.map((item, index) => {
+      if (typeof item === 'string') {
+        return {
+          title: item,
+          description: item,
+          impact: 10,
+        }
+      }
+      if (item && typeof item === 'object') {
+        const obj = item as Record<string, unknown>
+        return {
+          title:
+            typeof obj.title === 'string'
+              ? obj.title
+              : typeof obj.name === 'string'
+              ? obj.name
+              : `Amélioration ${index + 1}`,
+          description:
+            typeof obj.description === 'string'
+              ? obj.description
+              : typeof obj.text === 'string'
+              ? obj.text
+              : 'Optimisez cette section de votre CV',
+          impact: typeof obj.impact === 'number' ? obj.impact : 10,
+        }
+      }
+      return {
+        title: `Amélioration ${index + 1}`,
+        description: 'Optimisez cette section de votre CV',
+        impact: 10,
+      }
+    })
+  }
+
+  if (typeof source === 'object') {
+    const obj = source as Record<string, unknown>
+    const items: NormalizedImprovement[] = []
+
+    const list = Array.isArray(obj.weakness)
+      ? obj.weakness
+      : Array.isArray(obj.weaknesses)
+      ? obj.weaknesses
+      : Array.isArray(obj.recommendations)
+      ? obj.recommendations
+      : Array.isArray(obj.strengths)
+      ? obj.strengths
+      : []
+
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i]
+      if (typeof item === 'string') {
+        items.push({
+          title: item,
+          description: item,
+          impact: 10,
+        })
+      } else if (item && typeof item === 'object') {
+        const itemObj = item as Record<string, unknown>
+        items.push({
+          title:
+            typeof itemObj.title === 'string'
+              ? itemObj.title
+              : `Amélioration ${i + 1}`,
+          description:
+            typeof itemObj.description === 'string'
+              ? itemObj.description
+              : 'Optimisez cette section de votre CV',
+          impact: typeof itemObj.impact === 'number' ? itemObj.impact : 10,
+        })
+      }
+    }
+
+    return items
+  }
+
+  return []
+}
+
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -59,10 +285,18 @@ export default async function DashboardPage() {
 
   // Career Command Center
   const [
+    analysesCount,
+    interviewSessionsCount,
     dashboardOpportunities,
     liveDiscoveryCount,
     activeDiscoverySourceCount,
   ] = await Promise.all([
+    prisma.cVAnalysis.count({
+      where: { userId: user.id },
+    }),
+    prisma.interviewSession.count({
+      where: { userId: user.id },
+    }),
     prisma.opportunity.findMany({
       where: {
         userId: user.id,
@@ -225,13 +459,14 @@ export default async function DashboardPage() {
            (lastAnalysis?.atsScoreAfter || claimedPreview?.atsScore || 0) < (previousAnalysis?.atsScoreAfter || 0) ? 'down' : 'stable',
   }
 
-  const cvData = lastAnalysis?.cvData as any || claimedPreview?.cvExtract as any
-  const skills: DashboardSkill[] = cvData?.skills?.slice(0, 6).map((skill: any, index: number) => ({
+  const cvData = (parseJsonSafely(lastAnalysis?.cvData) || parseJsonSafely(claimedPreview?.cvExtract)) as any
+  const normalizedSkills = normalizeSkills(cvData?.skills)
+  const skills: DashboardSkill[] = normalizedSkills.slice(0, 6).map((skill, index) => ({
     name: skill.name || `Compétence ${index + 1}`,
-    level: skill.level || 50,
-    category: index % 2 === 0 ? 'technical' : 'soft',
-    trend: index % 3 === 0 ? 'up' : undefined,
-  })) || []
+    level: skill.level ?? 50,
+    category: skill.category ?? (index % 2 === 0 ? 'technical' : 'soft'),
+    trend: skill.trend ?? (index % 3 === 0 ? 'up' : undefined),
+  }))
 
   const career: DashboardCareer = {
     currentLevel: "Junior",
@@ -243,14 +478,16 @@ export default async function DashboardPage() {
     },
   }
 
-  const improvements = cvData?.improvements as any[] || claimedPreview?.recommendations as any[] || []
-  const recommendations: DashboardRecommendation[] = improvements.slice(0, 4).map((imp: any, index: number) => ({
+  const rawImprovements = parseJsonSafely(lastAnalysis?.improvements) ?? cvData?.improvements
+  const rawRecommendations = parseJsonSafely(claimedPreview?.recommendations)
+  const normalizedImprovements = normalizeImprovements(rawImprovements, rawRecommendations)
+  const recommendations: DashboardRecommendation[] = normalizedImprovements.slice(0, 4).map((imp, index) => ({
     id: `rec-${index}`,
-    title: imp.title || `Amélioration ${index + 1}`,
-    description: imp.description || "Optimisez cette section de votre CV",
+    title: imp.title,
+    description: imp.description,
     actionType: 'improve',
     priority: index === 0 ? 'high' : 'medium',
-    estimatedImpact: imp.impact || 10,
+    estimatedImpact: imp.impact ?? 10,
   }))
 
   const history: DashboardHistoryItem[] = analyses.map((analysis) => ({
@@ -369,6 +606,10 @@ export default async function DashboardPage() {
       timeline={timeline}
       opportunitySummary={opportunitySummary}
       discoverySummary={discoverySummary}
+      stats={{
+        analysesCount,
+        simulationsCount: interviewSessionsCount,
+      }}
       claimedPreview={claimedPreview}
     />
   )

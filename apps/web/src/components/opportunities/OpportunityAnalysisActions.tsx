@@ -72,7 +72,7 @@ export function OpportunityAnalysisActions({
         type="button"
         onClick={analyze}
         disabled={loading}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-violet-600 px-5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-violet-600 px-5 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? (
           <>
@@ -90,7 +90,7 @@ export function OpportunityAnalysisActions({
       </button>
 
       {error ? (
-        <div className="rounded-2xl bg-rose-50 p-4 ring-1 ring-rose-100">
+        <div className="rounded-md bg-rose-50 p-4 ring-1 ring-rose-100">
           <div className="flex gap-3">
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-600" />
 
@@ -142,7 +142,7 @@ export function FutureActions({
     <div className="grid gap-3 sm:grid-cols-2">
       <Link
         href={`/analyze?opportunity=${opportunityId}`}
-        className="group rounded-[22px] border border-slate-200 bg-white p-4 transition hover:border-violet-200 hover:shadow-sm"
+        className="group rounded-md border border-slate-200 bg-white p-4 transition hover:border-violet-200 hover:shadow-sm"
       >
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
           <FileText className="h-4 w-4" />
@@ -164,7 +164,7 @@ export function FutureActions({
 
       <Link
         href={`/simulation/new?opportunity=${opportunityId}`}
-        className="group rounded-[22px] border border-slate-200 bg-white p-4 transition hover:border-violet-200 hover:shadow-sm"
+        className="group rounded-md border border-slate-200 bg-white p-4 transition hover:border-violet-200 hover:shadow-sm"
       >
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
           <Sparkles className="h-4 w-4" />
@@ -374,7 +374,7 @@ export function OpportunityStatusActions({
   }
 
   return (
-    <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="rounded-md border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-600">
@@ -398,7 +398,7 @@ export function OpportunityStatusActions({
 
       {recommendation === "APPLY" &&
       status === "TO_ANALYZE" ? (
-        <div className="mt-5 rounded-2xl bg-emerald-50 p-4 ring-1 ring-emerald-100">
+        <div className="mt-5 rounded-md bg-emerald-50 p-4 ring-1 ring-emerald-100">
           <p className="text-sm font-bold text-emerald-900">
             Trajectoire recommande cette candidature.
           </p>
@@ -445,7 +445,7 @@ export function OpportunityStatusActions({
       </div>
 
       {statusError ? (
-        <p className="mt-4 rounded-2xl bg-rose-50 p-3 text-sm font-semibold text-rose-700">
+        <p className="mt-4 rounded-md bg-rose-50 p-3 text-sm font-semibold text-rose-700">
           {statusError}
         </p>
       ) : null}

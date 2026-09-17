@@ -12,27 +12,33 @@ interface ProgressProps {
   label?: string
   showValue?: boolean
   size?: "sm" | "md" | "lg"
-  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink" | "primary"
+  color?: "primary" | "success" | "warning" | "danger" | "info"
   className?: string
 }
 
 export function Progress({
-  value, max = 100, label, showValue = true, size = "md", color = "primary", className }: ProgressProps) {
+  value,
+  max = 100,
+  label,
+  showValue = true,
+  size = "md",
+  color = "primary",
+  className,
+}: ProgressProps) {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
 
   const sizes = {
     sm: "h-1",
-    md: "h-2",
-    lg: "h-3",
+    md: "h-1.5",
+    lg: "h-2.5",
   }
 
   const colors = {
-    primary: "bg-gradient-to-r from-primary-400 to-primary-600",
-    bronze: "bg-gradient-to-r from-primary-400 to-primary-600",
-    forest: "bg-gradient-to-r from-forest-500 to-forest-600",
-    terracotta: "bg-gradient-to-r from-terracotta-500 to-terracotta-600",
-    brick: "bg-gradient-to-r from-brick-500 to-brick-600",
-    ink: "bg-gradient-to-r from-primary-600 to-primary-700",
+    primary: "bg-primary",
+    success: "bg-emerald-500",
+    warning: "bg-amber-500",
+    danger: "bg-rose-500",
+    info: "bg-sky-500",
   }
 
   return (
@@ -40,12 +46,10 @@ export function Progress({
       {(label || showValue) && (
         <div className="flex items-center justify-between mb-2">
           {label && (
-            <span className="text-sm font-semibold text-ink-700">
-              {label}
-            </span>
+            <span className="text-sm font-medium text-foreground-muted">{label}</span>
           )}
           {showValue && (
-            <span className="text-sm font-bold text-ink-900">
+            <span className="text-sm font-semibold text-foreground tabular-nums">
               {Math.round(percentage)}%
             </span>
           )}
@@ -53,7 +57,7 @@ export function Progress({
       )}
       <div
         className={cn(
-          "w-full bg-ivoire-200 rounded-full overflow-hidden",
+          "w-full bg-surface-muted rounded-full overflow-hidden",
           sizes[size],
         )}
       >
@@ -79,24 +83,29 @@ interface CircularProgressProps {
   size?: number
   strokeWidth?: number
   label?: string
-  color?: "bronze" | "forest" | "terracotta" | "brick" | "ink" | "primary"
+  color?: "primary" | "success" | "warning" | "danger"
   className?: string
 }
 
 export function CircularProgress({
-  value, max = 100, size = 120, strokeWidth = 8, label, color = "primary", className }: CircularProgressProps) {
+  value,
+  max = 100,
+  size = 120,
+  strokeWidth = 8,
+  label,
+  color = "primary",
+  className,
+}: CircularProgressProps) {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
   const radius = (size - strokeWidth) / 2
   const circumference = radius * 2 * Math.PI
   const offset = circumference - (percentage / 100) * circumference
 
-  const colors = {
+  const strokeColors = {
     primary: "#7C3AED",
-    bronze: "#7C3AED",
-    forest: "#2F6844",
-    terracotta: "#C25E00",
-    brick: "#8B3A3A",
-    ink: "#6D28D9",
+    success: "#10B981",
+    warning: "#F59E0B",
+    danger: "#EF4444",
   }
 
   return (
@@ -107,23 +116,24 @@ export function CircularProgress({
       <svg
         className="w-full h-full transform -rotate-90"
         viewBox={`0 0 ${size} ${size}`}
+        aria-hidden
       >
-        {/* Background circle */}
+        {/* Track */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#E7E2DB"
+          stroke="hsl(var(--surface-muted))"
           strokeWidth={strokeWidth}
         />
-        {/* Progress circle */}
+        {/* Progress */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={colors[color]}
+          stroke={strokeColors[color]}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -132,11 +142,11 @@ export function CircularProgress({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-black text-ink-900">
+        <span className="text-2xl font-bold text-foreground tabular-nums">
           {Math.round(percentage)}%
         </span>
         {label && (
-          <span className="text-xs text-ink-500 font-semibold">{label}</span>
+          <span className="text-xs font-medium text-foreground-muted">{label}</span>
         )}
       </div>
     </div>

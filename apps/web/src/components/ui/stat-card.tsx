@@ -12,31 +12,31 @@ interface StatCardProps {
 export function StatCard({
   value, label, icon, trend, color = "blue", className }: StatCardProps) {
   const colors = {
-    blue: "bg-ivoire-50 border-ivoire-200 text-ink-600",
-    green: "bg-forest-50 border-forest-100 text-forest-600",
-    amber: "bg-terracotta-50 border-terracotta-100 text-terracotta-600",
-    violet: "bg-primary-50 border-primary-100 text-primary-600",
-    slate: "bg-ivoire-50 border-ivoire-200 text-ink-600",
+    blue: "bg-sky-50 text-sky-700 border border-sky-100",
+    green: "bg-emerald-50 text-emerald-700 border border-emerald-100",
+    amber: "bg-amber-50 text-amber-700 border border-amber-100",
+    violet: "bg-violet-50 text-violet-700 border border-violet-100",
+    slate: "bg-slate-50 text-slate-700 border border-slate-200/60",
   }
 
   return (
     <div
       className={cn(
-        "p-6 rounded-2xl border bg-white/70 backdrop-blur-xl shadow-premium",
+        "p-5 md:p-6 rounded-xl border border-border/80 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
         className,
       )}
     >
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-3xl font-serif font-black text-ink-900">{value}</div>
-          <div className="text-sm font-semibold text-ink-400 mt-1">
+          <div className="text-2xl md:text-3xl font-bold font-sans tracking-tight text-foreground tabular-nums">{value}</div>
+          <div className="text-xs md:text-sm font-medium text-foreground-muted mt-1">
             {label}
           </div>
         </div>
         {icon && (
           <div
             className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center",
+              "size-10 rounded-lg flex items-center justify-center shrink-0",
               colors[color],
             )}
           >
@@ -47,8 +47,8 @@ export function StatCard({
       {trend && (
         <div
           className={cn(
-            "mt-3 flex items-center gap-1 text-sm font-bold",
-            trend.isPositive ? "text-forest-600" : "text-brick-600",
+            "mt-3 flex items-center gap-1 text-xs font-semibold",
+            trend.isPositive ? "text-emerald-600" : "text-rose-600",
           )}
         >
           <svg

@@ -1,15 +1,24 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+
 interface ScoreRingProps {
   score: number
   size?: number
   strokeWidth?: number
   label?: string
   showLabel?: boolean
+  className?: string
 }
 
 export function ScoreRing({
-  score, size = 120, strokeWidth = 10, label = "Score", showLabel = true }: ScoreRingProps) {
+  score,
+  size = 120,
+  strokeWidth = 10,
+  label = "Score",
+  showLabel = true,
+  className,
+}: ScoreRingProps) {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const clampedScore = Math.min(100, Math.max(0, score))
@@ -17,37 +26,33 @@ export function ScoreRing({
 
   const getColor = (s: number) => {
     if (s >= 70)
-      return {
-        stroke: "#2F6844",
-        text: "text-forest-600",
-        label: "Excellent",
-      }
+      return { stroke: "#10B981", text: "text-emerald-600", badge: "Excellent" }
     if (s >= 50)
-      return { stroke: "#B7472A", text: "text-terracotta-600", label: "Moyen" }
-    return { stroke: "#9B2C2C", text: "text-brick-600", label: "Faible" }
+      return { stroke: "#F59E0B", text: "text-amber-600", badge: "Moyen" }
+    return { stroke: "#EF4444", text: "text-rose-600", badge: "Faible" }
   }
 
   const colors = getColor(clampedScore)
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className={cn("flex flex-col items-center gap-2", className)}>
       <div className="relative" style={{ width: size, height: size }}>
         <svg
           width={size}
           height={size}
           className="-rotate-90 transform"
-          aria-label={`${label}: ${clampedScore}%`}
+          aria-label={`${label} : ${clampedScore}/100`}
         >
-          {/* Track de fond */}
+          {/* Track */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#E7E2DB"
+            stroke="#F1F5F9"
             strokeWidth={strokeWidth}
           />
-          {/* Arc de score avec animation */}
+          {/* Score arc */}
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -61,19 +66,20 @@ export function ScoreRing({
             className="transition-all duration-1000 ease-out"
           />
         </svg>
-        {/* Score centré */}
+        {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`text-2xl font-bold ${colors.text}`}>
+          <span className={cn("text-2xl font-bold tabular-nums", colors.text)}>
             {clampedScore}
           </span>
-          <span className="text-xs text-ink-400">/ 100</span>
+          <span className="text-[11px] font-medium text-foreground-muted">/ 100</span>
         </div>
       </div>
+
       {showLabel && (
         <div className="text-center">
-          <p className="text-sm font-medium text-ink-600">{label}</p>
-          <p className={`text-xs font-semibold ${colors.text}`}>
-            {colors.label}
+          <p className="text-sm font-medium text-foreground-muted">{label}</p>
+          <p className={cn("text-xs font-semibold", colors.text)}>
+            {colors.badge}
           </p>
         </div>
       )}
