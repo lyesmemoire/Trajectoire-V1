@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "protocolVersion": "qualification-protocol-2.0",
+  "laboratoryId": "lab-a-node",
+  "implementation": {
+    "family": "nodejs",
+    "runtime": "Node.js 24.13.0",
+    "implementationId": "lab-a-node"
+  },
+  "maintainer": "Trajectoire",
+  "profile": "A",
+  "runId": "mock-snapshot",
+  "qualificationId": "UNKNOWN",
+  "snapshotDigest": "19c01bd5cce25c762bc40252b98ea9a88a1119d7aff8ee18fecd9f6aa74fe57c",
+  "executionStatus": "SUCCESS",
+  "decision": "ABSTAIN",
+  "decisionScope": {
+    "manifest": true,
+    "sbom": true,
+    "provenance": true,
+    "pbtReplay": false,
+    "chaosReplay": false,
+    "fuzzReplay": false,
+    "coverageReplay": false,
+    "mutationReplay": false
+  },
+  "capabilities": {
+    "manifest": true,
+    "sbom": true,
+    "provenance": true,
+    "pbtReplay": true,
+    "chaosReplay": true,
+    "fuzzReplay": true,
+    "coverageReplay": true,
+    "mutationReplay": true
+  },
+  "digests": {},
+  "environment": {},
+  "metrics": {
+    "totalControls": 11,
+    "passedControls": 10,
+    "failedControls": 1
+  },
+  "justification": "Certains tests ont été ignorés (Profil).",
+  "executionTimeMs": 4
+}
