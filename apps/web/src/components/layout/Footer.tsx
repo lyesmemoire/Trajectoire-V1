@@ -2,37 +2,61 @@ import Link from "next/link"
 
 export default function Footer() {
   return (
-    <footer className="border-t border-ivoire-200 mt-20 py-10 text-sm text-ink-600 bg-ivoire-50">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-
+    <footer className="border-t border-border bg-background py-12 text-sm text-foreground-muted">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-3">
         <div>
-          <h3 className="font-serif font-semibold text-ink-900 mb-2">
+          <h3 className="mb-2 font-sans font-bold text-foreground">
             Trajectoire
           </h3>
-          <p>
-            Préparez vos entretiens avec une IA personnalisée.
+          <p className="max-w-[280px] leading-relaxed">
+            Préparez vos entretiens avec une intelligence contextuelle basée
+            sur votre CV et l&apos;offre visée.
           </p>
         </div>
 
         <div>
-          <h4 className="font-semibold text-ink-900 mb-2">
+          <h4 className="mb-2 font-semibold text-foreground">
             Produit
           </h4>
           <ul className="space-y-2">
-            <li><Link href="/pricing" className="hover:text-ink-900 transition-colors">Tarifs</Link></li>
-            <li><Link href="/dashboard" className="hover:text-ink-900 transition-colors">Dashboard</Link></li>
+            <li>
+              <Link href="/analyze" className="transition-colors hover:text-foreground">
+                Analyser ma candidature
+              </Link>
+            </li>
+            <li>
+              <Link href="/pricing" className="transition-colors hover:text-foreground">
+                Tarifs
+              </Link>
+            </li>
+            <li>
+              <Link href="/dashboard" className="transition-colors hover:text-foreground">
+                Dashboard
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold text-ink-900 mb-2">
+          <h4 className="mb-2 font-semibold text-foreground">
             Légal
           </h4>
           <ul className="space-y-2">
-            <li><Link href="/terms" className="hover:text-ink-900 transition-colors">Conditions générales</Link></li>
-            <li><Link href="/privacy" className="hover:text-ink-900 transition-colors">Politique de confidentialité</Link></li>
             <li>
-              <a href="mailto:anislamine1980@gmail.com" className="hover:text-ink-900 transition-colors">
+              <Link href="/terms" className="transition-colors hover:text-foreground">
+                Conditions générales
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="transition-colors hover:text-foreground">
+                Politique de confidentialité
+              </Link>
+            </li>
+            <li>
+              <a
+                href="mailto:anislamine1980@gmail.com"
+                className="transition-colors hover:text-foreground"
+              >
                 anislamine1980@gmail.com
               </a>
             </li>
@@ -40,7 +64,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="text-center mt-10 text-xs text-ink-400">
+      <div className="mt-10 text-center text-xs text-slate-400">
         © {new Date().getFullYear()} Trajectoire. Tous droits réservés.
       </div>
     </footer>

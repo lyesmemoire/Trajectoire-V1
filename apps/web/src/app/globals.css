@@ -3,77 +3,74 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Trajectoire — Career Intelligence Workspace Palette */
+    --background: 240 20% 98%; /* #FAFAFC - Luminous Near White Canvas */
+    --foreground: 224 71% 4%; /* #0F172A - Deep Neutral / Slate Near Black */
+    --foreground-muted: 220 9% 46%; /* #64748B - Bluish Slate Gray */
+
+    --surface: 0 0% 100%; /* #FFFFFF - Pure Crisp White */
+    --surface-muted: 240 10% 96%; /* #F3F4F6 - Soft Surface Neutral */
+
+    --border: 220 13% 91%; /* #E2E8F0 - Subtle Hairline Border */
+
+    --primary: 262 83% 58%; /* #7C3AED - Trajectoire Violet */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 262 83% 96%; /* #F5F3FF - Very Light Violet */
+
+    --accent: 262 83% 96%;
+    --accent-foreground: 262 83% 45%;
+
+    --success: 152 76% 36%; /* #10B981 - Emerald */
+    --warning: 38 92% 50%; /* #F59E0B - Amber */
+    --danger: 0 84% 60%; /* #EF4444 - Rose / Red */
+    --info: 199 89% 48%; /* #0EA5E9 - Sky / Blue */
+
+    /* Radii */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+  }
+
   body {
-    @apply bg-ivoire-50 text-ink-900 font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 
   h1, h2, h3, h4 {
-    @apply font-serif tracking-tight;
+    @apply font-sans font-semibold tracking-tight;
   }
 
   ::selection {
-    background-color: theme('colors.primary.50');
-    color: theme('colors.primary.700');
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
   }
 
-  /* Scrollbar discrète et premium */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: theme('colors.ivoire.50');
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.ivoire.300');
-    border-radius: 999px;
+    background: hsl(var(--border));
+    border-radius: 4px;
   }
 }
-
-/* ═══════════════════════════════════════════════════════
-   UTILITIES — Helpers globaux
-   ═══════════════════════════════════════════════════════ */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-
   .gpu {
     transform: translateZ(0);
     will-change: transform;
   }
-
-  /* Backdrop avec support Safari */
-  .backdrop-blur-glass {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  /* Scrollbar custom (subtile) */
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #E2E8E4;
-    border-radius: 4px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.primary.600');
-  }
 }
-
-/* ═══════════════════════════════════════════════════════
-   RECHARTS — Override des styles par défaut
-   ═══════════════════════════════════════════════════════ */
 
 .recharts-text {
   font-family: inherit;
   font-size: 12px;
-  fill: #4A4A4A;
+  fill: hsl(var(--foreground-muted));
 }
 
 .recharts-cartesian-axis-tick-value {

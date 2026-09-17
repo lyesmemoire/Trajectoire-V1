@@ -22,6 +22,8 @@ import {
   X,
 } from "lucide-react"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
+import { Navbar } from "@/components/layout/Navbar"
+import Footer from "@/components/layout/Footer"
 
 const heroImage = "/images/hero-professional.jpg"
 const MAX_FILE_SIZE = 10 * 1024 * 1024
@@ -229,7 +231,9 @@ export default function HomePage() {
   const ctaLabel = "Obtenir mon diagnostic"
 
   return (
-    <main className="relative min-h-[calc(100dvh-73px)] bg-ivoire-50 text-ink-900">
+    <>
+      <Navbar />
+      <main className="relative min-h-[calc(100dvh-73px)] bg-ivoire-50 text-ink-900">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -240,26 +244,25 @@ export default function HomePage() {
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-7xl px-6 pt-6 pb-14 lg:pt-8 lg:pb-16">
+      <div className="relative mx-auto w-full max-w-7xl px-6 pt-6 pb-14 lg:pt-20 lg:pb-16">
         <div className="mx-auto w-full max-w-[1120px]">
-          <div className="grid gap-8 lg:grid-cols-[540px_540px] lg:justify-center lg:gap-12 lg:items-start">
+          <div className="grid gap-8 lg:grid-cols-[540px_540px] lg:items-start lg:justify-center lg:gap-12">
             {/* ─────────────────────────────
                 COLONNE GAUCHE
             ───────────────────────────── */}
             <section className="flex w-full flex-col items-start gap-5">
-              <h1 className="font-serif text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
-                Avancez sereinement
-                <br />
-                vers votre
-                <br />
-                prochain entretien.
-              </h1>
+              <div className="flex max-w-[500px] flex-col items-start">
+                <div className="mb-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />
+                  Intelligence de candidature
+                </div>
 
-              <p className="max-w-[46ch] leading-7 text-ink-700">
-                Importez votre CV et obtenez un diagnostic immédiat. Vous
-                pouvez aussi coller l’annonce pour rendre l’analyse encore
-                plus ciblée.
-              </p>
+                <h1 className="font-serif text-[42px] font-bold leading-[1.06] tracking-[-0.025em] text-ink-900 sm:text-[52px]">
+                  Préparez Sereinement
+                  <br />
+                  votre Entretien
+                </h1>
+              </div>
 
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-600">
                 <span className="inline-flex items-center gap-2">
@@ -302,7 +305,7 @@ export default function HomePage() {
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-white">
                       {file ? (
                         <CheckCircle2
                           className="size-5"
@@ -382,16 +385,16 @@ export default function HomePage() {
                   disabled={loading}
                   aria-busy={loading}
                   className="
-                    mt-3 flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl
-                    bg-gradient-to-b from-primary-600 to-primary-700
+                    mt-3 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl
+                    border border-bronze-400/18
+                    bg-gradient-to-b from-ink-900 to-ink-800
                     px-5 py-3.5 text-[15px] font-semibold text-white
                     shadow-premium-lg
-                    border border-primary-400/18
-                    ring-1 ring-primary-400/35
+                    ring-1 ring-bronze-400/35
                     transition-all duration-200 ease-premium
-                    hover:-translate-y-[1px] hover:ring-primary-400/60 hover:border-primary-400/28
+                    hover:-translate-y-[1px] hover:border-bronze-400/28 hover:ring-bronze-400/60
                     active:translate-y-0 active:shadow-premium
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400
                     focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
                     disabled:cursor-not-allowed disabled:opacity-70
                     disabled:hover:translate-y-0
@@ -419,7 +422,7 @@ export default function HomePage() {
 
                 {/* Annonce optionnelle */}
                 <details className="mt-3 rounded-xl border border-ivoire-200 bg-white px-4 py-3 lg:border-ivoire-300">
-                  <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-primary-400">
+                  <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-bronze-400">
                     Ajouter l’annonce (optionnel)
                   </summary>
 
@@ -430,7 +433,7 @@ export default function HomePage() {
                       placeholder="Collez l’annonce (missions, profil recherché, compétences, outils, etc.)"
                       rows={5}
                       disabled={loading}
-                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-primary-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
+                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
                     />
 
                     <p className="mt-2 text-xs text-ink-500">
@@ -454,13 +457,13 @@ export default function HomePage() {
                 </div>
 
                 <p className="mt-3 text-center text-xs text-ink-500">
-                  Vos documents restent privés. Vous gardez la main sur ce
-                  que vous partagez.
+                  Vos documents restent privés. Vous gardez la main sur ce que
+                  vous partagez.
                 </p>
               </form>
 
               {/* Réassurance */}
-              <div className="mt-3 mb-2 flex w-full items-center justify-start">
+              <div className="mb-2 mt-3 flex w-full items-center justify-start">
                 <div className="inline-flex items-center gap-3 rounded-full border border-ivoire-200 bg-white/85 px-5 py-2 shadow-premium backdrop-blur lg:border-ivoire-300">
                   <div className="flex -space-x-2" aria-hidden="true">
                     {["A", "M", "S", "L"].map((initial) => (
@@ -489,24 +492,25 @@ export default function HomePage() {
             </section>
 
             {/* ─────────────────────────────
-                IMAGE HERO
+                IMAGE HERO ANIMÉE
             ───────────────────────────── */}
             <aside className="relative w-full overflow-hidden rounded-3xl border border-ivoire-200 bg-white shadow-premium lg:mt-8 lg:border-ivoire-300">
-              <div className="relative h-[340px] w-full sm:h-[420px] lg:h-[620px]">
+              <div className="relative h-[340px] w-full overflow-hidden sm:h-[420px] lg:h-[620px]">
                 <Image
                   src={heroImage}
                   alt="Préparation d’entretien dans un contexte professionnel"
                   fill
                   sizes="(max-width: 1024px) 100vw, 540px"
-                  className="object-cover object-center"
+                  className="hero-photo-motion object-cover object-center"
                   priority
-                  unoptimized
                 />
               </div>
             </aside>
           </div>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   )
 }

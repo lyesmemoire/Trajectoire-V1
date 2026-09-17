@@ -1,7 +1,5 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import Footer from "@/components/layout/Footer"
-import { Navbar } from "@/components/layout/Navbar"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 
 export const metadata: Metadata = {
@@ -41,16 +39,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {`window.__CSP_NONCES__ = { script: "${scriptNonce}", style: "${styleNonce}" };`}
         </script>
       </head>
-      <body className="min-h-screen bg-ivoire-50 text-ink-900 antialiased font-sans">
+      <body className="min-h-screen bg-background text-foreground antialiased font-sans">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-ink-900 text-white px-4 py-2 rounded-lg z-50"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded-lg z-50"
         >
           Aller au contenu principal
         </a>
-        <Navbar />
-        <div id="main">{children}</div>
-        <Footer />
+        {children}
       </body>
     </html>
   )

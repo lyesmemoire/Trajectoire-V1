@@ -74,13 +74,18 @@ export function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ivoire-200 bg-ivoire-50/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex h-[73px] max-w-7xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-serif text-xl tracking-tight text-ink-900"
+          className="flex items-center gap-2"
         >
-          Trajectoire
+          <div className="flex size-[26px] items-center justify-center rounded-[8px] bg-primary shadow-sm" aria-hidden="true">
+             <div className="size-2 rounded-[2px] bg-white" />
+          </div>
+          <span className="font-sans text-[20px] font-bold tracking-tight text-foreground">
+            Trajectoire
+          </span>
         </Link>
 
         {isAuthenticated && (
@@ -95,8 +100,8 @@ export function Navbar({
                   href={link.href}
                   className={`text-sm font-medium transition-colors duration-200 ${
                     active
-                      ? "text-ink-900"
-                      : "text-ink-400 hover:text-ink-900"
+                      ? "text-foreground"
+                      : "text-foreground-muted hover:text-foreground"
                   }`}
                 >
                   {link.label}
@@ -118,7 +123,7 @@ export function Navbar({
               />
 
               {userName ? (
-                <span className="text-sm text-ink-600">
+                <span className="text-sm text-foreground-muted">
                   {userName}
                 </span>
               ) : null}
@@ -138,7 +143,7 @@ export function Navbar({
                   void handleLogout()
                 }
                 disabled={loggingOut}
-                className="rounded-lg p-2 text-ink-500 transition-colors duration-200 hover:bg-ivoire-100 hover:text-ink-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg p-2 text-foreground-muted transition-colors duration-200 hover:bg-slate-100 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Se déconnecter"
               >
                 <LogOut
@@ -172,7 +177,7 @@ export function Navbar({
 
         <button
           type="button"
-          className="rounded-lg p-2 text-ink-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink-400 lg:hidden"
+          className="rounded-lg p-2 text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:hidden"
           onClick={() =>
             setMobileOpen(
               (current) => !current,
@@ -200,7 +205,7 @@ export function Navbar({
       </nav>
 
       {mobileOpen && (
-        <div className="space-y-4 border-t border-ivoire-200 bg-ivoire-50/95 px-6 py-6 backdrop-blur-md lg:hidden">
+        <div className="space-y-4 border-t border-border bg-background/95 px-6 py-6 backdrop-blur-md lg:hidden">
           {isAuthenticated &&
             navLinks.map((link) => {
               const active =
@@ -215,8 +220,8 @@ export function Navbar({
                   }
                   className={`block text-base font-medium ${
                     active
-                      ? "text-ink-900"
-                      : "text-ink-700 hover:text-ink-900"
+                      ? "text-foreground"
+                      : "text-foreground-muted hover:text-foreground"
                   }`}
                 >
                   {link.label}
@@ -224,7 +229,7 @@ export function Navbar({
               );
             })}
 
-          <div className="flex flex-col gap-3 border-t border-ivoire-200 pt-4">
+          <div className="flex flex-col gap-3 border-t border-border pt-4">
             {isAuthenticated ? (
               <>
                 <div className="flex items-center gap-2">
@@ -237,7 +242,7 @@ export function Navbar({
                   />
 
                   {userName ? (
-                    <span className="text-sm text-ink-600">
+                    <span className="text-sm text-foreground-muted">
                       {userName}
                     </span>
                   ) : null}

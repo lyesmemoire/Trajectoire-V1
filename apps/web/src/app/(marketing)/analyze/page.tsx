@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { createClient } from "@/lib/supabase/server"
 import { AnalyzeOpportunityClient } from "@/components/analyze/AnalyzeOpportunityClient"
+import { checkUserSubscription } from "@/lib/subscription/check-subscription"
 
 export const dynamic = "force-dynamic"
 
@@ -30,15 +31,21 @@ export default async function AnalyzePage({
       : ""
 
   let opportunity = null
+  let isAuthenticated = false
+  let hasPremiumAccess = false
 
-  if (opportunityId) {
-    const supabase = await createClient()
+  const supabase = await createClient()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-    if (user) {
+  if (user) {
+    isAuthenticated = true
+    const subCheck = await checkUserSubscription(user.id)
+    hasPremiumAccess = subCheck.hasAccess
+
+    if (opportunityId) {
       const record = await prisma.opportunity.findFirst({
         where: {
           id: opportunityId,
@@ -69,6 +76,8 @@ export default async function AnalyzePage({
   return (
     <AnalyzeOpportunityClient
       opportunity={opportunity}
+      isAuthenticated={isAuthenticated}
+      hasPremiumAccess={hasPremiumAccess}
     />
   )
 }
