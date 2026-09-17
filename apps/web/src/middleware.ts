@@ -58,7 +58,6 @@ const AUTHENTICATED_PAGE_PREFIXES = [
   "/history",
   "/simulation",
   "/report",
-  "/analyze",
   "/interview",
   "/knowledge",
   "/matching",

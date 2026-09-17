@@ -90,7 +90,7 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/api/simulation", accessLevel: AccessLevel.AUTHENTICATED, comment: "API simulation" },
   { pattern: "/api/report", accessLevel: AccessLevel.AUTHENTICATED, comment: "API rapports" },
   { pattern: "/api/interview", accessLevel: AccessLevel.AUTHENTICATED, comment: "API interview" },
-  { pattern: "/analyze", accessLevel: AccessLevel.AUTHENTICATED, comment: "Analyse CV" },
+  { pattern: "/analyze", accessLevel: AccessLevel.PUBLIC, comment: "Analyse CV" },
   { pattern: "/search", accessLevel: AccessLevel.AUTHENTICATED, comment: "Recherche" },
   { pattern: "/copilot", accessLevel: AccessLevel.AUTHENTICATED, comment: "Copilot" },
   { pattern: "/opportunities", accessLevel: AccessLevel.AUTHENTICATED, comment: "Opportunités" },
