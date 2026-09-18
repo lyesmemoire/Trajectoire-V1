@@ -20,6 +20,7 @@ import { metrics } from "../metrics.js";
 
 export interface VoiceSession {
   id: string;
+  userId?: string;
   state: InterviewState;
   createdAt: number;
   updatedAt: number;
@@ -232,9 +233,14 @@ export class SessionManager {
 // â”€â”€ Singleton Instance pour gateway.ts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const defaultManager = new SessionManager();
 
-export function createVoiceSession(sessionId: string, _userId: string, ws: unknown, _config: unknown): VoiceSession {
+export function createVoiceSession(sessionId: string, userId: string, ws: unknown, _config: unknown): VoiceSession {
   // Utiliser l'ID externe du gateway comme clÃ© de session
+  if (defaultManager.getSession(sessionId)) {
+    throw new Error("Voice session already exists");
+  }
+
   const session = defaultManager.createSession({ id: sessionId, initialTopic: "Intro" });
+  session.userId = userId;
   
   const binding = new DefaultTransportBinding();
   

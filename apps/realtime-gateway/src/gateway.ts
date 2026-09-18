@@ -65,6 +65,7 @@ app.get("/health", async () => {
 
 app.get("/ws", { websocket: true }, (socket: WebSocket) => {
   let sessionId: string | null = null;
+  let authenticatedUserId: string | null = null;
 
   socket.on("error", (err: Error) => {
     app.log.error({ err, sessionId }, "WebSocket error");
@@ -91,6 +92,13 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
     // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (msg.type === "auth") {
       try {
+        if (sessionId || authenticatedUserId) {
+          socket.send(
+            JSON.stringify({ type: "error", code: "ALREADY_AUTHENTICATED" })
+          );
+          return;
+        }
+
         if (!msg.token || !msg.sessionId) {
           socket.send(
             JSON.stringify({ type: "error", code: "MISSING_AUTH_FIELDS" })
@@ -105,6 +113,7 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
         const userId = bypass ? `stress-${msg.sessionId}` : payload!.userId;
 
         sessionId = msg.sessionId;
+        authenticatedUserId = userId;
 
         createVoiceSession(sessionId, userId, socket, {
           turnTiming: {
@@ -139,6 +148,13 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
       const session = getVoiceSession(sessionId);
       if (!session) return;
 
+      if (!authenticatedUserId || session.userId !== authenticatedUserId) {
+        app.log.warn({ sessionId }, "Voice session ownership mismatch");
+        socket.send(JSON.stringify({ type: "error", code: "SESSION_FORBIDDEN" }));
+        socket.close();
+        return;
+      }
+
       try {
         if (session.sink) {
           session.sink.dispatch({
@@ -159,7 +175,10 @@ app.get("/ws", { websocket: true }, (socket: WebSocket) => {
   });
 
   socket.on("close", () => {
-    if (sessionId) {
+    if (!sessionId || !authenticatedUserId) return;
+
+    const session = getVoiceSession(sessionId);
+    if (session?.userId === authenticatedUserId) {
       removeVoiceSession(sessionId, "ws_close");
     }
   });
