@@ -15,12 +15,32 @@
 export const dynamic = "force-dynamic";
 
 import { NextResponse, NextRequest } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit/upstash-rate-limit";
+import { generateFingerprint } from "@/lib/security/ip-extraction";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 Mo
 const MAX_CHARS = 30000; // garde-fou anti explosion de tokens en aval
 
 export async function POST(req: NextRequest) {
+  const fingerprint = generateFingerprint(req);
+  const rateLimit = await checkRateLimit(`product-upload:${fingerprint}`, 10, 3600);
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Trop de requêtes. Réessayez plus tard." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": Math.max(
+            1,
+            Math.ceil((rateLimit.reset - Date.now()) / 1000),
+          ).toString(),
+        },
+      },
+    );
+  }
+
   let form: FormData;
   try {
     form = await req.formData();
