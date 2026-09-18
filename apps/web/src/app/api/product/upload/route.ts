@@ -17,7 +17,6 @@ export const dynamic = "force-dynamic";
 import { NextResponse, NextRequest } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit/upstash-rate-limit";
 import { generateFingerprint } from "@/lib/security/ip-extraction";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 Mo
 const MAX_CHARS = 30000; // garde-fou anti explosion de tokens en aval
@@ -81,7 +80,11 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(await file.arrayBuffer());
     
     // Use pdfjs-dist legacy build for Node.js compatibility
-    const loadingTask = pdfjsLib.getDocument({ data: buffer });
+    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
+
+    const loadingTask = pdfjsLib.getDocument({
+      data: new Uint8Array(buffer),
+    });
     const pdfDocument = await loadingTask.promise;
     
     let cvText = "";
