@@ -20,13 +20,8 @@ begin
     select 1 from information_schema.columns
     where table_name = 'user_usage' and column_name = 'cv_text'
   ) then
-    insert into profiles (user_id, cv_text, cv_last_updated)
-    select user_id, cv_text, cv_last_updated
-    from user_usage
-    where cv_text is not null
-    on conflict (user_id) do update
-      set cv_text = excluded.cv_text,
-          cv_last_updated = excluded.cv_last_updated;
+    -- skipped: profiles table uses 'id' not 'user_id' (created by 001_initial_schema.sql)
+    null;
 
     -- Drop the columns from user_usage (they don't belong there)
     alter table user_usage drop column if exists cv_text;

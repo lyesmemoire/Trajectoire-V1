@@ -80,7 +80,7 @@ function normalizeSkills(raw: unknown): NormalizedSkill[] {
     return result
   }
 
-  // Shape 2: Chaîne délimitée par des virgules ou retours à la ligne
+  // Shape 2: ChaÃ®ne dÃ©limitÃ©e par des virgules ou retours Ã  la ligne
   if (typeof raw === 'string') {
     return raw
       .split(/[,;\n]+/)
@@ -89,7 +89,7 @@ function normalizeSkills(raw: unknown): NormalizedSkill[] {
       .map((name) => ({ name }))
   }
 
-  // Shape 3: Objet catégorisé ({ technical: string[], soft: string[], languages: string[] })
+  // Shape 3: Objet catÃ©gorisÃ© ({ technical: string[], soft: string[], languages: string[] })
   // Forme standard issue de api/cv/analyze/route.ts (CvAnalysis) et lib/pdf/types.ts (CVData)
   if (typeof raw === 'object') {
     const result: NormalizedSkill[] = []
@@ -137,7 +137,7 @@ function normalizeSkills(raw: unknown): NormalizedSkill[] {
       }
     }
 
-    // Autres clés éventuelles contenant des tableaux
+    // Autres clÃ©s Ã©ventuelles contenant des tableaux
     const handledKeys = new Set(['technical', 'soft', 'languages', 'language'])
     for (const [k, val] of Object.entries(obj)) {
       if (handledKeys.has(k)) continue
@@ -181,7 +181,7 @@ function normalizeImprovements(
               ? obj.title
               : typeof obj.name === 'string'
               ? obj.name
-              : `Amélioration ${index + 1}`,
+              : `AmÃ©lioration ${index + 1}`,
           description:
             typeof obj.description === 'string'
               ? obj.description
@@ -192,7 +192,7 @@ function normalizeImprovements(
         }
       }
       return {
-        title: `Amélioration ${index + 1}`,
+        title: `AmÃ©lioration ${index + 1}`,
         description: 'Optimisez cette section de votre CV',
         impact: 10,
       }
@@ -227,7 +227,7 @@ function normalizeImprovements(
           title:
             typeof itemObj.title === 'string'
               ? itemObj.title
-              : `Amélioration ${i + 1}`,
+              : `AmÃ©lioration ${i + 1}`,
           description:
             typeof itemObj.description === 'string'
               ? itemObj.description
@@ -251,15 +251,16 @@ export default async function DashboardPage() {
     redirect("/login")
   }
 
-  // Vérifier si l'utilisateur a complété l'onboarding
+  // VÃ©rifier si l'utilisateur a complÃ©tÃ© l'onboarding
+  console.log('DB_URL:', process.env.DATABASE_URL?.slice(0, 60))
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
     select: { name: true },
   })
 
-  // Si l'utilisateur n'a pas complété l'onboarding, rediriger vers onboarding
+  // Si l'utilisateur n'a pas complÃ©tÃ© l'onboarding, rediriger vers onboarding
 
-  // Récupérer les analyses CV
+  // RÃ©cupÃ©rer les analyses CV
   const analyses = await prisma.cVAnalysis.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
@@ -269,19 +270,19 @@ export default async function DashboardPage() {
   const lastAnalysis = analyses[0]
   const previousAnalysis = analyses[1]
 
-  // Récupérer le profil carrière
+  // RÃ©cupÃ©rer le profil carriÃ¨re
   const careerProfile = await prisma.careerProfile.findUnique({
     where: { userId: user.id },
   })
 
-  // Récupérer les sessions d'entretien
+  // RÃ©cupÃ©rer les sessions d'entretien
   const interviewSessions = await prisma.interviewSession.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
     take: 3,
   })
 
-  // Vérifier quota
+  // VÃ©rifier quota
 
   // Career Command Center
   const [
@@ -440,10 +441,10 @@ export default async function DashboardPage() {
 
   const quota = await checkUserQuota(user.id)
 
-  // Vérifier si l'utilisateur a une preview analysis revendiquée
+  // VÃ©rifier si l'utilisateur a une preview analysis revendiquÃ©e
   const claimedPreview = await previewAnalysisService.getUserClaimedPreview(user.id)
 
-  // Transformer les données pour le nouveau dashboard
+  // Transformer les donnÃ©es pour le nouveau dashboard
   const userData: DashboardUserData = {
     name: dbUser?.name || user.email?.split("@")[0] || "Utilisateur",
     firstName: dbUser?.name?.split(" ")[0] || user.email?.split("@")[0] || "Utilisateur",
@@ -462,7 +463,7 @@ export default async function DashboardPage() {
   const cvData = (parseJsonSafely(lastAnalysis?.cvData) || parseJsonSafely(claimedPreview?.cvExtract)) as any
   const normalizedSkills = normalizeSkills(cvData?.skills)
   const skills: DashboardSkill[] = normalizedSkills.slice(0, 6).map((skill, index) => ({
-    name: skill.name || `Compétence ${index + 1}`,
+    name: skill.name || `CompÃ©tence ${index + 1}`,
     level: skill.level ?? 50,
     category: skill.category ?? (index % 2 === 0 ? 'technical' : 'soft'),
     trend: skill.trend ?? (index % 3 === 0 ? 'up' : undefined),
@@ -526,7 +527,7 @@ export default async function DashboardPage() {
     {
       id: 'action-4',
       title: 'Entretien IA',
-      description: 'Préparez-vous',
+      description: 'PrÃ©parez-vous',
       icon: 'Mic',
       href: '/interview',
       color: 'brick',
@@ -550,26 +551,26 @@ export default async function DashboardPage() {
     {
       type: 'strength',
       title: 'Score en progression',
-      description: 'Votre score ATS a augmenté de 15 points',
+      description: 'Votre score ATS a augmentÃ© de 15 points',
       value: 15,
       unit: 'pts',
     },
     {
       type: 'opportunity',
-      title: 'Compétences recherchées',
-      description: '3 compétences sont très demandées',
+      title: 'CompÃ©tences recherchÃ©es',
+      description: '3 compÃ©tences sont trÃ¨s demandÃ©es',
       value: 3,
     },
     {
       type: 'achievement',
-      title: 'Analyses complétées',
-      description: 'Vous avez analysé votre CV plusieurs fois',
+      title: 'Analyses complÃ©tÃ©es',
+      description: 'Vous avez analysÃ© votre CV plusieurs fois',
       value: analyses.length,
     },
     {
       type: 'weakness',
-      title: 'Section à améliorer',
-      description: 'La section expérience peut être optimisée',
+      title: 'Section Ã  amÃ©liorer',
+      description: 'La section expÃ©rience peut Ãªtre optimisÃ©e',
     },
   ]
 
@@ -585,7 +586,7 @@ export default async function DashboardPage() {
     ...(interviewSessions.slice(0, 2).map((session, index) => ({
       id: `timeline-interview-${index}`,
       type: 'interview' as const,
-      title: 'Entretien simulé',
+      title: 'Entretien simulÃ©',
       description: `Score : ${session.score || 0}/100`,
       date: session.createdAt,
       status: session.completedAt ? 'completed' as const : 'in-progress' as const,

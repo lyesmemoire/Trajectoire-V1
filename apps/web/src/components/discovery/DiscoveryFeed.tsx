@@ -1,586 +1,224 @@
 "use client"
 
-import {
-  useMemo,
-  useState,
-} from "react"
-
+import { useMemo, useState } from "react"
 import Link from "next/link"
-
+import { useRouter } from "next/navigation"
 import {
-  useRouter,
-} from "next/navigation"
-
-import {
-  ArrowRight,
-  BriefcaseBusiness,
-  Building2,
-  Check,
-  ChevronDown,
-  CircleCheck,
-  Clock3,
-  ExternalLink,
-  Filter,
-  Layers3,
-  MapPin,
-  Radar,
-  RefreshCw,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  Target,
-  Zap,
+  ArrowRight, BriefcaseBusiness, Building2, Check,
+  ChevronDown, CircleCheck, Clock3, ExternalLink,
+  Filter, Layers3, MapPin, Radar, RefreshCw,
+  Search, ShieldCheck, Sparkles, Target, Zap,
 } from "lucide-react"
+import { csrfFetch } from "@/lib/security/csrf-client"
+import { cn } from "@/lib/utils"
 
-import {
-  csrfFetch,
-} from "@/lib/security/csrf-client"
-type Provider =
-  | "GREENHOUSE"
-  | "LEVER"
-  | "ASHBY"
-  | "OTHER"
-
-type Status =
-  | "LIVE"
-  | "STALE"
-  | "CLOSED"
-
-type TrustBand =
-  | "HIGH"
-  | "MEDIUM"
-  | "LOW"
-  | "UNTRUSTED"
+type Provider  = "GREENHOUSE" | "LEVER" | "ASHBY" | "OTHER"
+type Status    = "LIVE" | "STALE" | "CLOSED"
+type TrustBand = "HIGH" | "MEDIUM" | "LOW" | "UNTRUSTED"
 
 type SerializedSource = {
-  id: string
-  opportunityId: string | null
-  provider: Provider
-  fingerprint: string
-  title: string
-  company: string
-  location: string | null
-  department: string | null
-  employmentType: string | null
-  workplaceType: string | null
-  description: string
-  sourceUrl: string
-  applyUrl: string | null
-  status: Status
-  publishedAt: string | null
-  firstSeenAt: string
-  lastSeenAt: string
+  id: string; opportunityId: string | null; provider: Provider
+  fingerprint: string; title: string; company: string
+  location: string | null; department: string | null
+  employmentType: string | null; workplaceType: string | null
+  description: string; sourceUrl: string; applyUrl: string | null
+  status: Status; publishedAt: string | null
+  firstSeenAt: string; lastSeenAt: string
 }
 
 type Trust = {
-  score: number
-  band: TrustBand
-  reasons: string[]
-
-  signals: {
-    liveness: number
-    providerAgreement: number
-    recency: number
-    completeness: number
-    applyPath: number
-  }
+  score: number; band: TrustBand; reasons: string[]
+  signals: { liveness: number; providerAgreement: number; recency: number; completeness: number; applyPath: number }
 }
 
 export type DiscoveryCluster = {
-  fingerprint: string
-  canonical: SerializedSource
-  sources: SerializedSource[]
-  sourceCount: number
-  providers: Provider[]
-  opportunityId: string | null
-  trust: Trust
+  fingerprint: string; canonical: SerializedSource
+  sources: SerializedSource[]; sourceCount: number
+  providers: Provider[]; opportunityId: string | null; trust: Trust
 }
 
-type Props = {
-  initialClusters:
-    DiscoveryCluster[]
+type Props         = { initialClusters: DiscoveryCluster[] }
+type FilterStatus   = "ALL" | Status
+type FilterProvider = "ALL" | Provider
+
+const PROVIDER_LABELS: Record<Provider, string> = {
+  GREENHOUSE: "Greenhouse", LEVER: "Lever", ASHBY: "Ashby", OTHER: "Autre",
 }
 
-type FilterStatus =
-  | "ALL"
-  | Status
-
-type FilterProvider =
-  | "ALL"
-  | Provider
-
-const PROVIDER_LABELS:
-  Record<Provider, string> = {
-    GREENHOUSE: "Greenhouse",
-    LEVER: "Lever",
-    ASHBY: "Ashby",
-    OTHER: "Autre",
-  }
-
-function clusterStatus(
-  cluster: DiscoveryCluster,
-): Status {
-  if (
-    cluster.sources.some(
-      (source) =>
-        source.status === "LIVE",
-    )
-  ) {
-    return "LIVE"
-  }
-
-  if (
-    cluster.sources.some(
-      (source) =>
-        source.status === "STALE",
-    )
-  ) {
-    return "STALE"
-  }
-
+function clusterStatus(c: DiscoveryCluster): Status {
+  if (c.sources.some(s => s.status === "LIVE"))  return "LIVE"
+  if (c.sources.some(s => s.status === "STALE")) return "STALE"
   return "CLOSED"
 }
 
-function statusLabel(
-  status: Status,
-) {
-  switch (status) {
-    case "LIVE":
-      return "Active"
-
-    case "STALE":
-      return "À vérifier"
-
-    case "CLOSED":
-      return "Clôturée"
-  }
+function statusLabel(s: Status)  {
+  return s === "LIVE" ? "Active" : s === "STALE" ? "A verifier" : "Cloturee"
 }
 
-function statusClasses(
-  status: Status,
-) {
-  switch (status) {
-    case "LIVE":
-      return "border-emerald-200 bg-emerald-50 text-emerald-700"
-
-    case "STALE":
-      return "border-amber-200 bg-amber-50 text-amber-700"
-
-    case "CLOSED":
-      return "border-slate-200 bg-slate-100 text-slate-500"
-  }
+function statusTone(s: Status) {
+  if (s === "LIVE")  return "border-success/30 bg-success/8 text-success"
+  if (s === "STALE") return "border-warning/30 bg-warning/8 text-warning"
+  return "border-border bg-surface-muted text-foreground-muted"
 }
 
-function trustClasses(
-  band: TrustBand,
-) {
-  switch (band) {
-    case "HIGH":
-      return "bg-emerald-50 text-emerald-700 ring-emerald-100"
-
-    case "MEDIUM":
-      return "bg-amber-50 text-amber-700 ring-amber-100"
-
-    case "LOW":
-      return "bg-rose-50 text-rose-700 ring-rose-100"
-
-    case "UNTRUSTED":
-      return "bg-slate-100 text-slate-500 ring-slate-200"
-  }
+function trustTone(b: TrustBand) {
+  if (b === "HIGH")     return "bg-success/10 text-success ring-success/20"
+  if (b === "MEDIUM")   return "bg-warning/10 text-warning ring-warning/20"
+  if (b === "LOW")      return "bg-danger/10 text-danger ring-danger/20"
+  return "bg-surface-muted text-foreground-muted ring-border"
 }
 
-function trustLabel(
-  band: TrustBand,
-) {
-  switch (band) {
-    case "HIGH":
-      return "Fiabilité élevée"
-
-    case "MEDIUM":
-      return "Fiabilité moyenne"
-
-    case "LOW":
-      return "Fiabilité faible"
-
-    case "UNTRUSTED":
-      return "Non fiable"
-  }
+function trustLabel(b: TrustBand) {
+  if (b === "HIGH")     return "Fiabilite elevee"
+  if (b === "MEDIUM")   return "Fiabilite moyenne"
+  if (b === "LOW")      return "Fiabilite faible"
+  return "Non fiable"
 }
 
-function relativeDate(
-  value: string,
-) {
-  const date =
-    new Date(value)
-
-  const now =
-    new Date()
-
-  const diff =
-    Math.max(
-      0,
-      now.getTime() -
-        date.getTime(),
-    )
-
-  const minutes =
-    Math.floor(
-      diff / 60_000,
-    )
-
-  if (minutes < 60) {
-    return minutes <= 1
-      ? "à l'instant"
-      : `il y a ${minutes} min`
-  }
-
-  const hours =
-    Math.floor(
-      minutes / 60,
-    )
-
-  if (hours < 24) {
-    return `il y a ${hours} h`
-  }
-
-  const days =
-    Math.floor(
-      hours / 24,
-    )
-
-  if (days < 30) {
-    return `il y a ${days} j`
-  }
-
-  return date.toLocaleDateString(
-    "fr-FR",
-    {
-      day: "numeric",
-      month: "short",
-    },
-  )
+function relativeDate(value: string) {
+  const diff    = Math.max(0, Date.now() - new Date(value).getTime())
+  const minutes = Math.floor(diff / 60_000)
+  if (minutes < 60)  return minutes <= 1 ? "a l instant" : "il y a " + minutes + " min"
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24)    return "il y a " + hours + " h"
+  const days = Math.floor(hours / 24)
+  if (days < 30)     return "il y a " + days + " j"
+  return new Date(value).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })
 }
 
-function MetricCard({
-  icon: Icon,
-  label,
-  value,
-  detail,
-}: {
-  icon:
-    typeof Radar
-
-  label:
-    string
-
-  value:
-    string | number
-
-  detail:
-    string
+function MetricCard({ icon: Icon, label, value, detail }: {
+  icon: typeof Radar; label: string; value: string | number; detail: string
 }) {
   return (
-    <div className="rounded-[24px] border border-white/80 bg-white/90 p-5 shadow-[0_16px_45px_rgba(63,46,107,0.06)]">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-            {label}
-          </p>
-
-          <p className="mt-2 text-3xl font-black tracking-[-0.04em] text-slate-950">
-            {value}
-          </p>
+    <div className="rounded-xl border border-border bg-surface p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground-muted">{label}</p>
+        <div className="grid size-7 place-items-center rounded-lg bg-primary/10">
+          <Icon className="size-3.5 text-primary" />
         </div>
-
-        <span className="grid size-10 place-items-center rounded-2xl bg-violet-50 text-violet-600">
-          <Icon className="size-4" />
-        </span>
       </div>
-
-      <p className="mt-2 text-xs font-medium text-slate-400">
-        {detail}
-      </p>
+      <p className="text-2xl font-bold tabular-nums text-foreground">{value}</p>
+      <p className="mt-1 text-xs text-foreground-muted">{detail}</p>
     </div>
   )
 }
 
-function EmptyFeed({
-  filtered,
-  clearFilters,
-}: {
-  filtered:
-    boolean
-
-  clearFilters:
-    () => void
+function OpportunityCard({ cluster, promoting, onPromote }: {
+  cluster: DiscoveryCluster; promoting: boolean
+  onPromote: (c: DiscoveryCluster) => Promise<void>
 }) {
-  return (
-    <div className="rounded-[30px] border border-dashed border-violet-200 bg-white/80 px-6 py-16 text-center shadow-sm">
-      <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-violet-50 text-violet-600">
-        <Radar className="size-6" />
-      </div>
-
-      <h2 className="mt-5 text-lg font-black tracking-tight text-slate-950">
-        {filtered
-          ? "Aucune offre ne correspond"
-          : "Votre radar est prêt"}
-      </h2>
-
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-        {filtered
-          ? "Modifiez vos filtres pour retrouver davantage d'opportunités."
-          : "Les offres détectées par vos sources ATS apparaîtront ici, dédupliquées et classées par fiabilité."}
-      </p>
-
-      {filtered ? (
-        <button
-          type="button"
-          onClick={
-            clearFilters
-          }
-          className="mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-slate-800"
-        >
-          Réinitialiser les filtres
-        </button>
-      ) : (
-        <Link
-          href="/opportunities/new"
-          className="mt-5 inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-violet-600/15 transition hover:bg-violet-700"
-        >
-          Ajouter une opportunité
-
-          <ArrowRight className="size-3.5" />
-        </Link>
-      )}
-    </div>
-  )
-}
-
-function OpportunityCard({
-  cluster,
-  promoting,
-  onPromote,
-}: {
-  cluster:
-    DiscoveryCluster
-
-  promoting:
-    boolean
-
-  onPromote: (
-    cluster: DiscoveryCluster,
-  ) => Promise<void>
-}) {
-  const canonical =
-    cluster.canonical
-
-  const status =
-    clusterStatus(
-      cluster,
-    )
-
-  const promoted =
-    Boolean(
-      cluster.opportunityId,
-    )
+  const canonical = cluster.canonical
+  const status    = clusterStatus(cluster)
+  const promoted  = Boolean(cluster.opportunityId)
 
   return (
-    <article className="group overflow-hidden rounded-[28px] border border-white/90 bg-white shadow-[0_18px_55px_rgba(63,46,107,0.07)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_65px_rgba(63,46,107,0.11)]">
+    <article className="overflow-hidden rounded-xl border border-border bg-surface transition-shadow hover:shadow-elevated">
       <div className="p-5 sm:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <span
-                className={[
-                  "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em]",
-                  statusClasses(
-                    status,
-                  ),
-                ].join(" ")}
-              >
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold",
+                statusTone(status),
+              )}>
                 <span className="size-1.5 rounded-full bg-current" />
-
-                {statusLabel(
-                  status,
-                )}
+                {statusLabel(status)}
               </span>
-
-              <span
-                className={[
-                  "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-extrabold ring-1",
-                  trustClasses(
-                    cluster.trust.band,
-                  ),
-                ].join(" ")}
-              >
+              <span className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold ring-1",
+                trustTone(cluster.trust.band),
+              )}>
                 <ShieldCheck className="size-3" />
-
-                {trustLabel(
-                  cluster.trust.band,
-                )}
+                {trustLabel(cluster.trust.band)}
               </span>
-
-              {cluster.sourceCount > 1 ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-extrabold text-indigo-700 ring-1 ring-indigo-100">
+              {cluster.sourceCount > 1 && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary ring-1 ring-primary/20">
                   <Layers3 className="size-3" />
-
-                  {cluster.sourceCount} sources concordantes
+                  {cluster.sourceCount} sources
                 </span>
-              ) : null}
+              )}
             </div>
 
-            <div className="mt-4 flex items-start gap-4">
-              <div className="hidden size-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-slate-950 to-slate-700 text-white shadow-lg shadow-slate-900/10 sm:grid">
-                <Building2 className="size-5" />
+            <div className="flex items-start gap-4">
+              <div className="hidden size-10 shrink-0 place-items-center rounded-xl bg-foreground text-background sm:grid">
+                <Building2 className="size-4" />
               </div>
-
               <div className="min-w-0">
-                <h2 className="text-lg font-black tracking-[-0.025em] text-slate-950 sm:text-xl">
-                  {canonical.title}
-                </h2>
-
-                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-slate-500">
-                  <span>
-                    {canonical.company}
-                  </span>
-
-                  {canonical.location ? (
+                <h2 className="text-base font-semibold text-foreground">{canonical.title}</h2>
+                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground-muted">
+                  <span>{canonical.company}</span>
+                  {canonical.location && (
                     <span className="inline-flex items-center gap-1">
-                      <MapPin className="size-3" />
-                      {canonical.location}
+                      <MapPin className="size-3" />{canonical.location}
                     </span>
-                  ) : null}
-
-                  {canonical.employmentType ? (
-                    <span>
-                      {canonical.employmentType}
-                    </span>
-                  ) : null}
-
-                  {canonical.workplaceType ? (
-                    <span>
-                      {canonical.workplaceType}
-                    </span>
-                  ) : null}
+                  )}
+                  {canonical.employmentType && <span>{canonical.employmentType}</span>}
                 </div>
               </div>
             </div>
 
-            <p className="mt-4 line-clamp-3 max-w-3xl text-[13px] leading-6 text-slate-500">
+            <p className="mt-4 line-clamp-2 text-sm text-foreground-muted">
               {canonical.description}
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              {cluster.providers.map(
-                (provider) => (
-                  <span
-                    key={
-                      provider
-                    }
-                    className="rounded-lg bg-slate-50 px-2.5 py-1.5 text-[10px] font-bold text-slate-600 ring-1 ring-slate-100"
-                  >
-                    {PROVIDER_LABELS[
-                      provider
-                    ]}
-                  </span>
-                ),
-              )}
-
-              <span className="inline-flex items-center gap-1.5 px-1 text-[11px] font-semibold text-slate-400">
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {cluster.providers.map(p => (
+                <span key={p} className="rounded-lg bg-surface-muted px-2.5 py-1 text-[10px] font-medium text-foreground-muted ring-1 ring-border">
+                  {PROVIDER_LABELS[p]}
+                </span>
+              ))}
+              <span className="inline-flex items-center gap-1.5 text-[11px] text-foreground-muted">
                 <Clock3 className="size-3" />
-
-                Vérifiée{" "}
-                {relativeDate(
-                  canonical.lastSeenAt,
-                )}
+                Verifie {relativeDate(canonical.lastSeenAt)}
               </span>
             </div>
           </div>
 
           <div className="flex shrink-0 items-center gap-4 xl:flex-col xl:items-end">
-            <div className="flex size-[76px] shrink-0 flex-col items-center justify-center rounded-[22px] bg-[#faf9fe] ring-1 ring-violet-100">
-              <span className="text-2xl font-black tracking-[-0.06em] text-violet-700">
-                {cluster.trust.score}
-              </span>
-
-              <span className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-400">
-                Trust
-              </span>
+            <div className="flex size-16 shrink-0 flex-col items-center justify-center rounded-xl border border-primary/20 bg-primary/5">
+              <span className="text-xl font-bold tabular-nums text-primary">{cluster.trust.score}</span>
+              <span className="text-[9px] font-semibold uppercase tracking-[0.12em] text-foreground-muted">Trust</span>
             </div>
-
-            <div className="hidden max-w-[210px] text-right xl:block">
-              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                Pourquoi ce score ?
+            {cluster.trust.reasons.length > 0 && (
+              <p className="hidden max-w-[180px] text-right text-[11px] text-foreground-muted xl:block">
+                {cluster.trust.reasons.slice(0, 2).join(" · ")}
               </p>
-
-              <p className="mt-1 text-[11px] leading-5 text-slate-500">
-                {cluster.trust.reasons
-                  .slice(0, 2)
-                  .join(" · ")}
-              </p>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/70 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
-          <Sparkles className="size-3.5 text-violet-500" />
-
-          {promoted
-            ? "Déjà intégrée à votre pipeline"
-            : status === "CLOSED"
-              ? "Cette offre n'est plus active"
-              : "Prête à être qualifiée dans votre pipeline"}
-        </div>
-
+      <div className="flex flex-col gap-3 border-t border-border/60 bg-surface-muted px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p className="flex items-center gap-2 text-[11px] text-foreground-muted">
+          <Sparkles className="size-3.5 text-primary" />
+          {promoted ? "Deja integree a votre pipeline"
+            : status === "CLOSED" ? "Cette offre n est plus active"
+            : "Prete a etre qualifiee"}
+        </p>
         <div className="flex flex-wrap items-center gap-2">
           <a
-            href={
-              canonical.sourceUrl
-            }
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[11px] font-bold text-slate-600 transition hover:border-slate-300 hover:text-slate-950"
+            href={canonical.sourceUrl} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-2 text-[11px] font-medium text-foreground-muted transition-colors hover:text-foreground"
           >
-            Voir l'offre
-
-            <ExternalLink className="size-3.5" />
+            Voir l offre <ExternalLink className="size-3.5" />
           </a>
-
-          {promoted &&
-          cluster.opportunityId ? (
+          {promoted && cluster.opportunityId ? (
             <Link
-              href={`/opportunities/${cluster.opportunityId}/workspace`}
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-3.5 py-2.5 text-[11px] font-bold text-white transition hover:bg-slate-800"
+              href={"/opportunities/" + cluster.opportunityId + "/workspace"}
+              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-3.5 py-2 text-[11px] font-semibold text-background transition-colors hover:bg-foreground/90"
             >
-              Préparer ma candidature
-
-              <ArrowRight className="size-3.5" />
+              Preparer ma candidature <ArrowRight className="size-3.5" />
             </Link>
           ) : (
             <button
               type="button"
-              disabled={
-                promoting ||
-                status === "CLOSED"
-              }
-              onClick={() =>
-                void onPromote(
-                  cluster,
-                )
-              }
-              className="inline-flex items-center gap-2 rounded-xl bg-violet-600 px-3.5 py-2.5 text-[11px] font-bold text-white shadow-lg shadow-violet-600/15 transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
+              disabled={promoting || status === "CLOSED"}
+              onClick={() => void onPromote(cluster)}
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-3.5 py-2 text-[11px] font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {promoting ? (
-                <RefreshCw className="size-3.5 animate-spin" />
-              ) : (
-                <Zap className="size-3.5" />
-              )}
-
-              {promoting
-                ? "Ajout..."
-                : "Ajouter à mes opportunités"}
+              {promoting ? <RefreshCw className="size-3.5 animate-spin" /> : <Zap className="size-3.5" />}
+              {promoting ? "Ajout..." : "Ajouter a mes opportunites"}
             </button>
           )}
         </div>
@@ -589,561 +227,197 @@ function OpportunityCard({
   )
 }
 
-export function DiscoveryFeed({
-  initialClusters,
-}: Props) {
-  const router =
-    useRouter()
+export function DiscoveryFeed({ initialClusters }: Props) {
+  const router = useRouter()
+  const [clusters, setClusters]     = useState(initialClusters)
+  const [query, setQuery]           = useState("")
+  const [status, setStatus]         = useState<FilterStatus>("ALL")
+  const [provider, setProvider]     = useState<FilterProvider>("ALL")
+  const [minimumTrust, setMinimumTrust] = useState(0)
+  const [promotingId, setPromotingId]   = useState<string | null>(null)
+  const [error, setError]           = useState<string | null>(null)
 
-  const [
-    clusters,
-    setClusters,
-  ] =
-    useState(
-      initialClusters,
-    )
+  const metrics = useMemo(() => ({
+    active:    clusters.filter(c => clusterStatus(c) === "LIVE").length,
+    highTrust: clusters.filter(c => c.trust.band === "HIGH").length,
+    promoted:  clusters.filter(c => Boolean(c.opportunityId)).length,
+    sources:   clusters.reduce((t, c) => t + c.sourceCount, 0),
+  }), [clusters])
 
-  const [
-    query,
-    setQuery,
-  ] =
-    useState("")
+  const filtered = useMemo(() => {
+    const q = query.trim().toLocaleLowerCase("fr")
+    return clusters.filter(c => {
+      const canon = c.canonical
+      const matchQuery    = !q || [canon.title, canon.company, canon.location ?? "", canon.department ?? ""]
+        .some(v => v.toLocaleLowerCase("fr").includes(q))
+      const matchStatus   = status === "ALL" || clusterStatus(c) === status
+      const matchProvider = provider === "ALL" || c.providers.includes(provider)
+      const matchTrust    = c.trust.score >= minimumTrust
+      return matchQuery && matchStatus && matchProvider && matchTrust
+    })
+  }, [clusters, query, status, provider, minimumTrust])
 
-  const [
-    status,
-    setStatus,
-  ] =
-    useState<FilterStatus>(
-      "ALL",
-    )
-
-  const [
-    provider,
-    setProvider,
-  ] =
-    useState<FilterProvider>(
-      "ALL",
-    )
-
-  const [
-    minimumTrust,
-    setMinimumTrust,
-  ] =
-    useState(0)
-
-  const [
-    promotingId,
-    setPromotingId,
-  ] =
-    useState<string | null>(
-      null,
-    )
-
-  const [
-    error,
-    setError,
-  ] =
-    useState<string | null>(
-      null,
-    )
-
-  const metrics =
-    useMemo(
-      () => {
-        const active =
-          clusters.filter(
-            (cluster) =>
-              clusterStatus(
-                cluster,
-              ) === "LIVE",
-          ).length
-
-        const highTrust =
-          clusters.filter(
-            (cluster) =>
-              cluster.trust.band ===
-              "HIGH",
-          ).length
-
-        const promoted =
-          clusters.filter(
-            (cluster) =>
-              Boolean(
-                cluster.opportunityId,
-              ),
-          ).length
-
-        const sources =
-          clusters.reduce(
-            (total, cluster) =>
-              total +
-              cluster.sourceCount,
-            0,
-          )
-
-        return {
-          active,
-          highTrust,
-          promoted,
-          sources,
-        }
-      },
-      [clusters],
-    )
-
-  const filtered =
-    useMemo(
-      () => {
-        const normalizedQuery =
-          query
-            .trim()
-            .toLocaleLowerCase(
-              "fr",
-            )
-
-        return clusters.filter(
-          (cluster) => {
-            const canonical =
-              cluster.canonical
-
-            const matchesQuery =
-              !normalizedQuery ||
-              [
-                canonical.title,
-                canonical.company,
-                canonical.location ?? "",
-                canonical.department ?? "",
-              ].some(
-                (value) =>
-                  value
-                    .toLocaleLowerCase(
-                      "fr",
-                    )
-                    .includes(
-                      normalizedQuery,
-                    ),
-              )
-
-            const matchesStatus =
-              status === "ALL" ||
-              clusterStatus(
-                cluster,
-              ) === status
-
-            const matchesProvider =
-              provider === "ALL" ||
-              cluster.providers.includes(
-                provider,
-              )
-
-            const matchesTrust =
-              cluster.trust.score >=
-              minimumTrust
-
-            return (
-              matchesQuery &&
-              matchesStatus &&
-              matchesProvider &&
-              matchesTrust
-            )
-          },
-        )
-      },
-      [
-        clusters,
-        minimumTrust,
-        provider,
-        query,
-        status,
-      ],
-    )
-
-  const filtersActive =
-    Boolean(
-      query ||
-      status !== "ALL" ||
-      provider !== "ALL" ||
-      minimumTrust > 0,
-    )
+  const filtersActive = Boolean(query || status !== "ALL" || provider !== "ALL" || minimumTrust > 0)
 
   function clearFilters() {
-    setQuery("")
-    setStatus("ALL")
-    setProvider("ALL")
-    setMinimumTrust(0)
+    setQuery(""); setStatus("ALL"); setProvider("ALL"); setMinimumTrust(0)
   }
 
-  async function promote(
-    cluster: DiscoveryCluster,
-  ) {
-    if (
-      promotingId ||
-      cluster.opportunityId
-    ) {
-      return
-    }
-
+  async function promote(cluster: DiscoveryCluster) {
+    if (promotingId || cluster.opportunityId) return
     setError(null)
-
-    setPromotingId(
-      cluster.canonical.id,
-    )
-
+    setPromotingId(cluster.canonical.id)
     try {
-      const response =
-        await csrfFetch(`/api/discovery/${cluster.canonical.id}/promote`,
-          {
-            method:
-              "POST",
-
-            headers: {
-              Accept:
-                "application/json",
-            },
-          },
-        )
-
-      const payload =
-        (await response.json()) as {
-          opportunity?: {
-            id?: string
-          }
-
-          error?: string
-        }
-
-      if (
-        !response.ok ||
-        !payload.opportunity?.id
-      ) {
-        throw new Error(
-          payload.error ||
-            "Impossible d'ajouter cette opportunité.",
-        )
-      }
-
-      const opportunityId =
-        payload.opportunity.id
-
-      setClusters(
-        (current) =>
-          current.map(
-            (item) =>
-              item.fingerprint ===
-              cluster.fingerprint
-                ? {
-                    ...item,
-                    opportunityId,
-                  }
-                : item,
-          ),
-      )
-
-      router.push(
-        `/opportunities/${opportunityId}/workspace`,
-      )
-    }
-    catch (caught) {
-      setError(
-        caught instanceof Error
-          ? caught.message
-          : "Une erreur est survenue.",
-      )
-    }
-    finally {
-      setPromotingId(
-        null,
-      )
+      const res = await csrfFetch("/api/discovery/" + cluster.canonical.id + "/promote", {
+        method: "POST", headers: { Accept: "application/json" },
+      })
+      const payload = await res.json() as { opportunity?: { id?: string }; error?: string }
+      if (!res.ok || !payload.opportunity?.id) throw new Error(payload.error || "Impossible d ajouter cette opportunite.")
+      const id = payload.opportunity.id
+      setClusters(curr => curr.map(c => c.fingerprint === cluster.fingerprint ? { ...c, opportunityId: id } : c))
+      router.push("/opportunities/" + id + "/workspace")
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Une erreur est survenue.")
+    } finally {
+      setPromotingId(null)
     }
   }
 
   return (
     <div className="pb-12">
-      <section className="relative overflow-hidden rounded-[32px] border border-white/80 bg-gradient-to-br from-white via-white to-violet-50/80 px-5 py-7 shadow-[0_20px_60px_rgba(63,46,107,0.07)] sm:px-7 lg:px-8">
-        <div className="pointer-events-none absolute -right-20 -top-28 size-72 rounded-full bg-violet-200/30 blur-3xl" />
-        <div className="pointer-events-none absolute right-32 top-20 size-40 rounded-full bg-indigo-200/20 blur-3xl" />
 
-        <div className="relative flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-violet-700 ring-1 ring-violet-100">
-              <Radar className="size-3.5" />
-
-              Opportunity Intelligence
-            </div>
-
-            <h1 className="mt-4 text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-4xl">
-              Discovery
-            </h1>
-
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-              Un radar unique pour détecter, dédupliquer et qualifier les offres avant de les intégrer à votre pipeline.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            <Link
-              href="/opportunities"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950"
-            >
-              <BriefcaseBusiness className="size-4" />
-
-              Mon pipeline
-            </Link>
-
-            <Link
-              href="/opportunities/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800"
-            >
-              <Target className="size-4" />
-
-              Ajouter manuellement
-            </Link>
-          </div>
+      {/* Header */}
+      <header className="mb-8 border-b border-border/60 pb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+            Opportunity Intelligence
+          </p>
+          <h1 className="font-serif text-3xl font-medium tracking-tight text-foreground">
+            Discovery
+          </h1>
+          <p className="mt-1.5 max-w-lg text-sm text-foreground-muted">
+            Detectez, dedupliclez et qualifiez les offres avant de les integrer a votre pipeline.
+          </p>
         </div>
-      </section>
+        <div className="flex gap-2 shrink-0">
+          <Link
+            href="/opportunities"
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-xs font-medium text-foreground-muted transition-colors hover:text-foreground"
+          >
+            <BriefcaseBusiness className="size-4" />
+            Mon pipeline
+          </Link>
+          <Link
+            href="/opportunities/new"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            <Target className="size-4" />
+            Ajouter manuellement
+          </Link>
+        </div>
+      </header>
 
-      <section className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <MetricCard
-          icon={Radar}
-          label="Offres actives"
-          value={
-            metrics.active
-          }
-          detail="Détectées et encore disponibles"
-        />
+      {/* Metrics */}
+      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <MetricCard icon={Radar}       label="Offres actives"  value={metrics.active}    detail="Detectees et disponibles" />
+        <MetricCard icon={ShieldCheck} label="Haute confiance" value={metrics.highTrust} detail="Sources jugees fiables"    />
+        <MetricCard icon={Layers3}     label="Sources"         value={metrics.sources}   detail="Avant deduplication"       />
+        <MetricCard icon={CircleCheck} label="Qualifiees"      value={metrics.promoted}  detail="Ajoutees au pipeline"      />
+      </div>
 
-        <MetricCard
-          icon={ShieldCheck}
-          label="Haute confiance"
-          value={
-            metrics.highTrust
-          }
-          detail="Sources jugées fiables"
-        />
-
-        <MetricCard
-          icon={Layers3}
-          label="Sources"
-          value={
-            metrics.sources
-          }
-          detail="Avant déduplication"
-        />
-
-        <MetricCard
-          icon={CircleCheck}
-          label="Qualifiées"
-          value={
-            metrics.promoted
-          }
-          detail="Ajoutées au pipeline"
-        />
-      </section>
-
-      <section className="mt-5 rounded-[26px] border border-white/80 bg-white/90 p-4 shadow-[0_16px_45px_rgba(63,46,107,0.06)]">
+      {/* Filters */}
+      <div className="mb-6 rounded-xl border border-border bg-surface p-4">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
-          <div className="relative min-w-0 flex-1">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-foreground-muted" />
             <input
-              value={
-                query
-              }
-              onChange={
-                (event) =>
-                  setQuery(
-                    event.target.value,
-                  )
-              }
-              placeholder="Rechercher un poste, une entreprise, un lieu..."
-              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-4 text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100/60"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="Rechercher un poste, une entreprise..."
+              className="h-10 w-full rounded-lg border border-border bg-surface-muted pl-10 pr-4 text-xs text-foreground outline-none transition placeholder:text-foreground-muted focus:border-primary/40 focus:bg-surface focus:ring-2 focus:ring-primary/10"
             />
           </div>
-
           <div className="flex flex-wrap items-center gap-2">
-            <div className="relative">
-              <Filter className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-
-              <select
-                value={
-                  status
-                }
-                onChange={
-                  (event) =>
-                    setStatus(
-                      event.target
-                        .value as FilterStatus,
-                    )
-                }
-                className="h-11 appearance-none rounded-xl border border-slate-200 bg-white pl-9 pr-8 text-[11px] font-bold text-slate-600 outline-none focus:border-violet-300"
-              >
-                <option value="ALL">
-                  Tous les statuts
-                </option>
-
-                <option value="LIVE">
-                  Actives
-                </option>
-
-                <option value="STALE">
-                  À vérifier
-                </option>
-
-                <option value="CLOSED">
-                  Clôturées
-                </option>
-              </select>
-
-              <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-            </div>
-
-            <div className="relative">
-              <select
-                value={
-                  provider
-                }
-                onChange={
-                  (event) =>
-                    setProvider(
-                      event.target
-                        .value as FilterProvider,
-                    )
-                }
-                className="h-11 appearance-none rounded-xl border border-slate-200 bg-white pl-3 pr-8 text-[11px] font-bold text-slate-600 outline-none focus:border-violet-300"
-              >
-                <option value="ALL">
-                  Toutes les sources
-                </option>
-
-                <option value="GREENHOUSE">
-                  Greenhouse
-                </option>
-
-                <option value="LEVER">
-                  Lever
-                </option>
-
-                <option value="ASHBY">
-                  Ashby
-                </option>
-
-                <option value="OTHER">
-                  Autre
-                </option>
-              </select>
-
-              <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-            </div>
-
-            <div className="relative">
-              <select
-                value={
-                  minimumTrust
-                }
-                onChange={
-                  (event) =>
-                    setMinimumTrust(
-                      Number(
-                        event.target.value,
-                      ),
-                    )
-                }
-                className="h-11 appearance-none rounded-xl border border-slate-200 bg-white pl-3 pr-8 text-[11px] font-bold text-slate-600 outline-none focus:border-violet-300"
-              >
-                <option value={0}>
-                  Tout Trust Score
-                </option>
-
-                <option value={50}>
-                  Trust ≥ 50
-                </option>
-
-                <option value={70}>
-                  Trust ≥ 70
-                </option>
-
-                <option value={85}>
-                  Trust ≥ 85
-                </option>
-              </select>
-
-              <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-            </div>
-
-            {filtersActive ? (
-              <button
-                type="button"
-                onClick={
-                  clearFilters
-                }
-                className="h-11 rounded-xl px-3 text-[11px] font-bold text-violet-600 transition hover:bg-violet-50"
-              >
-                Réinitialiser
+            {[
+              { value: status,      onChange: (v: string) => setStatus(v as FilterStatus),
+                options: [["ALL","Tous statuts"],["LIVE","Actives"],["STALE","A verifier"],["CLOSED","Cloturees"]] },
+              { value: provider,    onChange: (v: string) => setProvider(v as FilterProvider),
+                options: [["ALL","Toutes sources"],["GREENHOUSE","Greenhouse"],["LEVER","Lever"],["ASHBY","Ashby"],["OTHER","Autre"]] },
+              { value: minimumTrust, onChange: (v: string) => setMinimumTrust(Number(v)),
+                options: [["0","Tout Trust"],["50","Trust >= 50"],["70","Trust >= 70"],["85","Trust >= 85"]] },
+            ].map((sel, i) => (
+              <div key={i} className="relative">
+                <Filter className="pointer-events-none absolute left-3 top-1/2 size-3 -translate-y-1/2 text-foreground-muted" />
+                <select
+                  value={String(sel.value)}
+                  onChange={e => sel.onChange(e.target.value)}
+                  className="h-10 appearance-none rounded-lg border border-border bg-surface pl-8 pr-7 text-xs font-medium text-foreground outline-none focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                >
+                  {sel.options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2 top-1/2 size-3 -translate-y-1/2 text-foreground-muted" />
+              </div>
+            ))}
+            {filtersActive && (
+              <button type="button" onClick={clearFilters} className="h-10 rounded-lg px-3 text-xs font-medium text-primary hover:bg-primary/5 transition-colors">
+                Reinitialiser
               </button>
-            ) : null}
+            )}
           </div>
         </div>
-
-        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
-          <p className="text-[11px] font-semibold text-slate-400">
-            {filtered.length} opportunité
-            {filtered.length > 1
-              ? "s"
-              : ""} affichée
-            {filtered.length > 1
-              ? "s"
-              : ""}
+        <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3">
+          <p className="text-[11px] text-foreground-muted">
+            {filtered.length} opportunite{filtered.length > 1 ? "s" : ""} affichee{filtered.length > 1 ? "s" : ""}
           </p>
-
-          <p className="hidden items-center gap-1.5 text-[10px] font-bold text-slate-400 sm:flex">
-            <Check className="size-3 text-emerald-500" />
-
-            Doublons regroupés automatiquement
+          <p className="hidden items-center gap-1.5 text-[10px] text-foreground-muted sm:flex">
+            <Check className="size-3 text-success" />
+            Doublons regroupes automatiquement
           </p>
         </div>
-      </section>
+      </div>
 
-      {error ? (
-        <div
-          role="alert"
-          className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-700"
-        >
+      {error && (
+        <div role="alert" className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-xs font-medium text-danger">
           {error}
         </div>
-      ) : null}
+      )}
 
-      <section className="mt-5 space-y-3">
+      {/* Cards */}
+      <div className="space-y-3">
         {filtered.length === 0 ? (
-          <EmptyFeed
-            filtered={
-              filtersActive
-            }
-            clearFilters={
-              clearFilters
-            }
-          />
+          <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border py-16 text-center">
+            <div className="grid size-12 place-items-center rounded-full bg-primary/10">
+              <Radar className="size-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                {filtersActive ? "Aucune offre ne correspond" : "Votre radar est pret"}
+              </p>
+              <p className="mt-1 text-xs text-foreground-muted">
+                {filtersActive ? "Modifiez vos filtres." : "Les offres detectees apparaitront ici."}
+              </p>
+            </div>
+            {filtersActive ? (
+              <button type="button" onClick={clearFilters} className="rounded-lg bg-foreground px-4 py-2 text-xs font-semibold text-background hover:bg-foreground/90 transition-colors">
+                Reinitialiser les filtres
+              </button>
+            ) : (
+              <Link href="/opportunities/new" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
+                Ajouter une opportunite <ArrowRight className="size-3.5" />
+              </Link>
+            )}
+          </div>
         ) : (
-          filtered.map(
-            (cluster) => (
-              <OpportunityCard
-                key={
-                  cluster.fingerprint
-                }
-                cluster={
-                  cluster
-                }
-                promoting={
-                  promotingId ===
-                  cluster.canonical.id
-                }
-                onPromote={
-                  promote
-                }
-              />
-            ),
-          )
+          filtered.map(cluster => (
+            <OpportunityCard
+              key={cluster.fingerprint}
+              cluster={cluster}
+              promoting={promotingId === cluster.canonical.id}
+              onPromote={promote}
+            />
+          ))
         )}
-      </section>
+      </div>
     </div>
   )
 }

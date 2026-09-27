@@ -1,13 +1,17 @@
-"use client"
+$script = @"
+with open('C:/Users/elitebook/Desktop/design/app/page.tsx', encoding='utf-8') as f:
+    old = f.read()
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useVoiceInterview } from "@/hooks/useVoiceInterview"
+new_design = '''\"use client\"
+
+import { useState, useEffect, useRef, useCallback } from \"react\"
+import { useRouter } from \"next/navigation\"
+import { Mic, Pause, Send, Sparkles } from \"lucide-react\"
+import { useVoiceInterview } from \"@/hooks/useVoiceInterview\"
 
 type Message = {
   id: string
-  role: "user" | "assistant"
+  role: \"user\" | \"assistant\"
   content: string
   created_at: string
 }
@@ -21,555 +25,176 @@ type Session = {
   status: string
 }
 
-type MatchingContext = {
-  matchedSkills: string[]
-  missingSkills: string[]
-  suggestions: string[]
-}
-
-type PrepContext = {
-  job: { title: string }
-  matching: MatchingContext
-  priorities: string[]
-} | null
-
-// ── Preparation card (shown before first message) ─────────────────────────────
-
-function PrepCard({
-  session,
-  context,
-  onStart,
-}: {
-  session: Session
-  context: PrepContext
-  onStart: () => void
-}) {
-  const matchedSkills = (context?.matching?.matchedSkills ?? []).slice(0, 2)
-  const pointsToVerify = (context?.priorities ?? []).slice(0, 3)
-  const hasPersonalization =
-    matchedSkills.length > 0 || pointsToVerify.length > 0
-
-  return (
-    <div className="mx-auto max-w-[680px] py-8 px-4 sm:px-0">
-      <div className="rounded-[24px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900">
-            <svg
-              className="h-6 w-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">
-            Votre entretien est prêt
-          </h1>
-          <p className="mt-1 text-slate-600">{session.job_title}</p>
-        </div>
-
-        {hasPersonalization ? (
-          <>
-            <p className="mb-6 text-center text-sm text-slate-500">
-              Voici ce que Trajectoire a compris de votre profil pour cet entretien.
-            </p>
-
-            <div className="space-y-5">
-              {/* Points déjà présents */}
-              {matchedSkills.length > 0 && (
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5">
-                  <p className="mb-3 text-xs font-bold uppercase tracking-wider text-emerald-700">
-                    Points déjà présents dans votre profil
-                  </p>
-                  <ul className="space-y-2">
-                    {matchedSkills.map((skill) => (
-                      <li
-                        key={skill}
-                        className="flex items-center gap-2 text-sm text-slate-700"
-                      >
-                        <span className="text-emerald-600">✓</span>
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Points à vérifier */}
-              {pointsToVerify.length > 0 && (
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-600">
-                    Points à explorer pendant l'entretien
-                  </p>
-                  <ul className="space-y-2">
-                    {pointsToVerify.map((point) => (
-                      <li
-                        key={point}
-                        className="flex items-start gap-2 text-sm text-slate-700"
-                      >
-                        <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-violet-500" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </>
-        ) : (
-          <p className="mb-6 text-center text-sm leading-relaxed text-slate-500">
-            Je vais adapter les questions à votre poste et approfondir vos
-            réponses au fur et à mesure.
-          </p>
-        )}
-
-        {/* Phrase cerveau */}
-        <p className="mt-6 text-center text-sm text-slate-500 italic">
-          &ldquo;Je vais adapter mes questions à vos réponses et approfondir les
-          points qui manquent de preuves concrètes.&rdquo;
-        </p>
-
-        {/* CTA */}
-        <div className="mt-8 text-center">
-          <button
-            onClick={onStart}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg shadow-slate-200 transition hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[280px]"
-          >
-            Commencer mon entretien
-          </button>
-          <p className="mt-3 text-xs text-slate-400">
-            Vous pourrez arrêter l'entretien à tout moment.
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ── Main page ─────────────────────────────────────────────────────────────────
-
-export default function SimulationSessionPage({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
+export default function SimulationSessionPage({ params }: { params: Promise<{ id: string }> }) {
   const [session, setSession] = useState<Session | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
-  const [prepContext, setPrepContext] = useState<PrepContext>(null)
   const [loading, setLoading] = useState(true)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [voiceError, setVoiceError] = useState<string | null>(null)
-  const [textContent, setTextContent] = useState("")
-  // Live partial transcript from Web Speech API (display only, never sent to brain)
-  const [partialTranscript, setPartialTranscript] = useState("")
+  const [answer, setAnswer] = useState(\"\")
+  const [partialTranscript, setPartialTranscript] = useState(\"\")
   const [voiceEnabled, setVoiceEnabled] = useState(false)
-  // PREPARATION state — shown before first interaction
-  const [phase, setPhase] = useState<"PREPARATION" | "INTERVIEW">("PREPARATION")
+  const [isListening, setIsListening] = useState(false)
   const router = useRouter()
   const sessionIdRef = useRef<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
-  // ── Voice pipeline ────────────────────────────────────────────────────────
+  const handleTranscript = useCallback(async (text: string, durationMs?: number) => {
+    setAnswer(text)
+    if (sessionIdRef.current) await submitMessage(text, sessionIdRef.current, durationMs)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const handleTranscript = useCallback(
-    async (text: string, durationMs?: number, audioBlob?: Blob | null) => {
-      setTextContent(text)
-      if (sessionIdRef.current) {
-        const messageId = await submitMessage(text, sessionIdRef.current, durationMs)
-
-        if (messageId && audioBlob) {
-          const formData = new FormData()
-          formData.append("sessionId", sessionIdRef.current)
-          formData.append("messageId", messageId)
-          formData.append("audio", audioBlob, "recording.webm")
-
-          fetch("/api/simulation/audio-upload", {
-            method: "POST",
-            body: formData,
-          }).catch((err) => {
-            console.error("[Audio Replay] Upload failed non-fatally", err)
-          })
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  const {
-    startRecording,
-    stopRecording,
-    speakText,
-    cancelSpeaking,
-    markBrainResponse,
-    isRecording,
-    isTranscribing,
-    isSpeaking,
-  } = useVoiceInterview({
+  const { startRecording, stopRecording, speakText, cancelSpeaking, markBrainResponse, isRecording, isTranscribing, isSpeaking } = useVoiceInterview({
     onTranscript: handleTranscript,
-    onPartialTranscript: (partial) => setPartialTranscript(partial),
-    onError: (msg) => {
-      setVoiceError(msg)
-      setPartialTranscript("")
-      setTimeout(() => setVoiceError(null), 6000)
-    },
+    onPartialTranscript: (partial) => { setPartialTranscript(partial); setAnswer(partial) },
+    onError: (msg) => { setError(msg) },
   })
 
-  // ── Data fetching ─────────────────────────────────────────────────────────
-
-  useEffect(() => {
-    params.then(({ id }) => {
-      sessionIdRef.current = id
-      fetchSession(id)
-    })
-  }, [params])
-
-  // Auto-scroll to latest message
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  useEffect(() => { params.then(({ id }) => { sessionIdRef.current = id; fetchSession(id) }) }, [params])
+  useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: \"smooth\" }) }, [messages])
 
   async function fetchSession(id: string) {
     try {
-      const response = await fetch(`/api/simulation/${id}`)
-      if (!response.ok) throw new Error("Session introuvable")
+      const response = await fetch(\"/api/simulation/\" + id)
+      if (!response.ok) throw new Error(\"Session introuvable\")
       const data = await response.json()
       setSession(data.session)
       setMessages(data.messages || [])
-      // Capture context for prep card (best effort)
-      if (data.context) {
-        setPrepContext(data.context as PrepContext)
-      }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Erreur de chargement")
+      setError(err instanceof Error ? err.message : \"Erreur de chargement\")
     } finally {
       setLoading(false)
     }
   }
 
-  // ── Message submission (shared by text + voice) ───────────────────────────
-
   async function submitMessage(content: string, sessionId: string, durationMs?: number) {
     if (!content.trim() || sending) return
-
     setSending(true)
-    setError(null)
-
     const formData = new FormData()
-    formData.append("content", content)
-    formData.append("sessionId", sessionId)
-    if (durationMs) {
-      formData.append("durationMs", durationMs.toString())
-    }
-
+    formData.append(\"content\", content)
+    formData.append(\"sessionId\", sessionId)
+    if (durationMs) formData.append(\"durationMs\", durationMs.toString())
     try {
-      const response = await fetch("/api/simulation/message", {
-        method: "POST",
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const data = await response.json()
-        const errorMessage =
-          typeof data?.error === "string"
-            ? data.error
-            : typeof data?.error?.message === "string"
-              ? data.error.message
-              : "Erreur lors de l'envoi"
-        throw new Error(errorMessage)
-      }
-
-      const responseData = await response.json()
-      const messageId = responseData?.data?.resultRef || responseData?.data?.data?.resultRef || responseData?.data?.messageId
-
+      const response = await fetch(\"/api/simulation/message\", { method: \"POST\", body: formData })
+      if (!response.ok) throw new Error(\"Erreur envoi\")
       await fetchSession(sessionId)
-      setTextContent("")
-      setPartialTranscript("")
-
-      // TTS: read the latest assistant response aloud if voice is enabled
+      setAnswer(\"\")
+      setPartialTranscript(\"\")
       if (voiceEnabled) {
-        // Mark brain response timestamp for latency telemetry
         markBrainResponse()
-        const updatedRes = await fetch(`/api/simulation/${sessionId}`)
+        const updatedRes = await fetch(\"/api/simulation/\" + sessionId)
         if (updatedRes.ok) {
           const updated = await updatedRes.json()
-          const assistantMsgs: Message[] = (updated.messages || []).filter(
-            (m: Message) => m.role === "assistant"
-          )
+          const assistantMsgs: Message[] = (updated.messages || []).filter((m: Message) => m.role === \"assistant\")
           const last = assistantMsgs[assistantMsgs.length - 1]
-          if (last?.content) {
-            speakText(last.content)
-          }
+          if (last?.content) speakText(last.content)
         }
       }
-
-      return messageId
-
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Erreur inconnue")
+      setError(err instanceof Error ? err.message : \"Erreur inconnue\")
     } finally {
       setSending(false)
     }
-    return undefined
   }
 
-  // ── Form submit (text mode) ───────────────────────────────────────────────
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (sessionIdRef.current) {
-      await submitMessage(textContent, sessionIdRef.current)
-    }
+  async function handleSubmit() {
+    if (sessionIdRef.current) await submitMessage(answer, sessionIdRef.current)
   }
-
-  // ── End session ───────────────────────────────────────────────────────────
 
   async function handleEndSession() {
     const { id } = await params
     const formData = new FormData()
-    formData.append("sessionId", id)
-
+    formData.append(\"sessionId\", id)
     try {
-      const response = await fetch("/api/simulation/end", {
-        method: "POST",
-        body: formData,
-      })
-      if (response.ok) {
-        router.push("/dashboard")
-      } else {
-        setError("Erreur lors de la fin de session")
-      }
-    } catch {
-      setError("Erreur lors de la fin de session")
-    }
+      const response = await fetch(\"/api/simulation/end\", { method: \"POST\", body: formData })
+      if (response.ok) router.push(\"/dashboard\")
+    } catch { setError(\"Erreur fin de session\") }
   }
-
-  // ── Mic button handler ────────────────────────────────────────────────────
 
   async function handleMicClick() {
     if (isRecording) {
       stopRecording()
+      setIsListening(false)
     } else {
-      if (isSpeaking) {
-        cancelSpeaking()
-      }
+      if (isSpeaking) cancelSpeaking()
       setVoiceEnabled(true)
-      setVoiceError(null)
+      setIsListening(true)
       await startRecording()
     }
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  const lastAssistantMessage = messages.filter((m) => m.role === \"assistant\").slice(-1)[0]
+  const currentQuestion = lastAssistantMessage?.content ?? \"Chargement de la question...\"
+  const messageCount = messages.length
+  const progress = Math.min((messageCount / 10) * 100, 100)
+  const questionNumber = Math.ceil(messageCount / 2) + 1
 
-  if (loading) {
-    return (
-      <div className="max-w-4xl mx-auto py-16 text-center">
-        <p className="text-slate-500">Chargement de la simulation...</p>
-      </div>
-    )
-  }
-
-  if (error && !session) {
-    return (
-      <div className="max-w-4xl mx-auto py-16 text-center">
-        <p className="text-red-600 mb-4">{error}</p>
-        <Link href="/dashboard" className="text-slate-700 hover:underline">
-          Retour au tableau de bord
-        </Link>
-      </div>
-    )
-  }
-
+  if (loading) return <div className=\"flex h-screen items-center justify-center\"><p className=\"text-sm text-muted-foreground\">Chargement...</p></div>
   if (!session) return null
 
-  // ── PREPARATION phase ─────────────────────────────────────────────────────
-
-  if (phase === "PREPARATION") {
-    return (
-      <PrepCard
-        session={session}
-        context={prepContext}
-        onStart={() => setPhase("INTERVIEW")}
-      />
-    )
-  }
-
-  // ── INTERVIEW phase ───────────────────────────────────────────────────────
-
-  const micLabel = isRecording
-    ? "Arrêter"
-    : isTranscribing
-    ? "Transcription…"
-    : isSpeaking
-    ? "Lecture…"
-    : "🎙"
-
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-6 flex justify-between items-start">
-        <div>
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-2"
-          >
-            ← Retour au tableau de bord
-          </Link>
-          <h1 className="text-2xl font-bold text-slate-900">
-            {session.job_title}
-          </h1>
-          <p className="text-slate-600">
-            {session.interview_type} · {session.level} ·{" "}
-            {Math.floor(session.duration_seconds / 60)} minutes
-          </p>
+    <main className=\"bg-background px-5 py-6 text-foreground sm:px-8\">
+      <div className=\"mx-auto flex max-w-6xl flex-col gap-6\">
+        <div className=\"mb-2\">
+          <p className=\"text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-1\">Simulation d entretien</p>
+          <h1 className=\"text-3xl font-bold tracking-tight text-foreground\">{session.job_title}</h1>
+          <p className=\"mt-1 text-sm text-muted-foreground\">{session.interview_type} · {session.level} · {Math.floor(session.duration_seconds / 60)} minutes</p>
         </div>
-        <button
-          onClick={handleEndSession}
-          disabled={sending}
-          className="px-4 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium disabled:opacity-50"
-        >
-          Terminer
-        </button>
-      </div>
 
-      {/* Text error */}
-      {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
-          {error}
-        </div>
-      )}
+        {error && <div className=\"rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive\">{error}</div>}
 
-      {/* Voice error (non-blocking) */}
-      {voiceError && (
-        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm flex justify-between items-center">
-          <span>🎙 {voiceError}</span>
-          <button
-            onClick={() => setVoiceError(null)}
-            className="ml-4 text-amber-500 hover:text-amber-700"
-          >
-            ✕
-          </button>
-        </div>
-      )}
-
-      {/* Progress Bar */}
-      <div className="mb-6">
-        <div className="flex justify-between text-sm text-slate-500 mb-2">
-          <span>Progression</span>
-          <span>{messages.length} messages</span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-2">
-          <div
-            className="bg-slate-900 h-2 rounded-full transition-all"
-            style={{ width: `${Math.min((messages.length / 20) * 100, 100)}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Conversation */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6 min-h-[400px] max-h-[600px] overflow-y-auto">
-        {messages.length > 0 ? (
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`max-w-[70%] rounded-2xl p-4 ${
-                    message.role === "user"
-                      ? "bg-slate-900 text-white"
-                      : "bg-slate-50 text-slate-900"
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {message.content}
-                  </p>
+        <div className=\"grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]\">
+          <section className=\"flex min-w-0 flex-col gap-4\">
+            <div className=\"relative overflow-hidden rounded-2xl bg-foreground shadow-[0_24px_70px_-28px_rgba(15,23,42,0.5)]\">
+              <div className=\"relative flex aspect-video items-center justify-center overflow-hidden bg-slate-950\">
+                <img src=\"/interviewer.png\" alt=\"Intervieweuse IA\" className=\"absolute inset-0 size-full scale-[1.2] object-cover object-center\" />
+                <div className=\"absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/10\" />
+                <div className=\"absolute left-5 top-5 flex items-center gap-2 rounded-full bg-slate-950/55 px-3 py-2 text-xs font-medium text-background backdrop-blur-sm\">
+                  <span className=\"size-2 animate-pulse rounded-full bg-emerald-400\" />
+                  Intervieweur IA
+                </div>
+                <div className=\"absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 rounded-b-2xl bg-gradient-to-t from-slate-950 via-slate-950/95 to-slate-950/75 px-5 py-5 text-background sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center\">
+                  <div className=\"flex items-center gap-2 text-xs text-background/80\"><Mic className=\"size-4 text-primary\" /> Microphone {isRecording ? \"actif\" : \"inactif\"}</div>
+                  <div className=\"flex flex-col items-center gap-2\">
+                    <button type=\"button\" onClick={handleMicClick} disabled={isTranscribing} aria-label={isRecording ? \"Arreter\" : \"Parler\"} className={\"flex size-16 items-center justify-center rounded-full border-4 border-primary/80 shadow-[0_0_28px_rgba(96,165,250,0.55)] transition-transform hover:scale-105 \" + (isRecording ? \"bg-primary text-primary-foreground\" : \"bg-slate-800 text-background\")}>
+                      {isRecording ? <Mic className=\"size-7\" /> : <Pause className=\"size-7\" />}
+                    </button>
+                    <span className=\"text-sm font-semibold\">{isRecording ? \"Ecoute en cours...\" : isTranscribing ? \"Transcription...\" : isSpeaking ? \"Reponse en cours...\" : \"Parler maintenant\"}</span>
+                  </div>
+                  <div className=\"flex items-center justify-center gap-1.5 sm:justify-self-end\">
+                    {[18, 30, 46, 25, 58, 36, 50, 28, 42, 18].map((height, index) => <span key={index} className={\"w-1 rounded-full \" + (isRecording ? \"bg-primary animate-pulse\" : \"bg-primary/30\")} style={{ height }} />)}
+                  </div>
                 </div>
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-        ) : (
-          <div className="text-center text-slate-400 py-8">
-            <p>Préparation de votre entretien...</p>
-          </div>
-        )}
-
-        {/* Live partial transcript bubble (Web Speech API — display only) */}
-        {isRecording && partialTranscript && (
-          <div className="flex justify-end mt-3">
-            <div className="max-w-[70%] rounded-2xl p-4 bg-slate-200 text-slate-500 italic text-sm leading-relaxed animate-pulse">
-              {partialTranscript}
             </div>
-          </div>
-        )}
-      </div>
+            <p className=\"text-center text-xs text-muted-foreground\">{isRecording ? \"Parlez maintenant, votre reponse sera analysee en direct.\" : \"Activez le microphone pour commencer.\"}</p>
+          </section>
 
-      {/* Input Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white rounded-2xl border border-slate-200 p-6"
-      >
-        <div className="flex gap-3">
-          {/* Microphone button */}
-          <button
-            type="button"
-            onClick={handleMicClick}
-            disabled={sending || isTranscribing || isSpeaking}
-            title={
-              isRecording
-                ? "Cliquez pour arrêter l'enregistrement"
-                : "Cliquez pour parler"
-            }
-            className={`px-4 py-3 rounded-xl font-semibold transition-colors self-end text-sm shrink-0 disabled:opacity-50 ${
-              isRecording
-                ? "bg-red-500 text-white hover:bg-red-600 animate-pulse"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            }`}
-          >
-            {micLabel}
-          </button>
-
-          <textarea
-            name="content"
-            value={textContent}
-            onChange={(e) => setTextContent(e.target.value)}
-            placeholder={
-              isRecording ? "Enregistrement en cours…" : "Votre réponse…"
-            }
-            disabled={sending || isRecording}
-            className="flex-1 px-4 py-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-slate-300 focus:bg-white focus:border-transparent outline-none resize-none disabled:opacity-50 text-sm"
-            rows={3}
-          />
-
-          <button
-            type="submit"
-            disabled={sending || !textContent.trim() || isRecording}
-            className="px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition-colors self-end disabled:opacity-50"
-          >
-            {sending ? "Envoi…" : "Envoyer"}
-          </button>
+          <aside className=\"flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm\">
+            <div className=\"flex items-center justify-between text-sm font-medium\"><span>Question {questionNumber} / 5</span><span className=\"text-xs text-muted-foreground\">{Math.round(progress)}%</span></div>
+            <div className=\"mt-4 h-1.5 overflow-hidden rounded-full bg-muted\"><div className=\"h-full rounded-full bg-primary transition-all duration-500\" style={{ width: progress + \"%\" }} /></div>
+            <div className=\"mt-8 flex items-start gap-3 rounded-xl bg-muted/60 p-4\">
+              <div className=\"flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground\"><Sparkles className=\"size-4\" /></div>
+              <p className=\"text-base font-medium leading-7\">{currentQuestion}</p>
+            </div>
+            <div className=\"mt-8 flex flex-1 flex-col gap-3\">
+              <label className=\"text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground\">Votre reponse</label>
+              <textarea value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder=\"Votre reponse apparaitra ici pendant que vous parlez...\" className=\"min-h-36 flex-1 resize-none rounded-xl border-0 bg-muted/40 p-4 text-sm leading-6 outline-none ring-1 ring-border placeholder:text-muted-foreground focus:ring-2 focus:ring-primary\" />
+              <button type=\"button\" onClick={handleSubmit} disabled={sending || !answer.trim()} className=\"inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-foreground px-4 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-40\"><Send className=\"size-4\" />{sending ? \"Envoi...\" : \"Envoyer ma reponse\"}</button>
+              <button type=\"button\" onClick={handleEndSession} className=\"inline-flex h-9 items-center justify-center rounded-xl border border-border text-xs font-medium text-muted-foreground transition-colors hover:text-destructive\">Terminer la session</button>
+            </div>
+          </aside>
         </div>
-
-        {/* Voice state indicator */}
-        {(isTranscribing || isSpeaking || isRecording) && (
-          <p className="mt-2 text-xs text-slate-400">
-            {isRecording && "🔴 Enregistrement en cours — cliquez sur 🎙 pour terminer"}
-            {isTranscribing && "⏳ Transcription en cours…"}
-            {isSpeaking && "🔊 Lecture de la réponse du recruteur…"}
-          </p>
-        )}
-      </form>
-    </div>
+      </div>
+    </main>
   )
 }
+'''
+
+with open('C:/Trajectoire/apps/web/src/app/(app)/simulation/[id]/page.tsx', 'w', encoding='utf-8') as f:
+    f.write(new_design)
+print('Done.')
+"@
+$script | Out-File "C:\Trajectoire\integrate_v2.py" -Encoding utf8
+python C:\Trajectoire\integrate_v2.py

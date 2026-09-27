@@ -7,7 +7,7 @@ create extension if not exists vector;
 
 create table if not exists cv_embeddings (
   id uuid default uuid_generate_v4() primary key,
-  cv_id uuid references cvs(id) on delete cascade,
+  cv_id uuid,
   section_text text not null,
   embedding vector(1536),
   created_at timestamp default now()
