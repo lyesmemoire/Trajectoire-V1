@@ -155,6 +155,17 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
   // Quota check to ensure user doesn't bypass blocks
   const quota = await checkSimulationQuota(user.id);
 
+  // Astuce NON bloquante : l'analyse d'un CV (qui crée le careerProfile) améliore les
+  // questions mais n'est pas requise pour simuler (l'API ne l'exige pas).
+  // true/false = résultat ; null = inconnu (erreur base) -> aucun bandeau affiché.
+  const hasProfile: boolean | null = await prisma.careerProfile
+    .findUnique({
+      where: { userId: user.id },
+      select: { id: true },
+    })
+    .then((profile) => profile !== null)
+    .catch(() => null);
+
   return (
     <div className="mx-auto max-w-[760px] space-y-8 pb-16 pt-4 px-4 sm:px-6">
       {/* Script inline pour feedback de chargement sans Client Component */}
@@ -225,6 +236,27 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           Prêt
         </div>
       </div>
+
+      {hasProfile === false && (
+        <div
+          role="note"
+          className="flex items-start gap-3 rounded-xl border border-amber-800/40 bg-amber-950/30 px-4 py-3"
+        >
+          <span className="mt-0.5 text-amber-400" aria-hidden="true">
+            ⚠
+          </span>
+          <p className="text-sm text-amber-200">
+            Analysez votre CV depuis le{" "}
+            <Link
+              href="/dashboard"
+              className="underline underline-offset-2 hover:text-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-zinc-950"
+            >
+              tableau de bord
+            </Link>{" "}
+            pour obtenir des questions personnalisées.
+          </p>
+        </div>
+      )}
 
       <div className="rounded-[24px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-10">
         <form

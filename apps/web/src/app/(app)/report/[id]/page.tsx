@@ -355,7 +355,7 @@ export default async function ReportPage({
       {/* Actions */}
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
-          href="/simulation"
+          href="/simulation/new"
           className="inline-flex items-center justify-center rounded-lg bg-indigo-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-400"
         >
           Nouvelle simulation

@@ -71,7 +71,7 @@ export default async function HistoryPage() {
         <div className="bg-gradient-to-br from-bronze-50 to-ivoire-100/50 p-8 rounded-2xl border border-bronze-200/50 text-center">
           <h3 className="text-xl font-serif font-semibold text-ink-900 mb-2">Aucune simulation</h3>
           <p className="text-ink-600 mb-6">Vous n&apos;avez pas encore réalisé de simulation.</p>
-          <Link href="/simulation">
+          <Link href="/simulation/new">
             <Button size="md">
               Commencer ma première simulation
             </Button>
