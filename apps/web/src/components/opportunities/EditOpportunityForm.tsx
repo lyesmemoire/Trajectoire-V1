@@ -99,9 +99,9 @@ export function EditOpportunityForm({
     <>
       <button
         onClick={handleOpen}
-        className="inline-flex h-9 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-bold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-200 transition hover:bg-slate-50"
+        className="inline-flex h-9 items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 text-sm font-bold text-white/80 ring-1 ring-inset ring-white/[0.1] transition hover:bg-zinc-800 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70"
       >
-        <Pencil className="h-4 w-4 text-slate-400" />
+        <Pencil className="h-4 w-4 text-white/40" />
         Modifier
       </button>
 
@@ -114,8 +114,8 @@ export function EditOpportunityForm({
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-                <BriefcaseBusiness className="h-4 w-4 text-slate-400" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
+                <BriefcaseBusiness className="h-4 w-4 text-white/40" />
                 Poste *
               </span>
               <input
@@ -123,13 +123,13 @@ export function EditOpportunityForm({
                 onChange={(event) => setTitle(event.target.value)}
                 maxLength={200}
                 placeholder="Ex. Product Manager Senior"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+                className="h-11 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-                <Building2 className="h-4 w-4 text-slate-400" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
+                <Building2 className="h-4 w-4 text-white/40" />
                 Entreprise
               </span>
               <input
@@ -137,13 +137,13 @@ export function EditOpportunityForm({
                 onChange={(event) => setCompany(event.target.value)}
                 maxLength={200}
                 placeholder="Ex. Qonto"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+                className="h-11 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-                <MapPin className="h-4 w-4 text-slate-400" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
+                <MapPin className="h-4 w-4 text-white/40" />
                 Localisation
               </span>
               <input
@@ -151,13 +151,13 @@ export function EditOpportunityForm({
                 onChange={(event) => setLocation(event.target.value)}
                 maxLength={200}
                 placeholder="Ex. Paris · Hybride"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+                className="h-11 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-                <Link2 className="h-4 w-4 text-slate-400" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
+                <Link2 className="h-4 w-4 text-white/40" />
                 URL de l'offre
               </span>
               <input
@@ -165,14 +165,14 @@ export function EditOpportunityForm({
                 value={sourceUrl}
                 onChange={(event) => setSourceUrl(event.target.value)}
                 placeholder="https://..."
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+                className="h-11 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
               />
             </label>
           </div>
 
           <label className="block">
-            <span className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-              <Sparkles className="h-4 w-4 text-violet-500" />
+            <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
+              <Sparkles className="h-4 w-4 text-indigo-400" />
               Description de l'offre *
             </span>
 
@@ -182,12 +182,15 @@ export function EditOpportunityForm({
               maxLength={50_000}
               rows={10}
               placeholder="Description complète du poste..."
-              className="w-full resize-y rounded-xl border border-slate-200 bg-white p-4 text-sm leading-6 outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+              className="w-full resize-y rounded-xl border border-white/[0.1] bg-zinc-950 p-4 text-sm leading-6 text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
             />
           </label>
 
           {error ? (
-            <div className="rounded-xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700 ring-1 ring-rose-100">
+            <div
+              role="alert"
+              className="rounded-xl bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300 ring-1 ring-rose-400/20"
+            >
               {error}
             </div>
           ) : null}
@@ -197,7 +200,7 @@ export function EditOpportunityForm({
               type="button"
               onClick={() => setIsOpen(false)}
               disabled={submitting}
-              className="inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-bold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+              className="inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-bold text-white/60 transition hover:bg-white/[0.04] hover:text-white/80 disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70"
             >
               Annuler
             </button>
@@ -205,7 +208,7 @@ export function EditOpportunityForm({
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-violet-600 px-6 text-sm font-bold text-white shadow-md shadow-violet-200 transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-indigo-500 px-6 text-sm font-bold text-white shadow-md shadow-indigo-500/25 transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
             >
               {submitting ? (
                 <>

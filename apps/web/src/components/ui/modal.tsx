@@ -46,7 +46,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-foreground/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -55,7 +55,7 @@ export function Modal({
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           className={cn(
-            "relative w-full bg-white rounded-2xl shadow-elevated border border-border/70",
+            "relative w-full bg-zinc-900 text-white/80 rounded-2xl shadow-2xl shadow-black/50 border border-white/[0.08]",
             sizes[size],
           )}
           role="dialog"
@@ -69,19 +69,19 @@ export function Modal({
                 {title && (
                   <h2
                     id="modal-title"
-                    className="text-base font-semibold text-foreground leading-snug"
+                    className="text-base font-semibold text-white/80 leading-snug"
                   >
                     {title}
                   </h2>
                 )}
                 {description && (
-                  <p className="mt-1 text-sm text-foreground-muted">{description}</p>
+                  <p className="mt-1 text-sm text-white/50">{description}</p>
                 )}
               </div>
               {showClose && (
                 <button
                   onClick={onClose}
-                  className="shrink-0 rounded-lg p-1.5 text-foreground-muted transition-colors hover:bg-surface-muted hover:text-foreground"
+                  className="shrink-0 rounded-lg p-1.5 text-white/50 transition-colors hover:bg-white/[0.06] hover:text-white/80 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70"
                   aria-label="Fermer"
                 >
                   <X className="size-4" />
@@ -126,16 +126,16 @@ export function ConfirmModal({
   const confirmStyles = {
     danger: "bg-danger text-white hover:bg-red-600",
     warning: "bg-warning text-white hover:bg-amber-600",
-    info: "bg-primary text-white hover:bg-primary-700",
+    info: "bg-indigo-500 text-white hover:bg-indigo-400",
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-sm text-foreground-muted mb-5">{message}</p>
+      <p className="text-sm text-white/50 mb-5">{message}</p>
       <div className="flex gap-2.5">
         <button
           onClick={onClose}
-          className="flex-1 py-2.5 bg-surface-muted text-foreground text-sm font-medium rounded-lg hover:bg-border/40 transition-colors disabled:opacity-50"
+          className="flex-1 py-2.5 bg-white/[0.06] text-white/80 text-sm font-medium rounded-lg hover:bg-white/[0.1] transition-colors disabled:opacity-50"
           disabled={isLoading}
         >
           {cancelText}
