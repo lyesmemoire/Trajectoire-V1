@@ -1,15 +1,25 @@
 "use client"
 
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import {
+  animate,
+  motion,
+  MotionConfig,
+  useInView,
+  useMotionTemplate,
+  useMotionValue,
+  type Variants,
+} from "framer-motion"
 import {
   ArrowRight,
   ArrowUpRight,
   BriefcaseBusiness,
   CalendarClock,
-  CircleDot,
+  Code,
   FileSearch,
   FileText,
+  Globe,
   History,
   Mic2,
   Radar,
@@ -17,23 +27,41 @@ import {
   Target,
   TrendingUp,
   Users,
-  Code,
-  Globe,
+  type LucideIcon,
 } from "lucide-react"
 
 import type {
   DashboardProps,
   DashboardTimelineEvent,
-  DashboardSkill,
 } from "@/types/dashboard"
-import { Button } from "@/components/ui/button"
 
-const timelineIcons: Record<DashboardTimelineEvent["type"], any> = {
+/* -------------------------------------------------------------------------- */
+/*  Design tokens (dark / Raycast–Linear)                                      */
+/*  bg zinc-950 · primary indigo-500 · texte white/80                          */
+/*  Hiérarchie : white/80 (principal) › white/50 (secondaire) › white/35 (meta)*/
+/* -------------------------------------------------------------------------- */
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
+}
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
+}
+
+const timelineIcons: Record<DashboardTimelineEvent["type"], LucideIcon> = {
   analysis: FileSearch,
   interview: Mic2,
   matching: Radar,
   milestone: Target,
 }
+
+const focusRing =
+  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
 
 function getFirstName(name?: string) {
   const cleaned = name?.trim()
@@ -51,6 +79,180 @@ function formatDate(date: Date) {
     return ""
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Primitives                                                                 */
+/* -------------------------------------------------------------------------- */
+
+/** Nombre qui compte de 0 à `value` quand il entre dans le viewport. */
+function AnimatedNumber({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true })
+  const [display, setDisplay] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+    const controls = animate(0, value, {
+      duration: 0.9,
+      ease: EASE,
+      onUpdate: (latest) => setDisplay(Math.round(latest)),
+    })
+    return () => controls.stop()
+  }, [inView, value])
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {display}
+    </span>
+  )
+}
+
+/** Carte avec halo indigo qui suit le curseur (effet « spotlight »). */
+function SpotlightCard({
+  children,
+  className = "",
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  const x = useMotionValue(-200)
+  const y = useMotionValue(-200)
+  const spotlight = useMotionTemplate`radial-gradient(240px circle at ${x}px ${y}px, rgba(99,102,241,0.14), transparent 70%)`
+
+  return (
+    <div
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        x.set(e.clientX - rect.left)
+        y.set(e.clientY - rect.top)
+      }}
+      onMouseLeave={() => {
+        x.set(-200)
+        y.set(-200)
+      }}
+      className={`group relative overflow-hidden rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06] transition-colors duration-200 hover:bg-white/[0.035] hover:ring-white/[0.12] ${className}`}
+    >
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: spotlight }}
+      />
+      <div className="relative">{children}</div>
+    </div>
+  )
+}
+
+function IconTile({ icon: Icon }: { icon: LucideIcon }) {
+  return (
+    <div className="grid size-9 place-items-center rounded-lg bg-indigo-500/10 text-indigo-400 ring-1 ring-inset ring-indigo-400/20 transition-transform duration-200 group-hover:scale-105">
+      <Icon className="size-4" strokeWidth={1.75} />
+    </div>
+  )
+}
+
+function Panel({
+  title,
+  subtitle,
+  action,
+  children,
+}: {
+  title: string
+  subtitle?: string
+  action?: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <section className="overflow-hidden rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06]">
+      <header className="flex items-center justify-between gap-4 border-b border-white/[0.06] px-5 py-4">
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold tracking-tight text-white/80">
+            {title}
+          </h3>
+          {subtitle ? (
+            <p className="mt-0.5 text-xs text-white/40">{subtitle}</p>
+          ) : null}
+        </div>
+        {action}
+      </header>
+      {children}
+    </section>
+  )
+}
+
+function TextLink({
+  href,
+  children,
+}: {
+  href: string
+  children: ReactNode
+}) {
+  return (
+    <Link
+      href={href}
+      className={`inline-flex items-center gap-1 rounded-md text-xs font-medium text-indigo-400 transition-colors hover:text-indigo-300 ${focusRing}`}
+    >
+      {children}
+    </Link>
+  )
+}
+
+/** Anneau de progression animé (score ATS). */
+function ScoreRing({ value }: { value: number }) {
+  const ref = useRef<SVGSVGElement>(null)
+  const inView = useInView(ref, { once: true })
+  const clamped = Math.max(0, Math.min(100, value))
+  const radius = 34
+  const circumference = 2 * Math.PI * radius
+
+  return (
+    <svg
+      ref={ref}
+      viewBox="0 0 84 84"
+      className="size-20 shrink-0 -rotate-90"
+      role="img"
+      aria-label={`Score ATS ${clamped} sur 100`}
+    >
+      <circle
+        cx="42"
+        cy="42"
+        r={radius}
+        fill="none"
+        strokeWidth="6"
+        className="stroke-white/[0.07]"
+      />
+      <motion.circle
+        cx="42"
+        cy="42"
+        r={radius}
+        fill="none"
+        strokeWidth="6"
+        strokeLinecap="round"
+        className="stroke-indigo-500"
+        strokeDasharray={circumference}
+        initial={{ strokeDashoffset: circumference }}
+        animate={{
+          strokeDashoffset: inView
+            ? circumference * (1 - clamped / 100)
+            : circumference,
+        }}
+        transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
+      />
+    </svg>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Dashboard                                                                  */
+/* -------------------------------------------------------------------------- */
+
+const pipelineStages = [
+  { key: "discovered", label: "Découvertes" },
+  { key: "toAnalyze", label: "À analyser" },
+  { key: "toApply", label: "À postuler" },
+  { key: "applied", label: "Postulées" },
+  { key: "interview", label: "Entretien" },
+  { key: "offer", label: "Offre" },
+] as const
 
 export function DashboardWidgets({
   userData,
@@ -70,627 +272,577 @@ export function DashboardWidgets({
   const totalSimulations = stats?.simulationsCount ?? 0
   const hasCVAnalysis = totalAnalyses > 0 || score.currentScore > 0
 
+  const nextAction = opportunitySummary.nextAction
+  const pipelineMax = Math.max(
+    1,
+    ...pipelineStages.map((s) => opportunitySummary.pipeline[s.key]),
+  )
+
+  const heroLabel = nextAction
+    ? "Prochaine étape stratégique"
+    : topRecommendation
+      ? "Recommandation prioritaire"
+      : "Démarrage recommandé"
+
+  const heroTitle = nextAction
+    ? nextAction.action
+    : topRecommendation
+      ? topRecommendation.title
+      : "Analysez votre CV pour évaluer votre compatibilité ATS"
+
+  const heroHref = nextAction
+    ? `/opportunities/${nextAction.id}/workspace`
+    : "/analyze"
+
+  const heroCta = nextAction
+    ? "Ouvrir le workspace de l'offre"
+    : topRecommendation
+      ? "Mettre en œuvre l'action"
+      : "Lancer mon analyse CV"
+
   return (
-    <div className="w-full space-y-8 pb-12">
-      {/* 1. HEADER PRODUIT COMPACT & SANS-SERIF */}
-      <motion.header
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-6"
-      >
-        <div>
-          <h1 className="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-            Bonjour {firstName} 👋
-          </h1>
-          <p className="mt-1 text-sm text-foreground-muted">
-            Voici où vous en êtes dans votre préparation et vos prochaines étapes.
-          </p>
-        </div>
+    <MotionConfig reducedMotion="user">
+      <div className="relative isolate min-h-[calc(100dvh-4rem)] overflow-hidden rounded-2xl bg-zinc-950 text-white/80 ring-1 ring-white/[0.06]">
+        {/* Halo d'ambiance */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.16),transparent_70%)]"
+        />
 
-        <div className="flex shrink-0 items-center gap-3">
-          <Link href="/analyze">
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2 border-border/80 hover:border-primary-300 hover:bg-primary-50/50"
-            >
-              <FileText className="size-4 text-primary-600" />
-              Analyser un CV
-            </Button>
-          </Link>
-          <Link href="/simulation/new">
-            <Button variant="primary" size="sm" className="gap-2 shadow-sm">
-              <Mic2 className="size-4" />
-              Nouvel entretien IA
-            </Button>
-          </Link>
-        </div>
-      </motion.header>
-
-      {/* 2. METRIC CARDS — 4 COLONNES HARMONIEUSES */}
-      <motion.section
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {/* Card 1: Score ATS */}
-        <div className="group relative overflow-hidden rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-primary-200 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-foreground-muted">
-              Score ATS
-            </span>
-            <div className="grid size-9 place-items-center rounded-lg border border-primary-100/80 bg-primary-50 text-primary-600 transition-transform duration-200 group-hover:scale-105">
-              <Target className="size-4.5" strokeWidth={1.75} />
-            </div>
-          </div>
-
-          <div className="mt-3">
-            {hasCVAnalysis ? (
-              <div className="flex items-baseline gap-1">
-                <span className="font-sans text-3xl font-bold text-foreground">
-                  {score.currentScore}
-                </span>
-                <span className="text-sm font-semibold text-foreground-muted">
-                  /100
-                </span>
-              </div>
-            ) : (
-              <span className="font-sans text-lg font-semibold text-foreground">
-                Non analysé
-              </span>
-            )}
-          </div>
-
-          <div className="mt-2.5 flex items-center justify-between text-xs text-foreground-muted">
-            {hasCVAnalysis ? (
-              score.previousScore !== undefined ? (
-                <span className="inline-flex items-center gap-1 font-medium text-emerald-600">
-                  <TrendingUp className="size-3.5" />
-                  {score.currentScore >= score.previousScore ? "+" : ""}
-                  {score.currentScore - score.previousScore} pts vs avant
-                </span>
-              ) : (
-                <span>Diagnostic de référence</span>
-              )
-            ) : (
-              <Link
-                href="/analyze"
-                className="font-medium text-primary-600 hover:text-primary-700 hover:underline inline-flex items-center gap-1"
-              >
-                Lancer l'audit ATS <ArrowRight className="size-3" />
-              </Link>
-            )}
-          </div>
-        </div>
-
-        {/* Card 2: Opportunités cibles */}
-        <div className="group relative overflow-hidden rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-sky-200 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-foreground-muted">
-              Opportunités suivies
-            </span>
-            <div className="grid size-9 place-items-center rounded-lg border border-sky-100/80 bg-sky-50 text-sky-600 transition-transform duration-200 group-hover:scale-105">
-              <BriefcaseBusiness className="size-4.5" strokeWidth={1.75} />
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-sans text-3xl font-bold text-foreground">
-                {opportunitySummary.activeCount}
-              </span>
-              <span className="text-xs font-medium text-foreground-muted">
-                en cours
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-2.5 flex items-center justify-between text-xs text-foreground-muted">
-            {opportunitySummary.highMatchCount > 0 ? (
-              <span className="font-medium text-sky-700">
-                {opportunitySummary.highMatchCount} à fort matching (≥75%)
-              </span>
-            ) : opportunitySummary.activeCount > 0 ? (
-              <span>Candidatures dans le pipeline</span>
-            ) : (
-              <Link
-                href="/opportunities"
-                className="font-medium text-sky-600 hover:text-sky-700 hover:underline inline-flex items-center gap-1"
-              >
-                Ajouter une offre <ArrowRight className="size-3" />
-              </Link>
-            )}
-          </div>
-        </div>
-
-        {/* Card 3: Simulations d'entretien */}
-        <div className="group relative overflow-hidden rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-emerald-200 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-foreground-muted">
-              Simulations d'entretien
-            </span>
-            <div className="grid size-9 place-items-center rounded-lg border border-emerald-100/80 bg-emerald-50 text-emerald-600 transition-transform duration-200 group-hover:scale-105">
-              <Mic2 className="size-4.5" strokeWidth={1.75} />
-            </div>
-          </div>
-
-          <div className="mt-3">
-            {totalSimulations > 0 ? (
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-sans text-3xl font-bold text-foreground">
-                  {totalSimulations}
-                </span>
-                <span className="text-xs font-medium text-foreground-muted">
-                  réalisée{totalSimulations > 1 ? "s" : ""}
-                </span>
-              </div>
-            ) : (
-              <span className="font-sans text-lg font-semibold text-foreground">
-                À démarrer
-              </span>
-            )}
-          </div>
-
-          <div className="mt-2.5 flex items-center justify-between text-xs text-foreground-muted">
-            {totalSimulations > 0 ? (
-              <span className="font-medium text-emerald-700">
-                Entraînements vocaux IA
-              </span>
-            ) : (
-              <Link
-                href="/simulation/new"
-                className="font-medium text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center gap-1"
-              >
-                Tester ma première réponse <ArrowRight className="size-3" />
-              </Link>
-            )}
-          </div>
-        </div>
-
-        {/* Card 4: Radar de marché */}
-        <div className="group relative overflow-hidden rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-amber-200 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-foreground-muted">
-              Radar de marché
-            </span>
-            <div className="grid size-9 place-items-center rounded-lg border border-amber-100/80 bg-amber-50 text-amber-600 transition-transform duration-200 group-hover:scale-105">
-              <Radar className="size-4.5" strokeWidth={1.75} />
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-sans text-3xl font-bold text-foreground">
-                {discoverySummary.liveCount}
-              </span>
-              <span className="text-xs font-medium text-foreground-muted">
-                offres détectées
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-2.5 flex items-center justify-between text-xs text-foreground-muted">
-            <span>
-              {discoverySummary.sourceCount} source{discoverySummary.sourceCount > 1 ? "s" : ""} active{discoverySummary.sourceCount > 1 ? "s" : ""}
-            </span>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* 3 & 4. GRILLE CENTRALE : NEXT BEST ACTION (2/3) & VOTRE PROGRESSION (1/3) */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 items-start">
-        {/* COLONNE GAUCHE (7-8 colonnes) : NEXT BEST ACTION */}
-        <motion.section
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="lg:col-span-7 xl:col-span-8 space-y-6"
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="mx-auto w-full max-w-[1200px] space-y-8 p-5 sm:p-8 lg:p-10"
         >
-          {/* HERO LUMINEUX TRAJECTOIRE */}
-          <div className="relative overflow-hidden rounded-xl border border-primary-200/80 bg-gradient-to-br from-primary-50/50 via-white to-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-primary-300 hover:shadow-md group">
-            <div className="flex flex-col gap-6">
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-primary-200/60 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-700 shadow-sm backdrop-blur-sm">
-                  <Sparkles className="size-3.5 text-primary-600" />
-                  <span>
-                    {opportunitySummary.nextAction
-                      ? "PROCHAINE ÉTAPE STRATÉGIQUE"
-                      : topRecommendation
-                      ? "RECOMMANDATION PRIORITAIRE"
-                      : "DÉMARRAGE RECOMMANDÉ"}
-                  </span>
-                </div>
-
-                <h2 className="font-sans text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                  {opportunitySummary.nextAction
-                    ? opportunitySummary.nextAction.action
-                    : topRecommendation
-                    ? topRecommendation.title
-                    : "Analysez votre CV pour évaluer votre compatibilité ATS"}
-                </h2>
-
-                <p className="max-w-2xl text-sm leading-relaxed text-foreground-muted">
-                  {opportunitySummary.nextAction ? (
-                    <>
-                      Pour le poste{" "}
-                      <span className="font-medium text-foreground">
-                        {opportunitySummary.nextAction.title}
-                      </span>
-                      {opportunitySummary.nextAction.company ? (
-                        <>
-                          {" "}
-                          chez{" "}
-                          <span className="font-medium text-foreground">
-                            {opportunitySummary.nextAction.company}
-                          </span>
-                        </>
-                      ) : null}
-                      . Préparez vos arguments ciblés dans le workspace dédié.
-                    </>
-                  ) : topRecommendation ? (
-                    topRecommendation.description
-                  ) : (
-                    "Importez votre CV et une annonce pour obtenir un audit ATS instantané, détecter les compétences manquantes et optimiser vos chances d'entretien."
-                  )}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
-                  href={
-                    opportunitySummary.nextAction
-                      ? `/opportunities/${opportunitySummary.nextAction.id}/workspace`
-                      : topRecommendation
-                      ? "/analyze"
-                      : "/analyze"
-                  }
-                >
-                  <Button
-                    variant="primary"
-                    size="md"
-                    className="gap-2 shadow-sm font-semibold"
-                  >
-                    {opportunitySummary.nextAction
-                      ? "Ouvrir le workspace de l'offre"
-                      : topRecommendation
-                      ? "Mettre en œuvre l'action"
-                      : "Lancer mon analyse CV"}
-                    <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-
-                {opportunitySummary.nextAction && (
-                  <Link href="/opportunities">
-                    <Button variant="ghost" size="md" className="text-xs text-foreground-muted hover:text-foreground">
-                      Voir toutes les opportunités
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* 5. ACTIVITÉ RÉCENTE ÉPURÉE */}
-          <div className="rounded-xl border border-border/80 bg-white shadow-sm overflow-hidden">
-            <div className="flex items-center justify-between border-b border-border/60 px-6 py-4">
-              <div>
-                <h3 className="font-sans text-base font-bold text-foreground">
-                  Activité récente
-                </h3>
-                <p className="text-xs text-foreground-muted mt-0.5">
-                  Vos dernières analyses et simulations enregistrées
-                </p>
-              </div>
-              <Link
-                href="/history"
-                className="text-xs font-semibold text-primary-600 transition-colors hover:text-primary-700 hover:underline inline-flex items-center gap-1"
-              >
-                Voir l'historique complet <ArrowRight className="size-3" />
-              </Link>
-            </div>
-
-            {timeline.length > 0 ? (
-              <div className="divide-y divide-border/50">
-                {timeline.slice(0, 4).map((event) => {
-                  const Icon = timelineIcons[event.type] || History
-
-                  const iconColor =
-                    event.type === "interview"
-                      ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                      : event.type === "analysis"
-                      ? "bg-primary-50 text-primary-600 border-primary-100"
-                      : "bg-sky-50 text-sky-600 border-sky-100"
-
-                  return (
-                    <div
-                      key={event.id}
-                      className="group flex items-center justify-between p-4 sm:p-5 transition-colors hover:bg-surface-muted/30"
-                    >
-                      <div className="flex items-center gap-4 min-w-0">
-                        <div
-                          className={`grid size-9 shrink-0 place-items-center rounded-lg border ${iconColor}`}
-                        >
-                          <Icon className="size-4" strokeWidth={1.75} />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-foreground truncate">
-                            {event.title}
-                          </p>
-                          <p className="text-xs text-foreground-muted truncate mt-0.5">
-                            {event.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-4 shrink-0 pl-4">
-                        <span className="text-xs font-medium text-foreground-muted hidden sm:inline">
-                          {formatDate(event.date)}
-                        </span>
-                        <div>
-                          {event.status === "completed" ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-700 border border-emerald-100">
-                              <CircleDot className="size-2 fill-current" /> Terminé
-                            </span>
-                          ) : event.status === "in-progress" ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-700 border border-primary-100">
-                              <CircleDot className="size-2 fill-current" /> En cours
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-foreground-muted border border-border/60">
-                              <CircleDot className="size-2" /> Planifié
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex min-h-[140px] flex-col items-center justify-center p-6 text-center">
-                <CalendarClock className="size-8 text-foreground-muted/50 mb-2" />
-                <p className="text-sm font-medium text-foreground">
-                  Aucune activité récente
-                </p>
-                <p className="text-xs text-foreground-muted mt-1 max-w-sm">
-                  Vos analyses ATS et simulations d'entretien apparaîtront ici dès que vous les aurez lancées.
-                </p>
-              </div>
-            )}
-          </div>
-        </motion.section>
-
-        {/* COLONNE DROITE (4-5 colonnes) : VOTRE PROGRESSION */}
-        <motion.aside
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="lg:col-span-5 xl:col-span-4 space-y-6"
-        >
-          <div className="rounded-xl border border-border/80 bg-white p-6 shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-border/60 pb-4">
-              <div>
-                <h3 className="font-sans text-base font-bold text-foreground">
-                  Votre progression
-                </h3>
-                <p className="text-xs text-foreground-muted mt-0.5">
-                  État actuel de votre dossier
-                </p>
-              </div>
-              <span
-                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                  score.currentScore >= 75
-                    ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
-                    : score.currentScore > 0
-                    ? "bg-primary-50 text-primary-700 border border-primary-100"
-                    : "bg-surface-muted text-foreground-muted border border-border/60"
-                }`}
-              >
-                {score.currentScore >= 75
-                  ? "Profil solide"
-                  : score.currentScore > 0
-                  ? "En optimisation"
-                  : "À initialiser"}
-              </span>
-            </div>
-
-            {/* Block ATS */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs font-medium">
-                <span className="text-foreground">Optimisation ATS du CV</span>
-                <span className="font-bold text-foreground">
-                  {hasCVAnalysis ? `${score.currentScore}%` : "0%"}
+          {/* Header */}
+          <motion.header
+            variants={item}
+            className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-white/50 ring-1 ring-white/[0.08]">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-indigo-400/60 motion-reduce:animate-none" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-indigo-500" />
                 </span>
+                Career Command Center
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-surface-muted">
-                <div
-                  className={`h-full rounded-full transition-all duration-700 ${
-                    score.currentScore >= 75
-                      ? "bg-emerald-500"
-                      : score.currentScore >= 50
-                      ? "bg-primary-600"
-                      : "bg-primary-500"
-                  }`}
-                  style={{ width: `${score.currentScore}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-foreground-muted">
-                {score.currentScore >= 75
-                  ? "Score élevé : profil prêt pour les candidatures directes."
-                  : score.currentScore > 0
-                  ? "Recommandations disponibles pour augmenter votre score."
-                  : "Analysez un CV pour générer votre premier diagnostic."}
+              <h1 className="text-2xl font-semibold tracking-tight text-white/80 sm:text-3xl">
+                Bonjour {firstName}
+              </h1>
+              <p className="mt-1.5 max-w-xl text-sm text-white/50">
+                Voici où vous en êtes dans votre préparation et vos prochaines
+                étapes.
               </p>
             </div>
 
-            {/* Block Pipeline Opportunités */}
-            <div className="space-y-2 border-t border-border/50 pt-4">
-              <div className="flex items-center justify-between text-xs font-medium">
-                <span className="text-foreground">Pipeline d'opportunités</span>
-                <Link
-                  href="/opportunities"
-                  className="font-semibold text-primary-600 hover:text-primary-700 inline-flex items-center gap-0.5"
-                >
-                  Voir <ArrowUpRight className="size-3" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="rounded-lg bg-surface-muted/60 p-2 border border-border/50">
-                  <span className="block text-sm font-bold text-foreground">
-                    {opportunitySummary.pipeline.toApply}
-                  </span>
-                  <span className="text-[10px] text-foreground-muted">
-                    À postuler
-                  </span>
-                </div>
-                <div className="rounded-lg bg-surface-muted/60 p-2 border border-border/50">
-                  <span className="block text-sm font-bold text-foreground">
-                    {opportunitySummary.pipeline.interview}
-                  </span>
-                  <span className="text-[10px] text-foreground-muted">
-                    Entretien
-                  </span>
-                </div>
-                <div className="rounded-lg bg-surface-muted/60 p-2 border border-border/50">
-                  <span className="block text-sm font-bold text-foreground">
-                    {opportunitySummary.pipeline.offer}
-                  </span>
-                  <span className="text-[10px] text-foreground-muted">
-                    Offre
-                  </span>
-                </div>
-              </div>
+            <div className="flex shrink-0 items-center gap-2.5">
+              <Link
+                href="/analyze"
+                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-white/[0.04] px-3.5 text-sm font-medium text-white/80 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.07] hover:ring-white/[0.14] ${focusRing}`}
+              >
+                <FileText className="size-4 text-white/50" />
+                Analyser un CV
+              </Link>
+              <Link
+                href="/simulation/new"
+                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-indigo-500 px-3.5 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 ${focusRing}`}
+              >
+                <Mic2 className="size-4" />
+                Nouvel entretien IA
+              </Link>
             </div>
+          </motion.header>
 
-            {/* Block Compétences Normalisées */}
-            <div className="space-y-2.5 border-t border-border/50 pt-4">
-              <div className="flex items-center justify-between text-xs font-medium">
-                <span className="text-foreground">Compétences identifiées</span>
-                {skills.length > 4 && (
-                  <span className="text-[11px] text-foreground-muted">
-                    +{skills.length - 4} autres
+          {/* Metrics */}
+          <motion.section
+            variants={item}
+            className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {/* Score ATS */}
+            <SpotlightCard className="p-5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-white/50">
+                  Score ATS
+                </span>
+                <IconTile icon={Target} />
+              </div>
+              <div className="mt-4 flex items-baseline gap-1">
+                {hasCVAnalysis ? (
+                  <>
+                    <span className="text-3xl font-semibold tracking-tight text-white/80">
+                      <AnimatedNumber value={score.currentScore} />
+                    </span>
+                    <span className="text-sm text-white/35">/100</span>
+                  </>
+                ) : (
+                  <span className="text-lg font-medium text-white/80">
+                    Non analysé
                   </span>
                 )}
               </div>
+              <div className="mt-2.5 text-xs text-white/50">
+                {hasCVAnalysis ? (
+                  score.previousScore !== undefined ? (
+                    <span
+                      className={`inline-flex items-center gap-1 font-medium ${
+                        score.currentScore >= score.previousScore
+                          ? "text-emerald-400"
+                          : "text-rose-400"
+                      }`}
+                    >
+                      <TrendingUp
+                        className={`size-3.5 ${
+                          score.currentScore < score.previousScore
+                            ? "-scale-y-100"
+                            : ""
+                        }`}
+                      />
+                      {score.currentScore >= score.previousScore ? "+" : ""}
+                      {score.currentScore - score.previousScore} pts vs avant
+                    </span>
+                  ) : (
+                    "Diagnostic de référence"
+                  )
+                ) : (
+                  <TextLink href="/analyze">
+                    Lancer l&apos;audit ATS <ArrowRight className="size-3" />
+                  </TextLink>
+                )}
+              </div>
+            </SpotlightCard>
 
-              {skills.length > 0 ? (
-                <div className="flex flex-wrap gap-1.5">
-                  {skills.slice(0, 4).map((skill) => {
-                    const pillColor =
-                      skill.category === "technical"
-                        ? "bg-primary-50/80 text-primary-700 border-primary-100"
-                        : skill.category === "soft"
-                        ? "bg-emerald-50/80 text-emerald-700 border-emerald-100"
-                        : "bg-sky-50/80 text-sky-700 border-sky-100"
+            {/* Opportunités */}
+            <SpotlightCard className="p-5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-white/50">
+                  Opportunités suivies
+                </span>
+                <IconTile icon={BriefcaseBusiness} />
+              </div>
+              <div className="mt-4 flex items-baseline gap-1.5">
+                <span className="text-3xl font-semibold tracking-tight text-white/80">
+                  <AnimatedNumber value={opportunitySummary.activeCount} />
+                </span>
+                <span className="text-xs text-white/35">en cours</span>
+              </div>
+              <div className="mt-2.5 text-xs text-white/50">
+                {opportunitySummary.highMatchCount > 0 ? (
+                  <span className="font-medium text-indigo-300">
+                    {opportunitySummary.highMatchCount} à fort matching (≥75%)
+                  </span>
+                ) : opportunitySummary.activeCount > 0 ? (
+                  "Candidatures dans le pipeline"
+                ) : (
+                  <TextLink href="/opportunities">
+                    Ajouter une offre <ArrowRight className="size-3" />
+                  </TextLink>
+                )}
+              </div>
+            </SpotlightCard>
 
-                    const Icon =
-                      skill.category === "technical"
-                        ? Code
-                        : skill.category === "soft"
-                        ? Users
-                        : Globe
+            {/* Simulations */}
+            <SpotlightCard className="p-5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-white/50">
+                  Simulations d&apos;entretien
+                </span>
+                <IconTile icon={Mic2} />
+              </div>
+              <div className="mt-4 flex items-baseline gap-1.5">
+                {totalSimulations > 0 ? (
+                  <>
+                    <span className="text-3xl font-semibold tracking-tight text-white/80">
+                      <AnimatedNumber value={totalSimulations} />
+                    </span>
+                    <span className="text-xs text-white/35">
+                      réalisée{totalSimulations > 1 ? "s" : ""}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-lg font-medium text-white/80">
+                    À démarrer
+                  </span>
+                )}
+              </div>
+              <div className="mt-2.5 text-xs text-white/50">
+                {totalSimulations > 0 ? (
+                  "Entraînements vocaux IA"
+                ) : (
+                  <TextLink href="/simulation/new">
+                    Tester ma première réponse{" "}
+                    <ArrowRight className="size-3" />
+                  </TextLink>
+                )}
+              </div>
+            </SpotlightCard>
 
-                    return (
-                      <span
-                        key={skill.name}
-                        className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium border ${pillColor}`}
+            {/* Radar */}
+            <SpotlightCard className="p-5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-white/50">
+                  Radar de marché
+                </span>
+                <IconTile icon={Radar} />
+              </div>
+              <div className="mt-4 flex items-baseline gap-1.5">
+                <span className="text-3xl font-semibold tracking-tight text-white/80">
+                  <AnimatedNumber value={discoverySummary.liveCount} />
+                </span>
+                <span className="text-xs text-white/35">offres détectées</span>
+              </div>
+              <div className="mt-2.5 text-xs text-white/50">
+                {discoverySummary.sourceCount} source
+                {discoverySummary.sourceCount > 1 ? "s" : ""} active
+                {discoverySummary.sourceCount > 1 ? "s" : ""}
+              </div>
+            </SpotlightCard>
+          </motion.section>
+
+          {/* Main grid */}
+          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
+            <motion.div
+              variants={item}
+              className="space-y-6 lg:col-span-7 xl:col-span-8"
+            >
+              {/* Hero next best action */}
+              <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/[0.14] via-indigo-500/[0.04] to-transparent p-6 ring-1 ring-indigo-400/25 sm:p-8">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-indigo-500/20 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
+                />
+                <div className="relative flex flex-col gap-6">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
+                      <Sparkles className="size-3.5" />
+                      {heroLabel}
+                    </div>
+
+                    <h2 className="text-xl font-semibold tracking-tight text-white/80 sm:text-2xl">
+                      {heroTitle}
+                    </h2>
+
+                    <p className="max-w-2xl text-sm leading-relaxed text-white/50">
+                      {nextAction ? (
+                        <>
+                          Pour le poste{" "}
+                          <span className="font-medium text-white/80">
+                            {nextAction.title}
+                          </span>
+                          {nextAction.company ? (
+                            <>
+                              {" "}
+                              chez{" "}
+                              <span className="font-medium text-white/80">
+                                {nextAction.company}
+                              </span>
+                            </>
+                          ) : null}
+                          . Préparez vos arguments ciblés dans le workspace
+                          dédié.
+                        </>
+                      ) : topRecommendation ? (
+                        topRecommendation.description
+                      ) : (
+                        "Importez votre CV et une annonce pour obtenir un audit ATS instantané, détecter les compétences manquantes et optimiser vos chances d'entretien."
+                      )}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                      href={heroHref}
+                      className={`inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_10px_30px_-10px_rgba(99,102,241,0.7)] transition-colors hover:bg-indigo-400 ${focusRing}`}
+                    >
+                      {heroCta}
+                      <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </Link>
+
+                    {nextAction ? (
+                      <Link
+                        href="/opportunities"
+                        className={`inline-flex h-10 items-center rounded-lg px-3 text-xs font-medium text-white/50 transition-colors hover:bg-white/[0.04] hover:text-white/80 ${focusRing}`}
                       >
-                        <Icon className="size-3 shrink-0" />
-                        <span className="truncate max-w-[130px]">
-                          {skill.name}
-                        </span>
+                        Voir toutes les opportunités
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity */}
+              <Panel
+                title="Activité récente"
+                subtitle="Vos dernières analyses et simulations enregistrées"
+                action={
+                  <TextLink href="/history">
+                    Historique complet <ArrowRight className="size-3" />
+                  </TextLink>
+                }
+              >
+                {timeline.length > 0 ? (
+                  <ul className="divide-y divide-white/[0.05]">
+                    {timeline.slice(0, 4).map((event) => {
+                      const Icon = timelineIcons[event.type] ?? History
+
+                      return (
+                        <li
+                          key={event.id}
+                          className="group flex items-center justify-between gap-4 px-5 py-3.5 transition-colors hover:bg-white/[0.025]"
+                        >
+                          <div className="flex min-w-0 items-center gap-3.5">
+                            <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/[0.04] text-white/50 ring-1 ring-inset ring-white/[0.06] transition-colors group-hover:text-indigo-300">
+                              <Icon className="size-4" strokeWidth={1.75} />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="truncate text-sm font-medium text-white/80">
+                                {event.title}
+                              </p>
+                              <p className="mt-0.5 truncate text-xs text-white/40">
+                                {event.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex shrink-0 items-center gap-3">
+                            <span className="hidden text-xs tabular-nums text-white/35 sm:inline">
+                              {formatDate(event.date)}
+                            </span>
+                            {event.status === "completed" ? (
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
+                                <span className="size-1.5 rounded-full bg-emerald-400" />
+                                Terminé
+                              </span>
+                            ) : event.status === "in-progress" ? (
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
+                                <span className="size-1.5 rounded-full bg-indigo-400" />
+                                En cours
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/50 ring-1 ring-inset ring-white/[0.08]">
+                                <span className="size-1.5 rounded-full bg-white/30" />
+                                Planifié
+                              </span>
+                            )}
+                          </div>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                ) : (
+                  <div className="flex min-h-[150px] flex-col items-center justify-center px-6 py-8 text-center">
+                    <CalendarClock className="mb-2 size-7 text-white/25" />
+                    <p className="text-sm font-medium text-white/80">
+                      Aucune activité récente
+                    </p>
+                    <p className="mt-1 max-w-sm text-xs text-white/40">
+                      Vos analyses ATS et simulations d&apos;entretien
+                      apparaîtront ici dès que vous les aurez lancées.
+                    </p>
+                  </div>
+                )}
+              </Panel>
+            </motion.div>
+
+            {/* Progression */}
+            <motion.aside
+              variants={item}
+              className="lg:col-span-5 xl:col-span-4"
+            >
+              <Panel
+                title="Votre progression"
+                subtitle="État actuel de votre dossier"
+                action={
+                  <span
+                    className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ring-inset ${
+                      score.currentScore >= 75
+                        ? "bg-emerald-500/10 text-emerald-400 ring-emerald-400/20"
+                        : score.currentScore > 0
+                          ? "bg-indigo-500/10 text-indigo-300 ring-indigo-400/25"
+                          : "bg-white/[0.04] text-white/50 ring-white/[0.08]"
+                    }`}
+                  >
+                    {score.currentScore >= 75
+                      ? "Profil solide"
+                      : score.currentScore > 0
+                        ? "En optimisation"
+                        : "À initialiser"}
+                  </span>
+                }
+              >
+                <div className="space-y-5 p-5">
+                  {/* ATS */}
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <ScoreRing value={hasCVAnalysis ? score.currentScore : 0} />
+                      <span className="absolute inset-0 grid place-items-center text-sm font-semibold tabular-nums text-white/80">
+                        {hasCVAnalysis ? score.currentScore : 0}%
                       </span>
-                    )
-                  })}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-white/80">
+                        Optimisation ATS du CV
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-white/40">
+                        {score.currentScore >= 75
+                          ? "Score élevé : profil prêt pour les candidatures directes."
+                          : score.currentScore > 0
+                            ? "Recommandations disponibles pour augmenter votre score."
+                            : "Analysez un CV pour générer votre premier diagnostic."}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Pipeline */}
+                  <div className="space-y-3 border-t border-white/[0.06] pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-white/80">
+                        Pipeline d&apos;opportunités
+                      </span>
+                      <TextLink href="/opportunities">
+                        Voir <ArrowUpRight className="size-3" />
+                      </TextLink>
+                    </div>
+
+                    <ul className="space-y-2">
+                      {pipelineStages.map((stage, index) => {
+                        const count = opportunitySummary.pipeline[stage.key]
+                        return (
+                          <li
+                            key={stage.key}
+                            className="flex items-center gap-3 text-xs"
+                          >
+                            <span className="w-20 shrink-0 text-white/50">
+                              {stage.label}
+                            </span>
+                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                              <motion.div
+                                className="h-full rounded-full bg-indigo-500"
+                                initial={{ width: 0 }}
+                                animate={{
+                                  width: `${(count / pipelineMax) * 100}%`,
+                                }}
+                                transition={{
+                                  duration: 0.7,
+                                  ease: EASE,
+                                  delay: 0.3 + index * 0.05,
+                                }}
+                              />
+                            </div>
+                            <span className="w-5 shrink-0 text-right font-medium tabular-nums text-white/80">
+                              {count}
+                            </span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+
+                  {/* Skills */}
+                  <div className="space-y-3 border-t border-white/[0.06] pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-white/80">
+                        Compétences identifiées
+                      </span>
+                      {skills.length > 4 ? (
+                        <span className="text-[11px] text-white/35">
+                          +{skills.length - 4} autres
+                        </span>
+                      ) : null}
+                    </div>
+
+                    {skills.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {skills.slice(0, 4).map((skill) => {
+                          const Icon =
+                            skill.category === "technical"
+                              ? Code
+                              : skill.category === "soft"
+                                ? Users
+                                : Globe
+
+                          return (
+                            <span
+                              key={skill.name}
+                              className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
+                                skill.category === "technical"
+                                  ? "bg-indigo-500/10 text-indigo-300 ring-indigo-400/20"
+                                  : "bg-white/[0.04] text-white/70 ring-white/[0.08]"
+                              }`}
+                            >
+                              <Icon className="size-3 shrink-0" />
+                              <span className="max-w-[130px] truncate">
+                                {skill.name}
+                              </span>
+                            </span>
+                          )
+                        })}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-white/40">
+                        Vos compétences clés apparaîtront ici après analyse de
+                        votre CV.
+                      </p>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <p className="text-[11px] text-foreground-muted">
-                  Vos compétences clés apparaîtront ici après analyse de votre CV.
-                </p>
-              )}
-            </div>
+              </Panel>
+            </motion.aside>
           </div>
-        </motion.aside>
+
+          {/* Quick actions */}
+          <motion.section variants={item} className="space-y-4">
+            <h3 className="text-sm font-semibold tracking-tight text-white/80">
+              Continuer votre préparation
+            </h3>
+
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+              {[
+                {
+                  href: "/analyze",
+                  icon: FileText,
+                  title: "Analyser un CV",
+                  text: "Diagnostic de compatibilité ATS et recommandations concrètes par rapport à une annonce cible.",
+                },
+                {
+                  href: "/simulation/new",
+                  icon: Mic2,
+                  title: "Préparer un entretien",
+                  text: "Simulation vocale IA avec questions de recruteurs ciblées et debriefing personnalisé immédiat.",
+                },
+                {
+                  href: "/opportunities",
+                  icon: BriefcaseBusiness,
+                  title: "Gérer mes opportunités",
+                  text: "Suivez votre pipeline de candidatures, relances et étapes de recrutement en un seul endroit.",
+                },
+              ].map((action) => (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className={`group block rounded-xl ${focusRing}`}
+                >
+                  <SpotlightCard className="h-full p-5">
+                    <div className="flex items-center justify-between">
+                      <IconTile icon={action.icon} />
+                      <ArrowUpRight className="size-4 text-white/30 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-indigo-300" />
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="text-sm font-semibold text-white/80">
+                        {action.title}
+                      </h4>
+                      <p className="mt-1 text-xs leading-relaxed text-white/40">
+                        {action.text}
+                      </p>
+                    </div>
+                  </SpotlightCard>
+                </Link>
+              ))}
+            </div>
+          </motion.section>
+        </motion.div>
       </div>
-
-      {/* 6. QUICK ACTIONS : 3 COLONNES INTERACTIVES */}
-      <motion.section
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="space-y-4 pt-2"
-      >
-        <h3 className="font-sans text-base font-bold text-foreground">
-          Continuer votre préparation
-        </h3>
-
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {/* Action 1 */}
-          <Link href="/analyze" className="group block">
-            <div className="h-full rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-primary-300 hover:shadow-md">
-              <div className="flex items-center justify-between">
-                <div className="grid size-9 place-items-center rounded-lg border border-primary-100 bg-primary-50 text-primary-600 transition-transform duration-200 group-hover:scale-105">
-                  <FileText className="size-4.5" strokeWidth={1.75} />
-                </div>
-                <ArrowUpRight className="size-4 text-foreground-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary-600" />
-              </div>
-
-              <div className="mt-4">
-                <h4 className="font-sans text-sm font-bold text-foreground group-hover:text-primary-600 transition-colors">
-                  Analyser un CV
-                </h4>
-                <p className="mt-1 text-xs text-foreground-muted leading-relaxed">
-                  Diagnostic de compatibilité ATS et recommandations concrètes par rapport à une annonce cible.
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          {/* Action 2 */}
-          <Link href="/simulation/new" className="group block">
-            <div className="h-full rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-emerald-300 hover:shadow-md">
-              <div className="flex items-center justify-between">
-                <div className="grid size-9 place-items-center rounded-lg border border-emerald-100 bg-emerald-50 text-emerald-600 transition-transform duration-200 group-hover:scale-105">
-                  <Mic2 className="size-4.5" strokeWidth={1.75} />
-                </div>
-                <ArrowUpRight className="size-4 text-foreground-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-600" />
-              </div>
-
-              <div className="mt-4">
-                <h4 className="font-sans text-sm font-bold text-foreground group-hover:text-emerald-700 transition-colors">
-                  Préparer un entretien
-                </h4>
-                <p className="mt-1 text-xs text-foreground-muted leading-relaxed">
-                  Simulation vocale IA avec questions de recruteurs ciblées et debriefing personnalisé immédiat.
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          {/* Action 3 */}
-          <Link href="/opportunities" className="group block">
-            <div className="h-full rounded-xl border border-border/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-200 hover:border-sky-300 hover:shadow-md">
-              <div className="flex items-center justify-between">
-                <div className="grid size-9 place-items-center rounded-lg border border-sky-100 bg-sky-50 text-sky-600 transition-transform duration-200 group-hover:scale-105">
-                  <BriefcaseBusiness className="size-4.5" strokeWidth={1.75} />
-                </div>
-                <ArrowUpRight className="size-4 text-foreground-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-sky-600" />
-              </div>
-
-              <div className="mt-4">
-                <h4 className="font-sans text-sm font-bold text-foreground group-hover:text-sky-700 transition-colors">
-                  Gérer mes opportunités
-                </h4>
-                <p className="mt-1 text-xs text-foreground-muted leading-relaxed">
-                  Suivez votre pipeline de candidatures, relances et étapes de recrutement en un seul endroit.
-                </p>
-              </div>
-            </div>
-          </Link>
-        </div>
-      </motion.section>
-    </div>
+    </MotionConfig>
   )
 }
