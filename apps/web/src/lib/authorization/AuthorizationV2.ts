@@ -80,6 +80,7 @@ const ROUTE_RULES: RouteRule[] = [
   // ROUTES AUTHENTIFIÉES (AccessLevel.AUTHENTICATED)
   // ============================================================
   { pattern: "/onboarding", accessLevel: AccessLevel.AUTHENTICATED, comment: "Onboarding" },
+  { pattern: "/api/onboarding", accessLevel: AccessLevel.AUTHENTICATED, comment: "API onboarding" },
   { pattern: "/api/cv", accessLevel: AccessLevel.AUTHENTICATED, comment: "API CV" },
   { pattern: "/api/user", accessLevel: AccessLevel.AUTHENTICATED, comment: "API utilisateur" },
   { pattern: "/dashboard", accessLevel: AccessLevel.AUTHENTICATED, comment: "Dashboard principal" },
