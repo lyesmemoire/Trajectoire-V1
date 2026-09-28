@@ -1,200 +1,224 @@
-$script = @"
-with open('C:/Users/elitebook/Desktop/design/app/page.tsx', encoding='utf-8') as f:
-    old = f.read()
+'use client'
 
-new_design = '''\"use client\"
+import { useState, useEffect, useRef } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2 } from 'lucide-react'
+import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 
-import { useState, useEffect, useRef, useCallback } from \"react\"
-import { useRouter } from \"next/navigation\"
-import { Mic, Pause, Send, Sparkles } from \"lucide-react\"
-import { useVoiceInterview } from \"@/hooks/useVoiceInterview\"
-
-type Message = {
-  id: string
-  role: \"user\" | \"assistant\"
-  content: string
-  created_at: string
-}
-
-type Session = {
-  id: string
-  job_title: string
-  interview_type: string
-  level: string
-  duration_seconds: number
-  status: string
-}
-
-export default function SimulationSessionPage({ params }: { params: Promise<{ id: string }> }) {
-  const [session, setSession] = useState<Session | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [loading, setLoading] = useState(true)
-  const [sending, setSending] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [answer, setAnswer] = useState(\"\")
-  const [partialTranscript, setPartialTranscript] = useState(\"\")
-  const [voiceEnabled, setVoiceEnabled] = useState(false)
-  const [isListening, setIsListening] = useState(false)
-  const router = useRouter()
-  const sessionIdRef = useRef<string | null>(null)
-  const messagesEndRef = useRef<HTMLDivElement | null>(null)
-
-  const handleTranscript = useCallback(async (text: string, durationMs?: number) => {
-    setAnswer(text)
-    if (sessionIdRef.current) await submitMessage(text, sessionIdRef.current, durationMs)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const { startRecording, stopRecording, speakText, cancelSpeaking, markBrainResponse, isRecording, isTranscribing, isSpeaking } = useVoiceInterview({
-    onTranscript: handleTranscript,
-    onPartialTranscript: (partial) => { setPartialTranscript(partial); setAnswer(partial) },
-    onError: (msg) => { setError(msg) },
-  })
-
-  useEffect(() => { params.then(({ id }) => { sessionIdRef.current = id; fetchSession(id) }) }, [params])
-  useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: \"smooth\" }) }, [messages])
-
-  async function fetchSession(id: string) {
-    try {
-      const response = await fetch(\"/api/simulation/\" + id)
-      if (!response.ok) throw new Error(\"Session introuvable\")
-      const data = await response.json()
-      setSession(data.session)
-      setMessages(data.messages || [])
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : \"Erreur de chargement\")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function submitMessage(content: string, sessionId: string, durationMs?: number) {
-    if (!content.trim() || sending) return
-    setSending(true)
-    const formData = new FormData()
-    formData.append(\"content\", content)
-    formData.append(\"sessionId\", sessionId)
-    if (durationMs) formData.append(\"durationMs\", durationMs.toString())
-    try {
-      const response = await fetch(\"/api/simulation/message\", { method: \"POST\", body: formData })
-      if (!response.ok) throw new Error(\"Erreur envoi\")
-      await fetchSession(sessionId)
-      setAnswer(\"\")
-      setPartialTranscript(\"\")
-      if (voiceEnabled) {
-        markBrainResponse()
-        const updatedRes = await fetch(\"/api/simulation/\" + sessionId)
-        if (updatedRes.ok) {
-          const updated = await updatedRes.json()
-          const assistantMsgs: Message[] = (updated.messages || []).filter((m: Message) => m.role === \"assistant\")
-          const last = assistantMsgs[assistantMsgs.length - 1]
-          if (last?.content) speakText(last.content)
-        }
-      }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : \"Erreur inconnue\")
-    } finally {
-      setSending(false)
-    }
-  }
-
-  async function handleSubmit() {
-    if (sessionIdRef.current) await submitMessage(answer, sessionIdRef.current)
-  }
-
-  async function handleEndSession() {
-    const { id } = await params
-    const formData = new FormData()
-    formData.append(\"sessionId\", id)
-    try {
-      const response = await fetch(\"/api/simulation/end\", { method: \"POST\", body: formData })
-      if (response.ok) router.push(\"/dashboard\")
-    } catch { setError(\"Erreur fin de session\") }
-  }
-
-  async function handleMicClick() {
-    if (isRecording) {
-      stopRecording()
-      setIsListening(false)
-    } else {
-      if (isSpeaking) cancelSpeaking()
-      setVoiceEnabled(true)
-      setIsListening(true)
-      await startRecording()
-    }
-  }
-
-  const lastAssistantMessage = messages.filter((m) => m.role === \"assistant\").slice(-1)[0]
-  const currentQuestion = lastAssistantMessage?.content ?? \"Chargement de la question...\"
-  const messageCount = messages.length
-  const progress = Math.min((messageCount / 10) * 100, 100)
-  const questionNumber = Math.ceil(messageCount / 2) + 1
-
-  if (loading) return <div className=\"flex h-screen items-center justify-center\"><p className=\"text-sm text-muted-foreground\">Chargement...</p></div>
-  if (!session) return null
-
+function SoundWave({ active, color = 'bg-indigo-400' }: { active: boolean; color?: string }) {
+  const heights = [3, 6, 10, 7, 14, 9, 12, 6, 10, 4]
   return (
-    <main className=\"bg-background px-5 py-6 text-foreground sm:px-8\">
-      <div className=\"mx-auto flex max-w-6xl flex-col gap-6\">
-        <div className=\"mb-2\">
-          <p className=\"text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-1\">Simulation d entretien</p>
-          <h1 className=\"text-3xl font-bold tracking-tight text-foreground\">{session.job_title}</h1>
-          <p className=\"mt-1 text-sm text-muted-foreground\">{session.interview_type} · {session.level} · {Math.floor(session.duration_seconds / 60)} minutes</p>
-        </div>
-
-        {error && <div className=\"rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive\">{error}</div>}
-
-        <div className=\"grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]\">
-          <section className=\"flex min-w-0 flex-col gap-4\">
-            <div className=\"relative overflow-hidden rounded-2xl bg-foreground shadow-[0_24px_70px_-28px_rgba(15,23,42,0.5)]\">
-              <div className=\"relative flex aspect-video items-center justify-center overflow-hidden bg-slate-950\">
-                <img src=\"/interviewer.png\" alt=\"Intervieweuse IA\" className=\"absolute inset-0 size-full scale-[1.2] object-cover object-center\" />
-                <div className=\"absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/10\" />
-                <div className=\"absolute left-5 top-5 flex items-center gap-2 rounded-full bg-slate-950/55 px-3 py-2 text-xs font-medium text-background backdrop-blur-sm\">
-                  <span className=\"size-2 animate-pulse rounded-full bg-emerald-400\" />
-                  Intervieweur IA
-                </div>
-                <div className=\"absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 rounded-b-2xl bg-gradient-to-t from-slate-950 via-slate-950/95 to-slate-950/75 px-5 py-5 text-background sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center\">
-                  <div className=\"flex items-center gap-2 text-xs text-background/80\"><Mic className=\"size-4 text-primary\" /> Microphone {isRecording ? \"actif\" : \"inactif\"}</div>
-                  <div className=\"flex flex-col items-center gap-2\">
-                    <button type=\"button\" onClick={handleMicClick} disabled={isTranscribing} aria-label={isRecording ? \"Arreter\" : \"Parler\"} className={\"flex size-16 items-center justify-center rounded-full border-4 border-primary/80 shadow-[0_0_28px_rgba(96,165,250,0.55)] transition-transform hover:scale-105 \" + (isRecording ? \"bg-primary text-primary-foreground\" : \"bg-slate-800 text-background\")}>
-                      {isRecording ? <Mic className=\"size-7\" /> : <Pause className=\"size-7\" />}
-                    </button>
-                    <span className=\"text-sm font-semibold\">{isRecording ? \"Ecoute en cours...\" : isTranscribing ? \"Transcription...\" : isSpeaking ? \"Reponse en cours...\" : \"Parler maintenant\"}</span>
-                  </div>
-                  <div className=\"flex items-center justify-center gap-1.5 sm:justify-self-end\">
-                    {[18, 30, 46, 25, 58, 36, 50, 28, 42, 18].map((height, index) => <span key={index} className={\"w-1 rounded-full \" + (isRecording ? \"bg-primary animate-pulse\" : \"bg-primary/30\")} style={{ height }} />)}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className=\"text-center text-xs text-muted-foreground\">{isRecording ? \"Parlez maintenant, votre reponse sera analysee en direct.\" : \"Activez le microphone pour commencer.\"}</p>
-          </section>
-
-          <aside className=\"flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm\">
-            <div className=\"flex items-center justify-between text-sm font-medium\"><span>Question {questionNumber} / 5</span><span className=\"text-xs text-muted-foreground\">{Math.round(progress)}%</span></div>
-            <div className=\"mt-4 h-1.5 overflow-hidden rounded-full bg-muted\"><div className=\"h-full rounded-full bg-primary transition-all duration-500\" style={{ width: progress + \"%\" }} /></div>
-            <div className=\"mt-8 flex items-start gap-3 rounded-xl bg-muted/60 p-4\">
-              <div className=\"flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground\"><Sparkles className=\"size-4\" /></div>
-              <p className=\"text-base font-medium leading-7\">{currentQuestion}</p>
-            </div>
-            <div className=\"mt-8 flex flex-1 flex-col gap-3\">
-              <label className=\"text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground\">Votre reponse</label>
-              <textarea value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder=\"Votre reponse apparaitra ici pendant que vous parlez...\" className=\"min-h-36 flex-1 resize-none rounded-xl border-0 bg-muted/40 p-4 text-sm leading-6 outline-none ring-1 ring-border placeholder:text-muted-foreground focus:ring-2 focus:ring-primary\" />
-              <button type=\"button\" onClick={handleSubmit} disabled={sending || !answer.trim()} className=\"inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-foreground px-4 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-40\"><Send className=\"size-4\" />{sending ? \"Envoi...\" : \"Envoyer ma reponse\"}</button>
-              <button type=\"button\" onClick={handleEndSession} className=\"inline-flex h-9 items-center justify-center rounded-xl border border-border text-xs font-medium text-muted-foreground transition-colors hover:text-destructive\">Terminer la session</button>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </main>
+    <div className="flex items-end gap-[3px]" aria-hidden>
+      {heights.map((h, i) => (
+        <span
+          key={i}
+          className={`w-[3px] rounded-full `+color+` transition-all`}
+          style={{
+            height            : active ? h * 2.5 + 'px' : '3px',
+            transitionDuration: (120 + i * 20) + 'ms',
+            transitionDelay   : active ? (i * 30) + 'ms' : '0ms',
+          }}
+        />
+      ))}
+    </div>
   )
 }
-'''
 
-with open('C:/Trajectoire/apps/web/src/app/(app)/simulation/[id]/page.tsx', 'w', encoding='utf-8') as f:
-    f.write(new_design)
-print('Done.')
-"@
-$script | Out-File "C:\Trajectoire\integrate_v2.py" -Encoding utf8
-python C:\Trajectoire\integrate_v2.py
+function TranscriptBubble({ transcript }: { transcript: RealtimeTranscript }) {
+  const isAI = transcript.role === 'assistant'
+  return (
+    <div className={`flex gap-3 `+(isAI ? 'justify-start' : 'justify-end')}>
+      {isAI && (
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white/60">
+          A
+        </div>
+      )}
+      <div
+        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed `+(isAI ? 'bg-white/10 text-white/90' : 'bg-indigo-500/80 text-white')+` `+(!transcript.final ? 'opacity-50' : 'opacity-100')}
+      >
+        {transcript.text}
+        {!transcript.final && (
+          <span className="ml-1 animate-pulse text-white/40">…</span>
+        )}
+      </div>
+      {!isAI && (
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-[10px] font-bold text-indigo-300">
+          V
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function SimulationPage() {
+  const params    = useParams()
+  const router    = useRouter()
+  const sessionId = (params?.id as string) ?? 'anonymous'
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isEnding, setIsEnding] = useState(false)
+
+  const {
+    status,
+    transcripts,
+    connect,
+    disconnect,
+    isAISpeaking,
+    isUserSpeaking,
+  } = useRealtimeInterview({
+    sessionId,
+    onError       : (msg) => console.error('[Simulation]', msg),
+    onConnected   : () => console.info('[Simulation] connecte'),
+    onDisconnected: () => console.info('[Simulation] deconnecte'),
+  })
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
+  }, [transcripts])
+
+  useEffect(() => { connect() }, []) // eslint-disable-line
+
+  async function handleEnd() {
+    if (isEnding) return
+    setIsEnding(true)
+    disconnect()
+    try {
+      await fetch('/api/interview', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({ action: 'COMPLETE', session_id: sessionId }),
+      })
+    } catch { /* redirige quand meme */ }
+    router.push('/report/' + sessionId)
+  }
+
+  const statusConfig: Record<string, { label: string; dot: string }> = {
+    idle         : { label: 'Initialisation...',  dot: 'bg-zinc-500' },
+    connecting   : { label: 'Connexion...',        dot: 'bg-amber-400 animate-pulse' },
+    connected    : { label: 'En ligne',            dot: 'bg-emerald-400' },
+    speaking_user: { label: 'Vous parlez...',      dot: 'bg-indigo-400 animate-pulse' },
+    speaking_ai  : { label: 'Alexandra parle...',  dot: 'bg-white animate-pulse' },
+    disconnected : { label: 'Deconnecte',          dot: 'bg-zinc-600' },
+    error        : { label: 'Erreur',              dot: 'bg-red-500' },
+  }
+  const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
+
+  return (
+    <div className="flex h-full flex-col bg-zinc-950 text-white">
+
+      <header className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-6 py-3">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/30">Trajectoire</span>
+          <span className="text-white/15">·</span>
+          <span className="text-xs text-white/50">Simulation d entretien</span>
+        </div>
+        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70">
+          <span className={`size-1.5 rounded-full `+statusDot} />
+          {statusLabel}
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden">
+
+        <div className="relative w-[52%] shrink-0 overflow-hidden bg-zinc-900">
+          <img
+            src="/interviewer.png"
+            alt="Alexandra"
+            className={`absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out `+(isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
+          />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950/60 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
+          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-zinc-950/70 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-md">
+            <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-white' : 'bg-emerald-400')} />
+            Alexandra · IA
+          </div>
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-6 py-8">
+            {isAISpeaking ? (
+              <>
+                <div className="flex items-center gap-2 text-[11px] font-medium text-white/50">
+                  <Volume2 className="size-3" />
+                  En train de parler
+                </div>
+                <SoundWave active color="bg-indigo-400" />
+              </>
+            ) : (
+              <div className="flex items-center gap-2 text-[11px] text-white/30">
+                <Mic className="size-3" />
+                En ecoute
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-1 flex-col border-l border-white/[0.08] bg-zinc-950">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6">
+            {transcripts.length === 0 ? (
+              <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
+                {status === 'connecting' ? (
+                  <>
+                    <Loader2 className="size-7 animate-spin text-white/30" />
+                    <p className="text-sm text-white/40">Connexion a l entretien...</p>
+                    <p className="text-xs text-white/20">Autorisez le microphone si demande</p>
+                  </>
+                ) : status === 'error' ? (
+                  <>
+                    <AlertCircle className="size-7 text-red-400/70" />
+                    <p className="text-sm text-white/50">Erreur de connexion</p>
+                    <button
+                      onClick={connect}
+                      className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white/70 transition hover:bg-white/15"
+                    >
+                      Reessayer
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex size-14 items-center justify-center rounded-full border border-white/10 bg-white/5">
+                      <Mic className="size-5 text-white/30" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-white/60">L entretien va commencer</p>
+                      <p className="mt-1 text-xs text-white/25">Alexandra va poser la premiere question</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-5">
+                {transcripts.map((t, i) => (
+                  <TranscriptBubble key={i} transcript={t} />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="shrink-0 border-t border-white/[0.08] bg-zinc-900/60 px-6 py-4 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-indigo-400/50 bg-indigo-400/15 text-indigo-300' : 'border-white/10 bg-white/5 text-white/30')}>
+                  {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-white/60">{isUserSpeaking ? 'Vous parlez' : 'En ecoute'}</p>
+                  <p className="text-[10px] text-white/25">Detection automatique</p>
+                </div>
+                <SoundWave active={isUserSpeaking} color="bg-indigo-400" />
+              </div>
+              <button
+                type="button"
+                onClick={handleEnd}
+                disabled={isEnding}
+                className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/50 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-40"
+              >
+                {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
+                {isEnding ? 'Finalisation...' : 'Terminer'}
+              </button>
+            </div>
+            <p className="mt-3 text-center text-[10px] text-white/20">
+              Parlez naturellement - Alexandra detecte automatiquement quand vous avez fini
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
