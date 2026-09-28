@@ -28,6 +28,8 @@ model User {
   monthlyResetDate       DateTime                 @default(dbgenerated("(now() + '1 mon'::interval)"))
   credits                Int                      @default(100)
   onboardingCompleted    Boolean                  @default(false)
+  onboardingData         Json?
+  onboardingCompletedAt  DateTime?
   AIUsageLog             AIUsageLog[]
   Account                Account[]
   AdminAuditLog          AdminAuditLog[]
