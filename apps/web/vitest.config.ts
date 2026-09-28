@@ -24,7 +24,8 @@ export default defineConfig({
     environment: "node",
     testTimeout: 60000,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
-    exclude: ["**/node_modules/**", "**/.next/**"],
+    // src/e2e/** = specs Playwright (test.describe), pas des tests Vitest : ne pas les ramasser.
+    exclude: ["**/node_modules/**", "**/.next/**", "src/e2e/**"],
     env: {
       VITEST: "true",
       NODE_ENV: "test",

@@ -96,18 +96,18 @@ Parcours plein écran en 3 étapes, **hors** de `(app)/` (pas de sidebar) : post
 - **Composants** `components/onboarding/` : `OnboardingWizard` (état, `AnimatePresence`, barre de progression `role="progressbar"`, soumission puis `router.push("/dashboard")`), `StepTargetJob`, `StepProfile`, `StepGoal`, `constants.ts` (enums réexportés du schéma Zod, classes partagées, formulation CV). Framer Motion sous `MotionConfig reducedMotion="user"` ; radios HTML natives ; zinc-950 / indigo-500.
 - **CV** : upload seul via `/api/cv/upload` (extraction du texte), **rien n'est stocké ni analysé** ; seul l'indicateur `cvProvided` est enregistré. Formulation validée, à conserver telle quelle : « Votre CV est lu pour personnaliser votre expérience. Vous pourrez lancer l'analyse complète depuis votre tableau de bord. »
 - **API** `POST /api/onboarding/complete` : corps `{ targetJob: { title, sector, level }, name, goal: { interviewType }, cvProvided }` validé par `validation/CompleteOnboardingSchema.ts` (`strict()` : un `userId` client est rejeté). L'identité vient **uniquement** de la session ; écriture par `prisma.user.updateMany({ where: { id: session } })`. Réponses 200 `{ success: true }`, 400, 401, 409 (profil absent), 500. Règle `AuthorizationV2` : `/api/onboarding` → AUTHENTICATED (le défaut d'`AuthorizationV2` est **fail-open** : toute route non listée est publique).
-- **Données** : `users.onboardingCompleted` (existant), `users.onboardingData` (JSONB `{ version: 1, targetJob, goal, cvProvided }`), `users.onboardingCompletedAt`. Migration `prisma/migrations/20260927_add_onboarding_data_to_users/` (`ADD COLUMN IF NOT EXISTS`) : **non appliquée** à Supabase.
+- **Données** : `users.onboardingCompleted` (existant), `users.onboardingData` (JSONB `{ version: 1, targetJob, goal, cvProvided }`), `users.onboardingCompletedAt`. Migration `prisma/migrations/20260927_add_onboarding_data_to_users/` (`ADD COLUMN IF NOT EXISTS`) : **appliquée** à la base Supabase le 2026-09-28 (`prisma migrate deploy`, colonnes vérifiées par introspection).
 - **Tests** : `validation/CompleteOnboardingSchema.test.ts`, `app/api/onboarding/complete/route.test.ts` (Supabase, Prisma et logger mockés).
 - **Pas encore branché** : aucune redirection des nouveaux utilisateurs vers `/onboarding` (ticket `check-access` à venir). `lib/onboarding/*` et `types/onboarding.ts` sont un ancien moteur jamais utilisé, indépendant du parcours ci-dessus.
 
 ## Base de données
 
-- **PostgreSQL Supabase**, accès via **Prisma 6.1** (`DATABASE_URL` pooler 6543, `DIRECT_URL` 5432 pour migrations) **et** `@supabase/supabase-js` (RLS, RPC). Les deux coexistent.
+- **PostgreSQL Supabase**, accès via **Prisma 6.1** (`DATABASE_URL` pooler 6543, `DIRECT_URL` 5432 pour migrations) **et** `@supabase/supabase-js` (RLS, RPC). Les deux coexistent. ⚠️ La base référencée par le `.env` est la base Supabase **distante** (pooler `aws-0-eu-west-1`) : toute commande Prisma (`migrate`, `db pull`) et tout test non mocké agit sur elle.
 - `prisma/schema.prisma` inclut le schéma `auth` de Supabase (modèles `users`, `sessions`, `identities`, MFA/SSO…) — ne pas y toucher.
 - Modèles applicatifs : `User`, `CareerProfile`, `InterviewSession`/`interview_sessions`/`interview_messages`/`reports`, `SimulationSession`, `PremiumInterviewSession`, `CVAnalysis`, `CvRewrite`, `PreviewAnalysis`, `Subscription`, `UserPurchase`, `CreditTransaction`/`CreditUsage`/`credits_ledger`, `StripeEvent`/`ProcessedWebhook`/`Idempotency`, `Opportunity`, `ApplicationWorkspace`, `CareerStory`, `OpportunityStory`, `CareerMemory`, `OpportunityMemory`, `DiscoverySource`, `DiscoveredJob`, `Graph*` (knowledge graph, pgvector), `DataLineage`, `AIUsageLog`, `AdminAuditLog`, `Behavior*`/`User*Profile`, `PublicChallenge*`, `WaitlistEntry`, `badges`/`user_badges`/`user_goals`.
 - Enums : `OpportunityStatus`, `UserRole`, `Plan`, `WorkspaceReadiness`, `CareerMemoryOrigin/Status`, `DiscoveryProvider`, `DiscoveryJobStatus`.
 - Migrations récentes dans `prisma/migrations/` (2026-09) ; SQL historique dans `supabase/` (`consolidated-migration.sql`, `patches-v*.sql`).
-- **Ordre de déploiement** : appliquer une migration additive à Supabase **avant** de déployer le code dont le client Prisma la connaît, sinon toute requête `prisma.<modèle>.*` sans `select` échoue. La migration `20260927_add_onboarding_data_to_users` est actuellement **en attente d'application**.
+- **Ordre de déploiement** : appliquer une migration additive à Supabase **avant** de déployer le code dont le client Prisma la connaît, sinon toute requête `prisma.<modèle>.*` sans `select` échoue. La migration `20260927_add_onboarding_data_to_users` a été appliquée le 2026-09-28. `20260915215555_add_opportunity_id_to_interview_session` avait été appliquée à la main hors historique Prisma : elle a été enregistrée par `prisma migrate resolve --applied` (DDL non rejoué). **Ne pas la rejouer** : sa clé étrangère n'est pas idempotente. Avant tout `migrate deploy`, lancer `prisma migrate status` ; `prisma db pull` **réécrit `schema.prisma`** : utiliser `db pull --print`.
 
 ## Services externes
 
@@ -140,6 +140,14 @@ API NestJS : `cd apps/api && pnpm start:dev | test | test:e2e`.
 
 CI (`.github/workflows/ci-cd.yml`, Node 22, pnpm 9.15.9) : lint → typecheck → tests (`test:run`, `test:verify`, `tests/architecture-invariant.test.ts`, `test:cov`) sur `main`/`develop`.
 
+## Tests
+
+- **Vitest** (`apps/web`) : `pnpm --dir apps/web exec vitest run <fichier>`. Les tests de l'onboarding : `src/validation/CompleteOnboardingSchema.test.ts`, `src/app/api/onboarding/complete/route.test.ts`. Le `pnpm test` de la **racine** est un autre harnais (`test:run` + `test:replay` + `test:verify`, il écrit des fichiers `artifacts/trace-<runId>.json`) : ce n'est pas la suite Vitest d'`apps/web`.
+- **La base configurée est distante.** Prisma charge le `.env` tout seul, y compris dans un worker Vitest : `DATABASE_URL` y pointe vers la base Supabase distante, il n'y a pas de base locale par défaut. Tout test qui appelle Prisma sans mock atteint donc cette base.
+- **`PreviewStorageService.test.ts` et `PreviewAnalysisRepository.test.ts` appellent Prisma sans mock** (`deleteMany` avant/après chaque test). Une garde au sommet de chaque fichier bloque l'exécution si l'**hôte** de `DATABASE_URL` n'est pas `localhost`, `127.0.0.1` ou `[::1]` (le message n'affiche que l'hôte, jamais l'URL complète ni le mot de passe). **Ne jamais supprimer cette garde.** Conséquence : sans base locale fournie, ces deux fichiers sont en erreur de suite. C'est voulu. Tout nouveau test qui écrit sur Prisma doit soit mocker `@/lib/prisma`, soit porter la même garde.
+- **Les 14 fichiers de `src/e2e/**`** (13 `*.e2e.test.ts` + `base.test.ts`) sont des specs Playwright, **exclus de Vitest** par `exclude: ["src/e2e/**"]` dans `apps/web/vitest.config.ts`. Ne pas les déplacer ni retirer l'exclusion ; ils se lancent avec `pnpm test:e2e` (dans `apps/web`).
+- Autres échecs Vitest connus, hors onboarding : `rate-limiting` (exige Redis), `PreviewTokenManager` (exige `window`), `ssrf`, hash `core/p7`.
+
 ## Conventions et pièges
 
 - **`next.config.ts` ignore les erreurs TypeScript et ESLint au build** (`ignoreBuildErrors`, `ignoreDuringBuilds`). Un build vert ne prouve rien : lancer `pnpm typecheck` et `pnpm lint` explicitement.
@@ -155,8 +163,9 @@ CI (`.github/workflows/ci-cd.yml`, Node 22, pnpm 9.15.9) : lint → typecheck �
 ## État en cours
 
 - **Simulation Realtime** (`api/interview/realtime-session/route.ts`, hook `useRealtimeInterview`, page `simulation/[id]`) : commitée. ⚠️ Les sessions sont stockées dans une `Map` **en mémoire** (`realtimeSessions`) : non fiable en serverless/multi-instance, à persister avant prod. Pas de quota ni de rate-limit sur cette route.
-- **Onboarding** : commits 1 à 4 sur `main` (colonnes + schéma Zod, route + autorisation, UI, tests). Migration **non appliquée** ; redirection des nouveaux utilisateurs non branchée (voir « Onboarding »).
-- **TypeScript** : `pnpm typecheck` à 0 erreur. **Vitest** (`apps/web`, suite complète, mesurée au commit `8b15a37c`) : 579 tests passent, 49 échouent, plus 14 fichiers `src/e2e/**` en erreur (ils relèvent de Playwright mais Vitest les ramasse). Aucun de ces échecs ne référence des fichiers de l'onboarding : tests `preview/*` et `preview-analysis/*` qui exigent une base, `rate-limiting` qui exige Redis, `PreviewTokenManager` qui exige `window`, `ssrf`, hash `core/p7`. Les tests de l'onboarding passent (56). ⚠️ `lib/preview/__tests__/PreviewStorageService.test.ts` appelle `prisma.previewAnalysis.deleteMany()` dans son `beforeEach` : ne jamais le lancer avec une `DATABASE_URL` réelle en environnement.
+- **Onboarding** : commits 1 à 4 sur `main` (colonnes + schéma Zod, route + autorisation, UI, tests). Migration **appliquée** à la base le 2026-09-28 (`a3d18660`) ; redirection des nouveaux utilisateurs non branchée (voir « Onboarding »).
+- **TypeScript** : `pnpm typecheck` à 0 erreur.
+- **Vitest** : voir la section « Tests ». Dernière mesure de la suite complète (commit `8b15a37c`, avant l'exclusion des e2e et les gardes) : 579 tests passent, 49 échouent, aucun ne référence l'onboarding (56 tests d'onboarding passent).
 
 ## Sources de vérité (et ce qui est périmé)
 

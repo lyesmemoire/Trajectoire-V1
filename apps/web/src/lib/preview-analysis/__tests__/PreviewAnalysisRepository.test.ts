@@ -7,6 +7,28 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { previewAnalysisRepository } from '../PreviewAnalysisRepository'
 import { prisma } from '@/lib/prisma'
 
+// ─── GARDE DE SÉCURITÉ — NE JAMAIS SUPPRIMER ────────────────────────────────
+// Ces tests écrivent sur Prisma SANS mock (deleteMany avant/après chaque test).
+// Ils ne doivent s'exécuter que contre une base locale. L'hôte est analysé
+// (pas de simple .includes) et seul l'hôte est affiché : jamais l'URL complète,
+// qui contient le mot de passe.
+{
+  let host = 'non défini'
+  try {
+    host = process.env.DATABASE_URL ? new URL(process.env.DATABASE_URL).hostname : 'non défini'
+  } catch {
+    host = 'illisible'
+  }
+
+  if (!['localhost', '127.0.0.1', '[::1]'].includes(host)) {
+    throw new Error(
+      '[SAFETY] Ces tests écrivent sur Prisma. ' +
+        "Ils ne doivent s'exécuter qu'avec une base locale. " +
+        `DATABASE_URL pointe actuellement vers l'hôte : ${host}`,
+    )
+  }
+}
+
 describe('PreviewAnalysisRepository', () => {
   beforeEach(async () => {
     // Nettoyer la base de données avant chaque test
