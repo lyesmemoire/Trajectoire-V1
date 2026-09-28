@@ -323,7 +323,7 @@ export default async function ReportPage({
       )}
       {!isPremium && questionByQuestion.length > 0 && (
         <div className="mb-6 rounded-xl border border-white/[0.08] bg-zinc-900 p-6 relative overflow-hidden">
-          <h2 className="text-xl font-serif font-semibold text-white/80 mb-1">
+          <h2 className="text-xl font-sans font-semibold text-white/80 mb-1">
             Analyse de vos réponses
           </h2>
           <p className="text-sm text-white/50 mb-4">
