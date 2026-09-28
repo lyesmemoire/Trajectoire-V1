@@ -312,11 +312,9 @@ function LoginContent() {
                     Mot de passe
                   </label>
 
-                  {/* TODO: créer app/forgot-password/page.tsx */}
                   <Link
                     href="/forgot-password"
-                    aria-disabled="true"
-                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 opacity-50 cursor-not-allowed"
+                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
                   >
                     Mot de passe oublié ?
                   </Link>
