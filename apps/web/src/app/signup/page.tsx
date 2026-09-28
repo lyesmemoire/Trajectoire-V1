@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase"
-import { Button } from "@/components/ui/button"
+import { darkTokens } from "@/lib/theme/dark-tokens"
 import { usePreviewStorage } from "@/hooks/usePreviewStorage"
 
 export default function SignupPage() {
@@ -81,15 +81,18 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium text-center space-y-4">
-          <div className="text-forest-500 text-5xl mb-4">✉️</div>
-          <h2 className="text-2xl font-serif font-bold text-ink-900">Vérifiez vos emails</h2>
-          <p className="text-ink-600">
-            Un lien de confirmation a été envoyé à <span className="font-medium text-ink-900">{email}</span>.
+      <div
+        style={darkTokens}
+        className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+      >
+        <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 text-center shadow-2xl shadow-black/40 space-y-4">
+          <div className="text-emerald-400 text-5xl mb-4">✉️</div>
+          <h2 className="text-2xl font-semibold tracking-tight text-white/80">Vérifiez vos emails</h2>
+          <p className="text-white/50">
+            Un lien de confirmation a été envoyé à <span className="font-medium text-white/80">{email}</span>.
             Cliquez dessus pour activer votre compte.
           </p>
-          <Link href="/login" className="block mt-6 text-sm text-bronze-600 font-medium hover:underline">
+          <Link href="/login" className="block mt-6 rounded text-sm text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
             Retour à la connexion
           </Link>
         </div>
@@ -98,55 +101,64 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
-      <Link href="/" className="text-2xl font-serif font-bold text-ink-900 mb-8">
+    <div
+        style={darkTokens}
+        className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+      >
+      <Link href="/" className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950">
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium">
+      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-serif font-bold text-ink-900 mb-2">Créer un compte</h1>
-          <p className="text-ink-600 text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">Créer un compte</h1>
+          <p className="text-white/50 text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-brick-50 border border-brick-100 rounded-xl">
-            <p className="text-brick-600 text-sm font-medium text-center">{error}</p>
+          <div role="alert" className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4">
+            <p className="text-rose-300 text-sm font-medium text-center">{error}</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-ink-700 mb-1">Email</label>
+            <label htmlFor="signup-email" className="block text-sm font-medium text-white/80 mb-1">Email</label>
             <input
+              id="signup-email"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="vous@exemple.com"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink-700 mb-1">Mot de passe</label>
+            <label htmlFor="signup-password" className="block text-sm font-medium text-white/80 mb-1">Mot de passe</label>
             <input
+              id="signup-password"
               type="password"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="••••••••"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink-700 mb-1">Confirmer le mot de passe</label>
+            <label htmlFor="signup-confirm-password" className="block text-sm font-medium text-white/80 mb-1">Confirmer le mot de passe</label>
             <input
+              id="signup-confirm-password"
               type="password"
+              autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="••••••••"
               required
             />
@@ -158,20 +170,24 @@ export default function SignupPage() {
               id="cgu"
               checked={acceptCGU}
               onChange={(e) => setAcceptCGU(e.target.checked)}
-              className="mt-1 w-4 h-4 rounded border-ivoire-300 text-bronze-600 focus:ring-bronze-400 cursor-pointer"
+              className="mt-1 h-4 w-4 cursor-pointer rounded border-white/[0.2] bg-zinc-950 accent-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
             />
-            <label htmlFor="cgu" className="text-sm text-ink-600 cursor-pointer leading-tight">
-              J'accepte les <Link href="/terms" className="text-bronze-600 hover:underline">conditions d'utilisation</Link> et la <Link href="/privacy" className="text-bronze-600 hover:underline">politique de confidentialité</Link>.
+            <label htmlFor="cgu" className="text-sm text-white/50 cursor-pointer leading-tight">
+              J'accepte les <Link href="/terms" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d'utilisation</Link> et la <Link href="/privacy" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">politique de confidentialité</Link>.
             </label>
           </div>
 
-          <Button type="submit" disabled={loading} className="w-full" size="md">
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-500 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+          >
             {loading ? "Création en cours..." : "S'inscrire"}
-          </Button>
+          </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-ink-600">
-          Déjà un compte ? <Link href="/login" className="text-bronze-600 font-medium hover:underline">Se connecter</Link>
+        <p className="mt-6 text-center text-sm text-white/50">
+          Déjà un compte ? <Link href="/login" className="rounded text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">Se connecter</Link>
         </p>
       </div>
     </div>

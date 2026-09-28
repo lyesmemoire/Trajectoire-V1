@@ -9,7 +9,7 @@ import {
 } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { darkTokens } from "@/lib/theme/dark-tokens"
 
 type SessionState = "checking" | "authenticated" | "guest"
 
@@ -34,25 +34,28 @@ function sanitizeRedirect(value: string | null) {
 
 function LoginFallback() {
   return (
-    <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
+    <div
+      style={darkTokens}
+      className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+    >
       <Link
         href="/"
-        className="text-2xl font-serif font-bold text-ink-900 mb-8"
+        className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
       >
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium">
+      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
         <div className="text-center">
-          <h1 className="text-2xl font-serif font-bold text-ink-900 mb-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">
             Bon retour
           </h1>
 
-          <p className="text-ink-600 text-sm">
+          <p className="text-white/50 text-sm">
             Connectez-vous pour accéder à votre espace.
           </p>
 
-          <p className="mt-3 text-xs text-ink-500">
+          <p className="mt-3 text-xs text-white/40">
             Chargement…
           </p>
         </div>
@@ -190,26 +193,29 @@ function LoginContent() {
   }
 
   return (
-    <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
+    <div
+      style={darkTokens}
+      className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+    >
       <Link
         href="/"
-        className="text-2xl font-serif font-bold text-ink-900 mb-8"
+        className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
       >
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl p-8 rounded-2xl border border-ivoire-200 shadow-premium">
+      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-serif font-bold text-ink-900 mb-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">
             Bon retour
           </h1>
 
-          <p className="text-ink-600 text-sm">
+          <p className="text-white/50 text-sm">
             Connectez-vous pour accéder à votre espace.
           </p>
 
           {sessionState === "checking" && (
-            <p className="mt-3 text-xs text-ink-500">
+            <p className="mt-3 text-xs text-white/40">
               Vérification de session…
             </p>
           )}
@@ -219,9 +225,9 @@ function LoginContent() {
           <div
             role="alert"
             aria-live="polite"
-            className="mb-6 p-4 bg-brick-50 border border-brick-100 rounded-xl"
+            className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4"
           >
-            <p className="text-brick-600 text-sm font-medium text-center">
+            <p className="text-rose-300 text-sm font-medium text-center">
               {error}
             </p>
           </div>
@@ -229,20 +235,20 @@ function LoginContent() {
 
         {sessionState === "authenticated" ? (
           <div className="space-y-4">
-            <div className="rounded-xl border border-ivoire-200 bg-ivoire-50 px-4 py-4">
-              <p className="text-sm font-semibold text-ink-900">
+            <div className="rounded-xl border border-white/[0.08] bg-zinc-950 px-4 py-4">
+              <p className="text-sm font-semibold text-white/80">
                 Vous êtes déjà connecté.
               </p>
 
               {sessionEmail ? (
-                <p className="mt-1 text-sm text-ink-600">
+                <p className="mt-1 text-sm text-white/50">
                   Compte :{" "}
-                  <span className="font-medium">
+                  <span className="font-medium text-white/80">
                     {sessionEmail}
                   </span>
                 </p>
               ) : (
-                <p className="mt-1 text-sm text-ink-600">
+                <p className="mt-1 text-sm text-white/50">
                   Vous pouvez accéder à votre dashboard ou
                   vous déconnecter.
                 </p>
@@ -252,7 +258,7 @@ function LoginContent() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href={redirectTo}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-ink-900 px-4 py-3 text-sm font-semibold text-white shadow-premium-lg ring-1 ring-bronze-400/25 transition hover:-translate-y-[1px]"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               >
                 Aller au dashboard
               </a>
@@ -261,7 +267,7 @@ function LoginContent() {
                 type="button"
                 onClick={handleSignOut}
                 disabled={signingOut}
-                className="w-full rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm font-semibold text-ink-900 shadow-sm transition hover:bg-ivoire-50 disabled:opacity-60"
+                className="w-full rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/80 transition-colors hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
               >
                 {signingOut
                   ? "Déconnexion…"
@@ -276,17 +282,21 @@ function LoginContent() {
               className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-medium text-ink-700 mb-1">
+                <label
+                  htmlFor="login-email"
+                  className="block text-sm font-medium text-white/80 mb-1"
+                >
                   Email
                 </label>
 
                 <input
+                  id="login-email"
                   type="email"
                   value={email}
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
-                  className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+                  className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
                   placeholder="vous@exemple.com"
                   autoComplete="email"
                   required
@@ -296,25 +306,29 @@ function LoginContent() {
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-sm font-medium text-ink-700">
+                  <label
+                    htmlFor="login-password"
+                    className="block text-sm font-medium text-white/80"
+                  >
                     Mot de passe
                   </label>
 
                   <Link
                     href="/forgot-password"
-                    className="text-xs text-bronze-600 hover:underline"
+                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
                   >
                     Mot de passe oublié ?
                   </Link>
                 </div>
 
                 <input
+                  id="login-password"
                   type="password"
                   value={password}
                   onChange={(e) =>
                     setPassword(e.target.value)
                   }
-                  className="w-full p-3 rounded-xl border-2 border-ivoire-300 text-ink-900 bg-white placeholder-ink-400 focus:outline-none focus:border-bronze-400 focus:ring-2 focus:ring-bronze-400/20 transition-all"
+                  className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="current-password"
                   required
@@ -322,23 +336,22 @@ function LoginContent() {
                 />
               </div>
 
-              <Button
+              <button
                 type="submit"
                 disabled={loading}
-                className="w-full"
-                size="md"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-500 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? "Connexion en cours..."
                   : "Se connecter"}
-              </Button>
+              </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-ink-600">
+            <p className="mt-6 text-center text-sm text-white/50">
               Pas encore de compte ?{" "}
               <Link
                 href="/signup"
-                className="text-bronze-600 font-medium hover:underline"
+                className="rounded text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               >
                 S&apos;inscrire
               </Link>
