@@ -42,11 +42,12 @@ export default function SignupPage() {
 
     try {
       const supabase = createClient()
+      // TODO: créer app/api/auth/callback/route.ts (échange code → session)
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/simulation/new`,
+          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
           // Skip email confirmation in development
           ...(process.env.NODE_ENV === 'development' ? { data: { skip_email_confirmation: true } } : {}),
         },
@@ -86,7 +87,7 @@ export default function SignupPage() {
         className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
       >
         <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 text-center shadow-2xl shadow-black/40 space-y-4">
-          <div className="text-emerald-400 text-5xl mb-4">✉️</div>
+          <div className="text-emerald-400 text-5xl mb-4" aria-hidden="true">✉️</div>
           <h2 className="text-2xl font-semibold tracking-tight text-white/80">Vérifiez vos emails</h2>
           <p className="text-white/50">
             Un lien de confirmation a été envoyé à <span className="font-medium text-white/80">{email}</span>.
@@ -121,7 +122,7 @@ export default function SignupPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="space-y-4">
           <div>
             <label htmlFor="signup-email" className="block text-sm font-medium text-white/80 mb-1">Email</label>
             <input
@@ -130,7 +131,7 @@ export default function SignupPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="vous@exemple.com"
               required
             />
@@ -142,12 +143,16 @@ export default function SignupPage() {
               id="signup-password"
               type="password"
               autoComplete="new-password"
+              aria-describedby="pw-hint"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="••••••••"
               required
             />
+            <p id="pw-hint" className="mt-1 text-xs text-zinc-500">
+              6 caractères minimum.
+            </p>
           </div>
 
           <div>
@@ -158,7 +163,7 @@ export default function SignupPage() {
               autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               placeholder="••••••••"
               required
             />
@@ -180,7 +185,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-500 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Création en cours..." : "S'inscrire"}
           </button>
