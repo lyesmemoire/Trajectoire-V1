@@ -17,21 +17,21 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  default: "bg-white text-foreground border border-border/80 shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
-  standard: "bg-white text-foreground border border-border/80 shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
-  editorial: "bg-surface-muted text-foreground border border-transparent shadow-none",
+  default: "bg-zinc-900 text-white/80 border border-white/[0.08]",
+  standard: "bg-zinc-900 text-white/80 border border-white/[0.08]",
+  editorial: "bg-white/[0.03] text-white/80 border border-transparent",
   interactive:
-    "bg-white text-foreground border border-border/80 shadow-[0_1px_2px_0_rgba(0,0,0,0.03)] transition-all duration-150 hover:border-slate-300 hover:shadow-sm cursor-pointer",
+    "bg-zinc-900 text-white/80 border border-white/[0.08] transition-colors duration-150 hover:border-white/[0.16] hover:bg-zinc-800/70 cursor-pointer",
   selected:
-    "bg-violet-50/20 text-foreground border-2 border-primary shadow-[0_1px_2px_0_rgba(124,58,237,0.06)]",
+    "bg-indigo-500/10 text-white/80 border-2 border-indigo-500",
   highlight:
-    "bg-white text-foreground border border-primary/30 shadow-[0_2px_8px_-2px_rgba(124,58,237,0.08)]",
+    "bg-zinc-900 text-white/80 border border-indigo-400/30 shadow-[0_2px_20px_-6px_rgba(99,102,241,0.35)]",
   ai:
-    "bg-white text-foreground border border-primary/30 shadow-[0_2px_8px_-2px_rgba(124,58,237,0.08)]",
+    "bg-zinc-900 text-white/80 border border-indigo-400/30 shadow-[0_2px_20px_-6px_rgba(99,102,241,0.35)]",
   success:
-    "bg-white text-foreground border border-emerald-200 shadow-[0_1px_2px_0_rgba(16,185,129,0.04)]",
+    "bg-zinc-900 text-white/80 border border-emerald-400/25",
   warning:
-    "bg-white text-foreground border border-amber-200 shadow-[0_1px_2px_0_rgba(245,158,11,0.04)]",
+    "bg-zinc-900 text-white/80 border border-amber-400/25",
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -66,7 +66,7 @@ export const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-base font-semibold leading-snug tracking-tight text-foreground font-sans",
+      "text-base font-semibold leading-snug tracking-tight text-white/80 font-sans",
       className
     )}
     {...props}
@@ -80,7 +80,7 @@ export const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-foreground-muted", className)}
+    className={cn("text-sm text-white/50", className)}
     {...props}
   />
 ));

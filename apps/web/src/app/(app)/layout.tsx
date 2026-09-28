@@ -14,8 +14,8 @@ const darkTokens = {
   "--background": "240 10% 4%", // zinc-950
   "--foreground": "0 0% 81%", // ≈ white/80 sur zinc-950
   "--foreground-muted": "240 5% 55%",
-  "--surface": "240 6% 7%",
-  "--surface-muted": "240 5% 11%",
+  "--surface": "240 6% 10%", // zinc-900
+  "--surface-muted": "240 5% 13%",
   "--border": "240 4% 16%", // zinc-800
   colorScheme: "dark",
 } as CSSProperties
