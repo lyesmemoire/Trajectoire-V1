@@ -65,21 +65,21 @@ function analysisValue(value: unknown): StoredAnalysis {
 function scoreTone(score: number) {
   if (score >= 80) {
     return {
-      text: "text-emerald-700",
-      bg: "bg-emerald-50/50",
+      text: "text-emerald-400",
+      bg: "bg-emerald-950/40",
       bar: "bg-emerald-500",
     }
   }
   if (score >= 60) {
     return {
-      text: "text-violet-700",
-      bg: "bg-violet-50/50",
-      bar: "bg-violet-500",
+      text: "text-indigo-400",
+      bg: "bg-indigo-950/40",
+      bar: "bg-indigo-500",
     }
   }
   return {
-    text: "text-amber-700",
-    bg: "bg-amber-50/50",
+    text: "text-amber-400",
+    bg: "bg-amber-950/40",
     bar: "bg-amber-500",
   }
 }
@@ -348,7 +348,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                       ))}
                     </ul>
                     <Link href={`/simulation/new?opportunity=${opportunity.id}`}>
-                       <Button variant="primary" size="sm">
+                       <Button variant="dark" size="sm">
                          <Sparkles className="mr-2 size-3.5" />
                          Démarrer une simulation sur ces points
                        </Button>

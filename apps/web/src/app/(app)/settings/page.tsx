@@ -67,7 +67,7 @@ export default function SettingsPage() {
             <p className="text-ink-600 mb-6">
               Gérez votre abonnement et vos paiements via le portail Stripe.
             </p>
-            <Button
+            <Button variant="dark"
               onClick={handleStripePortal}
               disabled={loading}
               size="md"

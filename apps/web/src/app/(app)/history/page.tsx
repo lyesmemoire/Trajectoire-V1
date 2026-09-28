@@ -72,7 +72,7 @@ export default async function HistoryPage() {
           <h3 className="text-xl font-serif font-semibold text-ink-900 mb-2">Aucune simulation</h3>
           <p className="text-ink-600 mb-6">Vous n&apos;avez pas encore réalisé de simulation.</p>
           <Link href="/simulation/new">
-            <Button size="md">
+            <Button variant="dark" size="md">
               Commencer ma première simulation
             </Button>
           </Link>

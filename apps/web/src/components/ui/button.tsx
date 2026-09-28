@@ -1,7 +1,15 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "premium" | "danger";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "premium"
+  | "danger"
+  | "dark"
+  | "dark-ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps
@@ -24,6 +32,27 @@ const variantStyles: Record<ButtonVariant, string> = {
     "bg-primary text-white hover:bg-violet-700 active:bg-violet-800 border border-transparent shadow-[0_2px_8px_-1px_rgba(124,58,237,0.25)]",
   danger:
     "bg-danger text-white hover:bg-red-600 active:bg-red-700 border border-transparent shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]",
+
+  // Variantes pour les écrans au thème SOMBRE (zinc-950 / indigo). Les variantes
+  // ci-dessus (thème clair : marketing, landing…) restent inchangées.
+  // Le focus utilise `focus-visible:` (comme la base) : avec `focus:`, la base
+  // `focus-visible:ring-primary/25` (violet) l'emporterait à la navigation clavier.
+  dark: [
+    "bg-indigo-600 text-zinc-50",
+    "hover:bg-indigo-500",
+    "focus-visible:ring-2 focus-visible:ring-indigo-500",
+    "focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+    "disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed",
+    "transition-colors duration-150",
+  ].join(" "),
+  "dark-ghost": [
+    "bg-transparent text-zinc-300 border border-zinc-700",
+    "hover:border-zinc-600 hover:text-zinc-100",
+    "focus-visible:ring-2 focus-visible:ring-indigo-500",
+    "focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+    "disabled:opacity-40 disabled:cursor-not-allowed",
+    "transition-colors duration-150",
+  ].join(" "),
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
