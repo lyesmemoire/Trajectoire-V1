@@ -240,29 +240,29 @@ export default async function ApplicationWorkspacePage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
           href={`/opportunities/${opportunity.id}`}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-900"
+          className="inline-flex items-center gap-2 text-sm font-medium text-white/50 transition hover:text-white/80"
         >
           <ArrowLeft className="h-4 w-4" />
           Voir la fiche opportunité
         </Link>
 
-        <div className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 shadow-sm">
+        <div className="rounded-full border border-white/[0.1] bg-zinc-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
           {statusLabel(opportunity.status)}
         </div>
       </div>
 
-      <section className="relative overflow-hidden rounded-[32px] bg-slate-950 px-6 py-7 text-white shadow-2xl sm:px-8 lg:px-10 lg:py-9">
-        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-violet-500/20 blur-3xl" />
+      <section className="relative overflow-hidden rounded-[32px] bg-zinc-900 px-6 py-7 text-white/80 ring-1 ring-white/[0.08] sm:px-8 lg:px-10 lg:py-9">
+        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
         <div className="absolute bottom-0 left-1/3 h-40 w-80 rounded-full bg-indigo-500/10 blur-3xl" />
 
         <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-violet-200">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-indigo-300">
               <Sparkles className="h-3.5 w-3.5" />
               Application Intelligence
             </div>
 
-            <p className="text-sm font-medium text-slate-400">
+            <p className="text-sm font-medium text-white/50">
               {opportunity.company || "Entreprise à préciser"}
             </p>
 
@@ -270,7 +270,7 @@ export default async function ApplicationWorkspacePage({
               {opportunity.title}
             </h1>
 
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/50 sm:text-base">
               Ton cockpit de candidature centralise la décision,
               le CV, la préparation entretien et les prochaines
               actions pour cette opportunité.
@@ -280,7 +280,7 @@ export default async function ApplicationWorkspacePage({
           <div className="rounded-[26px] border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
             <div className="flex items-end justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
                   Préparation
                 </p>
                 <p className="mt-2 text-4xl font-semibold">
@@ -289,10 +289,10 @@ export default async function ApplicationWorkspacePage({
               </div>
 
               <div className="text-right">
-                <p className="text-sm font-semibold text-violet-200">
+                <p className="text-sm font-semibold text-indigo-300">
                   {completedSteps}/{preparationSteps.length}
                 </p>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-white/40">
                   étapes complétées
                 </p>
               </div>
@@ -300,7 +300,7 @@ export default async function ApplicationWorkspacePage({
 
             <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
               <div
-                className="h-full rounded-full bg-violet-400"
+                className="h-full rounded-full bg-indigo-500"
                 style={{ width: `${readiness}%` }}
               />
             </div>
@@ -308,32 +308,32 @@ export default async function ApplicationWorkspacePage({
         </div>
       </section>
 
-      <section className="overflow-hidden rounded-[30px] border border-violet-100 bg-white shadow-[0_20px_60px_rgba(76,29,149,0.08)]">
+      <section className="overflow-hidden rounded-[30px] border border-white/[0.08] bg-zinc-900">
         <div className="grid gap-0 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)]">
           <div className="p-6 sm:p-7 lg:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 ring-1 ring-violet-100">
+              <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 px-3 py-1.5 text-xs font-semibold text-indigo-300 ring-1 ring-indigo-400/20">
                 <Sparkles className="h-3.5 w-3.5" />
                 Prochaine meilleure action
               </div>
 
-              <span className="rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">
+              <span className="rounded-full bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/50 ring-1 ring-white/[0.1]">
                 {recommendedAction.eyebrow}
               </span>
             </div>
 
-            <h2 className="mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
+            <h2 className="mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-white/80 sm:text-3xl">
               {recommendedAction.title}
             </h2>
 
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/50">
               {recommendedAction.description}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link
                 href={recommendedAction.href}
-                className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/10 transition hover:bg-violet-700"
+                className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-indigo-400"
               >
                 {recommendedAction.action}
                 <ArrowRight className="h-4 w-4" />
@@ -341,39 +341,39 @@ export default async function ApplicationWorkspacePage({
 
               <Link
                 href={`/opportunities/${opportunity.id}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-50"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/80 ring-1 ring-white/[0.1] transition hover:bg-white/[0.08]"
               >
                 Voir l&apos;opportunité
               </Link>
             </div>
           </div>
 
-          <div className="border-t border-violet-100 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-6 sm:p-7 lg:border-l lg:border-t-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-500">
+          <div className="border-t border-white/[0.08] bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent p-6 sm:p-7 lg:border-l lg:border-t-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
               Niveau de préparation
             </p>
 
             <div className="mt-3 flex items-end gap-2">
-              <span className="text-5xl font-semibold tracking-[-0.05em] text-slate-950">
+              <span className="text-5xl font-semibold tracking-[-0.05em] text-white/80">
                 {readiness}
               </span>
-              <span className="pb-1.5 text-lg font-semibold text-slate-400">
+              <span className="pb-1.5 text-lg font-semibold text-white/40">
                 %
               </span>
             </div>
 
-            <p className="mt-2 text-sm leading-6 text-slate-500">
+            <p className="mt-2 text-sm leading-6 text-white/50">
               {completedSteps}/{preparationSteps.length} étapes clés sont déjà complétées.
             </p>
 
-            <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white ring-1 ring-violet-100">
+            <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white/[0.06] ring-1 ring-white/[0.08]">
               <div
-                className="h-full rounded-full bg-violet-600 transition-all"
+                className="h-full rounded-full bg-indigo-500 transition-all"
                 style={{ width: `${readiness}%` }}
               />
             </div>
 
-            <p className="mt-4 text-xs font-medium text-slate-500">
+            <p className="mt-4 text-xs font-medium text-white/50">
               {readiness >= 75
                 ? "Candidature fortement préparée"
                 : readiness >= 50
@@ -383,7 +383,7 @@ export default async function ApplicationWorkspacePage({
           </div>
         </div>
 
-        <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-5 sm:px-7">
+        <div className="border-t border-white/[0.06] bg-white/[0.02] px-5 py-5 sm:px-7">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {pipelineStages.map((stage, index) => {
               const isActive =
@@ -398,10 +398,10 @@ export default async function ApplicationWorkspacePage({
                   key={stage.key}
                   className={
                     isActive
-                      ? "rounded-2xl bg-violet-600 px-3 py-3 text-white shadow-sm"
+                      ? "rounded-2xl bg-indigo-500 px-3 py-3 text-white"
                       : isComplete
-                        ? "rounded-2xl bg-white px-3 py-3 text-emerald-700 ring-1 ring-emerald-100"
-                        : "rounded-2xl bg-white px-3 py-3 text-slate-400 ring-1 ring-slate-200"
+                        ? "rounded-2xl bg-emerald-500/10 px-3 py-3 text-emerald-300 ring-1 ring-emerald-400/20"
+                        : "rounded-2xl bg-white/[0.03] px-3 py-3 text-white/40 ring-1 ring-white/[0.08]"
                   }
                 >
                   <div className="flex items-center gap-2">
@@ -410,8 +410,8 @@ export default async function ApplicationWorkspacePage({
                         isActive
                           ? "grid h-5 w-5 place-items-center rounded-full bg-white/20 text-[10px] font-bold"
                           : isComplete
-                            ? "grid h-5 w-5 place-items-center rounded-full bg-emerald-50 text-[10px] font-bold text-emerald-600"
-                            : "grid h-5 w-5 place-items-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-400"
+                            ? "grid h-5 w-5 place-items-center rounded-full bg-emerald-500/15 text-[10px] font-bold text-emerald-300"
+                            : "grid h-5 w-5 place-items-center rounded-full bg-white/[0.06] text-[10px] font-bold text-white/40"
                       }
                     >
                       {isComplete ? "✓" : index + 1}
@@ -480,18 +480,18 @@ export default async function ApplicationWorkspacePage({
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(340px,0.65fr)]">
         <div className="space-y-6">
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
                   Mission control
                 </p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">
+                <h2 className="mt-2 text-xl font-semibold text-white/80">
                   Préparer ma candidature
                 </h2>
               </div>
 
-              <span className="rounded-full bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700">
+              <span className="rounded-full bg-indigo-500/10 px-3 py-1.5 text-xs font-semibold text-indigo-300">
                 {readiness}% prêt
               </span>
             </div>
@@ -540,17 +540,17 @@ export default async function ApplicationWorkspacePage({
           />
           <div
             id="company-research"
-            className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7"
+            className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7"
           >
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-slate-100 p-3 text-slate-700">
+              <div className="rounded-2xl bg-white/[0.06] p-3 text-white/70">
                 <Building2 className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
                   Company Intelligence
                 </p>
-                <h2 className="text-lg font-semibold text-slate-950">
+                <h2 className="text-lg font-semibold text-white/80">
                   Recherche entreprise
                 </h2>
               </div>
@@ -564,10 +564,10 @@ export default async function ApplicationWorkspacePage({
               ].map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                  className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4"
                 >
-                  <Circle className="h-4 w-4 text-slate-300" />
-                  <p className="mt-3 text-sm font-medium text-slate-700">
+                  <Circle className="h-4 w-4 text-white/25" />
+                  <p className="mt-3 text-sm font-medium text-white/80">
                     {item}
                   </p>
                 </div>
@@ -580,11 +580,11 @@ export default async function ApplicationWorkspacePage({
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
               Progression
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-slate-950">
+            <h2 className="mt-2 text-lg font-semibold text-white/80">
               Checklist candidature
             </h2>
 
@@ -597,14 +597,14 @@ export default async function ApplicationWorkspacePage({
                   {step.complete ? (
                     <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
                   ) : (
-                    <Circle className="h-5 w-5 shrink-0 text-slate-300" />
+                    <Circle className="h-5 w-5 shrink-0 text-white/25" />
                   )}
 
                   <span
                     className={
                       step.complete
-                        ? "text-sm font-medium text-slate-900"
-                        : "text-sm text-slate-500"
+                        ? "text-sm font-medium text-white/80"
+                        : "text-sm text-white/50"
                     }
                   >
                     {step.label}
@@ -614,22 +614,22 @@ export default async function ApplicationWorkspacePage({
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6">
             <div className="flex items-center gap-3">
-              <BriefcaseBusiness className="h-5 w-5 text-violet-600" />
-              <h2 className="font-semibold text-slate-950">
+              <BriefcaseBusiness className="h-5 w-5 text-indigo-400" />
+              <h2 className="font-semibold text-white/80">
                 Prochaine action
               </h2>
             </div>
 
-            <p className="mt-4 text-sm leading-6 text-slate-600">
+            <p className="mt-4 text-sm leading-6 text-white/50">
               {opportunity.nextAction ||
                 "Choisis la prochaine action qui fera avancer cette candidature."}
             </p>
 
             <Link
               href={`/opportunities/${opportunity.id}`}
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-violet-700 hover:text-violet-900"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
             >
               Gérer le pipeline
               <ArrowRight className="h-4 w-4" />
@@ -654,18 +654,18 @@ function MetricCard({
   icon: React.ReactNode
 }) {
   return (
-    <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-[24px] border border-white/[0.08] bg-zinc-900 p-5">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/40">
           {label}
         </p>
-        <div className="text-violet-600">{icon}</div>
+        <div className="text-indigo-400">{icon}</div>
       </div>
 
-      <p className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
+      <p className="mt-4 text-2xl font-semibold tracking-tight text-white/80">
         {value}
       </p>
-      <p className="mt-1 truncate text-sm text-slate-500">
+      <p className="mt-1 truncate text-sm text-white/50">
         {detail}
       </p>
     </div>
@@ -688,30 +688,30 @@ function ActionCard({
   complete: boolean
 }) {
   return (
-    <div className="group rounded-[24px] border border-slate-200 bg-slate-50/70 p-5 transition hover:border-violet-200 hover:bg-violet-50/40">
+    <div className="group rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-5 transition hover:border-indigo-400/30 hover:bg-indigo-500/[0.06]">
       <div className="flex items-start justify-between gap-4">
-        <div className="rounded-2xl bg-white p-3 text-violet-700 shadow-sm">
+        <div className="rounded-2xl bg-white/[0.06] p-3 text-indigo-300 ring-1 ring-inset ring-white/[0.08]">
           {icon}
         </div>
 
         {complete && (
-          <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
+          <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-semibold text-emerald-300">
             Disponible
           </span>
         )}
       </div>
 
-      <h3 className="mt-5 font-semibold text-slate-950">
+      <h3 className="mt-5 font-semibold text-white/80">
         {title}
       </h3>
 
-      <p className="mt-2 min-h-[48px] text-sm leading-6 text-slate-600">
+      <p className="mt-2 min-h-[48px] text-sm leading-6 text-white/50">
         {description}
       </p>
 
       <Link
         href={href}
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-violet-700"
+        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-indigo-400"
       >
         {action}
         <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
