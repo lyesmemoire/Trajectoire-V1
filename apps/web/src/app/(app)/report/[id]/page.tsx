@@ -61,16 +61,16 @@ export default async function ReportPage({
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="mb-4 inline-flex items-center text-sm text-slate-600 hover:text-slate-900"
+            className="mb-4 inline-flex items-center text-sm text-white/50 hover:text-white/80"
           >
             ← Retour au tableau de bord
           </Link>
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="text-3xl font-bold text-white/80">
             Rapport introuvable
           </h1>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-          <p className="text-slate-600">
+        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-8 text-center">
+          <p className="text-white/50">
             Ce rapport n'existe pas ou vous n'avez pas accès.
           </p>
         </div>
@@ -187,28 +187,28 @@ export default async function ReportPage({
       <div className="mb-8">
         <Link
           href="/dashboard"
-          className="mb-4 inline-flex items-center text-sm text-slate-600 hover:text-slate-900"
+          className="mb-4 inline-flex items-center text-sm text-white/50 hover:text-white/80"
         >
           ← Retour au tableau de bord
         </Link>
-        <h1 className="mb-2 text-3xl font-bold text-slate-900">
+        <h1 className="mb-2 text-3xl font-bold text-white/80">
           Rapport d'entretien
         </h1>
-        <p className="text-slate-600">
+        <p className="text-white/50">
           {sessionData.job_title} · {sessionData.interview_type} ·{" "}
           {sessionData.level}
         </p>
       </div>
 
       {/* Overall Score */}
-      <div className="mb-6 rounded-lg border border-violet-100 bg-gradient-to-br from-violet-50 to-violet-100/50 p-8 text-center">
-        <p className="mb-2 text-sm font-semibold text-violet-800">
+      <div className="mb-6 rounded-lg border border-indigo-400/20 bg-gradient-to-br from-indigo-500/15 to-indigo-500/[0.04] p-8 text-center">
+        <p className="mb-2 text-sm font-semibold text-indigo-300">
           Score global
         </p>
-        <p className="mb-2 text-6xl font-bold text-violet-700">
+        <p className="mb-2 text-6xl font-bold text-indigo-300">
           {report.overall_score}/100
         </p>
-        <p className="font-medium text-violet-900">
+        <p className="font-medium text-white/80">
           {(report.overall_score ?? 0) >= 80
             ? "Excellent"
             : (report.overall_score ?? 0) >= 60
@@ -219,21 +219,21 @@ export default async function ReportPage({
 
       {/* Detailed Scores */}
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-200 bg-white p-6">
-          <p className="mb-2 text-sm text-slate-600">Communication</p>
-          <p className="text-3xl font-bold text-slate-900">
+        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <p className="mb-2 text-sm text-white/50">Communication</p>
+          <p className="text-3xl font-bold text-white/80">
             {report.communication || 0}/100
           </p>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-6">
-          <p className="mb-2 text-sm text-slate-600">Technique</p>
-          <p className="text-3xl font-bold text-slate-900">
+        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <p className="mb-2 text-sm text-white/50">Technique</p>
+          <p className="text-3xl font-bold text-white/80">
             {report.technical || 0}/100
           </p>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-6">
-          <p className="mb-2 text-sm text-slate-600">Confiance</p>
-          <p className="text-3xl font-bold text-slate-900">
+        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <p className="mb-2 text-sm text-white/50">Confiance</p>
+          <p className="text-3xl font-bold text-white/80">
             {report.confidence || 0}/100
           </p>
         </div>
@@ -241,12 +241,12 @@ export default async function ReportPage({
 
       {/* Insight clé pour les utilisateurs FREE */}
       {!isPremium && (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-slate-50 p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900">
+        <div className="mb-6 rounded-lg border border-white/[0.08] bg-white/[0.03] p-6">
+          <h3 className="mb-4 text-lg font-semibold text-white/80">
             Insight clé
           </h3>
-          <p className="leading-relaxed text-slate-700">{keyInsight}</p>
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="leading-relaxed text-white/80">{keyInsight}</p>
+          <p className="mt-4 text-sm text-white/50">
             Débloquez l'analyse complète pour voir tous vos points forts et
             axes d'amélioration.
           </p>
@@ -260,16 +260,16 @@ export default async function ReportPage({
           weaknesses={limitedImprovements}
         />
       ) : (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900">
+        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <h3 className="mb-4 text-lg font-semibold text-white/80">
             Points forts et axes d'amélioration
           </h3>
-          <p className="mb-4 text-slate-600">
+          <p className="mb-4 text-white/50">
             {limitedStrengths[0] || "Aucun point fort détecté"}
           </p>
           <div className="relative">
             <div className="pointer-events-none select-none blur-sm opacity-50">
-              <p className="text-slate-400">Contenu premium masqué</p>
+              <p className="text-white/40">Contenu premium masqué</p>
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <UpgradeCTA />
@@ -283,24 +283,24 @@ export default async function ReportPage({
         realRecommendations.length > 0 ? (
           <RecommendationsSection recommendations={realRecommendations} />
         ) : (
-          <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">
+          <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+            <h3 className="mb-4 text-lg font-semibold text-white/80">
               Recommandations
             </h3>
-            <p className="text-slate-600">
+            <p className="text-white/50">
               Aucune recommandation détaillée n'est disponible pour cette
               simulation.
             </p>
           </div>
         )
       ) : (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900">
+        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <h3 className="mb-4 text-lg font-semibold text-white/80">
             Recommandations
           </h3>
           <div className="relative">
             <div className="pointer-events-none select-none blur-sm opacity-50">
-              <p className="text-slate-400">Contenu premium masqué</p>
+              <p className="text-white/40">Contenu premium masqué</p>
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <UpgradeCTA />
@@ -311,9 +311,9 @@ export default async function ReportPage({
 
       {/* Summary */}
       {report.summary && (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900">Résumé</h3>
-          <p className="leading-relaxed text-slate-700">{report.summary}</p>
+        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
+          <h3 className="mb-4 text-lg font-semibold text-white/80">Résumé</h3>
+          <p className="leading-relaxed text-white/80">{report.summary}</p>
         </div>
       )}
 
@@ -322,16 +322,16 @@ export default async function ReportPage({
         <QuestionByQuestionSection items={questionByQuestion} />
       )}
       {!isPremium && questionByQuestion.length > 0 && (
-        <div className="mb-6 rounded-xl border border-ivoire-200 bg-white/70 backdrop-blur-xl p-6 relative overflow-hidden">
-          <h2 className="text-xl font-serif font-semibold text-ink-900 mb-1">
+        <div className="mb-6 rounded-xl border border-white/[0.08] bg-zinc-900 p-6 relative overflow-hidden">
+          <h2 className="text-xl font-serif font-semibold text-white/80 mb-1">
             Analyse de vos réponses
           </h2>
-          <p className="text-sm text-ink-500 mb-4">
+          <p className="text-sm text-white/50 mb-4">
             Analyse détaillée question par question avec exemples de meilleures réponses.
           </p>
           <div className="pointer-events-none select-none blur-sm opacity-40 space-y-3">
             {questionByQuestion.slice(0, 2).map((_, i) => (
-              <div key={i} className="h-16 rounded-xl bg-slate-100" />
+              <div key={i} className="h-16 rounded-xl bg-white/[0.06]" />
             ))}
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -342,11 +342,11 @@ export default async function ReportPage({
 
       {/* Final Recommendation */}
       {report.recommendation && (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-slate-50 p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900">
+        <div className="mb-6 rounded-lg border border-white/[0.08] bg-white/[0.03] p-6">
+          <h3 className="mb-4 text-lg font-semibold text-white/80">
             Recommandation finale
           </h3>
-          <p className="leading-relaxed text-slate-700">
+          <p className="leading-relaxed text-white/80">
             {report.recommendation}
           </p>
         </div>
@@ -356,13 +356,13 @@ export default async function ReportPage({
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
           href="/simulation"
-          className="inline-flex items-center justify-center rounded-lg bg-violet-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-violet-700"
+          className="inline-flex items-center justify-center rounded-lg bg-indigo-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-400"
         >
           Nouvelle simulation
         </Link>
         <Link
           href="/dashboard"
-          className="inline-flex items-center justify-center rounded-lg bg-slate-100 px-6 py-3 font-semibold text-slate-700 transition-colors hover:bg-slate-200"
+          className="inline-flex items-center justify-center rounded-lg bg-white/[0.06] px-6 py-3 font-semibold text-white/80 transition-colors hover:bg-white/[0.1]"
         >
           Retour au tableau de bord
         </Link>
@@ -370,10 +370,10 @@ export default async function ReportPage({
 
       {/* Premium CTA at the end of report */}
       {!isPremium && (
-        <div className="mt-8 rounded-xl bg-gradient-to-r from-violet-600 to-violet-700 p-8 text-white">
+        <div className="mt-8 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 p-8 text-white">
           <div className="space-y-4 text-center">
             <h3 className="text-2xl font-bold">Prêt à aller plus loin ?</h3>
-            <p className="text-violet-100">
+            <p className="text-indigo-100">
               Débloquez l'analyse complète, le plan d'action personnalisé et
               les recommandations avancées.
             </p>
