@@ -55,7 +55,7 @@ function LoginFallback() {
             Connectez-vous pour accéder à votre espace.
           </p>
 
-          <p className="mt-3 text-xs text-white/40">
+          <p className="mt-3 text-xs text-white/50">
             Chargement…
           </p>
         </div>
@@ -215,7 +215,7 @@ function LoginContent() {
           </p>
 
           {sessionState === "checking" && (
-            <p className="mt-3 text-xs text-white/40">
+            <p role="status" className="mt-3 text-xs text-white/50">
               Vérification de session…
             </p>
           )}
@@ -224,7 +224,6 @@ function LoginContent() {
         {error && (
           <div
             role="alert"
-            aria-live="polite"
             className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4"
           >
             <p className="text-rose-300 text-sm font-medium text-center">
@@ -258,7 +257,7 @@ function LoginContent() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href={redirectTo}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
               >
                 Aller au dashboard
               </a>
@@ -296,7 +295,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
-                  className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
                   placeholder="vous@exemple.com"
                   autoComplete="email"
                   required
@@ -313,9 +312,11 @@ function LoginContent() {
                     Mot de passe
                   </label>
 
+                  {/* TODO: créer app/forgot-password/page.tsx */}
                   <Link
                     href="/forgot-password"
-                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                    aria-disabled="true"
+                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 opacity-50 cursor-not-allowed"
                   >
                     Mot de passe oublié ?
                   </Link>
@@ -328,7 +329,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setPassword(e.target.value)
                   }
-                  className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 p-3 text-white/80 placeholder-white/30 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="current-password"
                   required
@@ -339,7 +340,7 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-500 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? "Connexion en cours..."
