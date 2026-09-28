@@ -252,7 +252,6 @@ export default async function DashboardPage() {
   }
 
   // VÃ©rifier si l'utilisateur a complÃ©tÃ© l'onboarding
-  console.log('DB_URL:', process.env.DATABASE_URL?.slice(0, 60))
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
     select: { name: true },

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { motion } from "framer-motion"
 import {
   BarChart3,
   CreditCard,
@@ -15,10 +16,13 @@ import {
   Sparkles,
   Target,
   BriefcaseBusiness,
+  type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const NAV = [
+type NavItem = { label: string; href: string; icon: LucideIcon }
+
+const NAV: NavItem[] = [
   { label: "Aperçu", href: "/dashboard", icon: LayoutDashboard },
   { label: "Opportunités", href: "/opportunities", icon: BriefcaseBusiness },
   { label: "Discovery", href: "/discovery", icon: Radar },
@@ -28,127 +32,140 @@ const NAV = [
   { label: "Progression", href: "/knowledge", icon: BarChart3 },
 ]
 
-const SECONDARY_NAV = [
+const SECONDARY_NAV: NavItem[] = [
   { label: "Abonnement", href: "/pricing", icon: CreditCard },
   { label: "Paramètres", href: "/settings", icon: Settings },
 ]
+
+const focusRing =
+  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
 
 function isActive(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard"
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
+function NavGroup({
+  title,
+  items,
+  pathname,
+}: {
+  title: string
+  items: NavItem[]
+  pathname: string
+}) {
+  return (
+    <div>
+      <p className="mb-1.5 select-none px-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white/35">
+        {title}
+      </p>
+      <div className="space-y-0.5">
+        {items.map(({ label, href, icon: Icon }) => {
+          const active = isActive(pathname, href)
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "relative flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-[13px] font-medium transition-colors duration-150",
+                focusRing,
+                active
+                  ? "text-white/80"
+                  : "text-white/50 hover:bg-white/[0.04] hover:text-white/80",
+              )}
+            >
+              {active ? (
+                <motion.span
+                  layoutId="app-sidebar-active"
+                  aria-hidden
+                  className="absolute inset-0 rounded-lg bg-white/[0.06] ring-1 ring-inset ring-white/[0.08]"
+                  transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                />
+              ) : null}
+              {active ? (
+                <span
+                  aria-hidden
+                  className="absolute -left-3 top-2 h-5 w-[3px] rounded-r-full bg-indigo-500"
+                />
+              ) : null}
+              <Icon
+                className={cn(
+                  "relative size-[17px] shrink-0 transition-colors duration-150",
+                  active ? "text-indigo-400" : "text-white/40",
+                )}
+                strokeWidth={2}
+              />
+              <span className="relative truncate">{label}</span>
+            </Link>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="sticky top-0 hidden h-dvh w-[240px] shrink-0 lg:flex flex-col">
-      <div className="flex h-full flex-col bg-white border-r border-border/60">
-
+    <aside className="sticky top-0 hidden h-dvh w-[240px] shrink-0 flex-col lg:flex">
+      <div className="flex h-full flex-col border-r border-white/[0.06] bg-zinc-950">
         {/* ── Logo ── */}
-        <div className="flex items-center gap-2.5 px-5 pt-5 pb-4">
-          <Link href="/dashboard" className="group flex items-center gap-2.5 min-w-0">
-            <div className="grid size-[30px] shrink-0 place-items-center rounded-lg bg-primary text-white shadow-sm">
+        <div className="flex items-center gap-2.5 px-5 pb-4 pt-5">
+          <Link
+            href="/dashboard"
+            className={cn(
+              "group flex min-w-0 items-center gap-2.5 rounded-lg",
+              focusRing,
+            )}
+          >
+            <div className="grid size-[30px] shrink-0 place-items-center rounded-lg bg-indigo-500 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.1)_inset,0_6px_18px_-6px_rgba(99,102,241,0.7)]">
               <Target className="size-[15px]" strokeWidth={2} />
             </div>
-            <span className="font-semibold text-[15px] tracking-tight text-foreground truncate">
+            <span className="truncate text-[15px] font-semibold tracking-tight text-white/80">
               Trajectoire
             </span>
           </Link>
         </div>
 
         {/* ── Navigation ── */}
-        <nav className="flex-1 overflow-y-auto px-3 py-1 space-y-5">
-
-          {/* Section Principale */}
-          <div>
-            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-foreground-muted/50 select-none">
-              Personnel
-            </p>
-            <div className="space-y-0.5">
-              {NAV.map(({ label, href, icon: Icon }) => {
-                const active = isActive(pathname, href)
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "flex items-center gap-2.5 rounded-lg h-9 px-2.5 text-[13px] transition-all duration-150",
-                      active
-                        ? "bg-primary-50 text-primary font-semibold"
-                        : "text-foreground-muted font-medium hover:bg-slate-50 hover:text-foreground"
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "size-[17px] shrink-0 transition-colors duration-150",
-                        active ? "text-primary" : "text-foreground-muted/60"
-                      )}
-                      strokeWidth={active ? 2.5 : 2}
-                    />
-                    <span className="truncate">{label}</span>
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Section Système */}
-          <div>
-            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-foreground-muted/50 select-none">
-              Système
-            </p>
-            <div className="space-y-0.5">
-              {SECONDARY_NAV.map(({ label, href, icon: Icon }) => {
-                const active = isActive(pathname, href)
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "flex items-center gap-2.5 rounded-lg h-9 px-2.5 text-[13px] transition-all duration-150",
-                      active
-                        ? "bg-primary-50 text-primary font-semibold"
-                        : "text-foreground-muted font-medium hover:bg-slate-50 hover:text-foreground"
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "size-[17px] shrink-0 transition-colors duration-150",
-                        active ? "text-primary" : "text-foreground-muted/60"
-                      )}
-                      strokeWidth={active ? 2.5 : 2}
-                    />
-                    <span className="truncate">{label}</span>
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
+        <nav
+          aria-label="Navigation principale"
+          className="flex-1 space-y-5 overflow-y-auto px-3 py-1"
+        >
+          <NavGroup title="Personnel" items={NAV} pathname={pathname} />
+          <NavGroup title="Système" items={SECONDARY_NAV} pathname={pathname} />
         </nav>
 
         {/* ── Bottom ── */}
-        <div className="border-t border-border/60 px-3 py-3 space-y-0.5">
-          {/* Trajectoire AI shortcut */}
+        <div className="space-y-0.5 border-t border-white/[0.06] px-3 py-3">
           <Link
             href="/simulation/new"
-            className="group flex items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-slate-50 transition-colors duration-150"
+            className={cn(
+              "group flex items-center gap-2.5 rounded-lg px-2.5 py-2 transition-colors duration-150 hover:bg-white/[0.04]",
+              focusRing,
+            )}
           >
-            <div className="grid size-7 shrink-0 place-items-center rounded-md bg-primary-50">
-              <Sparkles className="size-3.5 text-primary" />
+            <div className="grid size-7 shrink-0 place-items-center rounded-md bg-indigo-500/10 ring-1 ring-inset ring-indigo-400/20">
+              <Sparkles className="size-3.5 text-indigo-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-foreground truncate">Trajectoire AI</p>
-              <p className="text-[10px] text-foreground-muted truncate">Simulation · Analyse</p>
+              <p className="truncate text-xs font-medium text-white/80">
+                Trajectoire AI
+              </p>
+              <p className="truncate text-[10px] text-white/40">
+                Simulation · Analyse
+              </p>
             </div>
           </Link>
 
-          {/* Logout */}
           <Link
             href="/logout"
-            className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-foreground-muted/60 transition-colors hover:bg-slate-50 hover:text-foreground"
+            className={cn(
+              "flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-white/40 transition-colors hover:bg-white/[0.04] hover:text-white/80",
+              focusRing,
+            )}
           >
             <LogOut className="size-[14px] shrink-0" />
             Se déconnecter
