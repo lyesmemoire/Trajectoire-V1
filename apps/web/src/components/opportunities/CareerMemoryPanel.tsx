@@ -431,24 +431,24 @@ export function CareerMemoryPanel({
   return (
     <section
       id="career-memory"
-      className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7"
+      className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="rounded-2xl bg-indigo-50 p-3 text-indigo-700">
+          <div className="rounded-2xl bg-indigo-500/10 p-3 text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
             <BrainCircuit className="h-5 w-5" />
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-600">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
               Career Intelligence
             </p>
 
-            <h2 className="mt-1 text-xl font-semibold text-slate-950">
+            <h2 className="mt-1 text-xl font-semibold text-white/80">
               Career Memory
             </h2>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
               Une mémoire professionnelle durable :
               faits, forces et preuves que Trajectoire
               peut réutiliser sans inventer ton parcours.
@@ -466,7 +466,7 @@ export function CareerMemoryPanel({
             onClick={() =>
               void recommendMemories()
             }
-            className="inline-flex items-center gap-2 rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {recommending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -485,7 +485,7 @@ export function CareerMemoryPanel({
                 (current) => !current,
               )
             }}
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+            className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
           >
           {showForm ? (
             <X className="h-4 w-4" />
@@ -517,10 +517,10 @@ export function CareerMemoryPanel({
         />
       </div>
 
-      <div className="mt-5 flex items-start gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/60 px-4 py-3">
-        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
+      <div className="mt-5 flex items-start gap-3 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-4 py-3">
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
 
-        <p className="text-sm leading-6 text-indigo-900">
+        <p className="text-sm leading-6 text-indigo-200">
           Une suggestion détectée par Trajectoire
           reste une hypothèse jusqu’à ta confirmation.
           Seuls les faits confirmés peuvent devenir
@@ -529,7 +529,7 @@ export function CareerMemoryPanel({
       </div>
 
       {error && (
-        <div className="mt-5 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div className="mt-5 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
           {error}
         </div>
       )}
@@ -537,9 +537,9 @@ export function CareerMemoryPanel({
       {showForm && (
         <form
           onSubmit={createMemory}
-          className="mt-6 rounded-[24px] border border-indigo-200 bg-indigo-50/30 p-5 sm:p-6"
+          className="mt-6 rounded-[24px] border border-indigo-400/20 bg-indigo-500/[0.05] p-5 sm:p-6"
         >
-          <div className="flex items-center gap-2 text-indigo-800">
+          <div className="flex items-center gap-2 text-indigo-300">
             <Sparkles className="h-4 w-4" />
 
             <p className="text-sm font-semibold">
@@ -549,7 +549,7 @@ export function CareerMemoryPanel({
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <label className="block">
-              <span className="text-sm font-semibold text-slate-800">
+              <span className="text-sm font-semibold text-white/80">
                 Catégorie
               </span>
 
@@ -562,7 +562,7 @@ export function CareerMemoryPanel({
                       event.target.value,
                   }))
                 }
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
               >
                 <option value="achievement">
                   Réussite
@@ -599,7 +599,7 @@ export function CareerMemoryPanel({
           </div>
 
           <label className="mt-4 block">
-            <span className="text-sm font-semibold text-slate-800">
+            <span className="text-sm font-semibold text-white/80">
               Fait confirmé
             </span>
 
@@ -614,7 +614,7 @@ export function CareerMemoryPanel({
                 }))
               }
               placeholder="Ex. J’ai dirigé une équipe de 8 personnes pendant 2 ans."
-              className="mt-2 w-full resize-y rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+              className="mt-2 w-full resize-y rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
             />
           </label>
 
@@ -622,7 +622,7 @@ export function CareerMemoryPanel({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-2xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -638,18 +638,18 @@ export function CareerMemoryPanel({
 
       <div className="mt-6">
         {loading ? (
-          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-slate-200 bg-slate-50">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-white/[0.1] bg-white/[0.02]">
+            <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
           </div>
         ) : memories.length === 0 ? (
-          <div className="rounded-[24px] border border-dashed border-indigo-200 bg-indigo-50/30 px-6 py-10 text-center">
-            <BrainCircuit className="mx-auto h-7 w-7 text-indigo-500" />
+          <div className="rounded-[24px] border border-dashed border-indigo-400/20 bg-indigo-500/[0.05] px-6 py-10 text-center">
+            <BrainCircuit className="mx-auto h-7 w-7 text-indigo-400" />
 
-            <p className="mt-4 font-semibold text-slate-950">
+            <p className="mt-4 font-semibold text-white/80">
               Career Memory est vide
             </p>
 
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/50">
               Ajoute une première information
               professionnelle fiable. Elle pourra
               ensuite enrichir plusieurs candidatures.
@@ -691,17 +691,17 @@ export function CareerMemoryPanel({
                         />
 
                         {selected && (
-                          <span className="rounded-full bg-violet-100 px-2.5 py-1 text-[11px] font-semibold text-violet-700">
+                          <span className="rounded-full bg-indigo-500/15 px-2.5 py-1 text-[11px] font-semibold text-indigo-300">
                             Preuve active
                           </span>
                         )}
                       </div>
 
-                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
                         {memory.category}
                       </p>
 
-                      <h3 className="mt-1 text-base font-semibold text-slate-950">
+                      <h3 className="mt-1 text-base font-semibold text-white/80">
                         {memory.key}
                       </h3>
                     </div>
@@ -719,7 +719,7 @@ export function CareerMemoryPanel({
                           ? "Retirer des favoris"
                           : "Ajouter aux favoris"
                       }
-                      className="rounded-xl p-2 text-slate-400 transition hover:bg-white hover:text-amber-500 disabled:opacity-50"
+                      className="rounded-xl p-2 text-white/40 transition hover:bg-white/[0.06] hover:text-amber-400 disabled:opacity-50"
                     >
                       <Star
                         className={
@@ -731,30 +731,30 @@ export function CareerMemoryPanel({
                     </button>
                   </div>
 
-                  <p className="mt-4 text-sm leading-6 text-slate-700">
+                  <p className="mt-4 text-sm leading-6 text-white/80">
                     {memory.value}
                   </p>
 
-                  <div className="mt-4 flex items-center justify-between gap-3 text-xs text-slate-500">
+                  <div className="mt-4 flex items-center justify-between gap-3 text-xs text-white/50">
                     <span>
                       Confiance {memory.confidence}%
                     </span>
 
                     {link?.relevance !== null &&
                       link?.relevance !== undefined && (
-                        <span className="font-semibold text-indigo-600">
+                        <span className="font-semibold text-indigo-300">
                           Pertinence {link.relevance}%
                         </span>
                       )}
                   </div>
 
                   {link?.reason && (
-                    <div className="mt-4 rounded-2xl border border-indigo-100 bg-white/70 px-4 py-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-600">
+                    <div className="mt-4 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-4 py-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-300">
                         Contexte candidature
                       </p>
 
-                      <p className="mt-1 text-sm leading-5 text-slate-600">
+                      <p className="mt-1 text-sm leading-5 text-white/50">
                         {link.reason}
                       </p>
                     </div>
@@ -772,7 +772,7 @@ export function CareerMemoryPanel({
                             "confirm",
                           )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:opacity-50"
                       >
                         {busy ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -792,7 +792,7 @@ export function CareerMemoryPanel({
                             "reject",
                           )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-rose-400/25 bg-rose-500/5 px-4 py-2.5 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/15 disabled:opacity-50"
                       >
                         <XCircle className="h-4 w-4" />
                         Rejeter
@@ -813,8 +813,8 @@ export function CareerMemoryPanel({
                         }
                         className={
                           selected
-                            ? "inline-flex items-center justify-center gap-2 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-2.5 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 disabled:opacity-50"
-                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-50"
+                            ? "inline-flex items-center justify-center gap-2 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20 disabled:opacity-50"
+                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50"
                         }
                       >
                         {busy ? (
@@ -840,7 +840,7 @@ export function CareerMemoryPanel({
                           )
                         }
                         aria-label="Archiver"
-                        className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-3 py-2.5 text-slate-500 transition hover:bg-slate-50 disabled:opacity-50"
+                        className="inline-flex items-center justify-center rounded-2xl border border-white/[0.1] bg-white/[0.04] px-3 py-2.5 text-white/50 transition hover:bg-white/[0.08] hover:text-white/80 disabled:opacity-50"
                       >
                         <Archive className="h-4 w-4" />
                       </button>
@@ -851,7 +851,7 @@ export function CareerMemoryPanel({
                     "REJECTED" ||
                     memory.status ===
                       "ARCHIVED") && (
-                    <div className="mt-5 rounded-2xl bg-slate-100 px-4 py-3 text-xs font-medium text-slate-500">
+                    <div className="mt-5 rounded-2xl bg-white/[0.05] px-4 py-3 text-xs font-medium text-white/50">
                       Cette information n’est pas
                       utilisée comme preuve active.
                     </div>
@@ -874,12 +874,12 @@ function Metric({
   value: number
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
         {label}
       </p>
 
-      <p className="mt-1 text-xl font-semibold text-slate-950">
+      <p className="mt-1 text-xl font-semibold text-white/80">
         {value}
       </p>
     </div>
@@ -893,7 +893,7 @@ function StatusBadge({
 }) {
   if (status === "CONFIRMED") {
     return (
-      <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
+      <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-semibold text-emerald-300">
         Confirmé
       </span>
     )
@@ -901,7 +901,7 @@ function StatusBadge({
 
   if (status === "SUGGESTED") {
     return (
-      <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-700">
+      <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-[11px] font-semibold text-amber-300">
         À confirmer
       </span>
     )
@@ -909,14 +909,14 @@ function StatusBadge({
 
   if (status === "REJECTED") {
     return (
-      <span className="rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-semibold text-rose-700">
+      <span className="rounded-full bg-rose-500/15 px-2.5 py-1 text-[11px] font-semibold text-rose-300">
         Rejeté
       </span>
     )
   }
 
   return (
-    <span className="rounded-full bg-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+    <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/50">
       Archivé
     </span>
   )
@@ -935,7 +935,7 @@ function OriginBadge({
         : "Utilisateur"
 
   return (
-    <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-500">
+    <span className="rounded-full border border-white/[0.1] bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-white/50">
       {label}
     </span>
   )
@@ -946,21 +946,21 @@ function cardClass(
   selected: boolean,
 ) {
   if (selected) {
-    return "rounded-[24px] border border-violet-200 bg-violet-50/40 p-5"
+    return "rounded-[24px] border border-indigo-400/25 bg-indigo-500/[0.06] p-5"
   }
 
   if (status === "SUGGESTED") {
-    return "rounded-[24px] border border-amber-200 bg-amber-50/40 p-5"
+    return "rounded-[24px] border border-amber-400/25 bg-amber-500/[0.06] p-5"
   }
 
   if (
     status === "REJECTED" ||
     status === "ARCHIVED"
   ) {
-    return "rounded-[24px] border border-slate-200 bg-slate-50 p-5 opacity-75"
+    return "rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-5 opacity-75"
   }
 
-  return "rounded-[24px] border border-emerald-100 bg-emerald-50/20 p-5"
+  return "rounded-[24px] border border-emerald-400/20 bg-emerald-500/[0.04] p-5"
 }
 
 function Field({
@@ -976,7 +976,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-semibold text-slate-800">
+      <span className="text-sm font-semibold text-white/80">
         {label}
       </span>
 
@@ -986,7 +986,7 @@ function Field({
           onChange(event.target.value)
         }
         placeholder={placeholder}
-        className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+        className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
       />
     </label>
   )
