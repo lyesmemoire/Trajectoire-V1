@@ -85,8 +85,20 @@ Kernel par couches : `layer0-kernel` (KernelState, Bayesian/Confidence/Contradic
 3. Voix (3 chemins coexistent) :
    - **Gateway** `apps/realtime-gateway` (WS binaire PCM 16 kHz, Deepgram + ElevenLabs), hook `useVoiceInterview`, rewrite `/api/gateway/*` → `NEXT_PUBLIC_GATEWAY_URL` (défaut `http://localhost:3001`).
    - **Routes Next** `/api/interview/transcribe` + `/speak` (déprécié selon la doc gateway).
-   - **OpenAI Realtime WebRTC** (en cours, non commité) : `POST /api/interview/realtime-session` (token éphémère + kernel HIIOS) + hook `useRealtimeInterview`.
+   - **OpenAI Realtime WebRTC** (commit `8cdcad24`) : `POST /api/interview/realtime-session` (token éphémère + kernel HIIOS) + hook `useRealtimeInterview`, utilisé par `simulation/[id]/page.tsx`.
 4. `POST /api/simulation/end` → `POST /api/report/generate` → page `report/[id]`.
+
+### Onboarding (`/onboarding`)
+
+Parcours plein écran en 3 étapes, **hors** de `(app)/` (pas de sidebar) : poste visé (intitulé, secteur, niveau) → profil (nom, CV optionnel) → premier objectif (type d'entretien) avec récapitulatif modifiable avant envoi.
+
+- **Page** `app/onboarding/page.tsx` (serveur) : session Supabase (`/login` si absente) ; garde inverse `/dashboard` si `users.onboardingCompleted` ; préremplit le nom. **Layout** `app/onboarding/layout.tsx` : plein écran zinc-950 avec les tokens sombres partagés `lib/theme/dark-tokens.ts` (aussi utilisés par `(app)/layout.tsx`).
+- **Composants** `components/onboarding/` : `OnboardingWizard` (état, `AnimatePresence`, barre de progression `role="progressbar"`, soumission puis `router.push("/dashboard")`), `StepTargetJob`, `StepProfile`, `StepGoal`, `constants.ts` (enums réexportés du schéma Zod, classes partagées, formulation CV). Framer Motion sous `MotionConfig reducedMotion="user"` ; radios HTML natives ; zinc-950 / indigo-500.
+- **CV** : upload seul via `/api/cv/upload` (extraction du texte), **rien n'est stocké ni analysé** ; seul l'indicateur `cvProvided` est enregistré. Formulation validée, à conserver telle quelle : « Votre CV est lu pour personnaliser votre expérience. Vous pourrez lancer l'analyse complète depuis votre tableau de bord. »
+- **API** `POST /api/onboarding/complete` : corps `{ targetJob: { title, sector, level }, name, goal: { interviewType }, cvProvided }` validé par `validation/CompleteOnboardingSchema.ts` (`strict()` : un `userId` client est rejeté). L'identité vient **uniquement** de la session ; écriture par `prisma.user.updateMany({ where: { id: session } })`. Réponses 200 `{ success: true }`, 400, 401, 409 (profil absent), 500. Règle `AuthorizationV2` : `/api/onboarding` → AUTHENTICATED (le défaut d'`AuthorizationV2` est **fail-open** : toute route non listée est publique).
+- **Données** : `users.onboardingCompleted` (existant), `users.onboardingData` (JSONB `{ version: 1, targetJob, goal, cvProvided }`), `users.onboardingCompletedAt`. Migration `prisma/migrations/20260927_add_onboarding_data_to_users/` (`ADD COLUMN IF NOT EXISTS`) : **non appliquée** à Supabase.
+- **Tests** : `validation/CompleteOnboardingSchema.test.ts`, `app/api/onboarding/complete/route.test.ts` (Supabase, Prisma et logger mockés).
+- **Pas encore branché** : aucune redirection des nouveaux utilisateurs vers `/onboarding` (ticket `check-access` à venir). `lib/onboarding/*` et `types/onboarding.ts` sont un ancien moteur jamais utilisé, indépendant du parcours ci-dessus.
 
 ## Base de données
 
@@ -95,6 +107,7 @@ Kernel par couches : `layer0-kernel` (KernelState, Bayesian/Confidence/Contradic
 - Modèles applicatifs : `User`, `CareerProfile`, `InterviewSession`/`interview_sessions`/`interview_messages`/`reports`, `SimulationSession`, `PremiumInterviewSession`, `CVAnalysis`, `CvRewrite`, `PreviewAnalysis`, `Subscription`, `UserPurchase`, `CreditTransaction`/`CreditUsage`/`credits_ledger`, `StripeEvent`/`ProcessedWebhook`/`Idempotency`, `Opportunity`, `ApplicationWorkspace`, `CareerStory`, `OpportunityStory`, `CareerMemory`, `OpportunityMemory`, `DiscoverySource`, `DiscoveredJob`, `Graph*` (knowledge graph, pgvector), `DataLineage`, `AIUsageLog`, `AdminAuditLog`, `Behavior*`/`User*Profile`, `PublicChallenge*`, `WaitlistEntry`, `badges`/`user_badges`/`user_goals`.
 - Enums : `OpportunityStatus`, `UserRole`, `Plan`, `WorkspaceReadiness`, `CareerMemoryOrigin/Status`, `DiscoveryProvider`, `DiscoveryJobStatus`.
 - Migrations récentes dans `prisma/migrations/` (2026-09) ; SQL historique dans `supabase/` (`consolidated-migration.sql`, `patches-v*.sql`).
+- **Ordre de déploiement** : appliquer une migration additive à Supabase **avant** de déployer le code dont le client Prisma la connaît, sinon toute requête `prisma.<modèle>.*` sans `select` échoue. La migration `20260927_add_onboarding_data_to_users` est actuellement **en attente d'application**.
 
 ## Services externes
 
@@ -139,13 +152,11 @@ CI (`.github/workflows/ci-cd.yml`, Node 22, pnpm 9.15.9) : lint → typecheck �
 - Les recherches larges à la racine sont très lentes (≈170 000 fichiers avec `node_modules`) : cibler `apps/web/src/...`.
 - `scripts/` contient surtout des one-shots historiques (codemods `fix-*`, `codemod-*`, `phase*`, `exec-00*`) — ne pas les relancer sans les lire.
 
-## État en cours (working tree au moment de l'exploration)
+## État en cours
 
-Branche `main` ; dernier commit `c507d5ef feat(design): refonte UI simulation, dashboard, discovery, opportunities`. Modifications non commitées :
-
-- `apps/web/src/app/(app)/simulation/[id]/page.tsx` (modifié) + nouveau `layout.tsx` (plein écran `fixed inset-0 z-50`).
-- Nouveau `api/interview/realtime-session/route.ts` : crée une session OpenAI Realtime (`gpt-4o-realtime-preview-2025-06-03`, voix `alloy`, VAD serveur) + `KernelState` HIIOS. ⚠️ Les sessions sont stockées dans une `Map` **en mémoire** (`realtimeSessions`) : non fiable en serverless/multi-instance, à persister avant prod. Pas de quota/rate-limit sur cette route.
-- Nouveau hook `hooks/useRealtimeInterview.ts` (WebRTC + DataChannel, transcripts partiels) et une copie parasite `.ts.txt` à supprimer.
+- **Simulation Realtime** (`api/interview/realtime-session/route.ts`, hook `useRealtimeInterview`, page `simulation/[id]`) : commitée. ⚠️ Les sessions sont stockées dans une `Map` **en mémoire** (`realtimeSessions`) : non fiable en serverless/multi-instance, à persister avant prod. Pas de quota ni de rate-limit sur cette route.
+- **Onboarding** : commits 1 à 4 sur `main` (colonnes + schéma Zod, route + autorisation, UI, tests). Migration **non appliquée** ; redirection des nouveaux utilisateurs non branchée (voir « Onboarding »).
+- **TypeScript** : `pnpm typecheck` à 0 erreur. **Vitest** (`apps/web`, suite complète, mesurée au commit `8b15a37c`) : 579 tests passent, 49 échouent, plus 14 fichiers `src/e2e/**` en erreur (ils relèvent de Playwright mais Vitest les ramasse). Aucun de ces échecs ne référence des fichiers de l'onboarding : tests `preview/*` et `preview-analysis/*` qui exigent une base, `rate-limiting` qui exige Redis, `PreviewTokenManager` qui exige `window`, `ssrf`, hash `core/p7`. Les tests de l'onboarding passent (56). ⚠️ `lib/preview/__tests__/PreviewStorageService.test.ts` appelle `prisma.previewAnalysis.deleteMany()` dans son `beforeEach` : ne jamais le lancer avec une `DATABASE_URL` réelle en environnement.
 
 ## Sources de vérité (et ce qui est périmé)
 
