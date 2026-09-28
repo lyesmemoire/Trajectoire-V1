@@ -302,18 +302,18 @@ export function DashboardWidgets({
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative isolate min-h-[calc(100dvh-4rem)] overflow-hidden rounded-2xl bg-zinc-950 text-white/80 ring-1 ring-white/[0.06]">
-        {/* Halo d'ambiance */}
+      <div className="relative isolate min-h-[calc(100dvh-4rem)] text-white/80">
+        {/* Halo d'ambiance (le fond zinc-950 vient du layout (app)) */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.16),transparent_70%)]"
+          className="pointer-events-none absolute inset-x-0 -top-8 -z-10 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.16),transparent_70%)]"
         />
 
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="mx-auto w-full max-w-[1200px] space-y-8 p-5 sm:p-8 lg:p-10"
+          className="mx-auto w-full max-w-[1200px] space-y-8"
         >
           {/* Header */}
           <motion.header
