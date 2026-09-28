@@ -1,8 +1,46 @@
 import type { ReactNode } from "react"
+import { redirect } from "next/navigation"
 import { AppSidebar } from "@/components/app/AppSidebar"
+import { logger } from "@/lib/logger"
+import { shouldRedirectToOnboarding } from "@/lib/onboarding/shouldRedirectToOnboarding"
+import { prisma } from "@/lib/prisma"
+import { createClient } from "@/lib/supabase/server"
 import { darkTokens } from "@/lib/theme/dark-tokens"
 
-export default function AppGroupLayout({ children }: { children: ReactNode }) {
+export default async function AppGroupLayout({ children }: { children: ReactNode }) {
+  // Garde d'onboarding : un compte récent qui n'a pas terminé l'onboarding y est renvoyé.
+  //
+  // - /onboarding vit HORS de (app)/ : ce layout ne s'exécute jamais pour cette route,
+  //   donc aucune boucle de redirection possible.
+  // - L'authentification reste gérée par le middleware et par chaque page : sans session
+  //   ici, on ne fait rien.
+  // - Ce n'est pas une barrière de sécurité, seulement un confort d'usage : en cas
+  //   d'erreur (base indisponible…), on laisse passer plutôt que de bloquer toute l'app.
+  // - redirect() lève une exception spéciale de Next : il doit rester HORS du try/catch.
+  let sendToOnboarding = false
+
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user: authUser },
+    } = await supabase.auth.getUser()
+
+    if (authUser) {
+      const user = await prisma.user.findUnique({
+        where: { id: authUser.id },
+        select: { onboardingCompleted: true, createdAt: true },
+      })
+
+      sendToOnboarding = shouldRedirectToOnboarding(user)
+    }
+  } catch (error) {
+    logger.error({ err: error }, "Onboarding guard failed")
+  }
+
+  if (sendToOnboarding) {
+    redirect("/onboarding")
+  }
+
   return (
     <div
       style={darkTokens}
