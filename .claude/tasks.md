@@ -13,8 +13,6 @@ _(rien — dernier item traité : commit `ef30a9a7`)_
 
 ## Après redesign complet
 - [ ] `components/premium/BlurOverlay.tsx` : code mort (référencé nulle part, vérifié par grep 2026-09-29) — utilise encore ivoire/ink/bronze, non traité faute d'usage réel. Ne pas le restyler avant d'avoir confirmé qu'il reste mort ; sinon le supprimer avec `types/permissions` si devenu orphelin.
-- [ ] `check-access` (`app/api/auth/check-access/route.ts`) : ajouter la redirection vers `/onboarding` si `!onboardingCompleted` — actuellement la route lit `onboardingCompleted` mais ne redirige pas (seul `(app)/layout.tsx` le fait, voir CLAUDE.md § Onboarding)
-
 ## Terminé ✅ (vérifié par `git log`)
 - [x] `route POST /api/onboarding/complete` + règle AuthorizationV2 (`61ff73cc`)
 - [x] Onboarding UI — 8 fichiers, layout plein écran + wizard (`721a9c5c`)
@@ -30,3 +28,4 @@ _(rien — dernier item traité : commit `ef30a9a7`)_
 - [x] `/forgot-password` (`4e741111`)
 - [x] `/reset-password` — formulaire nouveau mot de passe, `supabase.auth.updateUser`, redirect `/login` (`ef30a9a7`)
 - [x] Audit "Button violet" : sur les 4 fichiers listés, 3 étaient du code mort (jamais importés sous `app/`) → supprimés avec leur cluster complet (`components/ats/*` 11 fichiers + `types/ats.ts`, `components/interview/InterviewResults.tsx` + `CommitteeDecisionReveal.tsx` (dépendance devenue orpheline), `components/cv-editor/CVEditorShell.tsx` + `ExperienceEditor.tsx` + `types/cv.ts`), vérifié par grep récursif avant suppression. Le vrai bug live n'était pas un bouton violet mais `components/premium/PremiumModal.tsx` + `UpgradeCTA.tsx` (rendus 4× sur `/report/[id]`, page déjà dark) : entièrement en thème clair (`bg-white`, `ivoire`, `ink`, `bronze`) — réécrits en JSX + tokens zinc-900/indigo-500/`text-white/80` cohérents avec le reste de `/report`. `tsc --noEmit` et ESLint à 0 sur les deux fichiers. Non vérifié visuellement en navigateur (DB applicative cassée, voir `.env` ci-dessus) : à confirmer visuellement quand la connexion sera rétablie.
+- [x] `check-access` — vérifié le 2026-09-29 : **pas d'action nécessaire**. La route (`app/api/auth/check-access/route.ts`) est une API JSON interne (garde `x-internal-request === 'middleware'`), jamais appelée par `middleware.ts` ni par aucun composant client (grep récursif sur `apps/web/src`) — son commentaire d'en-tête ("Appelée par le middleware") est obsolète. Ses seuls appelants sont des tests e2e qui attendent du JSON. Y ajouter un `redirect()` casserait ce contrat sans jamais atteindre le navigateur. La redirection `/onboarding` demandée existe déjà, correctement, via `(app)/layout.tsx` + `lib/onboarding/shouldRedirectToOnboarding.ts` (`4901929a`).
