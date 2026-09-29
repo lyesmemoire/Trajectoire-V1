@@ -16,13 +16,13 @@ export function RecommendationsSection({ recommendations }: RecommendationsSecti
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "high":
-        return "bg-brick-100 text-brick-700 border-brick-200"
+        return "bg-rose-500/10 text-rose-300 border-rose-400/20"
       case "medium":
-        return "bg-terracotta-100 text-terracotta-700 border-terracotta-200"
+        return "bg-amber-500/10 text-amber-300 border-amber-400/20"
       case "low":
-        return "bg-bronze-100 text-bronze-700 border-bronze-200"
+        return "bg-indigo-500/10 text-indigo-300 border-indigo-400/20"
       default:
-        return "bg-ivoire-100 text-ink-700 border-ivoire-200"
+        return "bg-white/[0.04] text-white/70 border-white/[0.08]"
     }
   }
 
@@ -41,9 +41,9 @@ export function RecommendationsSection({ recommendations }: RecommendationsSecti
 
   if (recommendations.length === 0) {
     return (
-      <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200">
-        <h3 className="text-lg font-semibold text-ink-900 mb-4">Recommandations</h3>
-        <p className="text-ink-600">Aucune recommandation pour le moment. Continuez à pratiquer!</p>
+      <div className="bg-zinc-900 p-6 rounded-lg border border-white/[0.08]">
+        <h3 className="text-lg font-semibold text-white/80 mb-4">Recommandations</h3>
+        <p className="text-white/50">Aucune recommandation pour le moment. Continuez à pratiquer!</p>
       </div>
     )
   }
@@ -54,18 +54,18 @@ export function RecommendationsSection({ recommendations }: RecommendationsSecti
   })
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200">
-      <h3 className="text-lg font-semibold text-ink-900 mb-4">Recommandations</h3>
+    <div className="bg-zinc-900 p-6 rounded-lg border border-white/[0.08]">
+      <h3 className="text-lg font-semibold text-white/80 mb-4">Recommandations</h3>
       <div className="space-y-3">
         {sortedRecommendations.map((rec) => (
           <div
             key={rec.id}
-            className="border rounded-lg p-4 hover:bg-ivoire-50 transition-colors"
+            className="border border-white/[0.08] rounded-lg p-4 hover:bg-white/[0.03] transition-colors"
           >
             <div className="flex justify-between items-start mb-2">
               <div className="flex-1">
-                <p className="font-medium text-ink-900">{rec.title}</p>
-                <p className="text-xs text-ink-500 mt-1">{rec.category}</p>
+                <p className="font-medium text-white/80">{rec.title}</p>
+                <p className="text-xs text-white/40 mt-1">{rec.category}</p>
               </div>
               <span
                 className={`px-2 py-1 text-xs font-medium rounded border ${getPriorityColor(rec.priority)}`}
@@ -73,7 +73,7 @@ export function RecommendationsSection({ recommendations }: RecommendationsSecti
                 {getPriorityLabel(rec.priority)}
               </span>
             </div>
-            <p className="text-sm text-ink-600">{rec.description}</p>
+            <p className="text-sm text-white/50">{rec.description}</p>
           </div>
         ))}
       </div>
