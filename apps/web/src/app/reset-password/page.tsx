@@ -11,6 +11,20 @@ type Status = "idle" | "loading" | "success" | "error"
 
 const MIN_PASSWORD_LENGTH = 8
 
+// Témoin posé par /api/auth/callback quand le lien de réinitialisation a été
+// consommé (voir app/api/auth/callback/route.ts). Garde d'usage : Supabase reste l'autorité.
+const RECOVERY_COOKIE = "pw_recovery"
+
+function hasRecoveryMarker() {
+  return document.cookie
+    .split("; ")
+    .some((entry) => entry === `${RECOVERY_COOKIE}=1`)
+}
+
+function clearRecoveryMarker() {
+  document.cookie = `${RECOVERY_COOKIE}=; Max-Age=0; path=/`
+}
+
 export default function ResetPasswordPage() {
   const router = useRouter()
 
@@ -24,7 +38,9 @@ export default function ResetPasswordPage() {
   // (PKCE : la session est déjà posée en cookie), soit — selon la
   // configuration du template Supabase — avec un jeton de récupération dans
   // le hash de l'URL, que le client détecte automatiquement et traduit en
-  // évènement PASSWORD_RECOVERY. On couvre les deux cas.
+  // évènement PASSWORD_RECOVERY. On couvre les deux cas. Une session ouverte
+  // « normalement » (sans témoin de récupération) est refusée : la page ne
+  // sert pas à changer le mot de passe d'un compte déjà connecté.
   useEffect(() => {
     const supabase = createClient()
     let cancelled = false
@@ -39,7 +55,11 @@ export default function ResetPasswordPage() {
     supabase.auth.getSession().then(({ data }) => {
       if (cancelled) return
       setSessionState((current) =>
-        current === "ready" ? current : data.session ? "ready" : "invalid"
+        current === "ready"
+          ? current
+          : data.session && hasRecoveryMarker()
+            ? "ready"
+            : "invalid"
       )
     })
 
@@ -81,6 +101,11 @@ export default function ResetPasswordPage() {
         setStatus("error")
         return
       }
+
+      // La session de récupération ne doit pas rester ouverte : sinon /login
+      // afficherait « déjà connecté » juste après la réinitialisation.
+      clearRecoveryMarker()
+      await supabase.auth.signOut().catch(() => undefined)
 
       setStatus("success")
       setTimeout(() => {

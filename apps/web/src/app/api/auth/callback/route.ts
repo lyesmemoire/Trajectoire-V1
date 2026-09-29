@@ -23,6 +23,12 @@ import { logger } from "@/lib/logger"
 
 export const dynamic = "force-dynamic"
 
+// Témoin posé quand le lien mène à la réinitialisation du mot de passe :
+// /reset-password ne s'ouvre qu'avec lui (sinon n'importe quelle session
+// ouverte pourrait y changer son mot de passe). Garde d'usage côté client,
+// pas une barrière de sécurité : Supabase reste l'autorité sur updateUser.
+const RECOVERY_COOKIE = "pw_recovery"
+
 const OTP_TYPES: readonly EmailOtpType[] = [
   "signup",
   "invite",
@@ -94,5 +100,16 @@ export async function GET(request: NextRequest) {
     return loginError(origin, "link_invalid")
   }
 
-  return NextResponse.redirect(`${origin}${next}`)
+  const response = NextResponse.redirect(`${origin}${next}`)
+
+  if (next === "/reset-password") {
+    response.cookies.set(RECOVERY_COOKIE, "1", {
+      maxAge: 15 * 60,
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    })
+  }
+
+  return response
 }
