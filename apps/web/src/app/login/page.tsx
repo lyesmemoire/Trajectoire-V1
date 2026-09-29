@@ -32,6 +32,31 @@ function sanitizeRedirect(value: string | null) {
   return value
 }
 
+// Codes d'erreur posés par /api/auth/callback (`?error=`). Le message Supabase
+// brut n'est jamais affiché : toute valeur inconnue retombe sur un message
+// générique.
+const CALLBACK_ERRORS: Record<string, string> = {
+  link_expired:
+    "Ce lien a expiré. Demandez-en un nouveau depuis « Mot de passe oublié » ou reconnectez-vous.",
+  link_invalid:
+    "Ce lien n'est plus valide ou a déjà été utilisé. Demandez-en un nouveau ou connectez-vous.",
+  missing_code:
+    "Le lien de confirmation est incomplet. Ouvrez-le depuis l'e-mail reçu ou demandez-en un nouveau.",
+}
+
+const GENERIC_CALLBACK_ERROR =
+  "La confirmation a échoué. Veuillez réessayer ou vous connecter."
+
+// `?reason=` est posé par le middleware (texte libre) : on n'affiche que des
+// messages maîtrisés, jamais la valeur de l'URL.
+function reasonNotice(reason: string | null): string {
+  if (!reason) return ""
+  if (reason === "Authentication required") {
+    return "Connectez-vous pour accéder à cette page."
+  }
+  return "Vous n'avez pas accès à cette page avec ce compte."
+}
+
 function LoginFallback() {
   return (
     <div
@@ -72,6 +97,17 @@ function LoginContent() {
 
   const redirectTo = useMemo(
     () => sanitizeRedirect(searchParams.get("redirect")),
+    [searchParams]
+  )
+
+  const urlError = useMemo(() => {
+    const code = searchParams.get("error")
+    if (!code) return ""
+    return CALLBACK_ERRORS[code] ?? GENERIC_CALLBACK_ERROR
+  }, [searchParams])
+
+  const urlNotice = useMemo(
+    () => reasonNotice(searchParams.get("reason")),
     [searchParams]
   )
 
@@ -221,13 +257,24 @@ function LoginContent() {
           )}
         </div>
 
-        {error && (
+        {(error || urlError) && (
           <div
             role="alert"
             className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4"
           >
             <p className="text-rose-300 text-sm font-medium text-center">
-              {error}
+              {error || urlError}
+            </p>
+          </div>
+        )}
+
+        {!error && !urlError && urlNotice && (
+          <div
+            role="status"
+            className="mb-6 rounded-xl border border-indigo-400/20 bg-indigo-500/10 p-4"
+          >
+            <p className="text-indigo-200 text-sm font-medium text-center">
+              {urlNotice}
             </p>
           </div>
         )}
