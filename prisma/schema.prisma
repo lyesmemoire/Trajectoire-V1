@@ -30,6 +30,8 @@ model User {
   onboardingCompleted    Boolean                  @default(false)
   onboardingData         Json?
   onboardingCompletedAt  DateTime?
+  packExpiresAt          DateTime?
+  simulationsUsed        Int                      @default(0)
   AIUsageLog             AIUsageLog[]
   Account                Account[]
   AdminAuditLog          AdminAuditLog[]
@@ -1686,9 +1688,8 @@ enum UserRole {
 
 enum Plan {
   FREE
+  PACK
   PRO
-  EXPERT
-  STARTER
 
   @@schema("public")
 }
