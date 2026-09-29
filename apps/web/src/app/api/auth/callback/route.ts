@@ -20,6 +20,7 @@ import { NextRequest, NextResponse } from "next/server"
 import type { EmailOtpType } from "@supabase/supabase-js"
 import { createClient } from "@/lib/supabase/server"
 import { logger } from "@/lib/logger"
+import { PreviewTransferService } from "@/lib/preview/PreviewTransferService"
 
 export const dynamic = "force-dynamic"
 
@@ -28,6 +29,12 @@ export const dynamic = "force-dynamic"
 // ouverte pourrait y changer son mot de passe). Garde d'usage côté client,
 // pas une barrière de sécurité : Supabase reste l'autorité sur updateUser.
 const RECOVERY_COOKIE = "pw_recovery"
+
+// Jeton de l'analyse preview anonyme, posé par /signup : la confirmation
+// d'e-mail s'ouvre souvent dans un autre onglet, où le sessionStorage de
+// l'onglet d'origine est perdu. Le claim se fait donc ici, côté serveur, dès
+// que la session existe.
+const PREVIEW_COOKIE = "preview_token"
 
 const OTP_TYPES: readonly EmailOtpType[] = [
   "signup",
@@ -101,6 +108,34 @@ export async function GET(request: NextRequest) {
   }
 
   const response = NextResponse.redirect(`${origin}${next}`)
+
+  const previewToken = request.cookies.get(PREVIEW_COOKIE)?.value
+  if (previewToken) {
+    // Jamais bloquant : un claim raté (jeton expiré, déjà consommé) ne doit pas
+    // empêcher la connexion. Le témoin est supprimé dans tous les cas.
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (user) {
+        const result = await PreviewTransferService.transferPreviewToUser(
+          previewToken,
+          user.id,
+        )
+        if (!result.success) {
+          logger.warn(
+            { userId: user.id, reason: result.error },
+            "[auth/callback] claim de la preview refusé",
+          )
+        }
+      }
+    } catch (err) {
+      logger.error({ err }, "[auth/callback] claim de la preview échoué")
+    }
+
+    response.cookies.delete(PREVIEW_COOKIE)
+  }
 
   if (next === "/reset-password") {
     response.cookies.set(RECOVERY_COOKIE, "1", {

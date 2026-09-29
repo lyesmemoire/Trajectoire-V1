@@ -15,7 +15,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   
-  const { claimPreview, hasToken, clearToken } = usePreviewStorage()
+  const { token: previewToken, claimPreview, hasToken } = usePreviewStorage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,8 +42,7 @@ export default function SignupPage() {
 
     try {
       const supabase = createClient()
-      // TODO: créer app/api/auth/callback/route.ts (échange code → session)
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -62,17 +61,27 @@ export default function SignupPage() {
           password,
         })
         if (!signInError) {
+          // Session ouverte : le claim peut se faire tout de suite.
+          if (hasToken()) await claimPreview()
           window.location.href = '/simulation/new'
           return
         }
       }
 
-      setSuccess(true)
-
-      // Auto-claim de la preview si un token existe
       if (hasToken()) {
-        await claimPreview()
+        if (signUpData.session) {
+          // Confirmation d'e-mail désactivée : la session existe déjà.
+          await claimPreview()
+        } else if (previewToken) {
+          // Pas de session avant la confirmation : le token voyage par cookie
+          // (le sessionStorage ne survit pas à un autre onglet) et
+          // /api/auth/callback fait le claim une fois la session créée.
+          const secure = window.location.protocol === 'https:' ? '; Secure' : ''
+          document.cookie = `preview_token=${encodeURIComponent(previewToken)}; Max-Age=86400; Path=/; SameSite=Lax${secure}`
+        }
       }
+
+      setSuccess(true)
     } catch (err: any) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer.")
     } finally {
