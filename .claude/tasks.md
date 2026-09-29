@@ -12,7 +12,7 @@ _(rien — dernier item traité : commit `ef30a9a7`)_
 - [ ] Vitest : 49 tests en échec hors onboarding (`rate-limiting` exige Redis, `PreviewTokenManager` exige `window`, `ssrf`, hash `core/p7`) — connu, non traité
 
 ## Après redesign complet
-- [ ] Audit Button violet — usages non restylés du variant par défaut/`primary` dans `components/ats/ATSFooter.tsx`, `components/interview/InterviewResults.tsx`, `components/cv-editor/CVEditorShell.tsx`, `components/cv-editor/ExperienceEditor.tsx`, `components/premium/*` (vérifié par grep, 2026-09-29)
+- [ ] `components/premium/BlurOverlay.tsx` : code mort (référencé nulle part, vérifié par grep 2026-09-29) — utilise encore ivoire/ink/bronze, non traité faute d'usage réel. Ne pas le restyler avant d'avoir confirmé qu'il reste mort ; sinon le supprimer avec `types/permissions` si devenu orphelin.
 - [ ] `check-access` (`app/api/auth/check-access/route.ts`) : ajouter la redirection vers `/onboarding` si `!onboardingCompleted` — actuellement la route lit `onboardingCompleted` mais ne redirige pas (seul `(app)/layout.tsx` le fait, voir CLAUDE.md § Onboarding)
 
 ## Terminé ✅ (vérifié par `git log`)
@@ -29,3 +29,4 @@ _(rien — dernier item traité : commit `ef30a9a7`)_
 - [x] `/api/auth/callback` — échange code → session (`7489042a`)
 - [x] `/forgot-password` (`4e741111`)
 - [x] `/reset-password` — formulaire nouveau mot de passe, `supabase.auth.updateUser`, redirect `/login` (`ef30a9a7`)
+- [x] Audit "Button violet" : sur les 4 fichiers listés, 3 étaient du code mort (jamais importés sous `app/`) → supprimés avec leur cluster complet (`components/ats/*` 11 fichiers + `types/ats.ts`, `components/interview/InterviewResults.tsx` + `CommitteeDecisionReveal.tsx` (dépendance devenue orpheline), `components/cv-editor/CVEditorShell.tsx` + `ExperienceEditor.tsx` + `types/cv.ts`), vérifié par grep récursif avant suppression. Le vrai bug live n'était pas un bouton violet mais `components/premium/PremiumModal.tsx` + `UpgradeCTA.tsx` (rendus 4× sur `/report/[id]`, page déjà dark) : entièrement en thème clair (`bg-white`, `ivoire`, `ink`, `bronze`) — réécrits en JSX + tokens zinc-900/indigo-500/`text-white/80` cohérents avec le reste de `/report`. `tsc --noEmit` et ESLint à 0 sur les deux fichiers. Non vérifié visuellement en navigateur (DB applicative cassée, voir `.env` ci-dessus) : à confirmer visuellement quand la connexion sera rétablie.

@@ -5,7 +5,7 @@
 
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { X, Sparkles, Check, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Permission } from '@/types/permissions'
@@ -21,17 +21,49 @@ interface PremiumModalProps {
   onClose: () => void
 }
 
+const BENEFITS = [
+  {
+    icon: Sparkles,
+    title: 'Export PDF & DOCX',
+    description: 'Exportez vos rapports dans tous les formats professionnels',
+  },
+  {
+    icon: Check,
+    title: 'Historique illimité',
+    description: 'Accédez à tout votre historique d’analyses et simulations',
+  },
+  {
+    icon: Sparkles,
+    title: 'Rapports avancés',
+    description: 'Obtenez des insights détaillés et des recommandations personnalisées',
+  },
+  {
+    icon: Check,
+    title: 'Simulations illimitées',
+    description: 'Entraînez-vous autant que vous voulez avec nos entretiens simulés',
+  },
+  {
+    icon: Sparkles,
+    title: 'Assistant IA avancé',
+    description: 'Bénéficiez d’un copilot IA plus puissant et intelligent',
+  },
+  {
+    icon: Check,
+    title: 'Support prioritaire',
+    description: 'Obtenez une réponse rapide à toutes vos questions',
+  },
+]
+
 /**
  * Modal Premium
- * 
+ *
  * Affiche les bénéfices du plan premium et incite à l'upgrade.
  * L'utilisateur ne perd pas son contexte et peut revenir immédiatement.
  */
-export function PremiumModal({ 
-  requiredPermission, 
-  feature = 'cette fonctionnalité', 
-  open, 
-  onClose 
+export function PremiumModal({
+  feature = 'cette fonctionnalité',
+  open,
+  onClose,
 }: PremiumModalProps) {
   const [isClosing, setIsClosing] = useState(false)
 
@@ -44,196 +76,98 @@ export function PremiumModal({
   }
 
   const handleUpgrade = () => {
-    // Naviguer vers pricing avec un paramètre de retour
     const currentPath = window.location.pathname
     window.location.href = `/pricing?redirect=${encodeURIComponent(currentPath)}&feature=${encodeURIComponent(feature)}`
   }
 
   if (!open) return null
 
-  const benefits = [
-    {
-      icon: Sparkles,
-      title: 'Export PDF & DOCX',
-      description: 'Exportez vos rapports dans tous les formats professionnels',
-    },
-    {
-      icon: Check,
-      title: 'Historique illimité',
-      description: 'Accédez à tout votre historique d\'analyses et simulations',
-    },
-    {
-      icon: Sparkles,
-      title: 'Rapports avancés',
-      description: 'Obtenez des insights détaillés et des recommandations personnalisées',
-    },
-    {
-      icon: Check,
-      title: 'Simulations illimitées',
-      description: 'Entraînez-vous autant que vous voulez avec nos entretiens simulés',
-    },
-    {
-      icon: Sparkles,
-      title: 'Assistant IA avancé',
-      description: 'Bénéficiez d\'un copilot IA plus puissant et intelligent',
-    },
-    {
-      icon: Check,
-      title: 'Support prioritaire',
-      description: 'Obtenez une réponse rapide à toutes vos questions',
-    },
-  ]
+  return (
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-200 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+      onClick={handleClose}
+    >
+      <div
+        className={`w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/[0.08] bg-zinc-900 shadow-2xl shadow-black/40 transition-all duration-200 ${isClosing ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-white/[0.08] p-6">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-indigo-600/10 p-2">
+              <Sparkles className="h-5 w-5 text-indigo-400" />
+            </div>
+            <h2 className="text-xl font-bold text-white/80">
+              Débloquez {feature}
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/[0.06] hover:text-white/80"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
 
-  return React.createElement(
-    'div',
-    {
-      className: `fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-200 ${isClosing ? 'opacity-0' : 'opacity-100'}`,
-      onClick: handleClose,
-    },
-    React.createElement(
-      'div',
-      {
-        className: `bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-all duration-200 ${isClosing ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`,
-        onClick: (e: React.MouseEvent) => e.stopPropagation(),
-      },
-      [
-        // Header
-        React.createElement(
-          'div',
-          {
-            className: 'flex items-center justify-between p-6 border-b border-ivoire-200',
-          },
-          [
-            React.createElement(
-              'div',
-              { className: 'flex items-center gap-3' },
-              [
-                React.createElement('div', {
-                  className: 'bg-bronze-100 p-2 rounded-full',
-                }, React.createElement(Sparkles, { className: 'w-5 h-5 text-bronze-600' })),
-                React.createElement(
-                  'h2',
-                  { className: 'text-xl font-bold text-ink-900' },
-                  'Débloquez ' + feature
-                ),
-              ]
-            ),
-            React.createElement(
-              'button',
-              {
-                onClick: handleClose,
-                className: 'text-ink-400 hover:text-ink-600 transition-colors p-2 hover:bg-ivoire-100 rounded-lg',
-              },
-              React.createElement(X, { className: 'w-5 h-5' })
-            ),
-          ]
-        ),
+        {/* Content */}
+        <div className="space-y-6 p-6">
+          <p className="text-center text-white/50">
+            Cette fonctionnalité est réservée aux abonnés Premium. Passez à niveau
+            pour débloquer toutes les fonctionnalités avancées.
+          </p>
 
-        // Content
-        React.createElement(
-          'div',
-          { className: 'p-6 space-y-6' },
-          [
-            // Description
-            React.createElement(
-              'p',
-              { className: 'text-ink-600 text-center' },
-              'Cette fonctionnalité est réservée aux abonnés Premium. Passez à niveau pour débloquer toutes les fonctionnalités avancées.'
-            ),
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {BENEFITS.map((benefit, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-3 rounded-xl bg-white/[0.03] p-4"
+              >
+                <div className="mt-1 rounded-lg bg-indigo-600/10 p-2">
+                  <benefit.icon className="h-4 w-4 text-indigo-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-white/80">
+                    {benefit.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-white/50">
+                    {benefit.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-            // Benefits grid
-            React.createElement(
-              'div',
-              { className: 'grid grid-cols-1 md:grid-cols-2 gap-4' },
-              benefits.map((benefit, index) =>
-                React.createElement(
-                  'div',
-                  {
-                    key: index,
-                    className: 'flex items-start gap-3 p-4 bg-ivoire-50 rounded-xl',
-                  },
-                  [
-                    React.createElement('div', {
-                      className: 'bg-bronze-100 p-2 rounded-lg mt-1',
-                    }, React.createElement(benefit.icon, { className: 'w-4 h-4 text-bronze-600' })),
-                    React.createElement(
-                      'div',
-                      { className: 'flex-1' },
-                      [
-                        React.createElement(
-                          'h3',
-                          { className: 'font-semibold text-ink-900 text-sm' },
-                          benefit.title
-                        ),
-                        React.createElement(
-                          'p',
-                          { className: 'text-xs text-ink-600 mt-1' },
-                          benefit.description
-                        ),
-                      ]
-                    ),
-                  ]
-                )
-              )
-            ),
+          <div className="rounded-xl border border-indigo-400/20 bg-gradient-to-r from-indigo-500/15 to-indigo-500/[0.04] p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-white/80">À partir de</p>
+                <p className="text-2xl font-bold text-indigo-300">19€/mois</p>
+              </div>
+              <p className="text-xs text-white/50">Sans engagement</p>
+            </div>
+          </div>
+        </div>
 
-            // Price highlight
-            React.createElement(
-              'div',
-              { className: 'bg-gradient-to-r from-bronze-50 to-ivoire-50 p-4 rounded-xl border border-bronze-200' },
-              [
-                React.createElement(
-                  'div',
-                  { className: 'flex items-center justify-between' },
-                  [
-                    React.createElement(
-                      'div',
-                      null,
-                      [
-                        React.createElement('p', { className: 'text-sm font-semibold text-ink-900' }, 'À partir de'),
-                        React.createElement('p', { className: 'text-2xl font-bold text-bronze-600' }, '19€/mois'),
-                      ]
-                    ),
-                    React.createElement(
-                      'p',
-                      { className: 'text-xs text-ink-600' },
-                      'Sans engagement'
-                    ),
-                  ]
-                ),
-              ]
-            ),
-          ]
-        ),
-
-        // Footer
-        React.createElement(
-          'div',
-          { className: 'flex items-center justify-between p-6 border-t border-ivoire-200 bg-ivoire-50 rounded-b-2xl' },
-          [
-            React.createElement(
-              Button,
-              {
-                variant: 'ghost',
-                onClick: handleClose,
-                className: 'text-ink-600 hover:text-ink-900',
-              },
-              'Annuler'
-            ),
-            React.createElement(
-              Button,
-              {
-                onClick: handleUpgrade,
-                className: 'bg-bronze-600 hover:bg-bronze-700 text-white',
-              },
-              [
-                React.createElement(ArrowRight, { className: 'w-4 h-4 mr-2' }),
-                'Voir les plans',
-              ]
-            ),
-          ]
-        ),
-      ]
-    )
+        {/* Footer */}
+        <div className="flex items-center justify-between rounded-b-2xl border-t border-white/[0.08] bg-white/[0.02] p-6">
+          <Button
+            variant="dark-ghost"
+            onClick={handleClose}
+            className="ring-offset-zinc-900"
+          >
+            Annuler
+          </Button>
+          <Button
+            variant="dark"
+            onClick={handleUpgrade}
+            className="ring-offset-zinc-900"
+          >
+            <ArrowRight className="mr-2 h-4 w-4" />
+            Voir les plans
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }

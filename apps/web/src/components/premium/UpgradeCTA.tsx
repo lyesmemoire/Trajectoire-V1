@@ -5,7 +5,7 @@
 
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Lock, Sparkles } from "lucide-react"
 import { PremiumModal } from "./PremiumModal"
@@ -18,55 +18,37 @@ interface UpgradeCTAProps {
 export function UpgradeCTA({ feature = 'cette fonctionnalité' }: UpgradeCTAProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  return React.createElement(
-    React.Fragment,
-    null,
-    [
-      React.createElement(
-        'div',
-        { className: 'text-center space-y-4 p-6' },
-        [
-          React.createElement(
-            'div',
-            { className: 'flex justify-center' },
-            React.createElement('div', {
-              className: 'bg-bronze-600/20 p-3 rounded-full',
-            }, React.createElement(Lock, { className: 'w-6 h-6 text-bronze-400' }))
-          ),
-          React.createElement(
-            'div',
-            { className: 'space-y-2' },
-            [
-              React.createElement(
-                'h3',
-                { className: 'text-xl font-bold text-white' },
-                'Débloquez votre analyse complète'
-              ),
-              React.createElement(
-                'p',
-                { className: 'text-sm text-ink-300 max-w-xs mx-auto' },
-                'Accédez aux recommandations détaillées, au plan d\'action personnalisé et au feedback avancé.'
-              ),
-            ]
-          ),
-          React.createElement(
-            Button,
-            {
-              onClick: () => setIsModalOpen(true),
-              className: 'w-full bg-bronze-600 hover:bg-bronze-700',
-            },
-            [
-              React.createElement(Sparkles, { className: 'w-4 h-4' }),
-              'Débloquer maintenant',
-            ]
-          ),
-        ]
-      ),
-      React.createElement(PremiumModal, {
-        open: isModalOpen,
-        onClose: () => setIsModalOpen(false),
-        feature: feature,
-      }),
-    ]
+  return (
+    <>
+      <div className="space-y-4 p-6 text-center">
+        <div className="flex justify-center">
+          <div className="rounded-full bg-indigo-600/10 p-3">
+            <Lock className="h-6 w-6 text-indigo-400" />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold text-white/80">
+            Débloquez votre analyse complète
+          </h3>
+          <p className="mx-auto max-w-xs text-sm text-white/50">
+            Accédez aux recommandations détaillées, au plan d&apos;action
+            personnalisé et au feedback avancé.
+          </p>
+        </div>
+        <Button
+          variant="dark"
+          onClick={() => setIsModalOpen(true)}
+          className="w-full ring-offset-zinc-900"
+        >
+          <Sparkles className="h-4 w-4" />
+          Débloquer maintenant
+        </Button>
+      </div>
+      <PremiumModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        feature={feature}
+      />
+    </>
   )
 }
