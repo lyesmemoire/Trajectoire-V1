@@ -54,7 +54,7 @@ export class SubscriptionResolver {
     const [user, subscription] = await Promise.all([
       prisma.user.findUnique({
         where: { id: userId },
-        select: { plan: true, role: true }
+        select: { plan: true, role: true, packExpiresAt: true }
       }),
       prisma.subscription.findFirst({
         where: { userId },
@@ -64,11 +64,20 @@ export class SubscriptionResolver {
     ])
 
     // Déterminer le plan (priorité : subscription > user plan > FREE)
-    const plan = subscription?.plan 
+    let plan = subscription?.plan
       ? this.mapStringToPlan(subscription.plan)
-      : user?.plan 
+      : user?.plan
         ? this.mapStringToPlan(user.plan)
         : SubscriptionPlan.FREE
+
+    // Un Pack arrivé à échéance n'ouvre plus aucun droit : plan gratuit.
+    if (
+      plan === SubscriptionPlan.PACK &&
+      user?.packExpiresAt &&
+      user.packExpiresAt.getTime() <= Date.now()
+    ) {
+      plan = SubscriptionPlan.FREE
+    }
 
     // Déterminer le statut
     const status = subscription?.status 
@@ -126,6 +135,7 @@ export class SubscriptionResolver {
 
     // Les plans PRO, TEAM, ENTERPRISE ont accès premium
     const isPremiumPlan = this.userPlan === SubscriptionPlan.PRO ||
+           this.userPlan === SubscriptionPlan.PACK ||
                          this.userPlan === SubscriptionPlan.TEAM ||
                          this.userPlan === SubscriptionPlan.ENTERPRISE
 
@@ -154,6 +164,7 @@ export class SubscriptionResolver {
 
     // Les plans PRO, TEAM, ENTERPRISE peuvent exporter
     return this.userPlan === SubscriptionPlan.PRO ||
+           this.userPlan === SubscriptionPlan.PACK ||
            this.userPlan === SubscriptionPlan.TEAM ||
            this.userPlan === SubscriptionPlan.ENTERPRISE
   }
@@ -198,6 +209,7 @@ export class SubscriptionResolver {
 
     // Les plans PRO, TEAM, ENTERPRISE ont un historique illimité
     return this.userPlan === SubscriptionPlan.PRO ||
+           this.userPlan === SubscriptionPlan.PACK ||
            this.userPlan === SubscriptionPlan.TEAM ||
            this.userPlan === SubscriptionPlan.ENTERPRISE
   }
@@ -215,6 +227,7 @@ export class SubscriptionResolver {
 
     // Les plans PRO, TEAM, ENTERPRISE ont accès aux rapports avancés
     return this.userPlan === SubscriptionPlan.PRO ||
+           this.userPlan === SubscriptionPlan.PACK ||
            this.userPlan === SubscriptionPlan.TEAM ||
            this.userPlan === SubscriptionPlan.ENTERPRISE
   }

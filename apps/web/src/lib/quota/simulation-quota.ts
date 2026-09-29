@@ -1,131 +1,140 @@
 /**
  * Simulation Quota
  *
- * Source de vÃ©ritÃ© : `interview_sessions` (COUNT par userId + createdAt dans la pÃ©riode).
+ * Les droits viennent de lib/plans.ts (source de vérité de la grille) :
+ * - FREE : 0 simulation.
+ * - PACK : 5 simulations, valables 3 mois à compter de l'achat. Le compteur est
+ *          `users.simulationsUsed`, l'échéance `users.packExpiresAt` (posés par le
+ *          webhook Stripe).
+ * - PRO  : illimité, tant que l'abonnement Stripe est actif.
  *
- * PROPRIÃ‰TÃ‰S DES OFFRES :
- * - FREE : 1 simulation totale (lifetime).
- * - INTERVIEW_PACK : 5 simulations totales depuis la date d'achat (lifetime).
- * - PRO : 20 simulations par pÃ©riode d'abonnement (mensuel).
+ * Un Pack expiré retombe sur FREE (cf. getEffectivePlanId).
+ *
+ * `checkSimulationQuota` est une lecture. La consommation d'une simulation se
+ * fait par `consumeSimulation`, atomique côté base : deux créations simultanées
+ * ne peuvent pas dépasser la limite du Pack.
  */
 
 import { prisma } from "@/lib/prisma"
-import { SubscriptionService } from "@/lib/authorization/SubscriptionService"
-import { SubscriptionPlan } from "@/types/subscription"
+import {
+  PLANS,
+  canSimulate,
+  getEffectivePlanId,
+  getRemainingSimulations,
+  isExpired,
+  type PlanId,
+  type PlanUser,
+} from "@/lib/plans"
 
 export interface SimulationQuota {
-  plan: string
+  /** Plan effectif : un Pack expiré est déjà ramené à FREE. */
+  plan: PlanId
   resource: "simulations"
   limit: number | null
   used: number
   remaining: number | null
   isUnlimited: boolean
-  periodStart: Date
+  periodStart: Date | null
+  /** Expiration du Pack, ou fin de période de l'abonnement PRO. */
   periodEnd: Date | null
   allowed: boolean
+  /** Vrai si le Pack de l'utilisateur est arrivé à échéance. */
+  expired: boolean
 }
 
 /**
  * Retourne le quota de simulations de l'utilisateur.
- * PrioritÃ© : PRO > INTERVIEW_PACK > FREE
  */
 export async function checkSimulationQuota(userId: string): Promise<SimulationQuota> {
-  // 1. Charger l'utilisateur avec son abonnement PRO Ã©ventuel et son (dernier) achat de pack
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: {
       plan: true,
+      simulationsUsed: true,
+      packExpiresAt: true,
       Subscription: {
-        select: { status: true, currentPeriodEnd: true, plan: true }
+        select: { status: true, currentPeriodEnd: true },
       },
-      UserPurchase: {
-        where: { type: "INTERVIEW_PACK", status: "ACTIVE" },
-        orderBy: { activatedAt: "desc" },
-        take: 1
-      }
     },
   })
 
-  // === SI PRO ACTIF ===
-  const hasActivePro = user?.Subscription?.status === "active" &&
-    user.Subscription.plan === "PRO"
+  // PRO n'est valable que si l'abonnement Stripe est actif ; sinon on ne
+  // conserve rien de plus que le plan gratuit.
+  const proActive = user?.plan === "PRO" && user.Subscription?.status === "active"
 
-  if (hasActivePro) {
-    const planRaw = user.Subscription!.plan
-    // Limite depuis SubscriptionService (PRO=20)
-    const limit =
-      SubscriptionService.getMonthlyQuota(SubscriptionPlan.PRO, "simulations") ?? 20
-
-    const periodEnd = user.Subscription!.currentPeriodEnd
-    const periodStart = new Date(periodEnd)
-    periodStart.setMonth(periodStart.getMonth() - 1)
-
-    const used = await prisma.interviewSession.count({
-      where: { userId, createdAt: { gte: periodStart, lt: periodEnd } }
-    })
-
-    const isUnlimited = limit === null
-    const remaining = isUnlimited ? null : Math.max(0, limit - used)
-
-    return {
-      plan: planRaw,
-      resource: "simulations",
-      limit,
-      used,
-      remaining,
-      isUnlimited,
-      periodStart,
-      periodEnd,
-      allowed: isUnlimited || (remaining !== null && remaining > 0)
-    }
+  const planUser: PlanUser = {
+    plan: proActive ? "PRO" : user?.plan === "PACK" ? "PACK" : "FREE",
+    simulationsUsed: user?.simulationsUsed ?? 0,
+    packExpiresAt: user?.packExpiresAt ?? null,
   }
 
-  // === SI INTERVIEW_PACK ACTIF ===
-  const latestPack = user?.UserPurchase?.[0]
-  if (latestPack) {
-    const limit = 5
-    const periodStart = latestPack.activatedAt
-    const periodEnd = null // lifetime pour ce pack
+  const effective = getEffectivePlanId(planUser)
+  const plan = PLANS[effective]
+  const remaining = getRemainingSimulations(planUser)
+  const expired = isExpired(planUser)
 
-    const used = await prisma.interviewSession.count({
-      where: { userId, createdAt: { gte: periodStart } }
-    })
-
-    const remaining = Math.max(0, limit - used)
-
-    return {
-      plan: "INTERVIEW_PACK",
-      resource: "simulations",
-      limit,
-      used,
-      remaining,
-      isUnlimited: false,
-      periodStart,
-      periodEnd,
-      allowed: remaining > 0
-    }
-  }
-
-  // === SINON FREE ===
-  const limit = 1
-  const periodStart = new Date(0) // depuis toujours
-  const periodEnd = null // lifetime
-
-  const used = await prisma.interviewSession.count({
-    where: { userId } // depuis le dÃ©but du compte
-  })
-
-  const remaining = Math.max(0, limit - used)
+  const periodEnd =
+    planUser.plan === "PRO"
+      ? (user?.Subscription?.currentPeriodEnd ?? null)
+      : planUser.plan === "PACK"
+        ? (user?.packExpiresAt ?? null)
+        : null
 
   return {
-    plan: "FREE",
+    plan: effective,
     resource: "simulations",
-    limit,
-    used,
+    limit: plan.simulationLimit,
+    used: effective === "PACK" ? planUser.simulationsUsed : 0,
     remaining,
-    isUnlimited: false,
-    periodStart,
+    isUnlimited: plan.simulationLimit === null,
+    periodStart: null,
     periodEnd,
-    allowed: remaining > 0
+    allowed: canSimulate(planUser),
+    expired,
   }
+}
+
+/**
+ * Consomme une simulation. À appeler juste avant de créer la session.
+ *
+ * - PRO : rien à décompter.
+ * - PACK : incrément atomique conditionné à « il reste des simulations » et
+ *   « le Pack n'a pas expiré » — un compteur déjà à 5 ne peut jamais passer à 6,
+ *   même avec deux requêtes concurrentes.
+ * - FREE : refus.
+ */
+export async function consumeSimulation(
+  userId: string,
+): Promise<{ ok: boolean; quota: SimulationQuota }> {
+  const quota = await checkSimulationQuota(userId)
+  if (!quota.allowed) return { ok: false, quota }
+  if (quota.plan !== "PACK") return { ok: true, quota }
+
+  const limit = PLANS.PACK.simulationLimit ?? 0
+  const { count } = await prisma.user.updateMany({
+    where: {
+      id: userId,
+      plan: "PACK",
+      simulationsUsed: { lt: limit },
+      OR: [{ packExpiresAt: null }, { packExpiresAt: { gt: new Date() } }],
+    },
+    data: { simulationsUsed: { increment: 1 } },
+  })
+
+  if (count === 0) {
+    // Course perdue (dernière simulation prise entre-temps) ou Pack expiré.
+    return { ok: false, quota: await checkSimulationQuota(userId) }
+  }
+  return { ok: true, quota }
+}
+
+/**
+ * Rend une simulation consommée quand la création a échoué juste après
+ * `consumeSimulation`. Sans effet hors Pack (compteur jamais négatif).
+ */
+export async function releaseSimulation(userId: string): Promise<void> {
+  await prisma.user.updateMany({
+    where: { id: userId, plan: "PACK", simulationsUsed: { gt: 0 } },
+    data: { simulationsUsed: { decrement: 1 } },
+  })
 }

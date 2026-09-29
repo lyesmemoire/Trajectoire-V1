@@ -9,6 +9,7 @@ import {
 } from "@/lib/correlation/correlationId";
 
 import { logger } from "@/lib/logger";
+import { getEffectivePlanId, type PlanId } from "@/lib/plans";
 
 import {
   AuthorizationV2,
@@ -629,7 +630,7 @@ async function buildUserContext(
   } =
     await supabase
       .from("users")
-      .select("role, plan")
+      .select("role, plan, packExpiresAt")
       .eq("id", user.id)
       .single();
 
@@ -664,9 +665,13 @@ async function buildUserContext(
       profile?.role ||
       UserRole.USER,
 
+    // Plan effectif : un Pack arrivé à échéance retombe sur FREE.
     plan:
-      profile?.plan ||
-      SubscriptionPlan.FREE,
+      getEffectivePlanId({
+        plan: (profile?.plan || SubscriptionPlan.FREE) as PlanId,
+        simulationsUsed: 0,
+        packExpiresAt: profile?.packExpiresAt ?? null,
+      }) as SubscriptionPlan,
 
     isAuthenticated:
       true,

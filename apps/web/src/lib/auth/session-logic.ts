@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { envServer } from "@/lib/env.server";
 import { logger } from "@/lib/logger";
+import { getEffectivePlanId, type PlanId } from "@/lib/plans";
 
 /**
  * Source de vérité absolue pour l'identité utilisateur côté serveur.
@@ -31,7 +32,7 @@ export async function getStrictUser() {
   // ✅ Récupération du profil et des permissions
   const { data: profile, error: profileError } = await supabase
     .from("users")
-    .select("plan, role, name")
+    .select("plan, role, name, packExpiresAt")
     .eq("id", user.id)
     .single();
 
@@ -39,12 +40,19 @@ export async function getStrictUser() {
     logger.error({ err: profileError, userId: user.id, component: "session-logic" }, "Profile fetch error");
   }
 
+  // PACK débloque les mêmes fonctionnalités que PRO, tant qu'il n'a pas expiré.
+  const effectivePlan = getEffectivePlanId({
+    plan: (profile?.plan ?? "FREE") as PlanId,
+    simulationsUsed: 0,
+    packExpiresAt: profile?.packExpiresAt ?? null,
+  });
+
   const adminRoles = ["ADMIN_SUPPORT", "ADMIN_PRODUCT", "ADMIN_FOUNDER"];
   return {
     user,
     profile,
     isAdmin: profile?.role ? adminRoles.includes(profile.role) : false,
-    isPro: profile?.plan === "PRO" || profile?.plan === "EXPERT",
+    isPro: effectivePlan === "PRO" || effectivePlan === "PACK",
   };
 }
 

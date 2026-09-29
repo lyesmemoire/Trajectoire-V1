@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { Suspense, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { Check, ChevronDown, X } from "lucide-react"
 import { PLANS, type Plan, type PlanId } from "@/lib/plans"
@@ -262,6 +262,22 @@ function PlanCard({
   )
 }
 
+// ─── Bandeau « quota atteint » (?reason=quota, posé par /api/simulation/create) ─
+
+function QuotaNotice() {
+  const params = useSearchParams()
+  if (params.get("reason") !== "quota") return null
+
+  return (
+    <div
+      role="status"
+      className="mx-auto mt-8 max-w-xl rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-4 text-sm font-medium text-indigo-200"
+    >
+      Pour lancer une simulation, choisissez le Pack Entretien ou Pro.
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
@@ -339,6 +355,10 @@ export default function PricingPage() {
             les points qui peuvent vous coûter le poste, puis vous entraîne
             précisément là où cela compte.
           </p>
+
+          <Suspense fallback={null}>
+            <QuotaNotice />
+          </Suspense>
 
           {error && (
             <div

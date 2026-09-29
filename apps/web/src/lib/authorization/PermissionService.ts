@@ -30,28 +30,28 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.EXPORT_REPORT_PDF, {
       permission: Permission.EXPORT_REPORT_PDF,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Export PDF des rapports'
     })
 
     this.rules.set(Permission.EXPORT_REPORT_DOCX, {
       permission: Permission.EXPORT_REPORT_DOCX,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Export DOCX des rapports'
     })
 
     this.rules.set(Permission.EXPORT_DATA_EXCEL, {
       permission: Permission.EXPORT_DATA_EXCEL,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Export Excel des données'
     })
 
     this.rules.set(Permission.EXPORT_ANY, {
       permission: Permission.EXPORT_ANY,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Export dans tous les formats'
     })
@@ -61,21 +61,21 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.USE_COPILOT_BASIC, {
       permission: Permission.USE_COPILOT_BASIC,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Utiliser le copilot IA de base'
     })
 
     this.rules.set(Permission.USE_COPILOT_ADVANCED, {
       permission: Permission.USE_COPILOT_ADVANCED,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Utiliser le copilot IA avancé'
     })
 
     this.rules.set(Permission.USE_COPILOT, {
       permission: Permission.USE_COPILOT,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Utiliser le copilot IA'
     })
@@ -85,7 +85,7 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.RUN_INTERVIEW, {
       permission: Permission.RUN_INTERVIEW,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Lancer une simulation d\'entretien'
     })
@@ -99,7 +99,7 @@ export class PermissionService {
 
     this.rules.set(Permission.ACCESS_INTERVIEW_REPORTS, {
       permission: Permission.ACCESS_INTERVIEW_REPORTS,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder aux rapports de simulation'
     })
@@ -109,21 +109,21 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.ANALYZE_CV, {
       permission: Permission.ANALYZE_CV,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Analyser un CV'
     })
 
     this.rules.set(Permission.ANALYZE_JOB, {
       permission: Permission.ANALYZE_JOB,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Analyser une offre d\'emploi'
     })
 
     this.rules.set(Permission.ACCESS_MATCHING, {
       permission: Permission.ACCESS_MATCHING,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder au matching CV/Job'
     })
@@ -133,14 +133,14 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.ACCESS_HISTORY_LIMITED, {
       permission: Permission.ACCESS_HISTORY_LIMITED,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder à l\'historique limité'
     })
 
     this.rules.set(Permission.ACCESS_HISTORY_UNLIMITED, {
       permission: Permission.ACCESS_HISTORY_UNLIMITED,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder à l\'historique illimité'
     })
@@ -150,21 +150,21 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.ACCESS_REPORTS_BASIC, {
       permission: Permission.ACCESS_REPORTS_BASIC,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder aux rapports de base'
     })
 
     this.rules.set(Permission.ACCESS_REPORTS_ADVANCED, {
       permission: Permission.ACCESS_REPORTS_ADVANCED,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder aux rapports avancés'
     })
 
     this.rules.set(Permission.ACCESS_REPORTS_HR, {
       permission: Permission.ACCESS_REPORTS_HR,
-      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder aux rapports RH'
     })
@@ -219,7 +219,7 @@ export class PermissionService {
     // ============================================================
     this.rules.set(Permission.ACCESS_API_BASIC, {
       permission: Permission.ACCESS_API_BASIC,
-      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
+      allowedPlans: [SubscriptionPlan.FREE, SubscriptionPlan.PRO, SubscriptionPlan.PACK, SubscriptionPlan.TEAM, SubscriptionPlan.ENTERPRISE],
       allowedRoles: [Role.USER, Role.ADMIN_FOUNDER, Role.ADMIN_PRODUCT, Role.ADMIN_SUPPORT],
       description: 'Accéder à l\'API de base'
     })

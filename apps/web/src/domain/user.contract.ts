@@ -52,7 +52,7 @@ export type UserRole =
   | "ADMIN_PRODUCT"
   | "ADMIN_FOUNDER";
 
-export type UserPlan = "free" | "pro" | "expert";
+export type UserPlan = "free" | "pack" | "pro";
 
 /**
  * CanonicalUser — the shape the application consumes.
@@ -153,7 +153,7 @@ export interface SupabaseProfileRow {
 // MERGE RULES — Pure transformation, zero DB access
 // ═══════════════════════════════════════════════════════════════════
 
-const VALID_PLANS = new Set<UserPlan>(["free", "pro", "expert"]);
+const VALID_PLANS = new Set<UserPlan>(["free", "pack", "pro"]);
 
 /**
  * Normalizes a raw plan string to a valid UserPlan.
@@ -242,7 +242,7 @@ export function isAdmin(role: UserRole): boolean {
  * Checks if a user is on a paid plan.
  */
 export function isPaidPlan(plan: UserPlan): boolean {
-  return plan === "pro" || plan === "expert";
+  return plan === "pro" || plan === "pack";
 }
 
 // ═══════════════════════════════════════════════════════════════════

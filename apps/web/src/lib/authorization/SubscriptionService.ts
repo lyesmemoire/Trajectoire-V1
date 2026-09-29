@@ -5,6 +5,7 @@
 
 import { Permission } from '@/types/permissions'
 import { SubscriptionPlan } from '@/types/subscription'
+import { PLANS } from '@/lib/plans'
 
 // ============================================================
 // SERVICE SUBSCRIPTION SERVICE
@@ -33,7 +34,7 @@ export class SubscriptionService {
       monthlyQuota: {
         cvAnalysis: 3,
         jobAnalysis: 5,
-        simulations: 2,
+        simulations: PLANS.FREE.simulationLimit,
       },
       historyRetention: 30, // jours
       features: {
@@ -48,23 +49,25 @@ export class SubscriptionService {
     })
 
     // ============================================================
-    // STARTER PLAN
+    // PACK PLAN — mêmes fonctionnalités que PRO ; seul le quota de
+    // simulations diffère (total de 5, cf. lib/plans.ts et lib/quota).
     // ============================================================
-    this.planCapabilities.set(SubscriptionPlan.STARTER, {
-      name: 'Starter',
+    this.planCapabilities.set(SubscriptionPlan.PACK, {
+      name: 'Pack Entretien',
       monthlyQuota: {
-        cvAnalysis: 3,
-        jobAnalysis: 5,
-        simulations: 2,
+        cvAnalysis: 50,
+        jobAnalysis: 100,
+        simulations: PLANS.PACK.simulationLimit,
       },
-      historyRetention: 30, // jours
+      historyRetention: 365, // jours
       features: {
         basicAnalysis: true,
         matching: true,
         copilotBasic: true,
-        export: false,
-        advancedReports: false,
-        unlimitedHistory: false,
+        copilotAdvanced: true,
+        export: true,
+        advancedReports: true,
+        unlimitedHistory: true,
         apiAccess: 'basic',
       },
     })
@@ -77,7 +80,7 @@ export class SubscriptionService {
       monthlyQuota: {
         cvAnalysis: 50,
         jobAnalysis: 100,
-        simulations: 20,
+        simulations: PLANS.PRO.simulationLimit,
       },
       historyRetention: 365, // jours
       features: {
@@ -247,21 +250,7 @@ export class SubscriptionService {
         )
         break
 
-      case SubscriptionPlan.STARTER:
-        permissions.push(
-          Permission.USE_COPILOT_BASIC,
-          Permission.USE_COPILOT,
-          Permission.RUN_INTERVIEW,
-          Permission.ACCESS_INTERVIEW_REPORTS,
-          Permission.ANALYZE_CV,
-          Permission.ANALYZE_JOB,
-          Permission.ACCESS_MATCHING,
-          Permission.ACCESS_HISTORY_LIMITED,
-          Permission.ACCESS_REPORTS_BASIC,
-          Permission.ACCESS_API_BASIC,
-        )
-        break
-
+      case SubscriptionPlan.PACK: // PACK débloque les mêmes permissions que PRO
       case SubscriptionPlan.PRO:
         permissions.push(
           Permission.EXPORT_REPORT_PDF,

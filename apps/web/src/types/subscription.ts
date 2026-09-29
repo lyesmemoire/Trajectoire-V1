@@ -13,8 +13,8 @@
 export enum SubscriptionPlan {
   /** Plan gratuit - accès aux fonctionnalités de base */
   FREE = 'FREE',
-  /** Plan Starter - fonctionnalités essentielles */
-  STARTER = 'STARTER',
+  /** Pack Entretien - paiement unique, 5 simulations valables 3 mois (mêmes fonctionnalités que Pro) */
+  PACK = 'PACK',
   /** Plan Pro - fonctionnalités avancées pour les particuliers */
   PRO = 'PRO',
   /** Plan Team - fonctionnalités collaboratives pour les équipes */

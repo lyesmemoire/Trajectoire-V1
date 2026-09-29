@@ -7,7 +7,6 @@ export * from "./testimonials-section";
 export * from "./final-cta";
 export * from "./pressure-demo";
 export * from "./faq-section";
-export * from "./pricing";
 export * from "./ExitIntent";
 export * from "./WaitlistForm";
 export * from "./behavior-engine";

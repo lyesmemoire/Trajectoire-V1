@@ -28,9 +28,19 @@ export enum UserRole {
 
 export enum SubscriptionPlan {
   FREE = "FREE",
+  PACK = "PACK",
   PRO = "PRO",
-  EXPERT = "EXPERT",
 }
+
+/**
+ * Plans « premium » : PACK débloque exactement les mêmes routes et
+ * fonctionnalités que PRO. Seul le quota (5 simulations, 3 mois) diffère et il
+ * est géré par lib/quota, pas ici.
+ */
+const PREMIUM_PLANS: readonly SubscriptionPlan[] = [
+  SubscriptionPlan.PRO,
+  SubscriptionPlan.PACK,
+];
 
 export interface UserContext {
   userId: string;
@@ -187,8 +197,7 @@ export class AuthorizationV2 {
 
     // PREMIUM : Vérifier l'abonnement
     if (requiredAccessLevel === AccessLevel.PREMIUM) {
-      const hasPremium = this.userContext.plan === SubscriptionPlan.PRO || 
-                         this.userContext.plan === SubscriptionPlan.EXPERT;
+      const hasPremium = PREMIUM_PLANS.includes(this.userContext.plan);
       
       if (!hasPremium) {
         return {
@@ -259,8 +268,7 @@ export class AuthorizationV2 {
       return false;
     }
 
-    return this.userContext.plan === SubscriptionPlan.PRO ||
-           this.userContext.plan === SubscriptionPlan.EXPERT;
+    return PREMIUM_PLANS.includes(this.userContext.plan);
   }
 
   /**

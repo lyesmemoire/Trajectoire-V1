@@ -152,7 +152,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
   const contextualDescription = applicationContext?.plainText ?? "";
 
-  // Quota check to ensure user doesn't bypass blocks
+  // Le quota informe l'utilisateur ici ; l'API de création l'applique côté serveur.
   const quota = await checkSimulationQuota(user.id);
 
   // Astuce NON bloquante : l'analyse d'un CV (qui crée le careerProfile) améliore les
@@ -236,6 +236,27 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           Prêt
         </div>
       </div>
+
+      {!quota.allowed && (
+        <div
+          role="note"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3"
+        >
+          <p className="text-sm text-indigo-200">
+            {quota.expired
+              ? "Votre Pack Entretien a expiré."
+              : quota.plan === "FREE"
+                ? "Votre offre gratuite n'inclut pas de simulation."
+                : "Vous avez utilisé toutes vos simulations."}
+          </p>
+          <Link
+            href="/pricing"
+            className="rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+          >
+            Voir les offres
+          </Link>
+        </div>
+      )}
 
       {hasProfile === false && (
         <div

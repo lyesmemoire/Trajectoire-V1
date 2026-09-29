@@ -40,6 +40,9 @@ import {
 
 import {
   checkSimulationQuota,
+  consumeSimulation,
+  releaseSimulation,
+  type SimulationQuota,
 } from "@/lib/quota/simulation-quota";
 
 import {
@@ -293,6 +296,60 @@ async function ensureFirstQuestion(
     },
   );
 }
+/**
+ * Plafond de simulations atteint (FREE : 0, Pack épuisé ou expiré).
+ * Lancée depuis la consommation atomique quand la course est perdue.
+ */
+class SimulationQuotaExceededError extends Error {
+  constructor(readonly quota: SimulationQuota) {
+    super("SIMULATION_QUOTA_EXCEEDED");
+  }
+}
+
+function quotaMessage(quota: SimulationQuota): string {
+  if (quota.expired) {
+    return "Votre Pack Entretien a expiré.";
+  }
+  if (quota.plan === "FREE") {
+    return "Votre offre gratuite n'inclut pas de simulation.";
+  }
+  return "Vous avez utilisé toutes vos simulations disponibles.";
+}
+
+/**
+ * Le formulaire de /simulation/new est un POST classique : une navigation
+ * reçoit une redirection vers les offres, jamais un JSON brut. Les clients qui
+ * demandent explicitement du JSON gardent le 403 structuré.
+ */
+function quotaExceededResponse(
+  request: NextRequest,
+  quota: SimulationQuota,
+): NextResponse {
+  const wantsJson =
+    request.headers.get("accept")?.includes("application/json") ?? false;
+
+  if (!wantsJson) {
+    return NextResponse.redirect(
+      new URL("/pricing?reason=quota", request.url),
+      303,
+    );
+  }
+
+  return NextResponse.json(
+    {
+      error: "SIMULATION_QUOTA_EXCEEDED",
+      message: quotaMessage(quota),
+      plan: quota.plan,
+      used: quota.used,
+      limit: quota.limit,
+      remaining: 0,
+      periodEnd: quota.periodEnd,
+      expired: quota.expired,
+    },
+    { status: 403 },
+  );
+}
+
 export async function POST(
   request: NextRequest,
 ) {
@@ -314,20 +371,11 @@ export async function POST(
         .unauthorized();
     }
 
-    // --- Quota check : bloque la création si le plafond mensuel est atteint ---
+    // --- Quota : refus rapide avant tout travail (FREE, Pack épuisé/expiré) ---
+    // La consommation elle-même est atomique et se fait dans createSimulation.
     const quota = await checkSimulationQuota(user.id);
     if (!quota.allowed) {
-      return NextResponse.json(
-        {
-          error: "SIMULATION_QUOTA_EXCEEDED",
-          message: "Vous avez utilisé toutes vos simulations disponibles pour cette période.",
-          used: quota.used,
-          limit: quota.limit,
-          remaining: 0,
-          periodEnd: quota.periodEnd,
-        },
-        { status: 403 },
-      );
+      return quotaExceededResponse(request, quota);
     }
 
     const formData =
@@ -438,32 +486,61 @@ export async function POST(
           .SimulationService,
       )) as SimulationService;
 
+    // Consommation atomique juste avant la création : exécutée une seule fois,
+    // y compris avec une clé d'idempotence (un rejeu ne redécompte pas).
     const createSimulation =
-      async () =>
-        simulationService
-          .createSimulation({
-            userId:
-              user.id,
+      async () => {
+        const consumed =
+          await consumeSimulation(
+            user.id,
+          );
 
-            jobTitle:
-              validatedData
-                .jobTitle,
+        if (!consumed.ok) {
+          throw new SimulationQuotaExceededError(
+            consumed.quota,
+          );
+        }
 
-            level:
-              validatedData
-                .level,
+        try {
+          return await simulationService
+            .createSimulation({
+              userId:
+                user.id,
 
-            interviewType:
-              validatedData
-                .interviewType as
-                | "RH"
-                | "Technique"
-                | "Manager",
+              jobTitle:
+                validatedData
+                  .jobTitle,
 
-            duration:
-              validatedData
-                .duration,
-          });
+              level:
+                validatedData
+                  .level,
+
+              interviewType:
+                validatedData
+                  .interviewType as
+                  | "RH"
+                  | "Technique"
+                  | "Manager",
+
+              duration:
+                validatedData
+                  .duration,
+            });
+        } catch (creationError) {
+          // La session n'a pas été créée : on rend la simulation décomptée.
+          await releaseSimulation(
+            user.id,
+          ).catch(
+            (releaseError) =>
+              console.error(
+                "[simulation/create] release failed:",
+                releaseError,
+              ),
+          );
+
+          throw creationError;
+        }
+      };
 
     const idempotencyKey =
       request.headers.get(
@@ -677,6 +754,16 @@ export async function POST(
       303,
     );
   } catch (error) {
+    if (
+      error instanceof
+      SimulationQuotaExceededError
+    ) {
+      return quotaExceededResponse(
+        request,
+        error.quota,
+      );
+    }
+
     if (
       error instanceof
       AuthServiceUnavailableError

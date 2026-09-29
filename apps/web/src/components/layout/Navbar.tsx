@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
   isAuthenticated?: boolean;
-  userPlan?: "free" | "starter" | "pro" | "expert";
+  userPlan?: "free" | "pack" | "pro";
   userName?: string;
 }
 
@@ -115,11 +115,7 @@ export function Navbar({
           {isAuthenticated ? (
             <>
               <Badge
-                variant={
-                  userPlan === "starter"
-                    ? "free"
-                    : userPlan
-                }
+                variant={userPlan}
               />
 
               {userName ? (
@@ -234,11 +230,7 @@ export function Navbar({
               <>
                 <div className="flex items-center gap-2">
                   <Badge
-                    variant={
-                      userPlan === "starter"
-                        ? "free"
-                        : userPlan
-                    }
+                    variant={userPlan}
                   />
 
                   {userName ? (

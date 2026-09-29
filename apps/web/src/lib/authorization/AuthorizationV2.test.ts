@@ -183,11 +183,11 @@ describe('AuthorizationV2', () => {
       isAuthenticated: true,
     };
 
-    const expertUserContext: UserContext = {
+    const packUserContext: UserContext = {
       userId: 'user-789',
-      email: 'expert@example.com',
+      email: 'pack@example.com',
       role: UserRole.USER,
-      plan: SubscriptionPlan.EXPERT,
+      plan: SubscriptionPlan.PACK,
       isAuthenticated: true,
     };
 
@@ -200,8 +200,8 @@ describe('AuthorizationV2', () => {
       expect(result).toBe(true);
     });
 
-    it('should allow access to premium routes for EXPERT users', () => {
-      const auth = new AuthorizationV2(expertUserContext);
+    it('should allow access to premium routes for PACK users (same as PRO)', () => {
+      const auth = new AuthorizationV2(packUserContext);
       
       const result = auth.isPremium();
       expect(result).toBe(true);
@@ -230,7 +230,7 @@ describe('AuthorizationV2', () => {
       userId: 'admin-123',
       email: 'admin@example.com',
       role: UserRole.ADMIN_FOUNDER,
-      plan: SubscriptionPlan.EXPERT,
+      plan: SubscriptionPlan.PRO,
       isAuthenticated: true,
     };
 
@@ -238,7 +238,7 @@ describe('AuthorizationV2', () => {
       userId: 'support-123',
       email: 'support@example.com',
       role: UserRole.ADMIN_SUPPORT,
-      plan: SubscriptionPlan.EXPERT,
+      plan: SubscriptionPlan.PRO,
       isAuthenticated: true,
     };
 

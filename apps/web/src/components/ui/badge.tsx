@@ -9,6 +9,7 @@ export type BadgeVariant =
   | "danger"
   | "info"
   | "free"
+  | "pack"
   | "pro"
   | "expert";
 
@@ -24,6 +25,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   danger: "bg-rose-50 text-rose-700 border border-rose-200/60",
   info: "bg-sky-50 text-sky-700 border border-sky-200/60",
   free: "bg-slate-100 text-slate-700 border border-slate-200/80",
+  pack: "bg-indigo-500/15 text-indigo-300 border border-indigo-400/30",
   pro: "bg-violet-50 text-violet-700 border border-violet-200/60",
   expert: "bg-slate-900 text-white border border-transparent shadow-sm",
 };
