@@ -274,21 +274,24 @@ export function validateUrls(urls: string[]): { valid: string[]; invalid: string
  * @returns Sanitized URL or null if invalid
  */
 export function sanitizeUrl(url: string): string | null {
-  if (!validateUrl(url)) {
-    return null;
-  }
-  
   try {
     const parsedUrl = new URL(url);
-    
-    // Remove credentials
+
+    // Remove credentials and fragment before validating: embedded userinfo
+    // ("user:pass@host") trips the anti-redirection "@" check in
+    // validateUrl, but stripping it safely is the whole point of this
+    // function, so we sanitize first and validate the cleaned result.
     parsedUrl.username = '';
     parsedUrl.password = '';
-    
-    // Remove fragment
     parsedUrl.hash = '';
-    
-    return parsedUrl.toString();
+
+    const sanitized = parsedUrl.toString();
+
+    if (!validateUrl(sanitized)) {
+      return null;
+    }
+
+    return sanitized;
   } catch (error) {
     return null;
   }
