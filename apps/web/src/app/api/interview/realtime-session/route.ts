@@ -2,47 +2,44 @@
  * POST /api/interview/realtime-session
  *
  * Crée une session OpenAI Realtime full-duplex (audio ↔ audio).
- * Retourne un token éphémère + session_id HIIOS.
+ * Retourne un token éphémère + une question d'ouverture.
  *
  * Flow :
- *   1. Démarre le kernel HIIOS → génère session_id + première question
- *   2. Crée session OpenAI Realtime avec le system prompt HIIOS
+ *   1. Choisit la question d'ouverture selon le type d'entretien (session DB)
+ *   2. Crée session OpenAI Realtime avec le system prompt correspondant
  *   3. Retourne { client_secret, session_id, first_question }
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getVerifiedUserWithRetry } from '@/lib/auth/verified-user'
 import { getOpenAIKey } from '@/lib/ai/ai-models'
-import { KernelState } from '@/application/hiios/layer0-kernel/KernelState'
+import { Container, ServiceTokens } from '@/infrastructure/di'
+import { initializeContainer } from '@/infrastructure/di/bootstrap'
+import type { SessionRepository } from '@/infrastructure/repositories'
 
-// ── Store en mémoire (même map que /api/interview/route.ts) ──────────────────
-// On exporte pour partager entre les deux routes
-export const realtimeSessions = new Map<string, KernelState>()
+// ── Question d'ouverture ─────────────────────────────────────────────────────
+// Il n'y a plus de kernel HIIOS ici : celui qui existait avant n'était jamais
+// relu par la suite du flux (voir .claude/tasks.md, diagnostic 2026-09-29) —
+// une question fixe par type d'entretien suffit pour amorcer la conversation.
+
+const OPENING_QUESTIONS: Record<string, { id: string; text: string }> = {
+  RH: {
+    id  : 'opening_rh',
+    text: "Pouvez-vous me parler de votre parcours et de ce qui vous amène à candidater aujourd'hui ?",
+  },
+  Technique: {
+    id  : 'opening_technique',
+    text: 'Pouvez-vous décrire un problème technique complexe que vous avez résolu récemment, et la démarche que vous avez suivie ?',
+  },
+  Manager: {
+    id  : 'opening_manager',
+    text: 'Racontez-moi une situation où vous avez dû prendre une décision difficile concernant votre équipe.',
+  },
+}
+
+const DEFAULT_OPENING_QUESTION = OPENING_QUESTIONS.RH
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-
-function generateSessionId(): string {
-  return `rt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-}
-
-function initializeDefaultHypotheses(kernel: KernelState): void {
-  const defaults = [
-    { label: 'Leadership fort sous pression',     node: 'leadership.decision',                  prior: 0.45 },
-    { label: 'Communication claire',              node: 'communication.clarte',                 prior: 0.45 },
-    { label: 'Exécution fiable sous contrainte',  node: 'execution.livraison',                  prior: 0.45 },
-    { label: 'Conscience de soi développée',      node: 'intelligence_emotionnelle.conscienceSoi', prior: 0.40 },
-    { label: 'Résilience face à l\'échec',        node: 'intelligence_emotionnelle.resilience', prior: 0.45 },
-  ]
-  for (const d of defaults) {
-    kernel.hypothesis.generate({
-      label          : d.label,
-      description    : `Hypothèse initiale — ${d.label}`,
-      skill_node_id  : d.node,
-      prior          : d.prior,
-      created_at_turn: 0,
-    })
-  }
-}
 
 function buildRealtimeSystemPrompt(
   firstQuestion: string,
@@ -62,7 +59,7 @@ RÈGLES ABSOLUES :
 
 STRUCTURE DE L'ENTRETIEN :
 - Phase 1 (tours 1-2) : Exploration du parcours
-- Phase 2 (tours 3-4) : Compétences et expériences clés  
+- Phase 2 (tours 3-4) : Compétences et expériences clés
 - Phase 3 (tours 5-6) : Mise en situation et pression
 - Phase 4 (tour 7+)   : Questions du candidat + clôture
 
@@ -96,24 +93,31 @@ export async function POST(request: NextRequest) {
       candidateId?: string
     }
 
-    // ── 1. Démarrer le kernel HIIOS ──────────────────────────────────────────
-    const sessionId = generateSessionId()
-    const candidateId = body.candidateId ?? user.id
+    // ── Choisir la question d'ouverture ──────────────────────────────────────
+    // `candidateId` est en réalité l'id de la session `interview_sessions`
+    // (voir useRealtimeInterview.ts) : on l'utilise pour retrouver le type
+    // d'entretien choisi à la création. Si la session est introuvable ou
+    // n'appartient pas à l'utilisateur, on retombe sur une question par défaut
+    // plutôt que de bloquer la connexion Realtime.
+    let firstQuestion = DEFAULT_OPENING_QUESTION
 
-    const kernel = new KernelState(sessionId, candidateId)
-    initializeDefaultHypotheses(kernel)
-    realtimeSessions.set(sessionId, kernel)
+    if (body.candidateId) {
+      try {
+        initializeContainer()
+        const sessionRepository = (await Container.resolve(
+          ServiceTokens.SessionRepository,
+        )) as SessionRepository
 
-    const firstQuestion = kernel.questions.selectNext({
-      current_turn       : 0,
-      interview_state    : 'EXPLORATION',
-      empathy_level      : kernel.session.empathy_level,
-      pressure_level     : kernel.session.pressure_level,
-      active_bias_types  : [],
-      candidate_archetype: 'Senior',
-    })
+        const session = await sessionRepository.findById(body.candidateId)
+        if (session && session.user_id === user.id) {
+          firstQuestion = OPENING_QUESTIONS[session.interview_type] ?? DEFAULT_OPENING_QUESTION
+        }
+      } catch (err) {
+        console.error('[realtime-session] lookup session:', err)
+      }
+    }
 
-    // ── 2. Créer session OpenAI Realtime ─────────────────────────────────────
+    // ── Créer session OpenAI Realtime ─────────────────────────────────────────
     const systemPrompt = buildRealtimeSystemPrompt(
       firstQuestion.text,
       body.jobTitle,
@@ -154,13 +158,13 @@ export async function POST(request: NextRequest) {
 
     const openaiData = await openaiRes.json()
 
-    // ── 3. Retourner les infos au client ─────────────────────────────────────
+    // ── Retourner les infos au client ─────────────────────────────────────────
     return NextResponse.json({
-      client_secret  : openaiData.client_secret.value,
-      openai_session_id: openaiData.id,
-      session_id     : sessionId,        // notre session HIIOS
-      first_question : firstQuestion.text,
-      question_id    : firstQuestion.id,
+      client_secret     : openaiData.client_secret.value,
+      openai_session_id : openaiData.id,
+      session_id        : body.candidateId ?? null,
+      first_question    : firstQuestion.text,
+      question_id       : firstQuestion.id,
     })
 
   } catch (error: unknown) {
@@ -168,4 +172,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }
-
