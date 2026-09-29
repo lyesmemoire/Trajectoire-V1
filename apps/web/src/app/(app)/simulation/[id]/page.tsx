@@ -81,13 +81,26 @@ export default function SimulationPage() {
     if (isEnding) return
     setIsEnding(true)
     disconnect()
+
     try {
-      await fetch('/api/interview', {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({ action: 'COMPLETE', session_id: sessionId }),
+      // /api/simulation/end bascule le statut de la session, puis appelle
+      // lui-même /api/report/generate en interne : pas d'appel séparé requis.
+      // La réponse est un redirect HTTP (jamais du JSON) vers /report/<id>
+      // en cas de succès, ou /dashboard si la génération du rapport a échoué.
+      const formData = new FormData()
+      formData.append('sessionId', sessionId)
+
+      const res = await fetch('/api/simulation/end', {
+        method: 'POST',
+        body  : formData,
       })
-    } catch { /* redirige quand meme */ }
+
+      if (res.redirected) {
+        router.push(new URL(res.url).pathname)
+        return
+      }
+    } catch { /* réseau indisponible : redirection de repli ci-dessous */ }
+
     router.push('/report/' + sessionId)
   }
 
