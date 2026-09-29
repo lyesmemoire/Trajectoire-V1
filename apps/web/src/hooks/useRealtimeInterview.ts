@@ -74,6 +74,22 @@ export function useRealtimeInterview({
     }
   }, [])
 
+  // ── Persistance d'un tour finalisé ─────────────────────────────────────────
+  // Sans ça, aucune trace de l'entretien Realtime n'existe en base : le rapport
+  // (ReportService.generateReport) lit interview_messages, jamais le state React.
+
+  const persistTranscript = useCallback((transcript: RealtimeTranscript) => {
+    fetch('/api/interview/realtime-message', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId: sessionId,
+        role     : transcript.role,
+        content  : transcript.text,
+      }),
+    }).catch(err => console.error('[Realtime] persistance transcript:', err))
+  }, [sessionId])
+
   // ── Gestion des événements OpenAI Realtime ──────────────────────────────────
 
   const handleRealtimeEvent = useCallback((event: Record<string, unknown>) => {
@@ -135,6 +151,7 @@ export function useRealtimeInterview({
           return [...prev, final]
         })
         onTranscript?.(final)
+        persistTranscript(final)
         break
       }
 
@@ -171,6 +188,7 @@ export function useRealtimeInterview({
           return [...prev, final]
         })
         onTranscript?.(final)
+        persistTranscript(final)
         break
       }
 
@@ -183,7 +201,7 @@ export function useRealtimeInterview({
         break
       }
     }
-  }, [onTranscript, onError])
+  }, [onTranscript, onError, persistTranscript])
 
   // ── Connexion WebRTC ────────────────────────────────────────────────────────
 
