@@ -13,6 +13,10 @@ _(rien — dernier item traité : commit `ef30a9a7`)_
   - Le hook `useRealtimeInterview` ne reçoit **aucun `onTranscript`** dans `simulation/[id]/page.tsx` (seuls `onError`/`onConnected`/`onDisconnected` sont branchés) : les transcriptions vivent uniquement en state React pour l'affichage live, **jamais sauvegardées** en base. Aucun appel à `/api/report/generate` n'a lieu dans ce flux.
   - **Conclusion** : en production, un entretien Realtime ne laisse aujourd'hui **aucune trace exploitable** en base (`interview_sessions.score`/`feedback`/`analysis` jamais renseignés pour ce flux). Ce n'est pas un problème de fiabilité d'une `Map` en mémoire à remplacer par Redis — c'est l'intégralité du pipeline de complétion/rapport du flux vocal qui n'a jamais été raccordée. Chantier de la taille de l'« Option B » (aligner le flux Realtime sur le flux texte tour par tour), pas un fix ponctuel. Prochaine session : partir de ce diagnostic, ne pas répéter l'investigation.
 
+- [ ] 🔴 **RGPD : la suppression de compte laisse `users` + `Subscription` en base** (constaté le 2026-09-30). `public.users` n'a **aucune clé étrangère vers `auth.users`** : `AccountService.deleteAccount` supprime l'utilisateur Auth mais laisse la ligne `users` (e-mail, nom, `stripeCustomerId`, `onboardingData`) et la ligne `Subscription` (explique 39 lignes `users` pour 37 comptes Auth).
+  - À faire : anonymiser ou supprimer ces lignes une fois `auth.users` supprimé ; vérifier les cascades du schéma Prisma (`onDelete`) avant un `prisma.user.delete`.
+  - Priorité : **avant la mise en production réelle**. L'annulation de l'abonnement Stripe à la suppression est déjà faite (`lib/billing/cancel-user-subscription.ts`, commit `0df641f4`).
+
 ## Terminé ✅ (vérifié par `git log`)
 - [x] `route POST /api/onboarding/complete` + règle AuthorizationV2 (`61ff73cc`)
 - [x] Onboarding UI — 8 fichiers, layout plein écran + wizard (`721a9c5c`)
