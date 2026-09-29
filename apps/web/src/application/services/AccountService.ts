@@ -8,6 +8,7 @@ import { SessionRepository, ReportRepository, MessageRepository, ProfileReposito
 import { IAuditService, ILogger } from "@/core/interfaces";
 import { AppError, ErrorCode } from "@/core/errors";
 import { createAdminClient } from "@/lib/supabase/service";
+import { cancelUserSubscription } from "@/lib/billing/cancel-user-subscription";
 
 export interface DeleteAccountCommand {
   userId: string;
@@ -39,6 +40,20 @@ export class AccountService {
    */
   async deleteAccount(command: DeleteAccountCommand): Promise<void> {
     this.logger.setUserContext(command.userId);
+
+    // Annuler l'abonnement Stripe AVANT toute suppression : si l'annulation échoue,
+    // on interrompt tout (le compte reste intact) plutôt que de laisser un
+    // abonnement actif facturer un compte qui n'existe plus.
+    try {
+      await cancelUserSubscription(command.userId);
+    } catch (error) {
+      this.logger.error("Failed to cancel Stripe subscription", { error });
+      throw new AppError(
+        "Impossible d'annuler votre abonnement : la suppression du compte a été interrompue. Réessayez ou contactez le support.",
+        ErrorCode.INTERNAL_ERROR,
+        500
+      );
+    }
 
     // Get user's sessions
     const sessions = await this.sessionRepository.find({ user_id: command.userId });

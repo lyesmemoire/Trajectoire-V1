@@ -25,8 +25,11 @@ export function DangerZone() {
         return
       }
 
+      // Format d'erreur de l'API : { error: { code, message } }
       const data = await res.json().catch(() => null)
-      setError(data?.error || "Erreur lors de la suppression du compte.")
+      const apiMessage =
+        typeof data?.error === "string" ? data.error : data?.error?.message
+      setError(apiMessage || "Erreur lors de la suppression du compte.")
     } catch {
       setError("Erreur lors de la suppression du compte.")
     } finally {
