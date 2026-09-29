@@ -6,15 +6,15 @@
 _(rien — dernier item traité : commit `ef30a9a7`)_
 
 ## Restant — connu et documenté dans CLAUDE.md
-- [ ] 🔴 **Décision requise** — `/simulation` (`(app)/simulation/page.tsx`, déjà restylée dark, `34865e31`) : garder comme formulaire distinct de `/simulation/new` (niveaux Junior/Mid/Senior, durées 15/30/45, sans opportunité) ou fusionner. Question de produit/architecture, pas de design — à trancher explicitement avant tout refactor (~10 min de décision, ~2h de refacto si fusion). Pas de page "liste" séparée : `/simulation` est cette page.
 - [ ] Simulation Realtime (`api/interview/realtime-session`, `useRealtimeInterview`) : sessions en `Map` mémoire — non fiable en serverless/multi-instance, à persister avant prod ; pas de quota ni de rate-limit sur cette route
+
 ## Terminé ✅ (vérifié par `git log`)
 - [x] `route POST /api/onboarding/complete` + règle AuthorizationV2 (`61ff73cc`)
 - [x] Onboarding UI — 8 fichiers, layout plein écran + wizard (`721a9c5c`)
 - [x] Tests onboarding — schéma Zod + route (`8b15a37c`)
 - [x] Migration Prisma `onboardingData`/`onboardingCompletedAt` appliquée à Supabase (`a3d18660`, 2026-09-28)
 - [x] Redirect nouveaux utilisateurs vers `/onboarding` (`4901929a`)
-- [x] `/simulation` (legacy) restylée dark, sans redirection (`34865e31`)
+- [x] `/simulation` — résolu par `2bb297b8` (postérieur à `34865e31`) : `(app)/simulation/page.tsx` n'a plus de contenu propre, simple `redirect("/simulation/new")` ; la barrière `careerProfile` est devenue un bandeau non bloquant dans `/simulation/new`. Vérifié dans le code le 2026-09-29 : la note « décision ouverte » (garder distinct vs fusionner) documentait un état déjà dépassé avant le début de cette session.
 - [x] `/discovery` — indigo local, chips emerald/amber, font-sans (`fae6a0b8`) ; 4 pastilles `bg-zinc-100 text-zinc-900` → `bg-zinc-700 text-zinc-100` (2026-09-29)
 - [x] Login / signup — a11y (contraste, aria) (`4d5449d7`, `1dd53533`)
 - [x] Button — variantes dark + dark-ghost (`f413b9be`)
