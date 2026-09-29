@@ -5,28 +5,39 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { CentralizedRateLimitService, RateLimitScope, RouteType } from "../centralized-rate-limit.service";
+import { logger } from "@/lib/logger";
 
 // Mock Redis
 vi.mock("@upstash/redis", () => ({
-  Redis: vi.fn().mockImplementation(() => ({
-    zremrangebyscore: vi.fn().mockResolvedValue(0),
-    zcount: vi.fn().mockResolvedValue(0),
-    zadd: vi.fn().mockResolvedValue(1),
-    expire: vi.fn().mockResolvedValue(1),
-    zrange: vi.fn().mockResolvedValue([]),
-    del: vi.fn().mockResolvedValue(1),
-  })),
+  // Une fonction fléchée n'est jamais constructible ("new (() => {})()" leve
+  // toujours une TypeError) : initializeRedis() fait `new Redis(...)`, donc
+  // l'implementation doit etre une fonction classique.
+  Redis: vi.fn().mockImplementation(function () {
+    return {
+      zremrangebyscore: vi.fn().mockResolvedValue(0),
+      zcount: vi.fn().mockResolvedValue(0),
+      zadd: vi.fn().mockResolvedValue(1),
+      expire: vi.fn().mockResolvedValue(1),
+      zrange: vi.fn().mockResolvedValue([]),
+      del: vi.fn().mockResolvedValue(1),
+    };
+  }),
 }));
 
 describe("CentralizedRateLimitService", () => {
   let service: CentralizedRateLimitService;
 
   beforeEach(() => {
+    // initializeRedis() ne construit le client Redis (mocké ci-dessus) que si
+    // ces deux variables sont définies ; sans elles this.redis reste null.
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://mock.upstash.io");
+    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "mock-token");
     service = new CentralizedRateLimitService();
     vi.clearAllMocks();
   });
 
   afterEach(() => {
+    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
@@ -259,11 +270,14 @@ describe("CentralizedRateLimitService", () => {
 
     it("should block when burst capacity is exceeded", async () => {
       const mockRedis = (service as any).redis;
+      // RouteType.API burstLimit is 150 (RATE_LIMIT_CONFIGS), not 75 as this
+      // test previously assumed — with the real limit, 75 never triggered
+      // the burst branch at all, masking the missing block below.
       // Main window: 95/100 (within limit)
-      // Burst window: 75/75 (at burst limit)
+      // Burst window: 150/150 (at burst limit)
       mockRedis.zcount
         .mockResolvedValueOnce(95) // Main window count
-        .mockResolvedValueOnce(75); // Burst window count
+        .mockResolvedValueOnce(150); // Burst window count
 
       const result = await service.checkRateLimit(
         RateLimitScope.IP,
@@ -293,7 +307,10 @@ describe("CentralizedRateLimitService", () => {
       const mockRedis = (service as any).redis;
       mockRedis.zcount.mockRejectedValue(new Error("Redis connection failed"));
 
-      const loggerSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      // Le service logue via lib/logger (pino, écrit sur stdout/pino-pretty),
+      // jamais via console.error : espionner console.error ne se déclenche
+      // structurellement jamais.
+      const loggerSpy = vi.spyOn(logger, "error").mockImplementation(() => logger);
 
       await service.checkRateLimit(
         RateLimitScope.IP,

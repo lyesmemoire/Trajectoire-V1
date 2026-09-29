@@ -243,13 +243,28 @@ export class CentralizedRateLimitService {
       if (burstCount < config.burstLimit) {
         await this.addRequest(key, now, config.window);
         const remaining = config.burstLimit - burstCount - 1;
-        
+
         return {
           allowed: true,
           remaining: Math.max(0, remaining),
           resetTime: new Date(now + config.window * 1000),
         };
       }
+
+      // Burst capacity exceeded: block now, even if the main window still
+      // has room. Falling through to the main-window check below would let
+      // the request through as long as the main window isn't full yet,
+      // making the burst limit a no-op.
+      const oldestBurst = await this.redis!.zrange(key, 0, 0, { withScores: true }) as [string, number][];
+      const burstResetTime = oldestBurst.length > 0
+        ? new Date(oldestBurst[0][1] + config.window * 1000)
+        : new Date(now + config.burstWindow * 1000);
+
+      return {
+        allowed: false,
+        remaining: 0,
+        resetTime: burstResetTime,
+      };
     }
 
     // Check main window limit
