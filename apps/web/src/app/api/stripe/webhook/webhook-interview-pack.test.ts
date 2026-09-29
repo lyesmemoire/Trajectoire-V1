@@ -172,6 +172,21 @@ describe("POST /api/stripe/webhook - Pack (PACK) et abonnement (PRO)", () => {
     });
   });
 
+  it("links the Stripe customer created at payment to the user (portal access)", async () => {
+    const event = makePaymentCompletedEvent(sessionId, userId) as any;
+    event.data.object.customer = "cus_pack";
+    mocks.stripeWebhooksConstructEvent.mockReturnValue(event);
+    mocks.prismaUserPurchaseFindUnique.mockResolvedValue(null);
+
+    const res = await POST(makeRequest(JSON.stringify(event)));
+
+    expect(res.status).toBe(200);
+    expect(mocks.prismaUserUpdateMany).toHaveBeenCalledWith({
+      where: { id: userId, stripeCustomerId: null },
+      data:  { stripeCustomerId: "cus_pack" },
+    });
+  });
+
   it("accepts the legacy INTERVIEW_PACK metadata type", async () => {
     const event = makePaymentCompletedEvent(sessionId, userId, "INTERVIEW_PACK");
     mocks.stripeWebhooksConstructEvent.mockReturnValue(event);

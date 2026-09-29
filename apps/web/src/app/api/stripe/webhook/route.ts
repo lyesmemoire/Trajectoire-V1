@@ -124,6 +124,21 @@ export const POST = rateLimit(
                 sessionId: session.id,
               });
             }
+            // Rattache le client Stripe créé au paiement (portail de facturation).
+            // Jamais bloquant : l'achat et les droits sont déjà enregistrés.
+            if (typeof session.customer === "string") {
+              try {
+                await prisma.user.updateMany({
+                  where: { id: user_id, stripeCustomerId: null },
+                  data:  { stripeCustomerId: session.customer },
+                });
+              } catch (customerError) {
+                logger.warn("[Webhook] PACK — stripeCustomerId non enregistré", {
+                  userId: user_id,
+                  error:  customerError,
+                });
+              }
+            }
             logger.info("[Webhook] PACK purchase persisted", {
               userId:    user_id,
               sessionId: session.id,

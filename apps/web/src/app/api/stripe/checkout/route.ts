@@ -172,6 +172,12 @@ export async function POST(request: NextRequest) {
       sessionParams.customer_email = userProfile.email;
     }
 
+    // Paiement unique : Stripe ne crée pas de client par défaut. On le demande
+    // pour que l'acheteur du Pack retrouve ses reçus dans le portail de facturation.
+    if (isPaymentMode && !userProfile?.stripeCustomerId) {
+      sessionParams.customer_creation = "always";
+    }
+
     const session = await stripe.checkout.sessions.create(sessionParams);
 
     // Sauvegarder stripeCustomerId immédiatement si Stripe en a créé un
