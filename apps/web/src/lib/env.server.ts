@@ -73,16 +73,6 @@ OPENAI_BASE_URL: z
     .startsWith("price_")
     .optional(),
 
-  STRIPE_EXPERT_PRICE_ID: z
-    .string()
-    .startsWith("price_")
-    .optional(),
-
-  STRIPE_PRICE_STARTER_MONTHLY: z
-    .string()
-    .startsWith("price_")
-    .optional(),
-
   STRIPE_PRICE_INTERVIEW_PACK: z
     .string()
     .startsWith("price_")

@@ -8,6 +8,7 @@ import { envServer }                  from "@/lib/env.server";
 import { logInfo, logError }          from "@/lib/logger";
 import { checkRateLimit }             from "@/lib/rate-limit";
 import { stripe }                    from "@/lib/stripe";
+import { PLANS, canSimulate, getRemainingSimulations, isExpired, type PlanId } from "@/lib/plans";
 import Stripe from 'stripe';
 
 // ── Client Stripe (resilient) ──────────────────────────────────────────────────────────
@@ -15,27 +16,15 @@ function getStripe() {
   return stripe;
 }
 
-// ── Mapping slug frontend à Stripe Price ID (source de vérité serveur) ─────────
-// Le frontend envoie 'starter' | 'pro' | 'expert' | 'interview_pack'.
-// Le backend résout le slug vers le vrai Price ID configuré en environnement.
-function resolveStripePriceId(planSlug: string): string | null {
-  switch (planSlug) {
-    case "starter":        return envServer.STRIPE_PRICE_STARTER_MONTHLY ?? null;
-    case "pro":            return envServer.STRIPE_PRO_PRICE_ID           ?? null;
-    case "expert":         return envServer.STRIPE_EXPERT_PRICE_ID        ?? null;
-    case "interview_pack": return envServer.STRIPE_PRICE_INTERVIEW_PACK   ?? null;
-    default:               return null;
-  }
-}
+// ── Plans achetables : identifiants de lib/plans.ts (source de vérité) ──────────
+const CheckoutPlanSchema = z.enum(["PACK", "PRO"]);
+type CheckoutPlan = z.infer<typeof CheckoutPlanSchema>;
 
-// ── Résolution label plan depuis slug frontend ──────────────────────────────
-function resolvePlanLabel(planSlug: string): string {
-  switch (planSlug) {
-    case "starter":        return "STARTER";
-    case "pro":            return "PRO";
-    case "expert":         return "EXPERT";
-    case "interview_pack": return "INTERVIEW_PACK";
-    default:               return "FREE";
+// Résolution serveur du Price ID Stripe (dépend de l'environnement test/live).
+function resolveStripePriceId(plan: CheckoutPlan): string | null {
+  switch (plan) {
+    case "PACK": return envServer.STRIPE_PRICE_INTERVIEW_PACK ?? null;
+    case "PRO":  return envServer.STRIPE_PRO_PRICE_ID         ?? null;
   }
 }
 
@@ -64,9 +53,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // ── Validation payload — accepte les slugs frontend ──────────────────
+  // ── Validation payload : { plan: "PACK" | "PRO" } ────────────────────
   const RequestSchema = z.object({
-    priceId: z.enum(["starter", "pro", "expert", "interview_pack"]),
+    plan: CheckoutPlanSchema,
   });
 
   const body   = await request.json().catch(() => null);
@@ -78,23 +67,25 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const planSlug = parsed.data.priceId;
+  const planId: CheckoutPlan = parsed.data.plan;
 
-  // ── Résolution Price ID Stripe depuis le slug ─────────────────────────
-  const stripePriceId = resolveStripePriceId(planSlug);
-  if (!stripePriceId) {
-    logError("[Checkout]", `Price ID non configuré pour le plan : ${planSlug}`);
+  // ── Résolution Price ID Stripe depuis le plan ─────────────────────────
+  const priceId = resolveStripePriceId(planId);
+  if (!priceId) {
+    logError("[Checkout]", `Price ID non configuré pour le plan : ${planId}`);
     return NextResponse.json({ error: "Configuration paiement invalide." }, { status: 503 });
   }
-
-  const planLabel = resolvePlanLabel(planSlug);
-  // priceId est maintenant le vrai Price ID Stripe
-  const priceId = stripePriceId;
 
   // ── Récupérer profil utilisateur ──────────────────────────────────────
   const userProfile = await prisma.user.findUnique({
     where:  { id: user.id },
-    select: { email: true, plan: true, stripeCustomerId: true },
+    select: {
+      email: true,
+      plan: true,
+      stripeCustomerId: true,
+      simulationsUsed: true,
+      packExpiresAt: true,
+    },
   });
 
   // ── Guard : pas de double abonnement ─────────────────────────────────
@@ -108,22 +99,46 @@ export async function POST(request: NextRequest) {
     existingSubscription?.status === "active" &&
     existingSubscription?.stripeSubId;
 
-  // Ne pas bloquer l'achat du pack si on a déjà un abonnement.
-  if (hasActiveSubscription && planSlug !== "interview_pack") {
+  // Un abonné Pro a déjà des simulations illimitées : ni second abonnement,
+  // ni Pack (qui ne lui apporterait rien).
+  if (hasActiveSubscription) {
     return NextResponse.json(
-      { error: "Vous avez déjà un abonnement actif. Utilisez le portail client pour le modifier." },
+      {
+        error:
+          planId === "PACK"
+            ? "Votre abonnement Pro inclut déjà des simulations illimitées."
+            : "Vous avez déjà un abonnement actif. Utilisez le portail client pour le modifier.",
+      },
       { status: 400 }
     );
+  }
+
+  // Pack déjà actif avec des simulations restantes : un réachat les écraserait.
+  if (planId === "PACK" && userProfile) {
+    const packUser = {
+      plan: userProfile.plan as PlanId,
+      simulationsUsed: userProfile.simulationsUsed,
+      packExpiresAt: userProfile.packExpiresAt,
+    };
+    if (userProfile.plan === "PACK" && !isExpired(packUser) && canSimulate(packUser)) {
+      const remaining = getRemainingSimulations(packUser);
+      return NextResponse.json(
+        {
+          error: `Il vous reste ${remaining} simulation${remaining === 1 ? "" : "s"} sur votre ${PLANS.PACK.name}. Utilisez-les avant d'en acheter un nouveau.`,
+        },
+        { status: 400 }
+      );
+    }
   }
 
   logInfo("[STRIPE_CHECKOUT]", "Création session checkout", {
     userId:  user.id,
     priceId,
-    plan:    planLabel,
+    plan:    planId,
   });
 
   try {
-    const isPaymentMode = planSlug === "interview_pack";
+    const isPaymentMode = planId === "PACK";
     const mode = isPaymentMode ? "payment" : "subscription";
 
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
@@ -132,8 +147,8 @@ export async function POST(request: NextRequest) {
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: {
         user_id: user.id,
-        type:    planLabel, // e.g. "INTERVIEW_PACK" pour le webhook
-        plan:    planLabel, // legacy
+        type:    planId, // "PACK" | "PRO" — lu par le webhook
+        plan:    planId, // legacy
       },
       success_url: `${envServer.NEXT_PUBLIC_APP_URL}/dashboard?checkout=success`,
       cancel_url:  `${envServer.NEXT_PUBLIC_APP_URL}/pricing?checkout=cancelled`,
@@ -144,8 +159,8 @@ export async function POST(request: NextRequest) {
       sessionParams.subscription_data = {
         metadata: {
           user_id: user.id,
-          type:    planLabel,
-          plan:    planLabel,
+          type:    planId,
+          plan:    planId,
         },
       };
     }

@@ -48,12 +48,12 @@ export async function checkSimulationQuota(userId: string): Promise<SimulationQu
 
   // === SI PRO ACTIF ===
   const hasActivePro = user?.Subscription?.status === "active" &&
-    (user.Subscription.plan === "PRO" || user.Subscription.plan === "EXPERT")
+    user.Subscription.plan === "PRO"
 
   if (hasActivePro) {
     const planRaw = user.Subscription!.plan
-    // Limite depuis SubscriptionService (PRO=20, EXPERT=illimitÃ©)
-    const limit = planRaw === "EXPERT" ? null :
+    // Limite depuis SubscriptionService (PRO=20)
+    const limit =
       SubscriptionService.getMonthlyQuota(SubscriptionPlan.PRO, "simulations") ?? 20
 
     const periodEnd = user.Subscription!.currentPeriodEnd

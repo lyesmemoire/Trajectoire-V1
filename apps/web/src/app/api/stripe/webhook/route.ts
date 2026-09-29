@@ -7,6 +7,7 @@ import { envServer }                 from "@/lib/env.server";
 import { logger }                    from "@/lib/logger/Logger";
 import Stripe                        from "stripe";
 import { z }                         from "zod";
+import { computePackExpiry } from "@/lib/plans";
 import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
 import { RouteType, RateLimitScope } from "@/lib/rate-limiting/centralized-rate-limit.service";
 
@@ -78,33 +79,57 @@ export const POST = rateLimit(
            }
         }
 
-        // ── Pack Entretien (one-off payment) ───────────────────────────────────
-        if (session.mode === "payment" && type === "INTERVIEW_PACK") {
+        // ── Pack Entretien (paiement unique) ───────────────────────────────────
+        // "INTERVIEW_PACK" : ancien libellé, encore accepté pour les sessions
+        // de paiement créées avant l'alignement sur lib/plans.ts.
+        if (session.mode === "payment" && (type === "PACK" || type === "INTERVIEW_PACK")) {
           if (!session.id) {
-            logger.error("[Webhook] INTERVIEW_PACK — missing checkout session id");
+            logger.error("[Webhook] PACK — missing checkout session id");
             break;
           }
-          // Idempotent upsert: stripeCheckoutSessionId has a UNIQUE constraint.
-          // If this event fires twice only one row will ever be created.
+          // Idempotence : stripeCheckoutSessionId est UNIQUE. Si l'évènement est
+          // rejoué (ou concurrent), une seule ligne — et donc un seul octroi de
+          // droits — peut exister ; le doublon concurrent échoue (500) puis
+          // Stripe réessaie et tombe sur le « skip » ci-dessous.
           const existing = await prisma.userPurchase.findUnique({
             where: { stripeCheckoutSessionId: session.id },
           });
           if (!existing) {
-            await prisma.userPurchase.create({
-              data: {
-                userId:                 user_id,
-                type:                   "INTERVIEW_PACK",
-                stripeCheckoutSessionId: session.id,
-                status:                 "ACTIVE",
-                activatedAt:            new Date(event.created * 1000),
-              },
-            });
-            logger.info("[Webhook] INTERVIEW_PACK purchase persisted", {
+            const activatedAt = new Date(event.created * 1000);
+            // Achat + droits dans la même transaction : pas d'achat sans droits.
+            // Un abonné PRO n'est jamais rétrogradé (garde `plan: { not: "PRO" }`),
+            // même si un Pack lui parvenait par une course entre deux onglets.
+            const [, entitlement] = await prisma.$transaction([
+              prisma.userPurchase.create({
+                data: {
+                  userId:                  user_id,
+                  type:                    "INTERVIEW_PACK",
+                  stripeCheckoutSessionId: session.id,
+                  status:                  "ACTIVE",
+                  activatedAt,
+                },
+              }),
+              prisma.user.updateMany({
+                where: { id: user_id, plan: { not: "PRO" } },
+                data: {
+                  plan:            "PACK",
+                  packExpiresAt:   computePackExpiry("PACK", activatedAt),
+                  simulationsUsed: 0,
+                },
+              }),
+            ]);
+            if ((entitlement as { count?: number } | undefined)?.count === 0) {
+              logger.warn("[Webhook] PACK payé mais droits non appliqués (abonné PRO actif)", {
+                userId:    user_id,
+                sessionId: session.id,
+              });
+            }
+            logger.info("[Webhook] PACK purchase persisted", {
               userId:    user_id,
               sessionId: session.id,
             });
           } else {
-            logger.info("[Webhook] INTERVIEW_PACK already persisted — idempotent skip", {
+            logger.info("[Webhook] PACK already persisted — idempotent skip", {
               userId:    user_id,
               sessionId: session.id,
             });
@@ -155,10 +180,10 @@ export const POST = rateLimit(
         const plan = resolvePlanFromPriceId(
           (invoice as any).lines?.data?.[0]?.price?.id ?? ""
         );
-        if (plan !== "FREE") {
+        if (plan) {
           await prisma.user.update({
             where: { id: existing.userId },
-            data:  { plan: plan as any },
+            data:  { plan },
           });
         }
         break;
@@ -216,6 +241,16 @@ export const POST = rateLimit(
 // â”€â”€ Upsert Subscription + mise Ã  jour User.plan (atomique) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscription, eventCreatedTimestamp: number): Promise<void> {
   const plan             = resolvePlanFromSubscription(sub);
+  if (!plan) {
+    // Prix inconnu (ancien STARTER/EXPERT, prix de test…) : on ne devine pas un
+    // plan, on ne touche ni à l'abonnement ni à User.plan.
+    logger.error("[Webhook] Prix d'abonnement inconnu — plan inchangé", {
+      subscriptionId: sub.id,
+      userId,
+      priceId:        sub.items.data[0]?.price.id ?? "",
+    });
+    return;
+  }
   const currentPeriodEnd = new Date((sub as any).current_period_end * 1000);
   const eventDate        = new Date(eventCreatedTimestamp * 1000);
 
@@ -235,7 +270,7 @@ async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscriptio
         stripeSubId:      sub.id,
         status:           sub.status,
         currentPeriodEnd,
-        plan:             plan as any,
+        plan,
         updatedAt:        eventDate,
       },
       update: {
@@ -243,29 +278,29 @@ async function upsertSubscriptionAndPlan(userId: string, sub: Stripe.Subscriptio
         stripeSubId:      sub.id,
         status:           sub.status,
         currentPeriodEnd,
-        plan:             plan as any,
+        plan,
         updatedAt:        eventDate,
       },
     }),
     prisma.user.update({
       where: { id: userId },
-      data:  { plan: plan as any },
+      data:  { plan },
     }),
   ]);
 }
 
-// â”€â”€ RÃ©solution plan depuis un objet Subscription Stripe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function resolvePlanFromSubscription(sub: Stripe.Subscription): string {
+// ── Résolution plan depuis un objet Subscription Stripe ──────────────────────
+// `null` = prix inconnu : l'appelant ne doit PAS modifier le plan.
+function resolvePlanFromSubscription(sub: Stripe.Subscription): "PRO" | null {
   const priceId = sub.items.data[0]?.price.id ?? "";
   return resolvePlanFromPriceId(priceId);
 }
 
-// â”€â”€ RÃ©solution plan depuis un price ID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function resolvePlanFromPriceId(priceId: string): string {
-  if (!priceId) return "FREE";
-  if (priceId === envServer.STRIPE_EXPERT_PRICE_ID)  return "EXPERT";
-  if (priceId === envServer.STRIPE_PRO_PRICE_ID)     return "PRO";
-  if (priceId === envServer.STRIPE_PRICE_EARLY)      return "PRO";
-  if (priceId === envServer.STRIPE_PRICE_STARTER_MONTHLY) return "STARTER";
-  return "FREE";
+// ── Résolution plan depuis un price ID ────────────────────────────────────────
+// Seul PRO est un abonnement. STRIPE_PRICE_EARLY = ancien prix PRO (historique).
+function resolvePlanFromPriceId(priceId: string): "PRO" | null {
+  if (!priceId) return null;
+  if (envServer.STRIPE_PRO_PRICE_ID && priceId === envServer.STRIPE_PRO_PRICE_ID) return "PRO";
+  if (envServer.STRIPE_PRICE_EARLY && priceId === envServer.STRIPE_PRICE_EARLY)   return "PRO";
+  return null;
 }

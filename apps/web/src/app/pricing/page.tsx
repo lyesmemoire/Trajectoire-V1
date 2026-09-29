@@ -35,13 +35,6 @@ const CTA_LABELS: Record<PlanId, string> = {
   PRO: "Passer Pro",
 }
 
-// Slugs attendus aujourd'hui par /api/stripe/checkout (alignés sur PACK/PRO au
-// commit suivant).
-const CHECKOUT_SLUGS: Record<Exclude<PlanId, "FREE">, string> = {
-  PACK: "interview_pack",
-  PRO: "pro",
-}
-
 const STEPS = [
   { n: "01", label: "Votre CV + l’offre ciblée" },
   { n: "02", label: "Vos risques identifiés" },
@@ -290,7 +283,7 @@ export default function PricingPage() {
       const response = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId: CHECKOUT_SLUGS[planId] }),
+        body: JSON.stringify({ plan: planId }),
       })
 
       if (response.ok) {
