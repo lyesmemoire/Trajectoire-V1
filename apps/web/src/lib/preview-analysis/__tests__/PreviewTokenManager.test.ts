@@ -15,15 +15,16 @@ describe('PreviewTokenManager', () => {
   }
 
   beforeEach(() => {
-    // Mock sessionStorage
-    Object.defineProperty(window, 'sessionStorage', {
-      value: mockSessionStorage,
-      writable: true,
-    })
+    // previewTokenManager.ts guarde ses appels avec `typeof window !== 'undefined'`
+    // puis lit le global `sessionStorage` : dans l'environnement `node` de Vitest,
+    // ni l'un ni l'autre n'existe, donc on stub les deux plutôt que de dépendre de jsdom.
+    vi.stubGlobal('window', {})
+    vi.stubGlobal('sessionStorage', mockSessionStorage)
     mockSessionStorage.clear()
   })
 
   afterEach(() => {
+    vi.unstubAllGlobals()
     vi.restoreAllMocks()
   })
 
