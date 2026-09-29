@@ -285,7 +285,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
                 className="flex flex-col gap-4 px-5 py-4 transition-colors hover:bg-surface-muted sm:px-6 xl:flex-row xl:items-center xl:justify-between"
               >
                 <div className="flex min-w-0 items-start gap-3">
-                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-zinc-100 text-[10px] font-bold text-zinc-900">
+                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-zinc-700 text-[10px] font-bold text-zinc-100">
                     {PROVIDER_ABBR[source.provider] ?? "ATS"}
                   </div>
                   <div className="min-w-0">

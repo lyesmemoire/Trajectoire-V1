@@ -141,7 +141,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="hidden size-10 shrink-0 place-items-center rounded-xl bg-zinc-100 text-zinc-900 sm:grid">
+              <div className="hidden size-10 shrink-0 place-items-center rounded-xl bg-zinc-700 text-zinc-100 sm:grid">
                 <Building2 className="size-4" />
               </div>
               <div className="min-w-0">
@@ -206,7 +206,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
           {promoted && cluster.opportunityId ? (
             <Link
               href={"/opportunities/" + cluster.opportunityId + "/workspace"}
-              className="inline-flex items-center gap-2 rounded-lg bg-zinc-100 px-3.5 py-2 text-[11px] font-semibold text-zinc-900 transition-colors hover:bg-zinc-200"
+              className="inline-flex items-center gap-2 rounded-lg bg-zinc-700 px-3.5 py-2 text-[11px] font-semibold text-zinc-100 transition-colors hover:bg-zinc-800"
             >
               Preparer ma candidature <ArrowRight className="size-3.5" />
             </Link>
@@ -398,7 +398,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
               </p>
             </div>
             {filtersActive ? (
-              <button type="button" onClick={clearFilters} className="rounded-lg bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-900 hover:bg-zinc-200 transition-colors">
+              <button type="button" onClick={clearFilters} className="rounded-lg bg-zinc-700 px-4 py-2 text-xs font-semibold text-zinc-100 hover:bg-zinc-800 transition-colors">
                 Reinitialiser les filtres
               </button>
             ) : (

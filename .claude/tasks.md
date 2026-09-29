@@ -3,11 +3,10 @@
 > Mis à jour manuellement en session. Pour l'état détaillé (architecture, pièges), voir `CLAUDE.md`.
 
 ## En cours
-- [ ] Committer `apps/web/src/app/reset-password/page.tsx` (fait, non commité)
+_(rien — dernier item traité : commit `ef30a9a7`)_
 
 ## Restant — connu et documenté dans CLAUDE.md
-- [ ] `/simulation` (page legacy) : décision ouverte — garder comme formulaire distinct de `/simulation/new` (niveaux Junior/Mid/Senior, durées 15/30/45, sans opportunité) ou fusionner
-- [ ] `/discovery` : écarts esthétiques non traités — accent `primary` violet non surchargé en dark (`lib/theme/dark-tokens.ts`), 4 usages `bg-foreground text-background` (pastilles/boutons gris clair), `bg-success/8`/`bg-warning/8` hors échelle Tailwind, titre en `font-serif`
+- [ ] 🔴 **Décision requise** — `/simulation` (`(app)/simulation/page.tsx`, déjà restylée dark, `34865e31`) : garder comme formulaire distinct de `/simulation/new` (niveaux Junior/Mid/Senior, durées 15/30/45, sans opportunité) ou fusionner. Question de produit/architecture, pas de design — à trancher explicitement avant tout refactor (~10 min de décision, ~2h de refacto si fusion). Pas de page "liste" séparée : `/simulation` est cette page.
 - [ ] Simulation Realtime (`api/interview/realtime-session`, `useRealtimeInterview`) : sessions en `Map` mémoire — non fiable en serverless/multi-instance, à persister avant prod ; pas de quota ni de rate-limit sur cette route
 - [ ] `.env` — `DATABASE_URL` (pooler, utilisé par le client Prisma applicatif) a un mot de passe périmé/erroné, rejeté par le pooler (`DIRECT_URL` fonctionne) ; toute requête Prisma applicative échoue tant que ce n'est pas corrigé (diagnostic complet dans CLAUDE.md, § État en cours)
 - [ ] Vitest : 49 tests en échec hors onboarding (`rate-limiting` exige Redis, `PreviewTokenManager` exige `window`, `ssrf`, hash `core/p7`) — connu, non traité
@@ -23,10 +22,10 @@
 - [x] Migration Prisma `onboardingData`/`onboardingCompletedAt` appliquée à Supabase (`a3d18660`, 2026-09-28)
 - [x] Redirect nouveaux utilisateurs vers `/onboarding` (`4901929a`)
 - [x] `/simulation` (legacy) restylée dark, sans redirection (`34865e31`)
-- [x] `/discovery` — indigo local, chips emerald/amber, font-sans (`fae6a0b8`)
+- [x] `/discovery` — indigo local, chips emerald/amber, font-sans (`fae6a0b8`) ; 4 pastilles `bg-zinc-100 text-zinc-900` → `bg-zinc-700 text-zinc-100` (2026-09-29)
 - [x] Login / signup — a11y (contraste, aria) (`4d5449d7`, `1dd53533`)
 - [x] Button — variantes dark + dark-ghost (`f413b9be`)
 - [x] `/history`, `/report`, `/dashboard` — dark tokens (`8b3d0ad8`, `2c0ea136`, `55558ac7`)
 - [x] `/api/auth/callback` — échange code → session (`7489042a`)
 - [x] `/forgot-password` (`4e741111`)
-- [x] `/reset-password` — formulaire nouveau mot de passe, `supabase.auth.updateUser`, redirect `/login` (session courante, non commité)
+- [x] `/reset-password` — formulaire nouveau mot de passe, `supabase.auth.updateUser`, redirect `/login` (`ef30a9a7`)
