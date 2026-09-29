@@ -23,7 +23,6 @@ export default function ForgotPasswordPage() {
     try {
       const supabase = createClient()
 
-      // TODO: créer app/reset-password/page.tsx (formulaire nouveau mdp)
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/api/auth/callback?next=/reset-password`,
       })
