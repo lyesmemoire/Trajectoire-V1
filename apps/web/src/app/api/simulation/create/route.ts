@@ -58,6 +58,7 @@ import type { Prisma } from "@prisma/client";
 
 import {
   parseDifficulty,
+  parsePersona,
   sanitizeMandatoryQuestion,
   withSessionSetup,
 } from "@/lib/interview/session-setup";
@@ -438,6 +439,10 @@ export async function POST(
         formData.get("difficulty") ??
         undefined,
 
+      persona:
+        formData.get("persona") ??
+        undefined,
+
       mandatoryQuestion:
         formData.get("mandatoryQuestion") ??
         undefined,
@@ -677,6 +682,7 @@ export async function POST(
           data: {
             analysis: withSessionSetup(current.analysis, {
               difficulty: parseDifficulty(validatedData.difficulty),
+              persona: parsePersona(validatedData.persona),
               mandatoryQuestion: sanitizeMandatoryQuestion(
                 validatedData.mandatoryQuestion,
               ),

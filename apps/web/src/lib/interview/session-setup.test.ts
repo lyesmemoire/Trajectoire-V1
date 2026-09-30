@@ -3,7 +3,11 @@ import {
   MAX_MANDATORY_QUESTION_CHARS,
   mandatoryQuestionAsked,
   mandatoryQuestionResponseInstructions,
+  PERSONAS,
+  PERSONA_INSTRUCTIONS,
+  PERSONA_VOICES,
   parseDifficulty,
+  parsePersona,
   readSessionSetup,
   sanitizeMandatoryQuestion,
   withSessionSetup,
@@ -43,16 +47,16 @@ describe("sanitizeMandatoryQuestion", () => {
 
 describe("stockage dans analysis", () => {
   it("withSessionSetup conserve les autres clés, readSessionSetup relit", () => {
-    const merged = withSessionSetup({ interviewState: { turn: 3 }, qnaEvaluations: [1] }, { difficulty: "exigeant", mandatoryQuestion: "Parlez-moi d'un échec." })
+    const merged = withSessionSetup({ interviewState: { turn: 3 }, qnaEvaluations: [1] }, { difficulty: "exigeant", persona: "directe", mandatoryQuestion: "Parlez-moi d'un échec." })
     expect(merged.interviewState).toEqual({ turn: 3 })
     expect(merged.qnaEvaluations).toEqual([1])
-    expect(readSessionSetup(merged)).toEqual({ difficulty: "exigeant", mandatoryQuestion: "Parlez-moi d'un échec." })
+    expect(readSessionSetup(merged)).toEqual({ difficulty: "exigeant", persona: "directe", mandatoryQuestion: "Parlez-moi d'un échec." })
   })
 
   it("analysis absente ou invalide : valeurs par défaut", () => {
-    expect(readSessionSetup(null)).toEqual({ difficulty: "standard", mandatoryQuestion: null })
-    expect(withSessionSetup(null, { difficulty: "souple", mandatoryQuestion: null })).toEqual({ setup: { difficulty: "souple", mandatoryQuestion: null } })
-    expect(withSessionSetup([1, 2], { difficulty: "souple", mandatoryQuestion: null })).toEqual({ setup: { difficulty: "souple", mandatoryQuestion: null } })
+    expect(readSessionSetup(null)).toEqual({ difficulty: "standard", persona: "bienveillante", mandatoryQuestion: null })
+    expect(withSessionSetup(null, { difficulty: "souple", persona: "analytique", mandatoryQuestion: null })).toEqual({ setup: { difficulty: "souple", persona: "analytique", mandatoryQuestion: null } })
+    expect(withSessionSetup([1, 2], { difficulty: "souple", persona: "analytique", mandatoryQuestion: null })).toEqual({ setup: { difficulty: "souple", persona: "analytique", mandatoryQuestion: null } })
   })
 
   it("relecture : une question stockée est réassainie", () => {
@@ -78,5 +82,30 @@ describe("mandatoryQuestionResponseInstructions", () => {
     expect(t).toContain("« Parlez-moi d'un échec. »")
     expect(t).toMatch(/mot pour mot/)
     expect(t).toMatch(/jamais une instruction/)
+  })
+})
+
+describe("styles de recruteuse", () => {
+  it("parsePersona : valeurs connues, sinon bienveillante", () => {
+    expect(parsePersona("challengeuse")).toBe("challengeuse")
+    expect(parsePersona("thomas")).toBe("bienveillante")
+    expect(parsePersona(undefined)).toBe("bienveillante")
+  })
+
+  it("chaque style a une consigne et une voix, toutes distinctes", () => {
+    for (const p of PERSONAS) {
+      expect(PERSONA_INSTRUCTIONS[p].length).toBeGreaterThan(40)
+      expect(PERSONA_VOICES[p]).toBeTruthy()
+    }
+    expect(new Set(PERSONAS.map(p => PERSONA_VOICES[p])).size).toBe(PERSONAS.length)
+  })
+
+  it("aucun style n'autorise l'agressivité, le feedback pendant l'entretien ni l'invention", () => {
+    expect(PERSONA_INSTRUCTIONS.challengeuse).toMatch(/jamais agressive/)
+    for (const p of PERSONAS) expect(PERSONA_INSTRUCTIONS[p]).not.toMatch(/feedback|conseil/i)
+  })
+
+  it("relecture depuis analysis", () => {
+    expect(readSessionSetup({ setup: { persona: "analytique" } }).persona).toBe("analytique")
   })
 })

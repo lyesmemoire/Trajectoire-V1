@@ -27,10 +27,9 @@ import {
   REALTIME_MODEL,
   REALTIME_TRANSCRIPTION_LANGUAGE,
   REALTIME_TRANSCRIPTION_MODEL,
-  REALTIME_VOICE,
 } from '@/lib/interview/realtime-config'
 import { buildRealtimeInstructions, isResumedSession } from '@/lib/interview/realtime-instructions'
-import { mandatoryQuestionAsked, readSessionSetup } from '@/lib/interview/session-setup'
+import { PERSONA_VOICES, mandatoryQuestionAsked, readSessionSetup } from '@/lib/interview/session-setup'
 import { logger } from '@/lib/logger'
 
 // Question d'ouverture de repli (séance sans question enregistrée) : une par type d'entretien.
@@ -68,6 +67,7 @@ async function handleRealtimeSession(request: NextRequest) {
     let openingPersisted = false
     let resumed = false
     let pendingMandatoryQuestion: string | null = null
+    let voice: string = PERSONA_VOICES.bienveillante
     let durationSeconds: number
 
     try {
@@ -93,6 +93,7 @@ async function handleRealtimeSession(request: NextRequest) {
 
       // Réglages choisis à la création : difficulté et question imposée (à poser une seule fois).
       const setup = readSessionSetup(session.analysis)
+      voice = PERSONA_VOICES[setup.persona]
       pendingMandatoryQuestion = mandatoryQuestionAsked(setup.mandatoryQuestion, history) ? null : setup.mandatoryQuestion
 
       // Même contexte que l'entretien texte. Son échec n'empêche pas la séance : consignes sans CV ni offre.
@@ -112,6 +113,7 @@ async function handleRealtimeSession(request: NextRequest) {
         durationMinutes: Math.round(session.duration_seconds / 60),
         openingQuestion,
         difficulty: setup.difficulty,
+        persona: setup.persona,
         hasMandatoryQuestion: Boolean(pendingMandatoryQuestion),
         history,
         cvText: context?.candidate.cvText,
@@ -148,7 +150,7 @@ async function handleRealtimeSession(request: NextRequest) {
               turn_detection: { type: 'semantic_vad', eagerness: 'low', create_response: true, interrupt_response: true },
               noise_reduction: { type: 'near_field' },
             },
-            output: { voice: REALTIME_VOICE },
+            output: { voice },
           },
         },
       }),

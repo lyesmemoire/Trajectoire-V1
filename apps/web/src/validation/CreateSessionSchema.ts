@@ -19,6 +19,8 @@ export const CreateSessionSchema = z.object({
   opportunityId: z.string().optional(),
   /** Exigence des relances (défaut : standard). */
   difficulty: z.enum(["souple", "standard", "exigeant"]).optional(),
+  /** Style de la recruteuse (défaut : bienveillante). */
+  persona: z.enum(["bienveillante", "directe", "analytique", "challengeuse"]).optional(),
   /** Question saisie par le candidat, posée une fois vers la moitié de l'entretien (assainie côté serveur). */
   mandatoryQuestion: z.string().max(1000).optional(),
 });

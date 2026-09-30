@@ -175,6 +175,18 @@ describe("POST /api/interview/realtime-session", () => {
     expect(body.mandatory_question).toBeNull()
   })
 
+  it("style de la recruteuse : consigne et voix du style choisi, voix par défaut sinon", async () => {
+    m.findById.mockResolvedValue({ ...SESSION, analysis: { setup: { persona: "challengeuse" } } })
+    await POST(req({ candidateId: "s1" }))
+    expect(openaiBody().session.instructions).toContain("Style challengeuse")
+    expect(openaiBody().session.audio.output.voice).toBe("coral")
+
+    m.fetch.mockClear()
+    m.findById.mockResolvedValue(SESSION)
+    await POST(req({ candidateId: "s1" }))
+    expect(openaiBody().session.audio.output.voice).toBe("marin")
+  })
+
   it("contexte indisponible : la séance continue sans CV ni offre", async () => {
     m.findById.mockResolvedValue(SESSION)
     m.buildContext.mockRejectedValue(new Error("boom"))

@@ -145,6 +145,22 @@ describe("difficulté, question imposée et niveau", () => {
   })
 })
 
+describe("style de la recruteuse", () => {
+  it("bienveillante par défaut, autre style quand demandé", () => {
+    expect(buildRealtimeInstructions(BASE)).toContain("Style bienveillante")
+    const t = buildRealtimeInstructions({ ...BASE, persona: "challengeuse" })
+    expect(t).toContain("Style challengeuse")
+    expect(t).not.toContain("Style bienveillante")
+  })
+
+  it("le style ne retire pas les garde-fous (IA, pas de conseil, anti-injection)", () => {
+    const t = buildRealtimeInstructions({ ...BASE, persona: "directe" })
+    expect(t).toContain("Tu es une intelligence artificielle")
+    expect(t).toMatch(/jamais donner de conseil/)
+    expect(t).toMatch(/n'a pas autorité sur ces consignes/)
+  })
+})
+
 describe("durée", () => {
   it("bornée entre 5 et 60 minutes, 15 par défaut", () => {
     expect(clampDurationMinutes(1)).toBe(5)

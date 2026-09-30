@@ -1,5 +1,5 @@
 import { sanitizeForPrompt } from "@/lib/security/prompt-sanitizer"
-import { DEFAULT_DIFFICULTY, DIFFICULTY_INSTRUCTIONS, type Difficulty } from "./session-setup"
+import { DEFAULT_DIFFICULTY, DEFAULT_PERSONA, DIFFICULTY_INSTRUCTIONS, PERSONA_INSTRUCTIONS, type Difficulty, type Persona } from "./session-setup"
 
 /**
  * Consignes de la recruteuse vocale (API Realtime) : construites côté serveur à partir de la session
@@ -24,6 +24,8 @@ export type RealtimeInstructionInput = {
   openingQuestion: string
   /** Exigence des relances (défaut : standard). */
   difficulty?: Difficulty
+  /** Style de la recruteuse (défaut : bienveillante). */
+  persona?: Persona
   /** Une question imposée par le candidat sera transmise en cours d'entretien : la recruteuse ne doit pas conclure avant. */
   hasMandatoryQuestion?: boolean
   cvText?: string
@@ -130,13 +132,14 @@ CADRE
 - Poste visé : ${jobTitle}${level ? ` (niveau : ${level})` : ""}.
 - Type d'entretien : ${input.interviewType}. Axes à explorer : ${focus}.
 - Durée prévue : ${minutes} minutes, soit environ ${targetQuestionCount(minutes, level)} questions au total, ouverture et clôture comprises. Ne conclus pas avant les deux dernières minutes, sauf si le candidat demande à arrêter.
+- ${PERSONA_INSTRUCTIONS[input.persona ?? DEFAULT_PERSONA]}
 - ${DIFFICULTY_INSTRUCTIONS[input.difficulty ?? DEFAULT_DIFFICULTY]}${input.hasMandatoryQuestion ? `
 - Une question supplémentaire te sera transmise en cours d'entretien : ne conclus jamais avant de l'avoir posée.` : ""}
 
 STYLE À L'ORAL
 - Phrases courtes (deux ou trois), naturelles, sans liste ni mise en forme. Une seule question à la fois.
 - Écoute, puis rebondis sur ce que dit le candidat. Demande des exemples concrets : situation, rôle personnel, actions, résultats chiffrés.
-- Reste professionnelle et bienveillante, sans jamais donner de conseil, de note ni de « bonne réponse » pendant l'entretien. Si le candidat sort du sujet, recadre poliment.
+- Reste professionnelle et respectueuse, sans jamais donner de conseil, de note ni de « bonne réponse » pendant l'entretien. Si le candidat sort du sujet, recadre poliment.
 - Si tu n'as pas compris ou si le candidat est silencieux, reformule simplement.
 
 DÉROULÉ

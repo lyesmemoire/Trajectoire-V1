@@ -450,6 +450,38 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                 </div>
               </div>
 
+              {/* Style de la recruteuse */}
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-white/80">
+                  Style de la recruteuse
+                </label>
+                <p className="mb-3 text-sm text-white/50">
+                  Le ton et la voix changent ; c&apos;est toujours Alexandra, une recruteuse simulée par IA.
+                </p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {[
+                    { value: "bienveillante", label: "Bienveillante", hint: "Calme et encourageante" },
+                    { value: "directe", label: "Directe", hint: "Tolère peu le flou" },
+                    { value: "analytique", label: "Analytique", hint: "Creuse le raisonnement" },
+                    { value: "challengeuse", label: "Challengeuse", hint: "Tension constructive" },
+                  ].map((p) => (
+                    <label key={p.value} className="cursor-pointer">
+                      <input
+                        type="radio"
+                        name="persona"
+                        value={p.value}
+                        defaultChecked={p.value === "bienveillante"}
+                        className="peer sr-only"
+                      />
+                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-2 text-center transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500/40">
+                        <span className="text-sm font-medium text-white/70">{p.label}</span>
+                        <span className="mt-0.5 text-xs text-white/50">{p.hint}</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               {/* Difficulté */}
               <div>
                 <label className="mb-1 block text-sm font-semibold text-white/80">
