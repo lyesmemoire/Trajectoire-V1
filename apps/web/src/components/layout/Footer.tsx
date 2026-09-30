@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-10 text-center text-xs text-slate-400">
+      <div className="mt-10 text-center text-xs text-foreground-muted">
         © {new Date().getFullYear()} Trajectoire. Tous droits réservés.
       </div>
     </footer>

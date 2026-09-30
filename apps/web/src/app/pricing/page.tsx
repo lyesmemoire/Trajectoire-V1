@@ -111,19 +111,19 @@ function FAQAccordion({ q, a, index }: { q: string; a: string; index: number }) 
   const id = `faq-${index}`
 
   return (
-    <div className="border-b border-zinc-800 last:border-0">
+    <div className="border-b border-border last:border-0">
       <button
         id={`${id}-trigger`}
         aria-expanded={open}
         aria-controls={`${id}-panel`}
         onClick={() => setOpen((v) => !v)}
-        className="group flex w-full items-start justify-between gap-4 rounded-sm py-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="group flex w-full items-start justify-between gap-4 rounded-sm py-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        <span className="text-base font-medium leading-snug text-white/80 transition-colors group-hover:text-indigo-300">
+        <span className="text-base font-medium leading-snug text-foreground transition-colors group-hover:text-primary-700">
           {q}
         </span>
         <ChevronDown
-          className={`mt-0.5 h-4 w-4 shrink-0 text-zinc-500 transition-transform duration-300 ${
+          className={`mt-0.5 h-4 w-4 shrink-0 text-foreground-muted transition-transform duration-300 ${
             open ? "rotate-180" : ""
           }`}
           aria-hidden="true"
@@ -141,7 +141,7 @@ function FAQAccordion({ q, a, index }: { q: string; a: string; index: number }) 
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-sm leading-relaxed text-zinc-400">{a}</p>
+            <p className="pb-5 text-sm leading-relaxed text-foreground-muted">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -174,38 +174,38 @@ function PlanCard({
       transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       className={`relative flex flex-col rounded-3xl p-8 md:p-10 ${
         highlighted
-          ? "border border-indigo-500/60 bg-zinc-900 shadow-2xl shadow-indigo-500/10 ring-1 ring-indigo-500/40 md:-my-4 md:py-14"
-          : "border border-zinc-800 bg-zinc-900/60"
+          ? "border border-primary-500/60 bg-surface shadow-premium-lg ring-1 ring-primary-500/30 md:-my-4 md:py-14"
+          : "border border-border bg-surface shadow-premium"
       }`}
     >
       {highlighted && (
-        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-indigo-500 px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary-600 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-white">
           Le plus choisi
         </span>
       )}
 
       <p
-        className={`text-[11px] font-bold uppercase tracking-[0.2em] ${
-          highlighted ? "text-indigo-300" : "text-zinc-500"
+        className={`text-xs font-bold uppercase tracking-[0.2em] ${
+          highlighted ? "text-primary-700" : "text-foreground-muted"
         }`}
       >
         {plan.name}
       </p>
 
       <div className="mt-5 flex items-baseline gap-2">
-        <span className="text-5xl font-semibold tracking-tight text-white">
+        <span className="text-5xl font-semibold tracking-tight text-foreground">
           {formatPrice(plan)}
         </span>
-        <span className="text-sm font-medium text-zinc-400">
+        <span className="text-sm font-medium text-foreground-muted">
           {intervalLabel(plan)}
         </span>
       </div>
       {plan.price > 0 && (
-        <p className="mt-1 text-xs text-zinc-500">TTC</p>
+        <p className="mt-1 text-xs text-foreground-muted">TTC</p>
       )}
 
-      <p className="mt-6 text-sm font-medium text-zinc-300">{audience}</p>
-      <p className="mt-1 text-sm leading-relaxed text-zinc-400">{pitch}</p>
+      <p className="mt-6 text-sm font-medium text-foreground">{audience}</p>
+      <p className="mt-1 text-sm leading-relaxed text-foreground-muted">{pitch}</p>
 
       <ul
         className="mb-10 mt-8 flex flex-col gap-3.5"
@@ -216,16 +216,16 @@ function PlanCard({
             {feature.included ? (
               <Check
                 className={`mt-0.5 h-4 w-4 shrink-0 ${
-                  highlighted ? "text-indigo-400" : "text-zinc-400"
+                  highlighted ? "text-primary-600" : "text-foreground-muted"
                 }`}
                 aria-hidden="true"
               />
             ) : (
-              <X className="mt-0.5 h-4 w-4 shrink-0 text-zinc-700" aria-hidden="true" />
+              <X className="mt-0.5 h-4 w-4 shrink-0 text-foreground-muted" aria-hidden="true" />
             )}
             <span
               className={`text-sm leading-relaxed ${
-                feature.included ? "text-zinc-200" : "text-zinc-600"
+                feature.included ? "text-foreground" : "text-foreground-muted"
               }`}
             >
               {feature.label}
@@ -242,16 +242,16 @@ function PlanCard({
           id={`btn-plan-${plan.id.toLowerCase()}`}
           onClick={() => onSelect(plan.id)}
           disabled={loading !== null}
-          className={`flex w-full flex-col items-center gap-1 rounded-xl px-5 py-4 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60 ${
+          className={`flex w-full flex-col items-center gap-1 rounded-xl px-5 py-4 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-60 ${
             highlighted
-              ? "bg-indigo-600 text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] hover:bg-indigo-700"
-              : "border border-zinc-700 bg-zinc-800 text-white/80 hover:bg-zinc-700"
+              ? "bg-primary-600 text-white shadow-[0_8px_24px_-8px_rgba(124,58,237,0.45)] hover:bg-primary-700"
+              : "border border-border bg-surface text-foreground hover:bg-surface-muted"
           }`}
         >
           <span>{busy ? "Redirection…" : CTA_LABELS[plan.id]}</span>
           <span
-            className={`text-[10px] font-medium uppercase tracking-wider ${
-              highlighted ? "text-indigo-200" : "text-zinc-500"
+            className={`text-xs font-medium uppercase tracking-wider ${
+              highlighted ? "text-primary-100" : "text-foreground-muted"
             }`}
           >
             {reassurance(plan)}
@@ -271,7 +271,7 @@ function QuotaNotice() {
   return (
     <div
       role="status"
-      className="mx-auto mt-8 max-w-xl rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-4 text-sm font-medium text-indigo-200"
+      className="mx-auto mt-8 max-w-xl rounded-xl border border-primary-200 bg-primary-50 p-4 text-sm font-medium text-primary-800"
     >
       Pour lancer une simulation, choisissez le Pack Entretien ou Pro.
     </div>
@@ -332,7 +332,7 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mb-8 text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-400"
+            className="mb-8 text-xs font-bold uppercase tracking-[0.22em] text-primary-700"
           >
             Préparation d&apos;entretien par IA
           </motion.p>
@@ -341,16 +341,16 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-[2.6rem] font-semibold leading-[1.1] tracking-tight text-white md:text-[4rem]"
+            className="text-[2.6rem] font-semibold leading-[1.1] tracking-tight text-foreground md:text-[4rem]"
           >
             Un entretien peut changer
             <br />
             votre carrière.
             <br />
-            <span className="text-indigo-400">Préparez-le comme tel.</span>
+            <span className="text-primary-700">Préparez-le comme tel.</span>
           </motion.h1>
 
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-zinc-400 md:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground-muted md:text-xl">
             Trajectoire analyse votre CV et l&apos;offre que vous visez, identifie
             les points qui peuvent vous coûter le poste, puis vous entraîne
             précisément là où cela compte.
@@ -363,7 +363,7 @@ export default function PricingPage() {
           {error && (
             <div
               role="alert"
-              className="mx-auto mt-8 max-w-md rounded-xl border border-rose-400/20 bg-rose-500/10 p-4 text-sm font-medium text-rose-300"
+              className="mx-auto mt-8 max-w-md rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-medium text-rose-700"
             >
               {error}
             </div>
@@ -374,12 +374,12 @@ export default function PricingPage() {
       {/* ── FORMULES ── */}
       <section className="pb-20 md:pb-28" aria-labelledby="formules-title">
         <div className="mx-auto max-w-[1200px] px-6">
-          <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-400">
+          <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
             Formules
           </p>
           <h2
             id="formules-title"
-            className="mb-16 text-center text-3xl font-semibold tracking-tight text-white md:text-5xl"
+            className="mb-16 text-center text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
           >
             Choisissez votre niveau de préparation.
           </h2>
@@ -396,22 +396,22 @@ export default function PricingPage() {
             ))}
           </div>
 
-          <p className="mt-10 text-center text-[11px] font-medium tracking-wide text-zinc-500">
+          <p className="mt-10 text-center text-xs font-medium tracking-wide text-foreground-muted">
             Prix TTC · Paiement sécurisé par Stripe · Données privées
           </p>
         </div>
       </section>
 
       {/* ── MÉTHODE ── */}
-      <section className="border-y border-zinc-800 bg-zinc-900/40 py-16 md:py-24">
+      <section className="border-y border-border bg-surface-muted py-16 md:py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-400">
+          <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
             La méthode
           </p>
-          <h2 className="mb-14 text-center text-3xl font-semibold tracking-tight text-white md:text-[2.5rem]">
+          <h2 className="mb-14 text-center text-3xl font-semibold tracking-tight text-foreground md:text-[2.5rem]">
             Ce n&apos;est pas un chatbot d&apos;entretien.
             <br />
-            <span className="text-zinc-500">
+            <span className="text-foreground-muted">
               C&apos;est une préparation à cet entretien.
             </span>
           </h2>
@@ -427,12 +427,12 @@ export default function PricingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                className="flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 md:flex-col md:items-start md:gap-3"
+                className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-5 md:flex-col md:items-start md:gap-3"
               >
-                <span className="text-[11px] font-bold tracking-widest text-indigo-400">
+                <span className="text-xs font-bold tracking-widest text-primary-700">
                   {step.n}
                 </span>
-                <span className="text-sm font-medium leading-snug text-zinc-200">
+                <span className="text-sm font-medium leading-snug text-foreground">
                   {step.label}
                 </span>
               </motion.li>
@@ -444,35 +444,35 @@ export default function PricingPage() {
       {/* ── PREUVE PRODUIT ── */}
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-6">
-          <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-400">
+          <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
             Exemple d&apos;interface
           </p>
-          <h2 className="mb-4 text-center text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h2 className="mb-4 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Ce que Trajectoire identifie pour vous.
           </h2>
-          <p className="mb-12 text-center text-base text-zinc-500">
+          <p className="mb-12 text-center text-base text-foreground-muted">
             Exemple représentatif — vos priorités seront dérivées de votre CV et
             de l&apos;offre réelle.
           </p>
 
-          <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900">
-            <div className="border-b border-zinc-800 px-6 py-5 md:px-8">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500">
+          <div className="overflow-hidden rounded-2xl border border-border bg-surface">
+            <div className="border-b border-border px-6 py-5 md:px-8">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted">
                 Vos priorités pour cet entretien
               </p>
             </div>
-            <div className="divide-y divide-zinc-800">
+            <div className="divide-y divide-border">
               {PRIORITIES.map((priority, i) => (
                 <div key={priority} className="flex items-start gap-5 px-6 py-6 md:px-8">
-                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-[11px] font-bold text-indigo-300">
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-xs font-bold text-primary-700">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <p className="text-base leading-snug text-zinc-200">{priority}</p>
+                  <p className="text-base leading-snug text-foreground">{priority}</p>
                 </div>
               ))}
             </div>
-            <div className="border-t border-zinc-800 px-6 py-5 md:px-8">
-              <p className="text-sm leading-relaxed text-zinc-500">
+            <div className="border-t border-border px-6 py-5 md:px-8">
+              <p className="text-sm leading-relaxed text-foreground-muted">
                 La simulation Trajectoire insiste ensuite précisément sur ces
                 points — question par question.
               </p>
@@ -482,12 +482,12 @@ export default function PricingPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="border-t border-zinc-800 py-16 md:py-24">
+      <section className="border-t border-border py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-6">
-          <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-400">
+          <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
             FAQ
           </p>
-          <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Questions fréquentes
           </h2>
 
@@ -502,14 +502,14 @@ export default function PricingPage() {
       </section>
 
       {/* ── CTA FINAL ── */}
-      <section className="border-t border-zinc-800 bg-zinc-900/40 py-20 md:py-24">
+      <section className="border-t border-border bg-surface-muted py-20 md:py-24">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl">
             Votre prochain entretien mérite
             <br />
             une vraie préparation.
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-zinc-400 md:text-xl">
+          <p className="mt-6 text-lg leading-relaxed text-foreground-muted md:text-xl">
             Commencez gratuitement. Passez au Pack quand vous en avez besoin.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -517,7 +517,7 @@ export default function PricingPage() {
               id="btn-cta-pack"
               onClick={() => handleSelect("PACK")}
               disabled={loading !== null}
-              className="w-full rounded-xl bg-indigo-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_24px_-8px_rgba(124,58,237,0.45)] transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {loading === "PACK"
                 ? "Redirection…"
@@ -526,7 +526,7 @@ export default function PricingPage() {
             <button
               id="btn-cta-free"
               onClick={() => handleSelect("FREE")}
-              className="w-full rounded-xl border border-zinc-700 bg-transparent px-8 py-4 text-base font-semibold text-white/80 transition-colors hover:bg-zinc-800 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 sm:w-auto"
+              className="w-full rounded-xl border border-border bg-surface px-8 py-4 text-base font-semibold text-foreground transition-colors hover:bg-surface-muted outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
             >
               Analyser mon CV gratuitement
             </button>
