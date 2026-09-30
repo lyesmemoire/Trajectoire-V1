@@ -6,6 +6,7 @@ Contexte de travail pour Claude Code. Rédigé à partir de l'exploration du dé
 
 - `.claude/tasks.md` — tâches en cours et terminées (mise à jour manuelle en session, ne pas déduire du seul historique git)
 - `.claude/decisions.md` — décisions validées, à ne jamais remettre en question sans accord explicite
+- `.claude/roadmap.md` — feuille de route jusqu'au lancement (phases, responsables, critères go / no-go)
 
 Ces deux fichiers sont un complément de suivi, pas une deuxième source de vérité sur l'architecture : en cas d'écart avec le reste de ce document, vérifier dans le code plutôt que dans l'un ou l'autre. L'état détaillé du produit reste dans « État en cours » ci-dessous.
 
