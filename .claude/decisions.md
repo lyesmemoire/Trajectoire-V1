@@ -33,3 +33,16 @@
 - `hooks/useVoiceInterview.ts`
 - `lib/realtime/`
 - `supabase/migrations/*.disabled`
+
+## Tarification (validée le 2026-09-30)
+- Grille : FREE 0 € (aperçu CV uniquement, 0 simulation) · PACK 29 € TTC unique (5 simulations, 3 mois) · PRO 19 €/mois (illimité, paiement immédiat, sans essai). Société bulgare, prix TTC.
+- PACK = mêmes routes et fonctionnalités que PRO ; seul le quota (5, 3 mois) diffère. `lib/plans.ts` est la source unique.
+- Un abonné PRO ne peut pas acheter de Pack ; un Pack actif avec des simulations restantes ne peut pas être racheté.
+- Un prix Stripe inconnu ne change jamais le plan (erreur journalisée).
+- Toute migration est appliquée **avant** le code qui en dépend, avec accord explicite.
+
+## Module CV / ATS (validé le 2026-10-01)
+- Ne jamais afficher de donnée non calculée (pas de valeur par défaut affichée comme un résultat).
+- Aperçu gratuit : on ne persiste que le résultat, jamais le texte du CV ; le rattachement au compte est un **lien**, sans copie dans le profil (Option B).
+- Analyse complète et réécriture : réservées PACK/PRO, refus (403) avant tout appel IA ; CSRF + rate-limit ; entrées de prompt assainies avec `sanitizeForPrompt`.
+- Le `premium-orchestrator` est rejeté ; l'analyse ATS est reconstruite (noyau déterministe + IA pour le qualitatif). Un test de régression impose que « dev senior ↔ offre infirmier » obtienne un score très inférieur à « dev ↔ offre dev ».
