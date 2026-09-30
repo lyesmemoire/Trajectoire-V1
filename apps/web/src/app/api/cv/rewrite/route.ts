@@ -15,6 +15,7 @@ import {
 import { BillingService } from "@/lib/db/billing.service"
 import { logger } from "@/lib/logger"
 import { prisma } from "@/lib/prisma"
+import { requireFullCvAnalysis } from "@/lib/quota/plan-access"
 import { createClient } from "@/lib/supabase/server"
 
 const REWRITE_COST = 2
@@ -79,6 +80,13 @@ export async function POST(
         status: 401,
       },
     )
+  }
+
+  // Réécriture réservée au Pack Entretien et à Pro : refus AVANT tout appel IA.
+  const planGate = await requireFullCvAnalysis(user.id)
+
+  if (planGate) {
+    return planGate
   }
 
   let rawBody: RewriteBody

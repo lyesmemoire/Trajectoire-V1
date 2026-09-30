@@ -150,6 +150,7 @@ export function OpportunityCVTailoring({
           success?: boolean
           data?: string
           error?: string
+          message?: string
         }
 
       if (
@@ -157,7 +158,8 @@ export function OpportunityCVTailoring({
         !rewritePayload.data
       ) {
         throw new Error(
-          rewritePayload.error ||
+          rewritePayload.message ||
+            rewritePayload.error ||
             "Impossible de générer les recommandations ciblées.",
         )
       }

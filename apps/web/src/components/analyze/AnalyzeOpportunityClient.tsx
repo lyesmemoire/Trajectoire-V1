@@ -117,7 +117,9 @@ export function AnalyzeOpportunityClient({
     setError(null)
 
     try {
-      if (opportunity) {
+      // L'enregistrement de l'analyse complète (et son rattachement à la candidature)
+      // est réservé au Pack Entretien et à Pro. Un utilisateur gratuit garde l'aperçu.
+      if (opportunity && hasPremiumAccess) {
         const uploadForm = new FormData()
         uploadForm.append("file", file!)
 
@@ -391,7 +393,24 @@ export function AnalyzeOpportunityClient({
                 />
 
                 {opportunity && file ? (
-                  <OpportunityCVTailoring file={file} opportunity={opportunity} />
+                  hasPremiumAccess ? (
+                    <OpportunityCVTailoring file={file} opportunity={opportunity} />
+                  ) : (
+                    <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
+                      <p className="text-sm font-semibold text-foreground">
+                        Adapter votre CV à cette offre
+                      </p>
+                      <p className="mt-1 text-sm text-foreground-muted">
+                        Les recommandations ciblées sont réservées au Pack Entretien et à Pro.
+                      </p>
+                      <Link
+                        href="/pricing"
+                        className="mt-4 inline-flex text-sm font-semibold text-violet-600 hover:text-violet-800"
+                      >
+                        Voir les offres
+                      </Link>
+                    </div>
+                  )
                 ) : null}
               </div>
             )}

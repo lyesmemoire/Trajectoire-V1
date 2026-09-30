@@ -16,6 +16,7 @@
  */
 
 import { prisma } from "@/lib/prisma"
+import { loadPlanAccess } from "./plan-access"
 import {
   PLANS,
   canSimulate,
@@ -46,27 +47,7 @@ export interface SimulationQuota {
  * Retourne le quota de simulations de l'utilisateur.
  */
 export async function checkSimulationQuota(userId: string): Promise<SimulationQuota> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      plan: true,
-      simulationsUsed: true,
-      packExpiresAt: true,
-      Subscription: {
-        select: { status: true, currentPeriodEnd: true },
-      },
-    },
-  })
-
-  // PRO n'est valable que si l'abonnement Stripe est actif ; sinon on ne
-  // conserve rien de plus que le plan gratuit.
-  const proActive = user?.plan === "PRO" && user.Subscription?.status === "active"
-
-  const planUser: PlanUser = {
-    plan: proActive ? "PRO" : user?.plan === "PACK" ? "PACK" : "FREE",
-    simulationsUsed: user?.simulationsUsed ?? 0,
-    packExpiresAt: user?.packExpiresAt ?? null,
-  }
+  const { planUser, subscription } = await loadPlanAccess(userId)
 
   const effective = getEffectivePlanId(planUser)
   const plan = PLANS[effective]
@@ -75,9 +56,11 @@ export async function checkSimulationQuota(userId: string): Promise<SimulationQu
 
   const periodEnd =
     planUser.plan === "PRO"
-      ? (user?.Subscription?.currentPeriodEnd ?? null)
+      ? (subscription?.currentPeriodEnd ?? null)
       : planUser.plan === "PACK"
-        ? (user?.packExpiresAt ?? null)
+        ? planUser.packExpiresAt
+          ? new Date(planUser.packExpiresAt)
+          : null
         : null
 
   return {

@@ -34,6 +34,7 @@ import {
 } from "@/lib/rate-limiting/centralized-rate-limit.service";
 
 import { csrfProtect } from "@/lib/security/csrf-middleware";
+import { requireFullCvAnalysis } from "@/lib/quota/plan-access";
 
 // ============================================================
 // SCHEMA
@@ -1010,6 +1011,17 @@ export const POST =
               status: 401,
             },
           );
+        }
+
+        // Analyse complète réservée au Pack Entretien et à Pro : refus AVANT tout
+        // appel IA, toute facturation ou toute écriture.
+        const planGate =
+          await requireFullCvAnalysis(
+            user.id,
+          );
+
+        if (planGate) {
+          return planGate;
         }
 
         let body: {

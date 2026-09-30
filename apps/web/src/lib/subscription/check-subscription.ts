@@ -9,7 +9,7 @@
 //             les valeurs mises à jour par le webhook.
 //             (Architecture déjà prête pour Stripe)
 
-import { prisma } from '@/lib/prisma'
+import { isAdminRole, loadPlanAccess } from '@/lib/quota/plan-access'
 
 export type SubscriptionStatus =
   | 'active'       // Abonnement actif — accès complet
@@ -24,51 +24,33 @@ export interface SubscriptionCheck {
   plan: string | null
 }
 
+/**
+ * Accès « premium » = plan effectif PACK ou PRO (mêmes fonctionnalités, seul le
+ * quota de simulations diffère). Un Pack expiré, ou un PRO dont l'abonnement
+ * n'est plus actif, n'ouvre plus d'accès : voir lib/quota/plan-access.
+ */
 export async function checkUserSubscription(userId: string): Promise<SubscriptionCheck> {
 
   try {
-    // Lecture depuis la BDD — pas d'appel externe
-    const [user, subscription] = await Promise.all([
-      prisma.user.findUnique({
-        where: { id: userId },
-        select: { plan: true, role: true }
-      }),
-      prisma.subscription.findFirst({
-        where: { userId },
-        orderBy: { createdAt: 'desc' },
-        select: { status: true, plan: true }
-      })
-    ])
+    const access = await loadPlanAccess(userId)
 
     // Les admins ont toujours accès
-    if (user?.role && ['ADMIN_FOUNDER', 'ADMIN_PRODUCT', 'ADMIN_SUPPORT'].includes(user.role)) {
+    if (isAdminRole(access.role)) {
       return { hasAccess: true, status: 'active', plan: 'admin' }
     }
 
-    // Pas d'abonnement en BDD
-    if (!subscription) {
-      // Fallback : vérifier plan sur le User (peut être mis manuellement)
-      if (user?.plan && user.plan !== 'FREE') {
-        return { hasAccess: true, status: 'active', plan: user.plan }
-      }
-      return { hasAccess: false, status: 'none', plan: user?.plan ?? 'FREE' }
-    }
+    const hasAccess = access.effective === 'PRO' || access.effective === 'PACK'
 
-    // Statuts qui donnent accès
-    const activeStatuses: SubscriptionStatus[] = ['active', 'trialing']
-    const hasAccess = activeStatuses.includes(
-      subscription.status as SubscriptionStatus
-    )
+    const status: SubscriptionStatus = access.subscription
+      ? (access.subscription.status as SubscriptionStatus)
+      : hasAccess
+        ? 'active'
+        : 'none'
 
-    return {
-      hasAccess,
-      status: subscription.status as SubscriptionStatus,
-      plan: subscription.plan,
-    }
+    return { hasAccess, status, plan: access.effective }
 
   } catch {
-    // En cas d'erreur BDD : fail open pour ne pas bloquer des utilisateurs légitimes
-    // Logger l'erreur mais ne pas crasher le middleware
+    // En cas d'erreur BDD : accès refusé (fail closed), sans faire échouer la page
     return { hasAccess: false, status: 'none', plan: null }
   }
 }
