@@ -30,11 +30,14 @@ type OpportunityContext = {
 type Props = {
   file: File
   opportunity: OpportunityContext
+  /** Analyse enregistrée à laquelle rattacher les réécritures (si elle existe). */
+  analysisId?: string | null
 }
 
 export function OpportunityCVTailoring({
   file,
   opportunity,
+  analysisId = null,
 }: Props) {
   const [loading, setLoading] =
     useState(false)
@@ -153,6 +156,10 @@ export function OpportunityCVTailoring({
                 opportunity.title,
 
               context,
+
+              ...(analysisId
+                ? { analysisId }
+                : {}),
             }),
           },
         )

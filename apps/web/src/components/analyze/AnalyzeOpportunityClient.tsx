@@ -70,6 +70,7 @@ export function AnalyzeOpportunityClient({
   const [preview, setPreview] = useState<PreviewResultView | null>(null)
   // Analyse complète (Pack Entretien / Pro) : enregistrée dans le compte de l'utilisateur.
   const [full, setFull] = useState<CvAnalysisResult | null>(null)
+  const [analysisId, setAnalysisId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showConversion, setShowConversion] = useState(false)
 
@@ -220,6 +221,7 @@ export function AnalyzeOpportunityClient({
         }
 
         setFull(ats)
+        setAnalysisId(analysisId)
         setShowConversion(false)
         return
       }
@@ -441,7 +443,7 @@ export function AnalyzeOpportunityClient({
 
                 {opportunity && file ? (
                   hasPremiumAccess ? (
-                    <OpportunityCVTailoring file={file} opportunity={opportunity} />
+                    <OpportunityCVTailoring file={file} opportunity={opportunity} analysisId={analysisId} />
                   ) : (
                     <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                       <p className="text-sm font-semibold text-foreground">

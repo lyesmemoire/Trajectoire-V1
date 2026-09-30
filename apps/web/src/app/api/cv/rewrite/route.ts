@@ -41,6 +41,8 @@ type RewriteBody = {
   content?: string
   role?: string
   context?: string
+  /** Analyse de CV (de l'utilisateur) à laquelle rattacher la réécriture — optionnelle. */
+  analysisId?: string
 }
 
 function normalizeString(
@@ -199,6 +201,38 @@ async function handleRewrite(
     )
   }
 
+  // Rattachement à une analyse : elle doit appartenir à l'utilisateur (sinon 404, même
+  // réponse qu'une analyse inexistante).
+  const analysisId =
+    normalizeString(
+      rawBody.analysisId,
+      64,
+    ) || null
+
+  if (analysisId) {
+    const owned =
+      await prisma.cVAnalysis.findFirst(
+        {
+          where: {
+            id: analysisId,
+            userId: user.id,
+          },
+          select: { id: true },
+        },
+      )
+
+    if (!owned) {
+      return NextResponse.json(
+        {
+          error: "Analyse introuvable",
+        },
+        {
+          status: 404,
+        },
+      )
+    }
+  }
+
   const timeWindow =
     Math.floor(
       Date.now() /
@@ -210,6 +244,7 @@ async function handleRewrite(
     content,
     role,
     context,
+    analysisId ?? "",
   ].join("|")
 
   const contentHash =
@@ -390,6 +425,8 @@ async function handleRewrite(
               rewrittenContent,
 
               expiresAt,
+
+              analysisId,
             },
           })
 

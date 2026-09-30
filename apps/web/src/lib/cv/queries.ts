@@ -64,7 +64,25 @@ export async function getCVAnalysis(id: string, userId: string): Promise<CVAnaly
   }
 }
 
-// TODO(rewrites) : `getCVRewrites(analysisId)` n'est pas réalisable aujourd'hui. La table
-// `cv_rewrites` ne porte aucune colonne vers `CVAnalysis` (seulement user_id, action,
-// contenus, dates ; lignes purgées à `expires_at`). Il faut d'abord une colonne
-// `analysis_id` (migration soumise à accord) et que `api/cv/rewrite` la renseigne.
+export interface CVRewriteItem {
+  id: string
+  action: string
+  createdAt: Date
+  originalContent: string
+  rewrittenContent: string
+}
+
+/**
+ * Réécritures rattachées à une analyse (colonne `analysis_id`, renseignée par `api/cv/rewrite`
+ * quand l'appelant fournit `analysisId`). Filtrées aussi par utilisateur. Les lignes créées
+ * avant la colonne, ou sans analyse, n'y figurent pas. `expires_at` ne gouverne que le rejeu
+ * idempotent : la ligne reste lisible tant que le compte existe.
+ */
+export async function getCVRewrites(analysisId: string, userId: string, limit = 20): Promise<CVRewriteItem[]> {
+  return prisma.cvRewrite.findMany({
+    where: { analysisId, userId },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    select: { id: true, action: true, createdAt: true, originalContent: true, rewrittenContent: true },
+  })
+}

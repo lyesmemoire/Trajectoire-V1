@@ -9,6 +9,7 @@ const mocks = vi.hoisted(() => ({
   generateImpactMetrics: vi.fn(),
   tailorCVForOpportunity: vi.fn(),
   cvRewriteCreate: vi.fn(),
+  analysisFindFirst: vi.fn(),
   protection: { csrf: 0, rateLimitType: "" as string, rateLimitOptions: undefined as unknown },
 }))
 
@@ -44,7 +45,10 @@ vi.mock("@/lib/ai/cv-rewriter", () => ({
   tailorCVForOpportunity: mocks.tailorCVForOpportunity,
 }))
 vi.mock("@/lib/prisma", () => ({
-  prisma: { cvRewrite: { create: mocks.cvRewriteCreate, findUnique: vi.fn() } },
+  prisma: {
+    cvRewrite: { create: mocks.cvRewriteCreate, findUnique: vi.fn() },
+    cVAnalysis: { findFirst: mocks.analysisFindFirst },
+  },
 }))
 vi.mock("@/lib/db/billing.service", () => ({ BillingService: {} }))
 vi.mock("@/lib/logger", () => ({ logger: { error: vi.fn(), info: vi.fn(), warn: vi.fn() } }))
@@ -111,5 +115,39 @@ describe("POST /api/cv/rewrite — réservé au Pack Entretien et à Pro", () =>
     expect(res.status).toBe(200)
     expect(await res.json()).toEqual({ success: true, data: "Résumé réécrit" })
     expect(mocks.rewriteSummary).toHaveBeenCalledWith("Mon résumé")
+  })
+
+  describe("rattachement à une analyse", () => {
+    beforeEach(() => {
+      mocks.rewriteSummary.mockResolvedValue("Résumé réécrit")
+    })
+
+    it("analyse de l'utilisateur : l'identifiant est enregistré avec la réécriture", async () => {
+      mocks.analysisFindFirst.mockResolvedValue({ id: "a1" })
+
+      const res = await POST(request({ action: "rewrite_summary", content: "Mon résumé", analysisId: "a1" }))
+
+      expect(res.status).toBe(200)
+      expect(mocks.analysisFindFirst.mock.calls[0][0].where).toEqual({ id: "a1", userId: "u1" })
+      expect(mocks.cvRewriteCreate.mock.calls[0][0].data.analysisId).toBe("a1")
+    })
+
+    it("analyse d'un autre utilisateur ou inexistante : 404, aucun appel IA, rien d'écrit", async () => {
+      mocks.analysisFindFirst.mockResolvedValue(null)
+
+      const res = await POST(request({ action: "rewrite_summary", content: "Mon résumé", analysisId: "autre" }))
+
+      expect(res.status).toBe(404)
+      expect(mocks.rewriteSummary).not.toHaveBeenCalled()
+      expect(mocks.cvRewriteCreate).not.toHaveBeenCalled()
+    })
+
+    it("sans analyse : aucune vérification, analysisId null", async () => {
+      const res = await POST(request({ action: "rewrite_summary", content: "Mon résumé" }))
+
+      expect(res.status).toBe(200)
+      expect(mocks.analysisFindFirst).not.toHaveBeenCalled()
+      expect(mocks.cvRewriteCreate.mock.calls[0][0].data.analysisId).toBeNull()
+    })
   })
 })

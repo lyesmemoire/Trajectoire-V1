@@ -230,6 +230,7 @@ model CVAnalysis {
   applicationWorkspaces ApplicationWorkspace[]
   careerMemories        CareerMemory[]
   careerStories         CareerStory[]
+  cvRewrites            CvRewrite[]
 
   @@index([userId])
   @@schema("public")
@@ -531,17 +532,21 @@ model Idempotency {
 }
 
 model CvRewrite {
-  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId           String   @map("user_id")
-  idempotencyKey   String   @unique @map("idempotency_key")
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String      @map("user_id")
+  idempotencyKey   String      @unique @map("idempotency_key")
   action           String
-  originalContent  String   @map("original_content")
-  rewrittenContent String   @map("rewritten_content")
-  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  expiresAt        DateTime @map("expires_at") @db.Timestamptz(6)
+  originalContent  String      @map("original_content")
+  rewrittenContent String      @map("rewritten_content")
+  createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt        DateTime    @map("expires_at") @db.Timestamptz(6)
+  /// Analyse de CV à laquelle la réécriture se rapporte (optionnelle : anciennes lignes, réécriture sans analyse).
+  analysisId       String?     @map("analysis_id")
+  analysis         CVAnalysis? @relation(fields: [analysisId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])
+  @@index([analysisId])
   @@map("cv_rewrites")
   @@schema("public")
 }

@@ -1,11 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 
-const mocks = vi.hoisted(() => ({ findMany: vi.fn(), findFirst: vi.fn() }))
+const mocks = vi.hoisted(() => ({ findMany: vi.fn(), findFirst: vi.fn(), rewriteFindMany: vi.fn() }))
 vi.mock("@/lib/prisma", () => ({
-  prisma: { cVAnalysis: { findMany: mocks.findMany, findFirst: mocks.findFirst } },
+  prisma: {
+    cVAnalysis: { findMany: mocks.findMany, findFirst: mocks.findFirst },
+    cvRewrite: { findMany: mocks.rewriteFindMany },
+  },
 }))
 
-import { getCVAnalyses, getCVAnalysis } from "./queries"
+import { getCVAnalyses, getCVAnalysis, getCVRewrites } from "./queries"
 import { analyzeCv } from "@/lib/cv-analysis"
 import { toAtsRecord } from "@/lib/cv-analysis/persistence"
 import { CV_DEV, JOB_DEV } from "@/lib/cv-analysis/fixtures"
@@ -63,5 +66,14 @@ describe("lecture des analyses de CV", () => {
     expect(detail?.ats).toBeNull()
     expect(detail?.improvements).toEqual(["ok"])
     expect(detail?.atsScoreAfter).toBe(55)
+  })
+
+  it("réécritures : filtrées par analyse ET par utilisateur, plus récentes d'abord", async () => {
+    mocks.rewriteFindMany.mockResolvedValue([])
+    await getCVRewrites("a1", "u1")
+
+    const args = mocks.rewriteFindMany.mock.calls[0][0]
+    expect(args.where).toEqual({ analysisId: "a1", userId: "u1" })
+    expect(args.orderBy).toEqual({ createdAt: "desc" })
   })
 })

@@ -2,13 +2,20 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
-import { getCVAnalysis } from "@/lib/cv/queries"
+import { getCVAnalysis, getCVRewrites } from "@/lib/cv/queries"
 import { buildRemarks } from "@/lib/cv-analysis/preview"
 import { ScoreRingDark, scoreTone } from "@/components/cv/CvScore"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Détail de l'analyse – Trajectoire",
+}
+
+const REWRITE_LABELS: Record<string, string> = {
+  rewrite_summary: "Résumé",
+  improve_experience: "Expérience",
+  generate_impact_metrics: "Métriques d'impact",
+  tailor_opportunity: "Adaptation à une offre",
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -57,6 +64,7 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
   if (!analysis) notFound()
 
   const { ats } = analysis
+  const rewrites = await getCVRewrites(id, user.id)
   const remarks = ats ? buildRemarks(ats, { strengths: 4, weaknesses: 6 }) : null
   const recommendations = analysis.improvements
   const delta =
@@ -160,6 +168,35 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
           </Section>
         )}
 
+        {rewrites.length > 0 && (
+          <Section title="Réécritures">
+            <ul className="space-y-3">
+              {rewrites.map((rewrite) => (
+                <li key={rewrite.id} className="rounded-xl border border-white/[0.06] bg-zinc-950/50">
+                  <details>
+                    <summary className="flex cursor-pointer items-center justify-between gap-4 px-4 py-3 text-sm text-zinc-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400">
+                      <span className="font-medium text-zinc-50">{REWRITE_LABELS[rewrite.action] ?? "Réécriture"}</span>
+                      <span className="text-xs text-zinc-500">
+                        {rewrite.createdAt.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
+                      </span>
+                    </summary>
+                    <div className="space-y-4 border-t border-white/[0.06] px-4 py-4 text-sm">
+                      <div>
+                        <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">Avant</p>
+                        <p className="whitespace-pre-wrap text-zinc-400">{rewrite.originalContent}</p>
+                      </div>
+                      <div>
+                        <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-indigo-300">Après</p>
+                        <p className="whitespace-pre-wrap text-zinc-200">{rewrite.rewrittenContent}</p>
+                      </div>
+                    </div>
+                  </details>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
         {!ats && (
           <p className="rounded-2xl border border-white/[0.08] bg-zinc-900 p-6 text-sm text-zinc-400">
             Cette analyse est antérieure au moteur de score actuel : seul le score enregistré est disponible. Relancez une analyse pour
@@ -168,8 +205,6 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
         )}
       </div>
 
-      {/* TODO(rewrites) : historique des réécritures liées à cette analyse — impossible tant que
-          `cv_rewrites` n'a pas de colonne vers `CVAnalysis` (voir lib/cv/queries.ts). */}
     </div>
   )
 }
