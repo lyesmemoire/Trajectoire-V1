@@ -5,6 +5,13 @@ import * as crypto from "crypto";
 export async function generatePDF(summary: ReportSummary): Promise<PdfArtifact> {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
+
+  // Déterminisme : pdf-lib horodate le document à sa création (précision : la seconde),
+  // ce qui changerait les octets — donc le hash — d'un même rapport généré deux fois.
+  const fixedDate = new Date(0);
+  pdfDoc.setCreationDate(fixedDate);
+  pdfDoc.setModificationDate(fixedDate);
+
   const page = pdfDoc.addPage([600, 800]);
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
