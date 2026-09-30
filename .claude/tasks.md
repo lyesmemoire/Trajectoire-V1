@@ -28,7 +28,7 @@
 - [x] `opportunities/[id]/analyze` : réservée PACK/PRO (403 avant tout appel d'IA) + limite de débit `RouteType.AI` (30/h par utilisateur et par IP).
 - [x] `report/generate` : limite `RouteType.AI` par utilisateur (pas d'IP : `simulation/end` l'appelle côté serveur), clé d'idempotence stable par session, et rejeu qui relit le rapport réel (plus de réponse factice à zéro). Le service dédoublonne déjà (un rapport existant est renvoyé sans nouvel appel d'IA).
 - [ ] À examiner : `simulation/message` est limité à 20 requêtes/heure (bucket `SIMULATION`) : serré pour un entretien texte complet (produit, pas sécurité). `simulation/create`, `simulation/end`, `audio-upload`, `realtime-message` sans limite de débit propre (protégées par la session/le quota).
-- [ ] CSRF : seules les routes CV (`cv/*`) utilisent `csrfProtect` ; les autres routes à cookies s'appuient sur `SameSite`. Risque faible, à noter.
+- [x] **CSRF évalué (2026-10-02) : risque faible, accepté, pas de changement de code.** Seules `cv/*` (et `auth/sync-user`) utilisent `csrfProtect`. Les autres routes à cookies reposent sur : cookies de session Supabase SSR sans réglage `sameSite` dans le dépôt, donc `Lax` par défaut de la bibliothèque (non envoyés sur un POST inter-sites) ; corps JSON, ce qui déclenche un preflight CORS, et le middleware n'autorise que `ALLOWED_ORIGINS`. Le middleware ne vérifie pas l'en-tête `Origin` sur les méthodes d'écriture. Durcissement possible si besoin : contrôle d'`Origin` global pour `POST/PUT/PATCH/DELETE` sur `/api/*`, en excluant `/api/stripe/webhook`. À faire avant la mise en production si l'on veut une défense en profondeur.
 
 ### Auth
 - [ ] **Test manuel de bout en bout jamais fait** : inscription → confirmation → onboarding → reset mot de passe.
