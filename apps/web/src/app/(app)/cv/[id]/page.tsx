@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server"
 import { getCVAnalysis, getCVRewrites } from "@/lib/cv/queries"
 import { buildRemarks } from "@/lib/cv-analysis/preview"
 import { ScoreRingDark, scoreTone } from "@/components/cv/CvScore"
+import { CvRewriteForm } from "@/components/cv/CvRewriteForm"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
@@ -91,7 +92,7 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
             {ats?.mode === "cv_only" && " · sans offre (CV seul)"}
           </p>
         </div>
-        <Link href="/analyze">
+        <Link href="#reecrire">
           <Button variant="dark" size="md">
             Réécrire ce CV
           </Button>
@@ -167,6 +168,12 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
             <Bullets items={ats.warnings} tone="bg-zinc-500" />
           </Section>
         )}
+
+        <div id="reecrire" className="scroll-mt-20">
+          <Section title="Réécrire un passage">
+            <CvRewriteForm analysisId={analysis.id} />
+          </Section>
+        </div>
 
         {rewrites.length > 0 && (
           <Section title="Réécritures">
