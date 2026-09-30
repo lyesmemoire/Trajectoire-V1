@@ -22,6 +22,7 @@ import { generateNonce } from "@/lib/security/nonce";
 import { initializeCsrfToken } from "@/lib/security/csrf-middleware";
 import { getAllowedOrigins } from "@/lib/security/csrf";
 import { checkRequestOrigin } from "@/lib/security/origin-guard";
+import { buildContentSecurityPolicy } from "@/lib/security/csp";
 
 const CONFIG = {
   ALLOWED_ORIGINS: [
@@ -195,25 +196,7 @@ function applySecurityHeaders(
     return response;
   }
 
-  const csp = [
-    "default-src 'self';",
-
-    `script-src 'self' 'nonce-${scriptNonce}' 'strict-dynamic' https://cdn.jsdelivr.net;`,
-
-    `style-src 'self' 'nonce-${styleNonce}' https://cdn.jsdelivr.net;`,
-
-    "img-src 'self' data: https:;",
-
-    "font-src 'self' https://cdn.jsdelivr.net;",
-
-    "connect-src 'self' https://*.supabase.co https://api.openai.com;",
-
-    "frame-ancestors 'none';",
-
-    "object-src 'none';",
-
-    "upgrade-insecure-requests;",
-  ].join(" ");
+  const csp = buildContentSecurityPolicy(scriptNonce, styleNonce);
 
   response.headers.set(
     "Content-Security-Policy",
