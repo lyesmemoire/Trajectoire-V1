@@ -11,4 +11,3 @@ export * from "./ExitIntent";
 export * from "./WaitlistForm";
 export * from "./behavior-engine";
 export * from "./mini-pressure-test";
-export { PricingPreview } from "./pricing-preview";

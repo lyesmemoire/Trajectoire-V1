@@ -90,7 +90,7 @@ function normalizeSkills(raw: unknown): NormalizedSkill[] {
   }
 
   // Shape 3: Objet catÃ©gorisÃ© ({ technical: string[], soft: string[], languages: string[] })
-  // Forme standard issue de api/cv/analyze/route.ts (CvAnalysis) et lib/pdf/types.ts (CVData)
+  // Forme standard issue de api/cv/analyze/route.ts (CvAnalysis)
   if (typeof raw === 'object') {
     const result: NormalizedSkill[] = []
     const obj = raw as Record<string, unknown>
