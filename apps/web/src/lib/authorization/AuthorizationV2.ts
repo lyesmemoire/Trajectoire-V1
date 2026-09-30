@@ -95,6 +95,7 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/privacy", accessLevel: AccessLevel.PUBLIC, comment: "Politique de confidentialité" },
   { pattern: "/terms", accessLevel: AccessLevel.PUBLIC, comment: "Conditions d'utilisation" },
   { pattern: "/api/public", accessLevel: AccessLevel.PUBLIC, comment: "API publique (aperçu gratuit anonyme)" },
+  { pattern: "/api/cron", accessLevel: AccessLevel.PUBLIC, comment: "Tâches planifiées : authentifiées dans la route par CRON_SECRET (refus si absent)" },
   { pattern: "/images", accessLevel: AccessLevel.PUBLIC, comment: "Images statiques" },
   { pattern: "/audio-processor.js", accessLevel: AccessLevel.PUBLIC, comment: "Worklet audio (public/)" },
   { pattern: "/pcm16-processor.js", accessLevel: AccessLevel.PUBLIC, comment: "Worklet audio (public/)" },

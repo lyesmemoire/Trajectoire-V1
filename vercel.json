@@ -40,5 +40,10 @@
       ]
     }
   ],
-  "crons": []
+  "crons": [
+    {
+      "path": "/api/cron/cleanup-previews",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }
