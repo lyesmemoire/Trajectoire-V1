@@ -29,7 +29,15 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Parsing form data
-    const formData = await req.formData()
+    let formData: FormData
+    try {
+      formData = await req.formData()
+    } catch {
+      return NextResponse.json(
+        { error: "Requête invalide : envoyez le CV en multipart/form-data." },
+        { status: 415 },
+      )
+    }
     const cvFile = formData.get("cv") as File
     const jobDescription = formData.get("jobDescription") as string
 
