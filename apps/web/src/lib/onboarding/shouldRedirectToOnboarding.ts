@@ -23,7 +23,7 @@ export function shouldRedirectToOnboarding(
   user: OnboardingGuardUser | null | undefined,
   now: number = Date.now(),
 ): boolean {
-  // Profil absent : rien à faire ici (le profil est créé par /api/auth/check-access).
+  // Profil absent : rien à faire ici (le profil est créé par le déclencheur on_auth_user_created et par /api/auth/sync-user).
   if (!user) return false
 
   if (user.onboardingCompleted) return false

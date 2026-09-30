@@ -7,7 +7,7 @@
 // fait que traduire le plan effectif en capacités.
 //
 // Utilisé aujourd'hui par `AuthorizationModule` (contrôle d'administrateur des pages
-// admin) et par la route interne `api/auth/check-access`.
+// admin).
 
 import { loadPlanAccess } from '@/lib/quota/plan-access'
 import { SubscriptionPlan, SubscriptionCapabilities, AccessResolution } from '@/types/subscription'

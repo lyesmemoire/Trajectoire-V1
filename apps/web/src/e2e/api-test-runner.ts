@@ -32,14 +32,6 @@ async function runTest(name: string, testFn: () => Promise<void>): Promise<void>
 }
 
 // Auth Tests
-async function testAuthCheckAccess() {
-  const response = await fetch(`${API_TEST_BASE_URL}/api/auth/check-access`);
-  const status = response.status;
-  if (![200, 401].includes(status)) {
-    throw new Error(`Unexpected status: ${status}`);
-  }
-}
-
 async function testAuthClaimPreview() {
   const response = await fetch(`${API_TEST_BASE_URL}/api/auth/claim-preview`, {
     method: 'POST',
@@ -299,7 +291,6 @@ async function runApiTests() {
   }
 
   // Run all tests
-  await runTest('Auth: Check Access', testAuthCheckAccess);
   await runTest('Auth: Claim Preview', testAuthClaimPreview);
   await runTest('Auth: Sync User', testAuthSyncUser);
   

@@ -7,17 +7,6 @@ import { test, expect } from '@playwright/test';
 const BASE_URL = process.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('Auth API - E2E', () => {
-  test('POST /api/auth/check-access - should return user access status', async () => {
-    const response = await fetch(`${BASE_URL}/api/auth/check-access`);
-    // May return 403 without auth, but should not crash
-    expect([200, 403]).toContain(response.status);
-    
-    if (response.status === 200) {
-      const data = await response.json();
-      expect(data).toHaveProperty('hasAccess');
-    }
-  });
-
   test('POST /api/auth/claim-preview - should claim preview token', async () => {
     const response = await fetch(`${BASE_URL}/api/auth/claim-preview`, {
       method: 'POST',

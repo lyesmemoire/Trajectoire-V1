@@ -8,7 +8,12 @@
 // ============================================================
 
 /**
- * Plans d'abonnement disponibles
+ * Plans d'abonnement disponibles.
+ *
+ * La grille tarifaire réelle (prix, limites, droits) est `lib/plans.ts` : c'est la source
+ * de vérité. TEAM et ENTERPRISE n'existent pas dans la grille et aucun code vivant ne les
+ * atteint. Énumération distincte de `lib/authorization/AuthorizationV2.SubscriptionPlan`
+ * (dette connue : elles ne sont pas fusionnées, voir .claude/tasks.md).
  */
 export enum SubscriptionPlan {
   /** Plan gratuit - accès aux fonctionnalités de base */

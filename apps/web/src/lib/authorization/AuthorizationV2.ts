@@ -26,6 +26,12 @@ export enum UserRole {
   ADMIN_FOUNDER = "ADMIN_FOUNDER",
 }
 
+/**
+ * Plans reconnus par les règles d'accès. La grille tarifaire réelle (prix, limites, droits)
+ * est `lib/plans.ts` : c'est la source de vérité. Cette énumération est distincte de
+ * `types/subscription.SubscriptionPlan` (qui ajoute TEAM et ENTERPRISE, hors grille).
+ * Dette connue : les deux énumérations ne sont pas fusionnées (voir .claude/tasks.md).
+ */
 export enum SubscriptionPlan {
   FREE = "FREE",
   PACK = "PACK",
