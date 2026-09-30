@@ -20,15 +20,12 @@ import { AnalyzeButton } from "@/components/analyze/AnalyzeButton"
 import { PremiumATSResult } from "@/components/analyze/PremiumATSResult"
 import { OpportunityCVTailoring } from "@/components/analyze/OpportunityCVTailoring"
 import { ConversionPanel } from "@/components/conversion/ConversionPanel"
-import { usePreviewStorage } from "@/hooks/usePreviewStorage"
 import { csrfFetch } from "@/lib/security/csrf-client"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import {
-  ATSResult,
-  CandidateData,
-  JobData,
-  SavePreviewPayload,
-} from "@/types/preview"
+  normalizePreviewResult,
+  type PreviewResultView,
+} from "@/lib/preview/normalize-preview-result"
 
 type OpportunityContext = {
   id: string
@@ -57,11 +54,9 @@ export function AnalyzeOpportunityClient({
   const [file, setFile] = useState<File | null>(null)
   const [job, setJob] = useState(opportunity?.description ?? "")
   const [loading, setLoading] = useState(!!searchParams?.get("preview"))
-  const [preview, setPreview] = useState<any | null>(null)
+  const [preview, setPreview] = useState<PreviewResultView | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showConversion, setShowConversion] = useState(false)
-
-  const { savePreview } = usePreviewStorage()
 
   useEffect(() => {
     let token = searchParams?.get("preview")
@@ -86,9 +81,13 @@ export function AnalyzeOpportunityClient({
         if (!res.ok) {
           throw new Error(res.status === 404 ? "L'analyse a expiré ou n'existe plus. Veuillez importer un nouveau CV." : "Erreur lors de la récupération de l'analyse.")
         }
-        const data = await res.json()
+        // L'aperçu relu par jeton arrive enveloppé (`atsResult`) ; on lit les deux formes.
+        const result = normalizePreviewResult(await res.json())
+        if (!result) {
+          throw new Error("L'analyse a expiré ou n'existe plus. Veuillez importer un nouveau CV.")
+        }
         if (isMounted) {
-          setPreview(data)
+          setPreview(result)
           if (!opportunity) {
             setShowConversion(true)
           }
@@ -208,20 +207,18 @@ export function AnalyzeOpportunityClient({
         throw new Error(analysisResult.error || "Erreur d'analyse")
       }
 
-      setPreview(analysisResult)
+      const result = normalizePreviewResult(analysisResult)
+      if (!result) {
+        throw new Error("Réponse d'analyse invalide. Veuillez réessayer.")
+      }
+      setPreview(result)
 
-      const payload: SavePreviewPayload = {
-        atsResult: analysisResult as ATSResult,
-        candidateData: { fullName: undefined, email: undefined } as CandidateData,
-        jobData: { title: opportunity?.title || job, description: job } as JobData,
+      // L'analyse est déjà enregistrée côté serveur : on garde son jeton (pas de seconde écriture).
+      if (typeof analysisResult.previewToken === "string") {
+        PreviewTokenManager.setSessionToken(analysisResult.previewToken)
       }
 
-      if (!opportunity) {
-        await savePreview(payload)
-        setShowConversion(true)
-      } else {
-        setShowConversion(false)
-      }
+      setShowConversion(!opportunity)
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Erreur inconnue")
     } finally {
@@ -388,8 +385,7 @@ export function AnalyzeOpportunityClient({
                 <PremiumATSResult
                   score={preview.score}
                   strengths={preview.strengths}
-                  weaknesses={[preview.weakness]}
-                  recommendations={preview.recommendations}
+                  weaknesses={preview.weakness ? [preview.weakness] : []}
                   isAuthenticated={isAuthenticated}
                   hasPremiumAccess={hasPremiumAccess}
                 />

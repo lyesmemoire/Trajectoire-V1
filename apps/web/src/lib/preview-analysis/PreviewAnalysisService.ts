@@ -6,9 +6,8 @@
 // Règles :
 // - on ne persiste que le RÉSULTAT réellement calculé (score, forces, faiblesse) ;
 //   jamais le texte du CV ni celui de l'offre ;
-// - réclamer un aperçu (claim) le lie seulement à l'utilisateur : rien n'est copié
-//   dans son profil, ses analyses ou son graphe de connaissances. L'aperçu est un
-//   diagnostic rapide, pas une source de vérité sur le parcours.
+// - le rattachement d'un aperçu à un utilisateur passe par PreviewTransferService
+//   (lien seulement : rien n'est copié dans son profil ni ses analyses).
 
 import { previewAnalysisRepository } from './PreviewAnalysisRepository'
 
@@ -45,27 +44,6 @@ export class PreviewAnalysisService {
     })
 
     return { previewToken }
-  }
-
-  /**
-   * Lie un aperçu à un utilisateur (pas de copie dans son profil).
-   */
-  async claimPreview(token: string, userId: string): Promise<void> {
-    const isValid = await previewAnalysisRepository.isValidToken(token)
-    if (!isValid) {
-      throw new Error('Invalid or expired preview token')
-    }
-
-    const preview = await previewAnalysisRepository.findByToken(token)
-    if (!preview) {
-      throw new Error('Preview analysis not found')
-    }
-
-    if (preview.claimedByUserId) {
-      throw new Error('Preview analysis already claimed')
-    }
-
-    await previewAnalysisRepository.claimForUser(token, userId)
   }
 
   /**

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { createClient } from "@/lib/supabase"
 import { darkTokens } from "@/lib/theme/dark-tokens"
 import { usePreviewStorage } from "@/hooks/usePreviewStorage"
+import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 
 export default function SignupPage() {
   const [email, setEmail] = useState("")
@@ -76,8 +77,7 @@ export default function SignupPage() {
           // Pas de session avant la confirmation : le token voyage par cookie
           // (le sessionStorage ne survit pas à un autre onglet) et
           // /api/auth/callback fait le claim une fois la session créée.
-          const secure = window.location.protocol === 'https:' ? '; Secure' : ''
-          document.cookie = `preview_token=${encodeURIComponent(previewToken)}; Max-Age=86400; Path=/; SameSite=Lax${secure}`
+          PreviewTokenManager.setLinkCookie(previewToken)
         }
       }
 

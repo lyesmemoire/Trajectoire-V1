@@ -35,6 +35,18 @@ export class PreviewTokenManager {
   }
 
   /**
+   * Pose le cookie lu par /api/auth/callback pour rattacher l'aperçu au compte
+   * une fois la session créée. Nécessaire quand l'inscription exige une
+   * confirmation d'e-mail : le lien s'ouvre souvent dans un autre onglet, où le
+   * sessionStorage est perdu.
+   */
+  static setLinkCookie(token: string): void {
+    if (typeof document === 'undefined') return
+    const secure = window.location.protocol === 'https:' ? '; Secure' : ''
+    document.cookie = `${PREVIEW_TOKEN_KEY}=${encodeURIComponent(token)}; Max-Age=86400; Path=/; SameSite=Lax${secure}`
+  }
+
+  /**
    * Vérifier si un previewToken existe
    */
   static hasToken(): boolean {

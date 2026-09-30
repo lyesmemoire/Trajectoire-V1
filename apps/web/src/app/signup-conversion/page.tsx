@@ -49,14 +49,15 @@ export default function SignupConversionPage() {
 
     try {
       const supabase = createClient()
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             full_name: fullName,
           },
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          // Le callback échange le code contre une session (et rattache l'aperçu).
+          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
         },
       })
 
@@ -64,23 +65,25 @@ export default function SignupConversionPage() {
 
       setSuccess(true)
 
-      // Auto-claim de la preview si un token existe
+      // Rattachement de l'aperçu (lien seulement, rien n'est copié dans le profil)
       const previewToken = PreviewTokenManager.getSessionToken()
       if (previewToken) {
-        try {
-          await fetch('/api/auth/claim-preview', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ previewToken }),
-          })
+        if (signUpData.session) {
+          // Confirmation d'e-mail désactivée : la session existe, on rattache tout de suite.
+          try {
+            await fetch('/api/public/preview/claim', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: previewToken }),
+            })
+          } catch (err) {
+            console.error('Error claiming preview:', err)
+          }
           PreviewTokenManager.clearSessionToken()
-          
-          // Rediriger vers /welcome après claim réussi
-          setTimeout(() => {
-            router.push('/welcome')
-          }, 1000)
-        } catch (err) {
-          console.error('Error claiming preview:', err)
+        } else {
+          // Pas de session avant la confirmation : le jeton voyage par cookie et
+          // /api/auth/callback fait le rattachement. On garde le jeton en session.
+          PreviewTokenManager.setLinkCookie(previewToken)
         }
       }
     } catch (err: any) {
@@ -94,7 +97,7 @@ export default function SignupConversionPage() {
     const { data, error } = await createClient().auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`,
+        redirectTo: `${window.location.origin}/api/auth/callback`,
       },
     })
     if (error) {
@@ -108,7 +111,7 @@ export default function SignupConversionPage() {
     const { data, error } = await createClient().auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`,
+        redirectTo: `${window.location.origin}/api/auth/callback`,
       },
     })
     if (error) {

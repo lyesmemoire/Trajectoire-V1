@@ -6,7 +6,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { SavePreviewPayload, SavePreviewResponse, PreviewAnalysis, ClaimPreviewResponse } from '@/types/preview'
+import { PreviewAnalysis, ClaimPreviewResponse } from '@/types/preview'
 
 const STORAGE_KEY = 'preview_token'
 
@@ -24,46 +24,6 @@ export function usePreviewStorage() {
     const storedToken = sessionStorage.getItem(STORAGE_KEY)
     if (storedToken) {
       setToken(storedToken)
-    }
-  }, [])
-
-  /**
-   * Sauvegarde une analyse preview
-   * 
-   * @param payload - Données de l'analyse à sauvegarder
-   * @returns Token et date d'expiration
-   */
-  const savePreview = useCallback(async (payload: SavePreviewPayload): Promise<SavePreviewResponse | null> => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const response = await fetch('/api/public/preview/save', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })
-
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Erreur lors de la sauvegarde')
-      }
-
-      const result: SavePreviewResponse = await response.json()
-
-      // Sauvegarder le token dans sessionStorage
-      sessionStorage.setItem(STORAGE_KEY, result.token)
-      setToken(result.token)
-
-      return result
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue'
-      setError(errorMessage)
-      return null
-    } finally {
-      setLoading(false)
     }
   }, [])
 
@@ -172,7 +132,6 @@ export function usePreviewStorage() {
     token,
     loading,
     error,
-    savePreview,
     getPreview,
     claimPreview,
     clearToken,
