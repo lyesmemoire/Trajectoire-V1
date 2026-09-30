@@ -3,7 +3,9 @@ import { describe, it, expect, vi, beforeEach } from "vitest"
 const mocks = vi.hoisted(() => ({
   cancelUserSubscription: vi.fn(),
   deleteUser: vi.fn(),
+  purgeUserData: vi.fn(),
 }))
+vi.mock("@/lib/account/purge-user-data", () => ({ purgeUserData: mocks.purgeUserData }))
 
 vi.mock("@/lib/billing/cancel-user-subscription", () => ({
   cancelUserSubscription: mocks.cancelUserSubscription,
@@ -46,6 +48,7 @@ describe("AccountService.deleteAccount — abonnement Stripe", () => {
   beforeEach(() => {
     vi.resetAllMocks()
     mocks.deleteUser.mockResolvedValue({ error: null })
+    mocks.purgeUserData.mockResolvedValue(undefined)
   })
 
   it("annule l'abonnement avant de supprimer données et compte", async () => {
@@ -73,6 +76,30 @@ describe("AccountService.deleteAccount — abonnement Stripe", () => {
 
     expect(sessionRepository.find).not.toHaveBeenCalled()
     expect(messageRepository.deleteBySessionId).not.toHaveBeenCalled()
+    expect(mocks.deleteUser).not.toHaveBeenCalled()
+  })
+
+  it("ordre : Stripe, puis données applicatives, puis compte Auth", async () => {
+    mocks.cancelUserSubscription.mockResolvedValue({ cancelled: false })
+    const { service } = build()
+
+    await service.deleteAccount({ userId: "u1" })
+
+    expect(mocks.purgeUserData).toHaveBeenCalledWith("u1")
+    const stripe = mocks.cancelUserSubscription.mock.invocationCallOrder[0]
+    const purge = mocks.purgeUserData.mock.invocationCallOrder[0]
+    const auth = mocks.deleteUser.mock.invocationCallOrder[0]
+    expect(stripe).toBeLessThan(purge)
+    expect(purge).toBeLessThan(auth)
+  })
+
+  it("si la purge échoue : le compte Auth n'est pas supprimé, erreur explicite", async () => {
+    mocks.cancelUserSubscription.mockResolvedValue({ cancelled: false })
+    mocks.purgeUserData.mockRejectedValue(new Error("FK RESTRICT"))
+    const { service } = build()
+
+    await expect(service.deleteAccount({ userId: "u1" })).rejects.toThrow(/suppression de vos données/i)
+
     expect(mocks.deleteUser).not.toHaveBeenCalled()
   })
 })

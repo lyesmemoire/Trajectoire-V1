@@ -9,6 +9,7 @@ import { IAuditService, ILogger } from "@/core/interfaces";
 import { AppError, ErrorCode } from "@/core/errors";
 import { createAdminClient } from "@/lib/supabase/service";
 import { cancelUserSubscription } from "@/lib/billing/cancel-user-subscription";
+import { purgeUserData } from "@/lib/account/purge-user-data";
 
 export interface DeleteAccountCommand {
   userId: string;
@@ -80,6 +81,20 @@ export class AccountService {
     const profile = await this.profileRepository.getByUserId(command.userId);
     if (profile) {
       await this.profileRepository.delete(profile.id);
+    }
+
+    // Données applicatives (`public.users` et dépendances) : avant la suppression Auth, pour
+    // qu'un échec de celle-ci laisse un compte sans données (réessayable) plutôt que des
+    // données sans compte. Une erreur ici interrompt la suppression.
+    try {
+      await purgeUserData(command.userId);
+    } catch (error) {
+      this.logger.error("Failed to purge user data", { error });
+      throw new AppError(
+        "La suppression de vos données a échoué : le compte n'a pas été supprimé. Réessayez ou contactez le support.",
+        ErrorCode.INTERNAL_ERROR,
+        500
+      );
     }
 
     // Delete user from Supabase Auth
