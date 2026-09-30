@@ -29,7 +29,7 @@ function TranscriptBubble({ transcript }: { transcript: RealtimeTranscript }) {
   return (
     <div className={`flex gap-3 `+(isAI ? 'justify-start' : 'justify-end')}>
       {isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white/60">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/60">
           A
         </div>
       )}
@@ -38,11 +38,11 @@ function TranscriptBubble({ transcript }: { transcript: RealtimeTranscript }) {
       >
         {transcript.text}
         {!transcript.final && (
-          <span className="ml-1 animate-pulse text-white/40">…</span>
+          <span className="ml-1 animate-pulse text-white/60">…</span>
         )}
       </div>
       {!isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-[10px] font-bold text-indigo-300">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-xs font-bold text-indigo-300">
           V
         </div>
       )}
@@ -127,11 +127,11 @@ export default function SimulationPage() {
   const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
 
   return (
-    <div className="flex h-full flex-col bg-zinc-950 text-white">
+    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-zinc-950 text-white md:h-full md:min-h-0">
 
       <header className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-6 py-3">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold uppercase tracking-widest text-white/30">Trajectoire</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/60">Trajectoire</span>
           <span className="text-white/15">·</span>
           <span className="text-xs text-white/50">Simulation d entretien</span>
         </div>
@@ -151,9 +151,9 @@ export default function SimulationPage() {
         </div>
       )}
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
 
-        <div className="relative w-[52%] shrink-0 overflow-hidden bg-zinc-900">
+        <div className="relative h-64 w-full shrink-0 overflow-hidden bg-zinc-900 md:h-auto md:w-[52%]">
           <img
             src="/interviewer.png"
             alt="Alexandra"
@@ -168,14 +168,14 @@ export default function SimulationPage() {
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-6 py-8">
             {isAISpeaking ? (
               <>
-                <div className="flex items-center gap-2 text-[11px] font-medium text-white/50">
+                <div className="flex items-center gap-2 text-xs font-medium text-white/50">
                   <Volume2 className="size-3" />
                   En train de parler
                 </div>
                 <SoundWave active color="bg-indigo-400" />
               </>
             ) : (
-              <div className="flex items-center gap-2 text-[11px] text-white/30">
+              <div className="flex items-center gap-2 text-xs text-white/60">
                 <Mic className="size-3" />
                 En ecoute
               </div>
@@ -183,15 +183,15 @@ export default function SimulationPage() {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col border-l border-white/[0.08] bg-zinc-950">
+        <div className="flex min-h-[26rem] flex-1 flex-col border-t border-white/[0.08] bg-zinc-950 md:min-h-0 md:border-l md:border-t-0">
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6">
             {transcripts.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
                 {status === 'connecting' ? (
                   <>
-                    <Loader2 className="size-7 animate-spin text-white/30" />
-                    <p className="text-sm text-white/40">Connexion a l entretien...</p>
-                    <p className="text-xs text-white/20">Autorisez le microphone si demande</p>
+                    <Loader2 className="size-7 animate-spin text-white/60" />
+                    <p className="text-sm text-white/60">Connexion a l entretien...</p>
+                    <p className="text-xs text-white/60">Autorisez le microphone si demande</p>
                   </>
                 ) : status === 'error' ? (
                   <>
@@ -209,11 +209,11 @@ export default function SimulationPage() {
                 ) : (
                   <>
                     <div className="flex size-14 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                      <Mic className="size-5 text-white/30" />
+                      <Mic className="size-5 text-white/60" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white/60">L entretien va commencer</p>
-                      <p className="mt-1 text-xs text-white/25">Alexandra va poser la premiere question</p>
+                      <p className="mt-1 text-xs text-white/60">Alexandra va poser la premiere question</p>
                     </div>
                   </>
                 )}
@@ -228,14 +228,14 @@ export default function SimulationPage() {
           </div>
 
           <div className="shrink-0 border-t border-white/[0.08] bg-zinc-900/60 px-6 py-4 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-4">
-                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-indigo-400/50 bg-indigo-400/15 text-indigo-300' : 'border-white/10 bg-white/5 text-white/30')}>
+                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-indigo-400/50 bg-indigo-400/15 text-indigo-300' : 'border-white/10 bg-white/5 text-white/60')}>
                   {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white/60">{isUserSpeaking ? 'Vous parlez' : 'En ecoute'}</p>
-                  <p className="text-[10px] text-white/25">Detection automatique</p>
+                  <p className="text-xs text-white/60">Detection automatique</p>
                 </div>
                 <SoundWave active={isUserSpeaking} color="bg-indigo-400" />
               </div>
@@ -249,7 +249,7 @@ export default function SimulationPage() {
                 {isEnding ? 'Finalisation...' : 'Terminer'}
               </button>
             </div>
-            <p className="mt-3 text-center text-[10px] text-white/20">
+            <p className="mt-3 text-center text-xs text-white/60">
               Parlez naturellement - Alexandra detecte automatiquement quand vous avez fini
             </p>
           </div>
