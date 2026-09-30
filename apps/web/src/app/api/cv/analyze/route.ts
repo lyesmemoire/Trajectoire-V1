@@ -36,6 +36,8 @@ import {
 import { csrfProtect } from "@/lib/security/csrf-middleware";
 import { requireFullCvAnalysis } from "@/lib/quota/plan-access";
 import { sanitizeForPrompt } from "@/lib/security/prompt-sanitizer";
+import { analyzeCv, type CvAnalysisResult } from "@/lib/cv-analysis";
+import { readStoredAts, toAtsRecord } from "@/lib/cv-analysis/persistence";
 
 // ============================================================
 // SCHEMA
@@ -1028,6 +1030,7 @@ export const POST =
         let body: {
           extractedText: string;
           fileName?: string;
+          jobDescription?: string;
         };
 
         try {
@@ -1047,6 +1050,12 @@ export const POST =
 
         const text =
           body?.extractedText?.trim();
+
+        // Offre ciblée (optionnelle) : sans elle, l'analyse ATS porte sur le seul CV.
+        const jobDescription =
+          typeof body?.jobDescription === "string"
+            ? body.jobDescription.trim().slice(0, 10_000)
+            : "";
 
         if (
           !text ||
@@ -1149,6 +1158,15 @@ export const POST =
                     reserveResult.txId;
                 }
 
+                // Analyse ATS déterministe (score, dimensions, mots-clés, recommandations).
+                const atsRecord =
+                  toAtsRecord(
+                    analyzeCv(
+                      text,
+                      jobDescription,
+                    ),
+                  );
+
                 let structured:
                   CvAnalysis;
 
@@ -1222,6 +1240,18 @@ export const POST =
 
                               cvData:
                                 structured,
+
+                              atsScoreBefore:
+                                atsRecord.atsScoreBefore,
+
+                              atsScoreAfter:
+                                atsRecord.atsScoreAfter,
+
+                              improvements:
+                                atsRecord.improvements,
+
+                              keywords:
+                                atsRecord.keywords as any,
                             },
                           },
                         );
@@ -1496,6 +1526,8 @@ export const POST =
                     analysisId: dbRecordId,
                     structured,
                     hiiosContext,
+                    ats:
+                      atsRecord.keywords as CvAnalysisResult | null,
                   },
                 };
               },
@@ -1536,6 +1568,11 @@ export const POST =
                     cached:
                       true,
                   },
+
+                  ats:
+                    readStoredAts(
+                      analysis.keywords,
+                    ) as CvAnalysisResult | null,
                 };
               },
             );
@@ -1553,6 +1590,9 @@ export const POST =
 
               hiiosContext:
                 finalResult.hiiosContext,
+
+              ats:
+                finalResult.ats ?? null,
             },
           );
         } catch (

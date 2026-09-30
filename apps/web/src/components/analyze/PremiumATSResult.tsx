@@ -14,6 +14,8 @@ interface PremiumATSResultProps {
   recommendations?: string[]
   detectedSkills?: string[]
   missingSkills?: string[]
+  /** Détail du score (analyse complète) : uniquement des dimensions réellement évaluées. */
+  dimensions?: Array<{ label: string; value: number }>
   /** Limites de l'analyse (offre absente ou trop courte, CV très court…). */
   notices?: string[]
   isAuthenticated?: boolean
@@ -40,6 +42,7 @@ export function PremiumATSResult({
   recommendations = [],
   detectedSkills = [],
   missingSkills = [],
+  dimensions = [],
   notices = [],
   isAuthenticated = false,
   hasPremiumAccess = false,
@@ -73,6 +76,29 @@ export function PremiumATSResult({
           />
         </div>
       </div>
+
+      {/* ===== DÉTAIL DU SCORE (analyse complète) ===== */}
+      {dimensions.length > 0 && (
+        <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Détail du score</h2>
+          <ul className="space-y-5">
+            {dimensions.map(({ label, value }) => {
+              const dim = getScoreTheme(value)
+              return (
+                <li key={label}>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <span className="text-sm font-semibold text-foreground">{label}</span>
+                    <span className={`font-serif text-lg font-medium ${dim.text}`}>{Math.round(value)}</span>
+                  </div>
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-border/40">
+                    <div className={`h-full rounded-full ${dim.bar}`} style={{ width: `${Math.round(value)}%` }} />
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )}
 
       {/* ===== LIMITES DE L'ANALYSE ===== */}
       {notices.length > 0 && (

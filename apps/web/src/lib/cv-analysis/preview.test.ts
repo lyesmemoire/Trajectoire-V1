@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest"
-import { buildFreePreview } from "./preview"
+import { analyzeCv } from "./index"
+import { buildFreePreview, buildRemarks } from "./preview"
 import { CV_DEV, CV_JUNIOR, CV_NURSE, JOB_DEV, JOB_MKT, JOB_NURSE } from "./fixtures"
 
 const NOW = new Date("2026-10-01T00:00:00Z")
@@ -63,5 +64,24 @@ describe("buildFreePreview — score + 3 remarques au plus", () => {
     expect(Number.isInteger(score)).toBe(true)
     expect(score).toBeGreaterThanOrEqual(0)
     expect(score).toBeLessThanOrEqual(100)
+  })
+})
+
+describe("buildRemarks — analyse complète (plus de remarques que l'aperçu)", () => {
+  it("renvoie davantage de faiblesses que l'aperçu, toutes issues des mesures", () => {
+    const result = analyzeCv(CV_JUNIOR, JOB_MKT, { now: NOW })
+    const full = buildRemarks(result, { strengths: 4, weaknesses: 6 })
+    const free = buildRemarks(result, { strengths: 2, weaknesses: 1 })
+
+    expect(free.weaknesses).toHaveLength(1)
+    expect(full.weaknesses.length).toBeGreaterThan(1)
+    expect(full.weaknesses.length).toBeLessThanOrEqual(6)
+    expect(full.weaknesses[0]).toBe(free.weaknesses[0])
+    expect(new Set(full.weaknesses).size).toBe(full.weaknesses.length)
+  })
+
+  it("respecte les plafonds", () => {
+    const result = analyzeCv(CV_DEV, JOB_DEV, { now: NOW })
+    expect(buildRemarks(result, { strengths: 1, weaknesses: 1 }).strengths.length).toBeLessThanOrEqual(1)
   })
 })

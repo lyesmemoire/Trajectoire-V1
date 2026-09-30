@@ -26,6 +26,19 @@ import {
   normalizePreviewResult,
   type PreviewResultView,
 } from "@/lib/preview/normalize-preview-result"
+import type { CvAnalysisResult } from "@/lib/cv-analysis"
+import { buildRemarks } from "@/lib/cv-analysis/preview"
+
+/** Dimensions réellement évaluées (les `null` ne sont pas affichées). */
+function dimensionRows(ats: CvAnalysisResult): Array<{ label: string; value: number }> {
+  const d = ats.dimensions
+  const rows: Array<{ label: string; value: number }> = []
+  if (d.keywordCoverage !== null) rows.push({ label: "Couverture de l'offre", value: d.keywordCoverage })
+  if (d.experienceFit !== null) rows.push({ label: "Expérience demandée", value: d.experienceFit })
+  rows.push({ label: "Réalisations chiffrées", value: d.impact })
+  rows.push({ label: "Lisibilité pour un ATS", value: d.format })
+  return rows
+}
 
 type OpportunityContext = {
   id: string
@@ -55,6 +68,8 @@ export function AnalyzeOpportunityClient({
   const [job, setJob] = useState(opportunity?.description ?? "")
   const [loading, setLoading] = useState(!!searchParams?.get("preview"))
   const [preview, setPreview] = useState<PreviewResultView | null>(null)
+  // Analyse complète (Pack Entretien / Pro) : enregistrée dans le compte de l'utilisateur.
+  const [full, setFull] = useState<CvAnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showConversion, setShowConversion] = useState(false)
 
@@ -117,9 +132,9 @@ export function AnalyzeOpportunityClient({
     setError(null)
 
     try {
-      // L'enregistrement de l'analyse complète (et son rattachement à la candidature)
-      // est réservé au Pack Entretien et à Pro. Un utilisateur gratuit garde l'aperçu.
-      if (opportunity && hasPremiumAccess) {
+      // Analyse complète (enregistrée dans le compte, rattachée à la candidature si elle
+      // existe) : réservée au Pack Entretien et à Pro. Sinon, aperçu gratuit ci-dessous.
+      if (isAuthenticated && hasPremiumAccess) {
         const uploadForm = new FormData()
         uploadForm.append("file", file!)
 
@@ -148,7 +163,7 @@ export function AnalyzeOpportunityClient({
             "Content-Type": "application/json",
             "Idempotency-Key": crypto.randomUUID(),
           },
-          body: JSON.stringify({ extractedText, fileName: file!.name }),
+          body: JSON.stringify({ extractedText, fileName: file!.name, jobDescription: job }),
         })
         const persistencePayload = await persistenceResponse.json()
 
@@ -175,27 +190,38 @@ export function AnalyzeOpportunityClient({
           throw new Error("L'analyse du CV a été enregistrée sans identifiant exploitable.")
         }
 
-        const workspaceResponse = await csrfFetch(
-          `/api/opportunities/${opportunity.id}/workspace`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              selectedCVAnalysisId: analysisId,
-              readiness: "IN_PROGRESS",
-              preparation: { cvAnalysisId: analysisId, cvAnalyzed: true },
-              metadata: { lastCVAnalysisId: analysisId, cvSource: "opportunity-analysis" },
-            }),
-          },
-        )
-
-        if (!workspaceResponse.ok) {
-          const workspacePayload = await workspaceResponse.json().catch(() => null)
-          throw new Error(
-            workspacePayload?.error ||
-              "Le CV est analysé mais son rattachement à la candidature a échoué.",
+        if (opportunity) {
+          const workspaceResponse = await csrfFetch(
+            `/api/opportunities/${opportunity.id}/workspace`,
+            {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                selectedCVAnalysisId: analysisId,
+                readiness: "IN_PROGRESS",
+                preparation: { cvAnalysisId: analysisId, cvAnalyzed: true },
+                metadata: { lastCVAnalysisId: analysisId, cvSource: "opportunity-analysis" },
+              }),
+            },
           )
+
+          if (!workspaceResponse.ok) {
+            const workspacePayload = await workspaceResponse.json().catch(() => null)
+            throw new Error(
+              workspacePayload?.error ||
+                "Le CV est analysé mais son rattachement à la candidature a échoué.",
+            )
+          }
         }
+
+        const ats = persistencePayload.ats as CvAnalysisResult | null
+        if (!ats || typeof ats.overall !== "number") {
+          throw new Error("L'analyse du CV n'a pas renvoyé de résultat exploitable.")
+        }
+
+        setFull(ats)
+        setShowConversion(false)
+        return
       }
 
       const form = new FormData()
@@ -301,7 +327,7 @@ export function AnalyzeOpportunityClient({
                   Récupération de votre diagnostic...
                 </p>
               </div>
-            ) : !preview ? (
+            ) : !preview && !full ? (
               /* ========== FORMULAIRE ÉTAPES ========== */
               <div className="space-y-4">
 
@@ -384,14 +410,34 @@ export function AnalyzeOpportunityClient({
             ) : (
               /* ========== RÉSULTATS ========== */
               <div className="space-y-6">
-                <PremiumATSResult
-                  score={preview.score}
-                  strengths={preview.strengths}
-                  weaknesses={preview.weakness ? [preview.weakness] : []}
-                  notices={preview.warnings}
-                  isAuthenticated={isAuthenticated}
-                  hasPremiumAccess={hasPremiumAccess}
-                />
+                {full ? (
+                  (() => {
+                    const remarks = buildRemarks(full, { strengths: 4, weaknesses: 6 })
+                    return (
+                      <PremiumATSResult
+                        score={full.overall}
+                        strengths={remarks.strengths}
+                        weaknesses={remarks.weaknesses}
+                        detectedSkills={full.matchedKeywords}
+                        missingSkills={full.missingKeywords}
+                        recommendations={full.recommendations}
+                        dimensions={dimensionRows(full)}
+                        notices={full.warnings}
+                        isAuthenticated={isAuthenticated}
+                        hasPremiumAccess={hasPremiumAccess}
+                      />
+                    )
+                  })()
+                ) : preview ? (
+                  <PremiumATSResult
+                    score={preview.score}
+                    strengths={preview.strengths}
+                    weaknesses={preview.weakness ? [preview.weakness] : []}
+                    notices={preview.warnings}
+                    isAuthenticated={isAuthenticated}
+                    hasPremiumAccess={hasPremiumAccess}
+                  />
+                ) : null}
 
                 {opportunity && file ? (
                   hasPremiumAccess ? (

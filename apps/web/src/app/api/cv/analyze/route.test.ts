@@ -6,6 +6,9 @@ const mocks = vi.hoisted(() => ({
   requireFullCvAnalysis: vi.fn(),
   idempotencyExecute: vi.fn(),
   cvAnalysisCreate: vi.fn(),
+  transaction: vi.fn(),
+  careerProfileFindUnique: vi.fn(),
+  careerProfileUpsert: vi.fn(),
 }))
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -26,14 +29,26 @@ vi.mock("@/lib/rate-limiting/centralized-rate-limit.service", () => ({
 }))
 
 vi.mock("@/lib/prisma", () => ({
-  prisma: { cVAnalysis: { create: mocks.cvAnalysisCreate }, $transaction: vi.fn() },
+  prisma: {
+    cVAnalysis: { create: mocks.cvAnalysisCreate, findUnique: vi.fn() },
+    $transaction: mocks.transaction,
+  },
 }))
 vi.mock("@/lib/logger", () => ({ logger: { error: vi.fn(), info: vi.fn(), warn: vi.fn() } }))
 vi.mock("@/lib/ai/ai-models", () => ({
   getReasoningAIModel: vi.fn(),
   isRemoteAIAvailable: () => false,
 }))
-vi.mock("@/application/services/CVHIIOSBridge", () => ({ CVHIIOSBridge: {} }))
+vi.mock("@/application/services/CVHIIOSBridge", () => ({
+  CVHIIOSBridge: {
+    initializeFromCV: () => ({
+      sessionId: "s1",
+      hypothesisEngine: { getAll: () => [] },
+      evidenceEngine: { getAll: () => [] },
+      skillGraph: { getCoveragePercent: () => 0 },
+    }),
+  },
+}))
 vi.mock("@/lib/db/billing.service", () => ({ BillingService: {} }))
 vi.mock("@/core/idempotency/IdempotencyService", () => ({
   IdempotencyService: class {
@@ -102,5 +117,52 @@ describe("POST /api/cv/analyze — réservé au Pack Entretien et à Pro", () =>
 
     expect(res.status).toBe(400)
     expect(mocks.idempotencyExecute).not.toHaveBeenCalled()
+  })
+
+  describe("analyse ATS enregistrée", () => {
+    beforeEach(() => {
+      // Exécute réellement la logique de la route (idempotence et transaction passantes).
+      mocks.idempotencyExecute.mockImplementation(
+        async (_k: string, _u: string, _op: string, _p: unknown, run: () => Promise<{ data: unknown }>) =>
+          (await run()).data,
+      )
+      mocks.cvAnalysisCreate.mockResolvedValue({ id: "a1" })
+      mocks.transaction.mockImplementation(async (fn: (tx: unknown) => Promise<void>) =>
+        fn({
+          cVAnalysis: { create: mocks.cvAnalysisCreate },
+          careerProfile: { findUnique: mocks.careerProfileFindUnique, upsert: mocks.careerProfileUpsert },
+        }),
+      )
+      mocks.careerProfileFindUnique.mockResolvedValue(null)
+    })
+
+    const JOB =
+      "Développeur React / Node.js\nNous recherchons un développeur avec 5 ans d'expérience. Compétences : React, TypeScript, Node.js, PostgreSQL, AWS, Docker, dans une équipe agile."
+
+    it("avec une offre : score, recommandations et résultat complet sont enregistrés et renvoyés", async () => {
+      const res = await POST(request({ extractedText: CV, fileName: "cv.pdf", jobDescription: JOB }))
+      const body = await res.json()
+
+      expect(res.status).toBe(200)
+      expect(body.ats).toMatchObject({ mode: "job_match" })
+      expect(typeof body.ats.overall).toBe("number")
+
+      const data = mocks.cvAnalysisCreate.mock.calls[0][0].data
+      expect(data.atsScoreAfter).toBe(body.ats.overall)
+      expect(data.atsScoreBefore).toBeNull()
+      expect(Array.isArray(data.improvements)).toBe(true)
+      expect(data.keywords).toMatchObject({ mode: "job_match", overall: body.ats.overall })
+      // Le texte du CV reste stocké tel quel (inchangé par ce commit) ; rien d'inventé ailleurs.
+      expect(data.userId).toBe("u1")
+    })
+
+    it("sans offre : analyse du seul CV, annoncée (mode cv_only)", async () => {
+      const res = await POST(request({ extractedText: CV }))
+      const body = await res.json()
+
+      expect(body.ats.mode).toBe("cv_only")
+      expect(body.ats.dimensions.keywordCoverage).toBeNull()
+      expect(mocks.cvAnalysisCreate.mock.calls[0][0].data.keywords.mode).toBe("cv_only")
+    })
   })
 })
