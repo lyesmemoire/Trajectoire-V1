@@ -9,7 +9,7 @@ import { IAuditService, ILogger } from "@/core/interfaces";
 import { AppError, ErrorCode } from "@/core/errors";
 import { createAdminClient } from "@/lib/supabase/service";
 import { cancelUserSubscription } from "@/lib/billing/cancel-user-subscription";
-import { purgeUserData } from "@/lib/account/purge-user-data";
+import { getAccountDeletionBlocker, purgeUserData } from "@/lib/account/purge-user-data";
 
 export interface DeleteAccountCommand {
   userId: string;
@@ -41,6 +41,13 @@ export class AccountService {
    */
   async deleteAccount(command: DeleteAccountCommand): Promise<void> {
     this.logger.setUserContext(command.userId);
+
+    // Refus éventuel AVANT toute action irréversible (sinon l'abonnement serait annulé pour un compte
+    // qui reste) : compte administrateur, dont l'historique d'audit est conservé.
+    const blocker = await getAccountDeletionBlocker(command.userId);
+    if (blocker) {
+      throw new AppError(blocker, ErrorCode.CONFLICT, 409);
+    }
 
     // Annuler l'abonnement Stripe AVANT toute suppression : si l'annulation échoue,
     // on interrompt tout (le compte reste intact) plutôt que de laisser un
@@ -106,13 +113,8 @@ export class AccountService {
       throw new AppError("Failed to delete user account", ErrorCode.INTERNAL_ERROR, 500);
     }
 
-    // Audit log
-    await this.auditService.log({
-      userId: command.userId,
-      action: "account_delete",
-      resourceType: "account",
-    });
-
+    // Pas de ligne d'audit ici : `AdminAuditLog.adminId` référence l'utilisateur, qui n'existe plus
+    // (l'insertion échouait après la suppression et faisait répondre 500 à un compte déjà supprimé).
     this.logger.info("Account deleted successfully", { userId: command.userId });
   }
 

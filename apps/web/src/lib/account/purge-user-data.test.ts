@@ -11,12 +11,13 @@ const m = vi.hoisted(() => {
     simulationSession: { deleteMany: op("simulation.deleteMany") },
     stripeEvent: { updateMany: op("stripeEvent.updateMany") },
     previewAnalysis: { updateMany: op("preview.updateMany") },
-    user: { deleteMany: op("user.deleteMany") },
+    adminAuditLog: { deleteMany: op("adminAuditLog.deleteMany") },
+    user: { deleteMany: op("user.deleteMany"), findUnique: vi.fn() },
   }
 })
 vi.mock("@/lib/prisma", () => ({ prisma: { ...m, $transaction: m.transaction } }))
 
-import { purgeUserData } from "./purge-user-data"
+import { getAccountDeletionBlocker, purgeUserData } from "./purge-user-data"
 
 describe("purgeUserData", () => {
   beforeEach(() => m.transaction.mockClear())
@@ -42,8 +43,32 @@ describe("purgeUserData", () => {
     })
   })
 
+  it("supprime le journal d'action de l'utilisateur avant le compte (clé étrangère RESTRICT)", async () => {
+    await purgeUserData("u1")
+    const names = (m.transaction.mock.calls[0][0] as Array<{ name: string }>).map(o => o.name)
+    expect(names).toContain("adminAuditLog.deleteMany")
+    expect(names.indexOf("adminAuditLog.deleteMany")).toBeLessThan(names.indexOf("user.deleteMany"))
+    expect(m.adminAuditLog.deleteMany).toHaveBeenCalledWith({ where: { adminId: "u1" } })
+  })
+
   it("propage l'échec de la transaction", async () => {
     m.transaction.mockRejectedValueOnce(new Error("RESTRICT"))
     await expect(purgeUserData("u1")).rejects.toThrow("RESTRICT")
+  })
+})
+
+describe("getAccountDeletionBlocker", () => {
+  it("compte ordinaire ou inexistant : aucun blocage", async () => {
+    m.user.findUnique.mockResolvedValueOnce({ role: "USER" })
+    expect(await getAccountDeletionBlocker("u1")).toBeNull()
+    m.user.findUnique.mockResolvedValueOnce(null)
+    expect(await getAccountDeletionBlocker("u2")).toBeNull()
+  })
+
+  it("compte administrateur : refus avec un message explicite", async () => {
+    for (const role of ["ADMIN_SUPPORT", "ADMIN_PRODUCT", "ADMIN_FOUNDER"]) {
+      m.user.findUnique.mockResolvedValueOnce({ role })
+      expect(await getAccountDeletionBlocker("a1")).toMatch(/administration.*support/i)
+    }
   })
 })

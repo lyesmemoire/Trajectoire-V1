@@ -1,11 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 
 const mocks = vi.hoisted(() => ({
+  blocker: vi.fn(),
   cancelUserSubscription: vi.fn(),
   deleteUser: vi.fn(),
   purgeUserData: vi.fn(),
 }))
-vi.mock("@/lib/account/purge-user-data", () => ({ purgeUserData: mocks.purgeUserData }))
+vi.mock("@/lib/account/purge-user-data", () => ({
+  purgeUserData: mocks.purgeUserData,
+  getAccountDeletionBlocker: mocks.blocker,
+}))
 
 vi.mock("@/lib/billing/cancel-user-subscription", () => ({
   cancelUserSubscription: mocks.cancelUserSubscription,
@@ -41,7 +45,7 @@ function build() {
     auditService as any,
     logger as any,
   )
-  return { service, sessionRepository, messageRepository, logger }
+  return { service, sessionRepository, messageRepository, logger, auditService }
 }
 
 describe("AccountService.deleteAccount — abonnement Stripe", () => {
@@ -49,6 +53,28 @@ describe("AccountService.deleteAccount — abonnement Stripe", () => {
     vi.resetAllMocks()
     mocks.deleteUser.mockResolvedValue({ error: null })
     mocks.purgeUserData.mockResolvedValue(undefined)
+    mocks.blocker.mockResolvedValue(null)
+  })
+
+  it("compte administrateur : refus (409) avant toute action, Stripe compris", async () => {
+    mocks.blocker.mockResolvedValue("Ce compte dispose de droits d'administration.")
+    const { service, sessionRepository } = build()
+
+    await expect(service.deleteAccount({ userId: "a1" })).rejects.toMatchObject({ statusCode: 409 })
+
+    expect(mocks.cancelUserSubscription).not.toHaveBeenCalled()
+    expect(sessionRepository.find).not.toHaveBeenCalled()
+    expect(mocks.purgeUserData).not.toHaveBeenCalled()
+    expect(mocks.deleteUser).not.toHaveBeenCalled()
+  })
+
+  it("n'écrit aucune ligne d'audit après la suppression (l'utilisateur n'existe plus)", async () => {
+    mocks.cancelUserSubscription.mockResolvedValue({ cancelled: false })
+    const { service, auditService } = build()
+
+    await service.deleteAccount({ userId: "u1" })
+
+    expect(auditService.log).not.toHaveBeenCalled()
   })
 
   it("annule l'abonnement avant de supprimer données et compte", async () => {
