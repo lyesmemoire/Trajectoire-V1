@@ -27,20 +27,22 @@ Sortie : code sauvegardé hors de la machine, clés remplacées.
 
 | # | Tâche | Détail | Taille |
 |---|---|---|---|
-| 2.1 | Valeurs aléatoires | Examiner `application/human-presence`, `live-coaching`, `smart-notifications`, simulateurs `ai-quality` : supprimer ou brancher sur des données calculées (règle « aucun chiffre inventé ») | M |
-| 2.2 | Route orpheline | Retirer `/api/app/dashboard` et sa règle `/api/app` | S |
-| 2.3 | Un seul validateur d'upload | `cv/upload` et `analyze-preview` ont deux validateurs différents (PDF 8 Mo contre 5 Mo, DOCX refusé d'un côté, TXT probablement refusé) | M |
-| 2.4 | « Réécrire ce CV » | Le bouton mène à une page sans `?cv=id` | S |
-| 2.5 | Nettoyage périodique | Planifier `/api/admin/cleanup-previews` (jamais lancé aujourd'hui) | S |
-| 2.6 | RGPD | `AdminAuditLog` en `RESTRICT` peut bloquer la suppression d'un compte administrateur | S |
+| 2.1 | Valeurs aléatoires | Examiner `application/human-presence`, `live-coaching`, `smart-notifications`, simulateurs `ai-quality` : supprimer ou brancher sur des données calculées (règle « aucun chiffre inventé ») | M | ✅
+| 2.2 | Route orpheline | Retirer `/api/app/dashboard` et sa règle `/api/app` | S | ✅
+| 2.3 | Un seul validateur d'upload | `cv/upload` et `analyze-preview` ont deux validateurs différents (PDF 8 Mo contre 5 Mo, DOCX refusé d'un côté, TXT probablement refusé) | M | ✅
+| 2.4 | « Réécrire ce CV » | Le bouton mène à une page sans `?cv=id` | S | ✅
+| 2.5 | Nettoyage périodique | Planifier `/api/admin/cleanup-previews` (jamais lancé aujourd'hui) | S | ✅
+| 2.6 | RGPD | `AdminAuditLog` en `RESTRICT` peut bloquer la suppression d'un compte administrateur | S | ✅
 | 2.7 | Export PDF/DOCX du CV | À reconstruire ; à décider s'il est nécessaire au lancement | L |
-| 2.8 | `lib/ats/*` | ~5 000 lignes mortes à supprimer (garder `doubt-engine`, `recruiter-grade` ; `contracts/munitions.ts` à la racine ne se touche pas) | M |
+| 2.8 | `lib/ats/*` | ~5 000 lignes mortes à supprimer (garder `doubt-engine`, `recruiter-grade` ; `contracts/munitions.ts` à la racine ne se touche pas) | M | ✅
 | 2.9 | Pages légales | Mentions légales, mise à jour des CGU et de la confidentialité, dès que les informations réelles (phase 1) sont fournies | M |
 | 2.10 | Consentement | Selon la décision 3 | S à M |
 | 2.11 | Design | Appliquer les décisions 4 et 6 ; harmoniser le clair de `/analyze` (violet, ivoire, bronze mélangés) si souhaité | S |
 | 2.12 | Extension `vector` | Ne la déplacer hors de `public` que si les requêtes Prisma sont préfixées (sinon ne pas le faire) | S |
 
 Sortie : aucun TODO connu côté code, tests verts, build de production vert, `tasks.md` à jour.
+
+**État au 2026-10-02** : 2.1, 2.2, 2.3, 2.4, 2.5, 2.6 et 2.8 sont faites (✅). Restent 2.7, 2.9, 2.10, 2.11 et 2.12, qui dépendent de décisions ou d'informations de l'utilisateur. Trouvaille en route (2.6) : la suppression de compte échouait pour tout utilisateur ayant lancé une simulation (corrigé). À définir en production : `CRON_SECRET`.
 
 ## Phase 3 : tests manuels (utilisateur), corrections (Claude)
 

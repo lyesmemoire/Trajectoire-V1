@@ -19,9 +19,9 @@
 - [x] **Phase 3 faite** : moteur `lib/cv-analysis/` (`770ac59c`), aperçu gratuit par le moteur (`680a7834`), analyse complète PACK/PRO enregistrée dans `CVAnalysis` (`ae294387`).
 - [x] Pages `(app)/cv` et `(app)/cv/[id]` faites (`0e887830`). **Réécritures liées à une analyse faites** (`dbadd5aa`) : colonne `cv_rewrites.analysis_id` (migration `20261002_add_analysis_id_to_cv_rewrites` **appliquée** le 2026-10-02), `api/cv/rewrite` accepte `analysisId` (404 si l'analyse n'est pas à l'utilisateur), section « Réécritures » sur `/cv/[id]`. Reste : le bouton « Réécrire ce CV » mène à `/analyze` sans `?cv=id` (pas d'interface de réécriture dédiée) ; seul le parcours « Adapter à une offre » appelle la réécriture.
 - [ ] Export PDF/DOCX du CV à reconstruire (l'ancien code était mort et a été supprimé).
-- [ ] Un seul validateur d'upload (PDF/DOCX/TXT, une limite) : `cv/upload` (pdfjs, 8 Mo) et `analyze-preview` (pdf-parse, 5 Mo, DOCX « non supporté », TXT probablement rejeté par `file-type`).
+- [x] **Un seul validateur d'upload (2026-10-02, `75d729cc`)** : `lib/cv/cv-file.ts` (PDF/DOCX/TXT, 8 Mo, signature du fichier, 100 à 50 000 caractères, délai de 15 s) pour `cv/upload` et `analyze-preview` ; interfaces alignées sur `lib/cv/cv-limits.ts`.
 - [ ] Design `/analyze` : **décision du 2026-10-02 : le site public reste en thème clair** (pas de bascule sombre, essai annulé `2b6c8a26`). Reste seulement à harmoniser le clair (violet/ivoire/bronze mélangés) si souhaité.
-- [ ] `lib/ats/*` (~5 000 lignes, mort) : garder `doubt-engine`, `recruiter-grade`, `contracts/munitions` (munitions d'entretien, à assainir/plafonner), supprimer le reste une fois le nouveau moteur en place.
+- [x] `lib/ats/*` nettoyé (2026-10-02) : 12 fichiers morts supprimés ; restent `doubt-engine`, `recruiter-grade` et `contracts/munitions` (à assainir/plafonner avant tout usage) ; `lib/ats/contracts/munitions.ts` de la racine du dépôt est protégé et intact.
 - [ ] **Décision** : crédits `ENABLE_ATS_BILLING` (désactivé par défaut, 10/2 crédits) — font double emploi avec les plans : retirer ou garder.
 
 ### Audit CTO avant lancement (2026-10-02)
@@ -96,6 +96,13 @@
 - [x] **CI** (`07eac8ee`) : la garde « Upstash obligatoire en production » faisait échouer les jobs `build`, `regression` et `ai-quality-validation` ; variables factices ajoutées. **Correction de l'audit précédent** : un job de build existait déjà dans la CI (il n'y avait rien à ajouter).
 - [x] **Tests** (`30e58ec0`) : invariants de design et de fiabilité (`lib/design-invariants.test.ts`) ; 792 tests.
 - [ ] **Correction de l'audit précédent (PostHog)** : PostHog n'est **initialisé nulle part** (aucun des deux fournisseurs n'est importé) ; aucun suivi n'est actif aujourd'hui. Le choix de consentement ne devient nécessaire qu'au moment de brancher `components/providers/posthog-provider.tsx`.
-- [ ] **Route orpheline** : `/api/app/dashboard` n'a plus de consommateur (`DashboardClient` supprimé) ; à retirer avec sa règle `/api/app` d'`AuthorizationV2`.
-- [ ] **Valeurs aléatoires à examiner** : `application/human-presence/*` (énergie, motivation et fatigue tirées au hasard), `application/live-coaching`, `smart-notifications` et les simulateurs `ai-quality` utilisent `Math.random` ; leur exécution réelle par l'application n'a pas pu être prouvée (réseau d'imports interne). À supprimer ou à brancher sur des données calculées avant toute exposition à un utilisateur.
+- [x] Route orpheline `/api/app/dashboard` supprimée (`d8cad3b9`).
+- [x] **Valeurs aléatoires (2.1, `4a5ffc26`)** : 12 fichiers morts supprimés (smart-notifications, adaptive-interview, live-coaching, lib/latency, lib/prompts/assembly, lib/interview/pressure, latency-masker, bot-shield) ; `/admin/cognitive` et `/admin/ai-operating-system` fermés (404 : moteurs en mémoire sans données réelles) ; code de parrainage par `crypto.randomInt`. Conservés : `ai-quality` (utilisé par `scripts/ai-quality-validation.ts` en CI), `analytics` (échantillonnage légitime), `human-presence` et `adaptive-intelligence` (atteints seulement par les pages d'admin fermées, à supprimer avec elles si elles sont abandonnées).
 - [ ] **Bruit de journal** : le build journalise en niveau `error` « Dynamic server usage » pour chaque page qui lit les cookies (attendu, mais masque les vraies erreurs).
+
+### Lot 5 : code restant avant les tests (2026-10-02)
+- [x] **2.1** valeurs aléatoires, **2.2** route orpheline, **2.3** validateur d'upload unique, **2.8** `lib/ats/*` : voir ci-dessus.
+- [x] **2.4** « Réécrire ce CV » (`ec397a49`) : le bouton menait à un nouveau téléversement ; il mène maintenant à une section « Réécrire un passage » de `/cv/[id]` (`CvRewriteForm` : résumé ou expérience collés, pas de chargement du texte du CV ; états 403/402/429/réseau). **Non vérifié à l'écran** (session requise).
+- [x] **2.5** nettoyage planifié (`75806de6`) : `GET /api/cron/cleanup-previews` (Bearer `CRON_SECRET`, refus si absent), tâche quotidienne à 3 h dans `vercel.json`. **À faire en production : définir `CRON_SECRET`** (et que l'hébergeur soit Vercel, sinon planifier l'appel autrement).
+- [x] **2.6** RGPD (`194c6b7b`) : bogue réel corrigé, voir la section RGPD ci-dessus (suppression de compte impossible pour tout utilisateur ayant lancé une simulation).
+- [ ] **Restent (phase 2)** : 2.7 export PDF/DOCX (décision de périmètre), 2.9 pages légales (informations réelles à fournir), 2.10 consentement (décision), 2.11 design (décisions), 2.12 extension `vector` (ne pas déplacer).
