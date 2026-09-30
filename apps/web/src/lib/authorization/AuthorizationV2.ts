@@ -129,7 +129,6 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/knowledge", accessLevel: AccessLevel.AUTHENTICATED, comment: "Base de connaissances" },
   { pattern: "/matching", accessLevel: AccessLevel.AUTHENTICATED, comment: "Matching" },
   { pattern: "/discovery", accessLevel: AccessLevel.AUTHENTICATED, comment: "Discovery" },
-  { pattern: "/api/app", accessLevel: AccessLevel.AUTHENTICATED, comment: "API du tableau de bord (DashboardClient)" },
   { pattern: "/api/account", accessLevel: AccessLevel.AUTHENTICATED, comment: "API compte" },
   { pattern: "/api/analytics", accessLevel: AccessLevel.AUTHENTICATED, comment: "API analytics" },
   { pattern: "/api/career-memory", accessLevel: AccessLevel.AUTHENTICATED, comment: "API mémoire de carrière" },
