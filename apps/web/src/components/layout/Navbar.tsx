@@ -139,7 +139,7 @@ export function Navbar({
                   void handleLogout()
                 }
                 disabled={loggingOut}
-                className="rounded-lg p-2 text-foreground-muted transition-colors duration-200 hover:bg-slate-100 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg p-2 text-foreground-muted transition-colors duration-200 hover:bg-surface-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Se déconnecter"
               >
                 <LogOut

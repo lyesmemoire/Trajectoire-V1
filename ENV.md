@@ -27,10 +27,13 @@ Ce document recense toutes les variables d'environnement utilisées par **Trajec
 - **`ELEVENLABS_VOICE_ID`** : L'ID de la voix de Clara/Victor configurée sur ElevenLabs.
 
 ## 5. Stripe (Paiements)
-- *(À venir lors de la configuration Stripe)*
 - **`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`** : Clé publique Stripe (client).
 - **`STRIPE_SECRET_KEY`** : Clé privée Stripe (backend).
-- **`STRIPE_WEBHOOK_SECRET`** : Clé de validation des webhooks Stripe.
+- **`STRIPE_WEBHOOK_SECRET`** : Clé de validation des webhooks Stripe (`whsec_...` ; en local, affiché par `pnpm stripe:listen`).
+- **`STRIPE_PRICE_INTERVIEW_PACK`** : Identifiant du prix Stripe du Pack Entretien (paiement unique, 29 € TTC : 5 simulations valables 3 mois).
+- **`STRIPE_PRO_PRICE_ID`** : Identifiant du prix Stripe de l'abonnement Pro (19 €/mois, sans essai, simulations illimitées).
+- **`STRIPE_PRICE_EARLY`** *(optionnel)* : ancien prix Pro, encore reconnu par le webhook comme un abonnement Pro.
+- Un identifiant de prix inconnu ne modifie jamais le plan de l'utilisateur (l'erreur est journalisée). Les montants et limites vivent dans `apps/web/src/lib/plans.ts`, pas dans ces variables.
 
 ## 6. Observabilité (Monitoring & Analytics)
 - **`NEXT_PUBLIC_POSTHOG_KEY`** : Clé de projet PostHog pour l'analytics produit.
