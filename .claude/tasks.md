@@ -137,3 +137,7 @@
 ### Styles de recruteuse (2026-10-02)
 - [x] Quatre styles (bienveillante, directe, analytique, challengeuse) : même personnage « Alexandra » (un seul portrait), ton, façon de relancer une réponse vague et de recadrer un hors-sujet, voix Realtime propre (`PERSONA_VOICES` : marin, sage, shimmer, coral). Stockés dans `analysis.setup.persona` (sans migration), choisis sur `/simulation/new`. Indépendants de la difficulté ; les garde-fous (IA, pas de conseil, anti-injection) restent communs. Tests dans `session-setup.test.ts`, `realtime-instructions.test.ts`, route.
 - [ ] **À valider à l'écoute** : le choix des voix n'a pas été entendu ; les changer dans `PERSONA_VOICES` si l'une ne convient pas (ou n'est pas disponible sur le modèle). Le portrait reste celui d'une femme : éviter une voix masculine.
+
+### Écoute des voix (2026-10-02)
+- [x] Page admin `/admin/voix` (rôle admin, sinon redirection) : les 4 styles avec leur voix actuelle et un menu pour essayer les 10 voix Realtime. Lecture par `GET /api/admin/voice-preview` (admin, limite de débit, phrase d'essai fixe, voix validée contre une liste fermée, cache navigateur 1 h) qui appelle `gpt-4o-mini-tts` : **proche de la voix Realtime de même nom, pas identique**. Une fois le choix fait : modifier `PERSONA_VOICES` dans `lib/interview/session-setup.ts`.
+- [ ] Non vérifié à l'écran ni à l'oreille (session admin et clé OpenAI requises).
