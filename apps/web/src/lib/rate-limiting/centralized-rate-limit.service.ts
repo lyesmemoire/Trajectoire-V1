@@ -121,8 +121,8 @@ const RATE_LIMIT_CONFIGS: Record<RouteType, RateLimitConfig> = {
     burstWindow: 15,      // Within 15 seconds
   },
   [RouteType.SIMULATION]: {
-    limit: 20,
-    window: 3600,         // 20 simulations per hour
+    limit: 60,
+    window: 3600,         // 60 simulation requests per hour
     burstLimit: 25,       // Allow burst up to 25
     burstWindow: 300,     // Within 5 minutes
   },

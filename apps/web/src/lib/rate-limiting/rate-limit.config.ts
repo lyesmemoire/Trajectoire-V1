@@ -96,7 +96,7 @@ export const RATE_LIMIT_CONFIGS: Record<RouteType, RateLimitConfig> = {
   // SIMULATION - Interview simulation endpoints
   // ------------------------------------------------------------
   [RouteType.SIMULATION]: {
-    limit: 20,               // 20 simulations per hour
+    limit: 60,               // 60 simulation requests per hour
     window: 3600,             // 1 hour window
     burstLimit: 25,           // Allow burst up to 25 simulations
     burstWindow: 300,         // Within 5 minutes
