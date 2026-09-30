@@ -42,5 +42,6 @@ Ce document recense toutes les variables d'environnement utilisées par **Trajec
 
 ## 7. Configuration Système
 - **`NEXT_PUBLIC_APP_URL`** : URL publique du site (ex: `https://trajectoire.io`).
+- **`NEXT_PUBLIC_ALLOWED_ORIGINS`** (optionnel) : autres origines autorisées à appeler l'API depuis un navigateur, séparées par des virgules, jokers permis (ex: `https://*.vercel.app`). Les écritures (`POST/PUT/PATCH/DELETE`) sur `/api/*` depuis une autre origine reçoivent un 403 (`middleware.ts`, `lib/security/origin-guard.ts`). À renseigner pour les prévisualisations et tout second domaine ; le webhook Stripe est exempté.
 - **`LOG_LEVEL`** : Niveau de verbosité (`debug`, `info`, `warn`, `error`).
 - **`NODE_ENV`** : `development` ou `production`.
