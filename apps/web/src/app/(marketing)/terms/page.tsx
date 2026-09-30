@@ -3,6 +3,7 @@
 // Conditions Générales de Vente (CGV)
 
 import Link from "next/link"
+import { contactEmail, describePublisher } from "@/lib/legal/publisher"
 
 export default function TermsPage() {
   return (
@@ -25,9 +26,13 @@ export default function TermsPage() {
               1. Éditeur du service
             </h2>
             <p className="text-ink-700">
-              Le service Trajectoire est édité par une société au capital
-              social de 1 €, immatriculée en Bulgarie à Sofia sous le numéro
-              d'immatriculation 203456781, numéro de TVA BG203456781, dont le siège social est situé à Sofia Center, ul. "Stara Planina" 5, 1000 Sofia, Bulgarie.
+              {describePublisher() ??
+                "Les informations relatives à l'éditeur du service figurent dans les mentions légales."}{" "}
+              Voir aussi les{" "}
+              <Link href="/mentions-legales" className="underline underline-offset-4 hover:text-ink-900">
+                mentions légales
+              </Link>
+              .
             </p>
           </section>
 
@@ -96,7 +101,7 @@ export default function TermsPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative aux présentes CGV, vous pouvez nous
-              contacter à l'adresse email : anislamine1980@gmail.com
+              contacter à l'adresse email : {contactEmail()}
             </p>
           </section>
 

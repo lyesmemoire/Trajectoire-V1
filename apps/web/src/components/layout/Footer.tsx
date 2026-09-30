@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { canShowLegalNotice, contactEmail } from "@/lib/legal/publisher"
 
 export default function Footer() {
   return (
@@ -52,12 +53,19 @@ export default function Footer() {
                 Politique de confidentialité
               </Link>
             </li>
+            {canShowLegalNotice() && (
+              <li>
+                <Link href="/mentions-legales" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+                  Mentions légales
+                </Link>
+              </li>
+            )}
             <li>
               <a
-                href="mailto:anislamine1980@gmail.com"
+                href={`mailto:${contactEmail()}`}
                 className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
               >
-                anislamine1980@gmail.com
+                {contactEmail()}
               </a>
             </li>
           </ul>

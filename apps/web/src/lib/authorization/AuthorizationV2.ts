@@ -94,6 +94,7 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/signup-conversion", accessLevel: AccessLevel.PUBLIC, comment: "Conversion de l'aperçu gratuit" },
   { pattern: "/privacy", accessLevel: AccessLevel.PUBLIC, comment: "Politique de confidentialité" },
   { pattern: "/terms", accessLevel: AccessLevel.PUBLIC, comment: "Conditions d'utilisation" },
+  { pattern: "/mentions-legales", accessLevel: AccessLevel.PUBLIC, comment: "Mentions légales (404 en production tant qu'elles sont incomplètes)" },
   { pattern: "/api/public", accessLevel: AccessLevel.PUBLIC, comment: "API publique (aperçu gratuit anonyme)" },
   { pattern: "/api/cron", accessLevel: AccessLevel.PUBLIC, comment: "Tâches planifiées : authentifiées dans la route par CRON_SECRET (refus si absent)" },
   { pattern: "/images", accessLevel: AccessLevel.PUBLIC, comment: "Images statiques" },

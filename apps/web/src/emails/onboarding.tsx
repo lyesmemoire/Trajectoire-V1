@@ -1,4 +1,5 @@
 import { Html, Head, Body, Container, Text, Link, Section } from "react-email"
+import { contactEmail } from "@/lib/legal/publisher"
 
 interface OnboardingEmailProps {
   userName: string
@@ -47,7 +48,7 @@ export function OnboardingEmail({ userName, magicLink }: OnboardingEmailProps) {
 
             <Text style={footer}>
               À tout moment,{" "}
-              <Link href="mailto:anislamine1980@gmail.com" style={footerLink}>
+              <Link href={`mailto:${contactEmail()}`} style={footerLink}>
                 contactez-nous
               </Link>
               .

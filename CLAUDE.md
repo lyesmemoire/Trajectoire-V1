@@ -202,6 +202,7 @@ CI (`.github/workflows/ci-cd.yml`, Node 22, pnpm 9.15.9) : lint → typecheck �
 ## Thème et données personnelles
 
 - **Site public clair, espace connecté sombre** (zinc-950 / indigo-500) : ne pas basculer le public en sombre (décision du 2026-10-02).
+- **Identité légale de l'éditeur** : `apps/web/src/lib/legal/publisher.ts` (champs vides à renseigner, rien d'inventé) ; `/mentions-legales` répond 404 en production tant que les champs obligatoires manquent ; ne jamais recoder l'identité ni l'e-mail de contact ailleurs (un test l'interdit pour les adresses gmail).
 - **Suppression de compte** : `AccountService.deleteAccount` → Stripe, puis `lib/account/purge-user-data.ts` (transaction : `public.users` et cascades + tables sans FK), puis Supabase Auth. `public.users` n'a aucune FK vers `auth.users`. Les CV sont conservés tant que le compte existe (politique de confidentialité alignée).
 - **Chiffres inventés retirés** (dashboard, `/interview` + `evaluate`, `executive-result-engine`, `career-dna-card`, `evolution-card`, `analysis-recap`) : ne jamais réintroduire de valeur non calculée ni de `Math.random()` dans un score.
 

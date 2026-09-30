@@ -24,6 +24,7 @@ import { initializeCsrfToken } from "@/lib/security/csrf-middleware";
 import { getAllowedOrigins } from "@/lib/security/csrf";
 import { checkRequestOrigin } from "@/lib/security/origin-guard";
 import { buildContentSecurityPolicy } from "@/lib/security/csp";
+import { canShowLegalNotice } from "@/lib/legal/publisher";
 
 const CONFIG = {
   ALLOWED_ORIGINS: [
@@ -813,9 +814,12 @@ export async function middleware(
 
   // Défaut fermé : une route sans règle explicite (ou volontairement fermée) est inexistante.
   // Décidé avant tout appel à Supabase : inutile de vérifier une session pour un 404.
+  // Mentions légales incomplètes en production : vrai 404 (la page seule répondrait 200 derrière
+  // l'écran de chargement). Voir lib/legal/publisher.ts.
   if (
     new AuthorizationV2(null).getRequiredAccessLevel(pathname) ===
-    AccessLevel.NOT_FOUND
+      AccessLevel.NOT_FOUND ||
+    (pathname === "/mentions-legales" && !canShowLegalNotice())
   ) {
     return createNotFoundResponse(
       request,

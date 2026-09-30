@@ -3,6 +3,7 @@
 // Politique de Confidentialité
 
 import Link from "next/link"
+import { contactEmail } from "@/lib/legal/publisher"
 
 export default function PrivacyPage() {
   return (
@@ -95,7 +96,7 @@ export default function PrivacyPage() {
               <li>Droit de limitation du traitement</li>
             </ul>
             <p className="text-ink-700 mt-4">
-              Pour exercer ces droits, contactez-nous à : anislamine1980@gmail.com
+              Pour exercer ces droits, contactez-nous à : {contactEmail()}
             </p>
           </section>
 
@@ -142,7 +143,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative à cette politique de confidentialité,
-              contactez-nous à : anislamine1980@gmail.com
+              contactez-nous à : {contactEmail()}
             </p>
           </section>
         </div>

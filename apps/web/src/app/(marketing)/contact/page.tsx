@@ -5,6 +5,7 @@ import Link from "next/link"
 import { createClient } from "@/lib/supabase"
 import { Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { contactEmail } from "@/lib/legal/publisher"
 
 export default function ContactPage() {
   const [user, setUser] = useState<any>(null)
@@ -42,10 +43,10 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold text-ink-900 mb-1">Email</h3>
                 <a
-                  href="mailto:anislamine1980@gmail.com"
+                  href={`mailto:${contactEmail()}`}
                   className="text-bronze-600 hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-bronze-400 rounded"
                 >
-                  anislamine1980@gmail.com
+                  {contactEmail()}
                 </a>
               </div>
             </div>

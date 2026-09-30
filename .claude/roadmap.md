@@ -35,7 +35,7 @@ Sortie : code sauvegardé hors de la machine, clés remplacées.
 | 2.6 | RGPD | `AdminAuditLog` en `RESTRICT` peut bloquer la suppression d'un compte administrateur | S | ✅
 | 2.7 | Export PDF/DOCX du CV | À reconstruire ; à décider s'il est nécessaire au lancement | L |
 | 2.8 | `lib/ats/*` | ~5 000 lignes mortes à supprimer (garder `doubt-engine`, `recruiter-grade` ; `contracts/munitions.ts` à la racine ne se touche pas) | M | ✅
-| 2.9 | Pages légales | Mentions légales, mise à jour des CGU et de la confidentialité, dès que les informations réelles (phase 1) sont fournies | M |
+| 2.9 | Pages légales | Mentions légales, mise à jour des CGU et de la confidentialité, dès que les informations réelles (phase 1) sont fournies | M | — **structure prête (2026-10-02)** : `lib/legal/publisher.ts` à compléter, page `/mentions-legales` 404 en production tant qu'incomplète ; reste la saisie des informations et la validation juridique
 | 2.10 | Consentement | Selon la décision 3 | S à M |
 | 2.11 | Design | Appliquer les décisions 4 et 6 ; harmoniser le clair de `/analyze` (violet, ivoire, bronze mélangés) si souhaité | S |
 | 2.12 | Extension `vector` | Ne la déplacer hors de `public` que si les requêtes Prisma sont préfixées (sinon ne pas le faire) | S |
