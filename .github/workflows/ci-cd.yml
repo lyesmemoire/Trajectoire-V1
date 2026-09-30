@@ -221,6 +221,8 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
           SUPABASE_SERVICE_ROLE_KEY: ci-placeholder-service-role-key
           STRIPE_SECRET_KEY: sk_test_ci_placeholder
+          UPSTASH_REDIS_REST_URL: https://ci-placeholder.upstash.io
+          UPSTASH_REDIS_REST_TOKEN: ci-placeholder-upstash-token
         run: pnpm build
 
       - name: Start Web application
@@ -230,6 +232,8 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
           SUPABASE_SERVICE_ROLE_KEY: ci-placeholder-service-role-key
           STRIPE_SECRET_KEY: sk_test_ci_placeholder
+          UPSTASH_REDIS_REST_URL: https://ci-placeholder.upstash.io
+          UPSTASH_REDIS_REST_TOKEN: ci-placeholder-upstash-token
         run: |
           node apps/web/.next/standalone/apps/web/server.js > /tmp/trajectoire-web.log 2>&1 &
           echo $! > /tmp/trajectoire-web.pid
@@ -306,6 +310,8 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
           SUPABASE_SERVICE_ROLE_KEY: ci-placeholder-service-role-key
           STRIPE_SECRET_KEY: sk_test_ci_placeholder
+          UPSTASH_REDIS_REST_URL: https://ci-placeholder.upstash.io
+          UPSTASH_REDIS_REST_TOKEN: ci-placeholder-upstash-token
         run: pnpm build
 
       - name: Upload build artifacts
