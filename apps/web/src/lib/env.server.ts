@@ -223,6 +223,19 @@ function validateEnv() {
     }
   }
 
+  // Sans Upstash, le limiteur de débit laisse tout passer (fail-open) : toutes les protections de
+  // coût (appels d'IA facturés, création de sessions) tomberaient en silence. Échec bruyant en production.
+  if (
+    process.env.NODE_ENV === "production" &&
+    !(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  ) {
+    const message =
+      "[ENV SERVER] UPSTASH_REDIS_REST_URL et UPSTASH_REDIS_REST_TOKEN sont obligatoires en production : " +
+      "sans eux toutes les limites de débit sont désactivées.";
+    logError(message, {});
+    throw new Error(message);
+  }
+
   return result.data ?? ({} as z.infer<typeof EnvServerSchema>);
 }
 
