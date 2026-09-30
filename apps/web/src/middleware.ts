@@ -183,7 +183,7 @@ function applySecurityHeaders(
 
   response.headers.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=()",
+    "camera=(), microphone=(self), geolocation=(), payment=()",
   );
 
   if (IS_DEV) {

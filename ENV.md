@@ -19,6 +19,7 @@ Ce document recense toutes les variables d'environnement utilisées par **Trajec
 - **`OPENAI_API_KEY`** : Clé API pour OpenAI (ou proxy compatible).
 - **`OPENAI_BASE_URL`** : (Optionnel) Permet de rediriger vers un autre fournisseur (ex: Mistral API).
 - **`OPENAI_MODEL`** : (Optionnel) Le modèle par défaut à utiliser (ex: `gpt-4o`, `mistral-large-latest`).
+- **`OPENAI_REALTIME_MODEL`** : (Optionnel) Modèle de l'entretien vocal (API Realtime GA). Défaut : `gpt-realtime-2.1` ; `gpt-realtime-1.5` est une alternative moins chère. Les modèles `gpt-4o-realtime-preview` sont arrêtés depuis mai 2026.
 - **`MISTRAL_API_KEY`** : Clé API native Mistral.
 
 ## 4. Voix (Speech-to-Text & Text-to-Speech)

@@ -1,13 +1,14 @@
 /**
  * POST /api/interview/realtime-session
  *
- * Crée une session OpenAI Realtime full-duplex (audio ↔ audio).
- * Retourne un token éphémère + une question d'ouverture.
+ * Prépare une conversation vocale avec l'API Realtime d'OpenAI (version GA, WebRTC) :
+ *   1. vérifie que la séance appartient à l'utilisateur et est en cours (elle a déjà été décomptée du quota) ;
+ *   2. construit les consignes de la recruteuse à partir de la séance (poste, niveau, durée, type) et du
+ *      contexte de l'entretien texte (CV, offre, compétences à vérifier, priorités) ;
+ *   3. crée un jeton éphémère : POST /v1/realtime/client_secrets avec la session complète.
+ * Le navigateur se connecte ensuite directement à OpenAI (POST /v1/realtime/calls, voir le hook).
  *
- * Flow :
- *   1. Choisit la question d'ouverture selon le type d'entretien (session DB)
- *   2. Crée session OpenAI Realtime avec le system prompt correspondant
- *   3. Retourne { client_secret, session_id, first_question }
+ * Retourne { client_secret, expires_at, session_id, first_question, opening_persisted, duration_seconds }.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -15,174 +16,161 @@ import { getVerifiedUserWithRetry } from '@/lib/auth/verified-user'
 import { getOpenAIKey } from '@/lib/ai/ai-models'
 import { Container, ServiceTokens } from '@/infrastructure/di'
 import { initializeContainer } from '@/infrastructure/di/bootstrap'
-import type { SessionRepository } from '@/infrastructure/repositories'
+import type { MessageRepository, SessionRepository } from '@/infrastructure/repositories'
+import { UnifiedInterviewContextService } from '@/application/interview-context/UnifiedInterviewContextService'
+import { createClient } from '@/lib/supabase/server'
 import { rateLimit } from '@/lib/rate-limiting/rate-limit.middleware'
 import { RouteType, RateLimitScope } from '@/lib/rate-limiting/centralized-rate-limit.service'
-import { REALTIME_MODEL } from '@/lib/interview/realtime-config'
+import {
+  REALTIME_CLIENT_SECRETS_URL,
+  REALTIME_CLIENT_SECRET_TTL_SECONDS,
+  REALTIME_MODEL,
+  REALTIME_TRANSCRIPTION_LANGUAGE,
+  REALTIME_TRANSCRIPTION_MODEL,
+  REALTIME_VOICE,
+} from '@/lib/interview/realtime-config'
+import { buildRealtimeInstructions, isResumedSession } from '@/lib/interview/realtime-instructions'
+import { logger } from '@/lib/logger'
 
-// ── Question d'ouverture ─────────────────────────────────────────────────────
-// Il n'y a plus de kernel HIIOS ici : celui qui existait avant n'était jamais
-// relu par la suite du flux (voir .claude/tasks.md, diagnostic 2026-09-29) —
-// une question fixe par type d'entretien suffit pour amorcer la conversation.
-
-const OPENING_QUESTIONS: Record<string, { id: string; text: string }> = {
-  RH: {
-    id  : 'opening_rh',
-    text: "Pouvez-vous me parler de votre parcours et de ce qui vous amène à candidater aujourd'hui ?",
-  },
-  Technique: {
-    id  : 'opening_technique',
-    text: 'Pouvez-vous décrire un problème technique complexe que vous avez résolu récemment, et la démarche que vous avez suivie ?',
-  },
-  Manager: {
-    id  : 'opening_manager',
-    text: 'Racontez-moi une situation où vous avez dû prendre une décision difficile concernant votre équipe.',
-  },
+// Question d'ouverture de repli (séance sans question enregistrée) : une par type d'entretien.
+const OPENING_QUESTIONS: Record<string, string> = {
+  RH: "Pouvez-vous me parler de votre parcours et de ce qui vous amène à candidater aujourd'hui ?",
+  Technique: 'Pouvez-vous décrire un problème technique complexe que vous avez résolu récemment, et la démarche que vous avez suivie ?',
+  Manager: 'Racontez-moi une situation où vous avez dû prendre une décision difficile concernant votre équipe.',
 }
 
 const DEFAULT_OPENING_QUESTION = OPENING_QUESTIONS.RH
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-function buildRealtimeSystemPrompt(
-  firstQuestion: string,
-  jobTitle?: string,
-): string {
-  return `Tu es Alexandra, une intervieweuse professionnelle expérimentée qui conduit un entretien de recrutement pour le poste de ${jobTitle ?? 'professionnel'}.
-
-RÈGLES ABSOLUES :
-1. Tu parles UNIQUEMENT en français.
-2. Tu es humaine, directe, professionnelle. Jamais de listes à puces.
-3. Tes interventions sont courtes : maximum 2-3 phrases.
-4. Tu écoutes attentivement et tu rebondis sur ce que dit le candidat.
-5. Tu poses UNE seule question à la fois.
-6. Si le candidat s'éloigne du sujet, tu le recadres poliment.
-7. Tu n'es PAS un assistant IA — tu es une vraie recruteuse.
-8. Après chaque réponse du candidat, tu analyses et poses la question suivante logique.
-
-STRUCTURE DE L'ENTRETIEN :
-- Phase 1 (tours 1-2) : Exploration du parcours
-- Phase 2 (tours 3-4) : Compétences et expériences clés
-- Phase 3 (tours 5-6) : Mise en situation et pression
-- Phase 4 (tour 7+)   : Questions du candidat + clôture
-
-PREMIÈRE QUESTION À POSER :
-"${firstQuestion}"
-
-Commence immédiatement par cette question. Ne te présente pas longuement.`
+function json(body: Record<string, unknown>, status: number) {
+  return NextResponse.json(body, { status })
 }
-
-// ── Route principale ─────────────────────────────────────────────────────────
 
 async function handleRealtimeSession(request: NextRequest) {
   try {
-    // Auth
     const { user } = await getVerifiedUserWithRetry()
-    if (!user) {
-      return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
-    }
+    if (!user) return json({ error: 'Non authentifié' }, 401)
 
     const apiKey = getOpenAIKey()
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: 'OpenAI non configuré' },
-        { status: 503 },
-      )
-    }
+    if (!apiKey) return json({ error: 'Service vocal non configuré' }, 503)
 
-    // Body optionnel
-    const body = await request.json().catch(() => ({})) as {
-      jobTitle?: string
-      candidateId?: string
-    }
+    const body = (await request.json().catch(() => ({}))) as { candidateId?: string }
 
     // ── Session obligatoire ──────────────────────────────────────────────────
-    // `candidateId` est l'id de la session `interview_sessions` (voir
-    // useRealtimeInterview.ts). Cette session n'existe que si `/api/simulation/create`
-    // l'a acceptée, donc après contrôle et décompte du quota (FREE : aucune simulation,
-    // Pack épuisé ou expiré : refus). Exiger une session à soi, encore en cours, empêche
-    // d'obtenir des jetons Realtime (payants) en contournant le quota. On ne re-vérifie
-    // pas le quota ici : la simulation est déjà décomptée, un Pack à sa dernière
-    // simulation serait sinon bloqué à tort.
-    if (!body.candidateId || typeof body.candidateId !== 'string') {
-      return NextResponse.json({ error: 'Session requise' }, { status: 400 })
-    }
+    // `candidateId` est l'id de la session `interview_sessions`. Elle n'existe que si `/api/simulation/create`
+    // l'a acceptée, donc après contrôle et décompte du quota (FREE : aucune simulation, Pack épuisé ou
+    // expiré : refus). Exiger une session à soi, encore en cours, empêche d'obtenir des jetons payants en
+    // contournant le quota. Le quota n'est pas revérifié ici : la simulation est déjà décomptée.
+    if (!body.candidateId || typeof body.candidateId !== 'string') return json({ error: 'Session requise' }, 400)
 
-    let firstQuestion = DEFAULT_OPENING_QUESTION
+    let instructions: string
+    let openingQuestion: string
+    let openingPersisted = false
+    let resumed = false
+    let durationSeconds: number
+
     try {
       initializeContainer()
-      const sessionRepository = (await Container.resolve(
-        ServiceTokens.SessionRepository,
-      )) as SessionRepository
-
+      const sessionRepository = (await Container.resolve(ServiceTokens.SessionRepository)) as SessionRepository
       const session = await sessionRepository.findById(body.candidateId)
       // Même réponse pour « absente » et « à un autre » : pas d'oracle d'existence.
-      if (!session || session.user_id !== user.id) {
-        return NextResponse.json({ error: 'Session introuvable' }, { status: 404 })
+      if (!session || session.user_id !== user.id) return json({ error: 'Session introuvable' }, 404)
+      if (session.status !== 'in_progress') return json({ error: 'Cette session est terminée' }, 409)
+
+      // Question d'ouverture : celle déjà générée et enregistrée à la création de la séance (avec le CV et
+      // l'offre), sinon la question de repli du type. La recruteuse pose exactement celle-là : la
+      // transcription enregistrée et le rapport restent cohérents.
+      const messageRepository = (await Container.resolve(ServiceTokens.MessageRepository)) as MessageRepository
+      const messages = await messageRepository.getBySessionId(session.id)
+      const stored = messages.find(m => m.role === 'assistant' && m.content.trim())
+      const history = messages.map(m => ({ role: m.role, content: m.content }))
+      openingQuestion = stored?.content.trim() ?? OPENING_QUESTIONS[session.interview_type] ?? DEFAULT_OPENING_QUESTION
+      // Ouverture déjà enregistrée : seulement pour une séance neuve (un seul message, la question). Sinon
+      // (page rechargée en cours d'entretien), la recruteuse reprend au lieu de rouvrir.
+      openingPersisted = Boolean(stored) && messages.length === 1
+      resumed = isResumedSession(history)
+
+      // Même contexte que l'entretien texte. Son échec n'empêche pas la séance : consignes sans CV ni offre.
+      let context = null
+      try {
+        const supabase = await createClient()
+        context = await new UnifiedInterviewContextService(supabase).build({ userId: user.id, sessionId: session.id })
+      } catch (error) {
+        logger.warn({ err: error, sessionId: session.id }, '[realtime-session] contexte de l\'entretien indisponible')
       }
-      if (session.status !== 'in_progress') {
-        return NextResponse.json({ error: 'Cette session est terminée' }, { status: 409 })
-      }
-      firstQuestion = OPENING_QUESTIONS[session.interview_type] ?? DEFAULT_OPENING_QUESTION
+
+      durationSeconds = session.duration_seconds
+      instructions = buildRealtimeInstructions({
+        jobTitle: session.job_title,
+        level: session.level,
+        interviewType: session.interview_type,
+        durationMinutes: Math.round(session.duration_seconds / 60),
+        openingQuestion,
+        history,
+        cvText: context?.candidate.cvText,
+        jobDescription: context?.job.description,
+        matchedSkills: context?.matching.matchedSkills,
+        missingSkills: context?.matching.missingSkills,
+        priorities: context?.topRisks.map(r => ({ title: r.title, reason: r.reason, competency: r.competency })),
+      })
     } catch (err) {
       // Échec fermé : sans vérification de la session, pas de jeton.
-      console.error('[realtime-session] lookup session:', err)
-      return NextResponse.json({ error: 'Vérification de la session impossible' }, { status: 503 })
+      logger.error({ err }, '[realtime-session] lookup session')
+      return json({ error: 'Vérification de la session impossible' }, 503)
     }
 
-    // ── Créer session OpenAI Realtime ─────────────────────────────────────────
-    const systemPrompt = buildRealtimeSystemPrompt(
-      firstQuestion.text,
-      body.jobTitle,
-    )
+    // ── Jeton éphémère (API Realtime GA) ─────────────────────────────────────
+    const model = process.env.OPENAI_REALTIME_MODEL?.trim() || REALTIME_MODEL
 
-    const openaiRes = await fetch('https://api.openai.com/v1/realtime/sessions', {
-      method : 'POST',
+    const openaiRes = await fetch(REALTIME_CLIENT_SECRETS_URL, {
+      method: 'POST',
       headers: {
-        Authorization  : `Bearer ${apiKey}`,
-        'Content-Type' : 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: REALTIME_MODEL,
-        voice: 'alloy',
-        instructions: systemPrompt,
-        modalities: ['audio', 'text'],
-        turn_detection: {
-          type                : 'server_vad',
-          silence_duration_ms : 800,
-          threshold           : 0.5,
-          prefix_padding_ms   : 300,
+        expires_after: { anchor: 'created_at', seconds: REALTIME_CLIENT_SECRET_TTL_SECONDS },
+        session: {
+          type: 'realtime',
+          model,
+          instructions,
+          audio: {
+            input: {
+              transcription: { model: REALTIME_TRANSCRIPTION_MODEL, language: REALTIME_TRANSCRIPTION_LANGUAGE },
+              // Un entretien laisse réfléchir : détection sémantique de fin de parole, patiente.
+              turn_detection: { type: 'semantic_vad', eagerness: 'low', create_response: true, interrupt_response: true },
+              noise_reduction: { type: 'near_field' },
+            },
+            output: { voice: REALTIME_VOICE },
+          },
         },
-        input_audio_transcription: {
-          model: 'whisper-1',
-        },
-        temperature: 0.8,
       }),
     })
 
     if (!openaiRes.ok) {
-      const errorText = await openaiRes.text()
-      console.error('[realtime-session] OpenAI error:', errorText)
-      return NextResponse.json(
-        { error: errorText },
-        { status: 502 },
-      )
+      // Le texte d'erreur d'OpenAI reste dans les journaux : il n'est jamais renvoyé au navigateur.
+      const errorText = await openaiRes.text().catch(() => '')
+      logger.error({ status: openaiRes.status, model, errorText: errorText.slice(0, 500) }, '[realtime-session] OpenAI a refusé la session')
+      return json({ error: 'Service vocal momentanément indisponible' }, 502)
     }
 
-    const openaiData = await openaiRes.json()
+    const created = (await openaiRes.json()) as { value?: string; expires_at?: number }
+    if (!created.value) {
+      logger.error({ model }, '[realtime-session] réponse OpenAI sans jeton')
+      return json({ error: 'Service vocal momentanément indisponible' }, 502)
+    }
 
-    // ── Retourner les infos au client ─────────────────────────────────────────
     return NextResponse.json({
-      client_secret     : openaiData.client_secret.value,
-      openai_session_id : openaiData.id,
-      session_id        : body.candidateId ?? null,
-      first_question    : firstQuestion.text,
-      question_id       : firstQuestion.id,
+      client_secret: created.value,
+      expires_at: created.expires_at ?? null,
+      session_id: body.candidateId,
+      first_question: openingQuestion,
+      opening_persisted: openingPersisted,
+      resumed,
+      duration_seconds: durationSeconds,
     })
-
   } catch (error: unknown) {
-    console.error('[realtime-session]', error)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+    logger.error({ err: error }, '[realtime-session]')
+    return json({ error: 'Erreur serveur' }, 500)
   }
 }
 

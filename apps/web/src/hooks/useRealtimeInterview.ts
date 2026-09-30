@@ -1,20 +1,34 @@
 /**
  * useRealtimeInterview
  *
- * WebRTC full-duplex avec OpenAI Realtime API.
- * Audio in (micro) → OpenAI → Audio out (speakers) en temps réel.
- * Transcriptions disponibles en parallèle via DataChannel.
+ * Conversation vocale avec l'API Realtime d'OpenAI (version GA) en WebRTC :
+ *   1. jeton éphémère et consignes depuis notre serveur (/api/interview/realtime-session) ;
+ *   2. offre SDP envoyée à POST /v1/realtime/calls avec ce jeton ;
+ *   3. événements sur le canal de données « oai-events » (interprétés par lib/interview/realtime-events).
+ *
+ * La recruteuse parle la première. La durée choisie pilote la séance : consigne de clôture à T-2 min, puis
+ * fin automatique (la page termine l'entretien et génère le rapport). Les répliques finales sont enregistrées
+ * (une requête par tour) ; `flushTranscripts` permet d'attendre les dernières avant de clôturer.
  */
 
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
 import {
-  REALTIME_MODEL,
-  REALTIME_MAX_DURATION_MS,
-  REALTIME_WARNING_MS,
+  REALTIME_CALLS_URL,
   REALTIME_FLUSH_TIMEOUT_MS,
+  REALTIME_WRAP_UP_SECONDS,
+  realtimeTimeline,
 } from '@/lib/interview/realtime-config'
+import {
+  EMPTY_ACCUMULATORS,
+  interpretRealtimeEvent,
+  mergeTranscript,
+  type PartialAccumulators,
+  type RealtimeStatus,
+  type RealtimeTranscript,
+} from '@/lib/interview/realtime-events'
+import { WRAP_UP_INSTRUCTIONS, openingResponseInstructions } from '@/lib/interview/realtime-instructions'
 import {
   REALTIME_DEFAULT_ERROR,
   REALTIME_SDP_ERROR,
@@ -22,33 +36,18 @@ import {
   realtimeMicErrorMessage,
 } from '@/lib/interview/realtime-errors'
 
+export type { RealtimeStatus, RealtimeTranscript }
+
 /** Erreur dont le message est déjà lisible par l'utilisateur. */
 class RealtimeUserError extends Error {}
 
-// ── Types ────────────────────────────────────────────────────────────────────
-
-export type RealtimeStatus =
-  | 'idle'
-  | 'connecting'
-  | 'connected'
-  | 'speaking_user'
-  | 'speaking_ai'
-  | 'disconnected'
-  | 'error'
-
-export interface RealtimeTranscript {
-  role: 'user' | 'assistant'
-  text: string
-  final: boolean
-}
-
 export interface UseRealtimeInterviewOptions {
-  sessionId: string                                    // notre session HIIOS
+  sessionId: string
   onTranscript?: (transcript: RealtimeTranscript) => void
   onError?: (message: string) => void
   onConnected?: () => void
   onDisconnected?: () => void
-  /** Durée maximale atteinte : à la page de terminer l'entretien (rapport compris). */
+  /** Durée choisie atteinte (plus le délai de conclusion) : à la page de terminer l'entretien. */
   onMaxDuration?: () => void
 }
 
@@ -61,14 +60,24 @@ export interface UseRealtimeInterviewReturn {
   flushTranscripts: () => Promise<void>
   /** Message d'erreur lisible pour l'utilisateur, ou null. */
   errorMessage: string | null
-  /** Vrai à l'approche de la durée maximale (bandeau non bloquant). */
+  /** Vrai quand il reste moins de deux minutes (bandeau non bloquant). */
   isNearTimeLimit: boolean
+  /** Secondes restantes sur la durée choisie ; null avant la connexion. */
+  remainingSeconds: number | null
+  isMuted: boolean
+  toggleMute: () => void
   isConnected: boolean
   isAISpeaking: boolean
   isUserSpeaking: boolean
 }
 
-// ── Hook ─────────────────────────────────────────────────────────────────────
+interface SessionPayload {
+  client_secret?: string
+  first_question?: string
+  opening_persisted?: boolean
+  resumed?: boolean
+  duration_seconds?: number
+}
 
 export function useRealtimeInterview({
   sessionId,
@@ -78,236 +87,189 @@ export function useRealtimeInterview({
   onDisconnected,
   onMaxDuration,
 }: UseRealtimeInterviewOptions): UseRealtimeInterviewReturn {
-
   const [status, setStatus] = useState<RealtimeStatus>('idle')
   const [transcripts, setTranscripts] = useState<RealtimeTranscript[]>([])
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [isNearTimeLimit, setIsNearTimeLimit] = useState(false)
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null)
+  const [isMuted, setIsMuted] = useState(false)
 
-  const pcRef   = useRef<RTCPeerConnection | null>(null)
-  const dcRef   = useRef<RTCDataChannel | null>(null)
+  const pcRef = useRef<RTCPeerConnection | null>(null)
+  const dcRef = useRef<RTCDataChannel | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
+  const statusRef = useRef<RealtimeStatus>('idle')
+  const connectingRef = useRef(false)
+  const accRef = useRef<PartialAccumulators>(EMPTY_ACCUMULATORS)
 
   // Enregistrements de répliques en cours (attendus avant la fin de session)
   const pendingRef = useRef<Set<Promise<unknown>>>(new Set())
-  // Question d'ouverture renvoyée par la route : amorce le premier tour d'Alexandra
-  const firstQuestionRef = useRef<string | null>(null)
-  const warningTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const maxTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // La question d'ouverture est déjà enregistrée par la création de la séance : sa version parlée n'est pas rajoutée
+  const skipOpeningPersistRef = useRef(false)
+
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const onMaxDurationRef = useRef(onMaxDuration)
   onMaxDurationRef.current = onMaxDuration
 
-  // Accumulateurs de transcription partielle
-  const userPartialRef = useRef('')
-  const aiPartialRef   = useRef('')
-
-  // ── Envoi d'événement via DataChannel ──────────────────────────────────────
-
-  const sendEvent = useCallback((event: Record<string, unknown>) => {
-    if (dcRef.current?.readyState === 'open') {
-      dcRef.current.send(JSON.stringify(event))
-    }
+  const updateStatus = useCallback((next: RealtimeStatus) => {
+    statusRef.current = next
+    setStatus(next)
   }, [])
 
-  // ── Persistance d'un tour finalisé ─────────────────────────────────────────
-  // Sans ça, aucune trace de l'entretien Realtime n'existe en base : le rapport
-  // (ReportService.generateReport) lit interview_messages, jamais le state React.
+  const sendEvent = useCallback((event: Record<string, unknown>) => {
+    if (dcRef.current?.readyState === 'open') dcRef.current.send(JSON.stringify(event))
+  }, [])
 
-  const persistTranscript = useCallback((transcript: RealtimeTranscript) => {
-    const body = JSON.stringify({
-      sessionId: sessionId,
-      role     : transcript.role,
-      content  : transcript.text,
-    })
+  // ── Enregistrement d'un tour finalisé ──────────────────────────────────────
+  // Sans cela, aucune trace de l'entretien n'existe en base : le rapport lit interview_messages, jamais l'état React.
 
-    // Une seule nouvelle tentative, et seulement sur erreur réseau ou 5xx.
-    const send = async () => {
-      for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-          const res = await fetch('/api/interview/realtime-message', {
-            method : 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body,
-          })
-          if (res.ok || res.status < 500) return
-        } catch { /* réseau : nouvelle tentative */ }
+  const persistTranscript = useCallback(
+    (transcript: RealtimeTranscript) => {
+      const body = JSON.stringify({ sessionId, role: transcript.role, content: transcript.text })
+
+      // Une seule nouvelle tentative, et seulement sur erreur réseau ou 5xx.
+      const send = async () => {
+        for (let attempt = 0; attempt < 2; attempt++) {
+          try {
+            const res = await fetch('/api/interview/realtime-message', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body,
+            })
+            if (res.ok || res.status < 500) return
+          } catch {
+            /* réseau : nouvelle tentative */
+          }
+        }
+        console.error('[Realtime] persistance transcript impossible')
       }
-      console.error('[Realtime] persistance transcript impossible')
-    }
 
-    const promise: Promise<void> = send().finally(() => { pendingRef.current.delete(promise) })
-    pendingRef.current.add(promise)
-  }, [sessionId])
+      const promise: Promise<void> = send().finally(() => {
+        pendingRef.current.delete(promise)
+      })
+      pendingRef.current.add(promise)
+    },
+    [sessionId],
+  )
 
   const flushTranscripts = useCallback(async () => {
     const pending = Array.from(pendingRef.current)
     if (pending.length === 0) return
     // Bornée : une requête bloquée ne doit pas empêcher de terminer l'entretien.
-    await Promise.race([
-      Promise.allSettled(pending),
-      new Promise(resolve => setTimeout(resolve, REALTIME_FLUSH_TIMEOUT_MS)),
-    ])
+    await Promise.race([Promise.allSettled(pending), new Promise(resolve => setTimeout(resolve, REALTIME_FLUSH_TIMEOUT_MS))])
   }, [])
 
-  // ── Libération des ressources (micro, minuteurs) ────────────────────────────
+  // ── Événements du canal de données ─────────────────────────────────────────
 
-  const clearTimers = useCallback(() => {
-    if (warningTimerRef.current) clearTimeout(warningTimerRef.current)
-    if (maxTimerRef.current) clearTimeout(maxTimerRef.current)
-    warningTimerRef.current = null
-    maxTimerRef.current = null
-  }, [])
+  const handleRealtimeEvent = useCallback(
+    (event: Record<string, unknown>) => {
+      const outcome = interpretRealtimeEvent(event, accRef.current)
+      accRef.current = outcome.accumulators
 
-  const releaseMicrophone = useCallback(() => {
-    streamRef.current?.getTracks().forEach(track => track.stop())
-    streamRef.current = null
-  }, [])
-
-  // ── Gestion des événements OpenAI Realtime ──────────────────────────────────
-
-  const handleRealtimeEvent = useCallback((event: Record<string, unknown>) => {
-    const type = event.type as string
-
-    switch (type) {
-
-      // ── Audio de l'IA ──────────────────────────────────────────────────────
-      case 'response.audio.started':
-      case 'output_audio_buffer.started':
-        setStatus('speaking_ai')
-        break
-
-      case 'response.audio.done':
-      case 'output_audio_buffer.stopped':
-        setStatus('connected')
-        break
-
-      // ── Détection parole utilisateur ───────────────────────────────────────
-      case 'input_audio_buffer.speech_started':
-        setStatus('speaking_user')
-        userPartialRef.current = ''
-        break
-
-      case 'input_audio_buffer.speech_stopped':
-        setStatus('connected')
-        break
-
-      // ── Transcription utilisateur (partielle) ──────────────────────────────
-      case 'conversation.item.input_audio_transcription.delta': {
-        const delta = (event.delta as string) ?? ''
-        userPartialRef.current += delta
-        const partial: RealtimeTranscript = {
-          role : 'user',
-          text : userPartialRef.current,
-          final: false,
-        }
-        setTranscripts(prev => {
-          const last = prev[prev.length - 1]
-          if (last && last.role === 'user' && !last.final) {
-            return [...prev.slice(0, -1), partial]
-          }
-          return [...prev, partial]
-        })
-        onTranscript?.(partial)
-        break
-      }
-
-      // ── Transcription utilisateur (finale) ────────────────────────────────
-      case 'conversation.item.input_audio_transcription.completed': {
-        const text = (event.transcript as string) ?? userPartialRef.current
-        userPartialRef.current = ''
-        const final: RealtimeTranscript = { role: 'user', text, final: true }
-        setTranscripts(prev => {
-          const last = prev[prev.length - 1]
-          if (last && last.role === 'user' && !last.final) {
-            return [...prev.slice(0, -1), final]
-          }
-          return [...prev, final]
-        })
-        onTranscript?.(final)
-        persistTranscript(final)
-        break
-      }
-
-      // ── Transcription IA (partielle) ───────────────────────────────────────
-      case 'response.audio_transcript.delta': {
-        const delta = (event.delta as string) ?? ''
-        aiPartialRef.current += delta
-        const partial: RealtimeTranscript = {
-          role : 'assistant',
-          text : aiPartialRef.current,
-          final: false,
-        }
-        setTranscripts(prev => {
-          const last = prev[prev.length - 1]
-          if (last && last.role === 'assistant' && !last.final) {
-            return [...prev.slice(0, -1), partial]
-          }
-          return [...prev, partial]
-        })
-        onTranscript?.(partial)
-        break
-      }
-
-      // ── Transcription IA (finale) ──────────────────────────────────────────
-      case 'response.audio_transcript.done': {
-        const text = (event.transcript as string) ?? aiPartialRef.current
-        aiPartialRef.current = ''
-        const final: RealtimeTranscript = { role: 'assistant', text, final: true }
-        setTranscripts(prev => {
-          const last = prev[prev.length - 1]
-          if (last && last.role === 'assistant' && !last.final) {
-            return [...prev.slice(0, -1), final]
-          }
-          return [...prev, final]
-        })
-        onTranscript?.(final)
-        persistTranscript(final)
-        break
-      }
-
-      // ── Erreurs ────────────────────────────────────────────────────────────
-      case 'error': {
-        const errMsg = (event.error as { message?: string })?.message ?? 'Erreur Realtime'
-        console.error('[Realtime]', errMsg)
+      if (outcome.error) {
         const message = 'Le service vocal a signalé une erreur. Réessayez.'
+        console.error('[Realtime]', outcome.error)
         setErrorMessage(message)
         onError?.(message)
-        setStatus('error')
-        break
       }
-    }
-  }, [onTranscript, onError, persistTranscript])
+      if (outcome.status) updateStatus(outcome.status)
 
-  // ── Connexion WebRTC ────────────────────────────────────────────────────────
+      const t = outcome.transcript
+      if (!t) return
+      setTranscripts(prev => mergeTranscript(prev, t))
+      onTranscript?.(t)
+
+      if (t.final) {
+        if (t.role === 'assistant' && skipOpeningPersistRef.current) {
+          skipOpeningPersistRef.current = false
+          return
+        }
+        persistTranscript(t)
+      }
+    },
+    [onError, onTranscript, persistTranscript, updateStatus],
+  )
+
+  // ── Libération des ressources ──────────────────────────────────────────────
+
+  const cleanup = useCallback(() => {
+    if (tickRef.current) clearInterval(tickRef.current)
+    tickRef.current = null
+    dcRef.current?.close()
+    pcRef.current?.close()
+    dcRef.current = null
+    pcRef.current = null
+    streamRef.current?.getTracks().forEach(track => track.stop())
+    streamRef.current = null
+    if (audioRef.current) {
+      audioRef.current.srcObject = null
+      audioRef.current = null
+    }
+    accRef.current = EMPTY_ACCUMULATORS
+  }, [])
+
+  // ── Chronologie de la séance (durée choisie) ───────────────────────────────
+
+  const startTimeline = useCallback(
+    (durationSeconds: number | undefined) => {
+      if (tickRef.current) clearInterval(tickRef.current)
+      const { wrapUpAtMs, endAtMs } = realtimeTimeline(durationSeconds)
+      const plannedMs = Math.min(endAtMs, (durationSeconds && durationSeconds > 0 ? durationSeconds : 15 * 60) * 1000)
+      const startedAt = Date.now()
+      let wrapUpSent = false
+      let endSent = false
+      setRemainingSeconds(Math.round(plannedMs / 1000))
+
+      tickRef.current = setInterval(() => {
+        const elapsed = Date.now() - startedAt
+        setRemainingSeconds(Math.max(0, Math.round((plannedMs - elapsed) / 1000)))
+
+        // Consigne de clôture : dès que le candidat ne parle pas (sinon à la prochaine seconde).
+        if (!wrapUpSent && elapsed >= wrapUpAtMs && statusRef.current !== 'speaking_user') {
+          wrapUpSent = true
+          sendEvent({ type: 'response.create', response: { instructions: WRAP_UP_INSTRUCTIONS } })
+        }
+        if (!endSent && elapsed >= endAtMs) {
+          endSent = true
+          onMaxDurationRef.current?.()
+        }
+      }, 1000)
+    },
+    [sendEvent],
+  )
+
+  // ── Connexion ──────────────────────────────────────────────────────────────
 
   const connect = useCallback(async () => {
-    if (status === 'connecting' || status === 'connected') return
-    setStatus('connecting')
+    if (connectingRef.current || ['connected', 'speaking_user', 'speaking_ai'].includes(statusRef.current)) return
+    connectingRef.current = true
+    cleanup()
+    updateStatus('connecting')
     setErrorMessage(null)
 
     try {
-      // 1. Token éphémère depuis notre serveur
+      // 1. Jeton éphémère et consignes depuis notre serveur
       const tokenRes = await fetch('/api/interview/realtime-session', {
-        method : 'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({ candidateId: sessionId }),
+        body: JSON.stringify({ candidateId: sessionId }),
       })
-
       if (!tokenRes.ok) throw new RealtimeUserError(realtimeSessionErrorMessage(tokenRes.status))
-      const { client_secret, first_question } = await tokenRes.json()
-      firstQuestionRef.current = typeof first_question === 'string' ? first_question : null
+      const session = (await tokenRes.json()) as SessionPayload
+      if (!session.client_secret) throw new RealtimeUserError(REALTIME_DEFAULT_ERROR)
 
-      // 2. Micro utilisateur
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      skipOpeningPersistRef.current = Boolean(session.opening_persisted)
+
+      // 2. Micro
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      })
       streamRef.current = stream
 
-      // 3. PeerConnection
+      // 3. Connexion WebRTC
       const pc = new RTCPeerConnection()
       pcRef.current = pc
 
-      // Audio sortant de l'IA → <audio>
-      pc.ontrack = (e) => {
+      pc.ontrack = e => {
         if (!audioRef.current) {
           audioRef.current = new Audio()
           audioRef.current.autoplay = true
@@ -315,135 +277,93 @@ export function useRealtimeInterview({
         audioRef.current.srcObject = e.streams[0] ?? null
       }
 
-      // Micro → OpenAI
+      pc.onconnectionstatechange = () => {
+        if (pc.connectionState === 'failed') {
+          setErrorMessage("La connexion a été interrompue. Reprenez l'entretien : il repartira là où vous en étiez.")
+          updateStatus('error')
+        }
+      }
+
       stream.getTracks().forEach(track => pc.addTrack(track, stream))
 
-      // DataChannel pour les événements
       const dc = pc.createDataChannel('oai-events')
       dcRef.current = dc
 
       dc.addEventListener('open', () => {
-        setStatus('connected')
+        updateStatus('connected')
         onConnected?.()
-
-        // Configurer la session côté OpenAI
-        sendEvent({
-          type: 'session.update',
-          session: {
-            modalities  : ['audio', 'text'],
-            turn_detection: {
-              type                : 'server_vad',
-              silence_duration_ms : 800,
-              threshold           : 0.5,
-            },
-          },
-        })
-
-        // Alexandra ouvre l'entretien : sans response.create, le modèle attend que le
-        // candidat parle en premier (server_vad ne déclenche aucune réponse seul).
-        const opening = firstQuestionRef.current
+        // La recruteuse parle la première (ou reprend après une coupure) ; le modèle n'initie jamais seul.
         sendEvent({
           type: 'response.create',
-          response: opening
-            ? {
-                instructions:
-                  "Ouvre l'entretien maintenant : pose exactement cette première question, " +
-                  'sans te présenter longuement : « ' + opening + ' »',
-              }
-            : {},
+          response: { instructions: openingResponseInstructions(session.first_question ?? '', Boolean(session.resumed)) },
         })
-
-        // Durée maximale : avertissement puis fin automatique (déclenchée par la page).
-        clearTimers()
-        warningTimerRef.current = setTimeout(() => setIsNearTimeLimit(true), REALTIME_WARNING_MS)
-        maxTimerRef.current = setTimeout(() => onMaxDurationRef.current?.(), REALTIME_MAX_DURATION_MS)
+        startTimeline(session.duration_seconds)
       })
 
-      dc.addEventListener('message', (e) => {
+      dc.addEventListener('message', e => {
         try {
-          const event = JSON.parse(e.data as string)
-          handleRealtimeEvent(event)
+          handleRealtimeEvent(JSON.parse(e.data as string))
         } catch {
-          console.warn('[Realtime] Message non parsable', e.data)
+          console.warn('[Realtime] Message non parsable')
         }
       })
 
       dc.addEventListener('close', () => {
-        setStatus('disconnected')
+        if (tickRef.current) clearInterval(tickRef.current)
+        tickRef.current = null
+        if (statusRef.current !== 'error') updateStatus('disconnected')
         onDisconnected?.()
       })
 
-      // 4. Offer SDP
+      // 4. Offre SDP → OpenAI (le modèle et la configuration sont portés par le jeton)
       const offer = await pc.createOffer()
       await pc.setLocalDescription(offer)
 
-      // 5. Envoi à OpenAI Realtime
-      const sdpRes = await fetch(
-        'https://api.openai.com/v1/realtime?model=' + REALTIME_MODEL,
-        {
-          method : 'POST',
-          headers: {
-            Authorization  : `Bearer ${client_secret}`,
-            'Content-Type' : 'application/sdp',
-          },
-          body: offer.sdp,
-        },
-      )
-
+      const sdpRes = await fetch(REALTIME_CALLS_URL, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${session.client_secret}`, 'Content-Type': 'application/sdp' },
+        body: offer.sdp,
+      })
       if (!sdpRes.ok) throw new RealtimeUserError(REALTIME_SDP_ERROR)
 
-      const answerSdp = await sdpRes.text()
-      await pc.setRemoteDescription({
-        type: 'answer',
-        sdp : answerSdp,
-      })
-
+      await pc.setRemoteDescription({ type: 'answer', sdp: await sdpRes.text() })
     } catch (err: unknown) {
       console.error('[Realtime] connect error:', err)
-      const message =
-        err instanceof RealtimeUserError
-          ? err.message
-          : realtimeMicErrorMessage(err) ?? REALTIME_DEFAULT_ERROR
+      const message = err instanceof RealtimeUserError ? err.message : (realtimeMicErrorMessage(err) ?? REALTIME_DEFAULT_ERROR)
       // Rien ne doit rester ouvert après un échec (micro allumé, connexion à moitié établie).
-      dcRef.current?.close()
-      pcRef.current?.close()
-      dcRef.current = null
-      pcRef.current = null
-      releaseMicrophone()
-      clearTimers()
+      cleanup()
       setErrorMessage(message)
       onError?.(message)
-      setStatus('error')
+      updateStatus('error')
+    } finally {
+      connectingRef.current = false
     }
-  }, [status, sessionId, sendEvent, handleRealtimeEvent, onConnected, onDisconnected, onError, clearTimers, releaseMicrophone])
+  }, [cleanup, handleRealtimeEvent, onConnected, onDisconnected, onError, sendEvent, sessionId, startTimeline, updateStatus])
 
-  // ── Déconnexion ─────────────────────────────────────────────────────────────
+  // ── Déconnexion ────────────────────────────────────────────────────────────
 
   const disconnect = useCallback(() => {
-    dcRef.current?.close()
-    pcRef.current?.close()
-    dcRef.current = null
-    pcRef.current = null
-    releaseMicrophone()
-    clearTimers()
-    setIsNearTimeLimit(false)
-
-    if (audioRef.current) {
-      audioRef.current.srcObject = null
-      audioRef.current = null
-    }
-
-    setStatus('disconnected')
+    cleanup()
+    setIsMuted(false)
+    updateStatus('disconnected')
     onDisconnected?.()
-  }, [onDisconnected, releaseMicrophone, clearTimers])
+  }, [cleanup, onDisconnected, updateStatus])
 
-  // ── Cleanup au unmount ──────────────────────────────────────────────────────
+  const toggleMute = useCallback(() => {
+    const tracks = streamRef.current?.getAudioTracks() ?? []
+    if (tracks.length === 0) return
+    const nextMuted = tracks[0].enabled // activé → on coupe
+    tracks.forEach(track => {
+      track.enabled = !nextMuted
+    })
+    setIsMuted(nextMuted)
+  }, [])
+
+  // ── Nettoyage au démontage ─────────────────────────────────────────────────
 
   useEffect(() => {
-    return () => { disconnect() }
-  }, [disconnect])
-
-  // ── Retour ──────────────────────────────────────────────────────────────────
+    return () => cleanup()
+  }, [cleanup])
 
   return {
     status,
@@ -452,9 +372,12 @@ export function useRealtimeInterview({
     disconnect,
     flushTranscripts,
     errorMessage,
-    isNearTimeLimit,
-    isConnected   : status === 'connected' || status === 'speaking_user' || status === 'speaking_ai',
-    isAISpeaking  : status === 'speaking_ai',
+    isNearTimeLimit: remainingSeconds !== null && remainingSeconds <= REALTIME_WRAP_UP_SECONDS && status !== 'disconnected',
+    remainingSeconds,
+    isMuted,
+    toggleMute,
+    isConnected: status === 'connected' || status === 'speaking_user' || status === 'speaking_ai',
+    isAISpeaking: status === 'speaking_ai',
     isUserSpeaking: status === 'speaking_user',
   }
 }

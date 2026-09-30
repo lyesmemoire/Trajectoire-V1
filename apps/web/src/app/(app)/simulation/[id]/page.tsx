@@ -66,6 +66,9 @@ export default function SimulationPage() {
     flushTranscripts,
     errorMessage,
     isNearTimeLimit,
+    remainingSeconds,
+    isMuted,
+    toggleMute,
     isAISpeaking,
     isUserSpeaking,
   } = useRealtimeInterview({
@@ -83,8 +86,17 @@ export default function SimulationPage() {
 
   useEffect(() => { connect() }, []) // eslint-disable-line
 
+  // Fin de séance : un premier clic demande confirmation (le quota est déjà consommé et le rapport généré
+  // sur ce qui a été dit), un second confirme. La fin automatique (durée atteinte) passe directement.
+  const [confirmEnd, setConfirmEnd] = useState(false)
+  const canResume = !isEnding && (status === 'error' || status === 'disconnected') && transcripts.length > 0
+  const clock = remainingSeconds === null
+    ? null
+    : String(Math.floor(remainingSeconds / 60)).padStart(2, '0') + ':' + String(remainingSeconds % 60).padStart(2, '0')
+
   async function handleEnd() {
     if (isEnding) return
+    setConfirmEnd(false)
     setIsEnding(true)
     disconnect()
 
@@ -116,13 +128,13 @@ export default function SimulationPage() {
   handleEndRef.current = handleEnd
 
   const statusConfig: Record<string, { label: string; dot: string }> = {
-    idle         : { label: 'Initialisation...',  dot: 'bg-zinc-500' },
-    connecting   : { label: 'Connexion...',        dot: 'bg-amber-400 animate-pulse' },
-    connected    : { label: 'En ligne',            dot: 'bg-emerald-400' },
-    speaking_user: { label: 'Vous parlez...',      dot: 'bg-indigo-400 animate-pulse' },
-    speaking_ai  : { label: 'Alexandra parle...',  dot: 'bg-white animate-pulse' },
-    disconnected : { label: 'Deconnecte',          dot: 'bg-zinc-600' },
-    error        : { label: 'Erreur',              dot: 'bg-red-500' },
+    idle         : { label: 'Initialisation…',   dot: 'bg-zinc-500' },
+    connecting   : { label: 'Connexion…',         dot: 'bg-amber-400 animate-pulse' },
+    connected    : { label: 'En ligne',           dot: 'bg-emerald-400' },
+    speaking_user: { label: 'Vous parlez…',       dot: 'bg-indigo-400 animate-pulse' },
+    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-white animate-pulse' },
+    disconnected : { label: 'Déconnecté',         dot: 'bg-zinc-600' },
+    error        : { label: 'Erreur',             dot: 'bg-red-500' },
   }
   const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
 
@@ -133,11 +145,23 @@ export default function SimulationPage() {
         <div className="flex items-center gap-3">
           <span className="text-xs font-semibold uppercase tracking-widest text-white/60">Trajectoire</span>
           <span className="text-white/15">·</span>
-          <span className="text-xs text-white/50">Simulation d entretien</span>
+          <span className="text-xs text-white/60">Simulation d&apos;entretien</span>
         </div>
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70">
-          <span className={`size-1.5 rounded-full `+statusDot} />
-          {statusLabel}
+        <div className="flex items-center gap-3">
+          {clock && (
+            <span
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-white/80"
+              title="Temps restant sur la durée choisie"
+            >
+              <Clock className="size-3.5" aria-hidden />
+              <span className="sr-only">Temps restant : </span>
+              {clock}
+            </span>
+          )}
+          <div role="status" className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70">
+            <span className={`size-1.5 rounded-full `+statusDot} aria-hidden />
+            {statusLabel}
+          </div>
         </div>
       </header>
 
@@ -147,7 +171,7 @@ export default function SimulationPage() {
           className="flex shrink-0 items-center justify-center gap-2 border-b border-amber-400/20 bg-amber-400/10 px-6 py-2 text-xs text-amber-200"
         >
           <Clock className="size-3.5" aria-hidden />
-          L'entretien se terminera automatiquement dans 5 minutes. Vous pouvez aussi le terminer vous-même.
+          Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
         </div>
       )}
 
@@ -177,7 +201,7 @@ export default function SimulationPage() {
             ) : (
               <div className="flex items-center gap-2 text-xs text-white/60">
                 <Mic className="size-3" />
-                En ecoute
+                En écoute
               </div>
             )}
           </div>
@@ -190,8 +214,8 @@ export default function SimulationPage() {
                 {status === 'connecting' ? (
                   <>
                     <Loader2 className="size-7 animate-spin text-white/60" />
-                    <p className="text-sm text-white/60">Connexion a l entretien...</p>
-                    <p className="text-xs text-white/60">Autorisez le microphone si demande</p>
+                    <p className="text-sm text-white/60">Connexion à l&apos;entretien…</p>
+                    <p className="text-xs text-white/60">Autorisez le microphone si le navigateur le demande</p>
                   </>
                 ) : status === 'error' ? (
                   <>
@@ -203,7 +227,7 @@ export default function SimulationPage() {
                       onClick={connect}
                       className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white/70 transition hover:bg-white/15"
                     >
-                      Reessayer
+                      Réessayer
                     </button>
                   </>
                 ) : (
@@ -212,14 +236,14 @@ export default function SimulationPage() {
                       <Mic className="size-5 text-white/60" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white/60">L entretien va commencer</p>
-                      <p className="mt-1 text-xs text-white/60">Alexandra va poser la premiere question</p>
+                      <p className="text-sm font-medium text-white/60">L&apos;entretien va commencer</p>
+                      <p className="mt-1 text-xs text-white/60">Alexandra va poser la première question</p>
                     </div>
                   </>
                 )}
               </div>
             ) : (
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5" role="log" aria-live="polite" aria-label="Transcription de l'entretien">
                 {transcripts.map((t, i) => (
                   <TranscriptBubble key={i} transcript={t} />
                 ))}
@@ -234,23 +258,64 @@ export default function SimulationPage() {
                   {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60">{isUserSpeaking ? 'Vous parlez' : 'En ecoute'}</p>
-                  <p className="text-xs text-white/60">Detection automatique</p>
+                  <p className="text-xs font-medium text-white/60">{isMuted ? 'Micro coupé' : isUserSpeaking ? 'Vous parlez' : 'En écoute'}</p>
+                  <p className="text-xs text-white/60">Détection automatique</p>
                 </div>
-                <SoundWave active={isUserSpeaking} color="bg-indigo-400" />
+                <SoundWave active={isUserSpeaking && !isMuted} color="bg-indigo-400" />
               </div>
-              <button
-                type="button"
-                onClick={handleEnd}
-                disabled={isEnding}
-                className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/50 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-40"
-              >
-                {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
-                {isEnding ? 'Finalisation...' : 'Terminer'}
-              </button>
+              <div className="flex items-center gap-2">
+                {canResume && (
+                  <button
+                    type="button"
+                    onClick={connect}
+                    className="rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
+                  >
+                    Reprendre l&apos;entretien
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  aria-pressed={isMuted}
+                  disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
+                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10 disabled:opacity-40 aria-pressed:border-amber-400/40 aria-pressed:text-amber-200"
+                >
+                  {isMuted ? <MicOff className="size-4" aria-hidden /> : <Mic className="size-4" aria-hidden />}
+                  {isMuted ? 'Réactiver le micro' : 'Couper le micro'}
+                </button>
+                {confirmEnd && !isEnding ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleEnd}
+                      className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/15 px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:bg-red-500/25"
+                    >
+                      <PhoneOff className="size-4" aria-hidden />
+                      Confirmer la fin
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmEnd(false)}
+                      className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10"
+                    >
+                      Continuer
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setConfirmEnd(true)}
+                    disabled={isEnding}
+                    className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/60 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-40"
+                  >
+                    {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
+                    {isEnding ? 'Finalisation…' : 'Terminer'}
+                  </button>
+                )}
+              </div>
             </div>
             <p className="mt-3 text-center text-xs text-white/60">
-              Parlez naturellement - Alexandra detecte automatiquement quand vous avez fini
+              Parlez naturellement : Alexandra détecte automatiquement quand vous avez fini. Alexandra est une IA.
             </p>
           </div>
         </div>
