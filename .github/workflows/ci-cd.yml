@@ -11,6 +11,35 @@ env:
   PNPM_VERSION: '9.15.9'
 
 jobs:
+  # Tests de l'application web (apps/web) : les suites qui écrivent sur Prisma sans mock sont
+  # exclues (elles portent une garde « base locale seulement » et échouent volontairement sans elle).
+  web-tests:
+    name: Web tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run apps/web tests
+        run: >
+          pnpm --dir apps/web exec vitest run
+          --exclude "**/PreviewStorageService.test.ts"
+          --exclude "**/PreviewAnalysisRepository.test.ts"
+
   # Lint
   lint:
     name: Lint
