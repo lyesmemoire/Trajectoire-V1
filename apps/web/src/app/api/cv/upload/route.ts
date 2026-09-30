@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { logger } from "@/lib/logger";
+import {
+  RateLimitScope,
+  RouteType,
+} from "@/lib/rate-limiting/centralized-rate-limit.service";
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -254,7 +259,7 @@ function cleanExtractedText(
     );
 }
 
-export async function POST(
+async function handleUpload(
   request: NextRequest,
 ) {
   try {
@@ -446,3 +451,9 @@ export async function POST(
     );
   }
 }
+
+// Extraction de fichier (CPU) : limite de débit par utilisateur et par IP.
+// Pas de CSRF : la route n'écrit rien et ne renvoie le texte qu'à l'appelant.
+export const POST = rateLimit(RouteType.UPLOAD, handleUpload, {
+  scopes: [RateLimitScope.USER, RateLimitScope.IP],
+});

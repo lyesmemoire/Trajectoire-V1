@@ -1,8 +1,11 @@
 "use client"
 
 import {
+  useRef,
   useState,
 } from "react"
+
+import { csrfFetch } from "@/lib/security/csrf-client"
 
 import {
   Check,
@@ -45,6 +48,11 @@ export function OpportunityCVTailoring({
   const [copied, setCopied] =
     useState(false)
 
+  // Texte extrait du CV : conservé pour la durée de la page, afin de ne pas
+  // renvoyer le fichier (et consommer la limite d'envoi) à chaque régénération.
+  const extractedTextRef =
+    useRef<string | null>(null)
+
   async function generateTailoring() {
     if (loading) return
 
@@ -52,39 +60,43 @@ export function OpportunityCVTailoring({
     setError(null)
 
     try {
-      const uploadForm =
-        new FormData()
+      if (!extractedTextRef.current) {
+        const uploadForm =
+          new FormData()
 
-      uploadForm.append(
-        "file",
-        file,
-      )
-
-      const uploadResponse =
-        await fetch(
-          "/api/cv/upload",
-          {
-            method: "POST",
-            body: uploadForm,
-          },
+        uploadForm.append(
+          "file",
+          file,
         )
 
-      const uploadPayload =
-        (await uploadResponse.json()) as {
-          error?: string
-          extractedText?: string
+        const uploadResponse =
+          await fetch(
+            "/api/cv/upload",
+            {
+              method: "POST",
+              body: uploadForm,
+            },
+          )
+
+        const uploadPayload =
+          (await uploadResponse.json()) as {
+            error?: string
+            extractedText?: string
+          }
+
+        if (
+          !uploadResponse.ok ||
+          !uploadPayload.extractedText
+        ) {
+          throw new Error(
+            uploadPayload.error ||
+              "Impossible de lire le CV.",
+          )
         }
 
-      if (
-        !uploadResponse.ok ||
-        !uploadPayload.extractedText
-      ) {
-        throw new Error(
-          uploadPayload.error ||
-            "Impossible de lire le CV.",
-        )
+        extractedTextRef.current =
+          uploadPayload.extractedText
       }
-
 
       const contextResponse =
         await fetch(
@@ -120,7 +132,7 @@ export function OpportunityCVTailoring({
         contextPayload.context.plainText
 
       const rewriteResponse =
-        await fetch(
+        await csrfFetch(
           "/api/cv/rewrite",
           {
             method: "POST",
@@ -135,7 +147,7 @@ export function OpportunityCVTailoring({
                 "tailor_opportunity",
 
               content:
-                uploadPayload.extractedText,
+                extractedTextRef.current,
 
               role:
                 opportunity.title,

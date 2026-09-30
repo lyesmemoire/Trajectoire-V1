@@ -35,6 +35,7 @@ import {
 
 import { csrfProtect } from "@/lib/security/csrf-middleware";
 import { requireFullCvAnalysis } from "@/lib/quota/plan-access";
+import { sanitizeForPrompt } from "@/lib/security/prompt-sanitizer";
 
 // ============================================================
 // SCHEMA
@@ -179,7 +180,7 @@ async function analyzeCV(
     const response = await generateText({
       model: getReasoningAIModel(),
       system: SYSTEM_PROMPT,
-      prompt: `Analyse ce CV :\n\n${text.slice(0, 12000)}`,
+      prompt: `Analyse ce CV :\n\n${sanitizeForPrompt(text, 12000)}`,
       temperature: 0.1,
     });
 

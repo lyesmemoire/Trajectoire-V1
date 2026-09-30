@@ -9,6 +9,26 @@ const mocks = vi.hoisted(() => ({
   generateImpactMetrics: vi.fn(),
   tailorCVForOpportunity: vi.fn(),
   cvRewriteCreate: vi.fn(),
+  protection: { csrf: 0, rateLimitType: "" as string, rateLimitOptions: undefined as unknown },
+}))
+
+// Enveloppes de protection neutralisées, mais leur configuration est enregistrée.
+vi.mock("@/lib/security/csrf-middleware", () => ({
+  csrfProtect: (handler: unknown) => {
+    mocks.protection.csrf += 1
+    return handler
+  },
+}))
+vi.mock("@/lib/rate-limiting/rate-limit.middleware", () => ({
+  rateLimit: (type: string, handler: unknown, options: unknown) => {
+    mocks.protection.rateLimitType = type
+    mocks.protection.rateLimitOptions = options
+    return handler
+  },
+}))
+vi.mock("@/lib/rate-limiting/centralized-rate-limit.service", () => ({
+  RouteType: { UPLOAD: "upload" },
+  RateLimitScope: { USER: "user", IP: "ip" },
 }))
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -45,6 +65,14 @@ function request(body: unknown) {
     body: JSON.stringify(body),
   })
 }
+
+describe("POST /api/cv/rewrite — protection", () => {
+  it("est protégée par CSRF et par une limite de débit utilisateur + IP", () => {
+    expect(mocks.protection.csrf).toBe(1)
+    expect(mocks.protection.rateLimitType).toBe("upload")
+    expect(mocks.protection.rateLimitOptions).toEqual({ scopes: ["user", "ip"] })
+  })
+})
 
 describe("POST /api/cv/rewrite — réservé au Pack Entretien et à Pro", () => {
   beforeEach(() => {

@@ -1,8 +1,17 @@
+/** Longueur maximale par défaut du texte injecté dans un prompt. */
+export const DEFAULT_MAX_CHAR_LENGTH = 8000;
+
 /**
  * Sanitizes user-provided text (CV, job descriptions, transcripts)
  * before injecting them into AI prompts.
+ *
+ * `maxLength` permet aux appelants qui traitent de longs documents (CV complet,
+ * description de poste) de relever le plafond par défaut sans tronquer le texte.
  */
-export function sanitizeForPrompt(text: string): string {
+export function sanitizeForPrompt(
+  text: string,
+  maxLength: number = DEFAULT_MAX_CHAR_LENGTH,
+): string {
   if (!text) return "";
 
   // 1. Unicode Normalization (NFKC to mitigate homoglyph/spacing attacks)
@@ -59,9 +68,8 @@ export function sanitizeForPrompt(text: string): string {
   sanitized = sanitized.replace(/[A-Fa-f0-9]{64,}/g, "[HEX_REDACTED]");
 
   // 7. Limit length to prevent token flooding
-  const MAX_CHAR_LENGTH = 8000;
-  if (sanitized.length > MAX_CHAR_LENGTH) {
-    sanitized = sanitized.substring(0, MAX_CHAR_LENGTH) + "... [TRUNCATED]";
+  if (sanitized.length > maxLength) {
+    sanitized = sanitized.substring(0, maxLength) + "... [TRUNCATED]";
   }
 
   return sanitized;

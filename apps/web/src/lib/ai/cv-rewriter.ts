@@ -2,6 +2,12 @@ import AIClient from "./client"
 import { AI_MODELS } from "./models"
 import { RetryManager } from "./retry/RetryManager"
 import { ExternalServiceError } from "@/core/errors"
+import { sanitizeForPrompt } from "@/lib/security/prompt-sanitizer"
+
+// Plafonds alignés sur les limites de la route /api/cv/rewrite.
+const MAX_CONTENT = 20_000
+const MAX_CONTEXT = 15_000
+const MAX_ROLE = 300
 
 export async function improveExperience(
   content: string,
@@ -34,7 +40,7 @@ RÈGLES ABSOLUES :
           },
           {
             role: "user",
-            content,
+            content: sanitizeForPrompt(content, MAX_CONTENT),
           },
         ],
         temperature: 0.4,
@@ -90,7 +96,7 @@ RÈGLES ABSOLUES :
           },
           {
             role: "user",
-            content,
+            content: sanitizeForPrompt(content, MAX_CONTENT),
           },
         ],
         temperature: 0.4,
@@ -148,7 +154,7 @@ IMPORTANT :
           },
           {
             role: "user",
-            content: `Rôle : ${role}\nContexte : ${context}`,
+            content: `Rôle : ${sanitizeForPrompt(role, MAX_ROLE)}\nContexte : ${sanitizeForPrompt(context, MAX_CONTEXT)}`,
           },
         ],
         temperature: 0.3,
@@ -249,13 +255,13 @@ parcours afin d'améliorer le CV. Ne suppose jamais que ces preuves existent.
 
   const prompt = `
 POSTE CIBLÉ
-${role.slice(0, 300)}
+${sanitizeForPrompt(role, MAX_ROLE).slice(0, 300)}
 
 CONTEXTE DE L'OPPORTUNITÉ
-${opportunityContext.slice(0, 12000)}
+${sanitizeForPrompt(opportunityContext, 12000).slice(0, 12000)}
 
 CV SOURCE DU CANDIDAT
-${cvContent.slice(0, 16000)}
+${sanitizeForPrompt(cvContent, 16000).slice(0, 16000)}
 
 Analyse uniquement les preuves présentes dans le CV source.
 `.trim()

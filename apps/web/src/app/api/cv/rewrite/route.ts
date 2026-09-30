@@ -16,6 +16,12 @@ import { BillingService } from "@/lib/db/billing.service"
 import { logger } from "@/lib/logger"
 import { prisma } from "@/lib/prisma"
 import { requireFullCvAnalysis } from "@/lib/quota/plan-access"
+import {
+  RateLimitScope,
+  RouteType,
+} from "@/lib/rate-limiting/centralized-rate-limit.service"
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware"
+import { csrfProtect } from "@/lib/security/csrf-middleware"
 import { createClient } from "@/lib/supabase/server"
 
 const REWRITE_COST = 2
@@ -61,7 +67,7 @@ function isRewriteAction(
   ].includes(value)
 }
 
-export async function POST(
+async function handleRewrite(
   request: NextRequest,
 ) {
   const supabase = await createClient()
@@ -485,3 +491,10 @@ export async function POST(
     )
   }
 }
+
+// Opération IA coûteuse : protection CSRF + limite de débit (par utilisateur et par IP).
+export const POST = csrfProtect(
+  rateLimit(RouteType.UPLOAD, handleRewrite, {
+    scopes: [RateLimitScope.USER, RateLimitScope.IP],
+  }),
+)
