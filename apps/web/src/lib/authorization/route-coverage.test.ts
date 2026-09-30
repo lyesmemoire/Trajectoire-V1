@@ -34,7 +34,7 @@ function toUrl(file: string): string {
 }
 
 const level = (path: string) => new AuthorizationV2(null).getRequiredAccessLevel(path)
-const CLOSED_ON_PURPOSE = ["/monitoring", "/recruiter", "/__qa__"]
+const CLOSED_ON_PURPOSE = ["/monitoring", "/recruiter", "/__qa__", "/admin/cognitive", "/admin/ai-operating-system"]
 
 describe("couverture des règles d'accès (défaut fermé)", () => {
   const urls = walk(APP_DIR).map(toUrl)

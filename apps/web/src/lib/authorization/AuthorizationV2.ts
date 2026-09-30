@@ -159,6 +159,8 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/monitoring", accessLevel: AccessLevel.NOT_FOUND, comment: "Page de monitoring cassée (API absente) : fermée" },
   { pattern: "/recruiter", accessLevel: AccessLevel.NOT_FOUND, comment: "Espace recruteur non lancé : fermé" },
   { pattern: "/__qa__", accessLevel: AccessLevel.NOT_FOUND, comment: "Page de QA design : dev uniquement" },
+  { pattern: "/admin/cognitive", accessLevel: AccessLevel.NOT_FOUND, comment: "Tableau de bord de moteurs en mémoire sans données réelles (valeurs simulées) : fermé" },
+  { pattern: "/admin/ai-operating-system", accessLevel: AccessLevel.NOT_FOUND, comment: "Tableau de bord de moteurs en mémoire sans données réelles (latences simulées) : fermé" },
 ];
 
 /**
