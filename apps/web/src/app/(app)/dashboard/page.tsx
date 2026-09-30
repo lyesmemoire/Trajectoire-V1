@@ -1,20 +1,14 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { prisma } from "@/lib/prisma"
-import { checkUserQuota } from "@/lib/quota/simple-quota"
 import { DashboardWidgets } from "@/components/dashboard/DashboardWidgets"
 import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisService"
-import type { 
-  DashboardUserData, 
-  DashboardScore, 
-  DashboardSkill, 
-  DashboardCareer,
+import type {
+  DashboardUserData,
+  DashboardScore,
+  DashboardSkill,
   DashboardRecommendation,
-  DashboardHistoryItem,
-  DashboardAction,
-  DashboardProgress,
-  DashboardInsight,
-  DashboardTimelineEvent
+  DashboardTimelineEvent,
 } from "@/types/dashboard"
 
 type NormalizedSkill = {
@@ -27,7 +21,6 @@ type NormalizedSkill = {
 type NormalizedImprovement = {
   title: string
   description: string
-  impact?: number
 }
 
 function parseJsonSafely(data: unknown): unknown {
@@ -157,90 +150,31 @@ function normalizeSkills(raw: unknown): NormalizedSkill[] {
   return []
 }
 
+/**
+ * Recommandations enregistrées : uniquement des textes réels. Un élément sans texte est
+ * ignoré (pas de titre générique, pas d'impact estimé).
+ */
 function normalizeImprovements(
   rawImprovements: unknown,
   rawRecommendations: unknown
 ): NormalizedImprovement[] {
   const source = rawImprovements ?? rawRecommendations
-  if (!source) return []
+  if (!Array.isArray(source)) return []
 
-  if (Array.isArray(source)) {
-    return source.map((item, index) => {
-      if (typeof item === 'string') {
-        return {
-          title: item,
-          description: item,
-          impact: 10,
-        }
-      }
-      if (item && typeof item === 'object') {
-        const obj = item as Record<string, unknown>
-        return {
-          title:
-            typeof obj.title === 'string'
-              ? obj.title
-              : typeof obj.name === 'string'
-              ? obj.name
-              : `AmÃ©lioration ${index + 1}`,
-          description:
-            typeof obj.description === 'string'
-              ? obj.description
-              : typeof obj.text === 'string'
-              ? obj.text
-              : 'Optimisez cette section de votre CV',
-          impact: typeof obj.impact === 'number' ? obj.impact : 10,
-        }
-      }
-      return {
-        title: `AmÃ©lioration ${index + 1}`,
-        description: 'Optimisez cette section de votre CV',
-        impact: 10,
-      }
-    })
-  }
-
-  if (typeof source === 'object') {
-    const obj = source as Record<string, unknown>
-    const items: NormalizedImprovement[] = []
-
-    const list = Array.isArray(obj.weakness)
-      ? obj.weakness
-      : Array.isArray(obj.weaknesses)
-      ? obj.weaknesses
-      : Array.isArray(obj.recommendations)
-      ? obj.recommendations
-      : Array.isArray(obj.strengths)
-      ? obj.strengths
-      : []
-
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i]
-      if (typeof item === 'string') {
-        items.push({
-          title: item,
-          description: item,
-          impact: 10,
-        })
-      } else if (item && typeof item === 'object') {
-        const itemObj = item as Record<string, unknown>
-        items.push({
-          title:
-            typeof itemObj.title === 'string'
-              ? itemObj.title
-              : `AmÃ©lioration ${i + 1}`,
-          description:
-            typeof itemObj.description === 'string'
-              ? itemObj.description
-              : 'Optimisez cette section de votre CV',
-          impact: typeof itemObj.impact === 'number' ? itemObj.impact : 10,
-        })
-      }
+  const out: NormalizedImprovement[] = []
+  for (const item of source) {
+    if (typeof item === 'string') {
+      const text = item.trim()
+      if (text) out.push({ title: text, description: text })
+    } else if (item && typeof item === 'object') {
+      const obj = item as Record<string, unknown>
+      const title = typeof obj.title === 'string' ? obj.title.trim() : ''
+      const text = typeof obj.description === 'string' ? obj.description.trim()
+        : typeof obj.text === 'string' ? obj.text.trim() : ''
+      if (title || text) out.push({ title: title || text, description: text || title })
     }
-
-    return items
   }
-
-  return []
+  return out
 }
 
 export default async function DashboardPage() {
@@ -268,11 +202,6 @@ export default async function DashboardPage() {
 
   const lastAnalysis = analyses[0]
   const previousAnalysis = analyses[1]
-
-  // RÃ©cupÃ©rer le profil carriÃ¨re
-  const careerProfile = await prisma.careerProfile.findUnique({
-    where: { userId: user.id },
-  })
 
   // RÃ©cupÃ©rer les sessions d'entretien
   const interviewSessions = await prisma.interviewSession.findMany({
@@ -438,159 +367,61 @@ export default async function DashboardPage() {
     sourceCount: activeDiscoverySourceCount,
   }
 
-  const quota = await checkUserQuota(user.id)
-
-  // VÃ©rifier si l'utilisateur a une preview analysis revendiquÃ©e
+  // Aperçu revendiqué (si applicable)
   const claimedPreview = await previewAnalysisService.getUserClaimedPreview(user.id)
 
-  // Transformer les donnÃ©es pour le nouveau dashboard
   const userData: DashboardUserData = {
     name: dbUser?.name || user.email?.split("@")[0] || "Utilisateur",
     firstName: dbUser?.name?.split(" ")[0] || user.email?.split("@")[0] || "Utilisateur",
     avatar: user.user_metadata?.avatar_url,
   }
 
+  // Score : uniquement une valeur enregistrée (analyse ou aperçu revendiqué), sinon null.
+  const lastScore = lastAnalysis?.atsScoreAfter ?? null
   const score: DashboardScore = {
-    currentScore: lastAnalysis?.atsScoreAfter || claimedPreview?.atsScore || 0,
-    previousScore: previousAnalysis?.atsScoreAfter ?? undefined,
-    progressPercentage: lastAnalysis ? Math.min(100, (lastAnalysis.atsScoreAfter || 0)) : 
-                          claimedPreview ? Math.min(100, (claimedPreview.atsScore || 0)) : 0,
-    trend: (lastAnalysis?.atsScoreAfter || claimedPreview?.atsScore || 0) > (previousAnalysis?.atsScoreAfter || 0) ? 'up' : 
-           (lastAnalysis?.atsScoreAfter || claimedPreview?.atsScore || 0) < (previousAnalysis?.atsScoreAfter || 0) ? 'down' : 'stable',
+    currentScore: lastScore ?? claimedPreview?.atsScore ?? null,
+    // Comparaison seulement entre deux analyses réellement notées.
+    previousScore: lastScore !== null ? (previousAnalysis?.atsScoreAfter ?? undefined) : undefined,
   }
 
   const cvData = (parseJsonSafely(lastAnalysis?.cvData) || parseJsonSafely(claimedPreview?.cvExtract)) as any
-  const normalizedSkills = normalizeSkills(cvData?.skills)
-  const skills: DashboardSkill[] = normalizedSkills.slice(0, 6).map((skill, index) => ({
-    name: skill.name || `CompÃ©tence ${index + 1}`,
-    // Niveau, catégorie et tendance : uniquement s'ils figurent dans les données, jamais déduits.
-    ...(skill.level !== undefined ? { level: skill.level } : {}),
-    ...(skill.category ? { category: skill.category } : {}),
-    ...(skill.trend ? { trend: skill.trend } : {}),
-  }))
+  const skills: DashboardSkill[] = normalizeSkills(cvData?.skills)
+    .slice(0, 6)
+    .map((skill) => ({
+      name: skill.name,
+      // Niveau, catégorie et tendance : uniquement s'ils figurent dans les données, jamais déduits.
+      ...(skill.level !== undefined ? { level: skill.level } : {}),
+      ...(skill.category ? { category: skill.category } : {}),
+      ...(skill.trend ? { trend: skill.trend } : {}),
+    }))
 
-  const career: DashboardCareer = {
-    currentLevel: "Junior",
-    nextLevel: "Mid-level",
-    progressToNext: careerProfile?.employabilityScore || 50,
-    evolution: {
-      employabilityScore: careerProfile?.employabilityScore || 50,
-      trend: 'up',
-    },
-  }
-
-  const rawImprovements = parseJsonSafely(lastAnalysis?.improvements) ?? cvData?.improvements
+  const rawImprovements = parseJsonSafely(lastAnalysis?.improvements)
   const rawRecommendations = parseJsonSafely(claimedPreview?.recommendations)
-  const normalizedImprovements = normalizeImprovements(rawImprovements, rawRecommendations)
-  const recommendations: DashboardRecommendation[] = normalizedImprovements.slice(0, 4).map((imp, index) => ({
-    id: `rec-${index}`,
-    title: imp.title,
-    description: imp.description,
-    actionType: 'improve',
-    priority: index === 0 ? 'high' : 'medium',
-    estimatedImpact: imp.impact ?? 10,
-  }))
-
-  const history: DashboardHistoryItem[] = analyses.map((analysis) => ({
-    id: analysis.id,
-    fileName: analysis.fileName,
-    date: analysis.createdAt,
-    score: analysis.atsScoreAfter || 0,
-    targetJob: cvData?.targetJob,
-  }))
-
-  const actions: DashboardAction[] = [
-    {
-      id: 'action-1',
-      title: 'Analyser un CV',
-      description: 'Nouvelle analyse ATS',
-      icon: 'FileText',
-      href: '/analyze',
-      color: 'bronze',
-    },
-    {
-      id: 'action-2',
-      title: 'Nouveau Matching',
-      description: 'Trouvez des offres',
-      icon: 'Search',
-      href: '/matching',
-      color: 'forest',
-    },
-    {
-      id: 'action-3',
-      title: 'Copilot RH',
-      description: 'Discutez avec l\'IA',
-      icon: 'MessageSquare',
-      href: '/copilot',
-      color: 'sky',
-    },
-    {
-      id: 'action-4',
-      title: 'Entretien IA',
-      description: 'PrÃ©parez-vous',
-      icon: 'Mic',
-      href: '/interview',
-      color: 'brick',
-    },
-  ]
-
-  const progress: DashboardProgress = {
-    completedSteps: analyses.length > 0 ? 3 : 0,
-    totalSteps: 5,
-    percentage: analyses.length > 0 ? 60 : 0,
-    steps: [
-      { name: 'Analyse ATS', completed: analyses.length > 0 },
-      { name: 'Optimisation CV', completed: analyses.length > 0 },
-      { name: 'Matching', completed: analyses.length > 1 },
-      { name: 'Copilot', completed: false },
-      { name: 'Entretien IA', completed: interviewSessions.length > 0 },
-    ],
-  }
-
-  const insights: DashboardInsight[] = [
-    {
-      type: 'strength',
-      title: 'Score en progression',
-      description: 'Votre score ATS a augmentÃ© de 15 points',
-      value: 15,
-      unit: 'pts',
-    },
-    {
-      type: 'opportunity',
-      title: 'CompÃ©tences recherchÃ©es',
-      description: '3 compÃ©tences sont trÃ¨s demandÃ©es',
-      value: 3,
-    },
-    {
-      type: 'achievement',
-      title: 'Analyses complÃ©tÃ©es',
-      description: 'Vous avez analysÃ© votre CV plusieurs fois',
-      value: analyses.length,
-    },
-    {
-      type: 'weakness',
-      title: 'Section Ã  amÃ©liorer',
-      description: 'La section expÃ©rience peut Ãªtre optimisÃ©e',
-    },
-  ]
+  const recommendations: DashboardRecommendation[] = normalizeImprovements(rawImprovements, rawRecommendations)
+    .slice(0, 4)
+    .map((imp, index) => ({
+      id: `rec-${index}`,
+      title: imp.title,
+      description: imp.description,
+    }))
 
   const timeline: DashboardTimelineEvent[] = [
-    ...(analyses.slice(0, 2).map((analysis, index) => ({
-      id: `timeline-analysis-${index}`,
+    ...analyses.slice(0, 2).map((analysis, index) => ({
+      id: `timeline-analysis-${analysis.id}`,
       type: 'analysis' as const,
-      title: `Analyse CV #${analyses.length - index}`,
-      description: `Score : ${analysis.atsScoreAfter || 0}/100`,
+      title: `Analyse CV #${analysesCount - index}`,
+      description: analysis.atsScoreAfter !== null ? `Score : ${analysis.atsScoreAfter}/100` : undefined,
       date: analysis.createdAt,
       status: 'completed' as const,
-    }))),
-    ...(interviewSessions.slice(0, 2).map((session, index) => ({
-      id: `timeline-interview-${index}`,
+    })),
+    ...interviewSessions.slice(0, 2).map((session) => ({
+      id: `timeline-interview-${session.id}`,
       type: 'interview' as const,
-      title: 'Entretien simulÃ©',
-      description: `Score : ${session.score || 0}/100`,
+      title: 'Entretien simulé',
+      description: session.score !== null ? `Score : ${session.score}/100` : undefined,
       date: session.createdAt,
-      status: session.completedAt ? 'completed' as const : 'in-progress' as const,
-    }))),
+      status: session.completedAt ? ('completed' as const) : ('in-progress' as const),
+    })),
   ]
 
   return (
@@ -598,12 +429,7 @@ export default async function DashboardPage() {
       userData={userData}
       score={score}
       skills={skills}
-      career={career}
       recommendations={recommendations}
-      history={history}
-      actions={actions}
-      progress={progress}
-      insights={insights}
       timeline={timeline}
       opportunitySummary={opportunitySummary}
       discoverySummary={discoverySummary}

@@ -265,12 +265,13 @@ export function DashboardWidgets({
   stats,
 }: DashboardProps) {
   const firstName = getFirstName(userData.firstName || userData.name)
-  const topRecommendation =
-    recommendations.find((r) => r.priority === "high") ?? recommendations[0]
+  const topRecommendation = recommendations[0]
 
-  const totalAnalyses = stats?.analysesCount ?? (score.currentScore > 0 ? 1 : 0)
+  const totalAnalyses = stats?.analysesCount ?? (score.currentScore !== null ? 1 : 0)
   const totalSimulations = stats?.simulationsCount ?? 0
-  const hasCVAnalysis = totalAnalyses > 0 || score.currentScore > 0
+  // Un score n'existe que s'il a été enregistré : jamais de 0 par défaut.
+  const hasCVAnalysis = score.currentScore !== null
+  const currentScore = score.currentScore ?? 0
 
   const nextAction = opportunitySummary.nextAction
   const pipelineMax = Math.max(
@@ -372,13 +373,13 @@ export function DashboardWidgets({
                 {hasCVAnalysis ? (
                   <>
                     <span className="text-3xl font-semibold tracking-tight text-white/80">
-                      <AnimatedNumber value={score.currentScore} />
+                      <AnimatedNumber value={currentScore} />
                     </span>
                     <span className="text-sm text-white/35">/100</span>
                   </>
                 ) : (
                   <span className="text-lg font-medium text-white/80">
-                    Non analysé
+                    {totalAnalyses > 0 ? "Score indisponible" : "Non analysé"}
                   </span>
                 )}
               </div>
@@ -387,20 +388,20 @@ export function DashboardWidgets({
                   score.previousScore !== undefined ? (
                     <span
                       className={`inline-flex items-center gap-1 font-medium ${
-                        score.currentScore >= score.previousScore
+                        currentScore >= score.previousScore
                           ? "text-emerald-400"
                           : "text-rose-400"
                       }`}
                     >
                       <TrendingUp
                         className={`size-3.5 ${
-                          score.currentScore < score.previousScore
+                          currentScore < score.previousScore
                             ? "-scale-y-100"
                             : ""
                         }`}
                       />
-                      {score.currentScore >= score.previousScore ? "+" : ""}
-                      {score.currentScore - score.previousScore} pts vs avant
+                      {currentScore >= score.previousScore ? "+" : ""}
+                      {currentScore - score.previousScore} pts vs avant
                     </span>
                   ) : (
                     "Diagnostic de référence"
@@ -599,9 +600,11 @@ export function DashboardWidgets({
                               <p className="truncate text-sm font-medium text-white/80">
                                 {event.title}
                               </p>
-                              <p className="mt-0.5 truncate text-xs text-white/40">
-                                {event.description}
-                              </p>
+                              {event.description && (
+                                <p className="mt-0.5 truncate text-xs text-white/40">
+                                  {event.description}
+                                </p>
+                              )}
                             </div>
                           </div>
 
@@ -656,16 +659,16 @@ export function DashboardWidgets({
                 action={
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ring-inset ${
-                      score.currentScore >= 75
+                      currentScore >= 75
                         ? "bg-emerald-500/10 text-emerald-400 ring-emerald-400/20"
-                        : score.currentScore > 0
+                        : hasCVAnalysis
                           ? "bg-indigo-500/10 text-indigo-300 ring-indigo-400/25"
                           : "bg-white/[0.04] text-white/50 ring-white/[0.08]"
                     }`}
                   >
-                    {score.currentScore >= 75
+                    {currentScore >= 75
                       ? "Profil solide"
-                      : score.currentScore > 0
+                      : hasCVAnalysis
                         ? "En optimisation"
                         : "À initialiser"}
                   </span>
@@ -675,9 +678,9 @@ export function DashboardWidgets({
                   {/* ATS */}
                   <div className="flex items-center gap-4">
                     <div className="relative">
-                      <ScoreRing value={hasCVAnalysis ? score.currentScore : 0} />
+                      <ScoreRing value={hasCVAnalysis ? currentScore : 0} />
                       <span className="absolute inset-0 grid place-items-center text-sm font-semibold tabular-nums text-white/80">
-                        {hasCVAnalysis ? score.currentScore : 0}%
+                        {hasCVAnalysis ? `${currentScore}%` : "—"}
                       </span>
                     </div>
                     <div className="min-w-0">
@@ -685,9 +688,9 @@ export function DashboardWidgets({
                         Optimisation ATS du CV
                       </p>
                       <p className="mt-1 text-xs leading-relaxed text-white/40">
-                        {score.currentScore >= 75
+                        {currentScore >= 75
                           ? "Score élevé : profil prêt pour les candidatures directes."
-                          : score.currentScore > 0
+                          : hasCVAnalysis
                             ? "Recommandations disponibles pour augmenter votre score."
                             : "Analysez un CV pour générer votre premier diagnostic."}
                       </p>
