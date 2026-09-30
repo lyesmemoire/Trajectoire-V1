@@ -56,6 +56,7 @@ const PUBLIC_API_PREFIXES = [
  */
 const AUTHENTICATED_PAGE_PREFIXES = [
   "/dashboard",
+  "/cv",
   "/history",
   "/simulation",
   "/report",

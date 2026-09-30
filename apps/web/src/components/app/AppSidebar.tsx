@@ -29,6 +29,7 @@ const NAV: NavItem[] = [
   { label: "Simulation", href: "/simulation/new", icon: Mic2 },
   { label: "Historique", href: "/history", icon: History },
   { label: "Analyse CV", href: "/analyze", icon: FileText },
+  { label: "Mes CV", href: "/cv", icon: FileText },
   { label: "Progression", href: "/knowledge", icon: BarChart3 },
 ]
 
