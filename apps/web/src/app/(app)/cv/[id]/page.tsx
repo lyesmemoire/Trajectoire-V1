@@ -92,11 +92,18 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
             {ats?.mode === "cv_only" && " · sans offre (CV seul)"}
           </p>
         </div>
-        <Link href="#reecrire">
-          <Button variant="dark" size="md">
-            Réécrire ce CV
-          </Button>
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="#reecrire">
+            <Button variant="dark" size="md">
+              Réécrire ce CV
+            </Button>
+          </Link>
+          <Link href={`/cv/${analysis.id}/export`}>
+            <Button variant="dark" size="md">
+              Exporter (DOCX, PDF)
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="space-y-6">

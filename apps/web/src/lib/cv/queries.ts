@@ -9,6 +9,7 @@
 import { prisma } from "@/lib/prisma"
 import { readStoredAts } from "@/lib/cv-analysis/persistence"
 import type { CvAnalysisResult } from "@/lib/cv-analysis"
+import { draftFromCvData, type CvDocument } from "@/lib/cv-export/document"
 
 export interface CVAnalysisListItem {
   id: string
@@ -85,4 +86,25 @@ export async function getCVRewrites(analysisId: string, userId: string, limit = 
     take: limit,
     select: { id: true, action: true, createdAt: true, originalContent: true, rewrittenContent: true },
   })
+}
+
+export interface CVExportDraft {
+  id: string
+  fileName: string
+  /** Brouillon tiré de l'extraction automatique : à relire par l'utilisateur avant export. */
+  draft: CvDocument
+}
+
+/**
+ * Brouillon d'export d'une analyse de l'utilisateur. Seule l'extraction structurée (`cvData`) est
+ * lue : ni `originalText` ni `optimizedText`. Le dernier résumé réécrit de l'analyse, s'il existe,
+ * est proposé à part (l'utilisateur choisit de l'insérer).
+ */
+export async function getCVExportDraft(id: string, userId: string): Promise<CVExportDraft | null> {
+  const row = await prisma.cVAnalysis.findFirst({
+    where: { id, userId },
+    select: { id: true, fileName: true, cvData: true },
+  })
+  if (!row) return null
+  return { id: row.id, fileName: row.fileName, draft: draftFromCvData(row.cvData) }
 }

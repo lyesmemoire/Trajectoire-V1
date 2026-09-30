@@ -27,6 +27,7 @@
     "@upstash/redis": "^1.38.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "docx": "^9.7.0",
     "file-type": "^22.0.1",
     "framer-motion": "^12.42.2",
     "geist": "^1.7.2",
