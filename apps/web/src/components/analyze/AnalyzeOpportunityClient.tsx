@@ -387,7 +387,6 @@ export function AnalyzeOpportunityClient({
               <div className="space-y-6">
                 <PremiumATSResult
                   score={preview.score}
-                  radarDimensions={preview.radarDimensions}
                   strengths={preview.strengths}
                   weaknesses={[preview.weakness]}
                   recommendations={preview.recommendations}

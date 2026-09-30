@@ -68,30 +68,14 @@ export async function POST(req: NextRequest) {
       fingerprint: fingerprint,
     })
 
-    // 7. Réponse teaser avec insights intelligents
-    const gapToOptimal = Math.max(0, 80 - preview.score)
-    
-    // Calcul percentile (basé sur distribution hypothétique)
-    const percentile = Math.min(95, Math.max(5, Math.round((preview.score / 100) * 100)))
-    
-    // Dimensions pour radar (préparation Phase 2)
-    const radarDimensions = {
-      structure: Math.min(100, preview.score + Math.random() * 10 - 5),
-      keywords: Math.min(100, preview.score + Math.random() * 15 - 7),
-      impact: Math.min(100, preview.score + Math.random() * 10 - 5),
-      clarity: Math.min(100, preview.score + Math.random() * 8 - 4),
-      relevance: jobDescription ? Math.min(100, preview.score + 15) : preview.score,
-    }
-
+    // 7. Réponse : uniquement ce qui est réellement calculé (score, forces, faiblesse).
+    // Percentile, écart « au seuil » et dimensions du radar étaient inventés
+    // (dérivés du score, ou aléatoires) : ils ont été retirés.
     const response = NextResponse.json({
       previewToken: previewToken.previewToken,
       score: preview.score,
-      gapToOptimal,
-      percentile,
       strengths: preview.strengths,
       weakness: preview.weakness,
-      radarDimensions,
-      message: `Il vous manque ${gapToOptimal} points pour atteindre le seuil recommandé. Ce gap peut impacter vos chances d'entretien.`,
     })
 
     // 8. Set cookie pour persistance

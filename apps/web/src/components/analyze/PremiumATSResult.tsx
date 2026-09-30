@@ -1,31 +1,19 @@
 'use client'
 
-import { Check, Target, FileText, Key, TrendingUp, Eye, Layers, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react'
+import { Check, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
+// N'affiche que des valeurs réellement calculées. Les sous-scores (structure,
+// mots-clés, impact…), la « probabilité d'entretien » et le percentile ont été
+// retirés : ils étaient inventés (valeurs par défaut constantes, ou score ±
+// aléatoire). Ils reviendront avec l'analyse complète, calculés pour de vrai.
 interface PremiumATSResultProps {
   score: number
-  radarDimensions?: {
-    structure: number
-    keywords: number
-    impact: number
-    clarity: number
-    relevance: number
-  }
   strengths?: string[]
   weaknesses?: string[]
   recommendations?: string[]
   detectedSkills?: string[]
   missingSkills?: string[]
-  interviewProbability?: number
-  compatibility?: number
-  readability?: number
-  structure?: number
-  keywords?: number
-  experience?: number
-  education?: number
-  languages?: number
-  softSkills?: number
   isAuthenticated?: boolean
   hasPremiumAccess?: boolean
 }
@@ -43,38 +31,13 @@ function getScoreTheme(score: number) {
   return { bar: 'bg-amber-500', text: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200' }
 }
 
-function MiniBar({ value, color = 'bg-violet-500' }: { value: number; color?: string }) {
-  return (
-    <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-border/40">
-      <div className={`h-full rounded-full ${color} transition-all`} style={{ width: `${Math.round(value)}%` }} />
-    </div>
-  )
-}
-
-const dimensionConfig = [
-  { key: 'structure', label: 'Structure', icon: Layers },
-  { key: 'keywords', label: 'Mots-clés', icon: Key },
-  { key: 'impact', label: 'Impact', icon: TrendingUp },
-  { key: 'clarity', label: 'Lisibilité', icon: Eye },
-  { key: 'relevance', label: 'Compatibilité', icon: Target },
-] as const
-
 export function PremiumATSResult({
   score,
-  radarDimensions = { structure: 70, keywords: 65, impact: 75, clarity: 80, relevance: 70 },
   strengths = [],
   weaknesses = [],
   recommendations = [],
   detectedSkills = [],
   missingSkills = [],
-  interviewProbability = 65,
-  compatibility = 72,
-  readability = 78,
-  structure = 68,
-  keywords = 55,
-  experience = 85,
-  education = 60,
-  languages = 70,
   isAuthenticated = false,
   hasPremiumAccess = false,
 }: PremiumATSResultProps) {
@@ -90,36 +53,13 @@ export function PremiumATSResult({
           Diagnostic ATS
         </p>
 
-        <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex items-baseline gap-3">
-            <span className={`font-serif text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
-              {score}
-            </span>
-            <div>
-              <span className="text-2xl font-medium text-foreground-muted">/100</span>
-              <p className={`mt-1 text-base font-bold ${theme.text}`}>{label}</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3 rounded-lg bg-white/60 px-5 py-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-sky-100">
-                <Target className="size-5 text-sky-600" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-foreground-muted">Probabilité entretien</p>
-                <p className="text-xl font-bold text-foreground">{Math.round(interviewProbability)}%</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-lg bg-white/60 px-5 py-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-violet-100">
-                <Layers className="size-5 text-violet-600" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-foreground-muted">Compatibilité profil</p>
-                <p className="text-xl font-bold text-foreground">{Math.round(compatibility)}%</p>
-              </div>
-            </div>
+        <div className="mt-6 flex items-baseline gap-3">
+          <span className={`font-serif text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
+            {score}
+          </span>
+          <div>
+            <span className="text-2xl font-medium text-foreground-muted">/100</span>
+            <p className={`mt-1 text-base font-bold ${theme.text}`}>{label}</p>
           </div>
         </div>
 
@@ -128,69 +68,6 @@ export function PremiumATSResult({
             className={`h-full rounded-full ${theme.bar} transition-all duration-1000`}
             style={{ width: `${score}%` }}
           />
-        </div>
-      </div>
-
-      {/* ===== VOTRE PROFIL FACE À L'OFFRE (Dimensions + Métriques) ===== */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-        <div className="mb-8 flex items-center gap-3">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
-            <Eye className="size-4 text-violet-600" />
-          </div>
-          <h2 className="font-serif text-2xl font-medium text-foreground">Votre profil face à l'offre</h2>
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
-
-          {/* LEFT: Dimensions Principales */}
-          <div className="space-y-6">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-foreground-muted">
-              Dimensions principales
-            </p>
-            {dimensionConfig.map(({ key, label }) => {
-              const val = radarDimensions[key]
-              const dim = getScoreTheme(val)
-              return (
-                <div key={key} className="flex items-center gap-4">
-                  <div className="w-32 shrink-0">
-                    <p className="text-sm font-semibold text-foreground">{label}</p>
-                  </div>
-                  <div className="flex-1">
-                    <MiniBar value={val} color={dim.bar} />
-                  </div>
-                  <div className="w-12 shrink-0 text-right">
-                    <span className={`font-serif text-lg font-medium ${dim.text}`}>{Math.round(val)}</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* RIGHT: Métriques complémentaires */}
-          <div>
-            <p className="mb-6 text-[11px] font-bold uppercase tracking-widest text-foreground-muted">
-              Métriques complémentaires
-            </p>
-            <div className="space-y-4">
-              {[
-                { label: 'Lisibilité', value: readability },
-                { label: 'Structure', value: structure },
-                { label: 'Mots-clés', value: keywords },
-                { label: 'Expérience', value: experience },
-                { label: 'Formation', value: education },
-                { label: 'Langues', value: languages },
-              ].map(({ label, value }) => {
-                const t = getScoreTheme(value)
-                return (
-                  <div key={label} className="flex items-center justify-between border-b border-border/40 pb-3 last:border-0 last:pb-0">
-                    <span className="text-sm text-foreground-muted">{label}</span>
-                    <span className={`font-serif text-lg font-medium ${t.text}`}>{Math.round(value)}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -244,7 +121,7 @@ export function PremiumATSResult({
         </div>
       )}
 
-      {/* ===== COMPÉTENCES DETECTÉES ===== */}
+      {/* ===== COMPÉTENCES DÉTECTÉES (uniquement si fournies) ===== */}
       {(detectedSkills.length > 0 || missingSkills.length > 0) && (
         <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
           <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Mapping des compétences</h2>
@@ -277,7 +154,7 @@ export function PremiumATSResult({
         </div>
       )}
 
-      {/* ===== RECOMMANDATIONS TRAJECTOIRE ===== */}
+      {/* ===== RECOMMANDATIONS (uniquement si fournies) ===== */}
       {recommendations.length > 0 && (
         <div className="rounded-xl border border-violet-200 bg-violet-50 p-6 sm:p-8">
           <div className="mb-6 flex items-center gap-3">
@@ -297,15 +174,15 @@ export function PremiumATSResult({
         </div>
       )}
 
-      {/* ===== PAYWALL (Secondaire si non premium) ===== */}
+      {/* ===== ÉTAPE SUIVANTE (si pas d'accès premium) ===== */}
       {!hasPremiumAccess && (
         <div className="mt-12 rounded-xl border border-border bg-surface p-6 shadow-sm">
           {!isAuthenticated ? (
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Préparation premium</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Débloquez l'analyse complète</h3>
-                <p className="mt-1 text-sm text-foreground-muted">Matching IA, simulations d'entretien, recommandations illimitées.</p>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
+                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Préparez l&apos;entretien</h3>
+                <p className="mt-1 text-sm text-foreground-muted">Simulations d&apos;entretien personnalisées et rapport détaillé après chaque simulation.</p>
               </div>
               <Link
                 href="/signup-conversion"
@@ -318,9 +195,9 @@ export function PremiumATSResult({
           ) : (
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Préparation premium</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Allez plus loin dans votre préparation</h3>
-                <p className="mt-1 text-sm text-foreground-muted">Matching IA, simulations d'entretien, suivi avancé.</p>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
+                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Passez aux simulations d&apos;entretien</h3>
+                <p className="mt-1 text-sm text-foreground-muted">Le Pack Entretien ou Pro vous donnent accès aux simulations et aux rapports détaillés.</p>
               </div>
               <Link
                 href="/pricing"

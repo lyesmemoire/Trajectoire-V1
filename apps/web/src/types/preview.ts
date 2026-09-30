@@ -66,24 +66,25 @@ export interface JobData {
 export interface ATSResult {
   /** Score global (0-100) */
   score: number
-  /** Écart vers le score optimal */
-  gapToOptimal: number
-  /** Percentile (0-100) */
-  percentile: number
   /** Forces du CV */
   strengths: string[]
   /** Faiblesses du CV */
   weakness: string[]
-  /** Dimensions pour le graphique radar */
-  radarDimensions: {
+  /**
+   * Champs historiques NON calculés (percentile, écart au seuil, radar, message) :
+   * l'API ne les renseigne plus, ils ne servent qu'à lire d'anciennes lignes.
+   * À supprimer avec l'unification des systèmes d'aperçu.
+   */
+  gapToOptimal?: number
+  percentile?: number
+  radarDimensions?: {
     structure: number
     keywords: number
     impact: number
     clarity: number
     relevance: number
   }
-  /** Message personnalisé */
-  message: string
+  message?: string
 }
 
 /**
