@@ -20,7 +20,6 @@ import { AnalyzeButton } from "@/components/analyze/AnalyzeButton"
 import { PremiumATSResult } from "@/components/analyze/PremiumATSResult"
 import { OpportunityCVTailoring } from "@/components/analyze/OpportunityCVTailoring"
 import { ConversionPanel } from "@/components/conversion/ConversionPanel"
-import { darkTokens } from "@/lib/theme/dark-tokens"
 import { csrfFetch } from "@/lib/security/csrf-client"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import {
@@ -256,14 +255,14 @@ export function AnalyzeOpportunityClient({
   }
 
   return (
-    <div style={darkTokens} className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-[1120px] px-6 pb-24 pt-10">
 
         {/* Breadcrumb */}
         {opportunity ? (
           <Link
             href={`/opportunities/${opportunity.id}`}
-            className="inline-flex items-center gap-2 text-sm font-medium text-indigo-300 transition hover:text-indigo-200"
+            className="inline-flex items-center gap-2 text-sm font-medium text-violet-600 transition hover:text-violet-800"
           >
             <ArrowLeft className="size-4" />
             Retour à l'opportunité
@@ -278,14 +277,14 @@ export function AnalyzeOpportunityClient({
             {/* HEADER */}
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/15">
-                  <Zap className="size-4 text-indigo-300" />
+                <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
+                  <Zap className="size-4 text-violet-600" />
                 </div>
-                <span className="text-xs font-semibold uppercase tracking-widest text-indigo-300">
+                <span className="text-xs font-semibold uppercase tracking-widest text-violet-600">
                   Analyse ATS
                 </span>
               </div>
-              <h1 className="mt-3 text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+              <h1 className="mt-3 font-serif text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
                 {opportunity ? "Adapter votre CV à cette offre" : "Diagnostiquer votre CV"}
               </h1>
               <p className="mt-2 text-base leading-relaxed text-foreground-muted">
@@ -297,12 +296,12 @@ export function AnalyzeOpportunityClient({
 
             {/* Opportunité connectée */}
             {opportunity ? (
-              <div className="flex items-start gap-4 rounded-xl border border-indigo-400/25 bg-indigo-500/10 p-4">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15">
-                  <Building2 className="size-4 text-indigo-300" />
+              <div className="flex items-start gap-4 rounded-xl border border-violet-200 bg-violet-50 p-4">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-violet-100">
+                  <Building2 className="size-4 text-violet-600" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-indigo-300">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
                     Opportunité ciblée
                   </p>
                   <p className="mt-0.5 text-base font-semibold text-foreground">
@@ -312,7 +311,7 @@ export function AnalyzeOpportunityClient({
                     <p className="text-sm text-foreground-muted">{opportunity.company}</p>
                   ) : null}
                   {opportunity.matchScore !== null ? (
-                    <p className="mt-1 text-sm font-medium text-indigo-200">
+                    <p className="mt-1 text-sm font-medium text-violet-700">
                       Score actuel : {opportunity.matchScore}/100
                       {opportunity.recommendationLabel ? ` · ${opportunity.recommendationLabel}` : ""}
                     </p>
@@ -323,7 +322,7 @@ export function AnalyzeOpportunityClient({
 
             {loading && !file ? (
               <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-xl border border-border bg-surface p-6 shadow-sm">
-                <Loader2 className="size-8 animate-spin text-indigo-300" />
+                <Loader2 className="size-8 animate-spin text-violet-600" />
                 <p className="text-sm font-medium text-foreground-muted">
                   Récupération de votre diagnostic...
                 </p>
@@ -335,7 +334,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 01 — CV */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
                       1
                     </div>
                     <div className="flex items-center gap-2">
@@ -354,7 +353,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 02 — Offre */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
                       2
                     </div>
                     <div className="flex items-center gap-2">
@@ -364,7 +363,7 @@ export function AnalyzeOpportunityClient({
                       </span>
                     </div>
                     {opportunity ? (
-                      <span className="ml-auto rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-400">
+                      <span className="ml-auto rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
                         Préremplie
                       </span>
                     ) : null}
@@ -382,7 +381,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 03 — Lancer */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-5 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
                       3
                     </div>
                     <span className="text-sm font-semibold text-foreground">
@@ -391,7 +390,7 @@ export function AnalyzeOpportunityClient({
                   </div>
 
                   {error ? (
-                    <div className="mb-4 rounded-lg border border-rose-400/25 bg-rose-500/10 p-3 text-sm font-medium text-rose-400">
+                    <div className="mb-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm font-medium text-rose-700">
                       {error}
                     </div>
                   ) : null}
@@ -399,7 +398,7 @@ export function AnalyzeOpportunityClient({
                   <AnalyzeButton disabled={!canAnalyze} loading={loading} onClick={handleAnalyze} />
 
                   <div className="mt-4 flex items-start gap-2">
-                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-400" />
+                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
                     <p className="text-xs leading-relaxed text-foreground-muted">
                       Trajectoire reformule uniquement ce qui est déjà dans votre CV.
                       Aucune expérience fictive ne sera ajoutée.
@@ -453,7 +452,7 @@ export function AnalyzeOpportunityClient({
                       </p>
                       <Link
                         href="/pricing"
-                        className="mt-4 inline-flex text-sm font-semibold text-indigo-300 hover:text-indigo-200"
+                        className="mt-4 inline-flex text-sm font-semibold text-violet-600 hover:text-violet-800"
                       >
                         Voir les offres
                       </Link>
@@ -469,21 +468,21 @@ export function AnalyzeOpportunityClient({
           </main>
 
           {/* ============== COLONNE LATÉRALE ============== */}
-          <aside className="h-fit rounded-xl border border-white/[0.08] bg-zinc-900 p-6 text-zinc-200 lg:sticky lg:top-8">
+          <aside className="h-fit rounded-xl bg-foreground p-6 text-background lg:sticky lg:top-8">
             <div className="flex items-center gap-2">
-              <div className="flex size-7 items-center justify-center rounded-lg bg-indigo-500/20">
-                <Sparkles className="size-4 text-indigo-300" />
+              <div className="flex size-7 items-center justify-center rounded-lg bg-violet-500/20">
+                <Sparkles className="size-4 text-violet-300" />
               </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+              <span className="text-xs font-bold uppercase tracking-widest text-background/50">
                 CV Targeting IA
               </span>
             </div>
 
-            <h2 className="mt-4 text-xl font-medium leading-snug text-zinc-50">
+            <h2 className="mt-4 font-serif text-xl font-medium leading-snug text-background">
               Votre parcours contient déjà les preuves. On les rend visibles.
             </h2>
 
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400">
+            <p className="mt-3 text-sm leading-relaxed text-background/60">
               Le but n'est pas d'inventer un meilleur candidat. C'est de rendre
               immédiatement lisibles les preuves que vous avez déjà accumulées.
             </p>
@@ -497,7 +496,7 @@ export function AnalyzeOpportunityClient({
                     </p>
                     <ul className="space-y-2">
                       {opportunity.strengths.slice(0, 3).map((s) => (
-                        <li key={s} className="flex gap-2 text-sm leading-5 text-zinc-300">
+                        <li key={s} className="flex gap-2 text-sm leading-5 text-background/70">
                           <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-400" />
                           {s}
                         </li>
@@ -513,7 +512,7 @@ export function AnalyzeOpportunityClient({
                     </p>
                     <ul className="space-y-2">
                       {opportunity.gaps.slice(0, 3).map((g) => (
-                        <li key={g} className="flex gap-2 text-sm leading-5 text-zinc-300">
+                        <li key={g} className="flex gap-2 text-sm leading-5 text-background/70">
                           <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber-400" />
                           {g}
                         </li>
@@ -523,13 +522,13 @@ export function AnalyzeOpportunityClient({
                 ) : null}
               </div>
             ) : (
-              <p className="mt-6 text-sm leading-relaxed text-zinc-500">
+              <p className="mt-6 text-sm leading-relaxed text-background/50">
                 Connectez une opportunité pour voir automatiquement vos forces et écarts ici.
               </p>
             )}
 
-            <div className="mt-6 border-t border-white/10 pt-5">
-              <p className="text-xs text-zinc-500">
+            <div className="mt-6 border-t border-background/10 pt-5">
+              <p className="text-xs text-background/40">
                 Analyse basée sur votre CV importé × la description du poste.
               </p>
             </div>
