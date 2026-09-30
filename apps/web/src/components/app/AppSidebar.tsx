@@ -20,9 +20,9 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-type NavItem = { label: string; href: string; icon: LucideIcon }
+export type NavItem = { label: string; href: string; icon: LucideIcon }
 
-const NAV: NavItem[] = [
+export const NAV: NavItem[] = [
   { label: "Aperçu", href: "/dashboard", icon: LayoutDashboard },
   { label: "Opportunités", href: "/opportunities", icon: BriefcaseBusiness },
   { label: "Discovery", href: "/discovery", icon: Radar },
@@ -33,7 +33,7 @@ const NAV: NavItem[] = [
   { label: "Progression", href: "/knowledge", icon: BarChart3 },
 ]
 
-const SECONDARY_NAV: NavItem[] = [
+export const SECONDARY_NAV: NavItem[] = [
   { label: "Abonnement", href: "/pricing", icon: CreditCard },
   { label: "Paramètres", href: "/settings", icon: Settings },
 ]
@@ -41,7 +41,7 @@ const SECONDARY_NAV: NavItem[] = [
 const focusRing =
   "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
 
-function isActive(pathname: string, href: string) {
+export function isActive(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard"
   return pathname === href || pathname.startsWith(`${href}/`)
 }

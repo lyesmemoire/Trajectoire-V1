@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { redirect } from "next/navigation"
 import { AppSidebar } from "@/components/app/AppSidebar"
+import { AppMobileNav } from "@/components/app/AppMobileNav"
 import { logger } from "@/lib/logger"
 import { shouldRedirectToOnboarding } from "@/lib/onboarding/shouldRedirectToOnboarding"
 import { prisma } from "@/lib/prisma"
@@ -46,6 +47,9 @@ export default async function AppGroupLayout({ children }: { children: ReactNode
       style={darkTokens}
       className="min-h-dvh bg-zinc-950 text-white/80 selection:bg-indigo-500/30 selection:text-white"
     >
+      {/* Sous 1024 px la barre latérale est masquée : en-tête + tiroir à la place. */}
+      <AppMobileNav />
+
       <div className="mx-auto flex w-full max-w-[1440px]">
         <AppSidebar />
 
