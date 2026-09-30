@@ -30,9 +30,9 @@ function getScoreLabel(score: number) {
 }
 
 function getScoreTheme(score: number) {
-  if (score >= 80) return { bar: 'bg-emerald-500', text: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' }
-  if (score >= 60) return { bar: 'bg-violet-500', text: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-200' }
-  return { bar: 'bg-amber-500', text: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200' }
+  if (score >= 80) return { bar: 'bg-emerald-500', text: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-400/25' }
+  if (score >= 60) return { bar: 'bg-indigo-500', text: 'text-indigo-200', bg: 'bg-indigo-500/10', border: 'border-indigo-400/25' }
+  return { bar: 'bg-amber-500', text: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-400/25' }
 }
 
 export function PremiumATSResult({
@@ -60,7 +60,7 @@ export function PremiumATSResult({
         </p>
 
         <div className="mt-6 flex items-baseline gap-3">
-          <span className={`font-serif text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
+          <span className={`text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
             {score}
           </span>
           <div>
@@ -69,7 +69,7 @@ export function PremiumATSResult({
           </div>
         </div>
 
-        <div className="mt-8 h-2.5 overflow-hidden rounded-full bg-white/50">
+        <div className="mt-8 h-2.5 overflow-hidden rounded-full bg-white/[0.08]">
           <div
             className={`h-full rounded-full ${theme.bar} transition-all duration-1000`}
             style={{ width: `${score}%` }}
@@ -80,7 +80,7 @@ export function PremiumATSResult({
       {/* ===== DÉTAIL DU SCORE (analyse complète) ===== */}
       {dimensions.length > 0 && (
         <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Détail du score</h2>
+          <h2 className="mb-6 text-xl font-medium text-foreground">Détail du score</h2>
           <ul className="space-y-5">
             {dimensions.map(({ label, value }) => {
               const dim = getScoreTheme(value)
@@ -88,7 +88,7 @@ export function PremiumATSResult({
                 <li key={label}>
                   <div className="flex items-baseline justify-between gap-4">
                     <span className="text-sm font-semibold text-foreground">{label}</span>
-                    <span className={`font-serif text-lg font-medium ${dim.text}`}>{Math.round(value)}</span>
+                    <span className={`text-lg font-medium ${dim.text}`}>{Math.round(value)}</span>
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-border/40">
                     <div className={`h-full rounded-full ${dim.bar}`} style={{ width: `${Math.round(value)}%` }} />
@@ -115,16 +115,16 @@ export function PremiumATSResult({
 
           {/* Forces */}
           {strengths.length > 0 && (
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6 sm:p-8">
+            <div className="rounded-xl border border-emerald-400/25 bg-emerald-500/10 p-6 sm:p-8">
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-100">
-                  <Check className="size-4 text-emerald-600" />
+                <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-500/15">
+                  <Check className="size-4 text-emerald-400" />
                 </div>
-                <h2 className="font-serif text-xl font-medium text-emerald-900">Vos forces pour ce poste</h2>
+                <h2 className="text-xl font-medium text-emerald-200">Vos forces pour ce poste</h2>
               </div>
               <ul className="space-y-4">
                 {strengths.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-emerald-800">
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-emerald-200">
                     <span className="mt-1.5 size-2 shrink-0 rounded-full bg-emerald-500" />
                     {item}
                   </li>
@@ -135,19 +135,19 @@ export function PremiumATSResult({
 
           {/* Vigilance */}
           {weaknesses.length > 0 && weaknesses[0] && (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+            <div className="rounded-xl border border-amber-400/25 bg-amber-500/10 p-6 sm:p-8">
               <div className="mb-2 flex items-center gap-3">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100">
-                  <AlertTriangle className="size-4 text-amber-600" />
+                <div className="flex size-8 items-center justify-center rounded-lg bg-amber-500/15">
+                  <AlertTriangle className="size-4 text-amber-400" />
                 </div>
-                <h2 className="font-serif text-xl font-medium text-amber-900">À renforcer</h2>
+                <h2 className="text-xl font-medium text-amber-200">À renforcer</h2>
               </div>
-              <p className="mb-6 text-xs text-amber-700">
+              <p className="mb-6 text-xs text-amber-400">
                 Ce qui mérite votre attention avant de candidater.
               </p>
               <ul className="space-y-4">
                 {weaknesses.filter(Boolean).map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-amber-800">
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-amber-200">
                     <span className="mt-1.5 size-2 shrink-0 rounded-full bg-amber-500" />
                     {item}
                   </li>
@@ -162,14 +162,14 @@ export function PremiumATSResult({
       {/* ===== COMPÉTENCES DÉTECTÉES (uniquement si fournies) ===== */}
       {(detectedSkills.length > 0 || missingSkills.length > 0) && (
         <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Mapping des compétences</h2>
+          <h2 className="mb-6 text-xl font-medium text-foreground">Mapping des compétences</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {detectedSkills.length > 0 && (
               <div>
-                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-emerald-700">Détectées</p>
+                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-emerald-400">Détectées</p>
                 <div className="flex flex-wrap gap-2">
                   {detectedSkills.map((skill) => (
-                    <span key={skill} className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-800">
+                    <span key={skill} className="rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-200">
                       {skill}
                     </span>
                   ))}
@@ -178,10 +178,10 @@ export function PremiumATSResult({
             )}
             {missingSkills.length > 0 && (
               <div>
-                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-amber-700">Manquantes</p>
+                <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-amber-400">Manquantes</p>
                 <div className="flex flex-wrap gap-2">
                   {missingSkills.map((skill) => (
-                    <span key={skill} className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-800">
+                    <span key={skill} className="rounded-full border border-amber-400/25 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-200">
                       {skill}
                     </span>
                   ))}
@@ -194,17 +194,17 @@ export function PremiumATSResult({
 
       {/* ===== RECOMMANDATIONS (uniquement si fournies) ===== */}
       {recommendations.length > 0 && (
-        <div className="rounded-xl border border-violet-200 bg-violet-50 p-6 sm:p-8">
+        <div className="rounded-xl border border-indigo-400/25 bg-indigo-500/10 p-6 sm:p-8">
           <div className="mb-6 flex items-center gap-3">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
-              <Sparkles className="size-4 text-violet-600" />
+            <div className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/15">
+              <Sparkles className="size-4 text-indigo-300" />
             </div>
-            <h2 className="font-serif text-xl font-medium text-violet-900">Recommandations Trajectoire</h2>
+            <h2 className="text-xl font-medium text-indigo-200">Recommandations Trajectoire</h2>
           </div>
           <ul className="space-y-4">
             {recommendations.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-violet-800">
-                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-violet-400" />
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-indigo-200">
+                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-indigo-400" />
                 {item}
               </li>
             ))}
@@ -218,8 +218,8 @@ export function PremiumATSResult({
           {!isAuthenticated ? (
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Préparez l&apos;entretien</h3>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-indigo-300">Étape suivante</p>
+                <h3 className="mt-1 text-lg font-medium text-foreground">Préparez l&apos;entretien</h3>
                 <p className="mt-1 text-sm text-foreground-muted">Simulations d&apos;entretien personnalisées et rapport détaillé après chaque simulation.</p>
               </div>
               <Link
@@ -233,8 +233,8 @@ export function PremiumATSResult({
           ) : (
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Passez aux simulations d&apos;entretien</h3>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-indigo-300">Étape suivante</p>
+                <h3 className="mt-1 text-lg font-medium text-foreground">Passez aux simulations d&apos;entretien</h3>
                 <p className="mt-1 text-sm text-foreground-muted">Le Pack Entretien ou Pro vous donnent accès aux simulations et aux rapports détaillés.</p>
               </div>
               <Link

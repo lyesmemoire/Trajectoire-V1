@@ -18,8 +18,8 @@ export function AnalyzeButton({ disabled, loading, onClick }: Props) {
       onClick={onClick}
       className={`w-full py-4 rounded-xl font-medium text-base transition-all duration-500 ${
         disabled
-          ? "bg-ivoire-100 text-ink-400 border border-ivoire-200 cursor-not-allowed"
-          : "bg-ink-900 text-ivoire-50 shadow-premium hover:shadow-premium-lg hover:bg-ink-800"
+          ? "bg-zinc-800 text-zinc-500 border border-zinc-700 cursor-not-allowed"
+          : "bg-indigo-500 text-white  hover: hover:bg-indigo-400"
       }`}
     >
       {loading ? "Analyse en cours..." : "Analyser"}

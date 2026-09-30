@@ -41,8 +41,8 @@ export function CVUploader({ file, onFile }: Props) {
         }}
         className={`relative flex flex-col items-center justify-center w-full min-h-[120px] p-4 border border-dashed rounded-xl cursor-pointer transition-all duration-300 ${
           isDragging 
-            ? "border-bronze-400 bg-bronze-50" 
-            : "border-ivoire-300 bg-white/80 hover:border-bronze-400"
+            ? "border-indigo-400 bg-indigo-500/10" 
+            : "border-zinc-700 bg-zinc-900/60 hover:border-indigo-400"
         }`}
       >
         <input
@@ -52,10 +52,10 @@ export function CVUploader({ file, onFile }: Props) {
           onChange={(e) => validateAndSetFile(e.target.files?.[0])}
         />
         <div className="flex flex-col items-center text-center">
-          <p className="font-semibold text-base text-ink-900">
+          <p className="font-semibold text-base text-zinc-50">
             {file ? file.name : "Importer votre CV"}
           </p>
-          <p className="text-sm mt-1 text-ink-600">
+          <p className="text-sm mt-1 text-zinc-400">
             Glissez-déposez ou cliquez pour parcourir
           </p>
         </div>
@@ -67,7 +67,7 @@ export function CVUploader({ file, onFile }: Props) {
               exit={{ opacity: 0, y: 5 }}
               whileHover={{ scale: 1.05 }}
               onClick={(e) => { e.preventDefault(); onFile(null); }}
-              className="absolute top-2 right-2 text-xs text-ink-400 hover:text-ink-600 transition-colors bg-ivoire-100 px-2 py-1 rounded-md"
+              className="absolute top-2 right-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors bg-zinc-800 px-2 py-1 rounded-md"
             >
               Retirer
             </motion.button>
@@ -81,7 +81,7 @@ export function CVUploader({ file, onFile }: Props) {
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }} 
-            className="text-brick-500 text-sm mt-2 text-center"
+            className="text-rose-400 text-sm mt-2 text-center"
           >
             {error}
           </motion.p>
