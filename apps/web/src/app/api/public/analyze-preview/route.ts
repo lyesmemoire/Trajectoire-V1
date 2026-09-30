@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { checkRateLimit } from "@/lib/rate-limit/upstash-rate-limit"
 import { generateFingerprint } from "@/lib/security/ip-extraction"
-import { validateCVUpload, validateJobDescription } from "@/lib/validators/cv-validator"
+import { readCvFile } from "@/lib/cv/cv-file"
+import { validateJobDescription } from "@/lib/validators/cv-validator"
 import { buildFreePreview } from "@/lib/cv-analysis/preview"
 import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisService"
 import { logger } from "@/lib/logger"
@@ -41,12 +42,12 @@ export async function POST(req: NextRequest) {
     const cvFile = formData.get("cv") as File
     const jobDescription = formData.get("jobDescription") as string
 
-    // 3. Validation CV
-    const cvValidation = await validateCVUpload(cvFile)
-    if (!cvValidation.valid) {
+    // 3. Validation et lecture du CV (même validateur que api/cv/upload : lib/cv/cv-file.ts)
+    const cv = await readCvFile(cvFile instanceof File ? cvFile : null)
+    if (!cv.ok) {
       return NextResponse.json(
-        { error: cvValidation.error },
-        { status: 400 }
+        { error: cv.error, ...(cv.hint ? { hint: cv.hint } : {}) },
+        { status: cv.status }
       )
     }
 
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 5. Aperçu : analyse déterministe (aucune IA, aucun coût, résultat reproductible)
-    const preview = buildFreePreview(cvValidation.content!, jobDescription || "")
+    const preview = buildFreePreview(cv.text, jobDescription || "")
 
     // 6. Sauvegarder le RÉSULTAT (jamais le texte du CV ni de l'offre) avec un token
     const { previewToken } = await previewAnalysisService.savePreviewAnalysis({

@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { CV_ACCEPT_ATTRIBUTE, CV_MAX_FILE_SIZE, CV_MAX_FILE_SIZE_LABEL } from "@/lib/cv/cv-limits"
 
 interface Props {
   file: File | null
@@ -20,8 +21,8 @@ export function CVUploader({ file, onFile }: Props) {
       onFile(null)
       return
     }
-    if (f.size > 5 * 1024 * 1024) {
-      setError("Fichier trop volumineux (max 5MB).")
+    if (f.size > CV_MAX_FILE_SIZE) {
+      setError(`Fichier trop volumineux (max ${CV_MAX_FILE_SIZE_LABEL}).`)
       onFile(null)
       return
     }
@@ -47,7 +48,7 @@ export function CVUploader({ file, onFile }: Props) {
       >
         <input
           type="file"
-          accept=".pdf,.docx,.txt"
+          accept={CV_ACCEPT_ATTRIBUTE}
           className="hidden"
           onChange={(e) => validateAndSetFile(e.target.files?.[0])}
         />

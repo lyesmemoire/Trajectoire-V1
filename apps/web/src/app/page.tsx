@@ -24,9 +24,14 @@ import {
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import { Navbar } from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
+import {
+  CV_ACCEPT_ATTRIBUTE,
+  CV_ACCEPT_EXTENSIONS,
+  CV_MAX_FILE_SIZE,
+  CV_MAX_FILE_SIZE_LABEL,
+} from "@/lib/cv/cv-limits"
 
 const heroImage = "/images/hero-professional.jpg"
-const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 type AnalyzePreviewResponse = {
   previewToken?: string
@@ -58,7 +63,7 @@ function formatBytes(bytes: number) {
 function isAllowedFile(file: File) {
   const name = file.name.toLowerCase()
 
-  return [".pdf", ".doc", ".docx"].some((extension) =>
+  return CV_ACCEPT_EXTENSIONS.some((extension) =>
     name.endsWith(extension)
   )
 }
@@ -103,7 +108,7 @@ export default function HomePage() {
     if (!isAllowedFile(nextFile)) {
       setFile(null)
       setError(
-        "Format non pris en charge. Utilisez un PDF, DOC ou DOCX."
+        "Format non pris en charge. Utilisez un PDF, un DOCX ou un TXT."
       )
 
       if (fileInputRef.current) {
@@ -113,10 +118,10 @@ export default function HomePage() {
       return
     }
 
-    if (nextFile.size > MAX_FILE_SIZE) {
+    if (nextFile.size > CV_MAX_FILE_SIZE) {
       setFile(null)
       setError(
-        `Votre CV ne doit pas dépasser 10 Mo (actuel : ${formatBytes(
+        `Votre CV ne doit pas dépasser ${CV_MAX_FILE_SIZE_LABEL} (actuel : ${formatBytes(
           nextFile.size
         )}).`
       )
@@ -322,7 +327,7 @@ export default function HomePage() {
                       </p>
 
                       <p className="text-sm text-ink-500">
-                        {fileMeta ?? "PDF, DOC ou DOCX · 10 Mo maximum"}
+                        {fileMeta ?? `PDF, DOCX ou TXT · ${CV_MAX_FILE_SIZE_LABEL} maximum`}
                       </p>
                     </div>
 
@@ -354,7 +359,7 @@ export default function HomePage() {
                       ref={fileInputRef}
                       className="sr-only"
                       type="file"
-                      accept=".pdf,.doc,.docx"
+                      accept={CV_ACCEPT_ATTRIBUTE}
                       disabled={loading}
                       onChange={handleFileChange}
                     />

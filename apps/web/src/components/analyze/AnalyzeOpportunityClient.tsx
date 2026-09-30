@@ -21,6 +21,7 @@ import { PremiumATSResult } from "@/components/analyze/PremiumATSResult"
 import { OpportunityCVTailoring } from "@/components/analyze/OpportunityCVTailoring"
 import { ConversionPanel } from "@/components/conversion/ConversionPanel"
 import { csrfFetch } from "@/lib/security/csrf-client"
+import { CV_MAX_FILE_SIZE_LABEL } from "@/lib/cv/cv-limits"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import {
   normalizePreviewResult,
@@ -346,7 +347,7 @@ export function AnalyzeOpportunityClient({
                       </span>
                     </div>
                     <span className="ml-auto rounded-full bg-surface-muted px-2 py-0.5 text-xs text-foreground-muted">
-                      PDF · DOCX · TXT — max 5 MB
+                      PDF · DOCX · TXT — max {CV_MAX_FILE_SIZE_LABEL}
                     </span>
                   </div>
                   <CVUploader file={file} onFile={setFile} />
