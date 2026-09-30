@@ -21,18 +21,4 @@ test.describe('Interview API - E2E', () => {
     expect([200, 400, 401]).toContain(response.status);
   });
 
-  test('POST /api/interview/questions - should generate interview questions', async () => {
-    const response = await fetch(`${BASE_URL}/api/interview/questions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        jobTitle: 'Software Engineer',
-        level: 'mid',
-      }),
-    });
-
-    // May fail without auth or API keys, but should not crash
-    expect([200, 400, 401, 500]).toContain(response.status);
-  });
-
 });

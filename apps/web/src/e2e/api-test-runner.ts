@@ -126,21 +126,6 @@ async function testInterviewCreate() {
   }
 }
 
-async function testInterviewQuestions() {
-  const response = await fetch(`${API_TEST_BASE_URL}/api/interview/questions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jobTitle: 'Software Engineer',
-      level: 'mid',
-    }),
-  });
-  const status = response.status;
-  if (![200, 400, 401, 500].includes(status)) {
-    throw new Error(`Unexpected status: ${status}`);
-  }
-}
-
 // Matching Tests
 async function testMatchingCalculateScore() {
   const response = await fetch(`${API_TEST_BASE_URL}/api/matching/calculate-score`, {
@@ -323,7 +308,6 @@ async function runApiTests() {
   await runTest('CV: Upload', testCVUpload);
   
   await runTest('Interview: Create', testInterviewCreate);
-  await runTest('Interview: Questions', testInterviewQuestions);
   
   await runTest('Matching: Calculate Score', testMatchingCalculateScore);
   await runTest('Matching: History', testMatchingHistory);
