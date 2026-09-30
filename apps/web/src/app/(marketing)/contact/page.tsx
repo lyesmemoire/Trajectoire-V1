@@ -23,7 +23,7 @@ export default function ContactPage() {
       <div className="max-w-2xl mx-auto px-6 py-20">
         <Link
           href="/"
-          className="inline-flex items-center text-sm text-ink-600 hover:text-ink-900 mb-8 transition-colors"
+          className="inline-flex min-h-11 items-center text-sm text-ink-600 hover:text-ink-900 mb-8 transition-colors"
         >
           ← Retour à l'accueil
         </Link>

@@ -18,19 +18,19 @@ export default function Footer() {
           <h4 className="mb-2 font-semibold text-foreground">
             Produit
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-0">
             <li>
-              <Link href="/analyze" className="transition-colors hover:text-foreground">
+              <Link href="/analyze" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                 Analyser ma candidature
               </Link>
             </li>
             <li>
-              <Link href="/pricing" className="transition-colors hover:text-foreground">
+              <Link href="/pricing" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                 Tarifs
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="transition-colors hover:text-foreground">
+              <Link href="/dashboard" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                 Dashboard
               </Link>
             </li>
@@ -41,21 +41,21 @@ export default function Footer() {
           <h4 className="mb-2 font-semibold text-foreground">
             Légal
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-0">
             <li>
-              <Link href="/terms" className="transition-colors hover:text-foreground">
+              <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                 Conditions générales
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="transition-colors hover:text-foreground">
+              <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                 Politique de confidentialité
               </Link>
             </li>
             <li>
               <a
                 href="mailto:anislamine1980@gmail.com"
-                className="transition-colors hover:text-foreground"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
               >
                 anislamine1980@gmail.com
               </a>

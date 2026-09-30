@@ -184,7 +184,7 @@ export default function SignupPage() {
         style={darkTokens}
         className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
       >
-      <Link href="/" className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950">
+      <Link href="/" className="inline-flex min-h-11 items-center rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950">
         Trajectoire
       </Link>
 
@@ -247,13 +247,13 @@ export default function SignupPage() {
             />
           </div>
 
-          <div className="flex items-start gap-3 py-2">
+          <div className="flex min-h-11 items-start gap-3 py-2">
             <input
               type="checkbox"
               id="cgu"
               checked={acceptCGU}
               onChange={(e) => setAcceptCGU(e.target.checked)}
-              className="mt-1 h-4 w-4 cursor-pointer rounded border-white/[0.2] bg-zinc-950 accent-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="mt-0.5 size-5 shrink-0 cursor-pointer rounded border-white/[0.2] bg-zinc-950 accent-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
             />
             <label htmlFor="cgu" className="text-sm text-white/50 cursor-pointer leading-tight">
               J'accepte les <Link href="/terms" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d'utilisation</Link> et la <Link href="/privacy" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">politique de confidentialité</Link>.
@@ -270,7 +270,7 @@ export default function SignupPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-white/50">
-          Déjà un compte ? <Link href="/login" className="rounded text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">Se connecter</Link>
+          Déjà un compte ? <Link href="/login" className="inline-flex min-h-11 items-center rounded px-1 text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">Se connecter</Link>
         </p>
       </div>
     </div>

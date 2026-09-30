@@ -76,3 +76,28 @@
 .recharts-cartesian-axis-tick-value {
   font-size: 11px;
 }
+
+/* Accessibilité (globale) ------------------------------------------------------------------ */
+@layer base {
+  /* Focus clavier visible partout où un composant ne définit pas le sien. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+}
+
+/* Mouvement réduit : pas d'animation ni de transition longue, pas de défilement animé.
+   Les animations framer-motion sont désactivées par MotionProvider (reducedMotion="user"). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

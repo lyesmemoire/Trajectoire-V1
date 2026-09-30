@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
+import { MotionProvider } from "@/components/providers/MotionProvider"
 
 // Police unique du produit (décision du 2026-10-02 : tout en Inter). Servie depuis nos propres
 // fichiers par next/font (pas d'appel à Google à l'exécution, compatible avec la CSP `font-src 'self'`).
@@ -56,7 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           Aller au contenu principal
         </a>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   )

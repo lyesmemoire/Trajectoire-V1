@@ -78,7 +78,7 @@ export function Navbar({
       <nav className="mx-auto flex h-[73px] max-w-7xl items-center justify-between px-6">
         <Link
           href="/"
-          className="flex items-center gap-2"
+          className="flex min-h-11 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <div className="flex size-[26px] items-center justify-center rounded-[8px] bg-primary shadow-sm" aria-hidden="true">
              <div className="size-2 rounded-[2px] bg-white" />
@@ -173,7 +173,7 @@ export function Navbar({
 
         <button
           type="button"
-          className="rounded-lg p-2 text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:hidden"
+          className="grid size-11 place-items-center rounded-lg text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:hidden"
           onClick={() =>
             setMobileOpen(
               (current) => !current,
