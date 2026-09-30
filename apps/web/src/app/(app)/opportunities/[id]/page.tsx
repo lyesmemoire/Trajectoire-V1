@@ -166,7 +166,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
             </span>
           </div>
 
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-foreground sm:text-5xl">
+          <h1 className="font-sans text-4xl font-medium tracking-tight text-foreground sm:text-5xl">
             {opportunity.title}
           </h1>
 
@@ -239,7 +239,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                         Match Score
                       </p>
                       <div className="flex items-baseline gap-1.5">
-                        <span className="font-serif text-5xl text-foreground">
+                        <span className="font-sans text-5xl text-foreground">
                           {score}
                         </span>
                         <span className="text-sm font-medium text-foreground-muted">
@@ -362,7 +362,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                 <div className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-surface-muted">
                   <BrainCircuit className="size-5 text-foreground-muted" />
                 </div>
-                <h3 className="mb-2 font-serif text-xl font-medium text-foreground">
+                <h3 className="mb-2 font-sans text-xl font-medium text-foreground">
                   Analyser cette opportunité
                 </h3>
                 <p className="mx-auto mb-6 max-w-sm text-sm text-foreground-muted">

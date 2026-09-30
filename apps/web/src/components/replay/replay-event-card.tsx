@@ -104,7 +104,7 @@ export function ReplayEventCard({ event }: { event: ReplayEvent }) {
           </span>
         </div>
 
-        <h4 className="text-lg font-serif font-black text-ink-900 mb-2">
+        <h4 className="text-lg font-sans font-black text-ink-900 mb-2">
           {event.title}
         </h4>
         <p className="text-sm text-ink-600 font-medium leading-relaxed mb-4">
@@ -116,7 +116,7 @@ export function ReplayEventCard({ event }: { event: ReplayEvent }) {
             <p className="text-xs font-black text-ink-400 uppercase tracking-widest mb-2">
               Conseil Stratégique
             </p>
-            <p className="text-sm font-serif font-bold text-ink-800 leading-relaxed italic">
+            <p className="text-sm font-sans font-bold text-ink-800 leading-relaxed italic">
               "{event.coachingAdvice}"
             </p>
           </div>

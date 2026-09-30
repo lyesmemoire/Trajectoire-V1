@@ -104,7 +104,7 @@ export function TestimonialsSection() {
               className="p-12 rounded-[3.5rem] bg-[#0B1023] border border-white/[0.08] flex flex-col justify-between group hover:bg-[#0F172A] hover:border-white/10 transition-all duration-500 shadow-2xl"
             >
               <div className="space-y-8">
-                <div className="text-5xl text-white/10 font-serif">“</div>
+                <div className="text-5xl text-white/10 font-sans">“</div>
                 <p className="text-xl font-medium text-ink-200 leading-relaxed italic">
                   {t.quote}
                 </p>

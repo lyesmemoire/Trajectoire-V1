@@ -46,7 +46,7 @@ export default function QADesignPage() {
     <main className="min-h-screen bg-ivoire-50">
       <div className="max-w-6xl mx-auto px-6 py-12 space-y-12">
         <header className="space-y-2">
-          <h1 className="font-serif text-3xl text-ink-900">QA Visuelle — Design System</h1>
+          <h1 className="font-sans text-3xl text-ink-900">QA Visuelle — Design System</h1>
           <p className="text-sm text-ink-600">
             Page de test dev-only. À supprimer ou garder protégée par notFound() en prod.
           </p>
@@ -54,7 +54,7 @@ export default function QADesignPage() {
 
         {/* 1) Badges (collision Bronze vs autres) */}
         <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
-          <h2 className="font-serif text-xl text-ink-900 mb-4">Badges</h2>
+          <h2 className="font-sans text-xl text-ink-900 mb-4">Badges</h2>
           <div className="flex flex-wrap items-center gap-3">
             <Badge variant="free" />
             <Badge variant="pro" />
@@ -67,7 +67,7 @@ export default function QADesignPage() {
 
         {/* 2) Scores (Forest / Terracotta / Brick) */}
         <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
-          <h2 className="font-serif text-xl text-ink-900 mb-4">Scores</h2>
+          <h2 className="font-sans text-xl text-ink-900 mb-4">Scores</h2>
           <div className="flex flex-wrap gap-10 items-center">
             <div className="text-center space-y-2">
               <ScoreRing score={35} label="Score" />
@@ -86,7 +86,7 @@ export default function QADesignPage() {
 
         {/* 3) Boutons (inclure danger) */}
         <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
-          <h2 className="font-serif text-xl text-ink-900 mb-4">Boutons</h2>
+          <h2 className="font-sans text-xl text-ink-900 mb-4">Boutons</h2>
           <div className="flex flex-wrap gap-3">
             <Button variant="primary">Primary (Ink)</Button>
             <Button variant="premium">Premium (Bronze)</Button>
@@ -103,12 +103,12 @@ export default function QADesignPage() {
         {/* 4) Leaderboard + Badge PRO (test collision) */}
         <section className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
-            <h2 className="font-serif text-xl text-ink-900 mb-4">Leaderboard</h2>
+            <h2 className="font-sans text-xl text-ink-900 mb-4">Leaderboard</h2>
             <LiveLeaderboard entries={entries} />
           </div>
 
           <div className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium space-y-4">
-            <h2 className="font-serif text-xl text-ink-900">Collision test</h2>
+            <h2 className="font-sans text-xl text-ink-900">Collision test</h2>
             <p className="text-sm text-ink-600">
               Mets le badge PRO à côté du podium : ils ne doivent pas partager la même "signature" couleur.
               Le podium utilise des hex isolés (#B8860B, #8A8A8A, #CD7F32), le badge PRO utilise bronze-* tokens.
@@ -130,7 +130,7 @@ export default function QADesignPage() {
 
         {/* 5) État système (success/neutral/danger) */}
         <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
-          <h2 className="font-serif text-xl text-ink-900 mb-4">États système</h2>
+          <h2 className="font-sans text-xl text-ink-900 mb-4">États système</h2>
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-forest-50 border border-forest-200 rounded-lg">
               <div className="w-3 h-3 rounded-full bg-forest-500"></div>

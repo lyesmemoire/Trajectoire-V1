@@ -286,7 +286,7 @@ export function AnalyzeOpportunityClient({
                   Analyse ATS
                 </span>
               </div>
-              <h1 className="mt-3 font-serif text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+              <h1 className="mt-3 font-sans text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
                 {opportunity ? "Adapter votre CV à cette offre" : "Diagnostiquer votre CV"}
               </h1>
               <p className="mt-2 text-base leading-relaxed text-foreground-muted">
@@ -480,7 +480,7 @@ export function AnalyzeOpportunityClient({
               </span>
             </div>
 
-            <h2 className="mt-4 font-serif text-xl font-medium leading-snug text-background">
+            <h2 className="mt-4 font-sans text-xl font-medium leading-snug text-background">
               Votre parcours contient déjà les preuves. On les rend visibles.
             </h2>
 

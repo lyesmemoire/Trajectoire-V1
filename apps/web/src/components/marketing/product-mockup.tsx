@@ -32,7 +32,7 @@ export default function ProductMockup() {
                 }}
               >
                 <div className="absolute inset-2.5 rounded-full bg-white flex items-center justify-center shadow-inner">
-                  <strong className="text-2xl font-serif font-black text-ink-800">
+                  <strong className="text-2xl font-sans font-black text-ink-800">
                     84%
                   </strong>
                 </div>
@@ -41,7 +41,7 @@ export default function ProductMockup() {
                 <span className="text-[10px] font-bold text-ink-400 tracking-wider uppercase">
                   Score ATS
                 </span>
-                <h3 className="font-serif font-extrabold text-ink-800 text-sm leading-snug mt-1">
+                <h3 className="font-sans font-extrabold text-ink-800 text-sm leading-snug mt-1">
                   Compatible avec l'offre Product Manager
                 </h3>
                 <div className="mt-3 space-y-1.5">
@@ -144,7 +144,7 @@ export default function ProductMockup() {
 
       {/* Floating metric indicator */}
       <div className="absolute -right-6 -bottom-6 hidden md:block bg-white/90 backdrop-blur-md border border-ivoire-200/80 rounded-2xl p-4 shadow-premium-lg max-w-[210px]">
-        <strong className="text-lg font-serif font-black text-ink-800 block">
+        <strong className="text-lg font-sans font-black text-ink-800 block">
           +3 entretiens
         </strong>
         <p className="text-ink-500 text-xs leading-normal mt-1">

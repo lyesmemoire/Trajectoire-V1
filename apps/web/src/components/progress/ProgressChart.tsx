@@ -33,7 +33,7 @@ export function ProgressChart({
 
   return (
     <div className="flex h-80 w-full flex-col rounded-3xl border border-ivoire-200 bg-white/70 backdrop-blur-xl p-6 shadow-premium">
-      <h3 className="mb-6 text-sm font-serif font-black text-ink-900 uppercase tracking-wider">
+      <h3 className="mb-6 text-sm font-sans font-black text-ink-900 uppercase tracking-wider">
         {title}
       </h3>
       <div className="flex-1">

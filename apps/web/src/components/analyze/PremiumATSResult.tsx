@@ -60,7 +60,7 @@ export function PremiumATSResult({
         </p>
 
         <div className="mt-6 flex items-baseline gap-3">
-          <span className={`font-serif text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
+          <span className={`font-sans text-[110px] font-medium leading-[0.8] tracking-tight ${theme.text}`}>
             {score}
           </span>
           <div>
@@ -80,7 +80,7 @@ export function PremiumATSResult({
       {/* ===== DÉTAIL DU SCORE (analyse complète) ===== */}
       {dimensions.length > 0 && (
         <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Détail du score</h2>
+          <h2 className="mb-6 font-sans text-xl font-medium text-foreground">Détail du score</h2>
           <ul className="space-y-5">
             {dimensions.map(({ label, value }) => {
               const dim = getScoreTheme(value)
@@ -88,7 +88,7 @@ export function PremiumATSResult({
                 <li key={label}>
                   <div className="flex items-baseline justify-between gap-4">
                     <span className="text-sm font-semibold text-foreground">{label}</span>
-                    <span className={`font-serif text-lg font-medium ${dim.text}`}>{Math.round(value)}</span>
+                    <span className={`font-sans text-lg font-medium ${dim.text}`}>{Math.round(value)}</span>
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-border/40">
                     <div className={`h-full rounded-full ${dim.bar}`} style={{ width: `${Math.round(value)}%` }} />
@@ -120,7 +120,7 @@ export function PremiumATSResult({
                 <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-100">
                   <Check className="size-4 text-emerald-600" />
                 </div>
-                <h2 className="font-serif text-xl font-medium text-emerald-900">Vos forces pour ce poste</h2>
+                <h2 className="font-sans text-xl font-medium text-emerald-900">Vos forces pour ce poste</h2>
               </div>
               <ul className="space-y-4">
                 {strengths.map((item, i) => (
@@ -140,7 +140,7 @@ export function PremiumATSResult({
                 <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100">
                   <AlertTriangle className="size-4 text-amber-600" />
                 </div>
-                <h2 className="font-serif text-xl font-medium text-amber-900">À renforcer</h2>
+                <h2 className="font-sans text-xl font-medium text-amber-900">À renforcer</h2>
               </div>
               <p className="mb-6 text-xs text-amber-700">
                 Ce qui mérite votre attention avant de candidater.
@@ -162,7 +162,7 @@ export function PremiumATSResult({
       {/* ===== COMPÉTENCES DÉTECTÉES (uniquement si fournies) ===== */}
       {(detectedSkills.length > 0 || missingSkills.length > 0) && (
         <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-          <h2 className="mb-6 font-serif text-xl font-medium text-foreground">Mapping des compétences</h2>
+          <h2 className="mb-6 font-sans text-xl font-medium text-foreground">Mapping des compétences</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {detectedSkills.length > 0 && (
               <div>
@@ -199,7 +199,7 @@ export function PremiumATSResult({
             <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
               <Sparkles className="size-4 text-violet-600" />
             </div>
-            <h2 className="font-serif text-xl font-medium text-violet-900">Recommandations Trajectoire</h2>
+            <h2 className="font-sans text-xl font-medium text-violet-900">Recommandations Trajectoire</h2>
           </div>
           <ul className="space-y-4">
             {recommendations.map((item, i) => (
@@ -219,7 +219,7 @@ export function PremiumATSResult({
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Préparez l&apos;entretien</h3>
+                <h3 className="mt-1 font-sans text-lg font-medium text-foreground">Préparez l&apos;entretien</h3>
                 <p className="mt-1 text-sm text-foreground-muted">Simulations d&apos;entretien personnalisées et rapport détaillé après chaque simulation.</p>
               </div>
               <Link
@@ -234,7 +234,7 @@ export function PremiumATSResult({
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-violet-600">Étape suivante</p>
-                <h3 className="mt-1 font-serif text-lg font-medium text-foreground">Passez aux simulations d&apos;entretien</h3>
+                <h3 className="mt-1 font-sans text-lg font-medium text-foreground">Passez aux simulations d&apos;entretien</h3>
                 <p className="mt-1 text-sm text-foreground-muted">Le Pack Entretien ou Pro vous donnent accès aux simulations et aux rapports détaillés.</p>
               </div>
               <Link

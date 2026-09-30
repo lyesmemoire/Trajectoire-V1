@@ -58,7 +58,7 @@ export const fonts = {
   /** Corps de texte */
   body: "font-sans",
   /** Marketing / moments de marque uniquement */
-  brand: "font-serif",
+  brand: "font-sans",
 } as const
 
 // ─── Spacing scale (px) ───────────────────────────────────────────────────
@@ -72,9 +72,9 @@ export const spacing = {
 /**
  * RÈGLES FONDAMENTALES
  *
- * 1. Espace app : font-sans partout (titres, labels, valeurs)
- * 2. Fraunces (font-serif) : UNIQUEMENT marketing/landing et
- *    moments de marque explicitement justifiés (ex: logo sidebar)
+ * 1. Police unique : Inter (font-sans, chargée par next/font dans app/layout.tsx), partout :
+ *    site public et espace connecté (décision du 2026-10-02). Plus de serif.
+ * 2. (réservé)
  * 3. CTA primaire : bg-primary text-white (violet) — jamais bg-ink-900 dans l'app
  * 4. Densité : paddings 20–24px pour les cartes, 16–20px pour les items de liste
  * 5. Ombres ultra-subtiles — max shadow-sm sur cards normales

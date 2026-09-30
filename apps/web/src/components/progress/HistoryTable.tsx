@@ -15,7 +15,7 @@ export function HistoryTable({ history }: HistoryTableProps) {
   return (
     <div className="mt-8 rounded-xl border border-ivoire-200 bg-white/70 backdrop-blur-xl shadow-premium overflow-hidden">
       <div className="px-6 py-4 border-b border-ivoire-200">
-        <h3 className="text-lg font-serif font-semibold text-ink-900">
+        <h3 className="text-lg font-sans font-semibold text-ink-900">
           Historique des Sessions
         </h3>
       </div>

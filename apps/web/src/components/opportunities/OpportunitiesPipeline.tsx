@@ -57,7 +57,7 @@ function OpportunityRow({ opportunity }: { opportunity: OpportunityListItem }) {
             </span>
           </div>
 
-          <h3 className="truncate font-serif text-lg font-medium text-foreground">
+          <h3 className="truncate font-sans text-lg font-medium text-foreground">
             {opportunity.title}
           </h3>
 
@@ -144,7 +144,7 @@ export function OpportunitiesPipeline({ initialOpportunities }: Props) {
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
             Opportunites
           </p>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-foreground">
+          <h1 className="font-sans text-4xl font-medium tracking-tight text-foreground">
             Vos pistes actives
           </h1>
           <p className="mt-2 max-w-md text-sm text-foreground-muted">
@@ -219,7 +219,7 @@ export function OpportunitiesPipeline({ initialOpportunities }: Props) {
                       </div>
                       <span className="text-sm font-medium text-foreground-muted">{label}</span>
                     </div>
-                    <span className="font-serif text-2xl font-medium text-foreground">{value}</span>
+                    <span className="font-sans text-2xl font-medium text-foreground">{value}</span>
                   </div>
                 ))}
               </div>

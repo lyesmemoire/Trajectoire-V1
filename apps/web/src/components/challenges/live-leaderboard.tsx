@@ -40,7 +40,7 @@ export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
   return (
     <div className="bg-white/70 backdrop-blur-xl rounded-[3rem] border border-ivoire-200 p-8 shadow-premium space-y-8">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-serif font-black text-ink-900 flex items-center gap-2">
+        <h3 className="text-xl font-sans font-black text-ink-900 flex items-center gap-2">
           <Trophy className="w-5 h-5 text-[#B8860B]" /> Top Performers
         </h3>
         <span className="text-[10px] font-black text-ink-400 uppercase tracking-widest bg-ivoire-50 px-3 py-1 rounded-lg border border-ivoire-100">
@@ -63,7 +63,7 @@ export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
               }`}
             >
               <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center font-serif font-black text-lg ${
+                className={`w-10 h-10 rounded-xl flex items-center justify-center font-sans font-black text-lg ${
                   style ? style.pill : "bg-white text-ink-400"
                 }`}
               >
@@ -71,7 +71,7 @@ export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className="font-serif font-black text-ink-900 truncate">
+                <p className="font-sans font-black text-ink-900 truncate">
                   {entry.user.name || "Candidat Anonyme"}
                 </p>
                 <div className="flex items-center gap-4 mt-1">
@@ -91,7 +91,7 @@ export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
               </div>
 
               <div className="text-right">
-                <p className="text-xl font-serif font-black text-ink-900">
+                <p className="text-xl font-sans font-black text-ink-900">
                   {entry.bestScore}
                 </p>
                 <p className="text-[8px] font-black text-ink-400 uppercase tracking-widest">

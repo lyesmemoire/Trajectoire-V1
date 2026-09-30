@@ -47,7 +47,7 @@ export function DashboardContent({ user, lastAnalysis, previousAnalysis, quota }
 
       {/* Header */}
       <header className="max-w-4xl mx-auto mb-12 flex items-center justify-between relative z-10">
-        <Link href="/" className="text-lg font-serif font-semibold tracking-tight text-ink-900">
+        <Link href="/" className="text-lg font-sans font-semibold tracking-tight text-ink-900">
           Trajectoire
         </Link>
         <div className="flex items-center gap-4">
@@ -69,7 +69,7 @@ export function DashboardContent({ user, lastAnalysis, previousAnalysis, quota }
           transition={{ duration: 0.5 }}
         >
           <p className="text-ink-600 text-sm">Bienvenue,</p>
-          <h1 className="text-3xl font-serif font-semibold mt-1 text-ink-900">
+          <h1 className="text-3xl font-sans font-semibold mt-1 text-ink-900">
             {userName}.
           </h1>
           <p className="text-ink-600 mt-2">
@@ -126,7 +126,7 @@ export function DashboardContent({ user, lastAnalysis, previousAnalysis, quota }
                   <p className="text-ink-600 text-sm">
                     Évolution
                   </p>
-                  <p className="text-2xl font-serif font-semibold mt-1 text-ink-900">
+                  <p className="text-2xl font-sans font-semibold mt-1 text-ink-900">
                     {evolution > 0 ? "+" : ""}
                     {evolution} points
                   </p>
@@ -162,7 +162,7 @@ export function DashboardContent({ user, lastAnalysis, previousAnalysis, quota }
               shadow-premium
             "
           >
-            <h2 className="text-2xl font-serif font-semibold mb-4 text-ink-900">
+            <h2 className="text-2xl font-sans font-semibold mb-4 text-ink-900">
               Commencez par analyser votre CV
             </h2>
             <p className="text-ink-600 mb-6">

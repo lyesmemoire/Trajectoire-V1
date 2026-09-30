@@ -82,8 +82,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['"Fraunces"', 'Georgia', 'ui-serif', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         premium: '0 4px 24px -4px rgba(30, 27, 75, 0.08)',

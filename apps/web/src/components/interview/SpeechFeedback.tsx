@@ -104,7 +104,7 @@ function StatCard({
           {label}
         </span>
       </div>
-      <p className={`text-lg font-serif font-black leading-none ${color} mt-1`}>{value}</p>
+      <p className={`text-lg font-sans font-black leading-none ${color} mt-1`}>{value}</p>
       {sub && (
         <p className="text-[10px] font-bold text-ink-300 mt-1">{sub}</p>
       )}
@@ -157,7 +157,7 @@ export function SpeechFeedback({
       <div className="flex items-center gap-6 p-8 bg-white/70 backdrop-blur-xl rounded-[2.5rem] border border-ivoire-200 shadow-premium-lg">
         <div className="text-center">
           <div
-            className={`w-24 h-24 rounded-full border-8 border-ivoire-100 flex items-center justify-center text-3xl font-serif font-black mb-2 ${OVERALL_CONFIG[result.overallRating].color}`}
+            className={`w-24 h-24 rounded-full border-8 border-ivoire-100 flex items-center justify-center text-3xl font-sans font-black mb-2 ${OVERALL_CONFIG[result.overallRating].color}`}
           >
             {result.overallScore}
           </div>
@@ -168,7 +168,7 @@ export function SpeechFeedback({
           </span>
         </div>
         <div className="flex-1 space-y-2">
-          <h3 className="text-xl font-serif font-black text-ink-900">
+          <h3 className="text-xl font-sans font-black text-ink-900">
             Analyse de l'Élocution
           </h3>
           <p className="text-sm text-ink-600 font-medium leading-relaxed">
@@ -224,7 +224,7 @@ export function SpeechFeedback({
           >
             <CheckCircle2 className="w-6 h-6 text-bronze-600 flex-shrink-0" />
             <div>
-              <p className="text-sm font-serif font-black text-ink-900">{rec.title}</p>
+              <p className="text-sm font-sans font-black text-ink-900">{rec.title}</p>
               <p className="text-xs text-ink-600 font-medium mt-1 leading-relaxed">
                 {rec.description}
               </p>

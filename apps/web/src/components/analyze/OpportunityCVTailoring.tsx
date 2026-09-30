@@ -224,7 +224,7 @@ export function OpportunityCVTailoring({
             <p className="text-xs font-bold uppercase tracking-widest text-violet-600">
               Étape suivante — CV Tailoring IA
             </p>
-            <h2 className="mt-1 font-serif text-xl font-medium text-foreground">
+            <h2 className="mt-1 font-sans text-xl font-medium text-foreground">
               Optimisez votre CV pour cette opportunité
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
@@ -278,7 +278,7 @@ export function OpportunityCVTailoring({
           <p className="text-xs font-bold uppercase tracking-widest text-violet-600">
             CV Tailoring terminé
           </p>
-          <h2 className="mt-1 font-serif text-xl font-medium text-foreground">
+          <h2 className="mt-1 font-sans text-xl font-medium text-foreground">
             Recommandations pour {opportunity.title}
           </h2>
           {opportunity.company ? (

@@ -16,7 +16,7 @@ export function ReplayTimeline({ replay }: { replay: SessionReplay }) {
           <p className="text-[10px] font-black uppercase tracking-widest text-ivoire-300 mb-2">
             Profil de Session
           </p>
-          <h3 className="text-2xl font-serif font-black mb-4">{replay.archetype}</h3>
+          <h3 className="text-2xl font-sans font-black mb-4">{replay.archetype}</h3>
           <p className="text-xs font-medium text-ivoire-200 leading-relaxed opacity-80">
             Cette session révèle un profil analytique avec une forte capacité
             d'adaptation.
@@ -27,7 +27,7 @@ export function ReplayTimeline({ replay }: { replay: SessionReplay }) {
             <Trophy className="w-8 h-8 text-forest-600" />
           </div>
           <div>
-            <h4 className="text-lg font-serif font-black text-ink-900">
+            <h4 className="text-lg font-sans font-black text-ink-900">
               Bilan Comportemental
             </h4>
             <p className="text-sm text-ink-600 font-medium leading-relaxed mt-1">
