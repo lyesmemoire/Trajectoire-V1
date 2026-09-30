@@ -12,6 +12,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Chrome, Github, Mail, ArrowLeft } from 'lucide-react'
 import { PreviewTokenManager } from '@/lib/preview-analysis/previewTokenManager'
+import { isValidEmail, normalizeEmail, validatePassword } from '@/lib/auth/credentials'
+import { translateAuthError } from '@/lib/auth/auth-errors'
 
 export default function SignupConversionPage() {
   const router = useRouter()
@@ -36,8 +38,14 @@ export default function SignupConversionPage() {
       setError('Les mots de passe ne correspondent pas.')
       return
     }
-    if (password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.')
+    const normalizedEmail = normalizeEmail(email)
+    if (!isValidEmail(normalizedEmail)) {
+      setError("Cette adresse e-mail n'est pas valide.")
+      return
+    }
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      setError(passwordError)
       return
     }
     if (!acceptCGU) {
@@ -50,7 +58,7 @@ export default function SignupConversionPage() {
     try {
       const supabase = createClient()
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
+        email: normalizedEmail,
         password,
         options: {
           data: {
@@ -86,8 +94,8 @@ export default function SignupConversionPage() {
           PreviewTokenManager.setLinkCookie(previewToken)
         }
       }
-    } catch (err: any) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.')
+    } catch (err: unknown) {
+      setError(translateAuthError(err as { code?: string; message?: string; status?: number }))
     } finally {
       setLoading(false)
     }
