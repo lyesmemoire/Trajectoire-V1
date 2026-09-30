@@ -56,3 +56,10 @@
 - **Rétention (option A)** : le texte des CV et les analyses sont conservés tant que le compte existe, supprimés avec lui (`lib/account/purge-user-data.ts`) ; la politique de confidentialité le dit. Pas de purge automatique.
 - Suppression de compte : Stripe (abonnement annulé) → données applicatives (transaction) → compte Auth. Les factures restent chez Stripe.
 - Realtime : un jeton n'est délivré que pour une session `interview_sessions` en cours de l'utilisateur (créée, donc décomptée, par `/api/simulation/create`).
+
+## Paiement, auth et marque (validé le 2026-10-02)
+- **Paiement échoué : période de grâce.** `past_due` conserve les droits PRO ; les relances Stripe suivent leur cours et `customer.subscription.deleted` ramène à FREE. (À implémenter dans `plan-access`, voir `tasks.md`.)
+- **`/signup-conversion` reste une page distincte de `/signup`** : `/signup` = inscription directe (sombre) ; `/signup-conversion` = parcours venant de l'aperçu ATS (clair, OAuth Google/GitHub, contexte de conversion). Ne pas fusionner.
+- **Navbar violet = couleur de marque du site public** (token `primary`) : ne pas la passer en indigo. L'indigo est la couleur de l'espace connecté.
+- Règles d'authentification communes : mot de passe 8 caractères minimum, e-mail normalisé (`lib/auth/credentials.ts`) ; erreurs Supabase toujours traduites (`lib/auth/auth-errors.ts`), jamais le texte brut.
+- `cv_rewrites.analysis_id` relie une réécriture à son analyse (facultatif, cascade) ; `expires_at` ne gouverne que le rejeu idempotent, pas la conservation.

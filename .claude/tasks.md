@@ -8,15 +8,15 @@
 ## Restant — par priorité
 
 ### Avant d'encaisser (bloquant)
-- [ ] 🔴 **Mise en ligne de la tarification** : migration `20260930_pricing_plans_pack_pro` **appliquée** à Supabase le 2026-09-30 ; reste à faire (côté utilisateur) : créer les prix Stripe test (Pack 29 € TTC unique, Pro 19 €/mois sans essai), `STRIPE_PRICE_INTERVIEW_PACK`, `STRIPE_PRO_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` (`whsec_…` via `stripe listen`), installer le CLI Stripe, configurer le portail de facturation, puis dérouler la checklist E2E (16 parcours, corrigée : Pack = +3 mois, FREE = 0 simulation). Documenter les 3 variables de prix dans `ENV.md` / `.env.example`.
-- [ ] 🔴 **Décision produit — paiement échoué** : aujourd'hui `past_due` retire immédiatement les droits PRO (`plan-access`). Recommandé : délai de grâce (accepter `past_due`).
+- [ ] 🔴 **Mise en ligne de la tarification** : migration `20260930_pricing_plans_pack_pro` **appliquée** à Supabase le 2026-09-30 ; reste à faire (côté utilisateur) : créer les prix Stripe test (Pack 29 € TTC unique, Pro 19 €/mois sans essai), `STRIPE_PRICE_INTERVIEW_PACK`, `STRIPE_PRO_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` (`whsec_…` via `stripe listen`), installer le CLI Stripe, configurer le portail de facturation, puis dérouler la checklist E2E (16 parcours, corrigée : Pack = +3 mois, FREE = 0 simulation). Les variables de prix sont documentées dans `ENV.md` / `.env.example` (`4a17c443`).
+- [ ] 🔴 **Paiement échoué : décision prise (période de grâce)** — `past_due` doit **conserver** les droits PRO (Stripe relance puis envoie `customer.subscription.deleted` → FREE). **Reste à implémenter** dans `lib/quota/plan-access.ts` (aujourd'hui seul `active` donne PRO) + test ; à faire avant les 16 parcours Stripe (le parcours « paiement échoué » l'attend).
 - [ ] 🔴 **Simulation Realtime** (`useRealtimeInterview`, `simulation/[id]`) : le pipeline de rapport a été raccordé (`93329526`, `a3c98841`, `94253685`) mais **jamais testé de bout en bout** (entretien vocal → rapport → settings). `/api/interview/realtime-session` exige désormais une session en cours de l'utilisateur (donc déjà décomptée du quota à la création) et a un rate-limit (`da95b917`). `POST /api/interview` renvoie 404 en production (route legacy).
 - [x] **RGPD (2026-10-02)** : `deleteAccount` supprime désormais `public.users` (cascades) + les tables sans FK, dans une transaction, avant le compte Auth (`e0eea467`) ; 4 comptes orphelins de test supprimés ; politique de confidentialité alignée (`30076efb`). **Rétention (option A)** : le texte des CV est conservé tant que le compte existe et supprimé avec lui. Reste : `AdminAuditLog` en `RESTRICT` bloque la suppression d'un administrateur ayant des entrées (voulu, message générique).
 - [x] Purge des 33 aperçus expirés de `PreviewAnalysis` faite (2026-10-02, accord explicite). Reste : planifier le nettoyage périodique (`/api/admin/cleanup-previews` n'est pas planifié).
 
 ### Module CV / ATS (audit du 2026-09-30)
 - [x] **Phase 3 faite** : moteur `lib/cv-analysis/` (`770ac59c`), aperçu gratuit par le moteur (`680a7834`), analyse complète PACK/PRO enregistrée dans `CVAnalysis` (`ae294387`).
-- [x] Pages `(app)/cv` et `(app)/cv/[id]` faites (`0e887830`). Reste : historique des **réécritures** liées à une analyse — impossible tant que `cv_rewrites` n'a pas de colonne `analysis_id` (migration à valider) ; le bouton « Réécrire ce CV » mène à `/analyze` sans `?cv=id`.
+- [x] Pages `(app)/cv` et `(app)/cv/[id]` faites (`0e887830`). **Réécritures liées à une analyse faites** (`dbadd5aa`) : colonne `cv_rewrites.analysis_id` (migration `20261002_add_analysis_id_to_cv_rewrites` **appliquée** le 2026-10-02), `api/cv/rewrite` accepte `analysisId` (404 si l'analyse n'est pas à l'utilisateur), section « Réécritures » sur `/cv/[id]`. Reste : le bouton « Réécrire ce CV » mène à `/analyze` sans `?cv=id` (pas d'interface de réécriture dédiée) ; seul le parcours « Adapter à une offre » appelle la réécriture.
 - [ ] Export PDF/DOCX du CV à reconstruire (l'ancien code était mort et a été supprimé).
 - [ ] Un seul validateur d'upload (PDF/DOCX/TXT, une limite) : `cv/upload` (pdfjs, 8 Mo) et `analyze-preview` (pdf-parse, 5 Mo, DOCX « non supporté », TXT probablement rejeté par `file-type`).
 - [ ] Design `/analyze` : **décision du 2026-10-02 : le site public reste en thème clair** (pas de bascule sombre, essai annulé `2b6c8a26`). Reste seulement à harmoniser le clair (violet/ivoire/bronze mélangés) si souhaité.
@@ -25,12 +25,12 @@
 
 ### Auth
 - [ ] **Test manuel de bout en bout jamais fait** : inscription → confirmation → onboarding → reset mot de passe.
-- [ ] Lots A1–A3 (erreurs Supabase en français, renvoi de l'e-mail de confirmation, redirection des utilisateurs connectés depuis les pages d'auth) et B3–B5 (longueur de mot de passe 6/8, validation/normalisation e-mail, chemin dev de signup).
-- [ ] Fusionner `/signup-conversion` (claire, OAuth) dans `/signup` ; `/welcome` orpheline.
+- [x] **Lots A1–A3 et B3–B5 faits (2026-10-02, `873ad098`)** : erreurs Supabase en français (`lib/auth/auth-errors.ts`), renvoi de l'e-mail de confirmation (inscription et connexion), `/signup` redirige un utilisateur connecté, mot de passe 8 caractères minimum (`lib/auth/credentials.ts`), e-mail normalisé et validé, chemin de signup propre au développement retiré. `signup-conversion` alignée sur les mêmes règles (`478861c0`). Reste : Supabase applique sa propre longueur minimale (réglage du projet, non visible).
+- [x] `/welcome` orpheline supprimée (`4a17c443`). **`/signup-conversion` conservée comme page distincte** (thème clair, OAuth, parcours de conversion depuis l'aperçu ATS) : ne pas la fusionner dans `/signup` (décision du 2026-10-02).
 
 ### Divers
 - [x] Chiffres inventés retirés : dashboard (`166d1242`, `41cae305`), `/api/interview/evaluate` (score aléatoire) + `/interview` redirigé + composants et fichiers morts (`executive-result-engine`, `career-dna-card`, `evolution-card`, `analysis-recap`) (`dbe6d64d`), route orpheline `interview/questions` (`6841efe9`). Reste à vérifier ailleurs : `Math.random()` dans des chemins de score (aucun autre trouvé lors de la recherche du 2026-10-02).
-- [ ] Bouton « Commencer » de la Navbar violet (`bg-primary`) sur des pages indigo ; `hover:bg-slate-100` dans la Navbar.
+- [x] Navbar : `hover:bg-slate-100` remplacé par un token (`4a17c443`). Le bouton « Commencer » reste **violet** : c'est la couleur de marque du site public (décision du 2026-10-02).
 - [ ] Deux enums de plans parallèles (`AuthorizationV2.SubscriptionPlan`, `types/subscription.SubscriptionPlan`) à fusionner.
 - [ ] Un échec Vitest isolé non identifié (vu une fois, non reproduit en 5 exécutions).
 - [ ] Deux suites bloquées par la garde `[SAFETY]` (`PreviewStorageService`, `PreviewAnalysisRepository`) : nécessitent une base locale — comportement voulu.
@@ -64,4 +64,4 @@
 - [x] **Realtime-session** : session en cours obligatoire + rate-limit (`da95b917`). **Privacy** : `30076efb`.
 - [x] **Module CV — Phase 0/1/2 (2026-10-01)** : valeurs inventées retirées (radar aléatoire, percentile, métriques par défaut) `435a5b5f` ; plus de transfert de l'aperçu vers le profil, résultat réel persisté, texte du CV non conservé `b357ddc5` ; un seul chemin d'aperçu `3c495b30` ; 24 fichiers morts supprimés `50072409` ; analyse complète et réécriture réservées PACK/PRO `91509cc4` ; CSRF + rate-limit + assainissement des prompts `4b0f21e4`.
 
-**Suite Vitest complète : 758/758 tests passent** (mesure du 2026-10-02 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).
+**Suite Vitest complète : 770/770 tests passent** (mesure du 2026-10-02 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).
