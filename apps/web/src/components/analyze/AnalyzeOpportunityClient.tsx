@@ -388,6 +388,7 @@ export function AnalyzeOpportunityClient({
                   score={preview.score}
                   strengths={preview.strengths}
                   weaknesses={preview.weakness ? [preview.weakness] : []}
+                  notices={preview.warnings}
                   isAuthenticated={isAuthenticated}
                   hasPremiumAccess={hasPremiumAccess}
                 />

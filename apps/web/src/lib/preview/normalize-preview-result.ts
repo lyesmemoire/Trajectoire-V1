@@ -14,6 +14,10 @@ export interface PreviewResultView {
   score: number
   strengths: string[]
   weakness: string | null
+  /** Analyse face à une offre, ou du seul CV (offre absente / trop courte). */
+  mode: "job_match" | "cv_only" | null
+  /** Limites de l'analyse à afficher à l'utilisateur. */
+  warnings: string[]
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -45,9 +49,18 @@ export function normalizePreviewResult(data: unknown): PreviewResultView | null 
       ? firstWeakness.trim()
       : null
 
+  const mode = source.mode === "job_match" || source.mode === "cv_only" ? source.mode : null
+  const warnings = Array.isArray(source.warnings)
+    ? source.warnings.filter(
+        (item): item is string => typeof item === "string" && item.trim().length > 0,
+      )
+    : []
+
   return {
     score: Math.min(100, Math.max(0, Math.round(rawScore))),
     strengths,
     weakness,
+    mode,
+    warnings,
   }
 }

@@ -1,9 +1,12 @@
 import { describe, it, expect } from "vitest"
 import { analyzeCv } from "./index"
 import { CV_DEV, CV_JUNIOR, CV_NURSE, JOB_DEV, JOB_MKT, JOB_NURSE } from "./fixtures"
+import { normalize } from "./text"
 
 const NOW = new Date("2026-10-01T00:00:00Z")
 const run = (cv: string, job?: string) => analyzeCv(cv, job, { now: NOW })
+// Les mots-clés sont affichés sous leur forme d'origine (accents, casse) : on compare en forme normalisée.
+const norm = (terms: string[]) => terms.map(normalize)
 
 describe("analyzeCv — le score discrimine les métiers (régression du premium-orchestrator)", () => {
   it("dev senior ↔ offre dev : score élevé", () => {
@@ -11,7 +14,7 @@ describe("analyzeCv — le score discrimine les métiers (régression du premium
     expect(r.mode).toBe("job_match")
     expect(r.overall).toBeGreaterThanOrEqual(80)
     expect(r.relevanceFactor).toBe(1)
-    expect(r.matchedKeywords).toEqual(expect.arrayContaining(["react", "typescript", "nodejs", "postgresql"]))
+    expect(norm(r.matchedKeywords)).toEqual(expect.arrayContaining(["react", "typescript", "node.js", "postgresql"]))
   })
 
   it("dev senior ↔ offre d'infirmier : score très bas (l'ancien moteur donnait 86)", () => {
@@ -20,14 +23,14 @@ describe("analyzeCv — le score discrimine les métiers (régression du premium
     expect(bad.overall).toBeLessThanOrEqual(30)
     expect(good.overall - bad.overall).toBeGreaterThanOrEqual(50)
     expect(bad.dimensions.keywordCoverage).toBeLessThanOrEqual(15)
-    expect(bad.missingKeywords).toEqual(expect.arrayContaining(["infirmier", "soins", "diplome"]))
+    expect(norm(bad.missingKeywords)).toEqual(expect.arrayContaining(["infirmier", "soins", "diplome"]))
   })
 
   it("infirmière ↔ offre d'infirmier (métier non technique) : bon score", () => {
     const r = run(CV_NURSE, JOB_NURSE)
     expect(r.dimensions.keywordCoverage).toBeGreaterThanOrEqual(80)
     expect(r.overall).toBeGreaterThanOrEqual(60)
-    expect(r.matchedKeywords).toEqual(expect.arrayContaining(["infirmier", "soins", "afgsu", "surveillance"]))
+    expect(norm(r.matchedKeywords)).toEqual(expect.arrayContaining(["infirmier", "soins", "afgsu", "surveillance"]))
   })
 
   it("infirmière ↔ offre dev : très bas, dans l'autre sens aussi", () => {
@@ -37,7 +40,7 @@ describe("analyzeCv — le score discrimine les métiers (régression du premium
   it("assistante junior ↔ responsable marketing : score bas", () => {
     const r = run(CV_JUNIOR, JOB_MKT)
     expect(r.overall).toBeLessThanOrEqual(25)
-    expect(r.matchedKeywords).toEqual(expect.arrayContaining(["marketing", "excel"]))
+    expect(norm(r.matchedKeywords)).toEqual(expect.arrayContaining(["marketing", "excel"]))
   })
 
   it("classement cohérent : bon match > match partiel > hors sujet", () => {
@@ -57,7 +60,14 @@ describe("analyzeCv — pas de faux positifs par sous-chaîne", () => {
 
   it("les alternatives « SEA/SEO » sont séparées", () => {
     const r = run(CV_JUNIOR, JOB_MKT)
-    expect([...r.missingKeywords, ...r.matchedKeywords]).toEqual(expect.arrayContaining(["sea", "seo"]))
+    expect(norm([...r.missingKeywords, ...r.matchedKeywords])).toEqual(expect.arrayContaining(["sea", "seo"]))
+  })
+})
+
+describe("analyzeCv — affichage des mots-clés", () => {
+  it("conserve les accents et la casse d'origine de l'offre", () => {
+    const shown = run(CV_DEV, JOB_NURSE).missingKeywords
+    expect(shown).toEqual(expect.arrayContaining(["diplômé", "état", "AFGSU"]))
   })
 })
 

@@ -14,6 +14,8 @@ interface PremiumATSResultProps {
   recommendations?: string[]
   detectedSkills?: string[]
   missingSkills?: string[]
+  /** Limites de l'analyse (offre absente ou trop courte, CV très court…). */
+  notices?: string[]
   isAuthenticated?: boolean
   hasPremiumAccess?: boolean
 }
@@ -38,6 +40,7 @@ export function PremiumATSResult({
   recommendations = [],
   detectedSkills = [],
   missingSkills = [],
+  notices = [],
   isAuthenticated = false,
   hasPremiumAccess = false,
 }: PremiumATSResultProps) {
@@ -70,6 +73,15 @@ export function PremiumATSResult({
           />
         </div>
       </div>
+
+      {/* ===== LIMITES DE L'ANALYSE ===== */}
+      {notices.length > 0 && (
+        <ul className="space-y-1 rounded-lg border border-border bg-surface px-4 py-3 text-xs text-foreground-muted">
+          {notices.map((notice) => (
+            <li key={notice}>{notice}</li>
+          ))}
+        </ul>
+      )}
 
       {/* ===== CE QUE LE RECRUTEUR VERRA (Forces / Gaps) ===== */}
       {(strengths.length > 0 || (weaknesses.length > 0 && weaknesses[0])) && (

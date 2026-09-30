@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { checkRateLimit } from "@/lib/rate-limit/upstash-rate-limit"
 import { generateFingerprint } from "@/lib/security/ip-extraction"
 import { validateCVUpload, validateJobDescription } from "@/lib/validators/cv-validator"
-import { generatePreviewAnalysis } from "@/lib/ai/preview-analyzer"
+import { buildFreePreview } from "@/lib/cv-analysis/preview"
 import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisService"
 import { logger } from "@/lib/logger"
 import * as Sentry from "@sentry/nextjs"
@@ -53,12 +53,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 5. Génération preview (8s timeout)
-    const preview = await generatePreviewAnalysis(
-      cvValidation.content!,
-      jobDescription || "",
-      { timeout: 8000 }
-    )
+    // 5. Aperçu : analyse déterministe (aucune IA, aucun coût, résultat reproductible)
+    const preview = buildFreePreview(cvValidation.content!, jobDescription || "")
 
     // 6. Sauvegarder le RÉSULTAT (jamais le texte du CV ni de l'offre) avec un token
     const { previewToken } = await previewAnalysisService.savePreviewAnalysis({
@@ -75,6 +71,9 @@ export async function POST(req: NextRequest) {
       score: preview.score,
       strengths: preview.strengths,
       weakness: preview.weakness,
+      mode: preview.mode,
+      confidence: preview.confidence,
+      warnings: preview.warnings,
     })
 
     // 8. Set cookie pour persistance

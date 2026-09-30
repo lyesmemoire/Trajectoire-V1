@@ -6,10 +6,10 @@
  * moteur fonctionne pour un infirmier comme pour un développeur.
  */
 
-import { canonical, isStopword, normalize, stem, stemSet, tokenize } from "./text"
+import { isStopword, normalize, stem, stemSet, tokenize } from "./text"
 
 export interface JobTerm {
-  /** Forme affichable (jeton normalisé le plus fréquent). */
+  /** Forme affichable, telle qu'écrite dans l'offre (accents et casse d'origine). */
   term: string
   stem: string
   weight: number
@@ -36,6 +36,15 @@ const REQUIREMENT_MARKERS = [
 
 const ACRONYM_RE = /\b[A-Z][A-Z0-9]{1,6}\b/g
 
+/** Mots d'origine (accents et casse conservés), sans apostrophes : « d'État » donne « d » puis « État ». */
+const RAW_WORD_RE = /[\p{L}\p{N}][\p{L}\p{N}+#./-]*/gu
+
+/** Forme affichable : minuscules pour un mot ordinaire, casse d'origine pour un sigle ou un nom composé. */
+function displayForm(raw: string): string {
+  const cleaned = raw.replace(/[.-]+$/, "")
+  return /^\p{Lu}?[\p{Ll}\p{N}.+#/-]*$/u.test(cleaned) ? cleaned.toLowerCase() : cleaned
+}
+
 /** Extrait les exigences pondérées d'une offre (les plus importantes d'abord). */
 export function extractJobTerms(jobText: string): JobTerm[] {
   const lines = jobText
@@ -58,22 +67,31 @@ export function extractJobTerms(jobText: string): JobTerm[] {
     const isTitle = lineIndex === 0
     const isRequirementLine = REQUIREMENT_MARKERS.some((m) => normalizedLine.includes(m))
 
-    for (const token of tokenize(line)) {
-      if (token.length < 2 || /^\d+$/.test(token) || isStopword(token)) continue
-      // Verbes à la 2e personne du pluriel d'une annonce (« vous piloterez », « analysez »).
-      if (token.length >= 6 && token.endsWith("ez")) continue
-      const s = stem(token)
-      if (s.length < 2 || isStopword(s)) continue
+    for (const raw of line.match(RAW_WORD_RE) ?? []) {
+      const tokens = tokenize(raw)
+      // « SEA/SEO » : une forme affichable par alternative.
+      const parts = raw.split("/").filter(Boolean)
 
-      const acc =
-        byStem.get(s) ??
-        { forms: new Map<string, number>(), count: 0, bonus: 0, firstIndex: order }
-      acc.count += 1
-      acc.forms.set(canonical(token), (acc.forms.get(canonical(token)) ?? 0) + 1)
-      if (isTitle) acc.bonus = Math.max(acc.bonus, 2)
-      if (isRequirementLine) acc.bonus = Math.max(acc.bonus, 1)
-      byStem.set(s, acc)
-      order += 1
+      tokens.forEach((token, i) => {
+        if (token.length < 2 || /^\d+$/.test(token) || isStopword(token)) return
+        // Verbes à la 2e personne du pluriel d'une annonce (« vous piloterez », « analysez »).
+        if (token.length >= 6 && token.endsWith("ez")) return
+        const s = stem(token)
+        if (s.length < 2 || isStopword(s)) return
+
+        const source = tokens.length === 1 ? raw : parts.length === tokens.length ? parts[i] : token
+        const shown = displayForm(source)
+
+        const acc =
+          byStem.get(s) ??
+          { forms: new Map<string, number>(), count: 0, bonus: 0, firstIndex: order }
+        acc.count += 1
+        acc.forms.set(shown, (acc.forms.get(shown) ?? 0) + 1)
+        if (isTitle) acc.bonus = Math.max(acc.bonus, 2)
+        if (isRequirementLine) acc.bonus = Math.max(acc.bonus, 1)
+        byStem.set(s, acc)
+        order += 1
+      })
     }
   })
 

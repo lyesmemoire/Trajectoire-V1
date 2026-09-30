@@ -10,7 +10,7 @@ describe("normalizePreviewResult", () => {
         strengths: ["A", "B"],
         weakness: "C",
       }),
-    ).toEqual({ score: 72, strengths: ["A", "B"], weakness: "C" })
+    ).toEqual({ score: 72, strengths: ["A", "B"], weakness: "C", mode: null, warnings: [] })
   })
 
   it("aperçu relu par jeton (enveloppe atsResult)", () => {
@@ -20,17 +20,25 @@ describe("normalizePreviewResult", () => {
         atsResult: { score: 64, strengths: ["A"], weakness: "C" },
         candidateData: {},
       }),
-    ).toEqual({ score: 64, strengths: ["A"], weakness: "C" })
+    ).toEqual({ score: 64, strengths: ["A"], weakness: "C", mode: null, warnings: [] })
   })
 
   it("faiblesse historique sous forme de tableau", () => {
     expect(
       normalizePreviewResult({ atsResult: { score: 50, strengths: [], weakness: ["", "X"] } }),
-    ).toEqual({ score: 50, strengths: [], weakness: "X" })
+    ).toEqual({ score: 50, strengths: [], weakness: "X", mode: null, warnings: [] })
   })
 
   it("sans faiblesse : null, jamais une valeur inventée", () => {
     expect(normalizePreviewResult({ score: 50, strengths: ["A"] })?.weakness).toBeNull()
+  })
+
+  it("relit le mode et les avertissements de l'analyse", () => {
+    expect(
+      normalizePreviewResult({
+        atsResult: { score: 60, strengths: [], weakness: null, mode: "cv_only", warnings: ["Aucune offre fournie", ""] },
+      }),
+    ).toEqual({ score: 60, strengths: [], weakness: null, mode: "cv_only", warnings: ["Aucune offre fournie"] })
   })
 
   it("borne le score entre 0 et 100", () => {

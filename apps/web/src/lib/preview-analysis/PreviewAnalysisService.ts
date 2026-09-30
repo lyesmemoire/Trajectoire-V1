@@ -11,11 +11,14 @@
 
 import { previewAnalysisRepository } from './PreviewAnalysisRepository'
 
-/** Résultat réellement calculé par generatePreviewAnalysis. */
+/** Résultat réellement calculé par buildFreePreview (lib/cv-analysis/preview). */
 export interface PreviewResult {
   score: number
   strengths: string[]
-  weakness?: string
+  weakness?: string | null
+  mode?: "job_match" | "cv_only"
+  confidence?: number
+  warnings?: string[]
 }
 
 export interface SavePreviewAnalysisRequest {
