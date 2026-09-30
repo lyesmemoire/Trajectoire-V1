@@ -45,6 +45,12 @@ export const RATE_LIMIT_CONFIGS: Record<RouteType, RateLimitConfig> = {
   // ------------------------------------------------------------
   // AI - Routes qui déclenchent un appel d'IA facturé
   // ------------------------------------------------------------
+  [RouteType.INTERVIEW_TURN]: {
+    limit: 300,              // 300 tours par heure
+    window: 3600,
+    burstLimit: 40,          // rafale de 40
+    burstWindow: 60,         // en 1 minute
+  },
   [RouteType.AI]: {
     limit: 30,               // 30 requêtes par heure
     window: 3600,
@@ -136,6 +142,7 @@ export const DEFAULT_SCOPES: Record<RouteType, string[]> = {
   [RouteType.AUTH]: ["IP"],           // Auth endpoints use IP only to prevent enumeration
   [RouteType.UPLOAD]: ["USER", "IP"],
   [RouteType.AI]: ["USER", "IP"],
+  [RouteType.INTERVIEW_TURN]: ["USER"],
   [RouteType.GRAPH]: ["USER", "IP"],
   [RouteType.COPILOT]: ["USER", "IP"],
   [RouteType.SEARCH]: ["USER", "IP"],

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2 } from 'lucide-react'
+import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 
 function SoundWave({ active, color = 'bg-indigo-400' }: { active: boolean; color?: string }) {
@@ -56,12 +56,16 @@ export default function SimulationPage() {
   const sessionId = (params?.id as string) ?? 'anonymous'
   const scrollRef = useRef<HTMLDivElement>(null)
   const [isEnding, setIsEnding] = useState(false)
+  const handleEndRef = useRef<() => Promise<void>>(async () => {})
 
   const {
     status,
     transcripts,
     connect,
     disconnect,
+    flushTranscripts,
+    errorMessage,
+    isNearTimeLimit,
     isAISpeaking,
     isUserSpeaking,
   } = useRealtimeInterview({
@@ -69,6 +73,8 @@ export default function SimulationPage() {
     onError       : (msg) => console.error('[Simulation]', msg),
     onConnected   : () => console.info('[Simulation] connecte'),
     onDisconnected: () => console.info('[Simulation] deconnecte'),
+    // Durée maximale atteinte : on termine l'entretien comme si le candidat avait cliqué.
+    onMaxDuration : () => { void handleEndRef.current() },
   })
 
   useEffect(() => {
@@ -81,6 +87,10 @@ export default function SimulationPage() {
     if (isEnding) return
     setIsEnding(true)
     disconnect()
+
+    // Les dernières répliques (dont celle d'Alexandra) s'enregistrent en arrière-plan :
+    // on les attend, sinon le rapport est généré sans elles.
+    await flushTranscripts()
 
     try {
       // /api/simulation/end bascule le statut de la session, puis appelle
@@ -103,6 +113,7 @@ export default function SimulationPage() {
 
     router.push('/report/' + sessionId)
   }
+  handleEndRef.current = handleEnd
 
   const statusConfig: Record<string, { label: string; dot: string }> = {
     idle         : { label: 'Initialisation...',  dot: 'bg-zinc-500' },
@@ -129,6 +140,16 @@ export default function SimulationPage() {
           {statusLabel}
         </div>
       </header>
+
+      {isNearTimeLimit && !isEnding && (
+        <div
+          role="status"
+          className="flex shrink-0 items-center justify-center gap-2 border-b border-amber-400/20 bg-amber-400/10 px-6 py-2 text-xs text-amber-200"
+        >
+          <Clock className="size-3.5" aria-hidden />
+          L'entretien se terminera automatiquement dans 5 minutes. Vous pouvez aussi le terminer vous-même.
+        </div>
+      )}
 
       <div className="flex flex-1 overflow-hidden">
 
@@ -175,7 +196,9 @@ export default function SimulationPage() {
                 ) : status === 'error' ? (
                   <>
                     <AlertCircle className="size-7 text-red-400/70" />
-                    <p className="text-sm text-white/50">Erreur de connexion</p>
+                    <p className="max-w-xs text-sm text-white/60">
+                      {errorMessage ?? 'Erreur de connexion'}
+                    </p>
                     <button
                       onClick={connect}
                       className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white/70 transition hover:bg-white/15"

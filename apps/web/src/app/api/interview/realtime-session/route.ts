@@ -18,6 +18,7 @@ import { initializeContainer } from '@/infrastructure/di/bootstrap'
 import type { SessionRepository } from '@/infrastructure/repositories'
 import { rateLimit } from '@/lib/rate-limiting/rate-limit.middleware'
 import { RouteType, RateLimitScope } from '@/lib/rate-limiting/centralized-rate-limit.service'
+import { REALTIME_MODEL } from '@/lib/interview/realtime-config'
 
 // ── Question d'ouverture ─────────────────────────────────────────────────────
 // Il n'y a plus de kernel HIIOS ici : celui qui existait avant n'était jamais
@@ -142,7 +143,7 @@ async function handleRealtimeSession(request: NextRequest) {
         'Content-Type' : 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-realtime-preview-2025-06-03',
+        model: REALTIME_MODEL,
         voice: 'alloy',
         instructions: systemPrompt,
         modalities: ['audio', 'text'],

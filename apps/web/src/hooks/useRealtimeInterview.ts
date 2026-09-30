@@ -9,6 +9,21 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import {
+  REALTIME_MODEL,
+  REALTIME_MAX_DURATION_MS,
+  REALTIME_WARNING_MS,
+  REALTIME_FLUSH_TIMEOUT_MS,
+} from '@/lib/interview/realtime-config'
+import {
+  REALTIME_DEFAULT_ERROR,
+  REALTIME_SDP_ERROR,
+  realtimeSessionErrorMessage,
+  realtimeMicErrorMessage,
+} from '@/lib/interview/realtime-errors'
+
+/** Erreur dont le message est déjà lisible par l'utilisateur. */
+class RealtimeUserError extends Error {}
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -33,6 +48,8 @@ export interface UseRealtimeInterviewOptions {
   onError?: (message: string) => void
   onConnected?: () => void
   onDisconnected?: () => void
+  /** Durée maximale atteinte : à la page de terminer l'entretien (rapport compris). */
+  onMaxDuration?: () => void
 }
 
 export interface UseRealtimeInterviewReturn {
@@ -40,6 +57,12 @@ export interface UseRealtimeInterviewReturn {
   transcripts: RealtimeTranscript[]
   connect: () => Promise<void>
   disconnect: () => void
+  /** Attend l'enregistrement des dernières répliques (à appeler avant simulation/end). */
+  flushTranscripts: () => Promise<void>
+  /** Message d'erreur lisible pour l'utilisateur, ou null. */
+  errorMessage: string | null
+  /** Vrai à l'approche de la durée maximale (bandeau non bloquant). */
+  isNearTimeLimit: boolean
   isConnected: boolean
   isAISpeaking: boolean
   isUserSpeaking: boolean
@@ -53,14 +76,27 @@ export function useRealtimeInterview({
   onError,
   onConnected,
   onDisconnected,
+  onMaxDuration,
 }: UseRealtimeInterviewOptions): UseRealtimeInterviewReturn {
 
   const [status, setStatus] = useState<RealtimeStatus>('idle')
   const [transcripts, setTranscripts] = useState<RealtimeTranscript[]>([])
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isNearTimeLimit, setIsNearTimeLimit] = useState(false)
 
   const pcRef   = useRef<RTCPeerConnection | null>(null)
   const dcRef   = useRef<RTCDataChannel | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const streamRef = useRef<MediaStream | null>(null)
+
+  // Enregistrements de répliques en cours (attendus avant la fin de session)
+  const pendingRef = useRef<Set<Promise<unknown>>>(new Set())
+  // Question d'ouverture renvoyée par la route : amorce le premier tour d'Alexandra
+  const firstQuestionRef = useRef<string | null>(null)
+  const warningTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const maxTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const onMaxDurationRef = useRef(onMaxDuration)
+  onMaxDurationRef.current = onMaxDuration
 
   // Accumulateurs de transcription partielle
   const userPartialRef = useRef('')
@@ -79,16 +115,54 @@ export function useRealtimeInterview({
   // (ReportService.generateReport) lit interview_messages, jamais le state React.
 
   const persistTranscript = useCallback((transcript: RealtimeTranscript) => {
-    fetch('/api/interview/realtime-message', {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        sessionId: sessionId,
-        role     : transcript.role,
-        content  : transcript.text,
-      }),
-    }).catch(err => console.error('[Realtime] persistance transcript:', err))
+    const body = JSON.stringify({
+      sessionId: sessionId,
+      role     : transcript.role,
+      content  : transcript.text,
+    })
+
+    // Une seule nouvelle tentative, et seulement sur erreur réseau ou 5xx.
+    const send = async () => {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const res = await fetch('/api/interview/realtime-message', {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+          })
+          if (res.ok || res.status < 500) return
+        } catch { /* réseau : nouvelle tentative */ }
+      }
+      console.error('[Realtime] persistance transcript impossible')
+    }
+
+    const promise: Promise<void> = send().finally(() => { pendingRef.current.delete(promise) })
+    pendingRef.current.add(promise)
   }, [sessionId])
+
+  const flushTranscripts = useCallback(async () => {
+    const pending = Array.from(pendingRef.current)
+    if (pending.length === 0) return
+    // Bornée : une requête bloquée ne doit pas empêcher de terminer l'entretien.
+    await Promise.race([
+      Promise.allSettled(pending),
+      new Promise(resolve => setTimeout(resolve, REALTIME_FLUSH_TIMEOUT_MS)),
+    ])
+  }, [])
+
+  // ── Libération des ressources (micro, minuteurs) ────────────────────────────
+
+  const clearTimers = useCallback(() => {
+    if (warningTimerRef.current) clearTimeout(warningTimerRef.current)
+    if (maxTimerRef.current) clearTimeout(maxTimerRef.current)
+    warningTimerRef.current = null
+    maxTimerRef.current = null
+  }, [])
+
+  const releaseMicrophone = useCallback(() => {
+    streamRef.current?.getTracks().forEach(track => track.stop())
+    streamRef.current = null
+  }, [])
 
   // ── Gestion des événements OpenAI Realtime ──────────────────────────────────
 
@@ -196,7 +270,9 @@ export function useRealtimeInterview({
       case 'error': {
         const errMsg = (event.error as { message?: string })?.message ?? 'Erreur Realtime'
         console.error('[Realtime]', errMsg)
-        onError?.(errMsg)
+        const message = 'Le service vocal a signalé une erreur. Réessayez.'
+        setErrorMessage(message)
+        onError?.(message)
         setStatus('error')
         break
       }
@@ -208,6 +284,7 @@ export function useRealtimeInterview({
   const connect = useCallback(async () => {
     if (status === 'connecting' || status === 'connected') return
     setStatus('connecting')
+    setErrorMessage(null)
 
     try {
       // 1. Token éphémère depuis notre serveur
@@ -217,11 +294,13 @@ export function useRealtimeInterview({
         body   : JSON.stringify({ candidateId: sessionId }),
       })
 
-      if (!tokenRes.ok) throw new Error('Impossible d\'obtenir le token Realtime')
-      const { client_secret } = await tokenRes.json()
+      if (!tokenRes.ok) throw new RealtimeUserError(realtimeSessionErrorMessage(tokenRes.status))
+      const { client_secret, first_question } = await tokenRes.json()
+      firstQuestionRef.current = typeof first_question === 'string' ? first_question : null
 
       // 2. Micro utilisateur
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      streamRef.current = stream
 
       // 3. PeerConnection
       const pc = new RTCPeerConnection()
@@ -259,6 +338,25 @@ export function useRealtimeInterview({
             },
           },
         })
+
+        // Alexandra ouvre l'entretien : sans response.create, le modèle attend que le
+        // candidat parle en premier (server_vad ne déclenche aucune réponse seul).
+        const opening = firstQuestionRef.current
+        sendEvent({
+          type: 'response.create',
+          response: opening
+            ? {
+                instructions:
+                  "Ouvre l'entretien maintenant : pose exactement cette première question, " +
+                  'sans te présenter longuement : « ' + opening + ' »',
+              }
+            : {},
+        })
+
+        // Durée maximale : avertissement puis fin automatique (déclenchée par la page).
+        clearTimers()
+        warningTimerRef.current = setTimeout(() => setIsNearTimeLimit(true), REALTIME_WARNING_MS)
+        maxTimerRef.current = setTimeout(() => onMaxDurationRef.current?.(), REALTIME_MAX_DURATION_MS)
       })
 
       dc.addEventListener('message', (e) => {
@@ -281,7 +379,7 @@ export function useRealtimeInterview({
 
       // 5. Envoi à OpenAI Realtime
       const sdpRes = await fetch(
-        'https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03',
+        'https://api.openai.com/v1/realtime?model=' + REALTIME_MODEL,
         {
           method : 'POST',
           headers: {
@@ -292,7 +390,7 @@ export function useRealtimeInterview({
         },
       )
 
-      if (!sdpRes.ok) throw new Error('Erreur SDP OpenAI Realtime')
+      if (!sdpRes.ok) throw new RealtimeUserError(REALTIME_SDP_ERROR)
 
       const answerSdp = await sdpRes.text()
       await pc.setRemoteDescription({
@@ -301,12 +399,23 @@ export function useRealtimeInterview({
       })
 
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Erreur connexion Realtime'
       console.error('[Realtime] connect error:', err)
+      const message =
+        err instanceof RealtimeUserError
+          ? err.message
+          : realtimeMicErrorMessage(err) ?? REALTIME_DEFAULT_ERROR
+      // Rien ne doit rester ouvert après un échec (micro allumé, connexion à moitié établie).
+      dcRef.current?.close()
+      pcRef.current?.close()
+      dcRef.current = null
+      pcRef.current = null
+      releaseMicrophone()
+      clearTimers()
+      setErrorMessage(message)
       onError?.(message)
       setStatus('error')
     }
-  }, [status, sessionId, sendEvent, handleRealtimeEvent, onConnected, onDisconnected, onError])
+  }, [status, sessionId, sendEvent, handleRealtimeEvent, onConnected, onDisconnected, onError, clearTimers, releaseMicrophone])
 
   // ── Déconnexion ─────────────────────────────────────────────────────────────
 
@@ -315,6 +424,9 @@ export function useRealtimeInterview({
     pcRef.current?.close()
     dcRef.current = null
     pcRef.current = null
+    releaseMicrophone()
+    clearTimers()
+    setIsNearTimeLimit(false)
 
     if (audioRef.current) {
       audioRef.current.srcObject = null
@@ -323,7 +435,7 @@ export function useRealtimeInterview({
 
     setStatus('disconnected')
     onDisconnected?.()
-  }, [onDisconnected])
+  }, [onDisconnected, releaseMicrophone, clearTimers])
 
   // ── Cleanup au unmount ──────────────────────────────────────────────────────
 
@@ -338,6 +450,9 @@ export function useRealtimeInterview({
     transcripts,
     connect,
     disconnect,
+    flushTranscripts,
+    errorMessage,
+    isNearTimeLimit,
     isConnected   : status === 'connected' || status === 'speaking_user' || status === 'speaking_ai',
     isAISpeaking  : status === 'speaking_ai',
     isUserSpeaking: status === 'speaking_user',

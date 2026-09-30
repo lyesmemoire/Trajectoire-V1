@@ -34,6 +34,8 @@ export enum RouteType {
   UPLOAD = "upload",
   /** Routes qui déclenchent un appel d'IA facturé (analyse, rapport). */
   AI = "ai",
+  /** Persistance des tours d'un entretien vocal (une requête par réplique). */
+  INTERVIEW_TURN = "interview_turn",
   GRAPH = "graph",
   COPILOT = "copilot",
   SEARCH = "search",
@@ -89,6 +91,12 @@ const RATE_LIMIT_CONFIGS: Record<RouteType, RateLimitConfig> = {
     window: 3600,         // 20 uploads per hour
     burstLimit: 25,       // Allow burst up to 25
     burstWindow: 300,     // Within 5 minutes
+  },
+  [RouteType.INTERVIEW_TURN]: {
+    limit: 300,
+    window: 3600,         // 300 tours par heure (entretien de 45 min : ~100 tours)
+    burstLimit: 40,       // Allow burst up to 40
+    burstWindow: 60,      // Within 1 minute
   },
   [RouteType.AI]: {
     limit: 30,

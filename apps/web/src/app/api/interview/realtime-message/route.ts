@@ -14,8 +14,11 @@ import { Container, ServiceTokens } from '@/infrastructure/di'
 import { initializeContainer } from '@/infrastructure/di/bootstrap'
 import type { SessionRepository } from '@/infrastructure/repositories'
 import type { MessageRepository } from '@/infrastructure/repositories'
+import { rateLimit } from '@/lib/rate-limiting/rate-limit.middleware'
+import { RouteType, RateLimitScope } from '@/lib/rate-limiting/centralized-rate-limit.service'
+import { REALTIME_MAX_MESSAGE_CHARS } from '@/lib/interview/realtime-config'
 
-export async function POST(request: NextRequest) {
+async function handleRealtimeMessage(request: NextRequest) {
   try {
     const { user } = await getVerifiedUserWithRetry()
     if (!user) {
@@ -28,7 +31,12 @@ export async function POST(request: NextRequest) {
       content?: string
     }
 
-    if (!body.sessionId || !body.content) {
+    if (
+      typeof body.sessionId !== 'string' ||
+      typeof body.content !== 'string' ||
+      !body.sessionId ||
+      !body.content.trim()
+    ) {
       return NextResponse.json(
         { error: 'sessionId et content requis' },
         { status: 400 },
@@ -55,6 +63,10 @@ export async function POST(request: NextRequest) {
     if (session.user_id !== user.id) {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
     }
+    // Pas d'écriture dans une session terminée : le rapport lit ces messages.
+    if (session.status !== 'in_progress') {
+      return NextResponse.json({ error: 'Cette session est terminée' }, { status: 409 })
+    }
 
     const messageRepository = (await Container.resolve(
       ServiceTokens.MessageRepository,
@@ -63,7 +75,7 @@ export async function POST(request: NextRequest) {
     await messageRepository.create({
       session_id: body.sessionId,
       role: body.role,
-      content: body.content,
+      content: body.content.slice(0, REALTIME_MAX_MESSAGE_CHARS),
     })
 
     return NextResponse.json({ success: true })
@@ -73,3 +85,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }
+
+// Une requête par réplique : bucket dédié, par utilisateur (un entretien de 45 min en compte ~100).
+export const POST = rateLimit(RouteType.INTERVIEW_TURN, handleRealtimeMessage, {
+  scopes: [RateLimitScope.USER],
+})
