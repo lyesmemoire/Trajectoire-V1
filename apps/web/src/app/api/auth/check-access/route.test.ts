@@ -219,65 +219,58 @@ describe('GET /api/auth/check-access', () => {
   })
 
   describe('Utilisateur PREMIUM', () => {
-    it('devrait retourner PREMIUM pour utilisateur avec abonnement actif', async () => {
-      const mockUserId = 'premium-user-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        id: mockUserId,
-        email: 'premium@example.com',
-        name: 'Premium User',
-        plan: 'PRO',
-        role: null,
-        referralCode: 'ABC12345',
-      } as any)
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'active',
-        plan: 'PRO',
-      } as any)
+    // Le plan effectif vient de lib/quota/plan-access : ligne `users` avec son abonnement.
+    const premiumRow = (id: string, status: string) => ({
+      id,
+      email: 'premium@example.com',
+      name: 'Premium User',
+      plan: 'PRO',
+      role: null,
+      referralCode: 'ABC12345',
+      simulationsUsed: 0,
+      packExpiresAt: null,
+      Subscription: { status, currentPeriodEnd: new Date(Date.now() + 10 * 24 * 3600 * 1000) },
+    })
 
+    const call = async (userId: string) => {
       const request = new NextRequest('http://localhost:3000/api/auth/check-access', {
-        headers: { 
+        headers: {
           'x-internal-request': 'middleware',
-          'x-user-id': mockUserId,
+          'x-user-id': userId,
         },
       })
       const response = await GET(request)
-      
+      return { response, data: await response.json() }
+    }
+
+    it('devrait retourner PREMIUM pour utilisateur avec abonnement actif', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(premiumRow('premium-user-id', 'active') as any)
+
+      const { response, data } = await call('premium-user-id')
+
       expect(response.status).toBe(200)
-      const data = await response.json()
       expect(data.authenticated).toBe(true)
       expect(data.accessLevel).toBe('PREMIUM')
       expect(data.subscription.hasAccess).toBe(true)
       expect(data.subscription.plan).toBe('PRO')
     })
 
-    it('devrait retourner PREMIUM pour utilisateur en période d\'essai', async () => {
-      const mockUserId = 'trial-user-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        id: mockUserId,
-        email: 'trial@example.com',
-        name: 'Trial User',
-        plan: 'FREE',
-        role: null,
-        referralCode: 'ABC12345',
-      } as any)
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'trialing',
-        plan: 'PRO',
-      } as any)
+    it('devrait garder PREMIUM pendant la période de grâce (past_due)', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(premiumRow('grace-user-id', 'past_due') as any)
 
-      const request = new NextRequest('http://localhost:3000/api/auth/check-access', {
-        headers: { 
-          'x-internal-request': 'middleware',
-          'x-user-id': mockUserId,
-        },
-      })
-      const response = await GET(request)
-      
-      const data = await response.json()
+      const { data } = await call('grace-user-id')
+
       expect(data.accessLevel).toBe('PREMIUM')
       expect(data.subscription.hasAccess).toBe(true)
+    })
+
+    it('devrait retourner AUTHENTICATED pour un abonnement annulé', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(premiumRow('canceled-user-id', 'canceled') as any)
+
+      const { data } = await call('canceled-user-id')
+
+      expect(data.accessLevel).toBe('AUTHENTICATED')
+      expect(data.subscription.hasAccess).toBe(false)
     })
   })
 

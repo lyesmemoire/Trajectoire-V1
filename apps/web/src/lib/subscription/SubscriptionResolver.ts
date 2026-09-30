@@ -1,11 +1,16 @@
 // apps/web/src/lib/subscription/SubscriptionResolver.ts
 //
-// Service de résolution des droits d'abonnement
-// Centralise toute la logique métier liée aux abonnements
-// Le middleware ne fait qu'appeler canAccess() pour vérifier les droits
+// Capacités d'un utilisateur (export, copilot, historique…) et résolution d'accès
+// (`canAccess`). SOURCE DE VÉRITÉ du plan : `lib/quota/plan-access` (`loadPlanAccess`) —
+// période de grâce `past_due`, expiration du Pack, annulation et impayé y sont déjà
+// appliqués. Ce fichier ne relit ni le statut Stripe ni `Subscription.plan` : il ne
+// fait que traduire le plan effectif en capacités.
+//
+// Utilisé aujourd'hui par `AuthorizationModule` (contrôle d'administrateur des pages
+// admin) et par la route interne `api/auth/check-access`.
 
-import { prisma } from '@/lib/prisma'
-import { SubscriptionPlan, SubscriptionStatus, SubscriptionCapabilities, AccessResolution } from '@/types/subscription'
+import { loadPlanAccess } from '@/lib/quota/plan-access'
+import { SubscriptionPlan, SubscriptionCapabilities, AccessResolution } from '@/types/subscription'
 
 // ============================================================
 // SERVICE SUBSCRIPTION RESOLVER
@@ -13,20 +18,17 @@ import { SubscriptionPlan, SubscriptionStatus, SubscriptionCapabilities, AccessR
 
 /**
  * Service de résolution des droits d'abonnement.
- * 
- * Responsabilités :
- * - Déterminer les capacités d'un utilisateur basées sur son abonnement
- * - Résoudre l'accès aux fonctionnalités
- * - Centraliser la logique métier des abonnements
- * 
+ *
  * Le middleware utilise uniquement canAccess() pour vérifier les droits.
  * Les composants peuvent utiliser les méthodes spécifiques (hasPremium, canExport, etc.)
+ *
+ * Les plans TEAM et ENTERPRISE existent dans l'énumération mais pas dans la grille
+ * tarifaire (`lib/plans.ts`) : `create()` ne peut pas les produire.
  */
 export class SubscriptionResolver {
   private userId: string
   private userPlan: SubscriptionPlan
   private userRole: string | null
-  private subscriptionStatus: SubscriptionStatus | null
 
   /**
    * Constructeur privé - utiliser create() pour instancier
@@ -34,84 +36,27 @@ export class SubscriptionResolver {
   private constructor(
     userId: string,
     userPlan: SubscriptionPlan,
-    userRole: string | null,
-    subscriptionStatus: SubscriptionStatus | null
+    userRole: string | null
   ) {
     this.userId = userId
     this.userPlan = userPlan
     this.userRole = userRole
-    this.subscriptionStatus = subscriptionStatus
   }
 
   /**
    * Crée une instance de SubscriptionResolver pour un utilisateur
-   * 
+   *
    * @param userId - L'ID de l'utilisateur
    * @returns Instance de SubscriptionResolver
    */
   static async create(userId: string): Promise<SubscriptionResolver> {
-    // Récupérer les données utilisateur et abonnement
-    const [user, subscription] = await Promise.all([
-      prisma.user.findUnique({
-        where: { id: userId },
-        select: { plan: true, role: true, packExpiresAt: true }
-      }),
-      prisma.subscription.findFirst({
-        where: { userId },
-        orderBy: { createdAt: 'desc' },
-        select: { status: true, plan: true }
-      })
-    ])
-
-    // Déterminer le plan (priorité : subscription > user plan > FREE)
-    let plan = subscription?.plan
-      ? this.mapStringToPlan(subscription.plan)
-      : user?.plan
-        ? this.mapStringToPlan(user.plan)
-        : SubscriptionPlan.FREE
-
-    // Un Pack arrivé à échéance n'ouvre plus aucun droit : plan gratuit.
-    if (
-      plan === SubscriptionPlan.PACK &&
-      user?.packExpiresAt &&
-      user.packExpiresAt.getTime() <= Date.now()
-    ) {
-      plan = SubscriptionPlan.FREE
-    }
-
-    // Déterminer le statut
-    const status = subscription?.status 
-      ? this.mapStringToStatus(subscription.status)
-      : SubscriptionStatus.ACTIVE
+    const access = await loadPlanAccess(userId)
 
     return new SubscriptionResolver(
       userId,
-      plan,
-      user?.role || null,
-      status
+      SubscriptionPlan[access.effective],
+      access.role
     )
-  }
-
-  /**
-   * Mappe une chaîne de caractères vers SubscriptionPlan
-   */
-  private static mapStringToPlan(plan: string): SubscriptionPlan {
-    const upperPlan = plan.toUpperCase()
-    if (Object.values(SubscriptionPlan).includes(upperPlan as SubscriptionPlan)) {
-      return upperPlan as SubscriptionPlan
-    }
-    return SubscriptionPlan.FREE
-  }
-
-  /**
-   * Mappe une chaîne de caractères vers SubscriptionStatus
-   */
-  private static mapStringToStatus(status: string): SubscriptionStatus {
-    const upperStatus = status.toUpperCase()
-    if (Object.values(SubscriptionStatus).includes(upperStatus as SubscriptionStatus)) {
-      return upperStatus as SubscriptionStatus
-    }
-    return SubscriptionStatus.ACTIVE
   }
 
   // ============================================================
@@ -120,8 +65,9 @@ export class SubscriptionResolver {
 
   /**
    * Vérifie si l'utilisateur a accès aux fonctionnalités premium
-   * 
-   * @returns true si l'utilisateur a un abonnement actif ou est admin
+   *
+   * @returns true si l'utilisateur est admin ou si son plan effectif est payant
+   *          (PACK non expiré, PRO actif ou en période de grâce)
    */
   hasPremium(): boolean {
     // Les admins ont toujours accès premium
@@ -129,17 +75,10 @@ export class SubscriptionResolver {
       return true
     }
 
-    // Vérifier si l'abonnement est actif
-    const isActiveSubscription = this.subscriptionStatus === SubscriptionStatus.ACTIVE ||
-                                  this.subscriptionStatus === SubscriptionStatus.TRIAL
-
-    // Les plans PRO, TEAM, ENTERPRISE ont accès premium
-    const isPremiumPlan = this.userPlan === SubscriptionPlan.PRO ||
+    return this.userPlan === SubscriptionPlan.PRO ||
            this.userPlan === SubscriptionPlan.PACK ||
-                         this.userPlan === SubscriptionPlan.TEAM ||
-                         this.userPlan === SubscriptionPlan.ENTERPRISE
-
-    return isActiveSubscription && isPremiumPlan
+           this.userPlan === SubscriptionPlan.TEAM ||
+           this.userPlan === SubscriptionPlan.ENTERPRISE
   }
 
   /**
@@ -191,8 +130,9 @@ export class SubscriptionResolver {
       return true
     }
 
-    // Les plans TEAM et ENTERPRISE ont des simulations illimitées
-    return this.userPlan === SubscriptionPlan.TEAM ||
+    // PRO : illimité (lib/plans.ts) ; TEAM et ENTERPRISE aussi. Le Pack est limité à 5.
+    return this.userPlan === SubscriptionPlan.PRO ||
+           this.userPlan === SubscriptionPlan.TEAM ||
            this.userPlan === SubscriptionPlan.ENTERPRISE
   }
 

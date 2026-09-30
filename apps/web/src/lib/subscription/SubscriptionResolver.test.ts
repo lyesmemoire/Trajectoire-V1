@@ -1,753 +1,145 @@
 // apps/web/src/lib/subscription/SubscriptionResolver.test.ts
 //
-// Tests pour le service SubscriptionResolver
-// Couvre tous les plans d'abonnement et leurs capacités
+// Le plan vient de `lib/quota/plan-access` (source unique) : ces tests vérifient que le
+// resolver applique les mêmes règles (grâce past_due, Pack expiré, annulation) et
+// traduit correctement le plan effectif en capacités.
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { SubscriptionResolver } from './SubscriptionResolver'
-import { SubscriptionPlan, SubscriptionStatus } from '@/types/subscription'
 
-// vi.hoisted ensures the mock object is created before vi.mock() hoisting runs.
-const mockPrisma = vi.hoisted(() => ({
-  user: {
-    findUnique: vi.fn(),
-  },
-  subscription: {
-    findFirst: vi.fn(),
-  },
-}))
+const mocks = vi.hoisted(() => ({ findUnique: vi.fn() }))
 
 vi.mock('@/lib/prisma', () => ({
-  prisma: mockPrisma,
+  prisma: { user: { findUnique: mocks.findUnique } },
 }))
 
-describe('SubscriptionResolver', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
+const DAY = 24 * 3600 * 1000
+const inDays = (n: number) => new Date(Date.now() + n * DAY)
+
+function row(over: Record<string, unknown> = {}) {
+  return {
+    plan: 'FREE',
+    role: 'USER',
+    simulationsUsed: 0,
+    packExpiresAt: null,
+    Subscription: null,
+    ...over,
+  }
+}
+
+const pro = (status: string) =>
+  row({ plan: 'PRO', Subscription: { status, currentPeriodEnd: inDays(10) } })
+
+async function resolverFor(userRow: ReturnType<typeof row> | null) {
+  mocks.findUnique.mockResolvedValue(userRow)
+  return SubscriptionResolver.create('u1')
+}
+
+describe('SubscriptionResolver — plan effectif (mêmes règles que plan-access)', () => {
+  beforeEach(() => vi.resetAllMocks())
+
+  it('utilisateur inconnu ou FREE : pas premium', async () => {
+    expect((await resolverFor(null)).hasPremium()).toBe(false)
+    expect((await resolverFor(row())).hasPremium()).toBe(false)
   })
 
-  afterEach(() => {
-    vi.restoreAllMocks()
+  it('PRO actif : premium', async () => {
+    expect((await resolverFor(pro('active'))).hasPremium()).toBe(true)
   })
 
-  describe('create()', () => {
-    it('devrait créer un resolver pour un utilisateur FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver).toBeInstanceOf(SubscriptionResolver)
-    })
-
-    it('devrait créer un resolver pour un utilisateur PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver).toBeInstanceOf(SubscriptionResolver)
-    })
-
-    it('devrait créer un resolver pour un utilisateur ADMIN', async () => {
-      const userId = 'user-admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver).toBeInstanceOf(SubscriptionResolver)
-    })
+  it('PRO past_due : premium maintenu (période de grâce)', async () => {
+    expect((await resolverFor(pro('past_due'))).hasPremium()).toBe(true)
   })
 
-  describe('hasPremium()', () => {
-    it('devrait retourner false pour un utilisateur FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
+  it.each(['canceled', 'unpaid', 'incomplete_expired'])(
+    'PRO %s : plus premium, même si Subscription.plan vaut encore PRO',
+    async (status) => {
+      const r = await resolverFor(pro(status))
+      expect(r.hasPremium()).toBe(false)
+      expect(r.canExport()).toBe(false)
+    },
+  )
 
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasPremium()).toBe(false)
-    })
-
-    it('devrait retourner true pour un utilisateur PRO actif', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasPremium()).toBe(true)
-    })
-
-    it('devrait retourner true pour un utilisateur en période d\'essai', async () => {
-      const userId = 'user-trial-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'TRIAL',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasPremium()).toBe(true)
-    })
-
-    it('devrait retourner true pour un utilisateur ADMIN', async () => {
-      const userId = 'user-admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasPremium()).toBe(true)
-    })
-
-    it('devrait retourner false pour un abonnement expiré', async () => {
-      const userId = 'user-expired-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'EXPIRED',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasPremium()).toBe(false)
-    })
+  it('PRO sans ligne d’abonnement : pas premium', async () => {
+    expect((await resolverFor(row({ plan: 'PRO' }))).hasPremium()).toBe(false)
   })
 
-  describe('hasAdmin()', () => {
-    it('devrait retourner true pour ADMIN_FOUNDER', async () => {
-      const userId = 'admin-founder-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdmin()).toBe(true)
-    })
-
-    it('devrait retourner true pour ADMIN_PRODUCT', async () => {
-      const userId = 'admin-product-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_PRODUCT',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdmin()).toBe(true)
-    })
-
-    it('devrait retourner true pour ADMIN_SUPPORT', async () => {
-      const userId = 'admin-support-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_SUPPORT',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdmin()).toBe(true)
-    })
-
-    it('devrait retourner false pour un utilisateur normal', async () => {
-      const userId = 'user-normal-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdmin()).toBe(false)
-    })
+  it('PACK valide : premium ; PACK expiré : pas premium', async () => {
+    expect((await resolverFor(row({ plan: 'PACK', packExpiresAt: inDays(30) }))).hasPremium()).toBe(true)
+    expect((await resolverFor(row({ plan: 'PACK', packExpiresAt: inDays(-1) }))).hasPremium()).toBe(false)
   })
 
-  describe('canExport()', () => {
-    it('devrait retourner false pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
+  it('administrateur : toujours premium', async () => {
+    expect((await resolverFor(row({ role: 'ADMIN_SUPPORT' }))).hasPremium()).toBe(true)
+  })
+})
 
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canExport()).toBe(false)
-    })
+describe('SubscriptionResolver — administrateur', () => {
+  beforeEach(() => vi.resetAllMocks())
 
-    it('devrait retourner true pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canExport()).toBe(true)
-    })
-
-    it('devrait retourner true pour TEAM', async () => {
-      const userId = 'user-team-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'TEAM',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'TEAM',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canExport()).toBe(true)
-    })
-
-    it('devrait retourner true pour ENTERPRISE', async () => {
-      const userId = 'user-enterprise-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'ENTERPRISE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'ENTERPRISE',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canExport()).toBe(true)
-    })
-
-    it('devrait retourner true pour ADMIN', async () => {
-      const userId = 'admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canExport()).toBe(true)
-    })
+  it.each(['ADMIN_FOUNDER', 'ADMIN_PRODUCT', 'ADMIN_SUPPORT'])('%s : admin', async (role) => {
+    expect((await resolverFor(row({ role }))).hasAdmin()).toBe(true)
   })
 
-  describe('canUseCopilot()', () => {
-    it('devrait retourner false pour un utilisateur FREE', async () => {
-      const userId = 'user-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
+  it('utilisateur normal : pas admin', async () => {
+    expect((await resolverFor(row())).hasAdmin()).toBe(false)
+  })
+})
 
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canUseCopilot()).toBe(false)
-    })
+describe('SubscriptionResolver — capacités', () => {
+  beforeEach(() => vi.resetAllMocks())
+
+  it('FREE : ni export, ni historique illimité, ni simulations illimitées', async () => {
+    const r = await resolverFor(row())
+    expect(r.canExport()).toBe(false)
+    expect(r.hasUnlimitedHistory()).toBe(false)
+    expect(r.hasAdvancedReports()).toBe(false)
+    expect(r.canRunUnlimitedSimulation()).toBe(false)
+    expect(r.canUseCopilot()).toBe(false)
   })
 
-  describe('canRunUnlimitedSimulation()', () => {
-    it('devrait retourner false pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canRunUnlimitedSimulation()).toBe(false)
-    })
-
-    it('devrait retourner false pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canRunUnlimitedSimulation()).toBe(false)
-    })
-
-    it('devrait retourner true pour TEAM', async () => {
-      const userId = 'user-team-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'TEAM',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'TEAM',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canRunUnlimitedSimulation()).toBe(true)
-    })
-
-    it('devrait retourner true pour ENTERPRISE', async () => {
-      const userId = 'user-enterprise-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'ENTERPRISE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'ENTERPRISE',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canRunUnlimitedSimulation()).toBe(true)
-    })
-
-    it('devrait retourner true pour ADMIN', async () => {
-      const userId = 'admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.canRunUnlimitedSimulation()).toBe(true)
-    })
+  it('PRO : export, historique, rapports ET simulations illimitées', async () => {
+    const r = await resolverFor(pro('active'))
+    expect(r.canExport()).toBe(true)
+    expect(r.hasUnlimitedHistory()).toBe(true)
+    expect(r.hasAdvancedReports()).toBe(true)
+    expect(r.canRunUnlimitedSimulation()).toBe(true)
+    expect(r.hasAdvancedAPI()).toBe(false)
   })
 
-  describe('hasUnlimitedHistory()', () => {
-    it('devrait retourner false pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasUnlimitedHistory()).toBe(false)
-    })
-
-    it('devrait retourner true pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasUnlimitedHistory()).toBe(true)
-    })
+  it('PACK : mêmes fonctionnalités que PRO, mais simulations limitées à 5', async () => {
+    const r = await resolverFor(row({ plan: 'PACK', packExpiresAt: inDays(30) }))
+    expect(r.canExport()).toBe(true)
+    expect(r.hasAdvancedReports()).toBe(true)
+    expect(r.canRunUnlimitedSimulation()).toBe(false)
   })
 
-  describe('hasAdvancedReports()', () => {
-    it('devrait retourner false pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
+  it('administrateur : toutes les capacités', async () => {
+    const caps = (await resolverFor(row({ role: 'ADMIN_FOUNDER' }))).getCapabilities()
+    expect(Object.values(caps).every(Boolean)).toBe(true)
+  })
+})
 
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedReports()).toBe(false)
-    })
+describe('SubscriptionResolver — canAccess', () => {
+  beforeEach(() => vi.resetAllMocks())
 
-    it('devrait retourner true pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedReports()).toBe(true)
-    })
+  it('PUBLIC et AUTHENTICATED : autorisés', async () => {
+    const r = await resolverFor(row())
+    expect(r.canAccess('PUBLIC').allowed).toBe(true)
+    expect(r.canAccess('AUTHENTICATED').allowed).toBe(true)
   })
 
-  describe('hasAdvancedAPI()', () => {
-    it('devrait retourner false pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
+  it('PREMIUM : refusé pour FREE et pour un abonnement annulé, accepté pour PRO en grâce', async () => {
+    expect((await resolverFor(row())).canAccess('PREMIUM').allowed).toBe(false)
+    expect((await resolverFor(pro('canceled'))).canAccess('PREMIUM').allowed).toBe(false)
 
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedAPI()).toBe(false)
-    })
-
-    it('devrait retourner false pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedAPI()).toBe(false)
-    })
-
-    it('devrait retourner true pour TEAM', async () => {
-      const userId = 'user-team-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'TEAM',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'TEAM',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedAPI()).toBe(true)
-    })
-
-    it('devrait retourner true pour ENTERPRISE', async () => {
-      const userId = 'user-enterprise-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'ENTERPRISE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'ENTERPRISE',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      
-      expect(resolver.hasAdvancedAPI()).toBe(true)
-    })
+    const grace = (await resolverFor(pro('past_due'))).canAccess('PREMIUM')
+    expect(grace.allowed).toBe(true)
+    expect(grace.currentLevel).toBe('PREMIUM')
   })
 
-  describe('canAccess()', () => {
-    it('devrait autoriser l\'accès PUBLIC pour tous', async () => {
-      const userId = 'user-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('PUBLIC')
-      
-      expect(resolution.allowed).toBe(true)
-      expect(resolution.requiredLevel).toBe('PUBLIC')
-    })
-
-    it('devrait autoriser l\'accès AUTHENTICATED pour tous les utilisateurs', async () => {
-      const userId = 'user-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('AUTHENTICATED')
-      
-      expect(resolution.allowed).toBe(true)
-      expect(resolution.requiredLevel).toBe('AUTHENTICATED')
-    })
-
-    it('devrait refuser l\'accès PREMIUM pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('PREMIUM')
-      
-      expect(resolution.allowed).toBe(false)
-      expect(resolution.reason).toBe('Premium subscription required')
-      expect(resolution.requiredLevel).toBe('PREMIUM')
-    })
-
-    it('devrait autoriser l\'accès PREMIUM pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('PREMIUM')
-      
-      expect(resolution.allowed).toBe(true)
-      expect(resolution.requiredLevel).toBe('PREMIUM')
-    })
-
-    it('devrait refuser l\'accès ADMIN pour un utilisateur normal', async () => {
-      const userId = 'user-normal-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('ADMIN')
-      
-      expect(resolution.allowed).toBe(false)
-      expect(resolution.reason).toBe('Admin role required')
-      expect(resolution.requiredLevel).toBe('ADMIN')
-    })
-
-    it('devrait autoriser l\'accès ADMIN pour ADMIN_FOUNDER', async () => {
-      const userId = 'admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const resolution = resolver.canAccess('ADMIN')
-      
-      expect(resolution.allowed).toBe(true)
-      expect(resolution.requiredLevel).toBe('ADMIN')
-    })
-  })
-
-  describe('getCapabilities()', () => {
-    it('devrait retourner toutes les capacités pour FREE', async () => {
-      const userId = 'user-free-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const capabilities = resolver.getCapabilities()
-      
-      expect(capabilities.hasPremium).toBe(false)
-      expect(capabilities.hasAdmin).toBe(false)
-      expect(capabilities.canExport).toBe(false)
-      expect(capabilities.canUseCopilot).toBe(false)
-      expect(capabilities.canRunUnlimitedSimulation).toBe(false)
-      expect(capabilities.hasUnlimitedHistory).toBe(false)
-      expect(capabilities.hasAdvancedReports).toBe(false)
-      expect(capabilities.hasAdvancedAPI).toBe(false)
-    })
-
-    it('devrait retourner toutes les capacités pour PRO', async () => {
-      const userId = 'user-pro-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'PRO',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'PRO',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const capabilities = resolver.getCapabilities()
-      
-      expect(capabilities.hasPremium).toBe(true)
-      expect(capabilities.hasAdmin).toBe(false)
-      expect(capabilities.canExport).toBe(true)
-      expect(capabilities.canUseCopilot).toBe(true)
-      expect(capabilities.canRunUnlimitedSimulation).toBe(false)
-      expect(capabilities.hasUnlimitedHistory).toBe(true)
-      expect(capabilities.hasAdvancedReports).toBe(true)
-      expect(capabilities.hasAdvancedAPI).toBe(false)
-    })
-
-    it('devrait retourner toutes les capacités pour TEAM', async () => {
-      const userId = 'user-team-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'TEAM',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'TEAM',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const capabilities = resolver.getCapabilities()
-      
-      expect(capabilities.hasPremium).toBe(true)
-      expect(capabilities.hasAdmin).toBe(false)
-      expect(capabilities.canExport).toBe(true)
-      expect(capabilities.canUseCopilot).toBe(true)
-      expect(capabilities.canRunUnlimitedSimulation).toBe(true)
-      expect(capabilities.hasUnlimitedHistory).toBe(true)
-      expect(capabilities.hasAdvancedReports).toBe(true)
-      expect(capabilities.hasAdvancedAPI).toBe(true)
-    })
-
-    it('devrait retourner toutes les capacités pour ENTERPRISE', async () => {
-      const userId = 'user-enterprise-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'ENTERPRISE',
-        role: null,
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue({
-        status: 'ACTIVE',
-        plan: 'ENTERPRISE',
-      })
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const capabilities = resolver.getCapabilities()
-      
-      expect(capabilities.hasPremium).toBe(true)
-      expect(capabilities.hasAdmin).toBe(false)
-      expect(capabilities.canExport).toBe(true)
-      expect(capabilities.canUseCopilot).toBe(true)
-      expect(capabilities.canRunUnlimitedSimulation).toBe(true)
-      expect(capabilities.hasUnlimitedHistory).toBe(true)
-      expect(capabilities.hasAdvancedReports).toBe(true)
-      expect(capabilities.hasAdvancedAPI).toBe(true)
-    })
-
-    it('devrait retourner toutes les capacités pour ADMIN', async () => {
-      const userId = 'admin-id'
-      
-      mockPrisma.user.findUnique.mockResolvedValue({
-        plan: 'FREE',
-        role: 'ADMIN_FOUNDER',
-      })
-      mockPrisma.subscription.findFirst.mockResolvedValue(null)
-
-      const resolver = await SubscriptionResolver.create(userId)
-      const capabilities = resolver.getCapabilities()
-      
-      expect(capabilities.hasPremium).toBe(true)
-      expect(capabilities.hasAdmin).toBe(true)
-      expect(capabilities.canExport).toBe(true)
-      expect(capabilities.canUseCopilot).toBe(true)
-      expect(capabilities.canRunUnlimitedSimulation).toBe(true)
-      expect(capabilities.hasUnlimitedHistory).toBe(true)
-      expect(capabilities.hasAdvancedReports).toBe(true)
-      expect(capabilities.hasAdvancedAPI).toBe(true)
-    })
+  it('ADMIN : réservé aux administrateurs', async () => {
+    expect((await resolverFor(row())).canAccess('ADMIN').allowed).toBe(false)
+    expect((await resolverFor(row({ role: 'ADMIN_PRODUCT' }))).canAccess('ADMIN').allowed).toBe(true)
   })
 })
