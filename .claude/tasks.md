@@ -23,6 +23,13 @@
 - [ ] `lib/ats/*` (~5 000 lignes, mort) : garder `doubt-engine`, `recruiter-grade`, `contracts/munitions` (munitions d'entretien, à assainir/plafonner), supprimer le reste une fois le nouveau moteur en place.
 - [ ] **Décision** : crédits `ENABLE_ATS_BILLING` (désactivé par défaut, 10/2 crédits) — font double emploi avec les plans : retirer ou garder.
 
+### Sécurité des routes d'IA (audit du 2026-10-02)
+- [x] **Routes vocales héritées supprimées** : `interview/speak`, `interview/transcribe`, `interview/realtime-transcription` (tout utilisateur connecté, même gratuit, pouvait déclencher TTS/Whisper sans plan, sans limite de débit ni de taille) et l'ancienne route `interview` (404 en production). Le parcours vocal réel est OpenAI Realtime (`realtime-session`). **`hooks/useVoiceInterview.ts` (à ne pas toucher) et `hooks/useSpeechAnalysis.ts` appellent encore ces routes supprimées** : aucune page ne les importe ; à supprimer ou reprendre le jour où l'on touche au vocal.
+- [x] `opportunities/[id]/analyze` : réservée PACK/PRO (403 avant tout appel d'IA) + limite de débit `RouteType.AI` (30/h par utilisateur et par IP).
+- [x] `report/generate` : limite `RouteType.AI` par utilisateur (pas d'IP : `simulation/end` l'appelle côté serveur), clé d'idempotence stable par session, et rejeu qui relit le rapport réel (plus de réponse factice à zéro). Le service dédoublonne déjà (un rapport existant est renvoyé sans nouvel appel d'IA).
+- [ ] À examiner : `simulation/message` est limité à 20 requêtes/heure (bucket `SIMULATION`) : serré pour un entretien texte complet (produit, pas sécurité). `simulation/create`, `simulation/end`, `audio-upload`, `realtime-message` sans limite de débit propre (protégées par la session/le quota).
+- [ ] CSRF : seules les routes CV (`cv/*`) utilisent `csrfProtect` ; les autres routes à cookies s'appuient sur `SameSite`. Risque faible, à noter.
+
 ### Auth
 - [ ] **Test manuel de bout en bout jamais fait** : inscription → confirmation → onboarding → reset mot de passe.
 - [x] **Lots A1–A3 et B3–B5 faits (2026-10-02, `873ad098`)** : erreurs Supabase en français (`lib/auth/auth-errors.ts`), renvoi de l'e-mail de confirmation (inscription et connexion), `/signup` redirige un utilisateur connecté, mot de passe 8 caractères minimum (`lib/auth/credentials.ts`), e-mail normalisé et validé, chemin de signup propre au développement retiré. `signup-conversion` alignée sur les mêmes règles (`478861c0`). Reste : Supabase applique sa propre longueur minimale (réglage du projet, non visible).
@@ -64,4 +71,4 @@
 - [x] **Realtime-session** : session en cours obligatoire + rate-limit (`da95b917`). **Privacy** : `30076efb`.
 - [x] **Module CV — Phase 0/1/2 (2026-10-01)** : valeurs inventées retirées (radar aléatoire, percentile, métriques par défaut) `435a5b5f` ; plus de transfert de l'aperçu vers le profil, résultat réel persisté, texte du CV non conservé `b357ddc5` ; un seul chemin d'aperçu `3c495b30` ; 24 fichiers morts supprimés `50072409` ; analyse complète et réécriture réservées PACK/PRO `91509cc4` ; CSRF + rate-limit + assainissement des prompts `4b0f21e4`.
 
-**Suite Vitest complète : 746/746 tests passent** (mesure du 2026-10-02 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).
+**Suite Vitest complète : 750/750 tests passent** (mesure du 2026-10-02 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).
