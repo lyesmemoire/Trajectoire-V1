@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { createClient } from "@/lib/supabase/server"
 import { analyzeOpportunity } from "@/lib/opportunities/analyzeOpportunity"
+import { requireFullCvAnalysis } from "@/lib/quota/plan-access"
+import { RateLimitScope, RouteType } from "@/lib/rate-limiting/centralized-rate-limit.service"
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware"
 
 export const runtime = "nodejs"
 
@@ -11,7 +14,7 @@ type RouteContext = {
   }>
 }
 
-export async function POST(
+async function handleAnalyze(
   _request: Request,
   context: RouteContext,
 ) {
@@ -31,6 +34,11 @@ export async function POST(
       },
     )
   }
+
+  // Analyse par IA : réservée au Pack Entretien et à Pro (403 avant tout appel d'IA),
+  // comme l'analyse complète du CV.
+  const denied = await requireFullCvAnalysis(user.id)
+  if (denied) return denied
 
   const { id } = await context.params
 
@@ -162,3 +170,8 @@ export async function POST(
     },
   })
 }
+
+// Chaque appel peut déclencher une analyse par IA : limite de débit par utilisateur et par IP.
+export const POST = rateLimit(RouteType.AI, handleAnalyze, {
+  scopes: [RateLimitScope.USER, RateLimitScope.IP],
+})

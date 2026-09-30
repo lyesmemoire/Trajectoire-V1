@@ -8,11 +8,13 @@ import { GenerateReportSchema } from "@/validation";
 import { IdempotencyService } from "@/core/idempotency/IdempotencyService";
 import { BillingService } from "@/lib/db/billing.service";
 import { NextRequest } from "next/server";
+import { RateLimitScope, RouteType } from "@/lib/rate-limiting/centralized-rate-limit.service";
+import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
 
 const ENABLE_REPORT_BILLING = process.env.ENABLE_REPORT_BILLING === "true";
 const REPORT_COST = 15; // credits per report
 
-export async function POST(request: NextRequest) {
+async function handleGenerateReport(request: NextRequest) {
   try {
     initializeContainer();
 
@@ -43,7 +45,8 @@ export async function POST(request: NextRequest) {
 
     const generateWithBilling = async () => {
       let txId: string | undefined;
-      const opKey = idempotencyKey || `report-${user.id}-${validatedData.sessionId}-${Date.now()}`;
+      // Clé stable par session : un même rapport ne réserve jamais deux fois des crédits.
+      const opKey = idempotencyKey || `report-${user.id}-${validatedData.sessionId}`;
 
       if (ENABLE_REPORT_BILLING) {
         const reserve = await BillingService.reserveCredits({
@@ -124,17 +127,9 @@ export async function POST(request: NextRequest) {
           const data = await generateWithBilling();
           return { resultRef: (data as any).reportId, data };
         },
-        async (resultRef) => ({
-          reportId: resultRef,
-          overallScore: 0,
-          communication: 0,
-          technical: 0,
-          confidence: 0,
-          strengths: [],
-          improvements: [],
-          summary: "Cached report",
-          recommendation: "Please view your dashboard for details.",
-        })
+        // Rejeu : on relit le rapport déjà enregistré (generateReport le renvoie sans nouvel
+        // appel d'IA quand il existe), au lieu d'une réponse factice à zéro.
+        async () => reportService.generateReport({ userId: user.id, sessionId: validatedData.sessionId })
       );
     } else {
       result = await generateWithBilling();
@@ -151,3 +146,9 @@ export async function POST(request: NextRequest) {
     return ApiResponseBuilder.fromError(error);
   }
 }
+
+// Limite par utilisateur seulement : /api/simulation/end appelle cette route côté serveur
+// (les requêtes internes partagent la même adresse IP).
+export const POST = rateLimit(RouteType.AI, handleGenerateReport, {
+  scopes: [RateLimitScope.USER],
+});

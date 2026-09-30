@@ -32,6 +32,8 @@ export enum RouteType {
   API = "api",
   AUTH = "auth",
   UPLOAD = "upload",
+  /** Routes qui déclenchent un appel d'IA facturé (analyse, rapport). */
+  AI = "ai",
   GRAPH = "graph",
   COPILOT = "copilot",
   SEARCH = "search",
@@ -87,6 +89,12 @@ const RATE_LIMIT_CONFIGS: Record<RouteType, RateLimitConfig> = {
     window: 3600,         // 20 uploads per hour
     burstLimit: 25,       // Allow burst up to 25
     burstWindow: 300,     // Within 5 minutes
+  },
+  [RouteType.AI]: {
+    limit: 30,
+    window: 3600,         // 30 AI-backed requests per hour
+    burstLimit: 10,       // Allow burst up to 10
+    burstWindow: 60,      // Within 1 minute
   },
   [RouteType.GRAPH]: {
     limit: 50,
