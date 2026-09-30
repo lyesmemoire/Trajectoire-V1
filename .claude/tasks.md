@@ -3,23 +3,23 @@
 > Mis à jour manuellement en session. Pour l'état détaillé (architecture, pièges), voir `CLAUDE.md`.
 
 ## En cours
-- [ ] **Module CV / ATS — Phase 3 : nouveau moteur d'analyse** (`lib/cv-analysis/`, noyau déterministe sans IA, tests de régression). Décision du 2026-10-01 : **reconstruire** (le `premium-orchestrator` ne discrimine pas les métiers : dev senior ↔ offre infirmier = 86, comme dev ↔ dev). Voir « Module CV / ATS » ci-dessous.
+- [ ] Rien de bloquant en cours : le module CV / ATS (Phases 0 à 3) est terminé. Voir « Restant » et « Terminé ».
 
 ## Restant — par priorité
 
 ### Avant d'encaisser (bloquant)
 - [ ] 🔴 **Mise en ligne de la tarification** : migration `20260930_pricing_plans_pack_pro` **appliquée** à Supabase le 2026-09-30 ; reste à faire (côté utilisateur) : créer les prix Stripe test (Pack 29 € TTC unique, Pro 19 €/mois sans essai), `STRIPE_PRICE_INTERVIEW_PACK`, `STRIPE_PRO_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` (`whsec_…` via `stripe listen`), installer le CLI Stripe, configurer le portail de facturation, puis dérouler la checklist E2E (16 parcours, corrigée : Pack = +3 mois, FREE = 0 simulation). Documenter les 3 variables de prix dans `ENV.md` / `.env.example`.
 - [ ] 🔴 **Décision produit — paiement échoué** : aujourd'hui `past_due` retire immédiatement les droits PRO (`plan-access`). Recommandé : délai de grâce (accepter `past_due`).
-- [ ] 🔴 **Simulation Realtime** (`useRealtimeInterview`, `simulation/[id]`) : le pipeline de rapport a été raccordé (`93329526` transcripts persistés, `a3c98841` fin via `/api/simulation/end`, `94253685` Map morte supprimée) mais **jamais testé de bout en bout** (entretien vocal → rapport → settings). `/api/interview/realtime-session` n'a ni quota ni rate-limit propre ; `POST /api/interview` renvoie 404 en production (route legacy).
-- [ ] 🔴 **RGPD : la suppression de compte laisse `users` + `Subscription` en base** (`public.users` n'a aucune FK vers `auth.users` : `deleteAccount` supprime l'utilisateur Auth mais pas la ligne `users` ni `Subscription`). À faire : anonymiser ou supprimer, vérifier les cascades Prisma. L'abonnement Stripe est déjà annulé à la suppression (`lib/billing/cancel-user-subscription.ts`, `0df641f4`). Le texte intégral des CV est stocké en clair (`CVAnalysis.originalText`, doublé dans `optimizedText`) sans rétention : à traiter avec.
-- [ ] **Purge des 33 aperçus expirés** de `PreviewAnalysis` (22 « simulés », `rawPayload` avec texte de CV) : `DELETE` sur la base distante, **en attente d'accord explicite**. Le nettoyage périodique (`/api/admin/cleanup-previews`) n'est pas planifié.
+- [ ] 🔴 **Simulation Realtime** (`useRealtimeInterview`, `simulation/[id]`) : le pipeline de rapport a été raccordé (`93329526`, `a3c98841`, `94253685`) mais **jamais testé de bout en bout** (entretien vocal → rapport → settings). `/api/interview/realtime-session` exige désormais une session en cours de l'utilisateur (donc déjà décomptée du quota à la création) et a un rate-limit (`da95b917`). `POST /api/interview` renvoie 404 en production (route legacy).
+- [x] **RGPD (2026-10-02)** : `deleteAccount` supprime désormais `public.users` (cascades) + les tables sans FK, dans une transaction, avant le compte Auth (`e0eea467`) ; 4 comptes orphelins de test supprimés ; politique de confidentialité alignée (`30076efb`). **Rétention (option A)** : le texte des CV est conservé tant que le compte existe et supprimé avec lui. Reste : `AdminAuditLog` en `RESTRICT` bloque la suppression d'un administrateur ayant des entrées (voulu, message générique).
+- [x] Purge des 33 aperçus expirés de `PreviewAnalysis` faite (2026-10-02, accord explicite). Reste : planifier le nettoyage périodique (`/api/admin/cleanup-previews` n'est pas planifié).
 
 ### Module CV / ATS (audit du 2026-09-30)
-- [ ] **Phase 3 (en cours)** : moteur d'analyse — couverture des exigences de l'offre (mots entiers, accents, pluriels), expérience/séniorité comparées à l'offre, complétude/lisibilité, métriques d'impact ; refus de scorer si l'offre est absente ; IA réservée au qualitatif (français, entrées assainies) ; puis branchement API (`cv/analyze` réservée PACK/PRO) et persistance `CVAnalysis.atsScoreBefore/After`.
-- [ ] Page authentifiée dédiée `(app)/cv` (historique des analyses, réécritures) — aujourd'hui aucune.
+- [x] **Phase 3 faite** : moteur `lib/cv-analysis/` (`770ac59c`), aperçu gratuit par le moteur (`680a7834`), analyse complète PACK/PRO enregistrée dans `CVAnalysis` (`ae294387`).
+- [x] Pages `(app)/cv` et `(app)/cv/[id]` faites (`0e887830`). Reste : historique des **réécritures** liées à une analyse — impossible tant que `cv_rewrites` n'a pas de colonne `analysis_id` (migration à valider) ; le bouton « Réécrire ce CV » mène à `/analyze` sans `?cv=id`.
 - [ ] Export PDF/DOCX du CV à reconstruire (l'ancien code était mort et a été supprimé).
 - [ ] Un seul validateur d'upload (PDF/DOCX/TXT, une limite) : `cv/upload` (pdfjs, 8 Mo) et `analyze-preview` (pdf-parse, 5 Mo, DOCX « non supporté », TXT probablement rejeté par `file-type`).
-- [ ] Design `/analyze` : encore clair + violet + ivoire/bronze ; passer en zinc-950 / indigo-500.
+- [ ] Design `/analyze` : **décision du 2026-10-02 : le site public reste en thème clair** (pas de bascule sombre, essai annulé `2b6c8a26`). Reste seulement à harmoniser le clair (violet/ivoire/bronze mélangés) si souhaité.
 - [ ] `lib/ats/*` (~5 000 lignes, mort) : garder `doubt-engine`, `recruiter-grade`, `contracts/munitions` (munitions d'entretien, à assainir/plafonner), supprimer le reste une fois le nouveau moteur en place.
 - [ ] **Décision** : crédits `ENABLE_ATS_BILLING` (désactivé par défaut, 10/2 crédits) — font double emploi avec les plans : retirer ou garder.
 
@@ -29,7 +29,7 @@
 - [ ] Fusionner `/signup-conversion` (claire, OAuth) dans `/signup` ; `/welcome` orpheline.
 
 ### Divers
-- [ ] Chiffres inventés hors module CV : `lib/executive/executive-result-engine.ts` (percentile aléatoire), `components/share/career-dna-card.tsx` (« Top X % Mondial »), `emails/analysis-recap.tsx` (« mieux que X % des candidats »).
+- [x] Chiffres inventés retirés : dashboard (`166d1242`, `41cae305`), `/api/interview/evaluate` (score aléatoire) + `/interview` redirigé + composants et fichiers morts (`executive-result-engine`, `career-dna-card`, `evolution-card`, `analysis-recap`) (`dbe6d64d`), route orpheline `interview/questions` (`6841efe9`). Reste à vérifier ailleurs : `Math.random()` dans des chemins de score (aucun autre trouvé lors de la recherche du 2026-10-02).
 - [ ] Bouton « Commencer » de la Navbar violet (`bg-primary`) sur des pages indigo ; `hover:bg-slate-100` dans la Navbar.
 - [ ] Deux enums de plans parallèles (`AuthorizationV2.SubscriptionPlan`, `types/subscription.SubscriptionPlan`) à fusionner.
 - [ ] Un échec Vitest isolé non identifié (vu une fois, non reproduit en 5 exécutions).
@@ -59,6 +59,9 @@
 - [x] Vitest groupe C — `centralized-rate-limit.service.test.ts` (20/20, `469cfc5d`) : 3 bugs empilés, révélés un par un. (1) `initializeRedis()` n'appelait jamais `new Redis(...)` faute de `UPSTASH_REDIS_REST_URL`/`TOKEN` → `vi.stubEnv`. (2) le mock `Redis` utilisait une fonction fléchée, non constructible → fonction classique. (3) **bug réel de production** : une fois `burstCount >= burstLimit`, `slidingWindowCheck()` ne bloquait pas, il retombait sur la vérification de la fenêtre principale qui autorisait si elle n'était pas pleine — le burst limit n'avait donc aucun effet une fois dépassé ; fix dans `centralized-rate-limit.service.ts` (bloquer immédiatement). Le test utilisait aussi un burst (75) ne correspondant pas au vrai `burstLimit` de `RouteType.API` (150) — corrigé. Enfin, `should log errors when Redis fails` espionnait `console.error` au lieu de `logger.error` (pino n'écrit jamais via `console.error`) — corrigé.
 - [x] **Auth (2026-09-29/30)** : callback (`code`, `token_hash`+`type`, erreurs Supabase → codes) `1ccd567f` ; `/login` lit `?error=`/`?reason=` `6796cf7d` ; reset-password exige une session de récupération + déconnexion après succès `ea90ff32` ; signup transmet le jeton d'aperçu par cookie, rattaché au callback `16a09a10`. Trigger `on_auth_user_created` vérifié actif.
 - [x] **Grille tarifaire (2026-09-30)** : `lib/plans.ts` `2ff91d11` ; enum `FREE/PACK/PRO` + `packExpiresAt`/`simulationsUsed` `ea8f10aa` (migration appliquée) ; `/pricing` refonte `d248b447` ; checkout/webhook PACK/PRO `3a935c93` ; quotas atomiques, PACK = PRO `25d4e8a4` ; `/settings` abonnement + portail `b1752bb2` ; annulation Stripe à la suppression de compte `0df641f4`. (Quota précédent comptait la mauvaise table : `InterviewSession` au lieu de `interview_sessions`.)
+- [x] **Module CV — Phase 3 et pages (2026-10-01/02)** : moteur déterministe `770ac59c`, aperçu `680a7834`, PDF déterministe `90fc9af2`, analyse complète enregistrée `ae294387`, pages `/cv` `0e887830`.
+- [x] **Dashboard** : plus aucun chiffre inventé, score `null` si absent (`166d1242`, `41cae305`).
+- [x] **Realtime-session** : session en cours obligatoire + rate-limit (`da95b917`). **Privacy** : `30076efb`.
 - [x] **Module CV — Phase 0/1/2 (2026-10-01)** : valeurs inventées retirées (radar aléatoire, percentile, métriques par défaut) `435a5b5f` ; plus de transfert de l'aperçu vers le profil, résultat réel persisté, texte du CV non conservé `b357ddc5` ; un seul chemin d'aperçu `3c495b30` ; 24 fichiers morts supprimés `50072409` ; analyse complète et réécriture réservées PACK/PRO `91509cc4` ; CSRF + rate-limit + assainissement des prompts `4b0f21e4`.
 
-**Suite Vitest complète : 700/700 tests passent** (mesure du 2026-10-01 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).
+**Suite Vitest complète : 758/758 tests passent** (mesure du 2026-10-02 ; hors les 2 suites du groupe A, bloquées par la garde `[SAFETY]` localhost-only par design).

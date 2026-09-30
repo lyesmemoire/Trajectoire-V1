@@ -46,3 +46,13 @@
 - Aperçu gratuit : on ne persiste que le résultat, jamais le texte du CV ; le rattachement au compte est un **lien**, sans copie dans le profil (Option B).
 - Analyse complète et réécriture : réservées PACK/PRO, refus (403) avant tout appel IA ; CSRF + rate-limit ; entrées de prompt assainies avec `sanitizeForPrompt`.
 - Le `premium-orchestrator` est rejeté ; l'analyse ATS est reconstruite (noyau déterministe + IA pour le qualitatif). Un test de régression impose que « dev senior ↔ offre infirmier » obtienne un score très inférieur à « dev ↔ offre dev ».
+- Analyse complète enregistrée dans `CVAnalysis` (`atsScoreAfter`, `improvements`, `keywords` = résultat complet) ; `atsScoreBefore` reste `null` tant qu'aucune optimisation n'est appliquée. Une ligne antérieure au moteur n'affiche que son score.
+
+## Thème (validé le 2026-10-02)
+- **Site public (marketing, `/analyze`, landing, navbar, footer) : thème clair.** Pas de bascule sombre.
+- **Espace connecté (`(app)/*`, `/pricing`, `/onboarding`) : thème sombre zinc-950 / indigo-500**, ne pas y toucher.
+
+## Données personnelles (validé le 2026-10-02)
+- **Rétention (option A)** : le texte des CV et les analyses sont conservés tant que le compte existe, supprimés avec lui (`lib/account/purge-user-data.ts`) ; la politique de confidentialité le dit. Pas de purge automatique.
+- Suppression de compte : Stripe (abonnement annulé) → données applicatives (transaction) → compte Auth. Les factures restent chez Stripe.
+- Realtime : un jeton n'est délivré que pour une session `interview_sessions` en cours de l'utilisateur (créée, donc décomptée, par `/api/simulation/create`).
