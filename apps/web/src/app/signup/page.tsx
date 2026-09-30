@@ -149,7 +149,7 @@ export default function SignupPage() {
             Un lien de confirmation a été envoyé à <span className="font-medium text-white/80">{email}</span>.
             Cliquez dessus pour activer votre compte.
           </p>
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-white/60">
             Rien reçu ? Regardez dans vos courriers indésirables. Si un compte existe déjà avec cette adresse,
             connectez-vous ou réinitialisez votre mot de passe.
           </p>
@@ -228,7 +228,7 @@ export default function SignupPage() {
               placeholder="••••••••"
               required
             />
-            <p id="pw-hint" className="mt-1 text-xs text-zinc-500">
+            <p id="pw-hint" className="mt-1 text-xs text-zinc-400">
               {MIN_PASSWORD_LENGTH} caractères minimum.
             </p>
           </div>

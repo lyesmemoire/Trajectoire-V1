@@ -7,7 +7,7 @@
     /* Trajectoire — Career Intelligence Workspace Palette */
     --background: 240 20% 98%; /* #FAFAFC - Luminous Near White Canvas */
     --foreground: 224 71% 4%; /* #0F172A - Deep Neutral / Slate Near Black */
-    --foreground-muted: 220 9% 46%; /* #64748B - Bluish Slate Gray */
+    --foreground-muted: 220 9% 43%; /* #646A78 - Bluish Slate Gray (>= 4,5:1 sur blanc et sur surface-muted) */
 
     --surface: 0 0% 100%; /* #FFFFFF - Pure Crisp White */
     --surface-muted: 240 10% 96%; /* #F3F4F6 - Soft Surface Neutral */

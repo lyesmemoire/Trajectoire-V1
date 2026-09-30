@@ -530,7 +530,7 @@ export function AnalyzeOpportunityClient({
             )}
 
             <div className="mt-6 border-t border-background/10 pt-5">
-              <p className="text-xs text-background/40">
+              <p className="text-xs text-background/70">
                 Analyse basée sur votre CV importé × la description du poste.
               </p>
             </div>
