@@ -246,7 +246,7 @@ export default function HomePage() {
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pt-6 pb-14 lg:pt-20 lg:pb-16">
         <div className="mx-auto w-full max-w-[1120px]">
-          <div className="grid gap-8 lg:grid-cols-[540px_540px] lg:items-start lg:justify-center lg:gap-12">
+          <div className="grid gap-8 lg:grid-cols-[repeat(2,minmax(0,540px))] lg:items-start lg:justify-center lg:gap-12">
             {/* ─────────────────────────────
                 COLONNE GAUCHE
             ───────────────────────────── */}
@@ -257,7 +257,7 @@ export default function HomePage() {
                   Intelligence de candidature
                 </div>
 
-                <h1 className="font-serif text-[42px] font-bold leading-[1.06] tracking-[-0.025em] text-ink-900 sm:text-[52px]">
+                <h1 className="font-sans text-[42px] font-bold leading-[1.06] tracking-[-0.025em] text-ink-900 sm:text-[52px]">
                   Préparez Sereinement
                   <br />
                   votre Entretien
