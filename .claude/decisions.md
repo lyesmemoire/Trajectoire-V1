@@ -68,3 +68,8 @@
 - **Middleware fermé par défaut** : `AuthorizationV2` renvoie `NOT_FOUND` (404) pour tout chemin sans règle ; la règle `/` ne couvre que l'accueil ; correspondance à la frontière de segment. `/monitoring`, `/recruiter`, `/__qa__` sont fermés (404) ; `/api/performance/*` est réservé aux administrateurs.
 - **CSP : `style-src-attr 'unsafe-inline'`** (option A) : les attributs `style` rendus côté serveur (largeurs de barres) sont autorisés ; `<style>` et scripts restent protégés par nonce. Pas de réécriture des ~51 `style={{}}`. `connect-src` autorise Sentry et PostHog. PostHog n'a pas besoin d'entrée `script-src` (`'strict-dynamic'`).
 - **Contrôle d'`Origin`** sur les écritures `/api/*` (webhook Stripe exempté) ; **RLS** activée sur toutes les tables de `public` (`CVAnalysis` : lecture de ses propres lignes).
+
+## Design (validé le 2026-10-02)
+- **Police unique : Inter**, chargée par `next/font` (`app/layout.tsx`, variable `--font-inter`), site public et espace connecté. Plus de serif : Fraunces retirée, `font-serif` remplacé par `font-sans`.
+- **`/pricing` en thème clair** (site public, violet de marque, tokens sémantiques). `/login` et `/signup` restent en sombre (décision du 2026-10-02 inchangée : à rouvrir seulement sur demande).
+- **Navigation de l'espace connecté** : barre latérale à partir de 1024 px, en-tête + tiroir (`AppMobileNav`) en dessous.
