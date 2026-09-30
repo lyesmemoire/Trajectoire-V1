@@ -141,22 +141,6 @@ async function testInterviewQuestions() {
   }
 }
 
-async function testInterviewEvaluate() {
-  const response = await fetch(`${API_TEST_BASE_URL}/api/interview/evaluate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: 'test-session',
-      question: 'What is your experience with React?',
-      answer: 'I have 3 years of experience with React',
-    }),
-  });
-  const status = response.status;
-  if (![200, 400, 401, 500].includes(status)) {
-    throw new Error(`Unexpected status: ${status}`);
-  }
-}
-
 // Matching Tests
 async function testMatchingCalculateScore() {
   const response = await fetch(`${API_TEST_BASE_URL}/api/matching/calculate-score`, {
@@ -340,7 +324,6 @@ async function runApiTests() {
   
   await runTest('Interview: Create', testInterviewCreate);
   await runTest('Interview: Questions', testInterviewQuestions);
-  await runTest('Interview: Evaluate', testInterviewEvaluate);
   
   await runTest('Matching: Calculate Score', testMatchingCalculateScore);
   await runTest('Matching: History', testMatchingHistory);

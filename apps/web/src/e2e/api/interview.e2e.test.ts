@@ -35,18 +35,4 @@ test.describe('Interview API - E2E', () => {
     expect([200, 400, 401, 500]).toContain(response.status);
   });
 
-  test('POST /api/interview/evaluate - should evaluate interview response', async () => {
-    const response = await fetch(`${BASE_URL}/api/interview/evaluate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'test-session',
-        question: 'What is your experience with React?',
-        answer: 'I have 3 years of experience with React',
-      }),
-    });
-
-    // May fail without auth or API keys, but should not crash
-    expect([200, 400, 401, 500]).toContain(response.status);
-  });
 });

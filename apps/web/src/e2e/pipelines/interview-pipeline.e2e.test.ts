@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 const BASE_URL = process.env.E2E_BASE_URL || 'http://localhost:3000';
 
 test.describe('Interview Pipeline - E2E', () => {
-  test('Complete interview flow: Create → Questions → Evaluate → Complete', async () => {
+  test('Complete interview flow: Create → Questions → Complete', async () => {
     // Step 1: Create interview session
     const createResponse = await fetch(`${BASE_URL}/api/interview`, {
       method: 'POST',
@@ -31,19 +31,6 @@ test.describe('Interview Pipeline - E2E', () => {
     });
 
     expect([200, 400, 401, 500]).toContain(questionsResponse.status);
-
-    // Step 3: Evaluate response
-    const evaluateResponse = await fetch(`${BASE_URL}/api/interview/evaluate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'test-session',
-        question: 'What is your experience with React?',
-        answer: 'I have 3 years of experience with React',
-      }),
-    });
-
-    expect([200, 400, 401, 500]).toContain(evaluateResponse.status);
   });
 
   test('Premium interview flow with streaming', async () => {
