@@ -56,6 +56,8 @@ model User {
   discoverySources       DiscoverySource[]
   graphs                 Graph[]
   opportunities          Opportunity[]
+  radarSearches          RadarSearch[]
+  radarMatches           RadarMatch[]
 
   @@index([email], map: "User_email_idx")
   @@index([monthlyResetDate], map: "User_monthlyResetDate_idx")
@@ -759,6 +761,7 @@ model Opportunity {
   interviewSessions   InterviewSession[]
   workspace           ApplicationWorkspace?
   discoveredJobs      DiscoveredJob[]
+  radarMatches        RadarMatch[]
   user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   memories            OpportunityMemory[]
   stories             OpportunityStory[]
@@ -967,6 +970,110 @@ model DiscoveredJob {
   @@index([opportunityId])
   @@index([provider, boardKey])
   @@map("discovered_jobs")
+  @@schema("public")
+}
+
+model MarketOffer {
+  id            String                   @id @default(cuid())
+  source        String
+  externalId    String                   @map("external_id")
+  title         String
+  company       String?
+  locationLabel String?                  @map("location_label")
+  department    String?
+  latitude      Float?
+  longitude     Float?
+  contractType  String?                  @map("contract_type")
+  romeCode      String?                  @map("rome_code")
+  experience    String?
+  salaryLabel   String?                  @map("salary_label")
+  description   String
+  sourceUrl     String                   @map("source_url")
+  applyUrl      String?                  @map("apply_url")
+  fingerprint   String
+  status        String                   @default("LIVE")
+  publishedAt   DateTime?                @map("published_at")
+  firstSeenAt   DateTime                 @default(now()) @map("first_seen_at")
+  lastSeenAt    DateTime                 @default(now()) @map("last_seen_at")
+  closedAt      DateTime?                @map("closed_at")
+  updatedAt     DateTime                 @default(now()) @updatedAt @map("updated_at")
+  /// Colonne générée (tsvector 'french' sur titre, entreprise, description) : jamais écrite par Prisma.
+  searchVector  Unsupported("tsvector")? @map("search_vector")
+  matches       RadarMatch[]
+
+  @@unique([source, externalId], map: "market_offers_source_external_id_key")
+  @@index([status, lastSeenAt(sort: Desc)], map: "market_offers_status_last_seen_idx")
+  @@index([fingerprint], map: "market_offers_fingerprint_idx")
+  @@index([department], map: "market_offers_department_idx")
+  @@index([romeCode], map: "market_offers_rome_code_idx")
+  @@index([publishedAt(sort: Desc)], map: "market_offers_published_at_idx")
+  @@map("market_offers")
+  @@schema("public")
+}
+
+model RadarSearch {
+  id            String       @id @default(cuid())
+  userId        String       @map("user_id")
+  name          String
+  keywords      String
+  romeCodes     String[]     @default([]) @map("rome_codes")
+  departments   String[]     @default([])
+  latitude      Float?
+  longitude     Float?
+  radiusKm      Int?         @map("radius_km")
+  contractTypes String[]     @default([]) @map("contract_types")
+  sources       String[]     @default(["FRANCE_TRAVAIL", "LA_BONNE_ALTERNANCE"])
+  enabled       Boolean      @default(true)
+  lastRunAt     DateTime?    @map("last_run_at")
+  lastRunError  String?      @map("last_run_error")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  matches       RadarMatch[]
+
+  @@index([userId], map: "radar_searches_user_id_idx")
+  @@index([enabled, lastRunAt], map: "radar_searches_enabled_last_run_idx")
+  @@map("radar_searches")
+  @@schema("public")
+}
+
+model RadarMatch {
+  id            String       @id @default(cuid())
+  userId        String       @map("user_id")
+  offerId       String       @map("offer_id")
+  searchId      String?      @map("search_id")
+  opportunityId String?      @map("opportunity_id")
+  score         Int?
+  scoreDetails  Json?        @map("score_details")
+  state         String       @default("NEW")
+  matchedAt     DateTime     @default(now()) @map("matched_at")
+  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offer         MarketOffer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  search        RadarSearch? @relation(fields: [searchId], references: [id], onDelete: SetNull)
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, offerId], map: "radar_matches_user_offer_key")
+  @@index([userId, state, score(sort: Desc)], map: "radar_matches_user_state_score_idx")
+  @@index([offerId], map: "radar_matches_offer_id_idx")
+  @@index([searchId], map: "radar_matches_search_id_idx")
+  @@map("radar_matches")
+  @@schema("public")
+}
+
+model RadarSyncRun {
+  id         String    @id @default(cuid())
+  source     String
+  status     String
+  fetched    Int       @default(0)
+  upserted   Int       @default(0)
+  closed     Int       @default(0)
+  error      String?
+  startedAt  DateTime  @default(now()) @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+
+  @@index([startedAt(sort: Desc)], map: "radar_sync_runs_started_at_idx")
+  @@map("radar_sync_runs")
   @@schema("public")
 }
 
