@@ -2,22 +2,27 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.app"
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trajectoire.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Trajectoire – Reprenez le contrôle.",
     template: "%s | Trajectoire",
   },
   description:
-    "Trajectoire aide les cadres et dirigeants à prendre les bonnes décisions avec clarté et confiance.",
+    "Préparez vos entretiens d'embauche avec une recruteuse IA et analysez votre CV pour les logiciels de recrutement (ATS).",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Trajectoire – Reprenez le contrôle.",
-    description: "Passez de l'intuition à la certitude.",
+    description:
+      "Simulations d'entretien avec une recruteuse IA, rapport détaillé et analyse de CV pour les logiciels de recrutement.",
     type: "website",
     locale: "fr_FR",
     siteName: "Trajectoire",
-    url: "https://trajectoire.app",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Trajectoire" }],
+    url: SITE_URL,
+    // Pas d'image de partage tant que le visuel n'existe pas dans public/ : l'ancienne référence
+    // (/og-image.jpg) renvoyait un 404.
   },
 }
 
