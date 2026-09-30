@@ -1,5 +1,8 @@
 "use client"
 
+import { validatePassword, MIN_PASSWORD_LENGTH } from "@/lib/auth/credentials"
+import { translateAuthError } from "@/lib/auth/auth-errors"
+
 import { useEffect, useState, type FormEvent } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -9,7 +12,6 @@ import { darkTokens } from "@/lib/theme/dark-tokens"
 type SessionState = "checking" | "ready" | "invalid"
 type Status = "idle" | "loading" | "success" | "error"
 
-const MIN_PASSWORD_LENGTH = 8
 
 // Témoin posé par /api/auth/callback quand le lien de réinitialisation a été
 // consommé (voir app/api/auth/callback/route.ts). Garde d'usage : Supabase reste l'autorité.
@@ -76,10 +78,9 @@ export default function ResetPasswordPage() {
 
     setErrorMessage("")
 
-    if (password.length < MIN_PASSWORD_LENGTH) {
-      setErrorMessage(
-        `Le mot de passe doit contenir au moins ${MIN_PASSWORD_LENGTH} caractères.`
-      )
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      setErrorMessage(passwordError)
       setStatus("error")
       return
     }
@@ -97,7 +98,7 @@ export default function ResetPasswordPage() {
       const { error } = await supabase.auth.updateUser({ password })
 
       if (error) {
-        setErrorMessage(error.message)
+        setErrorMessage(translateAuthError(error))
         setStatus("error")
         return
       }

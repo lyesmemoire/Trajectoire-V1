@@ -1,5 +1,8 @@
 "use client"
 
+import { isValidEmail, normalizeEmail } from "@/lib/auth/credentials"
+import { translateAuthError } from "@/lib/auth/auth-errors"
+
 import { useState, type FormEvent } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
@@ -23,12 +26,19 @@ export default function ForgotPasswordPage() {
     try {
       const supabase = createClient()
 
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const normalized = normalizeEmail(email)
+      if (!isValidEmail(normalized)) {
+        setErrorMessage("Cette adresse e-mail n'est pas valide.")
+        setStatus("error")
+        return
+      }
+
+      const { error } = await supabase.auth.resetPasswordForEmail(normalized, {
         redirectTo: `${window.location.origin}/api/auth/callback?next=/reset-password`,
       })
 
       if (error) {
-        setErrorMessage(error.message)
+        setErrorMessage(translateAuthError(error))
         setStatus("error")
         return
       }

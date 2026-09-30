@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase"
 import { darkTokens } from "@/lib/theme/dark-tokens"
 import { usePreviewStorage } from "@/hooks/usePreviewStorage"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
+import { isValidEmail, normalizeEmail, validatePassword, MIN_PASSWORD_LENGTH } from "@/lib/auth/credentials"
+import { translateAuthError } from "@/lib/auth/auth-errors"
 
 export default function SignupPage() {
   const [email, setEmail] = useState("")
@@ -15,8 +17,55 @@ export default function SignupPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent" | "failed">("idle")
+  const [cooldown, setCooldown] = useState(0)
+
   const { token: previewToken, claimPreview, hasToken } = usePreviewStorage()
+
+  // Utilisateur déjà connecté : inutile de créer un compte, on l'envoie sur son espace.
+  useEffect(() => {
+    let cancelled = false
+    fetch("/api/auth/me", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data: { authenticated?: boolean }) => {
+        if (!cancelled && data.authenticated) window.location.replace("/dashboard")
+      })
+      .catch(() => undefined)
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  // Délai avant un nouvel envoi (limite d'envoi d'e-mails côté Supabase).
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const timer = setTimeout(() => setCooldown((c) => c - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [cooldown])
+
+  const handleResend = async () => {
+    if (resendState === "sending" || cooldown > 0) return
+    setResendState("sending")
+    try {
+      const supabase = createClient()
+      const { error: resendError } = await supabase.auth.resend({
+        type: "signup",
+        email: normalizeEmail(email),
+        options: { emailRedirectTo: `${window.location.origin}/api/auth/callback` },
+      })
+      if (resendError) {
+        setResendState("failed")
+        setError(translateAuthError(resendError))
+        return
+      }
+      setError("")
+      setResendState("sent")
+      setCooldown(60)
+    } catch {
+      setResendState("failed")
+      setError(translateAuthError(null))
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,12 +75,18 @@ export default function SignupPage() {
       setError("Veuillez remplir tous les champs.")
       return
     }
-    if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas.")
+    const normalizedEmail = normalizeEmail(email)
+    if (!isValidEmail(normalizedEmail)) {
+      setError("Cette adresse e-mail n'est pas valide.")
       return
     }
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères.")
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      setError(passwordError)
+      return
+    }
+    if (password !== confirmPassword) {
+      setError("Les mots de passe ne correspondent pas.")
       return
     }
     if (!acceptCGU) {
@@ -44,36 +99,26 @@ export default function SignupPage() {
     try {
       const supabase = createClient()
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
+        email: normalizedEmail,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/api/auth/callback`,
-          // Skip email confirmation in development
-          ...(process.env.NODE_ENV === 'development' ? { data: { skip_email_confirmation: true } } : {}),
         },
       })
 
       if (signUpError) throw signUpError
 
-      // In development, auto-signin after signup
-      if (process.env.NODE_ENV === 'development') {
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        })
-        if (!signInError) {
-          // Session ouverte : le claim peut se faire tout de suite.
-          if (hasToken()) await claimPreview()
-          window.location.href = '/simulation/new'
-          return
-        }
+      // Même comportement dans tous les environnements : si Supabase renvoie une session
+      // (confirmation d'e-mail désactivée dans le projet), on entre directement ; sinon on
+      // attend le clic sur le lien de confirmation. Plus de chemin propre au développement.
+      if (signUpData.session) {
+        if (hasToken()) await claimPreview()
+        window.location.href = "/dashboard"
+        return
       }
 
       if (hasToken()) {
-        if (signUpData.session) {
-          // Confirmation d'e-mail désactivée : la session existe déjà.
-          await claimPreview()
-        } else if (previewToken) {
+        if (previewToken) {
           // Pas de session avant la confirmation : le token voyage par cookie
           // (le sessionStorage ne survit pas à un autre onglet) et
           // /api/auth/callback fait le claim une fois la session créée.
@@ -81,9 +126,11 @@ export default function SignupPage() {
         }
       }
 
+      setEmail(normalizedEmail)
       setSuccess(true)
-    } catch (err: any) {
-      setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer.")
+      setCooldown(60)
+    } catch (err: unknown) {
+      setError(translateAuthError(err as { code?: string; message?: string; status?: number }))
     } finally {
       setLoading(false)
     }
@@ -102,6 +149,28 @@ export default function SignupPage() {
             Un lien de confirmation a été envoyé à <span className="font-medium text-white/80">{email}</span>.
             Cliquez dessus pour activer votre compte.
           </p>
+          <p className="text-xs text-white/40">
+            Rien reçu ? Regardez dans vos courriers indésirables. Si un compte existe déjà avec cette adresse,
+            connectez-vous ou réinitialisez votre mot de passe.
+          </p>
+          {error && (
+            <p role="alert" className="text-sm text-rose-300">{error}</p>
+          )}
+          {resendState === "sent" && cooldown > 0 && (
+            <p role="status" className="text-sm text-emerald-300">Un nouvel e-mail vient d&apos;être envoyé.</p>
+          )}
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={resendState === "sending" || cooldown > 0}
+            className="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 disabled:no-underline"
+          >
+            {resendState === "sending"
+              ? "Envoi…"
+              : cooldown > 0
+                ? `Renvoyer l'e-mail (${cooldown} s)`
+                : "Renvoyer l'e-mail de confirmation"}
+          </button>
           <Link href="/login" className="block mt-6 rounded text-sm text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
             Retour à la connexion
           </Link>
@@ -160,7 +229,7 @@ export default function SignupPage() {
               required
             />
             <p id="pw-hint" className="mt-1 text-xs text-zinc-500">
-              6 caractères minimum.
+              {MIN_PASSWORD_LENGTH} caractères minimum.
             </p>
           </div>
 

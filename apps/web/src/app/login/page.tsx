@@ -1,5 +1,9 @@
 "use client"
 
+import { createClient } from "@/lib/supabase/client"
+import { normalizeEmail } from "@/lib/auth/credentials"
+import { translateAuthError } from "@/lib/auth/auth-errors"
+
 import {
   Suspense,
   useEffect,
@@ -120,6 +124,8 @@ function LoginContent() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [signingOut, setSigningOut] = useState(false)
+  const [needsConfirmation, setNeedsConfirmation] = useState(false)
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent" | "failed">("idle")
 
   // Server-truth session check using the current cookies.
   useEffect(() => {
@@ -180,9 +186,11 @@ function LoginContent() {
       const data = (await res.json()) as {
         ok?: boolean
         error?: string
+        code?: string
       }
 
       if (!res.ok) {
+        setNeedsConfirmation(data?.code === "email_not_confirmed")
         setError(
           data?.error ||
             "Connexion impossible pour le moment."
@@ -198,6 +206,24 @@ function LoginContent() {
         "Une erreur critique est survenue. Veuillez réessayer."
       )
       setLoading(false)
+    }
+  }
+
+  // Renvoi de l'e-mail de confirmation (compte créé mais adresse jamais confirmée).
+  const handleResend = async () => {
+    if (resendState === "sending") return
+    setResendState("sending")
+    try {
+      const supabase = createClient()
+      const { error: resendError } = await supabase.auth.resend({
+        type: "signup",
+        email: normalizeEmail(email),
+        options: { emailRedirectTo: `${window.location.origin}/api/auth/callback` },
+      })
+      setResendState(resendError ? "failed" : "sent")
+      if (resendError) setError(translateAuthError(resendError))
+    } catch {
+      setResendState("failed")
     }
   }
 
@@ -265,6 +291,25 @@ function LoginContent() {
             <p className="text-rose-300 text-sm font-medium text-center">
               {error || urlError}
             </p>
+          </div>
+        )}
+
+        {needsConfirmation && (
+          <div className="mb-6 text-center">
+            {resendState === "sent" ? (
+              <p role="status" className="text-sm text-emerald-300">
+                Un nouvel e-mail de confirmation vient d&apos;être envoyé à {normalizeEmail(email)}.
+              </p>
+            ) : (
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resendState === "sending"}
+                className="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
+              >
+                {resendState === "sending" ? "Envoi…" : "Renvoyer l'e-mail de confirmation"}
+              </button>
+            )}
           </div>
         )}
 
