@@ -16,6 +16,8 @@ import { getOpenAIKey } from '@/lib/ai/ai-models'
 import { Container, ServiceTokens } from '@/infrastructure/di'
 import { initializeContainer } from '@/infrastructure/di/bootstrap'
 import type { SessionRepository } from '@/infrastructure/repositories'
+import { rateLimit } from '@/lib/rate-limiting/rate-limit.middleware'
+import { RouteType, RateLimitScope } from '@/lib/rate-limiting/centralized-rate-limit.service'
 
 // ── Question d'ouverture ─────────────────────────────────────────────────────
 // Il n'y a plus de kernel HIIOS ici : celui qui existait avant n'était jamais
@@ -71,7 +73,7 @@ Commence immédiatement par cette question. Ne te présente pas longuement.`
 
 // ── Route principale ─────────────────────────────────────────────────────────
 
-export async function POST(request: NextRequest) {
+async function handleRealtimeSession(request: NextRequest) {
   try {
     // Auth
     const { user } = await getVerifiedUserWithRetry()
@@ -93,28 +95,38 @@ export async function POST(request: NextRequest) {
       candidateId?: string
     }
 
-    // ── Choisir la question d'ouverture ──────────────────────────────────────
-    // `candidateId` est en réalité l'id de la session `interview_sessions`
-    // (voir useRealtimeInterview.ts) : on l'utilise pour retrouver le type
-    // d'entretien choisi à la création. Si la session est introuvable ou
-    // n'appartient pas à l'utilisateur, on retombe sur une question par défaut
-    // plutôt que de bloquer la connexion Realtime.
+    // ── Session obligatoire ──────────────────────────────────────────────────
+    // `candidateId` est l'id de la session `interview_sessions` (voir
+    // useRealtimeInterview.ts). Cette session n'existe que si `/api/simulation/create`
+    // l'a acceptée, donc après contrôle et décompte du quota (FREE : aucune simulation,
+    // Pack épuisé ou expiré : refus). Exiger une session à soi, encore en cours, empêche
+    // d'obtenir des jetons Realtime (payants) en contournant le quota. On ne re-vérifie
+    // pas le quota ici : la simulation est déjà décomptée, un Pack à sa dernière
+    // simulation serait sinon bloqué à tort.
+    if (!body.candidateId || typeof body.candidateId !== 'string') {
+      return NextResponse.json({ error: 'Session requise' }, { status: 400 })
+    }
+
     let firstQuestion = DEFAULT_OPENING_QUESTION
+    try {
+      initializeContainer()
+      const sessionRepository = (await Container.resolve(
+        ServiceTokens.SessionRepository,
+      )) as SessionRepository
 
-    if (body.candidateId) {
-      try {
-        initializeContainer()
-        const sessionRepository = (await Container.resolve(
-          ServiceTokens.SessionRepository,
-        )) as SessionRepository
-
-        const session = await sessionRepository.findById(body.candidateId)
-        if (session && session.user_id === user.id) {
-          firstQuestion = OPENING_QUESTIONS[session.interview_type] ?? DEFAULT_OPENING_QUESTION
-        }
-      } catch (err) {
-        console.error('[realtime-session] lookup session:', err)
+      const session = await sessionRepository.findById(body.candidateId)
+      // Même réponse pour « absente » et « à un autre » : pas d'oracle d'existence.
+      if (!session || session.user_id !== user.id) {
+        return NextResponse.json({ error: 'Session introuvable' }, { status: 404 })
       }
+      if (session.status !== 'in_progress') {
+        return NextResponse.json({ error: 'Cette session est terminée' }, { status: 409 })
+      }
+      firstQuestion = OPENING_QUESTIONS[session.interview_type] ?? DEFAULT_OPENING_QUESTION
+    } catch (err) {
+      // Échec fermé : sans vérification de la session, pas de jeton.
+      console.error('[realtime-session] lookup session:', err)
+      return NextResponse.json({ error: 'Vérification de la session impossible' }, { status: 503 })
     }
 
     // ── Créer session OpenAI Realtime ─────────────────────────────────────────
@@ -172,3 +184,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }
+
+// Limite de débit par utilisateur et par IP : chaque appel ouvre une session OpenAI facturée.
+export const POST = rateLimit(RouteType.SIMULATION, handleRealtimeSession, {
+  scopes: [RateLimitScope.USER, RateLimitScope.IP],
+})
