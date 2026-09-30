@@ -41,6 +41,8 @@ export interface SimulationQuota {
   allowed: boolean
   /** Vrai si le Pack de l'utilisateur est arrivé à échéance. */
   expired: boolean
+  /** Vrai pour un PRO dont le dernier paiement a échoué (période de grâce, `past_due`). */
+  paymentPastDue: boolean
 }
 
 /**
@@ -74,6 +76,7 @@ export async function checkSimulationQuota(userId: string): Promise<SimulationQu
     periodEnd,
     allowed: canSimulate(planUser),
     expired,
+    paymentPastDue: planUser.plan === "PRO" && subscription?.status === "past_due",
   }
 }
 

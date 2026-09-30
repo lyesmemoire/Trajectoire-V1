@@ -75,9 +75,12 @@ export function buildSubscriptionSummary(quota: SimulationQuota): SubscriptionSu
     return {
       ...base,
       headline: "Simulations illimitées",
-      detail: quota.periodEnd
-        ? `Période en cours jusqu'au ${formatDate(quota.periodEnd)}`
-        : null,
+      // Période de grâce : le paiement a échoué, l'accès est maintenu le temps des relances.
+      detail: quota.paymentPastDue
+        ? "Votre dernier paiement a échoué. Mettez à jour votre moyen de paiement depuis le portail pour éviter la coupure de votre accès."
+        : quota.periodEnd
+          ? `Période en cours jusqu'au ${formatDate(quota.periodEnd)}`
+          : null,
       progress: null,
     }
   }

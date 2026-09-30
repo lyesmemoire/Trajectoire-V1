@@ -58,7 +58,7 @@
 - Realtime : un jeton n'est délivré que pour une session `interview_sessions` en cours de l'utilisateur (créée, donc décomptée, par `/api/simulation/create`).
 
 ## Paiement, auth et marque (validé le 2026-10-02)
-- **Paiement échoué : période de grâce.** `past_due` conserve les droits PRO ; les relances Stripe suivent leur cours et `customer.subscription.deleted` ramène à FREE. (À implémenter dans `plan-access`, voir `tasks.md`.)
+- **Paiement échoué : période de grâce.** `past_due` conserve les droits PRO ; les relances Stripe suivent leur cours et `customer.subscription.deleted` ramène à FREE. Implémenté dans `plan-access` ; la **durée** de la grâce est réglée par Stripe (relances automatiques), pas par le code.
 - **`/signup-conversion` reste une page distincte de `/signup`** : `/signup` = inscription directe (sombre) ; `/signup-conversion` = parcours venant de l'aperçu ATS (clair, OAuth Google/GitHub, contexte de conversion). Ne pas fusionner.
 - **Navbar violet = couleur de marque du site public** (token `primary`) : ne pas la passer en indigo. L'indigo est la couleur de l'espace connecté.
 - Règles d'authentification communes : mot de passe 8 caractères minimum, e-mail normalisé (`lib/auth/credentials.ts`) ; erreurs Supabase toujours traduites (`lib/auth/auth-errors.ts`), jamais le texte brut.

@@ -96,16 +96,32 @@ describe("checkSimulationQuota", () => {
     expect(q.allowed).toBe(true)
   })
 
-  it("PRO sans abonnement actif (past_due) : plus de droits", async () => {
+  it("PRO en retard de paiement (past_due) : droits maintenus, signalé", async () => {
     mocks.findUnique.mockResolvedValue(
       userRow({
         plan: "PRO",
-        Subscription: { status: "past_due", currentPeriodEnd: inDays(-2) },
+        Subscription: { status: "past_due", currentPeriodEnd: inDays(3) },
       }),
     )
     const q = await checkSimulationQuota("u1")
-    expect(q.plan).toBe("FREE")
-    expect(q.allowed).toBe(false)
+    expect(q.plan).toBe("PRO")
+    expect(q.allowed).toBe(true)
+    expect(q.paymentPastDue).toBe(true)
+  })
+
+  it("PRO dont l'abonnement est annulé ou impayé : plus de droits", async () => {
+    for (const status of ["canceled", "unpaid"]) {
+      mocks.findUnique.mockResolvedValue(
+        userRow({
+          plan: "PRO",
+          Subscription: { status, currentPeriodEnd: inDays(-2) },
+        }),
+      )
+      const q = await checkSimulationQuota("u1")
+      expect(q.plan).toBe("FREE")
+      expect(q.allowed).toBe(false)
+      expect(q.paymentPastDue).toBe(false)
+    }
   })
 })
 

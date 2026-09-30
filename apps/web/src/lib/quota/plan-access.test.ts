@@ -9,6 +9,7 @@ vi.mock("@/lib/prisma", () => ({
 import {
   hasFullCvAnalysis,
   isAdminRole,
+  isProAccessStatus,
   loadPlanAccess,
   requireFullCvAnalysis,
 } from "./plan-access"
@@ -51,16 +52,41 @@ describe("loadPlanAccess", () => {
     expect(a.expired).toBe(true)
   })
 
-  it("PRO seulement avec un abonnement actif", async () => {
+  it("PRO : active → PRO", async () => {
     mocks.findUnique.mockResolvedValue(
       row({ plan: "PRO", Subscription: { status: "active", currentPeriodEnd: inDays(20) } }),
     )
     expect((await loadPlanAccess("u1")).effective).toBe("PRO")
+  })
 
+  it("PRO : past_due → PRO maintenu (période de grâce)", async () => {
     mocks.findUnique.mockResolvedValue(
-      row({ plan: "PRO", Subscription: { status: "past_due", currentPeriodEnd: inDays(-1) } }),
+      row({ plan: "PRO", Subscription: { status: "past_due", currentPeriodEnd: inDays(3) } }),
     )
+    expect((await loadPlanAccess("u1")).effective).toBe("PRO")
+  })
+
+  it.each(["canceled", "unpaid", "incomplete", "incomplete_expired", "paused"])(
+    "PRO : %s → FREE immédiatement",
+    async (status) => {
+      mocks.findUnique.mockResolvedValue(
+        row({ plan: "PRO", Subscription: { status, currentPeriodEnd: inDays(20) } }),
+      )
+      expect((await loadPlanAccess("u1")).effective).toBe("FREE")
+    },
+  )
+
+  it("PRO sans ligne d'abonnement (null) → FREE", async () => {
+    mocks.findUnique.mockResolvedValue(row({ plan: "PRO", Subscription: null }))
     expect((await loadPlanAccess("u1")).effective).toBe("FREE")
+  })
+
+  it("isProAccessStatus : seuls active et past_due", () => {
+    expect(isProAccessStatus("active")).toBe(true)
+    expect(isProAccessStatus("past_due")).toBe(true)
+    expect(isProAccessStatus("canceled")).toBe(false)
+    expect(isProAccessStatus(null)).toBe(false)
+    expect(isProAccessStatus(undefined)).toBe(false)
   })
 })
 

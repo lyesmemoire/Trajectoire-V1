@@ -9,6 +9,7 @@ import { logInfo, logError }          from "@/lib/logger";
 import { checkRateLimit }             from "@/lib/rate-limit";
 import { stripe }                    from "@/lib/stripe";
 import { PLANS, canSimulate, getRemainingSimulations, isExpired, type PlanId } from "@/lib/plans";
+import { isProAccessStatus }          from "@/lib/quota/plan-access";
 import Stripe from 'stripe';
 
 // ── Client Stripe (resilient) ──────────────────────────────────────────────────────────
@@ -95,8 +96,10 @@ export async function POST(request: NextRequest) {
     select: { status: true, stripeSubId: true },
   });
 
+  // `past_due` (période de grâce) compte aussi : l'abonnement existe encore chez Stripe,
+  // en créer un second ferait payer deux fois. Le portail permet de régler le paiement.
   const hasActiveSubscription =
-    existingSubscription?.status === "active" &&
+    isProAccessStatus(existingSubscription?.status) &&
     existingSubscription?.stripeSubId;
 
   // Un abonné Pro a déjà des simulations illimitées : ni second abonnement,
@@ -107,7 +110,9 @@ export async function POST(request: NextRequest) {
         error:
           planId === "PACK"
             ? "Votre abonnement Pro inclut déjà des simulations illimitées."
-            : "Vous avez déjà un abonnement actif. Utilisez le portail client pour le modifier.",
+            : existingSubscription?.status === "past_due"
+              ? "Votre abonnement est en attente de paiement. Mettez à jour votre moyen de paiement depuis le portail client."
+              : "Vous avez déjà un abonnement actif. Utilisez le portail client pour le modifier.",
       },
       { status: 400 }
     );

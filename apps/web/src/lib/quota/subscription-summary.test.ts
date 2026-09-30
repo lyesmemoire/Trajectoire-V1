@@ -14,6 +14,7 @@ function quota(over: Partial<SimulationQuota>): SimulationQuota {
     periodEnd: null,
     allowed: false,
     expired: false,
+    paymentPastDue: false,
     ...over,
   }
 }
@@ -93,6 +94,16 @@ describe("buildSubscriptionSummary", () => {
     expect(s.priceLabel).toContain("/ mois")
     expect(s.headline).toBe("Simulations illimitées")
     expect(s.detail).toBe("Période en cours jusqu'au 25 octobre 2026")
+    expect(s.showPortal).toBe(true)
+    expect(s.showUpgrade).toBe(false)
+  })
+
+  it("PRO en période de grâce : accès maintenu, message clair sur le paiement échoué, portail affiché", () => {
+    const s = buildSubscriptionSummary(
+      quota({ plan: "PRO", limit: null, remaining: null, isUnlimited: true, allowed: true, paymentPastDue: true }),
+    )
+    expect(s.headline).toBe("Simulations illimitées")
+    expect(s.detail).toMatch(/paiement a échoué/)
     expect(s.showPortal).toBe(true)
     expect(s.showUpgrade).toBe(false)
   })

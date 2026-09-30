@@ -14,7 +14,7 @@ import { isAdminRole, loadPlanAccess } from '@/lib/quota/plan-access'
 export type SubscriptionStatus =
   | 'active'       // Abonnement actif — accès complet
   | 'trialing'     // Période d'essai — accès complet
-  | 'past_due'     // Paiement en retard — accès restreint
+  | 'past_due'     // Paiement en retard — période de grâce : accès maintenu
   | 'cancelled'    // Annulé — pas d'accès
   | 'none'         // Pas d'abonnement — pas d'accès
 
@@ -26,8 +26,8 @@ export interface SubscriptionCheck {
 
 /**
  * Accès « premium » = plan effectif PACK ou PRO (mêmes fonctionnalités, seul le
- * quota de simulations diffère). Un Pack expiré, ou un PRO dont l'abonnement
- * n'est plus actif, n'ouvre plus d'accès : voir lib/quota/plan-access.
+ * quota de simulations diffère). Un Pack expiré, ou un PRO dont l'abonnement n'est ni
+ * `active` ni `past_due` (période de grâce), n'ouvre plus d'accès : voir lib/quota/plan-access.
  */
 export async function checkUserSubscription(userId: string): Promise<SubscriptionCheck> {
 

@@ -2,7 +2,12 @@
  * Accès par plan — source unique du « plan effectif » d'un utilisateur.
  *
  * Règles (lib/plans.ts est la grille) :
- * - PRO n'est valable que si l'abonnement Stripe est actif (`Subscription.status`).
+ * - PRO n'est valable que si l'abonnement Stripe est `active` ou `past_due`
+ *   (`Subscription.status`). `past_due` = période de grâce : Stripe relance encore le
+ *   paiement, l'abonné est de bonne foi, on ne coupe pas. Les autres statuts (`canceled`,
+ *   `unpaid`, `incomplete`, `incomplete_expired`, `paused`…) ramènent à FREE immédiatement.
+ *   La fin de la grâce est décidée par Stripe (réglage des relances) : il envoie ensuite
+ *   `unpaid` ou `customer.subscription.deleted`.
  * - PACK n'est valable que tant que `packExpiresAt` n'est pas dépassé.
  * - Sinon : FREE (aperçu de l'analyse de CV uniquement, aucune simulation).
  *
@@ -34,6 +39,13 @@ export interface PlanAccess {
 
 const ADMIN_ROLES = ["ADMIN_FOUNDER", "ADMIN_PRODUCT", "ADMIN_SUPPORT"]
 
+/** Statuts d'abonnement Stripe qui donnent accès à PRO (`past_due` = période de grâce). */
+export const PRO_ACCESS_STATUSES = ["active", "past_due"] as const
+
+export function isProAccessStatus(status: string | null | undefined): boolean {
+  return !!status && (PRO_ACCESS_STATUSES as readonly string[]).includes(status)
+}
+
 export function isAdminRole(role: string | null | undefined): boolean {
   return !!role && ADMIN_ROLES.includes(role)
 }
@@ -52,7 +64,7 @@ export async function loadPlanAccess(userId: string): Promise<PlanAccess> {
     },
   })
 
-  const proActive = user?.plan === "PRO" && user.Subscription?.status === "active"
+  const proActive = user?.plan === "PRO" && isProAccessStatus(user.Subscription?.status)
 
   const planUser: PlanUser = {
     plan: proActive ? "PRO" : user?.plan === "PACK" ? "PACK" : "FREE",

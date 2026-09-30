@@ -51,7 +51,7 @@ describe("checkUserSubscription (aligné sur le plan effectif)", () => {
     expect(await checkUserSubscription("u1")).toMatchObject({ hasAccess: true, plan: "PACK" })
   })
 
-  it("PRO actif : accès ; PRO en retard de paiement : pas d'accès", async () => {
+  it("PRO actif ou en retard de paiement (grâce) : accès ; annulé : pas d'accès", async () => {
     mocks.findUnique.mockResolvedValue(
       row({ plan: "PRO", Subscription: { status: "active", currentPeriodEnd: inDays(20) } }),
     )
@@ -60,7 +60,12 @@ describe("checkUserSubscription (aligné sur le plan effectif)", () => {
     mocks.findUnique.mockResolvedValue(
       row({ plan: "PRO", Subscription: { status: "past_due", currentPeriodEnd: inDays(-1) } }),
     )
-    expect(await checkUserSubscription("u1")).toMatchObject({ hasAccess: false, status: "past_due" })
+    expect(await checkUserSubscription("u1")).toMatchObject({ hasAccess: true, status: "past_due", plan: "PRO" })
+
+    mocks.findUnique.mockResolvedValue(
+      row({ plan: "PRO", Subscription: { status: "canceled", currentPeriodEnd: inDays(-1) } }),
+    )
+    expect(await checkUserSubscription("u1")).toMatchObject({ hasAccess: false, status: "canceled" })
   })
 
   it("administrateur : accès", async () => {
