@@ -60,7 +60,7 @@ export default function PrivacyPage() {
               Vos données sont conservées :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
-              <li>CV et simulations : 2 ans après votre dernière activité</li>
+              <li>CV analysés et simulations : conservés tant que votre compte existe, puis supprimés définitivement avec lui. Vous pouvez supprimer votre compte à tout moment depuis les paramètres ; la suppression efface vos CV, analyses, simulations et opportunités. Les factures restent conservées par notre prestataire de paiement (obligation comptable).</li>
               <li>Données de paiement : conformément aux obligations légales</li>
               <li>Données analytics : 13 mois maximum</li>
               <li>Compte utilisateur : jusqu'à sa suppression</li>
