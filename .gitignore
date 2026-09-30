@@ -216,3 +216,6 @@ supabase/.temp/
 
 # Intentional AudioWorklet runtime source
 !/lib/realtime/audio/audio-worklet.js
+certification/keys/pipeline_private.pem
+laboratory/keys/lab_private.pem
+laboratory/keys/private.pem
