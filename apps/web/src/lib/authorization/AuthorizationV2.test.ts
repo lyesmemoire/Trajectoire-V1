@@ -216,12 +216,15 @@ describe('AuthorizationV2', () => {
 
     it('should return correct reason for denied premium access', () => {
       const auth = new AuthorizationV2(freeUserContext);
-      
-      // Simulate a premium route check
+      auth.addRouteRule({
+        pattern: '/premium-feature',
+        accessLevel: AccessLevel.PREMIUM,
+        comment: 'Route premium de test',
+      });
+
       const result = auth.checkAccess('/premium-feature');
-      if (!result.allowed) {
-        expect(result.reason).toBe('Premium subscription required');
-      }
+      expect(result.allowed).toBe(false);
+      expect(result.reason).toBe('Premium subscription required');
     });
   });
 
@@ -394,18 +397,20 @@ describe('AuthorizationV2', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should handle unknown routes as public (fail-open)', () => {
+    it('should treat unknown routes as closed (fail-closed, 404)', () => {
       const auth = new AuthorizationV2(null);
-      
+
       const result = auth.checkAccess('/unknown-route');
-      expect(result.allowed).toBe(true);
+      expect(result.allowed).toBe(false);
+      expect(result.reason).toBe('Not found');
+      expect(result.requiredAccessLevel).toBe(AccessLevel.NOT_FOUND);
     });
 
-    it('should handle empty pathname', () => {
+    it('should treat an empty pathname as closed', () => {
       const auth = new AuthorizationV2(null);
-      
+
       const result = auth.checkAccess('');
-      expect(result.allowed).toBe(true);
+      expect(result.allowed).toBe(false);
     });
 
     it('should handle null user context for authenticated routes', () => {

@@ -17,6 +17,8 @@ export enum AccessLevel {
   PREMIUM = "PREMIUM",
   /** Rôle admin requis - authentification + vérification rôle administrateur */
   ADMIN = "ADMIN",
+  /** Route inconnue ou volontairement fermée : traitée comme inexistante (404) */
+  NOT_FOUND = "NOT_FOUND",
 }
 
 export enum UserRole {
@@ -86,6 +88,16 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/login", accessLevel: AccessLevel.PUBLIC, comment: "Page de connexion" },
   { pattern: "/signup", accessLevel: AccessLevel.PUBLIC, comment: "Page d'inscription" },
   { pattern: "/auth", accessLevel: AccessLevel.PUBLIC, comment: "Routes d'authentification" },
+  { pattern: "/forgot-password", accessLevel: AccessLevel.PUBLIC, comment: "Mot de passe oublié" },
+  { pattern: "/reset-password", accessLevel: AccessLevel.PUBLIC, comment: "Réinitialisation du mot de passe" },
+  { pattern: "/logout", accessLevel: AccessLevel.PUBLIC, comment: "Déconnexion" },
+  { pattern: "/signup-conversion", accessLevel: AccessLevel.PUBLIC, comment: "Conversion de l'aperçu gratuit" },
+  { pattern: "/privacy", accessLevel: AccessLevel.PUBLIC, comment: "Politique de confidentialité" },
+  { pattern: "/terms", accessLevel: AccessLevel.PUBLIC, comment: "Conditions d'utilisation" },
+  { pattern: "/api/public", accessLevel: AccessLevel.PUBLIC, comment: "API publique (aperçu gratuit anonyme)" },
+  { pattern: "/images", accessLevel: AccessLevel.PUBLIC, comment: "Images statiques" },
+  { pattern: "/audio-processor.js", accessLevel: AccessLevel.PUBLIC, comment: "Worklet audio (public/)" },
+  { pattern: "/pcm16-processor.js", accessLevel: AccessLevel.PUBLIC, comment: "Worklet audio (public/)" },
   { pattern: "/api/auth", accessLevel: AccessLevel.PUBLIC, comment: "API d'authentification" },
   { pattern: "/api/stripe/webhook", accessLevel: AccessLevel.PUBLIC, comment: "Webhook Stripe" },
   { pattern: "/api/health", accessLevel: AccessLevel.PUBLIC, comment: "Health check" },
@@ -112,6 +124,21 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/copilot", accessLevel: AccessLevel.AUTHENTICATED, comment: "Copilot" },
   { pattern: "/opportunities", accessLevel: AccessLevel.AUTHENTICATED, comment: "Opportunités" },
   { pattern: "/api/opportunities", accessLevel: AccessLevel.AUTHENTICATED, comment: "API opportunités" },
+  { pattern: "/cv", accessLevel: AccessLevel.AUTHENTICATED, comment: "Mes CV" },
+  { pattern: "/interview", accessLevel: AccessLevel.AUTHENTICATED, comment: "Entretien" },
+  { pattern: "/knowledge", accessLevel: AccessLevel.AUTHENTICATED, comment: "Base de connaissances" },
+  { pattern: "/matching", accessLevel: AccessLevel.AUTHENTICATED, comment: "Matching" },
+  { pattern: "/discovery", accessLevel: AccessLevel.AUTHENTICATED, comment: "Discovery" },
+  { pattern: "/api/app", accessLevel: AccessLevel.AUTHENTICATED, comment: "API du tableau de bord (DashboardClient)" },
+  { pattern: "/api/account", accessLevel: AccessLevel.AUTHENTICATED, comment: "API compte" },
+  { pattern: "/api/analytics", accessLevel: AccessLevel.AUTHENTICATED, comment: "API analytics" },
+  { pattern: "/api/career-memory", accessLevel: AccessLevel.AUTHENTICATED, comment: "API mémoire de carrière" },
+  { pattern: "/api/discovery", accessLevel: AccessLevel.AUTHENTICATED, comment: "API discovery" },
+  { pattern: "/api/knowledge", accessLevel: AccessLevel.AUTHENTICATED, comment: "API connaissances" },
+  { pattern: "/api/matching", accessLevel: AccessLevel.AUTHENTICATED, comment: "API matching" },
+  { pattern: "/api/quota", accessLevel: AccessLevel.AUTHENTICATED, comment: "API quota" },
+  { pattern: "/api/stories", accessLevel: AccessLevel.AUTHENTICATED, comment: "API histoires" },
+  { pattern: "/api/stripe", accessLevel: AccessLevel.AUTHENTICATED, comment: "API Stripe (checkout, portail) ; le webhook a sa règle publique" },
 
   // ============================================================
   // ROUTES PREMIUM (AccessLevel.PREMIUM)
@@ -124,7 +151,25 @@ const ROUTE_RULES: RouteRule[] = [
   // ============================================================
   { pattern: "/admin", accessLevel: AccessLevel.ADMIN, comment: "Interface admin" },
   { pattern: "/api/admin", accessLevel: AccessLevel.ADMIN, comment: "API admin" },
+  { pattern: "/api/performance", accessLevel: AccessLevel.ADMIN, comment: "Métriques internes de performance" },
+
+  // ============================================================
+  // ROUTES FERMÉES (AccessLevel.NOT_FOUND) — 404 pour tout le monde
+  // ============================================================
+  { pattern: "/monitoring", accessLevel: AccessLevel.NOT_FOUND, comment: "Page de monitoring cassée (API absente) : fermée" },
+  { pattern: "/recruiter", accessLevel: AccessLevel.NOT_FOUND, comment: "Espace recruteur non lancé : fermé" },
+  { pattern: "/__qa__", accessLevel: AccessLevel.NOT_FOUND, comment: "Page de QA design : dev uniquement" },
 ];
+
+/**
+ * Une règle couvre son chemin exact et ses sous-chemins (frontière de segment) :
+ * "/api/cv" couvre "/api/cv/analyze" mais pas "/api/cvx". La règle "/" ne couvre que l'accueil :
+ * comme préfixe, elle capterait tous les chemins et rendrait le défaut fermé inopérant.
+ */
+function matchesRule(pathname: string, pattern: string): boolean {
+  if (pattern === "/") return pathname === "/";
+  return pathname === pattern || pathname.startsWith(pattern + "/");
+}
 
 // ============================================================
 // AUTHORIZATION V2
@@ -160,20 +205,16 @@ export class AuthorizationV2 {
    * Détermine le niveau d'accès requis pour un chemin donné
    */
   getRequiredAccessLevel(pathname: string): AccessLevel {
-    // 1. Recherche de correspondance exacte
-    const exactMatch = this.routeRules.find(rule => rule.pattern === pathname);
-    if (exactMatch) {
-      return exactMatch.accessLevel;
+    // Règle la plus spécifique (patterns triés du plus long au plus court) :
+    // chemin exact ou sous-chemin, à la frontière de segment.
+    const match = this.routeRules.find(rule => matchesRule(pathname, rule.pattern));
+    if (match) {
+      return match.accessLevel;
     }
 
-    // 2. Recherche de correspondance par préfixe
-    const prefixMatch = this.routeRules.find(rule => pathname.startsWith(rule.pattern));
-    if (prefixMatch) {
-      return prefixMatch.accessLevel;
-    }
-
-    // 3. Par défaut : accès public (fail-open)
-    return AccessLevel.PUBLIC;
+    // Par défaut : fermé (fail-closed). Toute nouvelle page ou route doit recevoir une règle
+    // explicite ; sinon elle répond 404 (le test route-coverage.test.ts le vérifie).
+    return AccessLevel.NOT_FOUND;
   }
 
   /**
@@ -181,6 +222,11 @@ export class AuthorizationV2 {
    */
   checkAccess(pathname: string): AuthorizationResult {
     const requiredAccessLevel = this.getRequiredAccessLevel(pathname);
+
+    // NOT_FOUND : fermé pour tout le monde, même connecté
+    if (requiredAccessLevel === AccessLevel.NOT_FOUND) {
+      return { allowed: false, reason: "Not found", requiredAccessLevel };
+    }
 
     // PUBLIC : Toujours autorisé
     if (requiredAccessLevel === AccessLevel.PUBLIC) {

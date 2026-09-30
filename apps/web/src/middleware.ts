@@ -13,6 +13,7 @@ import { getEffectivePlanId, type PlanId } from "@/lib/plans";
 
 import {
   AuthorizationV2,
+  AccessLevel,
   UserRole,
   SubscriptionPlan,
   type UserContext,
@@ -337,6 +338,60 @@ function createApiAuthorizationErrorResponse(
 
   return response;
 }
+function createNotFoundResponse(
+  request: NextRequest,
+  correlationId: string,
+  corsHeaders: Record<string, string>,
+  scriptNonce: string,
+  styleNonce: string,
+): NextResponse {
+  const pathname =
+    request.nextUrl.pathname;
+
+  logger.info(
+    {
+      correlationId,
+      pathname,
+      method: request.method,
+    },
+    "Closed route (no explicit authorization rule)",
+  );
+
+  // API : JSON. Pages : page 404 de l'application (réécriture vers un chemin inexistant).
+  const response =
+    isApiRoute(pathname)
+      ? NextResponse.json(
+          {
+            error: "not_found",
+            message: "Not found",
+            correlationId,
+          },
+          { status: 404 },
+        )
+      : NextResponse.rewrite(
+          new URL("/_not-found-closed", request.url),
+          { status: 404 },
+        );
+
+  applyHeaders(
+    response,
+    corsHeaders,
+  );
+
+  applySecurityHeaders(
+    response,
+    scriptNonce,
+    styleNonce,
+  );
+
+  response.headers.set(
+    "Cache-Control",
+    "no-store",
+  );
+
+  return response;
+}
+
 function createAuthenticationUnavailableResponse(
   request: NextRequest,
   correlationId: string,
@@ -755,6 +810,21 @@ export async function middleware(
 
   const styleNonce =
     generateNonce();
+
+  // Défaut fermé : une route sans règle explicite (ou volontairement fermée) est inexistante.
+  // Décidé avant tout appel à Supabase : inutile de vérifier une session pour un 404.
+  if (
+    new AuthorizationV2(null).getRequiredAccessLevel(pathname) ===
+    AccessLevel.NOT_FOUND
+  ) {
+    return createNotFoundResponse(
+      request,
+      correlationId,
+      corsHeaders,
+      scriptNonce,
+      styleNonce,
+    );
+  }
 
   const {
     supabase,
