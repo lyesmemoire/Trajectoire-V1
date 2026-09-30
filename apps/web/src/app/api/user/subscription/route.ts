@@ -1,7 +1,6 @@
 // apps/web/src/app/api/user/subscription/route.ts
 //
-// Route publique (authentifiée) pour récupérer le statut d'abonnement
-// Utilisée par le hook useSubscription côté client
+// Route authentifiée : statut d'accès premium de l'utilisateur connecté.
 
 import { NextResponse, NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'

@@ -30,8 +30,8 @@ export default async function ReportPage({
 
   // Vérifier le statut Premium
   const subscriptionCheck = await checkUserSubscription(user.id)
-  const isPremium =
-    subscriptionCheck.hasAccess || subscriptionCheck.plan !== "FREE"
+  // `hasAccess` seul : en cas d'erreur `plan` vaut null, et `null !== "FREE"` ouvrirait l'accès.
+  const isPremium = subscriptionCheck.hasAccess
 
   // Fetch report with session data (IDOR protection: verify user ownership)
   const { data: report } = await supabase

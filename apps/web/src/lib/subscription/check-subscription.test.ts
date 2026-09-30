@@ -68,6 +68,28 @@ describe("checkUserSubscription (aligné sur le plan effectif)", () => {
     expect(await checkUserSubscription("u1")).toMatchObject({ hasAccess: false, status: "canceled" })
   })
 
+  it("Pack actif : accès, sans faux statut d'abonnement", async () => {
+    mocks.findUnique.mockResolvedValue(row({ plan: "PACK", packExpiresAt: inDays(30) }))
+    expect(await checkUserSubscription("u1")).toEqual({ hasAccess: true, status: "none", plan: "PACK" })
+  })
+
+  it("statuts Stripe réels : canceled et unpaid sans accès, avec leur vrai nom", async () => {
+    for (const status of ["canceled", "unpaid", "incomplete_expired"]) {
+      mocks.findUnique.mockResolvedValue(
+        row({ plan: "PRO", Subscription: { status, currentPeriodEnd: inDays(-1) } }),
+      )
+      expect(await checkUserSubscription("u1")).toEqual({ hasAccess: false, status, plan: "FREE" })
+    }
+  })
+
+  it("erreur de base : échec fermé, aucun accès et plan null", async () => {
+    mocks.findUnique.mockRejectedValue(new Error("db down"))
+    const result = await checkUserSubscription("u1")
+    expect(result).toEqual({ hasAccess: false, status: "none", plan: null })
+    // Le plan null ne doit jamais être lu comme « autre que FREE » par un appelant.
+    expect(result.hasAccess).toBe(false)
+  })
+
   it("administrateur : accès", async () => {
     mocks.findUnique.mockResolvedValue(row({ role: "ADMIN_PRODUCT" }))
     expect(await checkUserSubscription("u1")).toEqual({ hasAccess: true, status: "active", plan: "admin" })
