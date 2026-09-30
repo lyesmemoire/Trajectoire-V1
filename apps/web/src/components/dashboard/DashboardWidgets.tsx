@@ -760,7 +760,9 @@ export function DashboardWidgets({
                               ? Code
                               : skill.category === "soft"
                                 ? Users
-                                : Globe
+                                : skill.category === "language"
+                                  ? Globe
+                                  : null
 
                           return (
                             <span
@@ -771,7 +773,7 @@ export function DashboardWidgets({
                                   : "bg-white/[0.04] text-white/70 ring-white/[0.08]"
                               }`}
                             >
-                              <Icon className="size-3 shrink-0" />
+                              {Icon && <Icon className="size-3 shrink-0" />}
                               <span className="max-w-[130px] truncate">
                                 {skill.name}
                               </span>

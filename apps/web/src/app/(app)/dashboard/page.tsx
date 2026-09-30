@@ -463,9 +463,10 @@ export default async function DashboardPage() {
   const normalizedSkills = normalizeSkills(cvData?.skills)
   const skills: DashboardSkill[] = normalizedSkills.slice(0, 6).map((skill, index) => ({
     name: skill.name || `CompÃ©tence ${index + 1}`,
-    level: skill.level ?? 50,
-    category: skill.category ?? (index % 2 === 0 ? 'technical' : 'soft'),
-    trend: skill.trend ?? (index % 3 === 0 ? 'up' : undefined),
+    // Niveau, catégorie et tendance : uniquement s'ils figurent dans les données, jamais déduits.
+    ...(skill.level !== undefined ? { level: skill.level } : {}),
+    ...(skill.category ? { category: skill.category } : {}),
+    ...(skill.trend ? { trend: skill.trend } : {}),
   }))
 
   const career: DashboardCareer = {

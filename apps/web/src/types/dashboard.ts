@@ -37,10 +37,10 @@ export interface DashboardScore {
 export interface DashboardSkill {
   /** Nom de la compÃ©tence */
   name: string
-  /** Niveau (0-100) */
-  level: number
-  /** CatÃ©gorie */
-  category: 'technical' | 'soft' | 'language'
+  /** Niveau (0-100), absent s'il n'est pas dans les données */
+  level?: number
+  /** CatÃ©gorie, absente si inconnue */
+  category?: 'technical' | 'soft' | 'language'
   /** Ã‰volution */
   trend?: 'up' | 'down' | 'stable'
 }
