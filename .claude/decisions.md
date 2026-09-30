@@ -63,3 +63,8 @@
 - **Navbar violet = couleur de marque du site public** (token `primary`) : ne pas la passer en indigo. L'indigo est la couleur de l'espace connecté.
 - Règles d'authentification communes : mot de passe 8 caractères minimum, e-mail normalisé (`lib/auth/credentials.ts`) ; erreurs Supabase toujours traduites (`lib/auth/auth-errors.ts`), jamais le texte brut.
 - `cv_rewrites.analysis_id` relie une réécriture à son analyse (facultatif, cascade) ; `expires_at` ne gouverne que le rejeu idempotent, pas la conservation.
+
+## Sécurité web (validé le 2026-10-02)
+- **Middleware fermé par défaut** : `AuthorizationV2` renvoie `NOT_FOUND` (404) pour tout chemin sans règle ; la règle `/` ne couvre que l'accueil ; correspondance à la frontière de segment. `/monitoring`, `/recruiter`, `/__qa__` sont fermés (404) ; `/api/performance/*` est réservé aux administrateurs.
+- **CSP : `style-src-attr 'unsafe-inline'`** (option A) : les attributs `style` rendus côté serveur (largeurs de barres) sont autorisés ; `<style>` et scripts restent protégés par nonce. Pas de réécriture des ~51 `style={{}}`. `connect-src` autorise Sentry et PostHog. PostHog n'a pas besoin d'entrée `script-src` (`'strict-dynamic'`).
+- **Contrôle d'`Origin`** sur les écritures `/api/*` (webhook Stripe exempté) ; **RLS** activée sur toutes les tables de `public` (`CVAnalysis` : lecture de ses propres lignes).
