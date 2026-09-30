@@ -20,6 +20,8 @@ import {
 
 import { generateNonce } from "@/lib/security/nonce";
 import { initializeCsrfToken } from "@/lib/security/csrf-middleware";
+import { getAllowedOrigins } from "@/lib/security/csrf";
+import { checkRequestOrigin } from "@/lib/security/origin-guard";
 
 const CONFIG = {
   ALLOWED_ORIGINS: [
@@ -720,6 +722,47 @@ export async function middleware(
       {
         headers:
           corsHeaders,
+      },
+    );
+  }
+
+  // Défense en profondeur contre le CSRF : écritures /api/* depuis une origine étrangère.
+  const originCheck = checkRequestOrigin({
+    method: request.method,
+    pathname,
+    origin,
+    host:
+      request.headers.get("x-forwarded-host") ??
+      request.headers.get("host"),
+    secFetchSite:
+      request.headers.get("sec-fetch-site"),
+    allowedOrigins:
+      getAllowedOrigins(),
+  });
+
+  if (!originCheck.allowed) {
+    logger.warn(
+      {
+        correlationId,
+        pathname,
+        method: request.method,
+        origin,
+        reason: originCheck.reason,
+      },
+      "Cross-origin write request rejected",
+    );
+
+    return NextResponse.json(
+      {
+        error: "origin_not_allowed",
+        message: "Origin not allowed",
+        correlationId,
+      },
+      {
+        status: 403,
+        headers: {
+          [getCorrelationIdHeader()]: correlationId,
+        },
       },
     );
   }

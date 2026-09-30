@@ -64,7 +64,7 @@ Alias : `@/*` → `apps/web/src/*`.
 
 ### Middleware (`src/middleware.ts`, ~900 lignes)
 
-Supabase SSR + `AuthorizationV2` (rôles/plans), CORS, CSRF (`lib/security/csrf-middleware`), nonce CSP, correlation-id. Listes explicites : `PUBLIC_PAGE_ROUTES`, `PUBLIC_API_PREFIXES` (`/api/auth`, `/api/public`, `/api/health`) et `AUTHENTICATED_PAGE_PREFIXES` (`/dashboard`, `/history`, `/simulation`, `/report`, `/interview`, `/knowledge`, `/matching`, `/settings`, `/onboarding`, `/copilot`, `/opportunities`, `/discovery`). **Toute nouvelle page privée doit être ajoutée à `AUTHENTICATED_PAGE_PREFIXES`.**
+Supabase SSR + `AuthorizationV2` (rôles/plans), CORS, contrôle d'`Origin` des écritures `/api/*` (`lib/security/origin-guard`, webhook Stripe exempté), CSRF (`lib/security/csrf-middleware`), nonce CSP, correlation-id. Listes explicites : `PUBLIC_PAGE_ROUTES`, `PUBLIC_API_PREFIXES` (`/api/auth`, `/api/public`, `/api/health`) et `AUTHENTICATED_PAGE_PREFIXES` (`/dashboard`, `/history`, `/simulation`, `/report`, `/interview`, `/knowledge`, `/matching`, `/settings`, `/onboarding`, `/copilot`, `/opportunities`, `/discovery`). **Toute nouvelle page privée doit être ajoutée à `AUTHENTICATED_PAGE_PREFIXES`.**
 
 ### Couches (`src/`)
 
