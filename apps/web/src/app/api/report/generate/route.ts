@@ -11,6 +11,8 @@ import { NextRequest } from "next/server";
 import { RateLimitScope, RouteType } from "@/lib/rate-limiting/centralized-rate-limit.service";
 import { rateLimit } from "@/lib/rate-limiting/rate-limit.middleware";
 
+export const maxDuration = 60;
+
 const ENABLE_REPORT_BILLING = process.env.ENABLE_REPORT_BILLING === "true";
 const REPORT_COST = 15; // credits per report
 

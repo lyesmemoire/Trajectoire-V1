@@ -7,6 +7,9 @@ import { AuthenticationError, ValidationError } from "@/core/errors";
 import { ApiResponseBuilder } from "@/core/http";
 import { EndSessionSchema } from "@/validation";
 
+// La génération du rapport (appel IA) est appelée depuis cette route.
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     // Initialize DI container
@@ -50,24 +53,9 @@ export async function POST(request: NextRequest) {
     // Execute command (domain end)
     await simulationService.endSession(validatedData.sessionId, user.id);
 
-    // =========================================================
-    // KPI + Gamification (best-effort, never blocks redirect)
-    // =========================================================
-    // 1) Upsert a session row for dashboard KPIs (count, score avg, time...)
-    // We use sessionId as the PK of interview_sessions (must be uuid).
-    try {
-      await supabase.from("interview_sessions").upsert({
-        id: validatedData.sessionId,
-        user_id: user.id,
-        duration_seconds: 0,
-        score: null,
-        created_at: new Date().toISOString(),
-      });
-    } catch (e) {
-      console.warn("[simulation/end] interview_sessions upsert failed:", e);
-    }
-
-    // 2) Award badges based on stored sessions
+    // Les KPI du tableau de bord viennent de la séance elle-même (score et retour écrits par
+    // /api/report/generate) : aucune réécriture ici, l'ancien upsert écrasait durée et date de création.
+    // Badges selon les séances enregistrées (best-effort, ne bloque jamais la redirection).
     try {
       await supabase.rpc("award_badges_for_user", { p_user_id: user.id });
     } catch (e) {

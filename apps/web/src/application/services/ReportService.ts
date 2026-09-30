@@ -49,6 +49,9 @@ export interface GenerateReportResult {
   };
 }
 
+/** Nombre minimal de mots prononcés par le candidat pour qu'un rapport soit généré. */
+export const MIN_CANDIDATE_WORDS = 30;
+
 export class ReportService {
   constructor(
     private readonly sessionRepository: SessionRepository,
@@ -132,6 +135,20 @@ export class ReportService {
 
     // Get conversation history
     const messages = await this.messageRepository.getBySessionId(command.sessionId);
+
+    // Garde de contenu : un rapport (et son score) n'a de sens que si le candidat a réellement parlé.
+    // Sans cela, l'IA noterait un entretien vide. Aucun rapport n'est créé ni compté au quota.
+    const candidateWords = messages
+      .filter((m) => m.role === "user")
+      .reduce((sum, m) => sum + (m.content.trim() ? m.content.trim().split(/\s+/).length : 0), 0);
+    if (candidateWords < MIN_CANDIDATE_WORDS) {
+      throw new AppError(
+        "Entretien trop court pour générer un rapport",
+        ErrorCode.INVALID_INPUT,
+        422
+      );
+    }
+
     const conversationHistory = messages
       .map((m) => `${m.role === "assistant" ? "Interviewer" : "Candidate"}: ${m.content}`)
       .join("\n\n");
@@ -158,18 +175,13 @@ export class ReportService {
         analysis: sessionData.analysis,
       });
     } catch (error) {
+      // Pas de faux rapport à zéro : rien n'est enregistré ni compté, la génération peut être relancée.
       this.logger.error("AI report generation failed", { error });
-      // Return minimal report if AI fails
-      analysis = {
-        overallScore: 0,
-        communication: 0,
-        technical: 0,
-        confidence: 0,
-        strengths: [],
-        improvements: [],
-        summary: "Analyse indisponible. Veuillez réessayer plus tard.",
-        recommendation: "Réessayez de générer le rapport ultérieurement.",
-      };
+      throw new AppError(
+        "La génération du rapport a échoué, veuillez réessayer",
+        ErrorCode.AI_ERROR,
+        503
+      );
     }
 
     // Create report entity

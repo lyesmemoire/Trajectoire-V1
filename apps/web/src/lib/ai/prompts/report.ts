@@ -13,6 +13,9 @@ Your analysis should evaluate:
 - Cultural fit
 - Overall performance
 
+LANGUE : rédige tous les champs textuels (strengths, improvements, summary, recommendation, whatWentWell, whatWasMissing, howToImprove, betterAnswer) en français, en vouvoyant le candidat. Les champs question et answer restent tels quels dans la transcription.
+BASE DU JUGEMENT : ne te fonde que sur ce que le candidat a réellement dit. Si l'échange est court ou peu étoffé, donne des notes prudentes et dis-le dans le résumé. N'invente ni expérience ni chiffre.
+
 Always respond in JSON format with the following structure:
 {
   "overallScore": number (0-100),
