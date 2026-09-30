@@ -60,10 +60,9 @@ export async function POST(req: NextRequest) {
       { timeout: 8000 }
     )
 
-    // 6. Sauvegarder dans PreviewAnalysis avec token
-    const previewToken = await previewAnalysisService.analyzePreview({
-      cvText: cvValidation.content!,
-      jobText: jobDescription,
+    // 6. Sauvegarder le RÉSULTAT (jamais le texte du CV ni de l'offre) avec un token
+    const { previewToken } = await previewAnalysisService.savePreviewAnalysis({
+      result: preview,
       ipHash: fingerprint,
       fingerprint: fingerprint,
     })
@@ -72,14 +71,14 @@ export async function POST(req: NextRequest) {
     // Percentile, écart « au seuil » et dimensions du radar étaient inventés
     // (dérivés du score, ou aléatoires) : ils ont été retirés.
     const response = NextResponse.json({
-      previewToken: previewToken.previewToken,
+      previewToken,
       score: preview.score,
       strengths: preview.strengths,
       weakness: preview.weakness,
     })
 
     // 8. Set cookie pour persistance
-    response.cookies.set('preview_token', previewToken.previewToken, {
+    response.cookies.set('preview_token', previewToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
