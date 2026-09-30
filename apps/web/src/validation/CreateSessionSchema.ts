@@ -17,6 +17,10 @@ export const CreateSessionSchema = z.object({
    * will validate ownership and persist this FK on InterviewSession.
    */
   opportunityId: z.string().optional(),
+  /** Exigence des relances (défaut : standard). */
+  difficulty: z.enum(["souple", "standard", "exigeant"]).optional(),
+  /** Question saisie par le candidat, posée une fois vers la moitié de l'entretien (assainie côté serveur). */
+  mandatoryQuestion: z.string().max(1000).optional(),
 });
 
 export type CreateSessionInput = z.infer<typeof CreateSessionSchema>;

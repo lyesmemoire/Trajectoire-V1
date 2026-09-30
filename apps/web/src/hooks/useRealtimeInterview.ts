@@ -29,6 +29,7 @@ import {
   type RealtimeTranscript,
 } from '@/lib/interview/realtime-events'
 import { WRAP_UP_INSTRUCTIONS, openingResponseInstructions } from '@/lib/interview/realtime-instructions'
+import { mandatoryQuestionResponseInstructions } from '@/lib/interview/session-setup'
 import {
   REALTIME_DEFAULT_ERROR,
   REALTIME_SDP_ERROR,
@@ -76,6 +77,7 @@ interface SessionPayload {
   first_question?: string
   opening_persisted?: boolean
   resumed?: boolean
+  mandatory_question?: string | null
   duration_seconds?: number
 }
 
@@ -210,18 +212,25 @@ export function useRealtimeInterview({
   // ── Chronologie de la séance (durée choisie) ───────────────────────────────
 
   const startTimeline = useCallback(
-    (durationSeconds: number | undefined) => {
+    (durationSeconds: number | undefined, mandatoryQuestion?: string | null) => {
       if (tickRef.current) clearInterval(tickRef.current)
       const { wrapUpAtMs, endAtMs } = realtimeTimeline(durationSeconds)
       const plannedMs = Math.min(endAtMs, (durationSeconds && durationSeconds > 0 ? durationSeconds : 15 * 60) * 1000)
       const startedAt = Date.now()
       let wrapUpSent = false
+      let mandatorySent = !mandatoryQuestion
       let endSent = false
       setRemainingSeconds(Math.round(plannedMs / 1000))
 
       tickRef.current = setInterval(() => {
         const elapsed = Date.now() - startedAt
         setRemainingSeconds(Math.max(0, Math.round((plannedMs - elapsed) / 1000)))
+
+        // Question imposée : une seule fois, vers la moitié du temps, quand personne ne parle.
+        if (!mandatorySent && !wrapUpSent && elapsed >= plannedMs / 2 && statusRef.current === 'connected') {
+          mandatorySent = true
+          sendEvent({ type: 'response.create', response: { instructions: mandatoryQuestionResponseInstructions(mandatoryQuestion as string) } })
+        }
 
         // Consigne de clôture : dès que le candidat ne parle pas (sinon à la prochaine seconde).
         if (!wrapUpSent && elapsed >= wrapUpAtMs && statusRef.current !== 'speaking_user') {
@@ -297,7 +306,7 @@ export function useRealtimeInterview({
           type: 'response.create',
           response: { instructions: openingResponseInstructions(session.first_question ?? '', Boolean(session.resumed)) },
         })
-        startTimeline(session.duration_seconds)
+        startTimeline(session.duration_seconds, session.mandatory_question)
       })
 
       dc.addEventListener('message', e => {

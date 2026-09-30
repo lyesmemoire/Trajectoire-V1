@@ -8,7 +8,7 @@
  *   3. crée un jeton éphémère : POST /v1/realtime/client_secrets avec la session complète.
  * Le navigateur se connecte ensuite directement à OpenAI (POST /v1/realtime/calls, voir le hook).
  *
- * Retourne { client_secret, expires_at, session_id, first_question, opening_persisted, duration_seconds }.
+ * Retourne { client_secret, expires_at, session_id, first_question, opening_persisted, resumed, mandatory_question, duration_seconds }.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -30,6 +30,7 @@ import {
   REALTIME_VOICE,
 } from '@/lib/interview/realtime-config'
 import { buildRealtimeInstructions, isResumedSession } from '@/lib/interview/realtime-instructions'
+import { mandatoryQuestionAsked, readSessionSetup } from '@/lib/interview/session-setup'
 import { logger } from '@/lib/logger'
 
 // Question d'ouverture de repli (séance sans question enregistrée) : une par type d'entretien.
@@ -66,6 +67,7 @@ async function handleRealtimeSession(request: NextRequest) {
     let openingQuestion: string
     let openingPersisted = false
     let resumed = false
+    let pendingMandatoryQuestion: string | null = null
     let durationSeconds: number
 
     try {
@@ -89,6 +91,10 @@ async function handleRealtimeSession(request: NextRequest) {
       openingPersisted = Boolean(stored) && messages.length === 1
       resumed = isResumedSession(history)
 
+      // Réglages choisis à la création : difficulté et question imposée (à poser une seule fois).
+      const setup = readSessionSetup(session.analysis)
+      pendingMandatoryQuestion = mandatoryQuestionAsked(setup.mandatoryQuestion, history) ? null : setup.mandatoryQuestion
+
       // Même contexte que l'entretien texte. Son échec n'empêche pas la séance : consignes sans CV ni offre.
       let context = null
       try {
@@ -105,6 +111,8 @@ async function handleRealtimeSession(request: NextRequest) {
         interviewType: session.interview_type,
         durationMinutes: Math.round(session.duration_seconds / 60),
         openingQuestion,
+        difficulty: setup.difficulty,
+        hasMandatoryQuestion: Boolean(pendingMandatoryQuestion),
         history,
         cvText: context?.candidate.cvText,
         jobDescription: context?.job.description,
@@ -166,6 +174,7 @@ async function handleRealtimeSession(request: NextRequest) {
       first_question: openingQuestion,
       opening_persisted: openingPersisted,
       resumed,
+      mandatory_question: pendingMandatoryQuestion,
       duration_seconds: durationSeconds,
     })
   } catch (error: unknown) {

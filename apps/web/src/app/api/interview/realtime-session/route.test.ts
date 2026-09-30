@@ -148,6 +148,33 @@ describe("POST /api/interview/realtime-session", () => {
     expect(openaiBody().session.instructions).toContain("Je suis développeuse.")
   })
 
+  it("réglages de séance : difficulté dans les consignes, question imposée transmise si pas encore posée", async () => {
+    m.findById.mockResolvedValue({
+      ...SESSION,
+      analysis: { setup: { difficulty: "exigeant", mandatoryQuestion: "Pourquoi avez-vous quitté votre dernier poste ?" } },
+    })
+    const body = await (await POST(req({ candidateId: "s1" }))).json()
+    expect(body.mandatory_question).toBe("Pourquoi avez-vous quitté votre dernier poste ?")
+    const instructions = openaiBody().session.instructions
+    expect(instructions).toContain("Difficulté exigeante")
+    expect(instructions).toMatch(/ne conclus jamais avant de l'avoir posée/)
+    expect(instructions).not.toContain("quitté votre dernier poste")
+  })
+
+  it("question imposée déjà posée (reprise) : non retransmise", async () => {
+    m.findById.mockResolvedValue({
+      ...SESSION,
+      analysis: { setup: { difficulty: "standard", mandatoryQuestion: "Pourquoi avez-vous quitté votre dernier poste ?" } },
+    })
+    m.getMessages.mockResolvedValue([
+      { role: "assistant", content: "Parlez-moi de vous." },
+      { role: "user", content: "Je suis développeuse." },
+      { role: "assistant", content: "Pourquoi avez-vous quitté votre dernier poste ?" },
+    ])
+    const body = await (await POST(req({ candidateId: "s1" }))).json()
+    expect(body.mandatory_question).toBeNull()
+  })
+
   it("contexte indisponible : la séance continue sans CV ni offre", async () => {
     m.findById.mockResolvedValue(SESSION)
     m.buildContext.mockRejectedValue(new Error("boom"))

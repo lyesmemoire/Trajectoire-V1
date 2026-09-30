@@ -26,7 +26,7 @@ describe("buildRealtimeInstructions : cadre de l'entretien", () => {
     expect(text).toContain("niveau : Senior")
     expect(text).toContain("Type d'entretien : Technique")
     expect(text).toContain("20 minutes")
-    expect(text).toContain(`environ ${targetQuestionCount(20)} questions`)
+    expect(text).toContain(`environ ${targetQuestionCount(20, "Senior")} questions`)
   })
 
   it("impose la première question enregistrée pour la séance", () => {
@@ -122,6 +122,26 @@ describe("reprise après coupure", () => {
     const r = openingResponseInstructions("Parlez-moi de vous.", true)
     expect(r).toMatch(/reprend/)
     expect(r).not.toContain("Parlez-moi de vous.")
+  })
+})
+
+describe("difficulté, question imposée et niveau", () => {
+  it("difficulté standard par défaut, exigeante et souple quand demandées", () => {
+    expect(buildRealtimeInstructions(BASE)).toContain("Difficulté standard")
+    expect(buildRealtimeInstructions({ ...BASE, difficulty: "exigeant" })).toContain("Difficulté exigeante")
+    expect(buildRealtimeInstructions({ ...BASE, difficulty: "souple" })).toContain("Difficulté souple")
+  })
+
+  it("question imposée attendue : interdit de conclure avant de l'avoir posée, sans citer son texte", () => {
+    const t = buildRealtimeInstructions({ ...BASE, hasMandatoryQuestion: true })
+    expect(t).toMatch(/ne conclus jamais avant de l'avoir posée/)
+    expect(buildRealtimeInstructions(BASE)).not.toMatch(/question supplémentaire/)
+  })
+
+  it("nombre de questions : moins pour un junior, plus pour un profil senior, minimum 3", () => {
+    expect(targetQuestionCount(15, "Junior")).toBeLessThan(targetQuestionCount(15, "Intermédiaire"))
+    expect(targetQuestionCount(15, "Senior")).toBeGreaterThan(targetQuestionCount(15, "Intermédiaire"))
+    expect(targetQuestionCount(5, "Junior")).toBe(3)
   })
 })
 

@@ -449,6 +449,55 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                   ))}
                 </div>
               </div>
+
+              {/* Difficulté */}
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-white/80">
+                  Exigence de la recruteuse
+                </label>
+                <p className="mb-3 text-sm text-white/50">
+                  Elle règle la fermeté des relances, pas la durée.
+                </p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  {[
+                    { value: "souple", label: "Souple", hint: "Ton chaleureux, peu de relances" },
+                    { value: "standard", label: "Standard", hint: "Relances sur les réponses vagues" },
+                    { value: "exigeant", label: "Exigeant", hint: "Précisions et points fragiles" },
+                  ].map((d) => (
+                    <label key={d.value} className="cursor-pointer">
+                      <input
+                        type="radio"
+                        name="difficulty"
+                        value={d.value}
+                        defaultChecked={d.value === "standard"}
+                        className="peer sr-only"
+                      />
+                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-3 text-center transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500/40">
+                        <span className="text-sm font-medium text-white/70">{d.label}</span>
+                        <span className="mt-0.5 text-xs text-white/50">{d.hint}</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Question imposée */}
+              <div>
+                <label htmlFor="mandatoryQuestion" className="mb-1 block text-sm font-semibold text-white/80">
+                  Une question que vous redoutez ? <span className="font-normal text-white/50">(facultatif)</span>
+                </label>
+                <p className="mb-3 text-sm text-white/50">
+                  Elle sera posée une fois, mot pour mot, vers la moitié de l&apos;entretien.
+                </p>
+                <input
+                  id="mandatoryQuestion"
+                  name="mandatoryQuestion"
+                  type="text"
+                  maxLength={300}
+                  placeholder="Ex. Pourquoi avez-vous quitté votre dernier poste ?"
+                  className="h-12 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+                />
+              </div>
             </div>
           </section>
 

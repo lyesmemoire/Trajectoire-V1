@@ -1,4 +1,5 @@
 import { sanitizeForPrompt } from "@/lib/security/prompt-sanitizer"
+import { DEFAULT_DIFFICULTY, DIFFICULTY_INSTRUCTIONS, type Difficulty } from "./session-setup"
 
 /**
  * Consignes de la recruteuse vocale (API Realtime) : construites côté serveur à partir de la session
@@ -21,6 +22,10 @@ export type RealtimeInstructionInput = {
   durationMinutes: number
   /** Première question : celle déjà enregistrée pour la séance, sinon la question d'ouverture du type. */
   openingQuestion: string
+  /** Exigence des relances (défaut : standard). */
+  difficulty?: Difficulty
+  /** Une question imposée par le candidat sera transmise en cours d'entretien : la recruteuse ne doit pas conclure avant. */
+  hasMandatoryQuestion?: boolean
   cvText?: string
   jobDescription?: string
   matchedSkills?: string[]
@@ -69,9 +74,20 @@ export function clampDurationMinutes(minutes: number): number {
   return Number.isFinite(minutes) ? Math.min(60, Math.max(5, Math.round(minutes))) : 15
 }
 
-/** Nombre de questions visé : environ une toutes les deux à trois minutes, ouverture et clôture comprises. */
-export function targetQuestionCount(durationMinutes: number): number {
-  return Math.max(3, Math.round(clampDurationMinutes(durationMinutes) / 2.5))
+/**
+ * Ajustement du nombre de questions selon le niveau : un profil junior a besoin de moins de questions
+ * approfondies, un profil avancé se vérifie sur davantage de sujets.
+ */
+function levelOffset(level: string | undefined): number {
+  const l = (level ?? "").toLowerCase()
+  if (l.includes("junior")) return -1
+  if (l.includes("senior") || l.includes("lead") || l.includes("manager")) return 1
+  return 0
+}
+
+/** Nombre de questions visé : environ une toutes les deux à trois minutes, ajusté au niveau, ouverture et clôture comprises. */
+export function targetQuestionCount(durationMinutes: number, level?: string): number {
+  return Math.max(3, Math.round(clampDurationMinutes(durationMinutes) / 2.5) + levelOffset(level))
 }
 
 export function buildRealtimeInstructions(input: RealtimeInstructionInput): string {
@@ -113,7 +129,9 @@ Tu es une intelligence artificielle. Si le candidat te demande si tu es une IA o
 CADRE
 - Poste visé : ${jobTitle}${level ? ` (niveau : ${level})` : ""}.
 - Type d'entretien : ${input.interviewType}. Axes à explorer : ${focus}.
-- Durée prévue : ${minutes} minutes, soit environ ${targetQuestionCount(minutes)} questions au total, ouverture et clôture comprises. Ne conclus pas avant les deux dernières minutes, sauf si le candidat demande à arrêter.
+- Durée prévue : ${minutes} minutes, soit environ ${targetQuestionCount(minutes, level)} questions au total, ouverture et clôture comprises. Ne conclus pas avant les deux dernières minutes, sauf si le candidat demande à arrêter.
+- ${DIFFICULTY_INSTRUCTIONS[input.difficulty ?? DEFAULT_DIFFICULTY]}${input.hasMandatoryQuestion ? `
+- Une question supplémentaire te sera transmise en cours d'entretien : ne conclus jamais avant de l'avoir posée.` : ""}
 
 STYLE À L'ORAL
 - Phrases courtes (deux ou trois), naturelles, sans liste ni mise en forme. Une seule question à la fois.

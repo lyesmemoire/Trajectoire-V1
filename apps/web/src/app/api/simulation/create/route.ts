@@ -54,6 +54,13 @@ import {
 } from "@/lib/ai/services/interview.service";
 
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
+
+import {
+  parseDifficulty,
+  sanitizeMandatoryQuestion,
+  withSessionSetup,
+} from "@/lib/interview/session-setup";
 
 const MAX_JOB_DESCRIPTION_LENGTH =
   20_000;
@@ -426,6 +433,14 @@ export async function POST(
       opportunityId:
         formData.get("opportunityId") ??
         undefined,
+
+      difficulty:
+        formData.get("difficulty") ??
+        undefined,
+
+      mandatoryQuestion:
+        formData.get("mandatoryQuestion") ??
+        undefined,
     };
 
     const validationResult =
@@ -644,6 +659,33 @@ export async function POST(
           contextUpdateError,
         );
       }
+    }
+
+    /*
+     * Réglages de séance (difficulté, question imposée) : fusionnés dans `analysis` (JSONB existant).
+     * Non bloquant : en cas d'échec la séance démarre avec les réglages par défaut.
+     */
+    try {
+      const current = await prisma.interview_sessions.findFirst({
+        where: { id: result.sessionId, user_id: user.id },
+        select: { analysis: true },
+      });
+
+      if (current) {
+        await prisma.interview_sessions.update({
+          where: { id: result.sessionId },
+          data: {
+            analysis: withSessionSetup(current.analysis, {
+              difficulty: parseDifficulty(validatedData.difficulty),
+              mandatoryQuestion: sanitizeMandatoryQuestion(
+                validatedData.mandatoryQuestion,
+              ),
+            }) as Prisma.InputJsonValue,
+          },
+        });
+      }
+    } catch (setupFailure) {
+      console.warn("[simulation/create] setup update failed:", setupFailure);
     }
 
     /*
