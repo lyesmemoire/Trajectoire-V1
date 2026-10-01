@@ -12,10 +12,7 @@ import { useRouter } from "next/navigation"
 import {
   ArrowRight,
   CheckCircle2,
-  FileText,
   Loader2,
-  Mic,
-  Target,
   Upload,
   X,
 } from "lucide-react"
@@ -38,12 +35,6 @@ type AnalyzePreviewResponse = {
   message?: string
   error?: string
 }
-
-const features = [
-  { icon: Mic, label: "Simulation vocale" },
-  { icon: FileText, label: "Analyse de CV" },
-  { icon: Target, label: "Feedback personnalisé" },
-]
 
 function formatBytes(bytes: number) {
   if (!Number.isFinite(bytes)) return ""
@@ -74,6 +65,7 @@ export function CvPreviewForm() {
 
   const [file, setFile] = useState<File | null>(null)
   const [job, setJob] = useState("")
+  const [showJob, setShowJob] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [notice, setNotice] = useState("")
@@ -140,7 +132,7 @@ export function CvPreviewForm() {
     validateFile(event.target.files?.[0] ?? null)
   }
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: DragEvent<HTMLElement>) => {
     event.preventDefault()
     event.stopPropagation()
 
@@ -210,7 +202,7 @@ export function CvPreviewForm() {
 
       if (!data?.previewToken) {
         throw new Error(
-          "Réponse invalide du serveur : token de prévisualisation manquant."
+          "Réponse invalide du serveur : token de prévisualisation manquant."
         )
       }
 
@@ -238,79 +230,53 @@ export function CvPreviewForm() {
   return (
     <form
       onSubmit={handleAnalyze}
-      className="w-full rounded-2xl border border-calm-line bg-calm-surface/90 p-4 shadow-premium backdrop-blur lg:border-calm-line"
+      className="w-full rounded-[22px] border border-calm-line bg-calm-surface p-5 shadow-calm sm:p-6"
     >
-      {/* Upload CV */}
-      <div
+      {/* Dépôt du CV : toute la zone est cliquable (étiquette du champ fichier) */}
+      <label
         onDragOver={(event) => {
           event.preventDefault()
           event.stopPropagation()
         }}
         onDrop={handleDrop}
         className={[
-          "rounded-xl border border-dashed p-3 transition-colors",
-          file
-            ? "border-calm-line bg-calm-bg"
-            : "border-calm-line bg-calm-bg/60 hover:bg-calm-bg",
+          "flex min-h-[132px] cursor-pointer flex-col items-center justify-center gap-1 rounded-[18px] border-2 border-dashed border-calm-accent-line bg-calm-accent-wash p-5 text-center transition-colors hover:bg-calm-accent-soft",
+          "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-calm-accent",
+          loading ? "pointer-events-none opacity-70" : "",
         ].join(" ")}
       >
-        <div className="flex items-center gap-4">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-calm-accent text-calm-ink">
-            {file ? (
-              <CheckCircle2 className="size-5" aria-hidden="true" />
-            ) : (
-              <Upload className="size-5" aria-hidden="true" />
-            )}
-          </span>
+        <span className="flex size-11 items-center justify-center rounded-full bg-calm-accent-soft text-calm-accent-deep">
+          {file ? <CheckCircle2 className="size-5" aria-hidden="true" /> : <Upload className="size-5" aria-hidden="true" />}
+        </span>
+        <span className="mt-1 max-w-full truncate font-semibold text-calm-ink">{file ? file.name : "Déposez votre CV"}</span>
+        <span className="text-sm text-calm-secondary">
+          {fileMeta ?? `PDF, DOCX ou TXT · ${CV_MAX_FILE_SIZE_LABEL} maximum`}
+        </span>
+        <input
+          ref={fileInputRef}
+          className="sr-only"
+          type="file"
+          accept={CV_ACCEPT_ATTRIBUTE}
+          disabled={loading}
+          onChange={handleFileChange}
+        />
+      </label>
 
-          <div className="min-w-0 flex-1">
-            <p className="truncate font-medium">
-              {file ? file.name : "Ajoutez votre CV"}
-            </p>
-
-            <p className="text-sm text-calm-secondary">
-              {fileMeta ?? `PDF, DOCX ou TXT · ${CV_MAX_FILE_SIZE_LABEL} maximum`}
-            </p>
-          </div>
-
-          {file && (
-            <button
-              type="button"
-              onClick={resetFile}
-              disabled={loading}
-              className="inline-flex items-center justify-center rounded-lg border border-calm-line bg-calm-surface px-2.5 py-2 text-sm text-calm-secondary transition-colors hover:text-calm-ink disabled:cursor-not-allowed disabled:opacity-50 lg:border-calm-line"
-              aria-label="Retirer le fichier"
-            >
-              <X className="size-4" aria-hidden="true" />
-            </button>
-          )}
-        </div>
-
-        <label className="mt-3 block cursor-pointer text-sm font-medium text-calm-ink">
-          <span className="inline-flex items-center gap-2">
-            <span className="underline underline-offset-4">
-              Choisir un fichier
-            </span>
-
-            <span className="text-calm-secondary">(ou glisser-déposer)</span>
-          </span>
-
-          <input
-            ref={fileInputRef}
-            className="sr-only"
-            type="file"
-            accept={CV_ACCEPT_ATTRIBUTE}
-            disabled={loading}
-            onChange={handleFileChange}
-          />
-        </label>
-      </div>
+      {file && (
+        <button
+          type="button"
+          onClick={resetFile}
+          disabled={loading}
+          className="tap-target mt-2 inline-flex items-center gap-2 rounded-[14px] px-3 text-sm text-calm-secondary transition-colors hover:text-calm-ink disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <X className="size-4" aria-hidden="true" />
+          Retirer le fichier
+        </button>
+      )}
 
       {/* Notice */}
       {notice && !error && (
-        <div className="mt-3 rounded-xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-secondary lg:border-calm-line">
-          {notice}
-        </div>
+        <div className="mt-3 rounded-[14px] border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-secondary">{notice}</div>
       )}
 
       {/* Erreur */}
@@ -318,31 +284,18 @@ export function CvPreviewForm() {
         <div
           role="alert"
           aria-live="assertive"
-          className="mt-3 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn"
+          className="mt-3 rounded-[14px] border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn"
         >
           {error}
         </div>
       )}
 
-      {/* CTA */}
+      {/* CTA principal (unique) */}
       <button
         type="submit"
         disabled={loading}
         aria-busy={loading}
-        className="
-          mt-3 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl
-          border border-transparent
-          bg-calm-accent
-          px-5 py-3.5 text-[15px] font-semibold text-white
-          shadow-calm
-          transition-all duration-200 ease-premium
-          hover:bg-calm-accent-deep
-          active:translate-y-0 active:shadow-premium
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-accent
-          focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg
-          disabled:cursor-not-allowed disabled:opacity-70
-          disabled:hover:translate-y-0
-        "
+        className="tap-target mt-4 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[14px] bg-calm-accent px-5 py-3.5 text-[15px] font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>
@@ -357,50 +310,36 @@ export function CvPreviewForm() {
         )}
       </button>
 
-      <p className="mt-2 text-center text-xs text-calm-secondary">
-        Ajoutez votre CV pour démarrer. L’annonce est optionnelle.
-      </p>
-
-      {/* Annonce optionnelle */}
-      <details className="mt-3 rounded-xl border border-calm-line bg-calm-surface px-4 py-3 lg:border-calm-line">
-        <summary className="cursor-pointer text-sm font-medium text-calm-ink outline-none focus-visible:ring-2 focus-visible:ring-calm-accent">
-          Ajouter l’annonce (optionnel)
-        </summary>
-
-        <div className="mt-3">
-          <textarea
-            value={job}
-            onChange={(event) => setJob(event.target.value)}
-            placeholder="Collez l’annonce (missions, profil recherché, compétences, outils, etc.)"
-            rows={5}
-            disabled={loading}
-            className="w-full resize-none rounded-xl border border-calm-line bg-calm-surface px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-calm-accent disabled:cursor-not-allowed disabled:bg-calm-bg lg:border-calm-line"
-          />
-
-          <p className="mt-2 text-xs text-calm-secondary">
-            Plus l’annonce est détaillée, plus l’analyse et les questions seront
-            ciblées.
-          </p>
-        </div>
-      </details>
-
-      {/* Fonctionnalités */}
-      <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs text-calm-secondary">
-        {features.map(({ icon: Icon, label }) => (
-          <span
-            key={label}
-            className="inline-flex items-center gap-1.5 rounded-full border border-calm-line bg-calm-surface px-3 py-1 lg:border-calm-line"
-          >
-            <Icon className="size-3.5" aria-hidden="true" />
-            {label}
-          </span>
-        ))}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <button
+          type="button"
+          aria-expanded={showJob}
+          aria-controls="offre-visee"
+          onClick={() => setShowJob((v) => !v)}
+          className="tap-target rounded-[14px] px-1 text-sm font-semibold text-calm-accent-deep underline-offset-4 hover:underline"
+        >
+          {showJob ? "− Masquer l’offre visée" : "+ Ajouter l’offre visée"}
+        </button>
+        <p className="text-sm text-calm-secondary">Gratuit · sans carte bancaire · résultat en 1 minute</p>
       </div>
 
-      <p className="mt-3 text-center text-xs text-calm-secondary">
-        Vos documents restent privés. Vous gardez la main sur ce que vous
-        partagez.
-      </p>
+      <div id="offre-visee" hidden={!showJob} className="mt-2">
+        <label htmlFor="offre-texte" className="sr-only">
+          Texte de l’offre visée
+        </label>
+        <textarea
+          id="offre-texte"
+          value={job}
+          onChange={(event) => setJob(event.target.value)}
+          placeholder="Collez l’offre (missions, profil recherché, compétences, outils…)"
+          rows={5}
+          disabled={loading}
+          className="w-full resize-none rounded-[14px] border border-calm-input bg-calm-surface px-4 py-3 text-sm text-calm-ink placeholder:text-calm-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-calm-accent disabled:cursor-not-allowed disabled:bg-calm-bg"
+        />
+        <p className="mt-2 text-xs text-calm-secondary">
+          Plus l’offre est détaillée, plus les questions seront ciblées.
+        </p>
+      </div>
     </form>
   )
 }
