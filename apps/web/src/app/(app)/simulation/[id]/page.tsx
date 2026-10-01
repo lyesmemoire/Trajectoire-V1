@@ -251,73 +251,71 @@ export default function SimulationPage() {
             )}
           </div>
 
-          <div className="shrink-0 border-t border-calm-line bg-calm-surface/60 px-6 py-4 backdrop-blur-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-4">
-                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-calm-accent-line bg-calm-accent-soft text-calm-accent' : 'border-calm-line bg-calm-accent-wash text-calm-secondary')}>
-                  {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-calm-secondary">{isMuted ? 'Micro coupé' : isUserSpeaking ? 'Vous parlez' : 'En écoute'}</p>
-                  <p className="text-xs text-calm-secondary">Détection automatique</p>
-                </div>
-                <SoundWave active={isUserSpeaking && !isMuted} color="bg-calm-accent" />
-              </div>
-              <div className="flex items-center gap-2">
-                {canResume && (
-                  <button
-                    type="button"
-                    onClick={connect}
-                    className="tap-target rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
-                  >
-                    Reprendre l&apos;entretien
-                  </button>
-                )}
+          <div className="shrink-0 border-t border-calm-line bg-calm-surface px-6 py-6">
+            <div className="flex flex-col items-center gap-4">
+              {canResume ? (
+                <button
+                  type="button"
+                  onClick={connect}
+                  className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep"
+                >
+                  <Mic className="size-6" aria-hidden />
+                  Reprendre l&apos;entretien
+                </button>
+              ) : (
                 <button
                   type="button"
                   onClick={toggleMute}
-                  aria-pressed={isMuted}
-                  aria-label={isMuted ? 'Réactiver le micro' : 'Couper le micro'}
-                  title={isMuted ? 'Réactiver le micro' : 'Couper le micro'}
+                  aria-pressed={!isMuted}
                   disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
-                  className="tap-target flex items-center justify-center rounded-full text-calm-secondary transition hover:bg-calm-accent-wash hover:text-calm-ink disabled:opacity-40 aria-pressed:bg-calm-accent-soft aria-pressed:text-calm-accent-deep"
+                  className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
                 >
-                  {isMuted ? <MicOff className="size-5" aria-hidden /> : <Mic className="size-5" aria-hidden />}
+                  {isMuted ? <Mic className="size-6" aria-hidden /> : <MicOff className="size-6" aria-hidden />}
+                  {isMuted ? 'Parler' : 'J\u2019ai terminé ma réponse'}
                 </button>
-                {confirmEnd && !isEnding ? (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleEnd}
-                      className="tap-target flex items-center gap-2 rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
-                    >
-                      <PhoneOff className="size-4" aria-hidden />
-                      Confirmer la fin
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setConfirmEnd(false)}
-                      className="tap-target rounded-xl px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-wash"
-                    >
-                      Continuer
-                    </button>
-                  </>
-                ) : (
+              )}
+
+              <div className="flex min-h-[28px] items-center gap-3" aria-live="polite">
+                <SoundWave active={isUserSpeaking && !isMuted} color="bg-calm-accent" />
+                <p className="text-sm text-calm-secondary">
+                  {isMuted ? 'Micro coupé' : isUserSpeaking ? 'Je vous écoute' : isAISpeaking ? 'Alexandra parle' : 'À vous'}
+                </p>
+              </div>
+
+              <p className="text-center text-sm text-calm-secondary">
+                Respirez. Vous pouvez reformuler à tout moment.
+              </p>
+
+              {confirmEnd && !isEnding ? (
+                <div role="alertdialog" aria-label="Terminer l\u2019entretien" className="flex flex-wrap items-center justify-center gap-2 text-sm text-calm-ink">
+                  <span>Terminer maintenant ? Le rapport sera généré sur ce qui a été dit.</span>
                   <button
                     type="button"
-                    onClick={() => setConfirmEnd(true)}
-                    disabled={isEnding}
-                    className="tap-target group flex items-center gap-2 rounded-xl border border-calm-accent-line bg-calm-surface px-5 py-2.5 text-sm font-semibold text-calm-accent-deep transition-colors duration-200 hover:bg-calm-accent-wash disabled:opacity-40"
+                    onClick={handleEnd}
+                    className="tap-target rounded-xl px-3 font-semibold text-calm-accent-deep underline underline-offset-4 hover:bg-calm-accent-wash"
                   >
-                    {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
-                    {isEnding ? 'Finalisation…' : 'Terminer l’entretien'}
+                    Oui, terminer
                   </button>
-                )}
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmEnd(false)}
+                    className="tap-target rounded-xl px-3 text-calm-secondary hover:bg-calm-accent-wash"
+                  >
+                    Continuer
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setConfirmEnd(true)}
+                  disabled={isEnding}
+                  className="tap-target inline-flex items-center gap-2 rounded-xl px-3 text-sm text-calm-secondary underline underline-offset-4 transition-colors hover:text-calm-ink disabled:opacity-40"
+                >
+                  {isEnding ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <PhoneOff className="size-4" aria-hidden />}
+                  {isEnding ? 'Finalisation…' : 'Terminer l\u2019entretien'}
+                </button>
+              )}
             </div>
-            <p className="mt-3 text-center text-sm text-calm-secondary">
-              Respirez. Vous pouvez reformuler à tout moment.
-            </p>
           </div>
         </div>
       </div>
