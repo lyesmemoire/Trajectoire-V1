@@ -89,6 +89,7 @@ export default function SimulationPage() {
   // Fin de séance : un premier clic demande confirmation (le quota est déjà consommé et le rapport généré
   // sur ce qui a été dit), un second confirme. La fin automatique (durée atteinte) passe directement.
   const [confirmEnd, setConfirmEnd] = useState(false)
+  const isLive = status === 'connected' || status === 'speaking_user' || status === 'speaking_ai'
   const canResume = !isEnding && (status === 'error' || status === 'disconnected') && transcripts.length > 0
   const clock = remainingSeconds === null
     ? null
@@ -271,7 +272,7 @@ export default function SimulationPage() {
                   className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
                 >
                   {isMuted ? <Mic className="size-6" aria-hidden /> : <MicOff className="size-6" aria-hidden />}
-                  {isMuted ? 'Parler' : 'J\u2019ai terminé ma réponse'}
+                  {!isLive ? 'Connexion…' : isMuted ? 'Parler' : 'J\u2019ai terminé ma réponse'}
                 </button>
               )}
 

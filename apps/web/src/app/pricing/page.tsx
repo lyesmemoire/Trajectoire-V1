@@ -179,7 +179,7 @@ function PlanCard({
       }`}
     >
       {highlighted && (
-        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary-600 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-calm-ink">
+        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary-600 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-white">
           Le plus choisi
         </span>
       )}
@@ -244,7 +244,7 @@ function PlanCard({
           disabled={loading !== null}
           className={`flex w-full flex-col items-center gap-1 rounded-xl px-5 py-4 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-60 ${
             highlighted
-              ? "bg-primary-600 text-calm-ink shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] hover:bg-primary-700"
+              ? "bg-primary-600 text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] hover:bg-primary-700"
               : "border border-border bg-surface text-foreground hover:bg-surface-muted"
           }`}
         >
@@ -517,7 +517,7 @@ export default function PricingPage() {
               id="btn-cta-pack"
               onClick={() => handleSelect("PACK")}
               disabled={loading !== null}
-              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-calm-ink shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {loading === "PACK"
                 ? "Redirection…"

@@ -413,7 +413,7 @@ export function StoryBankPanel({
               setError(null)
               setShowForm((current) => !current)
             }}
-            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent"
+            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
           >
             {showForm ? (
               <X className="h-4 w-4" />
@@ -561,7 +561,7 @@ export function StoryBankPanel({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -719,7 +719,7 @@ export function StoryBankPanel({
                     className={
                       linked
                         ? "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-semibold text-calm-ink transition hover:border-calm-warn-line hover:text-calm-warn disabled:opacity-50"
-                        : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:opacity-50"
+                        : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                     }
                   >
                     {busy ? (

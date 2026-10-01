@@ -48,7 +48,7 @@ export function CandidateSearch({ jobGraph, candidateGraphs = [] }: CandidateSea
         <button
           onClick={handleSearch}
           disabled={!jobGraph || !candidateGraphs || candidateGraphs.length === 0}
-          className="bg-calm-accent text-white px-6 py-2 rounded-lg hover:bg-calm-accent transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
+          className="bg-calm-accent text-white px-6 py-2 rounded-lg hover:bg-calm-accent-deep transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
         >
           Rechercher des Candidats
         </button>

@@ -485,7 +485,7 @@ export function CareerMemoryPanel({
                 (current) => !current,
               )
             }}
-            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent"
+            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
           >
           {showForm ? (
             <X className="h-4 w-4" />
@@ -622,7 +622,7 @@ export function CareerMemoryPanel({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50"
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -772,7 +772,7 @@ export function CareerMemoryPanel({
                             "confirm",
                           )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                       >
                         {busy ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -814,7 +814,7 @@ export function CareerMemoryPanel({
                         className={
                           selected
                             ? "inline-flex items-center justify-center gap-2 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-2.5 text-sm font-semibold text-calm-accent transition hover:bg-calm-accent-soft disabled:opacity-50"
-                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:opacity-50"
+                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                         }
                       >
                         {busy ? (

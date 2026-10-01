@@ -348,7 +348,7 @@ export function DashboardWidgets({
               </Link>
               <Link
                 href="/simulation/new"
-                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3.5 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent ${focusRing}`}
+                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3.5 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep ${focusRing}`}
               >
                 <Mic2 className="size-4" />
                 Nouvel entretien IA
@@ -554,7 +554,7 @@ export function DashboardWidgets({
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href={heroHref}
-                      className={`inline-flex h-10 items-center gap-2 rounded-lg bg-calm-accent px-4 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_10px_30px_-10px_rgba(31,42,55,0.7)] transition-colors hover:bg-calm-accent ${focusRing}`}
+                      className={`inline-flex h-10 items-center gap-2 rounded-lg bg-calm-accent px-4 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_10px_30px_-10px_rgba(31,42,55,0.7)] transition-colors hover:bg-calm-accent-deep ${focusRing}`}
                     >
                       {heroCta}
                       <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />

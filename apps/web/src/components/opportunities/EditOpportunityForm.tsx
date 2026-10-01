@@ -208,7 +208,7 @@ export function EditOpportunityForm({
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-calm-accent px-6 text-sm font-bold text-white shadow-md shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-calm-accent px-6 text-sm font-bold text-white shadow-md shadow-calm-ink/10 transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line"
             >
               {submitting ? (
                 <>

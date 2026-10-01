@@ -126,7 +126,7 @@ export function ConfirmModal({
   const confirmStyles = {
     danger: "bg-danger text-white hover:bg-calm-warn",
     warning: "bg-warning text-white hover:bg-calm-warn",
-    info: "bg-calm-accent text-white hover:bg-calm-accent",
+    info: "bg-calm-accent text-white hover:bg-calm-accent-deep",
   }
 
   return (

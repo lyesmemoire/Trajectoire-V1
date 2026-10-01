@@ -39,7 +39,7 @@ export default function AppError({ error, reset }: Props) {
         <button
           type="button"
           onClick={reset}
-          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-6 text-sm font-semibold text-white transition-colors hover:bg-calm-accent ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-6 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep ${focusRing}`}
         >
           Réessayer
         </button>

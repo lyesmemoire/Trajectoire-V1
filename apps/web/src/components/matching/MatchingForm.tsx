@@ -598,7 +598,7 @@ export function MatchingForm({
             !hasCv ||
             !jobDescription.trim()
           }
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-bronze-600 px-5 py-3 font-medium text-calm-ink transition hover:bg-bronze-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-calm-accent px-5 py-3 font-medium text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>

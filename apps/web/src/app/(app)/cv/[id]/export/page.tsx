@@ -53,7 +53,7 @@ export default async function CVExportPage({ params }: { params: Promise<{ id: s
           <p className="mb-5 text-sm text-calm-secondary">Téléchargez votre CV en DOCX ou en PDF, lisible par les logiciels de recrutement.</p>
           <Link
             href="/pricing"
-            className="inline-flex min-h-11 items-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white outline-none transition-colors hover:bg-calm-accent focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
+            className="inline-flex min-h-11 items-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white outline-none transition-colors hover:bg-calm-accent-deep focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
           >
             Voir les formules
           </Link>

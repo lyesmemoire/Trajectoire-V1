@@ -21,9 +21,9 @@ export function ProgressSteps({ steps }: ProgressStepsProps) {
                 transition-all duration-300
                 ${
                   step.completed
-                    ? "bg-forest-500 text-calm-ink"
+                    ? "bg-forest-500 text-white"
                     : step.current
-                      ? "bg-primary-600 text-calm-ink ring-4 ring-primary-50"
+                      ? "bg-primary-600 text-white ring-4 ring-primary-50"
                       : "bg-ivoire-100 text-ink-400"
                 }
               `}

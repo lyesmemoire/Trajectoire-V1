@@ -215,7 +215,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
               type="button"
               disabled={promoting || status === "CLOSED"}
               onClick={() => void onPromote(cluster)}
-              className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-3.5 py-2 text-[11px] font-semibold text-calm-ink transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-3.5 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
             >
               {promoting ? <RefreshCw className="size-3.5 animate-spin" /> : <Zap className="size-3.5" />}
               {promoting ? "Ajout..." : "Ajouter a mes opportunites"}
@@ -309,7 +309,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
           </Link>
           <Link
             href="/opportunities/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2.5 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent"
+            className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-calm-accent-deep"
           >
             <Target className="size-4" />
             Ajouter manuellement
@@ -402,7 +402,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
                 Reinitialiser les filtres
               </button>
             ) : (
-              <Link href="/opportunities/new" className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2 text-xs font-semibold text-calm-ink hover:bg-calm-accent transition-colors">
+              <Link href="/opportunities/new" className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2 text-xs font-semibold text-white hover:bg-calm-accent-deep transition-colors">
                 Ajouter une opportunite <ArrowRight className="size-3.5" />
               </Link>
             )}

@@ -105,7 +105,7 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
           {summary.showUpgrade && (
             <Link
               href="/pricing"
-              className={`inline-flex h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent ${FOCUS}`}
+              className={`inline-flex h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep ${FOCUS}`}
             >
               Voir les offres
             </Link>

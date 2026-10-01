@@ -162,7 +162,7 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
         <button
           type="submit"
           disabled={tooShort || loading}
-          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}
         >
           {loading ? "Réécriture en cours…" : "Réécrire"}
         </button>

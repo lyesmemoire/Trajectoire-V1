@@ -310,7 +310,7 @@ export default function HomePage() {
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-calm-ink">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-calm-accent text-white">
                       {file ? (
                         <CheckCircle2
                           className="size-5"

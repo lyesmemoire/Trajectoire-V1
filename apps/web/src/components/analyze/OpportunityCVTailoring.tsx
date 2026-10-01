@@ -251,7 +251,7 @@ export function OpportunityCVTailoring({
               type="button"
               onClick={generateTailoring}
               disabled={loading}
-              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-calm-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-calm-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
                 <>

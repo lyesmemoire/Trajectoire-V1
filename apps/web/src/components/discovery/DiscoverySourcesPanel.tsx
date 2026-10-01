@@ -200,7 +200,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
           <button
             type="button"
             onClick={() => { setError(null); setShowForm(v => !v) }}
-            className="inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent"
+            className="inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3 text-xs font-semibold text-white transition-colors hover:bg-calm-accent-deep"
           >
             {showForm ? <X className="size-3.5" /> : <Plus className="size-3.5" />}
             {showForm ? "Fermer" : "Ajouter une source"}
@@ -246,7 +246,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
             </label>
             <button
               type="submit" disabled={creating}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-calm-accent px-4 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-calm-accent px-4 text-xs font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
             >
               {creating ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
               {creating ? "Ajout..." : "Connecter"}

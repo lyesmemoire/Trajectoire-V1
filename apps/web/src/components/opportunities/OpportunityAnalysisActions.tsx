@@ -72,7 +72,7 @@ export function OpportunityAnalysisActions({
         type="button"
         onClick={analyze}
         disabled={loading}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-calm-accent px-5 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-calm-accent px-5 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
         {loading ? (
           <>
@@ -430,7 +430,7 @@ export function OpportunityStatusActions({
               }
               className={
                 primary
-                  ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-calm-accent px-4 text-sm font-bold text-white transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
+                  ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-calm-accent px-4 text-sm font-bold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
                   : "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-4 text-sm font-bold text-calm-ink transition hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
               }
             >

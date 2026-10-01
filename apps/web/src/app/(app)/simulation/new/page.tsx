@@ -251,7 +251,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           </p>
           <Link
             href="/pricing"
-            className="rounded-lg bg-calm-accent px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+            className="rounded-lg bg-calm-accent px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
           >
             Voir les offres
           </Link>
@@ -538,7 +538,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
             <button
               id="sim-btn"
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-8 py-4 text-base font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[320px]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-8 py-4 text-base font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[320px]"
             >
               <Sparkles className="h-5 w-5 text-calm-ink" />
               <span id="sim-btn-text">Commencer mon entretien</span>

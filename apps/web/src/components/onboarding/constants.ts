@@ -77,12 +77,12 @@ export const INITIAL_FORM_DATA: OnboardingFormData = {
 // ── Classes partagées (zinc-950 / indigo-500) ────────────────────────────────
 // Les éléments interactifs vivent dans une carte zinc-900 : l'offset du focus l'imite.
 export const FOCUS_RING =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
-export const BUTTON_PRIMARY = `inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-indigo-500 px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50 ${FOCUS_RING}`
+export const BUTTON_PRIMARY = `inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-calm-accent px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 ${FOCUS_RING}`
 
-export const BUTTON_GHOST = `inline-flex h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium text-white/50 transition-colors hover:bg-white/[0.04] hover:text-white/80 disabled:cursor-not-allowed disabled:opacity-50 ${FOCUS_RING}`
+export const BUTTON_GHOST = `inline-flex h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium text-calm-secondary transition-colors hover:bg-calm-accent-wash hover:text-calm-ink disabled:cursor-not-allowed disabled:opacity-50 ${FOCUS_RING}`
 
 // Carte d'option d'un groupe de radios natives (le <input> est en sr-only + peer).
 export const OPTION_CARD =
-  "flex min-h-11 items-center justify-center rounded-lg border border-white/[0.1] bg-zinc-950 px-3 py-2 text-center text-sm font-medium text-white/50 transition-colors hover:bg-white/[0.04] hover:text-white/80 peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-zinc-900"
+  "flex min-h-11 items-center justify-center rounded-lg border border-calm-line bg-calm-bg px-3 py-2 text-center text-sm font-medium text-calm-secondary transition-colors hover:bg-calm-accent-wash hover:text-calm-ink peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-checked:text-calm-accent peer-focus-visible:ring-2 peer-focus-visible:ring-calm-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-calm-bg"

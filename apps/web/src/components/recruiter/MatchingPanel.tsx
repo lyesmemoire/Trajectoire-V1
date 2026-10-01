@@ -62,7 +62,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
         <div className="text-center py-8">
           <button
             onClick={handleMatching}
-            className="bg-calm-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-calm-accent transition-colors"
+            className="bg-calm-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-calm-accent-deep transition-colors"
           >
             Lancer le Matching
           </button>

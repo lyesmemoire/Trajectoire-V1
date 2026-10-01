@@ -333,7 +333,7 @@ export default async function ApplicationWorkspacePage({
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link
                 href={recommendedAction.href}
-                className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent"
+                className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep"
               >
                 {recommendedAction.action}
                 <ArrowRight className="h-4 w-4" />

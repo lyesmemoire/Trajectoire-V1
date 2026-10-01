@@ -212,7 +212,7 @@ export function NewOpportunityForm() {
             <button
               type="submit"
               disabled={submitting}
-              className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-calm-accent px-6 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60 ${focusRing}`}
+              className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-calm-accent px-6 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60 ${focusRing}`}
             >
               {submitting ? (
                 <>

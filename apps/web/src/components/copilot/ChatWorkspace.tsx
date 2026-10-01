@@ -143,7 +143,7 @@ export function ChatWorkspace() {
                 <button
                   onClick={handleSendMessage}
                   disabled={loading || !input.trim()}
-                  className="bg-calm-accent text-white px-6 py-3 rounded-lg hover:bg-calm-accent transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
+                  className="bg-calm-accent text-white px-6 py-3 rounded-lg hover:bg-calm-accent-deep transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
                 >
                   Envoyer
                 </button>

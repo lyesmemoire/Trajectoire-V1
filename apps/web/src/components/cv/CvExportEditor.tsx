@@ -268,7 +268,7 @@ export function CvExportEditor({
           pas les alphabets non latins (utilisez alors le DOCX).
         </p>
         <div className="flex flex-wrap gap-3">
-          <button type="button" disabled={busy !== null} onClick={() => download("docx")} className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}>
+          <button type="button" disabled={busy !== null} onClick={() => download("docx")} className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}>
             {busy === "docx" ? "Génération…" : "Télécharger en DOCX"}
           </button>
           <button type="button" disabled={busy !== null} onClick={() => download("pdf")} className={buttonGhost}>
