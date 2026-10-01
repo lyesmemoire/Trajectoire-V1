@@ -1,6 +1,15 @@
 import Image from "next/image"
 import { Mic } from "lucide-react"
-import { HERO_CARD_BADGE, HERO_QUESTION, SHOW_HERO_AUDIO, SHOW_PORTRAIT } from "./content"
+import {
+  HERO_CARD_BADGE,
+  HERO_QUESTION,
+  HERO_VIDEO_BUTTON,
+  HERO_VIDEO_CAPTION,
+  SHOW_HERO_AUDIO,
+  SHOW_HERO_VIDEO,
+  SHOW_PORTRAIT,
+} from "./content"
+import { HeroVideo } from "./HeroVideo"
 import { HeroAudioPlayer } from "./HeroAudioPlayer"
 
 /** Avatar d'Alexandra : initiale tant que SHOW_PORTRAIT est faux (aucun vrai portrait n'existe encore). */
@@ -34,8 +43,8 @@ export function AlexandraStrip() {
   )
 }
 
-/** Carte produit du héros (colonne de droite) : aucune photo, aucune donnée inventée sur de vrais candidats. */
-export function HeroProductCard() {
+/** Carte d'Alexandra (ancienne colonne de droite) : conservée derrière SHOW_HERO_VIDEO = false. */
+function HeroAlexandraCard() {
   return (
     <div className="relative w-full pb-6 pr-6">
       {/* Fond arrondi décalé de 24 px en bas à droite : de la profondeur, rien d'interactif. */}
@@ -94,4 +103,38 @@ export function HeroProductCard() {
     </aside>
     </div>
   )
+}
+
+/** Cadre commun de la colonne de droite : carte blanche arrondie et fond accent-wash décalé de 24 px. */
+function HeroFrame({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="relative w-full pb-6 pr-6">
+      <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-[40px] bg-calm-accent-wash" />
+      <aside aria-label={label} className="relative w-full rounded-[28px] border border-calm-line bg-calm-surface p-4 shadow-calm sm:p-5">
+        {children}
+      </aside>
+    </div>
+  )
+}
+
+/** Carte vidéo : poster + bouton, légende et badge. Aucune lecture automatique. */
+function HeroVideoCard() {
+  return (
+    <HeroFrame label="Démonstration vidéo">
+      <HeroVideo label={HERO_VIDEO_BUTTON} />
+      <div className="mt-4 flex flex-wrap items-center gap-2 px-1 pb-1">
+        <p className="text-sm font-medium text-calm-ink">{HERO_VIDEO_CAPTION}</p>
+        {HERO_CARD_BADGE && (
+          <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
+            {HERO_CARD_BADGE}
+          </span>
+        )}
+      </div>
+    </HeroFrame>
+  )
+}
+
+/** Colonne de droite du héros : vidéo de démonstration, ou carte d'Alexandra selon SHOW_HERO_VIDEO. */
+export function HeroProductCard() {
+  return SHOW_HERO_VIDEO ? <HeroVideoCard /> : <HeroAlexandraCard />
 }

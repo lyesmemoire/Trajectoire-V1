@@ -219,3 +219,8 @@ supabase/.temp/
 certification/keys/pipeline_private.pem
 laboratory/keys/lab_private.pem
 laboratory/keys/private.pem
+
+# Vidéo de démonstration actuelle : ne doit pas partir en production (logos de marques réelles, promesse « gratuitement »). Voir .claude/tasks.md.
+apps/web/public/videos/trajectoire-demo.mp4
+apps/web/public/videos/trajectoire-demo.webm
+apps/web/public/videos/trajectoire-demo-poster.webp

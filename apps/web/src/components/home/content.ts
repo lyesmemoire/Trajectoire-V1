@@ -32,6 +32,15 @@ export const FORM_NOTE = "Gratuit · sans carte bancaire · résultat immédiat"
 
 export const HERO_CARD_BADGE = FREE_WARMUP_ENABLED ? null : "Offres payantes"
 
+/**
+ * Colonne de droite du héros : vidéo de démonstration (true) ou carte d'Alexandra (false, retour arrière en une ligne).
+ */
+export const SHOW_HERO_VIDEO = false
+
+/** Durée réelle de la vidéo : 54,8 s. */
+export const HERO_VIDEO_BUTTON = "Voir un extrait d’entretien (55 s)"
+export const HERO_VIDEO_CAPTION = "Démonstration d’un entretien avec Alexandra"
+
 export const HERO_QUESTION =
   "Vous avez animé les réseaux sociaux de votre association étudiante. Qu’est-ce qui a le mieux fonctionné, et comment l’avez-vous mesuré ?"
 
