@@ -152,9 +152,12 @@ export class SimulationService {
   async endSession(sessionId: string, userId: string): Promise<void> {
     const session = await this.getSession(sessionId, userId);
 
+    // Verrou optimiste : le dépôt attend la version LUE en base. complete() incrémente la version en mémoire ;
+    // la transmettre telle quelle comme version attendue faisait échouer toute fin de séance en 409.
+    const expectedVersion = session.version;
     session.complete();
 
-    await this.sessionRepository.update(sessionId, session.toPersistence() as any);
+    await this.sessionRepository.update(sessionId, { ...session.toPersistence(), version: expectedVersion } as any);
 
     await this.auditService.log({
       userId,
@@ -172,9 +175,10 @@ export class SimulationService {
   async cancelSession(sessionId: string, userId: string): Promise<void> {
     const session = await this.getSession(sessionId, userId);
 
+    const expectedVersion = session.version; // voir endSession : version lue en base, pas la version incrémentée
     session.cancel();
 
-    await this.sessionRepository.update(sessionId, session.toPersistence() as any);
+    await this.sessionRepository.update(sessionId, { ...session.toPersistence(), version: expectedVersion } as any);
 
     await this.auditService.log({
       userId,
