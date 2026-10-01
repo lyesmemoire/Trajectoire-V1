@@ -164,6 +164,7 @@ export async function finalizeSimulation(params: {
     if (current) {
       await prisma.interview_sessions.update({
         where: { id: sessionId },
+        select: { id: true },
         data: {
           analysis: withSessionSetup(current.analysis, {
             difficulty: parseDifficulty(input.difficulty),
