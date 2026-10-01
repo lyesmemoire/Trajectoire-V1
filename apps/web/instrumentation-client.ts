@@ -1,7 +1,13 @@
 // apps/web/instrumentation-client.ts
-import * as Sentry from "@sentry/nextjs";
+import type * as SentryModule from "@sentry/nextjs";
 
-Sentry.init({
+// Le SDK Sentry (replay compris, ≈ 550 Ko avant compression) n'est plus chargé avant l'hydratation : il est
+// importé à l'idle, après l'événement load, pour ne pas retarder le premier affichage (LCP). Les erreurs
+// survenues avant ce chargement ne sont pas remontées.
+let Sentry: typeof SentryModule | null = null;
+
+function initSentry(S: typeof SentryModule) {
+  S.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: process.env.NODE_ENV,
   
@@ -11,7 +17,7 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   
   integrations: [
-    Sentry.replayIntegration({
+    S.replayIntegration({
       maskAllText: true,
       blockAllMedia: true,
     }),
@@ -49,8 +55,25 @@ Sentry.init({
     }
     return breadcrumb;
   },
-});
+  });
+}
 
-// Required hooks for Next.js 15 + Sentry
-export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
-export const onRequestError = Sentry.captureRequestError;
+if (typeof window !== "undefined") {
+  const load = () => {
+    void import("@sentry/nextjs").then((S) => {
+      Sentry = S;
+      initSentry(S);
+    });
+  };
+  const idle = () => {
+    if ("requestIdleCallback" in window) window.requestIdleCallback(load, { timeout: 4000 });
+    else setTimeout(load, 2000);
+  };
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle, { once: true });
+}
+
+// Hook de navigation Next 15 : sans effet tant que le SDK n'est pas chargé.
+export const onRouterTransitionStart = (...args: Parameters<typeof SentryModule.captureRouterTransitionStart>) => {
+  Sentry?.captureRouterTransitionStart(...args);
+};

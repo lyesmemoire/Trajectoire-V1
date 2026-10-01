@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut, Menu, X } from "lucide-react";
 
-import { createClient } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -56,6 +55,8 @@ export function Navbar({
     setLoggingOut(true);
 
     try {
+      // Import différé : le client Supabase (≈ 190 Ko) n'est utile qu'à la déconnexion, pas au premier affichage.
+      const { createClient } = await import("@/lib/supabase");
       const supabase = createClient();
 
       const { error } = await supabase.auth.signOut();
@@ -98,6 +99,7 @@ export function Navbar({
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={false}
                   className={`text-sm font-medium transition-colors duration-200 ${
                     active
                       ? "text-foreground"
@@ -124,7 +126,7 @@ export function Navbar({
                 </span>
               ) : null}
 
-              <Link href="/settings">
+              <Link href="/settings" prefetch={false}>
                 <Button
                   variant="ghost"
                   size="sm"
