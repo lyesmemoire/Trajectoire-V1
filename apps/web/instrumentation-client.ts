@@ -11,6 +11,9 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   
 
+  // Le tracing de performance du navigateur est ajouté plus tard, à l'idle (voir plus bas), comme Replay.
+  integrations: (defaults) => defaults.filter((integration) => integration.name !== "BrowserTracing"),
+
   beforeSend(event, hint) {
     // Filter out client-side errors that are not critical
     if (event.level === "info" || event.level === "debug") {
@@ -45,11 +48,12 @@ Sentry.init({
   },
 });
 
-// Le cœur de Sentry (capture des erreurs, y compris d'hydratation) est chargé tout de suite. Seule l'intégration
-// Replay, la partie la plus lourde, est ajoutée plus tard, à l'idle après le chargement de la page.
+// Le cœur de Sentry (capture des erreurs, y compris d'hydratation) est chargé tout de suite. Seuls le tracing de performance
+// du navigateur et l'intégration Replay, les parties les plus lourdes, sont ajoutés plus tard, à l'idle après le chargement de la page.
 if (typeof window !== "undefined") {
   const addReplay = () => {
     void import("@sentry/nextjs").then((S) => {
+      S.addIntegration(S.browserTracingIntegration());
       S.addIntegration(S.replayIntegration({ maskAllText: true, blockAllMedia: true }));
     });
   };
