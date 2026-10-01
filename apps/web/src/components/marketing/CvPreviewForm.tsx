@@ -341,8 +341,8 @@ export function CvPreviewForm() {
           Plus l’offre est détaillée, plus les questions seront ciblées.
         </p>
       </div>
-      <p className="mt-2 flex items-center justify-center gap-2 text-center text-sm text-calm-tertiary">
-        <Check className="size-4 shrink-0 text-calm-accent" aria-hidden="true" />
+      <p className="mt-2 flex items-start justify-center gap-2 text-center text-sm text-calm-tertiary">
+        <Check className="mt-0.5 size-4 shrink-0 text-calm-accent" aria-hidden="true" />
         {FORM_NOTE}
       </p>
     </form>
