@@ -1,3 +1,5 @@
+// ⚠ GELÉ : ce module lit l'ancienne table InterviewSession, ne pas utiliser.
+// Aucun appelant (voir .claude/tasks.md, lot « Nettoyage »). La table active est interview_sessions.
 import prisma from "@/lib/prisma";
 
 export interface StabilityMetrics {

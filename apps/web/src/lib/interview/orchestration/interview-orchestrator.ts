@@ -1,3 +1,5 @@
+// ⚠ GELÉ : ce module lit et écrit l'ancienne table InterviewSession, ne pas utiliser.
+// Aucun appelant (voir .claude/tasks.md, lot « Nettoyage »). La table active est interview_sessions.
 import { analyzeAnswer } from "../behavior/answer-analysis";
 import { chooseStrategy, FollowUpIntent } from "./followup-strategy";
 import { InterviewState } from "./interview-state-machine";
