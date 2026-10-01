@@ -34,7 +34,8 @@ const ERRORS_BY_STATUS: Record<number, string> = {
   401: "Votre session a expiré. Reconnectez-vous pour continuer.",
   403: "Cette action n’est pas autorisée.",
   404: "Cette simulation est introuvable.",
-  409: "Cette simulation est déjà terminée.",
+  // 409 : verrou de tour (une réponse est déjà en cours) ou séance terminée — la page revérifie l'état réel avant de conclure.
+  409: "Une réponse est déjà en cours de traitement. Patientez un instant, puis réessayez.",
   429: "Trop de réponses en peu de temps. Patientez un instant, puis réessayez.",
   500: "Alexandra n’a pas pu répondre. Votre texte est conservé : réessayez.",
   503: "Le service est momentanément indisponible. Votre texte est conservé : réessayez.",
@@ -81,6 +82,7 @@ export type SessionQuestion = { kind: "question"; text: string } | { kind: "ende
 export function parseSessionQuestion(status: number, body: unknown): SessionQuestion {
   if (status !== 200 || !isRecord(body)) return { kind: "error", message: writtenAnswerErrorMessage(status) }
   if (typeof body.redirect === "string") return { kind: "ended" }
+  if (isRecord(body.session) && body.session.status === "completed") return { kind: "ended" }
   const text = lastAssistantMessage(body.messages)
   return text ? { kind: "question", text } : { kind: "error", message: "La question en cours n’a pas pu être chargée. Réessayez." }
 }

@@ -249,18 +249,12 @@ export default function SimulationPage() {
                     <p className="text-sm text-calm-secondary">Connexion à l&apos;entretien…</p>
                     <p className="text-xs text-calm-secondary">Autorisez le microphone si le navigateur le demande</p>
                   </>
-                ) : status === 'error' ? (
+                ) : uiState === 'error' ? (
                   <>
-                    <AlertCircle className="size-7 text-calm-secondary" />
+                    <AlertCircle className="size-7 text-calm-secondary" aria-hidden />
                     <p className="max-w-xs text-sm text-calm-secondary">
-                      {voiceError}
+                      Vous pouvez réessayer la connexion vocale, ou répondre par écrit.
                     </p>
-                    <button
-                      onClick={connect}
-                      className="tap-target rounded-xl bg-calm-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
-                    >
-                      Réessayer
-                    </button>
                   </>
                 ) : (
                   <>

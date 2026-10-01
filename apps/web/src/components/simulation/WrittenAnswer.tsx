@@ -59,6 +59,16 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
     if (open) textarea.current?.focus()
   }, [open])
 
+  async function checkEnded() {
+    try {
+      const res = await fetch(`/api/simulation/${sessionId}`)
+      const parsed = parseSessionQuestion(res.status, await res.json().catch(() => null))
+      if (parsed.kind === "ended") onEnded()
+    } catch {
+      /* réseau indisponible : le message d'erreur reste affiché */
+    }
+  }
+
   async function send() {
     if (sending) return
     const checked = validateWrittenAnswer(text)
@@ -84,8 +94,9 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
         setAnnouncement("Alexandra a répondu.")
         textarea.current?.focus()
       } else {
-        if (res.status === 409) onEnded()
         setError(result.message)
+        // 409 : conflit de tour OU séance terminée. On ne termine jamais l'entretien sur la foi du seul code 409.
+        if (res.status === 409) void checkEnded()
       }
     } catch {
       setError(writtenAnswerErrorMessage(0))

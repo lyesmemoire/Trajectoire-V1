@@ -56,6 +56,10 @@ describe("parseWrittenAnswerResponse", () => {
     expect(parseWrittenAnswerResponse(200, { success: true, data: {} })).toEqual({ ok: false, message: WRITTEN_ANSWER_DEFAULT_ERROR })
     expect(parseWrittenAnswerResponse(200, null)).toEqual({ ok: false, message: writtenAnswerErrorMessage(200) })
   })
+  it("409 : message de conflit, jamais « terminée » (la page revérifie la séance avant de conclure)", () => {
+    expect(writtenAnswerErrorMessage(409)).toMatch(/en cours/)
+    expect(writtenAnswerErrorMessage(409)).not.toMatch(/terminée/)
+  })
   it("le texte saisi est conservé : les erreurs d'IA le disent", () => {
     expect(writtenAnswerErrorMessage(504)).toMatch(/conservé/)
   })
@@ -66,6 +70,10 @@ describe("question en cours (GET /api/simulation/[id])", () => {
     expect(lastAssistantMessage([{ role: "assistant", content: "Q1" }, { role: "user", content: "R" }, { role: "assistant", content: "Q2" }])).toBe("Q2")
     expect(lastAssistantMessage([{ role: "user", content: "R" }])).toBeNull()
     expect(lastAssistantMessage("x")).toBeNull()
+  })
+  it("séance terminée : status completed sans rapport", () => {
+    expect(parseSessionQuestion(200, { session: { status: "completed" }, messages: [{ role: "assistant", content: "Q" }] })).toEqual({ kind: "ended" })
+    expect(parseSessionQuestion(200, { session: { status: "in_progress" }, messages: [{ role: "assistant", content: "Q" }] }).kind).toBe("question")
   })
   it("séance terminée : redirect", () => {
     expect(parseSessionQuestion(200, { redirect: "/report/abc" })).toEqual({ kind: "ended" })
