@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { ConfirmModal } from '@/components/ui/modal'
 import { endDestination } from '@/lib/interview/report-resolution'
+import { SHOW_PORTRAIT } from '@/components/home/content'
 import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
@@ -212,13 +213,26 @@ export default function SimulationPage() {
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
 
         <div className="relative h-64 w-full shrink-0 overflow-hidden bg-calm-surface md:h-auto md:w-[52%]">
-          <img
-            src="/interviewer.png"
-            alt="Alexandra"
-            className={`absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out `+(isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
-          />
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-calm-bg/60 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-calm-bg via-calm-bg/70 to-transparent" />
+          {/* Aucun vrai visuel d'Alexandra n'existe encore (interviewer.png est une capture d'écran) : monogramme tant que
+              SHOW_PORTRAIT est faux, comme sur la homepage. */}
+          {SHOW_PORTRAIT ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/interviewer.png"
+                alt="Alexandra"
+                className={'absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out ' + (isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
+              />
+              <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-calm-bg/60 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-calm-bg via-calm-bg/70 to-transparent" />
+            </>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-calm-accent-wash" aria-hidden>
+              <span className="font-accent flex size-28 items-center justify-center rounded-full bg-calm-accent-soft text-[56px] leading-none text-calm-accent-deep md:size-40 md:text-[80px]">
+                A
+              </span>
+            </div>
+          )}
           <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-calm-accent-line bg-calm-bg/70 px-3 py-1.5 text-xs font-medium text-calm-ink backdrop-blur-md">
             <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-calm-surface' : 'bg-calm-accent')} />
             Alexandra · IA
