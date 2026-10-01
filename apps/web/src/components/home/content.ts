@@ -21,7 +21,7 @@ export const FREE_WARMUP_ENABLED = false
 
 export const HERO_SUBTITLE = FREE_WARMUP_ENABLED
   ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser."
-  : "Déposez votre CV : Trajectoire repère vos atouts et ce qu’un recruteur voudra creuser. Avec une offre payante, Alexandra, votre recruteuse d’entraînement, vous pose ensuite les vraies questions de l’offre que vous visez, à voix haute et sans jugement."
+  : "Déposez votre CV : Trajectoire repère vos atouts et ce qu’un recruteur voudra creuser. Puis entraînez-vous avec Alexandra, votre recruteuse d’entraînement : les vraies questions de l’offre que vous visez, à voix haute et sans jugement."
 
 export const HOME_DESCRIPTION = FREE_WARMUP_ENABLED
   ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser. Diagnostic gratuit."
@@ -30,7 +30,7 @@ export const HOME_DESCRIPTION = FREE_WARMUP_ENABLED
 /** Mesuré en local : l'aperçu gratuit répond en moins de 0,1 s (analyse déterministe, sans IA). */
 export const FORM_NOTE = "Gratuit · sans carte bancaire · résultat immédiat"
 
-export const HERO_CARD_NOTE = FREE_WARMUP_ENABLED ? null : "Exemple d’une question posée pendant l’entretien vocal (offres payantes)."
+export const HERO_CARD_BADGE = FREE_WARMUP_ENABLED ? null : "Offres payantes"
 
 export const HERO_QUESTION =
   "Vous avez animé les réseaux sociaux de votre association étudiante. Qu’est-ce qui a le mieux fonctionné, et comment l’avez-vous mesuré ?"
@@ -121,8 +121,6 @@ export const STEPS = [
   },
 ] as const
 
-export const REPORT_NOTE = FREE_WARMUP_ENABLED ? null : "Le rapport accompagne chaque simulation, incluse dans les offres payantes."
-
 export const PRICING_INTRO = FREE_WARMUP_ENABLED
   ? "Commencez sans payer, puis choisissez l’offre qui correspond à votre recherche. L’offre Pro est sans engagement et résiliable à tout moment."
   : "Le diagnostic de votre CV est gratuit, sans carte bancaire. L’entretien vocal fait partie des offres payantes ; l’offre Pro est sans engagement et résiliable à tout moment."
@@ -170,9 +168,7 @@ export const TESTIMONIALS: readonly Testimonial[] = []
 export const FAQ = [
   {
     q: "Je suis très stressé en entretien. Est-ce adapté ?",
-    a: FREE_WARMUP_ENABLED
-      ? "Oui, c’est fait pour ça. Vous vous entraînez à votre rythme, sans public, et vous pouvez reformuler à tout moment. Le stress se travaille comme le reste : en s’entraînant au calme."
-      : "Oui, c’est fait pour ça. Avec une offre payante, vous vous entraînez à votre rythme, sans public, et vous pouvez reformuler à tout moment. Le stress se travaille comme le reste : en s’entraînant au calme.",
+    a: "Oui, c’est fait pour ça. Vous vous entraînez à votre rythme, sans public, et vous pouvez reformuler à tout moment. Le stress se travaille comme le reste : en s’entraînant au calme.",
   },
   {
     q: "Que deviennent mon CV et mes réponses ?",
@@ -184,7 +180,7 @@ export const FAQ = [
   },
   {
     q: "Puis-je préparer un oral d’école ?",
-    a: "Les questions partent de votre CV et du texte que vous ajoutez à la place d’une offre, par exemple la présentation de la formation visée. Vous pouvez donc vous en servir pour vous préparer à un oral d’école" + (FREE_WARMUP_ENABLED ? "" : " (entretien vocal des offres payantes)") + ".",
+    a: "Les questions partent de votre CV et du texte que vous ajoutez à la place d’une offre, par exemple la présentation de la formation visée. Vous pouvez donc vous en servir pour vous préparer à un oral d’école.",
   },
 ] as const
 

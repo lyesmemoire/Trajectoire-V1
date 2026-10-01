@@ -6,11 +6,11 @@ import { Reveal } from "./Reveal"
 import { Logo } from "./Logo"
 import {
   FAQ,
+  FREE_WARMUP_ENABLED,
   FINAL_TEXT,
   PRICING_INTRO,
   REASSURANCE,
   REPORT_EXAMPLE,
-  REPORT_NOTE,
   SHOW_SCHOOLS_LINK,
   SHOW_TESTIMONIALS,
   STEPS,
@@ -84,9 +84,7 @@ export function ReportSection() {
               <p className="text-xs font-semibold uppercase tracking-wide text-calm-accent-deep">Une version plus claire</p>
               <p className="mt-1 text-calm-ink">«&nbsp;{REPORT_EXAMPLE.clearer}&nbsp;»</p>
             </div>
-            {REPORT_NOTE ? (
-              <p className="mt-6 text-sm text-calm-secondary">{REPORT_NOTE}</p>
-            ) : (
+            {FREE_WARMUP_ENABLED && (
               <a href="#diagnostic" className={`${outlineBtn} mt-6`}>
                 Réessayer cette question
               </a>

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { HERO_CARD_NOTE, HERO_QUESTION, SHOW_HERO_AUDIO, SHOW_PORTRAIT } from "./content"
+import { HERO_CARD_BADGE, HERO_QUESTION, SHOW_HERO_AUDIO, SHOW_PORTRAIT } from "./content"
 import { HeroAudioPlayer } from "./HeroAudioPlayer"
 
 /** Avatar d'Alexandra : initiale tant que SHOW_PORTRAIT est faux (aucun vrai portrait n'existe encore). */
@@ -38,8 +38,13 @@ export function HeroProductCard() {
   return (
     <aside
       aria-label="Aperçu d’une question d’Alexandra"
-      className="w-full rounded-[28px] border border-calm-line bg-calm-surface p-6 shadow-calm sm:p-8"
+      className="relative w-full rounded-[28px] border border-calm-line bg-calm-surface p-6 shadow-calm sm:p-8"
     >
+      {HERO_CARD_BADGE && (
+        <span className="absolute right-5 top-5 rounded-full bg-calm-line-soft px-2.5 py-0.5 text-[11px] font-medium text-calm-secondary">
+          {HERO_CARD_BADGE}
+        </span>
+      )}
       <div className="flex items-center gap-4">
         <AlexandraAvatar size={84} />
         <div className="min-w-0">
@@ -57,8 +62,6 @@ export function HeroProductCard() {
         </span>
         <p className="mt-3 text-lg leading-relaxed text-calm-ink">«&nbsp;{HERO_QUESTION}&nbsp;»</p>
       </div>
-
-      {HERO_CARD_NOTE && <p className="mt-3 text-xs text-calm-tertiary">{HERO_CARD_NOTE}</p>}
 
       {SHOW_HERO_AUDIO && <HeroAudioPlayer />}
 
