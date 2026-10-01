@@ -21,7 +21,7 @@ export const FREE_WARMUP_ENABLED = false
 
 export const HERO_SUBTITLE = FREE_WARMUP_ENABLED
   ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser."
-  : "Déposez votre CV : Trajectoire repère vos atouts et ce qu’un recruteur voudra creuser. Puis entraînez-vous avec Alexandra, votre recruteuse d’entraînement : les vraies questions de l’offre que vous visez, à voix haute et sans jugement."
+  : "Déposez votre CV : Trajectoire repère ce qu’un recruteur voudra creuser. Puis entraînez-vous à voix haute avec Alexandra, sans jugement."
 
 export const HOME_DESCRIPTION = FREE_WARMUP_ENABLED
   ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser. Diagnostic gratuit."

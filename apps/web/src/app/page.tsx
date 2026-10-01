@@ -45,7 +45,7 @@ export default function HomePage() {
       <HomeHeader />
       <main id="main">
         <section aria-labelledby="hero-titre" className="mx-auto w-full max-w-[1200px] px-5 pb-16 pt-10 min-[900px]:pb-20 min-[900px]:pt-16">
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-start gap-10 min-[900px]:gap-14">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-center gap-10 min-[900px]:gap-14">
             <div className="flex flex-col gap-6">
               <h1 id="hero-titre" className="text-[clamp(36px,5.6vw,60px)] font-semibold leading-[1.08] tracking-[-0.02em] text-calm-ink">
                 Entraînez-vous face au recruteur qui a{" "}

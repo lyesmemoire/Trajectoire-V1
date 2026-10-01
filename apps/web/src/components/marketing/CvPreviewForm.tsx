@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation"
 import {
   ArrowRight,
+  Check,
   CheckCircle2,
   Loader2,
   Upload,
@@ -241,7 +242,7 @@ export function CvPreviewForm() {
         }}
         onDrop={handleDrop}
         className={[
-          "flex min-h-[132px] cursor-pointer flex-col items-center justify-center gap-1 rounded-[18px] border-2 border-dashed border-calm-accent-line bg-calm-accent-wash p-5 text-center transition-colors hover:bg-calm-accent-soft",
+          "flex min-h-[88px] cursor-pointer flex-col items-center justify-center gap-0.5 rounded-[18px] border-2 border-dashed border-calm-accent-line bg-calm-accent-wash p-3 text-center transition-colors hover:bg-calm-accent-soft",
           "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-calm-accent",
           loading ? "pointer-events-none opacity-70" : "",
         ].join(" ")}
@@ -311,7 +312,7 @@ export function CvPreviewForm() {
         )}
       </button>
 
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+      <div className="mt-2">
         <button
           type="button"
           aria-expanded={showJob}
@@ -321,7 +322,6 @@ export function CvPreviewForm() {
         >
           {showJob ? "− Masquer l’offre visée" : "+ Ajouter l’offre visée"}
         </button>
-        <p className="text-sm text-calm-secondary">{FORM_NOTE}</p>
       </div>
 
       <div id="offre-visee" hidden={!showJob} className="mt-2">
@@ -341,6 +341,10 @@ export function CvPreviewForm() {
           Plus l’offre est détaillée, plus les questions seront ciblées.
         </p>
       </div>
+      <p className="mt-2 flex items-center justify-center gap-2 text-center text-sm text-calm-tertiary">
+        <Check className="size-4 shrink-0 text-calm-accent" aria-hidden="true" />
+        {FORM_NOTE}
+      </p>
     </form>
   )
 }
