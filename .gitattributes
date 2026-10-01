@@ -1,1 +1,18 @@
 * text eol=lf
+
+# Binaires : jamais de conversion de fin de ligne (« * text eol=lf » corrompait les PNG/JPG committés)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.mp3 binary
+*.wav binary
+*.mp4 binary
