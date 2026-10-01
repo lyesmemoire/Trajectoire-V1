@@ -75,6 +75,8 @@ const AUTHENTICATED_PAGE_PREFIXES = [
   "/opportunities",
 
   "/discovery",
+
+  "/radar",
 ] as const;
 
 function matchesPathPrefix(
