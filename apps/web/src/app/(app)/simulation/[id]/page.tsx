@@ -2,8 +2,15 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
+import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
+import {
+  SIMULATION_UI_COPY,
+  deriveSimulationUiState,
+  friendlyVoiceError,
+  shouldAutoMute,
+  type SimulationUiState,
+} from '@/lib/interview/simulation-ui-state'
 
 function SoundWave({ active, color = 'bg-calm-accent' }: { active: boolean; color?: string }) {
   const heights = [3, 6, 10, 7, 14, 9, 12, 6, 10, 4]
@@ -89,8 +96,16 @@ export default function SimulationPage() {
   // Fin de séance : un premier clic demande confirmation (le quota est déjà consommé et le rapport généré
   // sur ce qui a été dit), un second confirme. La fin automatique (durée atteinte) passe directement.
   const [confirmEnd, setConfirmEnd] = useState(false)
-  const isLive = status === 'connected' || status === 'speaking_user' || status === 'speaking_ai'
-  const canResume = !isEnding && (status === 'error' || status === 'disconnected') && transcripts.length > 0
+  const lastTranscript = transcripts.length > 0 ? transcripts[transcripts.length - 1] : null
+  const uiState = deriveSimulationUiState({ status, isMuted, isEnding, lastTranscript })
+  const copy = SIMULATION_UI_COPY[uiState]
+
+  // À la fin de la question, le micro est coupé : la candidate prend le temps de réfléchir, puis appuie sur « Répondre ».
+  const previousUiState = useRef<SimulationUiState>(uiState)
+  useEffect(() => {
+    if (shouldAutoMute(previousUiState.current, uiState, isMuted)) toggleMute()
+    previousUiState.current = uiState
+  }, [uiState, isMuted, toggleMute])
   const clock = remainingSeconds === null
     ? null
     : String(Math.floor(remainingSeconds / 60)).padStart(2, '0') + ':' + String(remainingSeconds % 60).padStart(2, '0')
@@ -128,16 +143,27 @@ export default function SimulationPage() {
   }
   handleEndRef.current = handleEnd
 
-  const statusConfig: Record<string, { label: string; dot: string }> = {
-    idle         : { label: 'Initialisation…',   dot: 'bg-calm-line-soft' },
-    connecting   : { label: 'Connexion…',         dot: 'bg-calm-secondary animate-pulse' },
-    connected    : { label: 'En ligne',           dot: 'bg-calm-accent' },
-    speaking_user: { label: 'Vous parlez…',       dot: 'bg-calm-accent animate-pulse' },
-    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-calm-accent-deep animate-pulse' },
-    disconnected : { label: 'Déconnecté',         dot: 'bg-calm-line' },
-    error        : { label: 'Connexion interrompue', dot: 'bg-calm-secondary' },
+  const dotByState: Record<SimulationUiState, string> = {
+    connecting        : 'bg-calm-secondary animate-pulse',
+    recruiter_speaking: 'bg-calm-accent-deep animate-pulse',
+    ready             : 'bg-calm-accent',
+    listening         : 'bg-calm-accent animate-pulse',
+    processing        : 'bg-calm-secondary animate-pulse',
+    error             : 'bg-calm-secondary',
   }
-  const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
+  const statusLabel = copy.subtitle
+  const statusDot = dotByState[uiState]
+
+  // Action du bouton du micro, selon l'état (libellés dans lib/interview/simulation-ui-state.ts).
+  const onMicClick = () => {
+    if (copy.mic.action === 'retry') void connect()
+    else if (copy.mic.action === 'mute' || copy.mic.action === 'unmute') toggleMute()
+  }
+  const MicIcon = copy.mic.action === 'retry' ? RotateCcw
+    : copy.mic.action === 'mute' ? Check
+    : copy.mic.action === 'none' && uiState !== 'recruiter_speaking' ? Loader2
+    : Mic
+  const voiceError = friendlyVoiceError(errorMessage)
 
   return (
     <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-calm-bg text-calm-ink md:h-full md:min-h-0">
@@ -195,14 +221,14 @@ export default function SimulationPage() {
               <>
                 <div className="flex items-center gap-2 text-xs font-medium text-calm-secondary">
                   <Volume2 className="size-3" />
-                  En train de parler
+                  Alexandra parle
                 </div>
                 <SoundWave active color="bg-calm-accent" />
               </>
             ) : (
               <div className="flex items-center gap-2 text-xs text-calm-secondary">
                 <Mic className="size-3" />
-                En écoute
+                {copy.subtitle}
               </div>
             )}
           </div>
@@ -222,7 +248,7 @@ export default function SimulationPage() {
                   <>
                     <AlertCircle className="size-7 text-calm-secondary" />
                     <p className="max-w-xs text-sm text-calm-secondary">
-                      {errorMessage ?? 'Erreur de connexion'}
+                      {voiceError}
                     </p>
                     <button
                       onClick={connect}
@@ -254,34 +280,26 @@ export default function SimulationPage() {
 
           <div className="shrink-0 border-t border-calm-line bg-calm-surface px-6 py-6">
             <div className="flex flex-col items-center gap-4">
-              {canResume ? (
-                <button
-                  type="button"
-                  onClick={connect}
-                  className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep"
-                >
-                  <Mic className="size-6" aria-hidden />
-                  Reprendre l&apos;entretien
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={toggleMute}
-                  aria-pressed={!isMuted}
-                  disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
-                  className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
-                >
-                  {isMuted ? <Mic className="size-6" aria-hidden /> : <MicOff className="size-6" aria-hidden />}
-                  {!isLive ? 'Connexion…' : isMuted ? 'Parler' : 'J\u2019ai terminé ma réponse'}
-                </button>
+              <div className="min-h-[52px] text-center" aria-live="polite">
+                {copy.title && <p className="text-sm font-semibold text-calm-ink">{copy.title}</p>}
+                <p className="text-sm text-calm-secondary">{copy.subtitle}</p>
+              </div>
+
+              {uiState === 'error' && (
+                <p role="alert" className="max-w-sm text-center text-sm text-calm-ink">{voiceError}</p>
               )}
 
-              <div className="flex min-h-[28px] items-center gap-3" aria-live="polite">
-                <SoundWave active={isUserSpeaking && !isMuted} color="bg-calm-accent" />
-                <p className="text-sm text-calm-secondary">
-                  {isMuted ? 'Micro coupé' : isUserSpeaking ? 'Je vous écoute' : isAISpeaking ? 'Alexandra parle' : 'À vous'}
-                </p>
-              </div>
+              <button
+                type="button"
+                onClick={onMicClick}
+                disabled={copy.mic.disabled}
+                className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
+              >
+                <MicIcon className={`size-6 ${copy.mic.disabled && uiState !== 'recruiter_speaking' ? 'animate-spin' : ''}`} aria-hidden />
+                {copy.mic.label}
+              </button>
+
+              <SoundWave active={uiState === 'listening' && isUserSpeaking} color="bg-calm-accent" />
 
               <p className="text-center text-sm text-calm-secondary">
                 Respirez. Vous pouvez reformuler à tout moment.
