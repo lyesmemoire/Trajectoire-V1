@@ -56,14 +56,14 @@ function statusLabel(s: Status)  {
 }
 
 function statusTone(s: Status) {
-  if (s === "LIVE")  return "border-success/30 bg-emerald-950/60 text-emerald-400"
-  if (s === "STALE") return "border-warning/30 bg-amber-950/60 text-amber-400"
+  if (s === "LIVE")  return "border-success/30 bg-calm-accent-soft text-calm-accent"
+  if (s === "STALE") return "border-warning/30 bg-calm-warn-soft text-calm-warn"
   return "border-border bg-surface-muted text-foreground-muted"
 }
 
 function trustTone(b: TrustBand) {
-  if (b === "HIGH")     return "bg-emerald-950/60 text-emerald-400 ring-success/20"
-  if (b === "MEDIUM")   return "bg-amber-950/60 text-amber-400 ring-warning/20"
+  if (b === "HIGH")     return "bg-calm-accent-soft text-calm-accent ring-success/20"
+  if (b === "MEDIUM")   return "bg-calm-warn-soft text-calm-warn ring-warning/20"
   if (b === "LOW")      return "bg-danger/10 text-danger ring-danger/20"
   return "bg-surface-muted text-foreground-muted ring-border"
 }
@@ -93,8 +93,8 @@ function MetricCard({ icon: Icon, label, value, detail }: {
     <div className="rounded-xl border border-border bg-surface p-5">
       <div className="mb-3 flex items-center justify-between">
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground-muted">{label}</p>
-        <div className="grid size-7 place-items-center rounded-lg bg-indigo-600/10">
-          <Icon className="size-3.5 text-indigo-400" />
+        <div className="grid size-7 place-items-center rounded-lg bg-calm-accent-soft">
+          <Icon className="size-3.5 text-calm-accent" />
         </div>
       </div>
       <p className="text-2xl font-bold tabular-nums text-foreground">{value}</p>
@@ -133,7 +133,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
                 {trustLabel(cluster.trust.band)}
               </span>
               {cluster.sourceCount > 1 && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-600/10 px-2.5 py-1 text-[10px] font-semibold text-indigo-400 ring-1 ring-indigo-500/20">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-calm-accent-soft px-2.5 py-1 text-[10px] font-semibold text-calm-accent ring-1 ring-calm-accent-line">
                   <Layers3 className="size-3" />
                   {cluster.sourceCount} sources
                 </span>
@@ -141,7 +141,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="hidden size-10 shrink-0 place-items-center rounded-xl bg-zinc-700 text-zinc-100 sm:grid">
+              <div className="hidden size-10 shrink-0 place-items-center rounded-xl bg-calm-accent-soft text-calm-ink sm:grid">
                 <Building2 className="size-4" />
               </div>
               <div className="min-w-0">
@@ -176,8 +176,8 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
           </div>
 
           <div className="flex shrink-0 items-center gap-4 xl:flex-col xl:items-end">
-            <div className="flex size-16 shrink-0 flex-col items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-600/5">
-              <span className="text-xl font-bold tabular-nums text-indigo-400">{cluster.trust.score}</span>
+            <div className="flex size-16 shrink-0 flex-col items-center justify-center rounded-xl border border-calm-accent-line bg-calm-accent-soft">
+              <span className="text-xl font-bold tabular-nums text-calm-accent">{cluster.trust.score}</span>
               <span className="text-[9px] font-semibold uppercase tracking-[0.12em] text-foreground-muted">Trust</span>
             </div>
             {cluster.trust.reasons.length > 0 && (
@@ -191,7 +191,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
 
       <div className="flex flex-col gap-3 border-t border-border/60 bg-surface-muted px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p className="flex items-center gap-2 text-[11px] text-foreground-muted">
-          <Sparkles className="size-3.5 text-indigo-400" />
+          <Sparkles className="size-3.5 text-calm-accent" />
           {promoted ? "Deja integree a votre pipeline"
             : status === "CLOSED" ? "Cette offre n est plus active"
             : "Prete a etre qualifiee"}
@@ -206,7 +206,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
           {promoted && cluster.opportunityId ? (
             <Link
               href={"/opportunities/" + cluster.opportunityId + "/workspace"}
-              className="inline-flex items-center gap-2 rounded-lg bg-zinc-700 px-3.5 py-2 text-[11px] font-semibold text-zinc-100 transition-colors hover:bg-zinc-800"
+              className="inline-flex items-center gap-2 rounded-lg bg-calm-accent-soft px-3.5 py-2 text-[11px] font-semibold text-calm-ink transition-colors hover:bg-calm-accent-wash"
             >
               Preparer ma candidature <ArrowRight className="size-3.5" />
             </Link>
@@ -215,7 +215,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
               type="button"
               disabled={promoting || status === "CLOSED"}
               onClick={() => void onPromote(cluster)}
-              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-3.5 py-2 text-[11px] font-semibold text-zinc-50 transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-3.5 py-2 text-[11px] font-semibold text-calm-ink transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
               {promoting ? <RefreshCw className="size-3.5 animate-spin" /> : <Zap className="size-3.5" />}
               {promoting ? "Ajout..." : "Ajouter a mes opportunites"}
@@ -309,7 +309,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
           </Link>
           <Link
             href="/opportunities/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-xs font-semibold text-zinc-50 transition-colors hover:bg-indigo-500"
+            className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2.5 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent"
           >
             <Target className="size-4" />
             Ajouter manuellement
@@ -334,7 +334,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Rechercher un poste, une entreprise..."
-              className="h-10 w-full rounded-lg border border-border bg-surface-muted pl-10 pr-4 text-xs text-foreground outline-none transition placeholder:text-foreground-muted focus:border-indigo-500/40 focus:bg-surface focus:ring-2 focus:ring-indigo-500/10"
+              className="h-10 w-full rounded-lg border border-border bg-surface-muted pl-10 pr-4 text-xs text-foreground outline-none transition placeholder:text-foreground-muted focus:border-calm-accent-line focus:bg-surface focus:ring-2 focus:ring-calm-accent-line"
             />
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -351,7 +351,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
                 <select
                   value={String(sel.value)}
                   onChange={e => sel.onChange(e.target.value)}
-                  className="h-10 appearance-none rounded-lg border border-border bg-surface pl-8 pr-7 text-xs font-medium text-foreground outline-none focus:border-indigo-500/40 focus:ring-2 focus:ring-indigo-500/10"
+                  className="h-10 appearance-none rounded-lg border border-border bg-surface pl-8 pr-7 text-xs font-medium text-foreground outline-none focus:border-calm-accent-line focus:ring-2 focus:ring-calm-accent-line"
                 >
                   {sel.options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                 </select>
@@ -359,7 +359,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
               </div>
             ))}
             {filtersActive && (
-              <button type="button" onClick={clearFilters} className="h-10 rounded-lg px-3 text-xs font-medium text-indigo-400 hover:bg-indigo-600/5 transition-colors">
+              <button type="button" onClick={clearFilters} className="h-10 rounded-lg px-3 text-xs font-medium text-calm-accent hover:bg-calm-accent-soft transition-colors">
                 Reinitialiser
               </button>
             )}
@@ -370,7 +370,7 @@ export function DiscoveryFeed({ initialClusters }: Props) {
             {filtered.length} opportunite{filtered.length > 1 ? "s" : ""} affichee{filtered.length > 1 ? "s" : ""}
           </p>
           <p className="hidden items-center gap-1.5 text-[10px] text-foreground-muted sm:flex">
-            <Check className="size-3 text-emerald-400" />
+            <Check className="size-3 text-calm-accent" />
             Doublons regroupes automatiquement
           </p>
         </div>
@@ -386,8 +386,8 @@ export function DiscoveryFeed({ initialClusters }: Props) {
       <div className="space-y-3">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border py-16 text-center">
-            <div className="grid size-12 place-items-center rounded-full bg-indigo-600/10">
-              <Radar className="size-5 text-indigo-400" />
+            <div className="grid size-12 place-items-center rounded-full bg-calm-accent-soft">
+              <Radar className="size-5 text-calm-accent" />
             </div>
             <div>
               <p className="text-sm font-semibold text-foreground">
@@ -398,11 +398,11 @@ export function DiscoveryFeed({ initialClusters }: Props) {
               </p>
             </div>
             {filtersActive ? (
-              <button type="button" onClick={clearFilters} className="rounded-lg bg-zinc-700 px-4 py-2 text-xs font-semibold text-zinc-100 hover:bg-zinc-800 transition-colors">
+              <button type="button" onClick={clearFilters} className="rounded-lg bg-calm-accent-soft px-4 py-2 text-xs font-semibold text-calm-ink hover:bg-calm-accent-wash transition-colors">
                 Reinitialiser les filtres
               </button>
             ) : (
-              <Link href="/opportunities/new" className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-zinc-50 hover:bg-indigo-500 transition-colors">
+              <Link href="/opportunities/new" className="inline-flex items-center gap-2 rounded-lg bg-calm-accent px-4 py-2 text-xs font-semibold text-calm-ink hover:bg-calm-accent transition-colors">
                 Ajouter une opportunite <ArrowRight className="size-3.5" />
               </Link>
             )}

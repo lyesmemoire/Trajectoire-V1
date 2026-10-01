@@ -63,7 +63,7 @@ export function MicrophoneCheck({ onSuccess }: Props) {
   }
 
   return (
-    <div className="bg-white rounded-[3rem] p-10 border border-ivoire-100 shadow-xl max-w-md mx-auto text-center space-y-8">
+    <div className="bg-calm-surface rounded-[3rem] p-10 border border-ivoire-100 shadow-xl max-w-md mx-auto text-center space-y-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-black text-ink-900">
           Test rapide du micro

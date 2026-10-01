@@ -29,24 +29,24 @@ function scoreStatus(score: number): {
   if (score >= 80) {
     return {
       label: "Solide",
-      bgClass: "bg-emerald-500/10",
-      textClass: "text-emerald-300",
-      borderClass: "border-emerald-400/20",
+      bgClass: "bg-calm-accent-soft",
+      textClass: "text-calm-accent",
+      borderClass: "border-calm-accent-line",
     }
   }
   if (score >= 60) {
     return {
       label: "À renforcer",
-      bgClass: "bg-amber-500/10",
-      textClass: "text-amber-300",
-      borderClass: "border-amber-400/20",
+      bgClass: "bg-calm-warn-soft",
+      textClass: "text-calm-warn",
+      borderClass: "border-calm-warn-line",
     }
   }
   return {
     label: "Prioritaire",
-    bgClass: "bg-rose-500/10",
-    textClass: "text-rose-300",
-    borderClass: "border-rose-400/20",
+    bgClass: "bg-calm-warn-soft",
+    textClass: "text-calm-warn",
+    borderClass: "border-calm-warn-line",
   }
 }
 
@@ -123,14 +123,14 @@ function ReplayButton({ messageId, sessionId, isOpen }: { messageId: string; ses
   }
 
   if (state === "error") {
-    return <span className="text-[10px] text-rose-300 font-medium bg-rose-500/10 px-2 py-1 rounded">Replay indisponible</span>
+    return <span className="text-[10px] text-calm-warn font-medium bg-calm-warn-soft px-2 py-1 rounded">Replay indisponible</span>
   }
 
   return (
     <button
       onClick={togglePlay}
       disabled={state === "loading"}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-indigo-300 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-colors disabled:opacity-50"
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-calm-accent bg-calm-accent-soft hover:bg-calm-accent-soft rounded-full transition-colors disabled:opacity-50"
       aria-label={state === "playing" ? "Mettre en pause" : "Écouter ma réponse"}
     >
       {state === "playing" ? "⏸ Pause" : state === "loading" ? "⏳ Chargement..." : "▶ Écouter ma réponse"}
@@ -155,8 +155,8 @@ function QuestionCard({
 
   return (
     <div
-      className={`rounded-xl border bg-zinc-900 shadow-sm transition-shadow duration-200 ${
-        isOpen ? "shadow-[0_2px_20px_-6px_rgba(99,102,241,0.35)] border-indigo-400/30" : "border-white/[0.08] hover:border-indigo-400/20"
+      className={`rounded-xl border bg-calm-surface shadow-sm transition-shadow duration-200 ${
+        isOpen ? "shadow-[0_2px_20px_-6px_rgba(31,42,55,0.35)] border-calm-accent-line" : "border-calm-line hover:border-calm-accent-line"
       }`}
     >
       {/* Header — toujours visible */}
@@ -165,19 +165,19 @@ function QuestionCard({
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={onToggle}
-        className="flex w-full items-center gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 rounded-xl"
+        className="flex w-full items-center gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg rounded-xl"
       >
         {/* Numéro */}
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-xs font-bold text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-xs font-bold text-calm-accent ring-1 ring-inset ring-calm-accent-line">
           {index + 1}
         </span>
 
         {/* Compétence + score */}
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-white/80">
+          <p className="truncate text-sm font-medium text-calm-ink">
             {item.competency ?? "Compétence générale"}
           </p>
-          <p className="mt-0.5 truncate text-xs text-white/40 italic line-clamp-1">
+          <p className="mt-0.5 truncate text-xs text-calm-tertiary italic line-clamp-1">
             {item.question}
           </p>
         </div>
@@ -189,7 +189,7 @@ function QuestionCard({
           >
             {status.label}
           </span>
-          <span className="text-sm font-bold text-white/80 tabular-nums">
+          <span className="text-sm font-bold text-calm-ink tabular-nums">
             {Number.isFinite(item.score) ? Math.min(100, Math.max(0, Math.round(item.score))) : "–"}/100
           </span>
           <ChevronIcon open={isOpen} />
@@ -202,42 +202,42 @@ function QuestionCard({
         role="region"
         aria-labelledby={headerId}
         hidden={!isOpen}
-        className="border-t border-white/[0.06] px-5 pb-6 pt-4"
+        className="border-t border-calm-line px-5 pb-6 pt-4"
       >
         {/* Question et réponse */}
         <div className="mb-5 grid gap-4 md:grid-cols-2">
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/40">
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-calm-tertiary">
               Question du recruteur
             </p>
-            <p className="text-sm leading-relaxed text-white/80">{item.question}</p>
+            <p className="text-sm leading-relaxed text-calm-ink">{item.question}</p>
           </div>
           <div>
             <div className="mb-1.5 flex items-center justify-between">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-calm-tertiary">
                 Votre réponse
               </p>
               {item.hasAudio && item.messageId && item.sessionId && (
                 <ReplayButton messageId={item.messageId} sessionId={item.sessionId} isOpen={isOpen} />
               )}
             </div>
-            <p className="text-sm leading-relaxed text-white/80">{item.answer}</p>
+            <p className="text-sm leading-relaxed text-calm-ink">{item.answer}</p>
           </div>
         </div>
 
         {/* Ce qui a convaincu / Ce qui manquait */}
         <div className="mb-4 grid gap-3 sm:grid-cols-2">
           {item.whatWentWell.length > 0 && (
-            <div className="rounded-xl bg-emerald-500/[0.06] p-4">
+            <div className="rounded-xl bg-calm-accent-soft p-4">
               <div className="mb-2 flex items-center gap-1.5">
-                <span className="text-emerald-400 text-sm">✓</span>
-                <p className="text-xs font-semibold text-emerald-300">Ce qui a convaincu</p>
+                <span className="text-calm-accent text-sm">✓</span>
+                <p className="text-xs font-semibold text-calm-accent">Ce qui a convaincu</p>
               </div>
               <ul className="space-y-1">
                 {item.whatWentWell.map((point, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-                    <span className="text-sm text-white/70">{point}</span>
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-calm-accent" />
+                    <span className="text-sm text-calm-secondary">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -245,16 +245,16 @@ function QuestionCard({
           )}
 
           {item.whatWasMissing.length > 0 && (
-            <div className="rounded-xl bg-rose-500/[0.06] p-4">
+            <div className="rounded-xl bg-calm-warn-soft p-4">
               <div className="mb-2 flex items-center gap-1.5">
-                <span className="text-rose-400 text-sm">△</span>
-                <p className="text-xs font-semibold text-rose-300">Ce qui manquait</p>
+                <span className="text-calm-warn text-sm">△</span>
+                <p className="text-xs font-semibold text-calm-warn">Ce qui manquait</p>
               </div>
               <ul className="space-y-1">
                 {item.whatWasMissing.map((point, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/70">{point}</span>
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-calm-warn" />
+                    <span className="text-sm text-calm-secondary">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -264,17 +264,17 @@ function QuestionCard({
 
         {/* Comment progresser */}
         {item.howToImprove.length > 0 && (
-          <div className="mb-4 rounded-xl border border-indigo-400/20 bg-indigo-500/[0.06] p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-indigo-300">
+          <div className="mb-4 rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-calm-accent">
               Comment progresser
             </p>
             <ul className="space-y-1.5">
               {item.howToImprove.map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="mt-0.5 shrink-0 rounded-full bg-indigo-500/20 px-1.5 py-0.5 text-[10px] font-bold text-indigo-300">
+                  <span className="mt-0.5 shrink-0 rounded-full bg-calm-accent-soft px-1.5 py-0.5 text-[10px] font-bold text-calm-accent">
                     {i + 1}
                   </span>
-                  <span className="text-sm text-white/70">{tip}</span>
+                  <span className="text-sm text-calm-secondary">{tip}</span>
                 </li>
               ))}
             </ul>
@@ -283,11 +283,11 @@ function QuestionCard({
 
         {/* Meilleure réponse */}
         {item.betterAnswer && (
-          <div className="rounded-xl border border-indigo-400/25 bg-gradient-to-br from-indigo-500/10 to-transparent p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-indigo-300">
+          <div className="rounded-xl border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft to-transparent p-4">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-calm-accent">
               Exemple de réponse plus forte
             </p>
-            <p className="text-sm leading-relaxed text-white/70 italic">{item.betterAnswer}</p>
+            <p className="text-sm leading-relaxed text-calm-secondary italic">{item.betterAnswer}</p>
           </div>
         )}
       </div>
@@ -303,10 +303,10 @@ export function QuestionByQuestionSection({ items }: QuestionByQuestionSectionPr
   return (
     <div className="mb-6">
       <div className="mb-4">
-        <h2 className="text-xl font-sans font-semibold text-white/80">
+        <h2 className="text-xl font-sans font-semibold text-calm-ink">
           Analyse de vos réponses
         </h2>
-        <p className="mt-1 text-sm text-white/50">
+        <p className="mt-1 text-sm text-calm-secondary">
           Découvrez précisément ce qui a convaincu le recruteur et ce qui peut être renforcé.
         </p>
       </div>

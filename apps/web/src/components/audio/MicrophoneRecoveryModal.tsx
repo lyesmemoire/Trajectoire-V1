@@ -42,7 +42,7 @@ export function MicrophoneRecoveryModal({
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="relative bg-white/70 backdrop-blur-xl rounded-[2.5rem] p-10 max-w-md w-full shadow-premium space-y-8 text-center"
+        className="relative bg-calm-accent-line backdrop-blur-xl rounded-[2.5rem] p-10 max-w-md w-full shadow-premium space-y-8 text-center"
       >
         <div className="w-20 h-20 bg-terracotta-50 rounded-[2rem] flex items-center justify-center text-terracotta-500 mx-auto border border-terracotta-100 shadow-inner">
           <Mic className="w-10 h-10" />

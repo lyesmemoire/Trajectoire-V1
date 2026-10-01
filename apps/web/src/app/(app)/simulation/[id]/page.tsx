@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 
-function SoundWave({ active, color = 'bg-indigo-400' }: { active: boolean; color?: string }) {
+function SoundWave({ active, color = 'bg-calm-accent' }: { active: boolean; color?: string }) {
   const heights = [3, 6, 10, 7, 14, 9, 12, 6, 10, 4]
   return (
     <div className="flex items-end gap-[3px]" aria-hidden>
@@ -29,20 +29,20 @@ function TranscriptBubble({ transcript }: { transcript: RealtimeTranscript }) {
   return (
     <div className={`flex gap-3 `+(isAI ? 'justify-start' : 'justify-end')}>
       {isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/60">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-xs font-bold text-calm-secondary">
           A
         </div>
       )}
       <div
-        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed `+(isAI ? 'bg-white/10 text-white/90' : 'bg-indigo-500/80 text-white')+` `+(!transcript.final ? 'opacity-50' : 'opacity-100')}
+        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed `+(isAI ? 'bg-calm-accent-soft text-calm-ink' : 'bg-calm-accent-soft text-calm-ink')+` `+(!transcript.final ? 'opacity-50' : 'opacity-100')}
       >
         {transcript.text}
         {!transcript.final && (
-          <span className="ml-1 animate-pulse text-white/60">…</span>
+          <span className="ml-1 animate-pulse text-calm-secondary">…</span>
         )}
       </div>
       {!isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-xs font-bold text-indigo-300">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-xs font-bold text-calm-accent">
           V
         </div>
       )}
@@ -128,29 +128,29 @@ export default function SimulationPage() {
   handleEndRef.current = handleEnd
 
   const statusConfig: Record<string, { label: string; dot: string }> = {
-    idle         : { label: 'Initialisation…',   dot: 'bg-zinc-500' },
-    connecting   : { label: 'Connexion…',         dot: 'bg-amber-400 animate-pulse' },
-    connected    : { label: 'En ligne',           dot: 'bg-emerald-400' },
-    speaking_user: { label: 'Vous parlez…',       dot: 'bg-indigo-400 animate-pulse' },
-    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-white animate-pulse' },
-    disconnected : { label: 'Déconnecté',         dot: 'bg-zinc-600' },
-    error        : { label: 'Erreur',             dot: 'bg-red-500' },
+    idle         : { label: 'Initialisation…',   dot: 'bg-calm-line-soft' },
+    connecting   : { label: 'Connexion…',         dot: 'bg-calm-warn animate-pulse' },
+    connected    : { label: 'En ligne',           dot: 'bg-calm-accent' },
+    speaking_user: { label: 'Vous parlez…',       dot: 'bg-calm-accent animate-pulse' },
+    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-calm-surface animate-pulse' },
+    disconnected : { label: 'Déconnecté',         dot: 'bg-calm-line' },
+    error        : { label: 'Erreur',             dot: 'bg-calm-warn' },
   }
   const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
 
   return (
-    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-zinc-950 text-white md:h-full md:min-h-0">
+    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-calm-bg text-calm-ink md:h-full md:min-h-0">
 
-      <header className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-6 py-3">
+      <header className="flex shrink-0 items-center justify-between border-b border-calm-line px-6 py-3">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold uppercase tracking-widest text-white/60">Trajectoire</span>
-          <span className="text-white/15">·</span>
-          <span className="text-xs text-white/60">Simulation d&apos;entretien</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-calm-secondary">Trajectoire</span>
+          <span className="text-calm-tertiary">·</span>
+          <span className="text-xs text-calm-secondary">Simulation d&apos;entretien</span>
         </div>
         <div className="flex items-center gap-3">
           {clock && (
             <span
-              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-white/80"
+              className="flex items-center gap-1.5 rounded-full border border-calm-line bg-calm-accent-wash px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-calm-ink"
               title="Temps restant sur la durée choisie"
             >
               <Clock className="size-3.5" aria-hidden />
@@ -158,7 +158,7 @@ export default function SimulationPage() {
               {clock}
             </span>
           )}
-          <div role="status" className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70">
+          <div role="status" className="flex items-center gap-2 rounded-full border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-secondary">
             <span className={`size-1.5 rounded-full `+statusDot} aria-hidden />
             {statusLabel}
           </div>
@@ -168,7 +168,7 @@ export default function SimulationPage() {
       {isNearTimeLimit && !isEnding && (
         <div
           role="status"
-          className="flex shrink-0 items-center justify-center gap-2 border-b border-amber-400/20 bg-amber-400/10 px-6 py-2 text-xs text-amber-200"
+          className="flex shrink-0 items-center justify-center gap-2 border-b border-calm-warn-line bg-calm-warn-soft px-6 py-2 text-xs text-calm-warn"
         >
           <Clock className="size-3.5" aria-hidden />
           Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
@@ -177,29 +177,29 @@ export default function SimulationPage() {
 
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
 
-        <div className="relative h-64 w-full shrink-0 overflow-hidden bg-zinc-900 md:h-auto md:w-[52%]">
+        <div className="relative h-64 w-full shrink-0 overflow-hidden bg-calm-surface md:h-auto md:w-[52%]">
           <img
             src="/interviewer.png"
             alt="Alexandra"
             className={`absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out `+(isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
           />
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950/60 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
-          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-zinc-950/70 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-md">
-            <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-white' : 'bg-emerald-400')} />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-calm-bg/60 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-calm-bg via-calm-bg/70 to-transparent" />
+          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-calm-accent-line bg-calm-bg/70 px-3 py-1.5 text-xs font-medium text-calm-ink backdrop-blur-md">
+            <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-calm-surface' : 'bg-calm-accent')} />
             Alexandra · IA
           </div>
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-6 py-8">
             {isAISpeaking ? (
               <>
-                <div className="flex items-center gap-2 text-xs font-medium text-white/50">
+                <div className="flex items-center gap-2 text-xs font-medium text-calm-secondary">
                   <Volume2 className="size-3" />
                   En train de parler
                 </div>
-                <SoundWave active color="bg-indigo-400" />
+                <SoundWave active color="bg-calm-accent" />
               </>
             ) : (
-              <div className="flex items-center gap-2 text-xs text-white/60">
+              <div className="flex items-center gap-2 text-xs text-calm-secondary">
                 <Mic className="size-3" />
                 En écoute
               </div>
@@ -207,37 +207,37 @@ export default function SimulationPage() {
           </div>
         </div>
 
-        <div className="flex min-h-[26rem] flex-1 flex-col border-t border-white/[0.08] bg-zinc-950 md:min-h-0 md:border-l md:border-t-0">
+        <div className="flex min-h-[26rem] flex-1 flex-col border-t border-calm-line bg-calm-bg md:min-h-0 md:border-l md:border-t-0">
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6">
             {transcripts.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
                 {status === 'connecting' ? (
                   <>
-                    <Loader2 className="size-7 animate-spin text-white/60" />
-                    <p className="text-sm text-white/60">Connexion à l&apos;entretien…</p>
-                    <p className="text-xs text-white/60">Autorisez le microphone si le navigateur le demande</p>
+                    <Loader2 className="size-7 animate-spin text-calm-secondary" />
+                    <p className="text-sm text-calm-secondary">Connexion à l&apos;entretien…</p>
+                    <p className="text-xs text-calm-secondary">Autorisez le microphone si le navigateur le demande</p>
                   </>
                 ) : status === 'error' ? (
                   <>
-                    <AlertCircle className="size-7 text-red-400/70" />
-                    <p className="max-w-xs text-sm text-white/60">
+                    <AlertCircle className="size-7 text-calm-warn" />
+                    <p className="max-w-xs text-sm text-calm-secondary">
                       {errorMessage ?? 'Erreur de connexion'}
                     </p>
                     <button
                       onClick={connect}
-                      className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white/70 transition hover:bg-white/15"
+                      className="rounded-lg bg-calm-accent-soft px-4 py-2 text-xs font-semibold text-calm-secondary transition hover:bg-calm-accent-soft"
                     >
                       Réessayer
                     </button>
                   </>
                 ) : (
                   <>
-                    <div className="flex size-14 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                      <Mic className="size-5 text-white/60" />
+                    <div className="flex size-14 items-center justify-center rounded-full border border-calm-line bg-calm-accent-wash">
+                      <Mic className="size-5 text-calm-secondary" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white/60">L&apos;entretien va commencer</p>
-                      <p className="mt-1 text-xs text-white/60">Alexandra va poser la première question</p>
+                      <p className="text-sm font-medium text-calm-secondary">L&apos;entretien va commencer</p>
+                      <p className="mt-1 text-xs text-calm-secondary">Alexandra va poser la première question</p>
                     </div>
                   </>
                 )}
@@ -251,24 +251,24 @@ export default function SimulationPage() {
             )}
           </div>
 
-          <div className="shrink-0 border-t border-white/[0.08] bg-zinc-900/60 px-6 py-4 backdrop-blur-sm">
+          <div className="shrink-0 border-t border-calm-line bg-calm-surface/60 px-6 py-4 backdrop-blur-sm">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-4">
-                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-indigo-400/50 bg-indigo-400/15 text-indigo-300' : 'border-white/10 bg-white/5 text-white/60')}>
+                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-calm-accent-line bg-calm-accent-soft text-calm-accent' : 'border-calm-line bg-calm-accent-wash text-calm-secondary')}>
                   {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60">{isMuted ? 'Micro coupé' : isUserSpeaking ? 'Vous parlez' : 'En écoute'}</p>
-                  <p className="text-xs text-white/60">Détection automatique</p>
+                  <p className="text-xs font-medium text-calm-secondary">{isMuted ? 'Micro coupé' : isUserSpeaking ? 'Vous parlez' : 'En écoute'}</p>
+                  <p className="text-xs text-calm-secondary">Détection automatique</p>
                 </div>
-                <SoundWave active={isUserSpeaking && !isMuted} color="bg-indigo-400" />
+                <SoundWave active={isUserSpeaking && !isMuted} color="bg-calm-accent" />
               </div>
               <div className="flex items-center gap-2">
                 {canResume && (
                   <button
                     type="button"
                     onClick={connect}
-                    className="rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
+                    className="rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent"
                   >
                     Reprendre l&apos;entretien
                   </button>
@@ -278,7 +278,7 @@ export default function SimulationPage() {
                   onClick={toggleMute}
                   aria-pressed={isMuted}
                   disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
-                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10 disabled:opacity-40 aria-pressed:border-amber-400/40 aria-pressed:text-amber-200"
+                  className="flex items-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-soft disabled:opacity-40 aria-pressed:border-calm-warn-line aria-pressed:text-calm-warn"
                 >
                   {isMuted ? <MicOff className="size-4" aria-hidden /> : <Mic className="size-4" aria-hidden />}
                   {isMuted ? 'Réactiver le micro' : 'Couper le micro'}
@@ -288,7 +288,7 @@ export default function SimulationPage() {
                     <button
                       type="button"
                       onClick={handleEnd}
-                      className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/15 px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:bg-red-500/25"
+                      className="flex items-center gap-2 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-2.5 text-sm font-semibold text-calm-warn transition hover:bg-calm-warn-soft"
                     >
                       <PhoneOff className="size-4" aria-hidden />
                       Confirmer la fin
@@ -296,7 +296,7 @@ export default function SimulationPage() {
                     <button
                       type="button"
                       onClick={() => setConfirmEnd(false)}
-                      className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10"
+                      className="rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-soft"
                     >
                       Continuer
                     </button>
@@ -306,7 +306,7 @@ export default function SimulationPage() {
                     type="button"
                     onClick={() => setConfirmEnd(true)}
                     disabled={isEnding}
-                    className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/60 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-40"
+                    className="group flex items-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-5 py-2.5 text-sm font-medium text-calm-secondary transition-all duration-200 hover:border-calm-warn-line hover:bg-calm-warn-soft hover:text-calm-warn disabled:opacity-40"
                   >
                     {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
                     {isEnding ? 'Finalisation…' : 'Terminer'}
@@ -314,7 +314,7 @@ export default function SimulationPage() {
                 )}
               </div>
             </div>
-            <p className="mt-3 text-center text-xs text-white/60">
+            <p className="mt-3 text-center text-xs text-calm-secondary">
               Parlez naturellement : Alexandra détecte automatiquement quand vous avez fini. Alexandra est une IA.
             </p>
           </div>

@@ -13,7 +13,6 @@ import {
 } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { darkTokens } from "@/lib/theme/dark-tokens"
 
 type SessionState = "checking" | "authenticated" | "guest"
 
@@ -64,27 +63,26 @@ function reasonNotice(reason: string | null): string {
 function LoginFallback() {
   return (
     <div
-      style={darkTokens}
-      className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+      className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
     >
       <Link
         href="/"
-        className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
             Bon retour
           </h1>
 
-          <p className="text-white/50 text-sm">
+          <p className="text-calm-secondary text-sm">
             Connectez-vous pour accéder à votre espace.
           </p>
 
-          <p className="mt-3 text-xs text-white/50">
+          <p className="mt-3 text-xs text-calm-secondary">
             Chargement…
           </p>
         </div>
@@ -256,28 +254,27 @@ function LoginContent() {
 
   return (
     <div
-      style={darkTokens}
-      className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+      className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
     >
       <Link
         href="/"
-        className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
             Bon retour
           </h1>
 
-          <p className="text-white/50 text-sm">
+          <p className="text-calm-secondary text-sm">
             Connectez-vous pour accéder à votre espace.
           </p>
 
           {sessionState === "checking" && (
-            <p role="status" className="mt-3 text-xs text-white/50">
+            <p role="status" className="mt-3 text-xs text-calm-secondary">
               Vérification de session…
             </p>
           )}
@@ -286,9 +283,9 @@ function LoginContent() {
         {(error || urlError) && (
           <div
             role="alert"
-            className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4"
+            className="mb-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4"
           >
-            <p className="text-rose-300 text-sm font-medium text-center">
+            <p className="text-calm-warn text-sm font-medium text-center">
               {error || urlError}
             </p>
           </div>
@@ -297,7 +294,7 @@ function LoginContent() {
         {needsConfirmation && (
           <div className="mb-6 text-center">
             {resendState === "sent" ? (
-              <p role="status" className="text-sm text-emerald-300">
+              <p role="status" className="text-sm text-calm-accent">
                 Un nouvel e-mail de confirmation vient d&apos;être envoyé à {normalizeEmail(email)}.
               </p>
             ) : (
@@ -305,7 +302,7 @@ function LoginContent() {
                 type="button"
                 onClick={handleResend}
                 disabled={resendState === "sending"}
-                className="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
+                className="text-sm font-medium text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent disabled:opacity-60"
               >
                 {resendState === "sending" ? "Envoi…" : "Renvoyer l'e-mail de confirmation"}
               </button>
@@ -316,9 +313,9 @@ function LoginContent() {
         {!error && !urlError && urlNotice && (
           <div
             role="status"
-            className="mb-6 rounded-xl border border-indigo-400/20 bg-indigo-500/10 p-4"
+            className="mb-6 rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4"
           >
-            <p className="text-indigo-200 text-sm font-medium text-center">
+            <p className="text-calm-accent text-sm font-medium text-center">
               {urlNotice}
             </p>
           </div>
@@ -326,20 +323,20 @@ function LoginContent() {
 
         {sessionState === "authenticated" ? (
           <div className="space-y-4">
-            <div className="rounded-xl border border-white/[0.08] bg-zinc-950 px-4 py-4">
-              <p className="text-sm font-semibold text-white/80">
+            <div className="rounded-xl border border-calm-line bg-calm-bg px-4 py-4">
+              <p className="text-sm font-semibold text-calm-ink">
                 Vous êtes déjà connecté.
               </p>
 
               {sessionEmail ? (
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-calm-secondary">
                   Compte :{" "}
-                  <span className="font-medium text-white/80">
+                  <span className="font-medium text-calm-ink">
                     {sessionEmail}
                   </span>
                 </p>
               ) : (
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-calm-secondary">
                   Vous pouvez accéder à votre dashboard ou
                   vous déconnecter.
                 </p>
@@ -349,7 +346,7 @@ function LoginContent() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href={redirectTo}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-calm-accent px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
                 Aller au dashboard
               </a>
@@ -358,7 +355,7 @@ function LoginContent() {
                 type="button"
                 onClick={handleSignOut}
                 disabled={signingOut}
-                className="w-full rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/80 transition-colors hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                className="w-full rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-3 text-sm font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
               >
                 {signingOut
                   ? "Déconnexion…"
@@ -375,7 +372,7 @@ function LoginContent() {
               <div>
                 <label
                   htmlFor="login-email"
-                  className="block text-sm font-medium text-white/80 mb-1"
+                  className="block text-sm font-medium text-calm-ink mb-1"
                 >
                   Email
                 </label>
@@ -387,7 +384,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="vous@exemple.com"
                   autoComplete="email"
                   required
@@ -399,14 +396,14 @@ function LoginContent() {
                 <div className="flex items-center justify-between mb-1">
                   <label
                     htmlFor="login-password"
-                    className="block text-sm font-medium text-white/80"
+                    className="block text-sm font-medium text-calm-ink"
                   >
                     Mot de passe
                   </label>
 
                   <Link
                     href="/forgot-password"
-                    className="rounded text-xs text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                    className="rounded text-xs text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
                   >
                     Mot de passe oublié ?
                   </Link>
@@ -419,7 +416,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setPassword(e.target.value)
                   }
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="current-password"
                   required
@@ -430,7 +427,7 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? "Connexion en cours..."
@@ -438,11 +435,11 @@ function LoginContent() {
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-white/50">
+            <p className="mt-6 text-center text-sm text-calm-secondary">
               Pas encore de compte ?{" "}
               <Link
                 href="/signup"
-                className="rounded text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                className="rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
                 S&apos;inscrire
               </Link>

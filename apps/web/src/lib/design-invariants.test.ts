@@ -60,17 +60,7 @@ describe("pas de mode sombre", () => {
 
 // ─── Couleurs : écrans migrés vers Calm ────────────────────────────────────────────────────────────
 // Préfixes pas encore migrés (liste décroissante, vide à la fin du chantier).
-const PENDING: string[] = [
-  "app/(app)/",
-  "app/onboarding/",
-  "app/login/",
-  "app/signup/",
-  "app/signup-conversion/",
-  "app/forgot-password/",
-  "app/reset-password/",
-  "components/",
-  "lib/theme/",
-]
+const PENDING: string[] = []
 
 describe("écrans migrés : palette Calm uniquement", () => {
   const migrated = all.filter(f => {

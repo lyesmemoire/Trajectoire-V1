@@ -18,7 +18,7 @@ export function SuggestedQuestions({ questions, onSelectQuestion }: SuggestedQue
         <button
           key={index}
           onClick={() => onSelectQuestion(question)}
-          className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors"
+          className="text-sm bg-calm-line-soft hover:bg-calm-line-soft text-calm-ink px-3 py-2 rounded-lg transition-colors"
         >
           {question}
         </button>

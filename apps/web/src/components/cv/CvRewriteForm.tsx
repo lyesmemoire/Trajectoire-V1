@@ -24,7 +24,7 @@ const MIN_LENGTH = 40
 const MAX_LENGTH = 6000
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 type Status = "idle" | "loading" | "done"
 
@@ -111,15 +111,15 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
   return (
     <form onSubmit={submit} className="space-y-4" noValidate>
       <fieldset className="space-y-2">
-        <legend className="text-sm font-medium text-zinc-200">Que voulez-vous réécrire ?</legend>
+        <legend className="text-sm font-medium text-calm-ink">Que voulez-vous réécrire ?</legend>
         <div className="flex flex-wrap gap-2" role="radiogroup">
           {ACTIONS.map((a) => (
             <label
               key={a.value}
-              className={`inline-flex min-h-11 cursor-pointer items-center rounded-xl border px-4 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-indigo-400/70 ${
+              className={`inline-flex min-h-11 cursor-pointer items-center rounded-xl border px-4 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-calm-accent ${
                 action === a.value
-                  ? "border-indigo-400/60 bg-indigo-500/15 text-white"
-                  : "border-white/10 bg-white/[0.03] text-zinc-300 hover:bg-white/[0.06]"
+                  ? "border-calm-accent-line bg-calm-accent-soft text-calm-ink"
+                  : "border-calm-line bg-calm-accent-wash text-calm-ink hover:bg-calm-accent-wash"
               }`}
             >
               <input
@@ -137,7 +137,7 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
       </fieldset>
 
       <div className="space-y-2">
-        <label htmlFor="rewrite-content" className="block text-sm font-medium text-zinc-200">
+        <label htmlFor="rewrite-content" className="block text-sm font-medium text-calm-ink">
           Texte à réécrire
         </label>
         <textarea
@@ -148,9 +148,9 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
           rows={7}
           placeholder={current.hint}
           aria-describedby="rewrite-help"
-          className={`w-full resize-y rounded-xl border border-white/10 bg-zinc-950 px-4 py-3 text-sm leading-relaxed text-zinc-100 placeholder:text-zinc-500 ${focusRing}`}
+          className={`w-full resize-y rounded-xl border border-calm-line bg-calm-bg px-4 py-3 text-sm leading-relaxed text-calm-ink placeholder:text-calm-tertiary ${focusRing}`}
         />
-        <p id="rewrite-help" className="flex justify-between gap-4 text-xs text-zinc-400">
+        <p id="rewrite-help" className="flex justify-between gap-4 text-xs text-calm-secondary">
           <span>{current.hint}</span>
           <span aria-live="off">
             {trimmed.length} / {MAX_LENGTH}
@@ -162,22 +162,22 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
         <button
           type="submit"
           disabled={tooShort || loading}
-          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}
         >
           {loading ? "Réécriture en cours…" : "Réécrire"}
         </button>
         {tooShort && trimmed.length > 0 && (
-          <span className="text-xs text-zinc-400">Au moins {MIN_LENGTH} caractères sont nécessaires.</span>
+          <span className="text-xs text-calm-secondary">Au moins {MIN_LENGTH} caractères sont nécessaires.</span>
         )}
       </div>
 
       <div aria-live="polite" className="space-y-3">
         {planRequired && (
-          <div role="alert" className="rounded-xl border border-indigo-400/30 bg-indigo-500/10 p-4 text-sm text-indigo-100">
+          <div role="alert" className="rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4 text-sm text-calm-accent">
             <p className="font-medium">La réécriture est incluse dans le Pack Entretien et dans Pro.</p>
             <Link
               href="/pricing"
-              className={`mt-3 inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-indigo-200 underline underline-offset-4 ${focusRing}`}
+              className={`mt-3 inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-calm-accent underline underline-offset-4 ${focusRing}`}
             >
               Voir les formules
             </Link>
@@ -185,19 +185,19 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
         )}
 
         {error && (
-          <p role="alert" className="rounded-xl border border-rose-500/30 bg-rose-950/40 p-4 text-sm text-rose-200">
+          <p role="alert" className="rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4 text-sm text-calm-warn">
             {error}
           </p>
         )}
 
         {result && (
-          <div className="space-y-3 rounded-xl border border-white/[0.08] bg-zinc-950/60 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-indigo-300">Version réécrite</p>
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-100">{result}</p>
+          <div className="space-y-3 rounded-xl border border-calm-line bg-calm-bg/60 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-calm-accent">Version réécrite</p>
+            <p className="whitespace-pre-wrap text-sm leading-relaxed text-calm-ink">{result}</p>
             <button
               type="button"
               onClick={copy}
-              className={`inline-flex min-h-11 items-center rounded-lg border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] ${focusRing}`}
+              className={`inline-flex min-h-11 items-center rounded-lg border border-calm-line bg-calm-accent-wash px-4 text-sm font-medium text-calm-ink transition-colors hover:bg-calm-accent-soft ${focusRing}`}
             >
               {copied ? "Copié" : "Copier le texte"}
             </button>

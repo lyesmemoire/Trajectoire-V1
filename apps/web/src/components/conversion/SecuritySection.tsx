@@ -62,7 +62,7 @@ export function SecuritySection({ elements = defaultElements }: SecuritySectionP
           
           return (
             <div key={index} className="flex items-start gap-2">
-              <div className="p-1.5 bg-white rounded-md flex-shrink-0">
+              <div className="p-1.5 bg-calm-surface rounded-md flex-shrink-0">
                 <Icon className="w-3.5 h-3.5 text-forest-600" />
               </div>
               <div>

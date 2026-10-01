@@ -6,7 +6,6 @@ import { logger } from "@/lib/logger"
 import { shouldRedirectToOnboarding } from "@/lib/onboarding/shouldRedirectToOnboarding"
 import { prisma } from "@/lib/prisma"
 import { createClient } from "@/lib/supabase/server"
-import { darkTokens } from "@/lib/theme/dark-tokens"
 
 export default async function AppGroupLayout({ children }: { children: ReactNode }) {
   // Garde d'onboarding : un compte récent qui n'a pas terminé l'onboarding y est renvoyé.
@@ -44,8 +43,7 @@ export default async function AppGroupLayout({ children }: { children: ReactNode
 
   return (
     <div
-      style={darkTokens}
-      className="min-h-dvh bg-zinc-950 text-white/80 selection:bg-indigo-500/30 selection:text-white"
+      className="min-h-dvh bg-calm-bg text-calm-ink selection:bg-calm-accent-soft selection:text-calm-ink"
     >
       {/* Sous 1024 px la barre latérale est masquée : en-tête + tiroir à la place. */}
       <AppMobileNav />

@@ -55,9 +55,9 @@ function relativeDate(value: string | null) {
 
 function sourceStatus(s: DiscoverySource) {
   if (!s.enabled)                     return { label: "En pause",      tone: "bg-surface-muted text-foreground-muted ring-border"       }
-  if (s.lastSyncStatus === "SUCCESS") return { label: "Synchronisee",  tone: "bg-emerald-950/60 text-emerald-400 ring-success/20"               }
+  if (s.lastSyncStatus === "SUCCESS") return { label: "Synchronisee",  tone: "bg-calm-accent-soft text-calm-accent ring-success/20"               }
   if (s.lastSyncStatus === "ERROR")   return { label: "Erreur",        tone: "bg-danger/10 text-danger ring-danger/20"                  }
-  return                                     { label: "Prete",         tone: "bg-indigo-600/10 text-indigo-400 ring-indigo-500/20"               }
+  return                                     { label: "Prete",         tone: "bg-calm-accent-soft text-calm-accent ring-calm-accent-line"               }
 }
 
 async function readPayload(res: Response): Promise<ApiPayload> {
@@ -172,8 +172,8 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
       {/* Header */}
       <div className="flex flex-col gap-4 border-b border-border/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-start gap-3">
-          <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-indigo-600/10">
-            <CloudCog className="size-4 text-indigo-400" />
+          <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-calm-accent-soft">
+            <CloudCog className="size-4 text-calm-accent" />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
           <button
             type="button"
             onClick={() => { setError(null); setShowForm(v => !v) }}
-            className="inline-flex h-9 items-center gap-2 rounded-lg bg-indigo-600 px-3 text-xs font-semibold text-zinc-50 transition-colors hover:bg-indigo-500"
+            className="inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent"
           >
             {showForm ? <X className="size-3.5" /> : <Plus className="size-3.5" />}
             {showForm ? "Fermer" : "Ajouter une source"}
@@ -218,7 +218,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
                 <select
                   value={provider}
                   onChange={e => setProvider(e.target.value as Provider)}
-                  className="h-10 w-full appearance-none rounded-lg border border-border bg-surface px-3 pr-8 text-xs font-medium text-foreground outline-none focus:border-indigo-500/40 focus:ring-2 focus:ring-indigo-500/10"
+                  className="h-10 w-full appearance-none rounded-lg border border-border bg-surface px-3 pr-8 text-xs font-medium text-foreground outline-none focus:border-calm-accent-line focus:ring-2 focus:ring-calm-accent-line"
                 >
                   <option value="GREENHOUSE">Greenhouse</option>
                   <option value="LEVER">Lever</option>
@@ -232,7 +232,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
               <input
                 value={company} onChange={e => setCompany(e.target.value)}
                 placeholder="Ex. OpenAI" maxLength={120}
-                className="h-10 w-full rounded-lg border border-border bg-surface px-3 text-xs text-foreground placeholder:text-foreground-muted/50 outline-none focus:border-indigo-500/40 focus:ring-2 focus:ring-indigo-500/10"
+                className="h-10 w-full rounded-lg border border-border bg-surface px-3 text-xs text-foreground placeholder:text-foreground-muted/50 outline-none focus:border-calm-accent-line focus:ring-2 focus:ring-calm-accent-line"
               />
             </label>
             <label className="block">
@@ -240,13 +240,13 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
               <input
                 value={boardKey} onChange={e => setBoardKey(e.target.value)}
                 placeholder="Identifiant du job board" maxLength={120}
-                className="h-10 w-full rounded-lg border border-border bg-surface px-3 text-xs text-foreground placeholder:text-foreground-muted/50 outline-none focus:border-indigo-500/40 focus:ring-2 focus:ring-indigo-500/10"
+                className="h-10 w-full rounded-lg border border-border bg-surface px-3 text-xs text-foreground placeholder:text-foreground-muted/50 outline-none focus:border-calm-accent-line focus:ring-2 focus:ring-calm-accent-line"
               />
               <span className="mt-1 block text-[10px] text-foreground-muted">{PROVIDER_HELP[provider]}</span>
             </label>
             <button
               type="submit" disabled={creating}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 text-xs font-semibold text-zinc-50 transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-calm-accent px-4 text-xs font-semibold text-calm-ink transition-colors hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
               {creating ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
               {creating ? "Ajout..." : "Connecter"}
@@ -285,7 +285,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
                 className="flex flex-col gap-4 px-5 py-4 transition-colors hover:bg-surface-muted sm:px-6 xl:flex-row xl:items-center xl:justify-between"
               >
                 <div className="flex min-w-0 items-start gap-3">
-                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-zinc-700 text-[10px] font-bold text-zinc-100">
+                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-calm-accent-soft text-[10px] font-bold text-calm-ink">
                     {PROVIDER_ABBR[source.provider] ?? "ATS"}
                   </div>
                   <div className="min-w-0">
@@ -323,7 +323,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
                     type="button"
                     disabled={pending || !source.enabled || source.provider === "OTHER"}
                     onClick={() => void syncSource(source)}
-                    className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-indigo-600/10 px-3 text-[11px] font-medium text-indigo-400 ring-1 ring-indigo-500/20 transition-colors hover:bg-indigo-600/20 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-calm-accent-soft px-3 text-[11px] font-medium text-calm-accent ring-1 ring-calm-accent-line transition-colors hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {pending ? <Loader2 className="size-3.5 animate-spin" />
                       : source.lastSyncStatus === "SUCCESS" ? <CheckCircle2 className="size-3.5" />

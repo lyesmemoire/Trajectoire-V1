@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase"
-import { darkTokens } from "@/lib/theme/dark-tokens"
 import { usePreviewStorage } from "@/hooks/usePreviewStorage"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import { isValidEmail, normalizeEmail, validatePassword, MIN_PASSWORD_LENGTH } from "@/lib/auth/credentials"
@@ -139,31 +138,30 @@ export default function SignupPage() {
   if (success) {
     return (
       <div
-        style={darkTokens}
-        className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+        className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
       >
-        <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 text-center shadow-2xl shadow-black/40 space-y-4">
-          <div className="text-emerald-400 text-5xl mb-4" aria-hidden="true">✉️</div>
-          <h2 className="text-2xl font-semibold tracking-tight text-white/80">Vérifiez vos emails</h2>
-          <p className="text-white/50">
-            Un lien de confirmation a été envoyé à <span className="font-medium text-white/80">{email}</span>.
+        <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 text-center shadow-2xl shadow-calm-ink/10 space-y-4">
+          <div className="text-calm-accent text-5xl mb-4" aria-hidden="true">✉️</div>
+          <h2 className="text-2xl font-semibold tracking-tight text-calm-ink">Vérifiez vos emails</h2>
+          <p className="text-calm-secondary">
+            Un lien de confirmation a été envoyé à <span className="font-medium text-calm-ink">{email}</span>.
             Cliquez dessus pour activer votre compte.
           </p>
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-calm-secondary">
             Rien reçu ? Regardez dans vos courriers indésirables. Si un compte existe déjà avec cette adresse,
             connectez-vous ou réinitialisez votre mot de passe.
           </p>
           {error && (
-            <p role="alert" className="text-sm text-rose-300">{error}</p>
+            <p role="alert" className="text-sm text-calm-warn">{error}</p>
           )}
           {resendState === "sent" && cooldown > 0 && (
-            <p role="status" className="text-sm text-emerald-300">Un nouvel e-mail vient d&apos;être envoyé.</p>
+            <p role="status" className="text-sm text-calm-accent">Un nouvel e-mail vient d&apos;être envoyé.</p>
           )}
           <button
             type="button"
             onClick={handleResend}
             disabled={resendState === "sending" || cooldown > 0}
-            className="text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 disabled:no-underline"
+            className="text-sm font-medium text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent disabled:cursor-not-allowed disabled:opacity-60 disabled:no-underline"
           >
             {resendState === "sending"
               ? "Envoi…"
@@ -171,7 +169,7 @@ export default function SignupPage() {
                 ? `Renvoyer l'e-mail (${cooldown} s)`
                 : "Renvoyer l'e-mail de confirmation"}
           </button>
-          <Link href="/login" className="block mt-6 rounded text-sm text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
+          <Link href="/login" className="block mt-6 rounded text-sm text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">
             Retour à la connexion
           </Link>
         </div>
@@ -181,42 +179,41 @@ export default function SignupPage() {
 
   return (
     <div
-        style={darkTokens}
-        className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+        className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
       >
-      <Link href="/" className="inline-flex min-h-11 items-center rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950">
+      <Link href="/" className="inline-flex min-h-11 items-center rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg">
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-zinc-900 p-8 shadow-2xl shadow-black/40">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">Créer un compte</h1>
-          <p className="text-white/50 text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">Créer un compte</h1>
+          <p className="text-calm-secondary text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
         </div>
 
         {error && (
-          <div role="alert" className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4">
-            <p className="text-rose-300 text-sm font-medium text-center">{error}</p>
+          <div role="alert" className="mb-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4">
+            <p className="text-calm-warn text-sm font-medium text-center">{error}</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} noValidate className="space-y-4">
           <div>
-            <label htmlFor="signup-email" className="block text-sm font-medium text-white/80 mb-1">Email</label>
+            <label htmlFor="signup-email" className="block text-sm font-medium text-calm-ink mb-1">Email</label>
             <input
               id="signup-email"
               type="email"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="vous@exemple.com"
               required
             />
           </div>
 
           <div>
-            <label htmlFor="signup-password" className="block text-sm font-medium text-white/80 mb-1">Mot de passe</label>
+            <label htmlFor="signup-password" className="block text-sm font-medium text-calm-ink mb-1">Mot de passe</label>
             <input
               id="signup-password"
               type="password"
@@ -224,24 +221,24 @@ export default function SignupPage() {
               aria-describedby="pw-hint"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="••••••••"
               required
             />
-            <p id="pw-hint" className="mt-1 text-xs text-zinc-400">
+            <p id="pw-hint" className="mt-1 text-xs text-calm-secondary">
               {MIN_PASSWORD_LENGTH} caractères minimum.
             </p>
           </div>
 
           <div>
-            <label htmlFor="signup-confirm-password" className="block text-sm font-medium text-white/80 mb-1">Confirmer le mot de passe</label>
+            <label htmlFor="signup-confirm-password" className="block text-sm font-medium text-calm-ink mb-1">Confirmer le mot de passe</label>
             <input
               id="signup-confirm-password"
               type="password"
               autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="••••••••"
               required
             />
@@ -253,24 +250,24 @@ export default function SignupPage() {
               id="cgu"
               checked={acceptCGU}
               onChange={(e) => setAcceptCGU(e.target.checked)}
-              className="mt-0.5 size-5 shrink-0 cursor-pointer rounded border-white/[0.2] bg-zinc-950 accent-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="mt-0.5 size-5 shrink-0 cursor-pointer rounded border-calm-accent-line bg-calm-bg accent-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
             />
-            <label htmlFor="cgu" className="text-sm text-white/50 cursor-pointer leading-tight">
-              J'accepte les <Link href="/terms" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d'utilisation</Link> et la <Link href="/privacy" className="rounded text-indigo-400 hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">politique de confidentialité</Link>.
+            <label htmlFor="cgu" className="text-sm text-calm-secondary cursor-pointer leading-tight">
+              J'accepte les <Link href="/terms" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d'utilisation</Link> et la <Link href="/privacy" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">politique de confidentialité</Link>.
             </label>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Création en cours..." : "S'inscrire"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-white/50">
-          Déjà un compte ? <Link href="/login" className="inline-flex min-h-11 items-center rounded px-1 text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900">Se connecter</Link>
+        <p className="mt-6 text-center text-sm text-calm-secondary">
+          Déjà un compte ? <Link href="/login" className="inline-flex min-h-11 items-center rounded px-1 text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">Se connecter</Link>
         </p>
       </div>
     </div>

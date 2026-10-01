@@ -70,7 +70,7 @@ export function TrustSection({ elements = defaultElements }: TrustSectionProps) 
               className="text-center p-4 bg-ivoire-50 rounded-lg"
             >
               <div className="flex justify-center mb-2">
-                <div className="p-2 bg-white rounded-full">
+                <div className="p-2 bg-calm-surface rounded-full">
                   <Icon className="w-5 h-5 text-bronze-600" />
                 </div>
               </div>

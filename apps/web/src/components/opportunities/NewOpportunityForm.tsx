@@ -15,10 +15,10 @@ import {
 } from "lucide-react"
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 const fieldClass =
-  "w-full border border-white/[0.1] bg-zinc-950 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+  "w-full border border-calm-line bg-calm-bg text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
 
 export function NewOpportunityForm() {
   const router = useRouter()
@@ -89,7 +89,7 @@ export function NewOpportunityForm() {
     <div className="mx-auto max-w-5xl pb-12">
       <Link
         href="/opportunities"
-        className={`mb-5 inline-flex items-center gap-2 rounded-md text-sm font-semibold text-white/50 transition hover:text-white/80 ${focusRing}`}
+        className={`mb-5 inline-flex items-center gap-2 rounded-md text-sm font-semibold text-calm-secondary transition hover:text-calm-ink ${focusRing}`}
       >
         <ArrowLeft className="h-4 w-4" />
         Retour aux opportunités
@@ -98,17 +98,17 @@ export function NewOpportunityForm() {
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
         <form
           onSubmit={handleSubmit}
-          className="rounded-[30px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-8"
+          className="rounded-[30px] border border-calm-line bg-calm-surface p-6 sm:p-8"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-calm-accent-soft text-calm-accent ring-1 ring-inset ring-calm-accent-line">
             <BriefcaseBusiness className="h-5 w-5" />
           </div>
 
-          <h1 className="mt-5 text-2xl font-bold tracking-tight text-white/80 sm:text-3xl">
+          <h1 className="mt-5 text-2xl font-bold tracking-tight text-calm-ink sm:text-3xl">
             Ajouter une opportunité
           </h1>
 
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-calm-secondary">
             Colle une offre qui t&apos;intéresse. Elle rejoint ton pipeline et
             servira ensuite de contexte pour le matching, ton CV et tes
             simulations d&apos;entretien.
@@ -116,8 +116,8 @@ export function NewOpportunityForm() {
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
-                <BriefcaseBusiness className="h-4 w-4 text-white/40" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-calm-ink">
+                <BriefcaseBusiness className="h-4 w-4 text-calm-tertiary" />
                 Poste *
               </span>
               <input
@@ -130,8 +130,8 @@ export function NewOpportunityForm() {
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
-                <Building2 className="h-4 w-4 text-white/40" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-calm-ink">
+                <Building2 className="h-4 w-4 text-calm-tertiary" />
                 Entreprise
               </span>
               <input
@@ -144,8 +144,8 @@ export function NewOpportunityForm() {
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
-                <MapPin className="h-4 w-4 text-white/40" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-calm-ink">
+                <MapPin className="h-4 w-4 text-calm-tertiary" />
                 Localisation
               </span>
               <input
@@ -158,8 +158,8 @@ export function NewOpportunityForm() {
             </label>
 
             <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
-                <Link2 className="h-4 w-4 text-white/40" />
+              <span className="mb-2 flex items-center gap-2 text-sm font-bold text-calm-ink">
+                <Link2 className="h-4 w-4 text-calm-tertiary" />
                 URL de l&apos;offre
               </span>
               <input
@@ -173,8 +173,8 @@ export function NewOpportunityForm() {
           </div>
 
           <label className="mt-5 block">
-            <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white/80">
-              <Sparkles className="h-4 w-4 text-indigo-400" />
+            <span className="mb-2 flex items-center gap-2 text-sm font-bold text-calm-ink">
+              <Sparkles className="h-4 w-4 text-calm-accent" />
               Description de l&apos;offre *
             </span>
 
@@ -187,7 +187,7 @@ export function NewOpportunityForm() {
               className={`resize-y rounded-[22px] p-4 leading-6 ${fieldClass}`}
             />
 
-            <div className="mt-1.5 text-right text-xs text-white/40">
+            <div className="mt-1.5 text-right text-xs text-calm-tertiary">
               {description.length.toLocaleString("fr-FR")} / 50 000
             </div>
           </label>
@@ -195,7 +195,7 @@ export function NewOpportunityForm() {
           {error ? (
             <div
               role="alert"
-              className="mt-4 rounded-2xl bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300 ring-1 ring-rose-400/20"
+              className="mt-4 rounded-2xl bg-calm-warn-soft px-4 py-3 text-sm font-medium text-calm-warn ring-1 ring-calm-warn-line"
             >
               {error}
             </div>
@@ -204,7 +204,7 @@ export function NewOpportunityForm() {
           <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-end">
             <Link
               href="/opportunities"
-              className={`inline-flex h-12 items-center justify-center rounded-2xl px-5 text-sm font-bold text-white/60 transition hover:bg-white/[0.04] hover:text-white/80 ${focusRing}`}
+              className={`inline-flex h-12 items-center justify-center rounded-2xl px-5 text-sm font-bold text-calm-secondary transition hover:bg-calm-accent-wash hover:text-calm-ink ${focusRing}`}
             >
               Annuler
             </Link>
@@ -212,7 +212,7 @@ export function NewOpportunityForm() {
             <button
               type="submit"
               disabled={submitting}
-              className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-indigo-500 px-6 text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60 ${focusRing}`}
+              className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-calm-accent px-6 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60 ${focusRing}`}
             >
               {submitting ? (
                 <>
@@ -230,21 +230,21 @@ export function NewOpportunityForm() {
         </form>
 
         <aside className="space-y-4">
-          <div className="rounded-[26px] bg-gradient-to-br from-indigo-500/25 via-indigo-500/10 to-transparent p-5 text-white/80 ring-1 ring-indigo-400/25">
-            <Sparkles className="h-5 w-5 text-indigo-300" />
+          <div className="rounded-[26px] bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-5 text-calm-ink ring-1 ring-calm-accent-line">
+            <Sparkles className="h-5 w-5 text-calm-accent" />
 
-            <h2 className="mt-4 text-lg font-bold text-white/80">
+            <h2 className="mt-4 text-lg font-bold text-calm-ink">
               Bientôt : analyse intelligente
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-white/50">
+            <p className="mt-2 text-sm leading-6 text-calm-secondary">
               Trajectoire utilisera cette offre avec ton CV et ton profil pour
               mesurer le fit réel et identifier les écarts à traiter.
             </p>
           </div>
 
-          <div className="rounded-[26px] border border-white/[0.08] bg-zinc-900 p-5">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/40">
+          <div className="rounded-[26px] border border-calm-line bg-calm-surface p-5">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-calm-tertiary">
               Ce que nous allons connecter
             </p>
 
@@ -257,10 +257,10 @@ export function NewOpportunityForm() {
                 "Prochaine meilleure action",
               ].map((item, index) => (
                 <div key={item} className="flex gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-[11px] font-bold text-indigo-300 ring-1 ring-inset ring-indigo-400/20">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-[11px] font-bold text-calm-accent ring-1 ring-inset ring-calm-accent-line">
                     {index + 1}
                   </div>
-                  <span className="text-sm font-medium leading-6 text-white/80">
+                  <span className="text-sm font-medium leading-6 text-calm-ink">
                     {item}
                   </span>
                 </div>

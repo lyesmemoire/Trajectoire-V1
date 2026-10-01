@@ -16,18 +16,18 @@ export function VoiceAuditionPanel() {
       {PERSONAS.map(persona => {
         const voice = voices[persona]
         return (
-          <li key={persona} className="rounded-2xl border border-white/10 bg-zinc-900 p-5">
+          <li key={persona} className="rounded-2xl border border-calm-line bg-calm-surface p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-base font-semibold text-white/90">{PERSONA_LABELS[persona].label}</h2>
-                <p className="text-sm text-white/60">{PERSONA_LABELS[persona].hint}</p>
+                <h2 className="text-base font-semibold text-calm-ink">{PERSONA_LABELS[persona].label}</h2>
+                <p className="text-sm text-calm-secondary">{PERSONA_LABELS[persona].hint}</p>
               </div>
-              <label className="text-xs text-white/60">
+              <label className="text-xs text-calm-secondary">
                 <span className="sr-only">Voix pour le style {PERSONA_LABELS[persona].label}</span>
                 <select
                   value={voice}
                   onChange={e => setVoices(v => ({ ...v, [persona]: e.target.value }))}
-                  className="rounded-lg border border-white/10 bg-zinc-950 px-2 py-1.5 text-sm text-white/80"
+                  className="rounded-lg border border-calm-line bg-calm-bg px-2 py-1.5 text-sm text-calm-ink"
                 >
                   {AUDITION_VOICES.map(v => (
                     <option key={v} value={v}>
@@ -38,7 +38,7 @@ export function VoiceAuditionPanel() {
                 </select>
               </label>
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-white/70">« {AUDITION_SAMPLES[persona].text} »</p>
+            <p className="mt-3 text-sm leading-relaxed text-calm-secondary">« {AUDITION_SAMPLES[persona].text} »</p>
             {/* key : recharge le lecteur quand la voix change */}
             <audio
               key={persona + voice}

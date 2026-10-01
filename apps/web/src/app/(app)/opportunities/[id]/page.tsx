@@ -65,22 +65,22 @@ function analysisValue(value: unknown): StoredAnalysis {
 function scoreTone(score: number) {
   if (score >= 80) {
     return {
-      text: "text-emerald-400",
-      bg: "bg-emerald-950/40",
-      bar: "bg-emerald-500",
+      text: "text-calm-accent",
+      bg: "bg-calm-accent-soft",
+      bar: "bg-calm-accent",
     }
   }
   if (score >= 60) {
     return {
-      text: "text-indigo-400",
-      bg: "bg-indigo-950/40",
-      bar: "bg-indigo-500",
+      text: "text-calm-accent",
+      bg: "bg-calm-accent-soft",
+      bar: "bg-calm-accent",
     }
   }
   return {
-    text: "text-amber-400",
-    bg: "bg-amber-950/40",
-    bar: "bg-amber-500",
+    text: "text-calm-warn",
+    bg: "bg-calm-warn-soft",
+    bar: "bg-calm-warn",
   }
 }
 
@@ -281,7 +281,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                         <ul className="space-y-3">
                           {strengths.map((strength) => (
                             <li key={strength} className="flex gap-3 text-[13px] leading-relaxed text-foreground-muted">
-                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500/80" />
+                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-calm-accent-soft" />
                               {strength}
                             </li>
                           ))}
@@ -297,7 +297,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                         <ul className="space-y-3">
                           {gaps.map((gap) => (
                             <li key={gap} className="flex gap-3 text-[13px] leading-relaxed text-foreground-muted">
-                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500/80" />
+                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-calm-warn-soft" />
                               {gap}
                             </li>
                           ))}
@@ -311,7 +311,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                 {analysis.risks && analysis.risks.length > 0 && (
                   <div className="rounded-md border border-border/60 bg-surface p-6">
                     <div className="mb-4 flex items-center gap-2">
-                      <AlertTriangle className="size-4 text-amber-600/80" />
+                      <AlertTriangle className="size-4 text-calm-warn" />
                       <h3 className="text-[11px] font-semibold uppercase tracking-widest text-foreground">
                         Hypothèses de risques (Préparation)
                       </h3>

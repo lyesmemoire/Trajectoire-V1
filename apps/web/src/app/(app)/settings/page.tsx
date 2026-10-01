@@ -22,10 +22,10 @@ export default async function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-24 pt-10 sm:px-6">
-      <h1 className="mb-2 text-3xl font-semibold tracking-tight text-white/80 sm:text-4xl">
+      <h1 className="mb-2 text-3xl font-semibold tracking-tight text-calm-ink sm:text-4xl">
         Paramètres
       </h1>
-      <p className="mb-10 text-base text-zinc-400">
+      <p className="mb-10 text-base text-calm-secondary">
         Gérez votre compte et votre abonnement.
       </p>
 

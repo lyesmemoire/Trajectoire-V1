@@ -36,12 +36,12 @@ export function MatchingHistory({
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-calm-surface p-6 rounded-lg shadow">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Historique</h2>
         <button
           onClick={onToggleHistory}
-          className="text-blue-600 hover:text-blue-700 text-sm"
+          className="text-calm-accent-deep hover:text-calm-accent-deep text-sm"
         >
           {showHistory ? 'Masquer' : 'Afficher'}
         </button>
@@ -49,11 +49,11 @@ export function MatchingHistory({
 
       {showHistory ? (
         loading ? (
-          <div className="text-sm text-gray-500 text-center py-4">
+          <div className="text-sm text-calm-tertiary text-center py-4">
             Chargement...
           </div>
         ) : history.length === 0 ? (
-          <div className="text-sm text-gray-500 text-center py-4">
+          <div className="text-sm text-calm-tertiary text-center py-4">
             Aucun historique disponible
           </div>
         ) : (
@@ -62,19 +62,19 @@ export function MatchingHistory({
               <div
                 key={item.id}
                 onClick={() => onSelectMatch(item)}
-                className="p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
+                className="p-3 border rounded-lg hover:bg-calm-accent-wash cursor-pointer"
               >
                 <div className="flex justify-between items-center mb-1">
                   <span className="font-medium text-sm">{item.job}</span>
-                  <span className="text-green-600 font-bold">{item.score}%</span>
+                  <span className="text-calm-accent-deep font-bold">{item.score}%</span>
                 </div>
-                <div className="text-xs text-gray-500">{item.date}</div>
+                <div className="text-xs text-calm-tertiary">{item.date}</div>
               </div>
             ))}
           </div>
         )
       ) : (
-        <div className="text-sm text-gray-500 text-center py-4">
+        <div className="text-sm text-calm-tertiary text-center py-4">
           Cliquez pour afficher l'historique
         </div>
       )}

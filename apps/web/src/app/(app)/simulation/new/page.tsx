@@ -195,7 +195,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
       <div>
         <Link
           href={opportunity ? `/opportunities/${opportunity.id}` : "/dashboard"}
-          className="inline-flex items-center gap-2 text-sm font-medium text-white/50 transition hover:text-white/80"
+          className="inline-flex items-center gap-2 text-sm font-medium text-calm-secondary transition hover:text-calm-ink"
         >
           <ArrowLeft className="h-4 w-4" />
           {opportunity ? "Retour à l'opportunité" : "Retour"}
@@ -204,33 +204,33 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
       {/* Header */}
       <div className="text-center space-y-3">
-        <h1 className="text-3xl font-bold tracking-tight text-white/80 sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-calm-ink sm:text-4xl">
           Préparez votre entretien
         </h1>
-        <p className="text-base text-white/50">
+        <p className="text-base text-calm-secondary">
           Trajectoire adapte les questions au poste que vous visez et à votre
           profil.
         </p>
       </div>
 
       {/* Progression visuelle */}
-      <div className="flex items-center justify-center gap-4 text-sm font-medium text-white/40 sm:gap-6 py-2">
-        <div className="flex items-center gap-2 text-indigo-400">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500/15 text-xs">
+      <div className="flex items-center justify-center gap-4 text-sm font-medium text-calm-tertiary sm:gap-6 py-2">
+        <div className="flex items-center gap-2 text-calm-accent">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-calm-accent-soft text-xs">
             1
           </span>
           Poste
         </div>
-        <div className="h-px w-8 bg-white/[0.1]"></div>
-        <div className="flex items-center gap-2 text-indigo-400">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500/15 text-xs">
+        <div className="h-px w-8 bg-calm-accent-soft"></div>
+        <div className="flex items-center gap-2 text-calm-accent">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-calm-accent-soft text-xs">
             2
           </span>
           Entretien
         </div>
-        <div className="h-px w-8 bg-white/[0.1]"></div>
-        <div className="flex items-center gap-2 text-white/40">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.06] text-xs">
+        <div className="h-px w-8 bg-calm-accent-soft"></div>
+        <div className="flex items-center gap-2 text-calm-tertiary">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-calm-accent-wash text-xs">
             3
           </span>
           Prêt
@@ -240,9 +240,9 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
       {!quota.allowed && (
         <div
           role="note"
-          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-calm-accent-line bg-calm-accent-soft px-4 py-3"
         >
-          <p className="text-sm text-indigo-200">
+          <p className="text-sm text-calm-accent">
             {quota.expired
               ? "Votre Pack Entretien a expiré."
               : quota.plan === "FREE"
@@ -251,7 +251,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           </p>
           <Link
             href="/pricing"
-            className="rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+            className="rounded-lg bg-calm-accent px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
           >
             Voir les offres
           </Link>
@@ -261,16 +261,16 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
       {hasProfile === false && (
         <div
           role="note"
-          className="flex items-start gap-3 rounded-xl border border-amber-800/40 bg-amber-950/30 px-4 py-3"
+          className="flex items-start gap-3 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3"
         >
-          <span className="mt-0.5 text-amber-400" aria-hidden="true">
+          <span className="mt-0.5 text-calm-warn" aria-hidden="true">
             ⚠
           </span>
-          <p className="text-sm text-amber-200">
+          <p className="text-sm text-calm-warn">
             Analysez votre CV depuis le{" "}
             <Link
               href="/dashboard"
-              className="underline underline-offset-2 hover:text-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-zinc-950"
+              className="underline underline-offset-2 hover:text-calm-warn focus:outline-none focus:ring-2 focus:ring-calm-warn-line focus:ring-offset-2 focus:ring-offset-calm-bg"
             >
               tableau de bord
             </Link>{" "}
@@ -279,7 +279,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
         </div>
       )}
 
-      <div className="rounded-[24px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-10">
+      <div className="rounded-[24px] border border-calm-line bg-calm-surface p-6 sm:p-10">
         <form
           id="sim-form"
           action="/api/simulation/create"
@@ -293,10 +293,10 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           {/* Section 1 : Poste visé */}
           <section>
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                 <Briefcase className="h-4 w-4" />
               </div>
-              <h2 className="text-lg font-bold text-white/80">
+              <h2 className="text-lg font-bold text-calm-ink">
                 Quel poste visez-vous ?
               </h2>
             </div>
@@ -308,9 +308,9 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               required
               defaultValue={opportunity?.title ?? ""}
               placeholder="Ex. Product Manager, Développeur Full Stack, Consultant..."
-              className="h-14 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-base text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+              className="h-14 w-full rounded-xl border border-calm-line bg-calm-bg px-4 text-base text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
             />
-            <p className="mt-2 text-sm text-white/50">
+            <p className="mt-2 text-sm text-calm-secondary">
               Trajectoire utilisera ce poste pour adapter les compétences et les
               questions.
             </p>
@@ -319,20 +319,20 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
           {/* Section 2 : Offre d'emploi */}
           <section>
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                 <FileText className="h-4 w-4" />
               </div>
               <div className="flex flex-1 items-center gap-3">
-                <h2 className="text-lg font-bold text-white/80">
+                <h2 className="text-lg font-bold text-calm-ink">
                   Vous avez l'offre d'emploi ?
                 </h2>
-                <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-semibold text-emerald-300">
+                <span className="rounded-full bg-calm-accent-soft px-2.5 py-0.5 text-xs font-semibold text-calm-accent">
                   Recommandé
                 </span>
               </div>
             </div>
 
-            <p className="mb-4 text-sm text-white/50">
+            <p className="mb-4 text-sm text-calm-secondary">
               Ajoutez-la pour obtenir des questions encore plus proches de
               l'entretien réel.
             </p>
@@ -343,17 +343,17 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               rows={6}
               defaultValue={contextualDescription}
               placeholder="Collez ici la description du poste..."
-              className="w-full resize-y rounded-xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm leading-relaxed text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+              className="w-full resize-y rounded-xl border border-calm-line bg-calm-bg px-4 py-3 text-sm leading-relaxed text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
             />
           </section>
 
           {/* Section 3 : Paramètres d'entretien */}
           <section>
             <div className="mb-6 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                 <Settings className="h-4 w-4" />
               </div>
-              <h2 className="text-lg font-bold text-white/80">
+              <h2 className="text-lg font-bold text-calm-ink">
                 Votre entretien
               </h2>
             </div>
@@ -361,7 +361,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
             <div className="space-y-8">
               {/* Type d'entretien */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-white/80">
+                <label className="mb-3 block text-sm font-semibold text-calm-ink">
                   Type d'entretien
                 </label>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -378,7 +378,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                         defaultChecked={type.value === "RH"}
                         className="peer sr-only"
                       />
-                      <div className="flex h-12 items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-4 text-sm font-medium text-white/50 transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300">
+                      <div className="flex h-12 items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-4 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-checked:text-calm-accent">
                         {type.label}
                       </div>
                     </label>
@@ -388,7 +388,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
               {/* Niveau */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-white/80">
+                <label className="mb-3 block text-sm font-semibold text-calm-ink">
                   Niveau d'expérience
                 </label>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
@@ -407,7 +407,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                         defaultChecked={lvl.value === "Senior"}
                         className="peer sr-only"
                       />
-                      <div className="flex h-12 items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-2 text-sm font-medium text-white/50 transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300">
+                      <div className="flex h-12 items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-2 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-checked:text-calm-accent">
                         {lvl.label}
                       </div>
                     </label>
@@ -417,7 +417,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
               {/* Durée */}
               <div>
-                <label className="mb-3 block text-sm font-semibold text-white/80">
+                <label className="mb-3 block text-sm font-semibold text-calm-ink">
                   Durée de la simulation
                 </label>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -435,12 +435,12 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                         defaultChecked={dur.value === "15"}
                         className="peer sr-only"
                       />
-                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-2 transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10">
-                        <span className="text-sm font-medium text-white/50 peer-checked:text-indigo-300">
+                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-2 transition hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft">
+                        <span className="text-sm font-medium text-calm-secondary peer-checked:text-calm-accent">
                           {dur.label}
                         </span>
                         {dur.badge && (
-                          <span className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-indigo-400">
+                          <span className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-calm-accent">
                             {dur.badge}
                           </span>
                         )}
@@ -452,10 +452,10 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
               {/* Style de la recruteuse */}
               <div>
-                <label className="mb-1 block text-sm font-semibold text-white/80">
+                <label className="mb-1 block text-sm font-semibold text-calm-ink">
                   Style de la recruteuse
                 </label>
-                <p className="mb-3 text-sm text-white/50">
+                <p className="mb-3 text-sm text-calm-secondary">
                   Le ton et la voix changent ; c&apos;est toujours Alexandra, une recruteuse simulée par IA.
                 </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -473,9 +473,9 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                         defaultChecked={p.value === "bienveillante"}
                         className="peer sr-only"
                       />
-                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-2 text-center transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500/40">
-                        <span className="text-sm font-medium text-white/70">{p.label}</span>
-                        <span className="mt-0.5 text-xs text-white/50">{p.hint}</span>
+                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-2 text-center transition hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-focus-visible:ring-2 peer-focus-visible:ring-calm-accent-line">
+                        <span className="text-sm font-medium text-calm-secondary">{p.label}</span>
+                        <span className="mt-0.5 text-xs text-calm-secondary">{p.hint}</span>
                       </div>
                     </label>
                   ))}
@@ -484,10 +484,10 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
               {/* Difficulté */}
               <div>
-                <label className="mb-1 block text-sm font-semibold text-white/80">
+                <label className="mb-1 block text-sm font-semibold text-calm-ink">
                   Exigence de la recruteuse
                 </label>
-                <p className="mb-3 text-sm text-white/50">
+                <p className="mb-3 text-sm text-calm-secondary">
                   Elle règle la fermeté des relances, pas la durée.
                 </p>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -504,9 +504,9 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                         defaultChecked={d.value === "standard"}
                         className="peer sr-only"
                       />
-                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-white/[0.1] bg-zinc-900 px-3 text-center transition hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500/40">
-                        <span className="text-sm font-medium text-white/70">{d.label}</span>
-                        <span className="mt-0.5 text-xs text-white/50">{d.hint}</span>
+                      <div className="flex h-16 flex-col items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-3 text-center transition hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-focus-visible:ring-2 peer-focus-visible:ring-calm-accent-line">
+                        <span className="text-sm font-medium text-calm-secondary">{d.label}</span>
+                        <span className="mt-0.5 text-xs text-calm-secondary">{d.hint}</span>
                       </div>
                     </label>
                   ))}
@@ -515,10 +515,10 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
 
               {/* Question imposée */}
               <div>
-                <label htmlFor="mandatoryQuestion" className="mb-1 block text-sm font-semibold text-white/80">
-                  Une question que vous redoutez ? <span className="font-normal text-white/50">(facultatif)</span>
+                <label htmlFor="mandatoryQuestion" className="mb-1 block text-sm font-semibold text-calm-ink">
+                  Une question que vous redoutez ? <span className="font-normal text-calm-secondary">(facultatif)</span>
                 </label>
-                <p className="mb-3 text-sm text-white/50">
+                <p className="mb-3 text-sm text-calm-secondary">
                   Elle sera posée une fois, mot pour mot, vers la moitié de l&apos;entretien.
                 </p>
                 <input
@@ -527,24 +527,24 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                   type="text"
                   maxLength={300}
                   placeholder="Ex. Pourquoi avez-vous quitté votre dernier poste ?"
-                  className="h-12 w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-4 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+                  className="h-12 w-full rounded-xl border border-calm-line bg-calm-bg px-4 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
                 />
               </div>
             </div>
           </section>
 
           {/* CTA */}
-          <div className="mt-12 border-t border-white/[0.06] pt-8 text-center">
+          <div className="mt-12 border-t border-calm-line pt-8 text-center">
             <button
               id="sim-btn"
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-500 px-8 py-4 text-base font-bold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-indigo-400 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[320px]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-8 py-4 text-base font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[320px]"
             >
-              <Sparkles className="h-5 w-5 text-white" />
+              <Sparkles className="h-5 w-5 text-calm-ink" />
               <span id="sim-btn-text">Commencer mon entretien</span>
             </button>
 
-            <p className="mt-4 text-sm text-white/50">
+            <p className="mt-4 text-sm text-calm-secondary">
               Vous pourrez arrêter l'entretien à tout moment.
             </p>
           </div>

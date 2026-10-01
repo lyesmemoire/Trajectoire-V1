@@ -132,7 +132,7 @@ export default function SignupConversionPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-ivoire-50 flex flex-col items-center justify-center p-6">
-        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-premium text-center">
+        <div className="max-w-md w-full bg-calm-surface p-8 rounded-2xl shadow-premium text-center">
           <div className="w-16 h-16 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -167,7 +167,7 @@ export default function SignupConversionPage() {
           Retour
         </button>
 
-        <div className="bg-white p-8 rounded-2xl shadow-premium">
+        <div className="bg-calm-surface p-8 rounded-2xl shadow-premium">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-ink-900 mb-2">
               Créez votre compte
@@ -203,7 +203,7 @@ export default function SignupConversionPage() {
               <div className="w-full border-t border-ivoire-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-ink-500">ou</span>
+              <span className="px-2 bg-calm-surface text-ink-500">ou</span>
             </div>
           </div>
 

@@ -1,9 +1,9 @@
 /** Éléments d'affichage du score ATS, thème sombre (zinc-950 / indigo). Server Components. */
 
 export function scoreTone(score: number) {
-  if (score >= 70) return { label: "Solide", text: "text-emerald-300", badge: "bg-emerald-500/15 text-emerald-300 ring-emerald-400/20", stroke: "#34d399" }
-  if (score >= 50) return { label: "À renforcer", text: "text-amber-300", badge: "bg-amber-500/15 text-amber-300 ring-amber-400/20", stroke: "#fbbf24" }
-  return { label: "Insuffisant", text: "text-rose-300", badge: "bg-rose-500/15 text-rose-300 ring-rose-400/20", stroke: "#fb7185" }
+  if (score >= 70) return { label: "Solide", text: "text-calm-accent", badge: "bg-calm-accent-soft text-calm-accent ring-calm-accent-line", stroke: "#34d399" }
+  if (score >= 50) return { label: "À renforcer", text: "text-calm-warn", badge: "bg-calm-warn-soft text-calm-warn ring-calm-warn-line", stroke: "#fbbf24" }
+  return { label: "Insuffisant", text: "text-calm-warn", badge: "bg-calm-warn-soft text-calm-warn ring-calm-warn-line", stroke: "#fb7185" }
 }
 
 export function ScoreBadge({ score }: { score: number }) {
@@ -26,7 +26,7 @@ export function ScoreRingDark({ score, size = 148, strokeWidth = 12 }: { score: 
   return (
     <div className="relative" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90" role="img" aria-label={`Score ATS : ${value} sur 100`}>
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={strokeWidth} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(241,247,243,0.08)" strokeWidth={strokeWidth} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -41,7 +41,7 @@ export function ScoreRingDark({ score, size = 148, strokeWidth = 12 }: { score: 
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-4xl font-semibold tabular-nums ${tone.text}`}>{value}</span>
-        <span className="text-xs text-zinc-400">sur 100</span>
+        <span className="text-xs text-calm-secondary">sur 100</span>
       </div>
     </div>
   )

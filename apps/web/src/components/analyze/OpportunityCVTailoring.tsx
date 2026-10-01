@@ -215,13 +215,13 @@ export function OpportunityCVTailoring({
 
   if (!result) {
     return (
-      <section className="mt-2 rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white p-6">
+      <section className="mt-2 rounded-xl border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft to-calm-surface p-6">
         <div className="flex items-start gap-4">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-white">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-calm-accent text-white">
             <Sparkles className="size-5" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-violet-600">
+            <p className="text-xs font-bold uppercase tracking-widest text-calm-accent-deep">
               Étape suivante — CV Tailoring IA
             </p>
             <h2 className="mt-1 font-sans text-xl font-medium text-foreground">
@@ -232,18 +232,18 @@ export function OpportunityCVTailoring({
               précisément ce qu'il faut mieux mettre en avant pour maximiser vos chances.
             </p>
 
-            <div className="mt-4 flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
-              <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
-              <p className="text-xs leading-relaxed text-emerald-800">
+            <div className="mt-4 flex items-start gap-2 rounded-lg bg-calm-accent-soft border border-calm-accent-line p-3">
+              <ShieldCheck className="mt-0.5 size-4 shrink-0 text-calm-accent-deep" />
+              <p className="text-xs leading-relaxed text-calm-accent-deep">
                 Les recommandations sont basées exclusivement sur les preuves
                 présentes dans votre CV — aucune expérience fictive ne sera ajoutée.
               </p>
             </div>
 
             {error ? (
-              <div className="mt-4 flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3">
-                <TriangleAlert className="mt-0.5 size-4 shrink-0 text-rose-600" />
-                <p className="text-sm font-medium text-rose-800">{error}</p>
+              <div className="mt-4 flex items-start gap-2 rounded-lg border border-calm-warn-line bg-calm-warn-soft p-3">
+                <TriangleAlert className="mt-0.5 size-4 shrink-0 text-calm-warn" />
+                <p className="text-sm font-medium text-calm-warn">{error}</p>
               </div>
             ) : null}
 
@@ -251,7 +251,7 @@ export function OpportunityCVTailoring({
               type="button"
               onClick={generateTailoring}
               disabled={loading}
-              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-calm-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
                 <>
@@ -275,7 +275,7 @@ export function OpportunityCVTailoring({
     <section className="mt-2 rounded-xl border border-border bg-surface p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-violet-600">
+          <p className="text-xs font-bold uppercase tracking-widest text-calm-accent-deep">
             CV Tailoring terminé
           </p>
           <h2 className="mt-1 font-sans text-xl font-medium text-foreground">
@@ -292,7 +292,7 @@ export function OpportunityCVTailoring({
           className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-surface-muted"
         >
           {copied ? (
-            <><Check className="size-4 text-emerald-600" />Copié</>
+            <><Check className="size-4 text-calm-accent-deep" />Copié</>
           ) : (
             <><Clipboard className="size-4" />Copier</>
           )}
@@ -307,7 +307,7 @@ export function OpportunityCVTailoring({
         type="button"
         onClick={generateTailoring}
         disabled={loading}
-        className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-violet-600 transition hover:text-violet-800 disabled:opacity-50"
+        className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-calm-accent-deep transition hover:text-calm-accent-deep disabled:opacity-50"
       >
         {loading ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
         Régénérer les recommandations

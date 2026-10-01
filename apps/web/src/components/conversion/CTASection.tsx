@@ -70,7 +70,7 @@ export function CTASection({
           <div className="w-full border-t border-ivoire-300" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-white text-ink-500">ou</span>
+          <span className="px-2 bg-calm-surface text-ink-500">ou</span>
         </div>
       </div>
 

@@ -61,16 +61,16 @@ export default async function ReportPage({
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="mb-4 inline-flex items-center text-sm text-white/50 hover:text-white/80"
+            className="mb-4 inline-flex items-center text-sm text-calm-secondary hover:text-calm-ink"
           >
             ← Retour au tableau de bord
           </Link>
-          <h1 className="text-3xl font-bold text-white/80">
+          <h1 className="text-3xl font-bold text-calm-ink">
             Rapport introuvable
           </h1>
         </div>
-        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-8 text-center">
-          <p className="text-white/50">
+        <div className="rounded-lg border border-calm-line bg-calm-surface p-8 text-center">
+          <p className="text-calm-secondary">
             Ce rapport n'existe pas ou vous n'avez pas accès.
           </p>
         </div>
@@ -187,28 +187,28 @@ export default async function ReportPage({
       <div className="mb-8">
         <Link
           href="/dashboard"
-          className="mb-4 inline-flex items-center text-sm text-white/50 hover:text-white/80"
+          className="mb-4 inline-flex items-center text-sm text-calm-secondary hover:text-calm-ink"
         >
           ← Retour au tableau de bord
         </Link>
-        <h1 className="mb-2 text-3xl font-bold text-white/80">
+        <h1 className="mb-2 text-3xl font-bold text-calm-ink">
           Rapport d'entretien
         </h1>
-        <p className="text-white/50">
+        <p className="text-calm-secondary">
           {sessionData.job_title} · {sessionData.interview_type} ·{" "}
           {sessionData.level}
         </p>
       </div>
 
       {/* Overall Score */}
-      <div className="mb-6 rounded-lg border border-indigo-400/20 bg-gradient-to-br from-indigo-500/15 to-indigo-500/[0.04] p-8 text-center">
-        <p className="mb-2 text-sm font-semibold text-indigo-300">
+      <div className="mb-6 rounded-lg border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft to-calm-accent-soft p-8 text-center">
+        <p className="mb-2 text-sm font-semibold text-calm-accent">
           Score global
         </p>
-        <p className="mb-2 text-6xl font-bold text-indigo-300">
+        <p className="mb-2 text-6xl font-bold text-calm-accent">
           {report.overall_score}/100
         </p>
-        <p className="font-medium text-white/80">
+        <p className="font-medium text-calm-ink">
           {(report.overall_score ?? 0) >= 80
             ? "Excellent"
             : (report.overall_score ?? 0) >= 60
@@ -219,21 +219,21 @@ export default async function ReportPage({
 
       {/* Detailed Scores */}
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <p className="mb-2 text-sm text-white/50">Communication</p>
-          <p className="text-3xl font-bold text-white/80">
+        <div className="rounded-lg border border-calm-line bg-calm-surface p-6">
+          <p className="mb-2 text-sm text-calm-secondary">Communication</p>
+          <p className="text-3xl font-bold text-calm-ink">
             {report.communication || 0}/100
           </p>
         </div>
-        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <p className="mb-2 text-sm text-white/50">Technique</p>
-          <p className="text-3xl font-bold text-white/80">
+        <div className="rounded-lg border border-calm-line bg-calm-surface p-6">
+          <p className="mb-2 text-sm text-calm-secondary">Technique</p>
+          <p className="text-3xl font-bold text-calm-ink">
             {report.technical || 0}/100
           </p>
         </div>
-        <div className="rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <p className="mb-2 text-sm text-white/50">Confiance</p>
-          <p className="text-3xl font-bold text-white/80">
+        <div className="rounded-lg border border-calm-line bg-calm-surface p-6">
+          <p className="mb-2 text-sm text-calm-secondary">Confiance</p>
+          <p className="text-3xl font-bold text-calm-ink">
             {report.confidence || 0}/100
           </p>
         </div>
@@ -241,12 +241,12 @@ export default async function ReportPage({
 
       {/* Insight clé pour les utilisateurs FREE */}
       {!isPremium && (
-        <div className="mb-6 rounded-lg border border-white/[0.08] bg-white/[0.03] p-6">
-          <h3 className="mb-4 text-lg font-semibold text-white/80">
+        <div className="mb-6 rounded-lg border border-calm-line bg-calm-accent-wash p-6">
+          <h3 className="mb-4 text-lg font-semibold text-calm-ink">
             Insight clé
           </h3>
-          <p className="leading-relaxed text-white/80">{keyInsight}</p>
-          <p className="mt-4 text-sm text-white/50">
+          <p className="leading-relaxed text-calm-ink">{keyInsight}</p>
+          <p className="mt-4 text-sm text-calm-secondary">
             Débloquez l'analyse complète pour voir tous vos points forts et
             axes d'amélioration.
           </p>
@@ -260,16 +260,16 @@ export default async function ReportPage({
           weaknesses={limitedImprovements}
         />
       ) : (
-        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <h3 className="mb-4 text-lg font-semibold text-white/80">
+        <div className="mb-6 rounded-lg border border-calm-line bg-calm-surface p-6">
+          <h3 className="mb-4 text-lg font-semibold text-calm-ink">
             Points forts et axes d'amélioration
           </h3>
-          <p className="mb-4 text-white/50">
+          <p className="mb-4 text-calm-secondary">
             {limitedStrengths[0] || "Aucun point fort détecté"}
           </p>
           <div className="relative">
             <div className="pointer-events-none select-none blur-sm opacity-50">
-              <p className="text-white/40">Contenu premium masqué</p>
+              <p className="text-calm-tertiary">Contenu premium masqué</p>
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <UpgradeCTA />
@@ -283,24 +283,24 @@ export default async function ReportPage({
         realRecommendations.length > 0 ? (
           <RecommendationsSection recommendations={realRecommendations} />
         ) : (
-          <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-            <h3 className="mb-4 text-lg font-semibold text-white/80">
+          <div className="mb-6 rounded-lg border border-calm-line bg-calm-surface p-6">
+            <h3 className="mb-4 text-lg font-semibold text-calm-ink">
               Recommandations
             </h3>
-            <p className="text-white/50">
+            <p className="text-calm-secondary">
               Aucune recommandation détaillée n'est disponible pour cette
               simulation.
             </p>
           </div>
         )
       ) : (
-        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <h3 className="mb-4 text-lg font-semibold text-white/80">
+        <div className="mb-6 rounded-lg border border-calm-line bg-calm-surface p-6">
+          <h3 className="mb-4 text-lg font-semibold text-calm-ink">
             Recommandations
           </h3>
           <div className="relative">
             <div className="pointer-events-none select-none blur-sm opacity-50">
-              <p className="text-white/40">Contenu premium masqué</p>
+              <p className="text-calm-tertiary">Contenu premium masqué</p>
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <UpgradeCTA />
@@ -311,9 +311,9 @@ export default async function ReportPage({
 
       {/* Summary */}
       {report.summary && (
-        <div className="mb-6 rounded-lg border border-white/[0.08] bg-zinc-900 p-6">
-          <h3 className="mb-4 text-lg font-semibold text-white/80">Résumé</h3>
-          <p className="leading-relaxed text-white/80">{report.summary}</p>
+        <div className="mb-6 rounded-lg border border-calm-line bg-calm-surface p-6">
+          <h3 className="mb-4 text-lg font-semibold text-calm-ink">Résumé</h3>
+          <p className="leading-relaxed text-calm-ink">{report.summary}</p>
         </div>
       )}
 
@@ -322,16 +322,16 @@ export default async function ReportPage({
         <QuestionByQuestionSection items={questionByQuestion} />
       )}
       {!isPremium && questionByQuestion.length > 0 && (
-        <div className="mb-6 rounded-xl border border-white/[0.08] bg-zinc-900 p-6 relative overflow-hidden">
-          <h2 className="text-xl font-sans font-semibold text-white/80 mb-1">
+        <div className="mb-6 rounded-xl border border-calm-line bg-calm-surface p-6 relative overflow-hidden">
+          <h2 className="text-xl font-sans font-semibold text-calm-ink mb-1">
             Analyse de vos réponses
           </h2>
-          <p className="text-sm text-white/50 mb-4">
+          <p className="text-sm text-calm-secondary mb-4">
             Analyse détaillée question par question avec exemples de meilleures réponses.
           </p>
           <div className="pointer-events-none select-none blur-sm opacity-40 space-y-3">
             {questionByQuestion.slice(0, 2).map((_, i) => (
-              <div key={i} className="h-16 rounded-xl bg-white/[0.06]" />
+              <div key={i} className="h-16 rounded-xl bg-calm-accent-wash" />
             ))}
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -342,11 +342,11 @@ export default async function ReportPage({
 
       {/* Final Recommendation */}
       {report.recommendation && (
-        <div className="mb-6 rounded-lg border border-white/[0.08] bg-white/[0.03] p-6">
-          <h3 className="mb-4 text-lg font-semibold text-white/80">
+        <div className="mb-6 rounded-lg border border-calm-line bg-calm-accent-wash p-6">
+          <h3 className="mb-4 text-lg font-semibold text-calm-ink">
             Recommandation finale
           </h3>
-          <p className="leading-relaxed text-white/80">
+          <p className="leading-relaxed text-calm-ink">
             {report.recommendation}
           </p>
         </div>
@@ -356,13 +356,13 @@ export default async function ReportPage({
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
           href="/simulation/new"
-          className="inline-flex items-center justify-center rounded-lg bg-indigo-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-400"
+          className="inline-flex items-center justify-center rounded-lg bg-calm-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-calm-accent"
         >
           Nouvelle simulation
         </Link>
         <Link
           href="/dashboard"
-          className="inline-flex items-center justify-center rounded-lg bg-white/[0.06] px-6 py-3 font-semibold text-white/80 transition-colors hover:bg-white/[0.1]"
+          className="inline-flex items-center justify-center rounded-lg bg-calm-accent-wash px-6 py-3 font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft"
         >
           Retour au tableau de bord
         </Link>
@@ -370,10 +370,10 @@ export default async function ReportPage({
 
       {/* Premium CTA at the end of report */}
       {!isPremium && (
-        <div className="mt-8 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 p-8 text-white">
+        <div className="mt-8 rounded-xl bg-gradient-to-r from-calm-accent to-calm-accent p-8 text-calm-ink">
           <div className="space-y-4 text-center">
             <h3 className="text-2xl font-bold">Prêt à aller plus loin ?</h3>
-            <p className="text-indigo-100">
+            <p className="text-calm-accent">
               Débloquez l'analyse complète, le plan d'action personnalisé et
               les recommandations avancées.
             </p>

@@ -16,12 +16,12 @@ import { NAV, SECONDARY_NAV, isActive, type NavItem } from "@/components/app/App
  */
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 function NavLinks({ title, items, pathname }: { title: string; items: NavItem[]; pathname: string }) {
   return (
     <div>
-      <p className="mb-1.5 px-3 text-xs font-medium uppercase tracking-[0.14em] text-white/60">{title}</p>
+      <p className="mb-1.5 px-3 text-xs font-medium uppercase tracking-[0.14em] text-calm-secondary">{title}</p>
       <ul className="space-y-0.5">
         {items.map(({ label, href, icon: Icon }) => {
           const active = isActive(pathname, href)
@@ -32,7 +32,7 @@ function NavLinks({ title, items, pathname }: { title: string; items: NavItem[];
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors",
-                  active ? "bg-white/[0.08] text-white" : "text-white/75 hover:bg-white/[0.05] hover:text-white",
+                  active ? "bg-calm-accent-soft text-calm-ink" : "text-calm-ink hover:bg-calm-accent-wash hover:text-calm-ink",
                   focusRing,
                 )}
               >
@@ -102,12 +102,12 @@ export function AppMobileNav() {
 
   return (
     <div className="lg:hidden">
-      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-white/[0.06] bg-zinc-950/95 px-4 backdrop-blur">
+      <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-calm-line bg-calm-bg/95 px-4 backdrop-blur">
         <Link href="/dashboard" className={cn("flex items-center gap-2.5 rounded-lg", focusRing)}>
-          <span className="grid size-[30px] place-items-center rounded-lg bg-indigo-500 text-white">
+          <span className="grid size-[30px] place-items-center rounded-lg bg-calm-accent text-white">
             <Target className="size-[15px]" strokeWidth={2} aria-hidden />
           </span>
-          <span className="text-[15px] font-semibold tracking-tight text-white/90">Trajectoire</span>
+          <span className="text-[15px] font-semibold tracking-tight text-calm-ink">Trajectoire</span>
         </Link>
         <button
           ref={buttonRef}
@@ -117,7 +117,7 @@ export function AppMobileNav() {
           aria-expanded={open}
           aria-controls="app-mobile-drawer"
           className={cn(
-            "grid size-11 place-items-center rounded-lg text-white/80 transition-colors hover:bg-white/[0.06]",
+            "grid size-11 place-items-center rounded-lg text-calm-ink transition-colors hover:bg-calm-accent-wash",
             focusRing,
           )}
         >
@@ -132,7 +132,7 @@ export function AppMobileNav() {
             tabIndex={-1}
             aria-label="Fermer le menu"
             onClick={close}
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0 bg-calm-bg"
           />
           <div
             id="app-mobile-drawer"
@@ -140,16 +140,16 @@ export function AppMobileNav() {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation principale"
-            className="absolute inset-y-0 left-0 flex w-[min(20rem,85vw)] flex-col border-r border-white/[0.08] bg-zinc-950 pb-[env(safe-area-inset-bottom)]"
+            className="absolute inset-y-0 left-0 flex w-[min(20rem,85vw)] flex-col border-r border-calm-line bg-calm-bg pb-[env(safe-area-inset-bottom)]"
           >
             <div className="flex h-14 shrink-0 items-center justify-between px-4">
-              <span className="text-[15px] font-semibold tracking-tight text-white/90">Menu</span>
+              <span className="text-[15px] font-semibold tracking-tight text-calm-ink">Menu</span>
               <button
                 type="button"
                 onClick={close}
                 aria-label="Fermer le menu"
                 className={cn(
-                  "grid size-11 place-items-center rounded-lg text-white/80 transition-colors hover:bg-white/[0.06]",
+                  "grid size-11 place-items-center rounded-lg text-calm-ink transition-colors hover:bg-calm-accent-wash",
                   focusRing,
                 )}
               >
@@ -160,11 +160,11 @@ export function AppMobileNav() {
               <NavLinks title="Personnel" items={NAV} pathname={pathname} />
               <NavLinks title="Système" items={SECONDARY_NAV} pathname={pathname} />
             </nav>
-            <div className="border-t border-white/[0.06] px-3 py-3">
+            <div className="border-t border-calm-line px-3 py-3">
               <Link
                 href="/logout"
                 className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium text-white/75 transition-colors hover:bg-white/[0.05] hover:text-white",
+                  "flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium text-calm-ink transition-colors hover:bg-calm-accent-wash hover:text-calm-ink",
                   focusRing,
                 )}
               >

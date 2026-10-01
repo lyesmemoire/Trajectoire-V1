@@ -41,9 +41,9 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
 
   if (!candidateGraph || !jobGraph) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-calm-surface rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">Matching</h2>
-        <p className="text-gray-500 text-center py-8">
+        <p className="text-calm-tertiary text-center py-8">
           Veuillez d'abord charger un candidat et un poste
         </p>
       </div>
@@ -51,7 +51,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
   }
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-calm-surface rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-4">Matching</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
@@ -62,7 +62,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
         <div className="text-center py-8">
           <button
             onClick={handleMatching}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="bg-calm-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-calm-accent transition-colors"
           >
             Lancer le Matching
           </button>
@@ -75,10 +75,10 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
             <h3 className="font-semibold mb-3">Détail des scores</h3>
             <div className="grid grid-cols-3 gap-3">
               {report.scores.dimensions.map((dim, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-3 text-center">
-                  <div className="text-sm text-gray-600 mb-1">{dim.name}</div>
+                <div key={index} className="bg-calm-accent-wash rounded-lg p-3 text-center">
+                  <div className="text-sm text-calm-tertiary mb-1">{dim.name}</div>
                   <div className="text-xl font-bold">{dim.score}%</div>
-                  <div className="text-xs text-gray-500">Poids: {Math.round(dim.weight * 100)}%</div>
+                  <div className="text-xs text-calm-tertiary">Poids: {Math.round(dim.weight * 100)}%</div>
                 </div>
               ))}
             </div>
@@ -95,7 +95,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
 
           {report.missingSkills.length > 0 && (
             <div>
-              <h3 className="font-semibold mb-3 text-red-600">Compétences manquantes</h3>
+              <h3 className="font-semibold mb-3 text-calm-warn">Compétences manquantes</h3>
               <div className="flex flex-wrap gap-2">
                 {report.missingSkills.map((skill, index) => (
                   <SkillBadge key={index} skill={skill.name || skill} type="required" />
@@ -106,14 +106,14 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
 
           {report.transferableSkills.length > 0 && (
             <div>
-              <h3 className="font-semibold mb-3 text-blue-600">Compétences transférables</h3>
+              <h3 className="font-semibold mb-3 text-calm-accent-deep">Compétences transférables</h3>
               <div className="space-y-2">
                 {report.transferableSkills.map((transfer, index) => (
-                  <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+                  <div key={index} className="bg-calm-accent-soft border border-calm-accent-line rounded-lg p-3 text-sm">
                     <span className="font-medium">{transfer.from}</span>
                     <span className="mx-2">→</span>
                     <span className="font-medium">{transfer.to}</span>
-                    <span className="ml-2 text-gray-500">({Math.round(transfer.confidence * 100)}%)</span>
+                    <span className="ml-2 text-calm-tertiary">({Math.round(transfer.confidence * 100)}%)</span>
                   </div>
                 ))}
               </div>
@@ -122,7 +122,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
 
           <div>
             <h3 className="font-semibold mb-3">Explication</h3>
-            <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700">
+            <div className="bg-calm-accent-wash rounded-lg p-4 text-sm text-calm-ink">
               {report.summary}
             </div>
           </div>

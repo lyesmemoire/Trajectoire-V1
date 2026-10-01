@@ -30,7 +30,7 @@ function OptionGroup<T extends string>({
 }) {
   return (
     <fieldset>
-      <legend className="mb-3 text-sm font-medium text-white/80">{legend}</legend>
+      <legend className="mb-3 text-sm font-medium text-calm-ink">{legend}</legend>
       <div className={`grid gap-2 ${gridClass}`}>
         {options.map((option) => (
           <label key={option} className="cursor-pointer">
@@ -57,11 +57,11 @@ export function StepTargetJob({ data, onChange }: StepTargetJobProps) {
         <h2
           data-step-heading
           tabIndex={-1}
-          className="text-2xl font-semibold tracking-tight text-white/80 outline-none"
+          className="text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
           Quel poste visez-vous ?
         </h2>
-        <p className="text-sm leading-relaxed text-white/50">
+        <p className="text-sm leading-relaxed text-calm-secondary">
           Nous adaptons vos entretiens au poste, au secteur et à votre niveau
           d&apos;expérience.
         </p>
@@ -70,7 +70,7 @@ export function StepTargetJob({ data, onChange }: StepTargetJobProps) {
       <div className="space-y-2">
         <label
           htmlFor="onboarding-title"
-          className="block text-sm font-medium text-white/80"
+          className="block text-sm font-medium text-calm-ink"
         >
           Intitulé du poste
         </label>

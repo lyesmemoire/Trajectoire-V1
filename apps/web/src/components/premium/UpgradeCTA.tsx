@@ -22,15 +22,15 @@ export function UpgradeCTA({ feature = 'cette fonctionnalité' }: UpgradeCTAProp
     <>
       <div className="space-y-4 p-6 text-center">
         <div className="flex justify-center">
-          <div className="rounded-full bg-indigo-600/10 p-3">
-            <Lock className="h-6 w-6 text-indigo-400" />
+          <div className="rounded-full bg-calm-accent-soft p-3">
+            <Lock className="h-6 w-6 text-calm-accent" />
           </div>
         </div>
         <div className="space-y-2">
-          <h3 className="text-xl font-bold text-white/80">
+          <h3 className="text-xl font-bold text-calm-ink">
             Débloquez votre analyse complète
           </h3>
-          <p className="mx-auto max-w-xs text-sm text-white/50">
+          <p className="mx-auto max-w-xs text-sm text-calm-secondary">
             Accédez aux recommandations détaillées, au plan d&apos;action
             personnalisé et au feedback avancé.
           </p>
@@ -38,7 +38,7 @@ export function UpgradeCTA({ feature = 'cette fonctionnalité' }: UpgradeCTAProp
         <Button
           variant="dark"
           onClick={() => setIsModalOpen(true)}
-          className="w-full ring-offset-zinc-900"
+          className="w-full ring-offset-calm-bg"
         >
           <Sparkles className="h-4 w-4" />
           Débloquer maintenant

@@ -20,12 +20,12 @@ const podium = {
   silver: {
     icon: "text-[#8A8A8A]",
     card: "bg-[#8A8A8A]/10 border-[#8A8A8A]/25",
-    pill: "bg-[#8A8A8A] text-white",
+    pill: "bg-[#8A8A8A] text-calm-ink",
   },
   bronzeMedal: {
     icon: "text-[#CD7F32]",
     card: "bg-[#CD7F32]/10 border-[#CD7F32]/25",
-    pill: "bg-[#CD7F32] text-white",
+    pill: "bg-[#CD7F32] text-calm-ink",
   },
 } as const
 
@@ -38,7 +38,7 @@ function getPodiumStyle(index: number) {
 
 export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
   return (
-    <div className="bg-white/70 backdrop-blur-xl rounded-[3rem] border border-ivoire-200 p-8 shadow-premium space-y-8">
+    <div className="bg-calm-accent-line backdrop-blur-xl rounded-[3rem] border border-ivoire-200 p-8 shadow-premium space-y-8">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-sans font-black text-ink-900 flex items-center gap-2">
           <Trophy className="w-5 h-5 text-[#B8860B]" /> Top Performers
@@ -64,7 +64,7 @@ export function LiveLeaderboard({ entries }: { entries: Entry[] }) {
             >
               <div
                 className={`w-10 h-10 rounded-xl flex items-center justify-center font-sans font-black text-lg ${
-                  style ? style.pill : "bg-white text-ink-400"
+                  style ? style.pill : "bg-calm-surface text-ink-400"
                 }`}
               >
                 {i + 1}
