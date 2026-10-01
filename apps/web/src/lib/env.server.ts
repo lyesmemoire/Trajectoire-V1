@@ -140,6 +140,17 @@ OPENAI_BASE_URL: z
     .min(1)
     .optional(),
 
+  // Radar des offres : identifiants d'application France Travail (OAuth2 client_credentials).
+  // Sans eux, la source n'est pas branchée (lib/radar/sources.ts).
+  FRANCE_TRAVAIL_CLIENT_ID: z
+    .string()
+    .min(1)
+    .optional(),
+  FRANCE_TRAVAIL_CLIENT_SECRET: z
+    .string()
+    .min(1)
+    .optional(),
+
   // â”€â”€ Analytics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   POSTHOG_API_KEY: z
     .string()

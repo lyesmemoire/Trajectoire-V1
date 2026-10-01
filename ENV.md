@@ -19,6 +19,7 @@ Ce document recense toutes les variables d'environnement utilisées par **Trajec
 - **`OPENAI_API_KEY`** : Clé API pour OpenAI (ou proxy compatible).
 - **`OPENAI_BASE_URL`** : (Optionnel) Permet de rediriger vers un autre fournisseur (ex: Mistral API).
 - **`OPENAI_MODEL`** : (Optionnel) Le modèle par défaut à utiliser (ex: `gpt-4o`, `mistral-large-latest`).
+- **`FRANCE_TRAVAIL_CLIENT_ID`** / **`FRANCE_TRAVAIL_CLIENT_SECRET`** : (Optionnel) Identifiants d'application France Travail (API Offres d'emploi v2, scope `api_offresdemploiv2 o2dsoffre`) pour le Radar des offres. Sans eux, la source France Travail n'est pas branchée.
 - **`OPENAI_REALTIME_MODEL`** : (Optionnel) Modèle de l'entretien vocal (API Realtime GA). Défaut : `gpt-realtime-2.1` ; `gpt-realtime-1.5` est une alternative moins chère. Les modèles `gpt-4o-realtime-preview` sont arrêtés depuis mai 2026.
 - **`MISTRAL_API_KEY`** : Clé API native Mistral.
 
