@@ -118,3 +118,14 @@ describe("ligne de rassurance", () => {
     expect(src).not.toMatch(/Respirez./)
   })
 })
+
+describe("messages d'erreur de la page de simulation", () => {
+  it("n'affiche jamais le message brut du hook : il passe par friendlyVoiceError", async () => {
+    const { readFileSync } = await import("node:fs")
+    const src = readFileSync(new URL("../../app/(app)/simulation/[id]/page.tsx", import.meta.url), "utf-8")
+    // errorMessage n'est lu qu'une fois, pour être filtré
+    const uses = src.match(/errorMessage/g) ?? []
+    expect(uses.length).toBeLessThanOrEqual(2) // déstructuration du hook + friendlyVoiceError(errorMessage)
+    expect(src).toMatch(/friendlyVoiceError\(errorMessage\)/)
+  })
+})
