@@ -26,10 +26,10 @@ export function ScoreRing({
 
   const getColor = (s: number) => {
     if (s >= 70)
-      return { stroke: "#10B981", text: "text-emerald-600", badge: "Excellent" }
+      return { stroke: "#2F6B5E", text: "text-calm-accent-deep", badge: "Excellent" }
     if (s >= 50)
-      return { stroke: "#F59E0B", text: "text-amber-600", badge: "Moyen" }
-    return { stroke: "#EF4444", text: "text-rose-600", badge: "Faible" }
+      return { stroke: "#8A4B16", text: "text-calm-warn", badge: "Moyen" }
+    return { stroke: "#8A4B16", text: "text-calm-warn", badge: "Faible" }
   }
 
   const colors = getColor(clampedScore)
@@ -49,7 +49,7 @@ export function ScoreRing({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#F1F5F9"
+            stroke="#E6E4DE"
             strokeWidth={strokeWidth}
           />
           {/* Score arc */}

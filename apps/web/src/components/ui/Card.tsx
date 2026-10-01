@@ -17,21 +17,21 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  default: "bg-zinc-900 text-white/80 border border-white/[0.08]",
-  standard: "bg-zinc-900 text-white/80 border border-white/[0.08]",
-  editorial: "bg-white/[0.03] text-white/80 border border-transparent",
+  default: "bg-calm-surface text-calm-ink border border-calm-line",
+  standard: "bg-calm-surface text-calm-ink border border-calm-line",
+  editorial: "bg-calm-accent-wash text-calm-ink border border-transparent",
   interactive:
-    "bg-zinc-900 text-white/80 border border-white/[0.08] transition-colors duration-150 hover:border-white/[0.16] hover:bg-zinc-800/70 cursor-pointer",
+    "bg-calm-surface text-calm-ink border border-calm-line transition-colors duration-150 hover:border-calm-accent-line hover:bg-calm-accent-wash cursor-pointer",
   selected:
-    "bg-indigo-500/10 text-white/80 border-2 border-indigo-500",
+    "bg-calm-accent-soft text-calm-ink border-2 border-calm-accent",
   highlight:
-    "bg-zinc-900 text-white/80 border border-indigo-400/30 shadow-[0_2px_20px_-6px_rgba(99,102,241,0.35)]",
+    "bg-calm-surface text-calm-ink border border-calm-accent-line shadow-[0_2px_20px_-6px_rgba(31,42,55,0.35)]",
   ai:
-    "bg-zinc-900 text-white/80 border border-indigo-400/30 shadow-[0_2px_20px_-6px_rgba(99,102,241,0.35)]",
+    "bg-calm-surface text-calm-ink border border-calm-accent-line shadow-[0_2px_20px_-6px_rgba(31,42,55,0.35)]",
   success:
-    "bg-zinc-900 text-white/80 border border-emerald-400/25",
+    "bg-calm-surface text-calm-ink border border-calm-accent-line",
   warning:
-    "bg-zinc-900 text-white/80 border border-amber-400/25",
+    "bg-calm-surface text-calm-ink border border-calm-warn-line",
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -66,7 +66,7 @@ export const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-base font-semibold leading-snug tracking-tight text-white/80 font-sans",
+      "text-base font-semibold leading-snug tracking-tight text-calm-ink font-sans",
       className
     )}
     {...props}
@@ -80,7 +80,7 @@ export const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-white/50", className)}
+    className={cn("text-sm text-calm-secondary", className)}
     {...props}
   />
 ));

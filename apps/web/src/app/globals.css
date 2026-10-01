@@ -2,34 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design system « Calm » — ambiance Sauge.
+ *
+ * Deux familles de variables :
+ *  - `--calm-*` : la palette, en canaux RGB (Tailwind : `bg-calm-bg`, `text-calm-ink/80`…) ;
+ *  - les jetons sémantiques historiques (`--background`, `--foreground`, `--surface`, `--border`, `--primary`…)
+ *    et les variables de type shadcn (`--card`, `--muted`, `--ring`…), en canaux HSL, recalés sur la palette.
+ * Contrastes vérifiés (WCAG) : encre/fond 13,9:1 ; secondaire/fond 7,2:1 ; tertiaire/fond 8,9:1 ; accent/blanc 6,2:1 ;
+ * avertissement/fond d'avertissement 6,2:1 ; bordure de champ/blanc 3,7:1.
+ * Pas de mode sombre : une seule ambiance, claire.
+ */
 @layer base {
   :root {
-    /* Trajectoire — Career Intelligence Workspace Palette */
-    --background: 240 20% 98%; /* #FAFAFC - Luminous Near White Canvas */
-    --foreground: 224 71% 4%; /* #0F172A - Deep Neutral / Slate Near Black */
-    --foreground-muted: 220 9% 43%; /* #646A78 - Bluish Slate Gray (>= 4,5:1 sur blanc et sur surface-muted) */
+    /* Palette Calm (canaux RGB) */
+    --calm-bg: 250 250 248; /* #FAFAF8 */
+    --calm-surface: 255 255 255; /* #FFFFFF */
+    --calm-line: 230 228 222; /* #E6E4DE */
+    --calm-line-soft: 236 235 230; /* #ECEBE6 */
+    --calm-ink: 31 42 55; /* #1F2A37 */
+    --calm-secondary: 75 85 99; /* #4B5563 */
+    --calm-tertiary: 63 72 85; /* #3F4855 */
+    --calm-accent: 47 107 94; /* #2F6B5E */
+    --calm-accent-deep: 36 82 71; /* #245247 */
+    --calm-accent-soft: 227 239 233; /* #E3EFE9 */
+    --calm-accent-wash: 241 247 243; /* #F1F7F3 */
+    --calm-accent-line: 185 211 200; /* #B9D3C8 */
+    --calm-warn: 138 75 22; /* #8A4B16 */
+    --calm-warn-soft: 251 243 232; /* #FBF3E8 */
+    --calm-warn-line: 232 210 180; /* #E8D2B4 */
+    --calm-input: 124 133 144; /* #7C8590 */
 
-    --surface: 0 0% 100%; /* #FFFFFF - Pure Crisp White */
-    --surface-muted: 240 10% 96%; /* #F3F4F6 - Soft Surface Neutral */
+    /* Jetons sémantiques (canaux HSL) */
+    --background: 60 16.7% 97.6%; /* #FAFAF8 */
+    --foreground: 212.5 27.9% 16.9%; /* #1F2A37 */
+    --foreground-muted: 215 13.8% 34.1%; /* #4B5563 */
 
-    --border: 220 13% 91%; /* #E2E8F0 - Subtle Hairline Border */
+    --surface: 0 0% 100%; /* #FFFFFF */
+    --surface-muted: 140 27.3% 95.7%; /* #F1F7F3 */
 
-    --primary: 262 83% 58%; /* #7C3AED - Trajectoire Violet */
+    --border: 45 13.8% 88.6%; /* #E6E4DE */
+
+    --primary: 167 39% 30.2%; /* #2F6B5E */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 262 83% 96%; /* #F5F3FF - Very Light Violet */
+    --primary-light: 140 27.3% 95.7%; /* #F1F7F3 */
 
-    --accent: 262 83% 96%;
-    --accent-foreground: 262 83% 45%;
+    --accent: 150 27.3% 91.4%; /* #E3EFE9 */
+    --accent-foreground: 165.7 39% 23.1%; /* #245247 */
 
-    --success: 152 76% 36%; /* #10B981 - Emerald */
-    --warning: 38 92% 50%; /* #F59E0B - Amber */
-    --danger: 0 84% 60%; /* #EF4444 - Rose / Red */
-    --info: 199 89% 48%; /* #0EA5E9 - Sky / Blue */
+    /* États : jamais de rouge vif. Le « danger » est l'avertissement doux (brun ambré). */
+    --success: 167 39% 30.2%;
+    --warning: 27.4 72.5% 31.4%; /* #8A4B16 */
+    --danger: 27.4 72.5% 31.4%;
+    --info: 215 13.8% 34.1%;
 
-    /* Radii */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
+    /* Variables de type shadcn/ui */
+    --card: 0 0% 100%;
+    --card-foreground: 212.5 27.9% 16.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 212.5 27.9% 16.9%;
+    --secondary: 150 27.3% 91.4%;
+    --secondary-foreground: 165.7 39% 23.1%;
+    --muted: 140 27.3% 95.7%;
+    --muted-foreground: 215 13.8% 34.1%;
+    --destructive: 27.4 72.5% 31.4%;
+    --destructive-foreground: 0 0% 100%;
+    --input: 213 8.3% 52.5%; /* #7C8590 : contour de champ ≥ 3:1 sur blanc */
+    --ring: 167 39% 30.2%;
+
+    /* Rayons : 14 / 20 / 30 px */
+    --radius: 14px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 30px;
   }
 
   body {
@@ -38,11 +84,12 @@
 
   h1, h2, h3, h4 {
     @apply font-sans font-semibold tracking-tight;
+    text-wrap: balance;
   }
 
   ::selection {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: rgb(var(--calm-accent-soft));
+    color: rgb(var(--calm-accent-deep));
   }
 
   ::-webkit-scrollbar {
@@ -52,7 +99,7 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--border));
+    background: rgb(var(--calm-line));
     border-radius: 4px;
   }
 }
@@ -65,12 +112,23 @@
     transform: translateZ(0);
     will-change: transform;
   }
+  /* Accents typographiques : Newsreader italique, pour un mot ou une courte phrase seulement. */
+  .font-accent {
+    font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* Cible tactile ≥ 44 px (WCAG 2.5.5) pour les boutons et liens compacts. */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 .recharts-text {
   font-family: inherit;
   font-size: 12px;
-  fill: hsl(var(--foreground-muted));
+  fill: rgb(var(--calm-secondary));
 }
 
 .recharts-cartesian-axis-tick-value {
@@ -81,7 +139,7 @@
 @layer base {
   /* Focus clavier visible partout où un composant ne définit pas le sien. */
   :focus-visible {
-    outline: 2px solid hsl(var(--primary));
+    outline: 2px solid rgb(var(--calm-accent));
     outline-offset: 2px;
   }
 }

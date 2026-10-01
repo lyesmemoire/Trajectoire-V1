@@ -2,7 +2,16 @@
 
 > Ne pas remettre en question sans accord explicite de l'utilisateur. Source : CLAUDE.md + historique de commits.
 
-## Design
+## Design system « Calm » (2026-10-07) — remplace les règles « premium dark » et « public clair / connecté sombre »
+- **Une seule ambiance claire, palette Sauge, sur tout le produit** (site public + espace connecté). Plus de mode sombre : aucune classe `dark:`, plus de `zinc-950` / `indigo-500` / violet `#7C3AED`.
+- Palette (variables `--calm-*` dans `globals.css`, classes Tailwind `calm-*`) : fond #FAFAF8, surface #FFFFFF, bordures #E6E4DE / #ECEBE6, encre #1F2A37, secondaire #4B5563, tertiaire #3F4855, accent #2F6B5E, accent-deep #245247, accent-soft #E3EFE9, accent-wash #F1F7F3, accent-line #B9D3C8, avertissement #8A4B16.
+- Polices (next/font) : **Figtree** (texte) et **Newsreader italique** (accents, classe `font-accent`) ; remplace « police unique Inter ». Titres en `clamp()` (`text-calm-display/h1/h2/h3`). Rayons 14 / 20 / 30 px.
+- **Jamais de rouge vif** : l'avertissement est un brun ambré doux (`calm-warn`). Contraste ≥ 4,5:1, focus visible, cibles ≥ 44 px, Framer Motion doux et coupé sous `prefers-reduced-motion`, typographie française (espaces insécables).
+- `lib/theme/dark-tokens.ts` est **déprécié** (retiré au fil de la migration des écrans). Le test `lib/design-invariants.test.ts` impose la palette sur les écrans migrés ; sa liste `PENDING` se vide à chaque lot.
+- Les échelles héritées (`primary-*`, `violet`, `ivoire`, `ink`, `bronze`…) sont remappées sur Calm pour ne rien casser : ne pas les utiliser dans du nouveau code.
+- **`/signup-conversion` reste une page distincte de `/signup`** (parcours venant de l'aperçu ATS).
+
+## Design (anciennes règles — remplacées par Calm ci-dessus)
 - Fond `zinc-950`, accent `indigo-500` (formulaires auth, onboarding). Ailleurs : tokens sémantiques (`bg-background`, `text-foreground`, `bg-surface`, `border-border`, `primary-*` violet `#7C3AED`) définis dans `tailwind.config.ts` / `src/lib/design-tokens.ts`.
 - Couleurs « old-school » (ivoire, ink, bronze, terracotta, forest) réservées au marketing/landing — jamais dans l'app authentifiée.
 - Framer Motion sous `MotionConfig reducedMotion="user"` quand utilisé (onboarding).

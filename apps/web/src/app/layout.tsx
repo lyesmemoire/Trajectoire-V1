@@ -1,12 +1,19 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Figtree, Newsreader } from "next/font/google"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 import { MotionProvider } from "@/components/providers/MotionProvider"
 
-// Police unique du produit (décision du 2026-10-02 : tout en Inter). Servie depuis nos propres
-// fichiers par next/font (pas d'appel à Google à l'exécution, compatible avec la CSP `font-src 'self'`).
-const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-inter" })
+// Design system « Calm » : Figtree pour le texte, Newsreader italique pour les accents (un mot, une courte phrase).
+// Servies depuis nos propres fichiers par next/font (pas d'appel à Google à l'exécution, compatible avec la CSP
+// `font-src 'self'`).
+const figtree = Figtree({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-figtree" })
+const newsreader = Newsreader({
+  subsets: ["latin", "latin-ext"],
+  style: ["italic"],
+  display: "swap",
+  variable: "--font-newsreader",
+})
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.app"
 
@@ -37,7 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const styleNonce = await getStyleNonce()
 
   return (
-    <html lang="fr" className={`scroll-smooth ${inter.variable}`}>
+    <html lang="fr" className={`scroll-smooth ${figtree.variable} ${newsreader.variable}`}>
       <head>
         {/* CSP Nonce - Pass nonces to client via data attributes */}
         <script

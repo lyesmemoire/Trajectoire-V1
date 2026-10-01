@@ -12,17 +12,17 @@ interface StatCardProps {
 export function StatCard({
   value, label, icon, trend, color = "blue", className }: StatCardProps) {
   const colors = {
-    blue: "bg-sky-50 text-sky-700 border border-sky-100",
-    green: "bg-emerald-50 text-emerald-700 border border-emerald-100",
-    amber: "bg-amber-50 text-amber-700 border border-amber-100",
-    violet: "bg-violet-50 text-violet-700 border border-violet-100",
-    slate: "bg-slate-50 text-slate-700 border border-slate-200/60",
+    blue: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+    green: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+    amber: "bg-calm-warn-soft text-calm-warn border border-calm-warn-line",
+    violet: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+    slate: "bg-calm-accent-wash text-calm-ink border border-calm-line",
   }
 
   return (
     <div
       className={cn(
-        "p-5 md:p-6 rounded-xl border border-border/80 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
+        "p-5 md:p-6 rounded-xl border border-border/80 bg-calm-surface shadow-[0_1px_2px_0_rgba(31,42,55,0.03)]",
         className,
       )}
     >
@@ -48,7 +48,7 @@ export function StatCard({
         <div
           className={cn(
             "mt-3 flex items-center gap-1 text-xs font-semibold",
-            trend.isPositive ? "text-emerald-600" : "text-rose-600",
+            trend.isPositive ? "text-calm-accent-deep" : "text-calm-warn",
           )}
         >
           <svg

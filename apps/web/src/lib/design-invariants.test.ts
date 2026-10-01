@@ -4,8 +4,12 @@ import { join, relative, sep } from "node:path"
 import { fileURLToPath } from "node:url"
 
 /**
- * Règles de design et de fiabilité décidées le 2026-10-02 (voir .claude/decisions.md), vérifiées
- * statiquement pour qu'une régression échoue en CI plutôt qu'en production.
+ * Règles de design et de fiabilité (voir .claude/decisions.md), vérifiées statiquement pour qu'une régression
+ * échoue en CI plutôt qu'en production.
+ *
+ * Design system « Calm » (décision du 2026-10-07) : une seule ambiance claire, palette Sauge, Figtree et
+ * Newsreader italique, jamais de rouge vif. Les règles de couleur s'appliquent aux écrans déjà migrés :
+ * `PENDING` liste les préfixes qui ne le sont pas encore ; il se vide au fil des lots et sera vide à la fin.
  */
 
 const SRC = fileURLToPath(new URL("..", import.meta.url))
@@ -27,53 +31,77 @@ const all = walk(SRC)
 /** Fichiers sous un ou plusieurs préfixes (chemins relatifs à src, séparateur « / »). */
 const under = (...prefixes: string[]) => all.filter(f => prefixes.some(p => rel(f).startsWith(p)))
 
-describe("police unique : Inter", () => {
-  it("aucun font-serif dans le code", () => {
+describe("polices : Figtree et Newsreader italique", () => {
+  it("aucun font-serif dans le code (les accents passent par font-accent)", () => {
     const offenders = all.filter(f => /\bfont-serif\b/.test(read(f))).map(rel)
     expect(offenders).toEqual([])
   })
+
+  it("le layout racine charge Figtree et Newsreader (italique), plus Inter", () => {
+    const layout = read(all.find(f => rel(f) === "app/layout.tsx")!)
+    expect(layout).toMatch(/Figtree\(/)
+    expect(layout).toMatch(/Newsreader\(/)
+    expect(layout).toMatch(/style:\s*\["italic"\]/)
+    expect(layout).not.toMatch(/\bInter\(/)
+  })
 })
 
-describe("espace connecté : thème sombre (zinc-950 / indigo)", () => {
-  // Zones rendues uniquement dans l'espace connecté ou l'onboarding.
-  const zone = under(
-    "app/(app)/",
-    "app/onboarding/",
-    "components/app/",
-    "components/dashboard/",
-    "components/opportunities/",
-    "components/cv/",
-    "components/report/",
-    "components/settings/",
-    "components/discovery/",
-    "components/onboarding/",
-  )
-
-  // bg-white plein (les translucides bg-white/10 sont des calques sombres), slate/gray/neutral/stone, violet.
-  // Exception : les pastilles d'état animées de la simulation (petits points blancs sur fond sombre).
-  const FORBIDDEN =
-    /\bbg-white(?![/\w-])(?!\s+animate-pulse)|\b(?:bg|text|border)-(?:slate|gray|neutral|stone)-\d+|\b(?:bg|text|border|ring|from|to)-violet-\d+/g
-
-  it("la zone est bien trouvée", () => {
-    expect(zone.length).toBeGreaterThan(20)
+describe("pas de mode sombre", () => {
+  it("aucune classe dark: dans le code", () => {
+    const offenders = all.filter(f => /(^|[\s"'`])dark:[a-z]/.test(read(f)) && rel(f) !== "lib/design-invariants.test.ts").map(rel)
+    expect(offenders).toEqual([])
   })
 
-  it("aucune classe claire ou violette dans l'espace connecté", () => {
+  it("aucune couleur de marque violette (#7C3AED) dans le code", () => {
+    const offenders = all.filter(f => /#7C3AED/i.test(read(f))).map(rel)
+    expect(offenders).toEqual([])
+  })
+})
+
+// ─── Couleurs : écrans migrés vers Calm ────────────────────────────────────────────────────────────
+// Préfixes pas encore migrés (liste décroissante, vide à la fin du chantier).
+const PENDING: string[] = [
+  "app/(app)/",
+  "app/onboarding/",
+  "app/login/",
+  "app/signup/",
+  "app/signup-conversion/",
+  "app/forgot-password/",
+  "app/reset-password/",
+  "app/pricing/",
+  "app/(marketing)/",
+  "app/page.tsx",
+  "components/",
+  "lib/theme/",
+]
+
+describe("écrans migrés : palette Calm uniquement", () => {
+  const migrated = all.filter(f => {
+    const r = rel(f)
+    if (r.startsWith("app/api/") || r.startsWith("lib/") || r.startsWith("hooks/") || r.startsWith("e2e/")) return false
+    if (/\.(ts)$/.test(r) && !r.endsWith(".tsx")) return false
+    return !PENDING.some(p => r.startsWith(p))
+  })
+
+  // Familles de couleurs Tailwind interdites (on utilise `calm-*` ou les jetons sémantiques) et opacités de blanc
+  // héritées du thème sombre.
+  const FAMILIES = "zinc|slate|gray|neutral|stone|indigo|violet|purple|fuchsia|pink|rose|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue"
+  const FORBIDDEN = new RegExp(
+    `\\b(?:bg|text|border|ring|from|to|via|divide|fill|stroke|outline|placeholder|shadow)-(?:${FAMILIES})-\\d{2,3}\\b|\\b(?:bg|text|border|ring|divide)-white/\\d|\\bbg-black\\b`,
+    "g",
+  )
+
+  it("aucune couleur Tailwind brute, ni blanc translucide, dans les écrans migrés", () => {
     const offenders: string[] = []
-    for (const f of zone) {
-      const text = read(f).replace(/'animate-pulse bg-white'/g, "''")
-      const hits = text.match(FORBIDDEN)
-      if (hits) offenders.push(`${rel(f)} : ${Array.from(new Set(hits)).join(", ")}`)
+    for (const f of migrated) {
+      const hits = read(f).match(FORBIDDEN)
+      if (hits) offenders.push(`${rel(f)} : ${Array.from(new Set(hits)).slice(0, 6).join(", ")}`)
     }
     expect(offenders).toEqual([])
   })
-})
 
-describe("couleur de marque", () => {
-  it("#7C3AED n'est défini que dans les fichiers de tokens", () => {
-    const allowed = new Set(["app/globals.css", "lib/design-tokens.ts", "components/ui/progress.tsx"])
-    const offenders = all.filter(f => /#7C3AED/i.test(read(f)) && !allowed.has(rel(f))).map(rel)
-    expect(offenders).toEqual([])
+  it("la liste des écrans non migrés ne contient que des chemins existants", () => {
+    for (const p of PENDING) expect(all.some(f => rel(f).startsWith(p)), p).toBe(true)
   })
 })
 

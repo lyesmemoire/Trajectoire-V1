@@ -138,7 +138,7 @@ export default function MonitoringDashboard() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-red-500">Error: {error}</div>
+        <div className="text-xl text-calm-warn">Error: {error}</div>
       </div>
     );
   }
@@ -152,13 +152,13 @@ export default function MonitoringDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-calm-surface text-calm-ink p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Monitoring Dashboard</h1>
 
         {/* CPU & Memory */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className="bg-calm-accent-wash rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4">CPU</h2>
             <div className="space-y-4">
               <div>
@@ -166,9 +166,9 @@ export default function MonitoringDashboard() {
                   <span>Usage</span>
                   <span>{(metrics.runtime.cpu.usage * 100).toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-calm-accent-soft rounded-full h-2">
                   <div
-                    className="bg-blue-500 h-2 rounded-full"
+                    className="bg-calm-accent h-2 rounded-full"
                     style={{ width: `${metrics.runtime.cpu.usage * 100}%` }}
                   />
                 </div>
@@ -177,7 +177,7 @@ export default function MonitoringDashboard() {
                 <span className="block mb-2">Load Average</span>
                 <div className="flex gap-4">
                   {metrics.runtime.cpu.loadAverage.map((load, i) => (
-                    <div key={i} className="bg-gray-700 px-3 py-1 rounded">
+                    <div key={i} className="bg-calm-accent-soft px-3 py-1 rounded">
                       {load.toFixed(2)}
                     </div>
                   ))}
@@ -186,7 +186,7 @@ export default function MonitoringDashboard() {
             </div>
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className="bg-calm-accent-wash rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4">Memory</h2>
             <div className="space-y-4">
               <div>
@@ -194,24 +194,24 @@ export default function MonitoringDashboard() {
                   <span>Usage</span>
                   <span>{(metrics.runtime.memory.usage * 100).toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-calm-accent-soft rounded-full h-2">
                   <div
-                    className="bg-green-500 h-2 rounded-full"
+                    className="bg-calm-accent h-2 rounded-full"
                     style={{ width: `${metrics.runtime.memory.usage * 100}%` }}
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="block text-gray-400">Total</span>
+                  <span className="block text-calm-secondary">Total</span>
                   <span className="text-lg">{formatBytes(metrics.runtime.memory.total)}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Used</span>
+                  <span className="block text-calm-secondary">Used</span>
                   <span className="text-lg">{formatBytes(metrics.runtime.memory.used)}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Free</span>
+                  <span className="block text-calm-secondary">Free</span>
                   <span className="text-lg">{formatBytes(metrics.runtime.memory.free)}</span>
                 </div>
               </div>
@@ -220,24 +220,24 @@ export default function MonitoringDashboard() {
         </div>
 
         {/* Operations */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-8">
+        <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Operations</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {Object.entries(metrics.operations).map(([key, value]) => (
-              <div key={key} className="bg-gray-700 rounded-lg p-4">
+              <div key={key} className="bg-calm-accent-soft rounded-lg p-4">
                 <h3 className="text-lg font-semibold capitalize mb-2">{key}</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Time</span>
+                    <span className="text-calm-secondary">Time</span>
                     <span>{value.time.toFixed(2)}ms</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Count</span>
+                    <span className="text-calm-secondary">Count</span>
                     <span>{value.count}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Errors</span>
-                    <span className="text-red-400">{value.errors}</span>
+                    <span className="text-calm-secondary">Errors</span>
+                    <span className="text-calm-warn">{value.errors}</span>
                   </div>
                 </div>
               </div>
@@ -246,23 +246,23 @@ export default function MonitoringDashboard() {
         </div>
 
         {/* Latency */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-8">
+        <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Latency</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">P50</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">P50</span>
               <span className="text-2xl">{metrics.runtime.latency.p50.toFixed(2)}ms</span>
             </div>
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">P95</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">P95</span>
               <span className="text-2xl">{metrics.runtime.latency.p95.toFixed(2)}ms</span>
             </div>
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">P99</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">P99</span>
               <span className="text-2xl">{metrics.runtime.latency.p99.toFixed(2)}ms</span>
             </div>
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">Average</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">Average</span>
               <span className="text-2xl">{metrics.runtime.latency.avg.toFixed(2)}ms</span>
             </div>
           </div>
@@ -270,44 +270,44 @@ export default function MonitoringDashboard() {
 
         {/* Graph Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className="bg-calm-accent-wash rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4">Graph</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="block text-gray-400">Nodes</span>
+                  <span className="block text-calm-secondary">Nodes</span>
                   <span className="text-2xl">{metrics.graph.nodes.total}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Edges</span>
+                  <span className="block text-calm-secondary">Edges</span>
                   <span className="text-2xl">{metrics.graph.edges.total}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Total Graphs</span>
+                  <span className="block text-calm-secondary">Total Graphs</span>
                   <span className="text-2xl">{metrics.graph.graphs.total}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Active Graphs</span>
+                  <span className="block text-calm-secondary">Active Graphs</span>
                   <span className="text-2xl">{metrics.graph.graphs.active}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className="bg-calm-accent-wash rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4">Cache</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <span className="block text-gray-400">Hits</span>
-                  <span className="text-2xl text-green-400">{metrics.graph.cache.hits}</span>
+                  <span className="block text-calm-secondary">Hits</span>
+                  <span className="text-2xl text-calm-accent">{metrics.graph.cache.hits}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Misses</span>
-                  <span className="text-2xl text-red-400">{metrics.graph.cache.misses}</span>
+                  <span className="block text-calm-secondary">Misses</span>
+                  <span className="text-2xl text-calm-warn">{metrics.graph.cache.misses}</span>
                 </div>
                 <div>
-                  <span className="block text-gray-400">Hit Rate</span>
+                  <span className="block text-calm-secondary">Hit Rate</span>
                   <span className="text-2xl">{(metrics.graph.cache.hitRate * 100).toFixed(1)}%</span>
                 </div>
               </div>
@@ -316,9 +316,9 @@ export default function MonitoringDashboard() {
                   <span>Hit Rate</span>
                   <span>{(metrics.graph.cache.hitRate * 100).toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-calm-accent-soft rounded-full h-2">
                   <div
-                    className="bg-purple-500 h-2 rounded-full"
+                    className="bg-calm-accent h-2 rounded-full"
                     style={{ width: `${metrics.graph.cache.hitRate * 100}%` }}
                   />
                 </div>
@@ -328,20 +328,20 @@ export default function MonitoringDashboard() {
         </div>
 
         {/* Errors */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-8">
+        <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Errors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">Total Errors</span>
-              <span className="text-2xl text-red-400">{metrics.runtime.errors.total}</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">Total Errors</span>
+              <span className="text-2xl text-calm-warn">{metrics.runtime.errors.total}</span>
             </div>
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">By Type</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">By Type</span>
               <div className="mt-2 space-y-1">
                 {Object.entries(metrics.runtime.errors.byType).map(([type, count]) => (
                   <div key={type} className="flex justify-between">
                     <span>{type}</span>
-                    <span className="text-red-400">{count}</span>
+                    <span className="text-calm-warn">{count}</span>
                   </div>
                 ))}
               </div>
@@ -350,11 +350,11 @@ export default function MonitoringDashboard() {
         </div>
 
         {/* Uptime */}
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-calm-accent-wash rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">System</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-700 rounded-lg p-4">
-              <span className="block text-gray-400">Uptime</span>
+            <div className="bg-calm-accent-soft rounded-lg p-4">
+              <span className="block text-calm-secondary">Uptime</span>
               <span className="text-2xl">{formatTime(metrics.runtime.uptime)}</span>
             </div>
           </div>

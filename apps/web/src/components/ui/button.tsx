@@ -21,44 +21,40 @@ export interface ButtonProps
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-primary text-white hover:bg-violet-700 active:bg-violet-800 border border-transparent shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]",
+    "bg-calm-accent text-white hover:bg-calm-accent-deep active:bg-calm-accent-deep border border-transparent shadow-subtle",
   secondary:
-    "bg-white text-foreground border border-border hover:bg-slate-50 active:bg-slate-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.03)]",
+    "bg-calm-surface text-calm-ink border border-calm-line hover:bg-calm-accent-wash active:bg-calm-accent-soft shadow-subtle",
   outline:
-    "bg-transparent text-foreground border border-border hover:bg-slate-50 active:bg-slate-100",
+    "bg-transparent text-calm-ink border border-calm-line hover:bg-calm-accent-wash active:bg-calm-accent-soft",
   ghost:
-    "bg-transparent text-foreground hover:bg-slate-100/80 active:bg-slate-200/60",
+    "bg-transparent text-calm-ink hover:bg-calm-accent-wash active:bg-calm-accent-soft",
   premium:
-    "bg-primary text-white hover:bg-violet-700 active:bg-violet-800 border border-transparent shadow-[0_2px_8px_-1px_rgba(124,58,237,0.25)]",
+    "bg-calm-accent text-white hover:bg-calm-accent-deep active:bg-calm-accent-deep border border-transparent shadow-calm",
+  // Pas de rouge vif : l'action sensible utilise l'avertissement doux.
   danger:
-    "bg-danger text-white hover:bg-red-600 active:bg-red-700 border border-transparent shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]",
+    "bg-calm-warn text-white hover:bg-calm-warn/90 active:bg-calm-warn/90 border border-transparent shadow-subtle",
 
-  // Variantes pour les écrans au thème SOMBRE (zinc-950 / indigo). Les variantes
-  // ci-dessus (thème clair : marketing, landing…) restent inchangées.
-  // Le focus utilise `focus-visible:` (comme la base) : avec `focus:`, la base
-  // `focus-visible:ring-primary/25` (violet) l'emporterait à la navigation clavier.
+  // Anciennes variantes du thème sombre, conservées pour les appelants existants (noms stables) : mêmes rendus
+  // que primary et outline.
   dark: [
-    "bg-indigo-600 text-zinc-50",
-    "hover:bg-indigo-500",
-    "focus-visible:ring-2 focus-visible:ring-indigo-500",
-    "focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
-    "disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed",
+    "bg-calm-accent text-white border border-transparent",
+    "hover:bg-calm-accent-deep",
+    "disabled:bg-calm-accent-wash disabled:text-calm-tertiary disabled:cursor-not-allowed",
     "transition-colors duration-150",
   ].join(" "),
   "dark-ghost": [
-    "bg-transparent text-zinc-300 border border-zinc-700",
-    "hover:border-zinc-600 hover:text-zinc-100",
-    "focus-visible:ring-2 focus-visible:ring-indigo-500",
-    "focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+    "bg-transparent text-calm-ink border border-calm-line",
+    "hover:bg-calm-accent-wash",
     "disabled:opacity-40 disabled:cursor-not-allowed",
     "transition-colors duration-150",
   ].join(" "),
 };
 
+// Cibles tactiles ≥ 44 px (WCAG 2.5.5).
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-xs font-medium",
-  md: "h-10 px-4 text-sm font-medium",
-  lg: "h-11 px-5 text-sm font-medium",
+  sm: "min-h-[44px] px-3.5 text-sm font-medium",
+  md: "min-h-[44px] px-4 text-sm font-medium",
+  lg: "min-h-[48px] px-5 text-base font-medium",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -79,7 +75,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg disabled:pointer-events-none disabled:opacity-50",
           variantStyles[variant],
           sizeStyles[size],
           className

@@ -18,16 +18,16 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  neutral: "bg-slate-100 text-slate-700 border border-slate-200/80",
-  primary: "bg-violet-50 text-violet-700 border border-violet-200/60",
-  success: "bg-emerald-50 text-emerald-700 border border-emerald-200/60",
-  warning: "bg-amber-50 text-amber-700 border border-amber-200/60",
-  danger: "bg-rose-50 text-rose-700 border border-rose-200/60",
-  info: "bg-sky-50 text-sky-700 border border-sky-200/60",
-  free: "bg-slate-100 text-slate-700 border border-slate-200/80",
-  pack: "bg-indigo-500/15 text-indigo-300 border border-indigo-400/30",
-  pro: "bg-violet-50 text-violet-700 border border-violet-200/60",
-  expert: "bg-slate-900 text-white border border-transparent shadow-sm",
+  neutral: "bg-calm-line-soft text-calm-ink border border-calm-line",
+  primary: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+  success: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+  warning: "bg-calm-warn-soft text-calm-warn border border-calm-warn-line",
+  danger: "bg-calm-warn-soft text-calm-warn border border-calm-warn-line",
+  info: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+  free: "bg-calm-line-soft text-calm-ink border border-calm-line",
+  pack: "bg-calm-accent-soft text-calm-accent border border-calm-accent-line",
+  pro: "bg-calm-accent-soft text-calm-accent-deep border border-calm-accent-line",
+  expert: "bg-calm-surface text-calm-ink border border-transparent shadow-sm",
 };
 
 export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(

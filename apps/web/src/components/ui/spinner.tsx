@@ -45,7 +45,7 @@ export function PageLoader({ message = "Chargement..." }: PageLoaderProps) {
   return (
     <div className="min-h-screen bg-ivoire-50 flex items-center justify-center flex-col">
       <div className="w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-ink-700 to-ink-900 flex items-center justify-center">
-        <Spinner size="lg" className="text-white" />
+        <Spinner size="lg" className="text-calm-ink" />
       </div>
       <p className="text-ink-600 font-medium">{message}</p>
     </div>
