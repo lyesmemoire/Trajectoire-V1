@@ -39,6 +39,7 @@ describe("espace connecté : thème sombre (zinc-950 / indigo)", () => {
   const zone = under(
     "app/(app)/",
     "app/onboarding/",
+    "app/billing/",
     "components/app/",
     "components/dashboard/",
     "components/opportunities/",
@@ -47,6 +48,7 @@ describe("espace connecté : thème sombre (zinc-950 / indigo)", () => {
     "components/settings/",
     "components/discovery/",
     "components/onboarding/",
+    "components/billing/",
   )
 
   // bg-white plein (les translucides bg-white/10 sont des calques sombres), slate/gray/neutral/stone, violet.

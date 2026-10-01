@@ -118,6 +118,7 @@ const ROUTE_RULES: RouteRule[] = [
   { pattern: "/report", accessLevel: AccessLevel.AUTHENTICATED, comment: "Rapports" },
   { pattern: "/history", accessLevel: AccessLevel.AUTHENTICATED, comment: "Historique" },
   { pattern: "/settings", accessLevel: AccessLevel.AUTHENTICATED, comment: "Paramètres" },
+  { pattern: "/billing", accessLevel: AccessLevel.AUTHENTICATED, comment: "Retour de paiement Stripe" },
   { pattern: "/api/simulation", accessLevel: AccessLevel.AUTHENTICATED, comment: "API simulation" },
   { pattern: "/api/report", accessLevel: AccessLevel.AUTHENTICATED, comment: "API rapports" },
   { pattern: "/api/interview", accessLevel: AccessLevel.AUTHENTICATED, comment: "API interview" },

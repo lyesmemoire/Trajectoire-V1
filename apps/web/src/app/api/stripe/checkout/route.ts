@@ -10,6 +10,7 @@ import { checkRateLimit }             from "@/lib/rate-limit";
 import { stripe }                    from "@/lib/stripe";
 import { PLANS, canSimulate, getRemainingSimulations, isExpired, type PlanId } from "@/lib/plans";
 import { isProAccessStatus }          from "@/lib/quota/plan-access";
+import { buildCheckoutReturnUrls }      from "@/lib/billing/checkout-plan";
 import Stripe from 'stripe';
 
 // ── Client Stripe (resilient) ──────────────────────────────────────────────────────────
@@ -144,6 +145,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const isPaymentMode = planId === "PACK";
+    const returnUrls = buildCheckoutReturnUrls(envServer.NEXT_PUBLIC_APP_URL ?? "", planId);
     const mode = isPaymentMode ? "payment" : "subscription";
 
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
@@ -155,8 +157,8 @@ export async function POST(request: NextRequest) {
         type:    planId, // "PACK" | "PRO" — lu par le webhook
         plan:    planId, // legacy
       },
-      success_url: `${envServer.NEXT_PUBLIC_APP_URL}/dashboard?checkout=success`,
-      cancel_url:  `${envServer.NEXT_PUBLIC_APP_URL}/pricing?checkout=cancelled`,
+      success_url: returnUrls.successUrl,
+      cancel_url:  returnUrls.cancelUrl,
       expires_at:  Math.floor(Date.now() / 1000) + 30 * 60,
     };
 

@@ -278,6 +278,22 @@ function QuotaNotice() {
   )
 }
 
+// ─── Bandeau « paiement annulé » (?checkout=cancelled, cancel_url de Stripe) ──
+
+function CheckoutCancelledNotice() {
+  const params = useSearchParams()
+  if (params.get("checkout") !== "cancelled") return null
+
+  return (
+    <div
+      role="status"
+      className="mx-auto mt-8 max-w-xl rounded-xl border border-border bg-surface p-4 text-sm font-medium text-foreground"
+    >
+      Paiement annulé : aucun montant n&apos;a été débité. Vous pouvez choisir une offre quand vous le souhaitez.
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
@@ -358,6 +374,10 @@ export default function PricingPage() {
 
           <Suspense fallback={null}>
             <QuotaNotice />
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <CheckoutCancelledNotice />
           </Suspense>
 
           {error && (
