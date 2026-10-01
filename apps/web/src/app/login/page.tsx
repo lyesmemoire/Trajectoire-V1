@@ -40,7 +40,7 @@ function sanitizeRedirect(value: string | null) {
 // générique.
 const CALLBACK_ERRORS: Record<string, string> = {
   link_expired:
-    "Ce lien a expiré. Demandez-en un nouveau depuis « Mot de passe oublié » ou reconnectez-vous.",
+    "Ce lien a expiré. Demandez-en un nouveau depuis « Mot de passe oublié » ou reconnectez-vous.",
   link_invalid:
     "Ce lien n'est plus valide ou a déjà été utilisé. Demandez-en un nouveau ou connectez-vous.",
   missing_code:

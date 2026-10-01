@@ -95,7 +95,7 @@ function buildFaq() {
     },
     {
       q: "Que contient l’analyse de CV gratuite ?",
-      a: `Un aperçu : votre score ATS et jusqu’à ${FREE.cvPreviewRemarksMax ?? 3} remarques. L’analyse complète, avec le détail et les recommandations, est incluse dans le Pack et dans Pro.`,
+      a: `Un aperçu : votre score ATS et jusqu’à ${FREE.cvPreviewRemarksMax ?? 3} remarques. L’analyse complète, avec le détail et les recommandations, est incluse dans le Pack et dans Pro.`,
     },
     {
       q: "Les prix sont-ils TTC ?",

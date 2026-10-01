@@ -210,7 +210,7 @@ export default function HomePage() {
 
       if (!data?.previewToken) {
         throw new Error(
-          "Réponse invalide du serveur : token de prévisualisation manquant."
+          "Réponse invalide du serveur : token de prévisualisation manquant."
         )
       }
 

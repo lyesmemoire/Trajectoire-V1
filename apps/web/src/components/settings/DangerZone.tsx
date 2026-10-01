@@ -9,7 +9,7 @@ export function DangerZone() {
   const handleDeleteAccount = async () => {
     if (
       !confirm(
-        "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+        "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
       )
     ) {
       return

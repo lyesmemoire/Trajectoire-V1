@@ -104,7 +104,7 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
       await navigator.clipboard.writeText(result)
       setCopied(true)
     } catch {
-      setError("Copie impossible : sélectionnez le texte manuellement.")
+      setError("Copie impossible : sélectionnez le texte manuellement.")
     }
   }
 

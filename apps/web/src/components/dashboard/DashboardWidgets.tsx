@@ -689,7 +689,7 @@ export function DashboardWidgets({
                       </p>
                       <p className="mt-1 text-xs leading-relaxed text-calm-tertiary">
                         {currentScore >= 75
-                          ? "Score élevé : profil prêt pour les candidatures directes."
+                          ? "Score élevé : profil prêt pour les candidatures directes."
                           : hasCVAnalysis
                             ? "Recommandations disponibles pour augmenter votre score."
                             : "Analysez un CV pour générer votre premier diagnostic."}

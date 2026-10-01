@@ -92,7 +92,7 @@ export function CvExportEditor({
 
     const document = documentFromForm(form)
     if (!document.personal.name.trim()) {
-      setError("Renseignez votre nom : il sert de titre au CV et au nom du fichier.")
+      setError("Renseignez votre nom : il sert de titre au CV et au nom du fichier.")
       return
     }
     const check = CvDocumentSchema.safeParse(document)
@@ -161,7 +161,7 @@ export function CvExportEditor({
             <input id="cv-linkedin" className={inputClass} maxLength={200} value={form.personal.linkedin} onChange={(e) => setPersonal("linkedin", e.target.value)} />
           </Field>
         </div>
-        <Field id="cv-headline" label="Titre professionnel" hint="Par exemple : « Développeuse full stack ».">
+        <Field id="cv-headline" label="Titre professionnel" hint="Par exemple : « Développeuse full stack ».">
           <input id="cv-headline" className={inputClass} maxLength={160} value={form.headline} onChange={(e) => patch({ headline: e.target.value })} />
         </Field>
       </Section>
