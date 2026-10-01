@@ -32,7 +32,7 @@ export async function prepareInterview(opportunityId: string): Promise<never> {
 
   const opportunity = await prisma.opportunity.findFirst({
     where: { id: id.data, userId: user.id },
-    select: { title: true, company: true, location: true, description: true },
+    select: { title: true, company: true, location: true, description: true, metadata: true },
   })
   if (!opportunity) redirect("/opportunities")
 

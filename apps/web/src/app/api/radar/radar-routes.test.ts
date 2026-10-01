@@ -178,7 +178,7 @@ describe("PATCH /api/radar/matches/[id]", () => {
 })
 
 describe("POST /api/radar/matches/[id]/track", () => {
-  const offer = { title: "Dev", company: "Acme", locationLabel: "Paris", sourceUrl: "https://example.test/1", source: "FRANCE_TRAVAIL", description: "desc" }
+  const offer = { title: "Dev", company: "Acme", locationLabel: "Paris", contractType: "ALTERNANCE", sourceUrl: "https://example.test/1", source: "FRANCE_TRAVAIL", description: "desc" }
 
   it("crée l'opportunité, lie la correspondance et la marque enregistrée", async () => {
     m.txMatchFindFirst.mockResolvedValue({ opportunityId: null, offer })
@@ -186,7 +186,7 @@ describe("POST /api/radar/matches/[id]/track", () => {
     const res = await trackPOST(req("/x", "POST"), ctx("m1"))
     expect(res.status).toBe(201)
     expect(m.txMatchFindFirst.mock.calls[0][0].where).toEqual({ id: "m1", userId: "u1" })
-    expect(m.txOppCreate.mock.calls[0][0].data).toMatchObject({ userId: "u1", title: "Dev", source: "radar:FRANCE_TRAVAIL" })
+    expect(m.txOppCreate.mock.calls[0][0].data).toMatchObject({ userId: "u1", title: "Dev", source: "radar:FRANCE_TRAVAIL", metadata: { contractType: "ALTERNANCE" } })
     expect(m.txMatchUpdate.mock.calls[0][0].data).toEqual({ opportunityId: "o1", state: "SAVED" })
   })
 

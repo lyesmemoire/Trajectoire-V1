@@ -27,7 +27,7 @@ export async function POST(_request: NextRequest, { params }: Context) {
         where: { id, userId: user.id },
         select: {
           opportunityId: true,
-          offer: { select: { title: true, company: true, locationLabel: true, sourceUrl: true, source: true, description: true } },
+          offer: { select: { title: true, company: true, locationLabel: true, contractType: true, sourceUrl: true, source: true, description: true } },
         },
       })
       if (!match) return { notFound: true as const }
@@ -42,6 +42,8 @@ export async function POST(_request: NextRequest, { params }: Context) {
           sourceUrl: match.offer.sourceUrl,
           source: `radar:${match.offer.source}`,
           description: match.offer.description,
+          // Type de contrat de l'offre : sert plus tard à choisir le niveau par défaut de la simulation.
+          metadata: { contractType: match.offer.contractType },
         },
         select: { id: true },
       })
