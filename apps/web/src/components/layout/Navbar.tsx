@@ -81,7 +81,7 @@ export function Navbar({
           className="flex min-h-11 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <div className="flex size-[26px] items-center justify-center rounded-[8px] bg-primary shadow-sm" aria-hidden="true">
-             <div className="size-2 rounded-[2px] bg-white" />
+             <div className="size-2 rounded-[2px] bg-calm-surface" />
           </div>
           <span className="font-sans text-[20px] font-bold tracking-tight text-foreground">
             Trajectoire

@@ -233,7 +233,7 @@ export default function HomePage() {
   }
 
   // CTA principal fixe : il ne change jamais de libellé.
-  const ctaLabel = "Obtenir mon diagnostic"
+  const ctaLabel = "Obtenir mon diagnostic gratuit"
 
   return (
     <>
@@ -257,15 +257,15 @@ export default function HomePage() {
             ───────────────────────────── */}
             <section className="flex w-full flex-col items-start gap-5">
               <div className="flex max-w-[500px] flex-col items-start">
-                <div className="mb-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-700">
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />
+                <div className="mb-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-calm-accent-deep">
+                  <span className="h-1.5 w-1.5 rounded-full bg-calm-accent" />
                   Intelligence de candidature
                 </div>
 
-                <h1 className="font-sans text-[42px] font-bold leading-[1.06] tracking-[-0.025em] text-ink-900 sm:text-[52px]">
-                  Préparez Sereinement
+                <h1 className="font-sans text-calm-display font-semibold text-calm-ink">
+                  Préparez sereinement
                   <br />
-                  votre Entretien
+                  votre <span className="font-accent text-calm-accent">entretien</span>
                 </h1>
               </div>
 
@@ -293,7 +293,7 @@ export default function HomePage() {
               ───────────────────────────── */}
               <form
                 onSubmit={handleAnalyze}
-                className="w-full rounded-2xl border border-ivoire-200 bg-white/90 p-4 shadow-premium backdrop-blur lg:border-ivoire-300"
+                className="w-full rounded-2xl border border-ivoire-200 bg-calm-surface/90 p-4 shadow-premium backdrop-blur lg:border-ivoire-300"
               >
                 {/* Upload CV */}
                 <div
@@ -310,7 +310,7 @@ export default function HomePage() {
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-white">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-ink-900 text-calm-ink">
                       {file ? (
                         <CheckCircle2
                           className="size-5"
@@ -336,7 +336,7 @@ export default function HomePage() {
                         type="button"
                         onClick={resetFile}
                         disabled={loading}
-                        className="inline-flex items-center justify-center rounded-lg border border-ivoire-200 bg-white px-2.5 py-2 text-sm text-ink-500 transition-colors hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-50 lg:border-ivoire-300"
+                        className="inline-flex items-center justify-center rounded-lg border border-ivoire-200 bg-calm-surface px-2.5 py-2 text-sm text-ink-500 transition-colors hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-50 lg:border-ivoire-300"
                         aria-label="Retirer le fichier"
                       >
                         <X className="size-4" aria-hidden="true" />
@@ -378,7 +378,7 @@ export default function HomePage() {
                   <div
                     role="alert"
                     aria-live="assertive"
-                    className="mt-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                    className="mt-3 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn"
                   >
                     {error}
                   </div>
@@ -391,15 +391,14 @@ export default function HomePage() {
                   aria-busy={loading}
                   className="
                     mt-3 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl
-                    border border-bronze-400/18
-                    bg-gradient-to-b from-ink-900 to-ink-800
+                    border border-transparent
+                    bg-calm-accent
                     px-5 py-3.5 text-[15px] font-semibold text-white
-                    shadow-premium-lg
-                    ring-1 ring-bronze-400/35
+                    shadow-calm
                     transition-all duration-200 ease-premium
-                    hover:-translate-y-[1px] hover:border-bronze-400/28 hover:ring-bronze-400/60
+                    hover:bg-calm-accent-deep
                     active:translate-y-0 active:shadow-premium
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-calm-accent
                     focus-visible:ring-offset-2 focus-visible:ring-offset-ivoire-50
                     disabled:cursor-not-allowed disabled:opacity-70
                     disabled:hover:translate-y-0
@@ -426,7 +425,7 @@ export default function HomePage() {
                 </p>
 
                 {/* Annonce optionnelle */}
-                <details className="mt-3 rounded-xl border border-ivoire-200 bg-white px-4 py-3 lg:border-ivoire-300">
+                <details className="mt-3 rounded-xl border border-ivoire-200 bg-calm-surface px-4 py-3 lg:border-ivoire-300">
                   <summary className="cursor-pointer text-sm font-medium text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-bronze-400">
                     Ajouter l’annonce (optionnel)
                   </summary>
@@ -438,7 +437,7 @@ export default function HomePage() {
                       placeholder="Collez l’annonce (missions, profil recherché, compétences, outils, etc.)"
                       rows={5}
                       disabled={loading}
-                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
+                      className="w-full resize-none rounded-xl border border-ivoire-200 bg-calm-surface px-4 py-3 text-sm outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-bronze-400 disabled:cursor-not-allowed disabled:bg-ivoire-50 lg:border-ivoire-300"
                     />
 
                     <p className="mt-2 text-xs text-ink-500">
@@ -453,7 +452,7 @@ export default function HomePage() {
                   {features.map(({ icon: Icon, label }) => (
                     <span
                       key={label}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-ivoire-200 bg-white px-3 py-1 lg:border-ivoire-300"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-ivoire-200 bg-calm-surface px-3 py-1 lg:border-ivoire-300"
                     >
                       <Icon className="size-3.5" aria-hidden="true" />
                       {label}
@@ -469,12 +468,12 @@ export default function HomePage() {
 
               {/* Réassurance */}
               <div className="mb-2 mt-3 flex w-full items-center justify-start">
-                <div className="inline-flex items-center gap-3 rounded-full border border-ivoire-200 bg-white/85 px-5 py-2 shadow-premium backdrop-blur lg:border-ivoire-300">
+                <div className="inline-flex items-center gap-3 rounded-full border border-ivoire-200 bg-calm-accent-line px-5 py-2 shadow-premium backdrop-blur lg:border-ivoire-300">
                   <div className="flex -space-x-2" aria-hidden="true">
                     {["A", "M", "S", "L"].map((initial) => (
                       <span
                         key={initial}
-                        className="flex size-8 items-center justify-center rounded-full border-2 border-ivoire-50 bg-white text-xs font-semibold text-ink-900 shadow-sm"
+                        className="flex size-8 items-center justify-center rounded-full border-2 border-ivoire-50 bg-calm-surface text-xs font-semibold text-ink-900 shadow-sm"
                       >
                         {initial}
                       </span>
@@ -499,7 +498,7 @@ export default function HomePage() {
             {/* ─────────────────────────────
                 IMAGE HERO ANIMÉE
             ───────────────────────────── */}
-            <aside className="relative w-full overflow-hidden rounded-3xl border border-ivoire-200 bg-white shadow-premium lg:mt-8 lg:border-ivoire-300">
+            <aside className="relative w-full overflow-hidden rounded-3xl border border-ivoire-200 bg-calm-surface shadow-premium lg:mt-8 lg:border-ivoire-300">
               <div className="relative h-[340px] w-full overflow-hidden sm:h-[420px] lg:h-[620px]">
                 <Image
                   src={heroImage}

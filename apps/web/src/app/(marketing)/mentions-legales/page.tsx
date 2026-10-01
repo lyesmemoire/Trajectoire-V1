@@ -26,7 +26,7 @@ function Value({ value, optional = false }: { value: string; optional?: boolean 
   if (IS_PRODUCTION) return null
   if (optional) return <span className="text-xs text-ink-600">Facultatif</span>
   return (
-    <mark className="rounded bg-amber-200 px-1.5 py-0.5 text-xs font-semibold text-amber-950">À compléter</mark>
+    <mark className="rounded bg-calm-warn-soft px-1.5 py-0.5 text-xs font-semibold text-calm-warn">À compléter</mark>
   )
 }
 
@@ -67,7 +67,7 @@ export default function LegalNoticePage() {
         <h1 className="mb-8 text-4xl font-black text-ink-900">Mentions légales</h1>
 
         {missing.length > 0 && (
-          <div role="note" className="mb-10 rounded-xl border border-amber-300 bg-amber-50 p-5 text-sm text-amber-950">
+          <div role="note" className="mb-10 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-5 text-sm text-calm-warn">
             <p className="font-semibold">Brouillon : cette page n&apos;est pas publiée en production.</p>
             <p className="mt-1">
               {missing.length} champ(s) obligatoire(s) à renseigner dans <code>src/lib/legal/publisher.ts</code> :

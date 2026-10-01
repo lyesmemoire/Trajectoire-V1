@@ -68,9 +68,6 @@ const PENDING: string[] = [
   "app/signup-conversion/",
   "app/forgot-password/",
   "app/reset-password/",
-  "app/pricing/",
-  "app/(marketing)/",
-  "app/page.tsx",
   "components/",
   "lib/theme/",
 ]

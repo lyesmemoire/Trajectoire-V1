@@ -29,7 +29,7 @@ export default function ContactPage() {
           ← Retour à l'accueil
         </Link>
 
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-ivoire-200 p-8 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl rounded-2xl border border-ivoire-200 p-8 shadow-premium">
           <h1 className="text-3xl font-sans font-bold text-ink-900 mb-4">Contactez-nous</h1>
           <p className="text-ink-600 mb-8">
             Une question ? Nous répondons sous 24h.
