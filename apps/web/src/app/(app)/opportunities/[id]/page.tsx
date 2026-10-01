@@ -263,7 +263,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                        {analysis.potentialScore !== undefined && analysis.potentialScore > score && (
                          <div className="mt-4 flex items-center gap-2 text-[13px] text-primary">
                            <TrendingUp className="size-4" />
-                           Potentiel après optimisation de votre candidature : <strong>{analysis.potentialScore}/100</strong>
+                           Potentiel après optimisation de votre candidature : <strong>{analysis.potentialScore}/100</strong>
                          </div>
                        )}
                     </div>

@@ -264,7 +264,7 @@ export function CvExportEditor({
       <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
         <h2 className="mb-2 text-lg font-semibold text-calm-ink">Télécharger</h2>
         <p className="mb-4 text-sm text-calm-secondary">
-          Une seule colonne, titres standards, texte sélectionnable : le format attendu par les logiciels de recrutement. Le PDF ne gère
+          Une seule colonne, titres standards, texte sélectionnable : le format attendu par les logiciels de recrutement. Le PDF ne gère
           pas les alphabets non latins (utilisez alors le DOCX).
         </p>
         <div className="flex flex-wrap gap-3">

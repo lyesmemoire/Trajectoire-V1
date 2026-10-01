@@ -88,7 +88,7 @@ export function ConversionPanel({
               </h2>
               {atsScore && (
                 <p className="text-sm text-ink-600">
-                  Score ATS : {atsScore}/100
+                  Score ATS : {atsScore}/100
                 </p>
               )}
             </div>

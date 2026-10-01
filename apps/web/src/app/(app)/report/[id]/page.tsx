@@ -191,7 +191,7 @@ export default async function ReportPage({
         >
           ← Retour au tableau de bord
         </Link>
-        <h1 className="mb-2 text-3xl font-bold text-calm-ink">
+        <h1 className="mb-2 text-calm-h1 text-calm-ink">
           Rapport d'entretien
         </h1>
         <p className="text-calm-secondary">
@@ -200,12 +200,38 @@ export default async function ReportPage({
         </p>
       </div>
 
+      {/* Point fort d'abord */}
+      {strengths[0] && (
+        <section
+          aria-labelledby="point-fort"
+          className="mb-4 rounded-xl border border-calm-accent-line bg-calm-accent-wash p-6"
+        >
+          <h2 id="point-fort" className="mb-2 text-sm font-semibold text-calm-accent-deep">
+            Votre point fort
+          </h2>
+          <p className="text-lg leading-relaxed text-calm-ink">{strengths[0]}</p>
+        </section>
+      )}
+
+      {/* Axe prioritaire : avertissement doux, réservé aux plans qui voient les axes d'amélioration */}
+      {isPremium && improvements[0] && (
+        <section
+          aria-labelledby="axe-prioritaire"
+          className="mb-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-6"
+        >
+          <h2 id="axe-prioritaire" className="mb-2 text-sm font-semibold text-calm-warn">
+            Votre axe prioritaire
+          </h2>
+          <p className="text-lg leading-relaxed text-calm-ink">{improvements[0]}</p>
+        </section>
+      )}
+
       {/* Overall Score */}
-      <div className="mb-6 rounded-lg border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft to-calm-accent-soft p-8 text-center">
-        <p className="mb-2 text-sm font-semibold text-calm-accent">
+      <div className="mb-6 rounded-xl border border-calm-accent-line bg-calm-accent-soft p-8 text-center">
+        <p className="mb-2 text-sm font-semibold text-calm-accent-deep">
           Score global
         </p>
-        <p className="mb-2 text-6xl font-bold text-calm-accent">
+        <p className="mb-2 text-6xl font-bold text-calm-accent-deep">
           {report.overall_score}/100
         </p>
         <p className="font-medium text-calm-ink">
@@ -356,13 +382,13 @@ export default async function ReportPage({
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
           href="/simulation/new"
-          className="inline-flex items-center justify-center rounded-lg bg-calm-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-calm-accent"
+          className="inline-flex items-center justify-center tap-target rounded-xl bg-calm-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-calm-accent-deep"
         >
           Nouvelle simulation
         </Link>
         <Link
           href="/dashboard"
-          className="inline-flex items-center justify-center rounded-lg bg-calm-accent-wash px-6 py-3 font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft"
+          className="tap-target inline-flex items-center justify-center rounded-xl border border-calm-line bg-calm-surface px-6 py-3 font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft"
         >
           Retour au tableau de bord
         </Link>
@@ -370,10 +396,10 @@ export default async function ReportPage({
 
       {/* Premium CTA at the end of report */}
       {!isPremium && (
-        <div className="mt-8 rounded-xl bg-gradient-to-r from-calm-accent to-calm-accent p-8 text-calm-ink">
+        <div className="mt-8 rounded-xl border border-calm-accent-line bg-calm-accent-wash p-8 text-calm-ink">
           <div className="space-y-4 text-center">
-            <h3 className="text-2xl font-bold">Prêt à aller plus loin ?</h3>
-            <p className="text-calm-accent">
+            <h3 className="text-calm-h3 font-semibold">Prêt à aller plus loin ?</h3>
+            <p className="text-calm-secondary">
               Débloquez l'analyse complète, le plan d'action personnalisé et
               les recommandations avancées.
             </p>

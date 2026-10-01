@@ -68,7 +68,7 @@ export default function LegalNoticePage() {
 
         {missing.length > 0 && (
           <div role="note" className="mb-10 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-5 text-sm text-calm-warn">
-            <p className="font-semibold">Brouillon : cette page n&apos;est pas publiée en production.</p>
+            <p className="font-semibold">Brouillon : cette page n&apos;est pas publiée en production.</p>
             <p className="mt-1">
               {missing.length} champ(s) obligatoire(s) à renseigner dans <code>src/lib/legal/publisher.ts</code> :
             </p>
@@ -168,7 +168,7 @@ export default function LegalNoticePage() {
               </Link>
               . Pour exercer vos droits (accès, rectification, effacement, opposition, limitation, portabilité),
               écrivez à <Value value={p.dataProtectionEmail} />. Vous pouvez aussi introduire une réclamation auprès
-              de l&apos;autorité de contrôle compétente (en France, la CNIL : www.cnil.fr).
+              de l&apos;autorité de contrôle compétente (en France, la CNIL : www.cnil.fr).
             </p>
           </Section>
 

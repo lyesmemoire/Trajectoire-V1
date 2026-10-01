@@ -449,7 +449,7 @@ export function CareerMemoryPanel({
             </h2>
 
             <p className="mt-2 max-w-2xl text-sm leading-6 text-calm-secondary">
-              Une mémoire professionnelle durable :
+              Une mémoire professionnelle durable :
               faits, forces et preuves que Trajectoire
               peut réutiliser sans inventer ton parcours.
             </p>

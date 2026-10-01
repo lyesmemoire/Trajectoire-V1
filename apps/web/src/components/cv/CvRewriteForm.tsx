@@ -111,7 +111,7 @@ export function CvRewriteForm({ analysisId }: { analysisId: string }) {
   return (
     <form onSubmit={submit} className="space-y-4" noValidate>
       <fieldset className="space-y-2">
-        <legend className="text-sm font-medium text-calm-ink">Que voulez-vous réécrire ?</legend>
+        <legend className="text-sm font-medium text-calm-ink">Que voulez-vous réécrire ?</legend>
         <div className="flex flex-wrap gap-2" role="radiogroup">
           {ACTIONS.map((a) => (
             <label

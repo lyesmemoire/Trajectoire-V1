@@ -139,7 +139,7 @@ export default function SignupConversionPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-ink-900 mb-2">
-            Compte créé avec succès !
+            Compte créé avec succès !
           </h2>
           <p className="text-ink-600 mb-6">
             Vérifiez votre email pour activer votre compte.
@@ -302,7 +302,7 @@ export default function SignupConversionPage() {
           </form>
 
           <p className="text-center text-sm text-ink-600 mt-6">
-            Déjà un compte ?{' '}
+            Déjà un compte ?{' '}
             <a href="/login" className="font-medium text-ink-900 hover:underline">
               Se connecter
             </a>

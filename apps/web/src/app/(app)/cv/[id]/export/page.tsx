@@ -41,7 +41,7 @@ export default async function CVExportPage({ params }: { params: Promise<{ id: s
       <h1 className="mb-2 text-3xl font-bold text-calm-ink">Exporter mon CV</h1>
       <p className="mb-8 max-w-2xl text-sm leading-relaxed text-calm-secondary">
         Voici les informations que nous avons pu lire dans «&nbsp;{exportDraft.fileName.trim() || "votre CV"}&nbsp;». La lecture
-        automatique peut oublier ou déplacer des éléments : relisez et complétez chaque section avant de télécharger. Le fichier est
+        automatique peut oublier ou déplacer des éléments : relisez et complétez chaque section avant de télécharger. Le fichier est
         généré à partir de ce que vous validez ici, rien n&apos;est ajouté ni inventé.
       </p>
 

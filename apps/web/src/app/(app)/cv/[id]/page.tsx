@@ -115,7 +115,7 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
                 <p className={`text-base font-medium ${scoreTone(analysis.atsScoreAfter).text}`}>{scoreTone(analysis.atsScoreAfter).label}</p>
                 {analysis.atsScoreBefore !== null && (
                   <p className="text-calm-secondary">
-                    Avant : {analysis.atsScoreBefore}/100
+                    Avant : {analysis.atsScoreBefore}/100
                     {delta !== null && <span className={delta >= 0 ? " text-calm-accent" : " text-calm-warn"}> ({delta >= 0 ? "+" : ""}{delta} pts)</span>}
                   </p>
                 )}
@@ -213,7 +213,7 @@ export default async function CVDetailPage({ params }: { params: Promise<{ id: s
 
         {!ats && (
           <p className="rounded-2xl border border-calm-line bg-calm-surface p-6 text-sm text-calm-secondary">
-            Cette analyse est antérieure au moteur de score actuel : seul le score enregistré est disponible. Relancez une analyse pour
+            Cette analyse est antérieure au moteur de score actuel : seul le score enregistré est disponible. Relancez une analyse pour
             obtenir le détail.
           </p>
         )}

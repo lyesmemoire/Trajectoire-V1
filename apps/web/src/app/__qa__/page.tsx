@@ -61,7 +61,7 @@ export default function QADesignPage() {
             <Badge variant="expert" />
           </div>
           <p className="mt-3 text-xs text-ink-500">
-            Vérifier : PRO (bronze) ne doit pas ressembler à un warning (terracotta) ni à un danger (brick).
+            Vérifier : PRO (bronze) ne doit pas ressembler à un warning (terracotta) ni à un danger (brick).
           </p>
         </section>
 
@@ -95,7 +95,7 @@ export default function QADesignPage() {
             <Button variant="danger">Danger (Brick)</Button>
           </div>
           <p className="mt-3 text-xs text-ink-500">
-            Vérifier : danger = brick (irréversible). Jamais terracotta pour danger.
+            Vérifier : danger = brick (irréversible). Jamais terracotta pour danger.
             Premium = bronze (rare, accent). Primary = ink (structurel).
           </p>
         </section>
@@ -110,15 +110,15 @@ export default function QADesignPage() {
           <div className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium space-y-4">
             <h2 className="font-sans text-xl text-ink-900">Collision test</h2>
             <p className="text-sm text-ink-600">
-              Mets le badge PRO à côté du podium : ils ne doivent pas partager la même "signature" couleur.
+              Mets le badge PRO à côté du podium : ils ne doivent pas partager la même "signature" couleur.
               Le podium utilise des hex isolés (#B8860B, #8A8A8A, #CD7F32), le badge PRO utilise bronze-* tokens.
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-ink-700">Plan :</span>
+              <span className="text-sm text-ink-700">Plan :</span>
               <Badge variant="pro" />
             </div>
             <div className="mt-4 p-4 bg-ivoire-50 rounded-lg border border-ivoire-200">
-              <p className="text-xs text-ink-600 font-medium mb-2">Palette Podium (hex isolés) :</p>
+              <p className="text-xs text-ink-600 font-medium mb-2">Palette Podium (hex isolés) :</p>
               <div className="flex gap-2 text-xs">
                 <span className="px-2 py-1 rounded text-calm-ink" style={{backgroundColor: "#B8860B"}}>Gold #B8860B</span>
                 <span className="px-2 py-1 rounded text-calm-ink" style={{backgroundColor: "#8A8A8A"}}>Silver #8A8A8A</span>

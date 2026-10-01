@@ -300,7 +300,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
                       <span>·</span>
                       <span className="font-mono">{source.boardKey}</span>
                       <span>·</span>
-                      <span>Dernier scan : {relativeDate(source.lastSyncAt)}</span>
+                      <span>Dernier scan : {relativeDate(source.lastSyncAt)}</span>
                     </div>
                     {source.lastSyncError && (
                       <p className="mt-1 max-w-lg truncate text-[11px] text-danger">{source.lastSyncError}</p>

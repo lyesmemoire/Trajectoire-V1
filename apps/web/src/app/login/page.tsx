@@ -330,7 +330,7 @@ function LoginContent() {
 
               {sessionEmail ? (
                 <p className="mt-1 text-sm text-calm-secondary">
-                  Compte :{" "}
+                  Compte :{" "}
                   <span className="font-medium text-calm-ink">
                     {sessionEmail}
                   </span>
@@ -405,7 +405,7 @@ function LoginContent() {
                     href="/forgot-password"
                     className="rounded text-xs text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
                   >
-                    Mot de passe oublié ?
+                    Mot de passe oublié ?
                   </Link>
                 </div>
 
@@ -436,7 +436,7 @@ function LoginContent() {
             </form>
 
             <p className="mt-6 text-center text-sm text-calm-secondary">
-              Pas encore de compte ?{" "}
+              Pas encore de compte ?{" "}
               <Link
                 href="/signup"
                 className="rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"

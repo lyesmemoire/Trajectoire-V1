@@ -148,7 +148,7 @@ export default function SignupPage() {
             Cliquez dessus pour activer votre compte.
           </p>
           <p className="text-xs text-calm-secondary">
-            Rien reçu ? Regardez dans vos courriers indésirables. Si un compte existe déjà avec cette adresse,
+            Rien reçu ? Regardez dans vos courriers indésirables. Si un compte existe déjà avec cette adresse,
             connectez-vous ou réinitialisez votre mot de passe.
           </p>
           {error && (
@@ -267,7 +267,7 @@ export default function SignupPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-calm-secondary">
-          Déjà un compte ? <Link href="/login" className="inline-flex min-h-11 items-center rounded px-1 text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">Se connecter</Link>
+          Déjà un compte ? <Link href="/login" className="inline-flex min-h-11 items-center rounded px-1 text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">Se connecter</Link>
         </p>
       </div>
     </div>

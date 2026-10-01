@@ -26,7 +26,7 @@ export default function PrivacyPage() {
               1. Données collectées
             </h2>
             <p className="text-ink-700">
-              Nous collectons les données suivantes :
+              Nous collectons les données suivantes :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
               <li>Informations d'inscription (email, nom)</li>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
               2. Finalité du traitement
             </h2>
             <p className="text-ink-700">
-              Vos données sont utilisées pour :
+              Vos données sont utilisées pour :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
               <li>Fournir le service Trajectoire</li>
@@ -58,13 +58,13 @@ export default function PrivacyPage() {
               3. Conservation des données
             </h2>
             <p className="text-ink-700">
-              Vos données sont conservées :
+              Vos données sont conservées :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
-              <li>CV analysés et simulations : conservés tant que votre compte existe, puis supprimés définitivement avec lui. Vous pouvez supprimer votre compte à tout moment depuis les paramètres ; la suppression efface vos CV, analyses, simulations et opportunités. Les factures restent conservées par notre prestataire de paiement (obligation comptable).</li>
-              <li>Données de paiement : conformément aux obligations légales</li>
-              <li>Données analytics : 13 mois maximum</li>
-              <li>Compte utilisateur : jusqu'à sa suppression</li>
+              <li>CV analysés et simulations : conservés tant que votre compte existe, puis supprimés définitivement avec lui. Vous pouvez supprimer votre compte à tout moment depuis les paramètres ; la suppression efface vos CV, analyses, simulations et opportunités. Les factures restent conservées par notre prestataire de paiement (obligation comptable).</li>
+              <li>Données de paiement : conformément aux obligations légales</li>
+              <li>Données analytics : 13 mois maximum</li>
+              <li>Compte utilisateur : jusqu'à sa suppression</li>
             </ul>
           </section>
 
@@ -85,7 +85,7 @@ export default function PrivacyPage() {
               5. Vos droits
             </h2>
             <p className="text-ink-700">
-              Conformément au RGPD, vous disposez des droits suivants :
+              Conformément au RGPD, vous disposez des droits suivants :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
               <li>Droit d'accès à vos données</li>
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
               <li>Droit de limitation du traitement</li>
             </ul>
             <p className="text-ink-700 mt-4">
-              Pour exercer ces droits, contactez-nous à : {contactEmail()}
+              Pour exercer ces droits, contactez-nous à : {contactEmail()}
             </p>
           </section>
 
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-ink-700">
               Nous ne partageons jamais vos données personnelles avec des tiers
-              à des fins commerciales. Vos données peuvent être partagées avec :
+              à des fins commerciales. Vos données peuvent être partagées avec :
             </p>
             <ul className="list-disc pl-6 text-ink-700 space-y-2">
               <li>Stripe (traitement des paiements)</li>
@@ -143,14 +143,14 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative à cette politique de confidentialité,
-              contactez-nous à : {contactEmail()}
+              contactez-nous à : {contactEmail()}
             </p>
           </section>
         </div>
 
         <div className="mt-12 pt-8 border-t border-ivoire-200">
           <p className="text-sm text-ink-500">
-            Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
+            Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
           </p>
         </div>
       </div>

@@ -47,7 +47,7 @@ export default function RootError({ error, reset }: Props) {
       </div>
 
       {error.digest ? (
-        <p className="mt-8 text-xs text-foreground-muted">Référence à communiquer au support : {error.digest}</p>
+        <p className="mt-8 text-xs text-foreground-muted">Référence à communiquer au support : {error.digest}</p>
       ) : null}
     </main>
   )

@@ -53,7 +53,7 @@ export function BenefitsList({ benefits = defaultBenefits }: BenefitsListProps) 
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-ink-900 mb-4">
-        Créez gratuitement votre compte pour :
+        Créez gratuitement votre compte pour :
       </h3>
       
       {benefits.map((benefit, index) => {

@@ -31,7 +31,7 @@ export default function AppError({ error, reset }: Props) {
         Un problème est survenu
       </h1>
       <p className="mt-3 text-base leading-relaxed text-calm-secondary">
-        Cette page n&apos;a pas pu s&apos;afficher. Vos données ne sont pas affectées : réessayez, ou revenez
+        Cette page n&apos;a pas pu s&apos;afficher. Vos données ne sont pas affectées : réessayez, ou revenez
         au tableau de bord.
       </p>
 
@@ -52,7 +52,7 @@ export default function AppError({ error, reset }: Props) {
       </div>
 
       {error.digest ? (
-        <p className="mt-8 text-xs text-calm-secondary">Référence à communiquer au support : {error.digest}</p>
+        <p className="mt-8 text-xs text-calm-secondary">Référence à communiquer au support : {error.digest}</p>
       ) : null}
     </div>
   )

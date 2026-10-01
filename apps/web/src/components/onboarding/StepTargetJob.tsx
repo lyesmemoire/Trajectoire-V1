@@ -59,7 +59,7 @@ export function StepTargetJob({ data, onChange }: StepTargetJobProps) {
           tabIndex={-1}
           className="text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
-          Quel poste visez-vous ?
+          Quel poste visez-vous ?
         </h2>
         <p className="text-sm leading-relaxed text-calm-secondary">
           Nous adaptons vos entretiens au poste, au secteur et à votre niveau

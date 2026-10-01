@@ -38,7 +38,7 @@ export function VoiceAuditionPanel() {
                 </select>
               </label>
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-calm-secondary">« {AUDITION_SAMPLES[persona].text} »</p>
+            <p className="mt-3 text-sm leading-relaxed text-calm-secondary">« {AUDITION_SAMPLES[persona].text} »</p>
             {/* key : recharge le lecteur quand la voix change */}
             <audio
               key={persona + voice}

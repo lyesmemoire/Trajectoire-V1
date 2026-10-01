@@ -129,12 +129,12 @@ export default function SimulationPage() {
 
   const statusConfig: Record<string, { label: string; dot: string }> = {
     idle         : { label: 'Initialisation…',   dot: 'bg-calm-line-soft' },
-    connecting   : { label: 'Connexion…',         dot: 'bg-calm-warn animate-pulse' },
+    connecting   : { label: 'Connexion…',         dot: 'bg-calm-secondary animate-pulse' },
     connected    : { label: 'En ligne',           dot: 'bg-calm-accent' },
     speaking_user: { label: 'Vous parlez…',       dot: 'bg-calm-accent animate-pulse' },
-    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-calm-surface animate-pulse' },
+    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-calm-accent-deep animate-pulse' },
     disconnected : { label: 'Déconnecté',         dot: 'bg-calm-line' },
-    error        : { label: 'Erreur',             dot: 'bg-calm-warn' },
+    error        : { label: 'Connexion interrompue', dot: 'bg-calm-secondary' },
   }
   const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
 
@@ -154,7 +154,7 @@ export default function SimulationPage() {
               title="Temps restant sur la durée choisie"
             >
               <Clock className="size-3.5" aria-hidden />
-              <span className="sr-only">Temps restant : </span>
+              <span className="sr-only">Temps restant : </span>
               {clock}
             </span>
           )}
@@ -168,10 +168,10 @@ export default function SimulationPage() {
       {isNearTimeLimit && !isEnding && (
         <div
           role="status"
-          className="flex shrink-0 items-center justify-center gap-2 border-b border-calm-warn-line bg-calm-warn-soft px-6 py-2 text-xs text-calm-warn"
+          className="flex shrink-0 items-center justify-center gap-2 border-b border-calm-accent-line bg-calm-accent-wash px-6 py-2 text-sm text-calm-ink"
         >
           <Clock className="size-3.5" aria-hidden />
-          Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
+          Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
         </div>
       )}
 
@@ -219,13 +219,13 @@ export default function SimulationPage() {
                   </>
                 ) : status === 'error' ? (
                   <>
-                    <AlertCircle className="size-7 text-calm-warn" />
+                    <AlertCircle className="size-7 text-calm-secondary" />
                     <p className="max-w-xs text-sm text-calm-secondary">
                       {errorMessage ?? 'Erreur de connexion'}
                     </p>
                     <button
                       onClick={connect}
-                      className="rounded-lg bg-calm-accent-soft px-4 py-2 text-xs font-semibold text-calm-secondary transition hover:bg-calm-accent-soft"
+                      className="tap-target rounded-xl bg-calm-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
                     >
                       Réessayer
                     </button>
@@ -268,7 +268,7 @@ export default function SimulationPage() {
                   <button
                     type="button"
                     onClick={connect}
-                    className="rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent"
+                    className="tap-target rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
                   >
                     Reprendre l&apos;entretien
                   </button>
@@ -277,18 +277,19 @@ export default function SimulationPage() {
                   type="button"
                   onClick={toggleMute}
                   aria-pressed={isMuted}
+                  aria-label={isMuted ? 'Réactiver le micro' : 'Couper le micro'}
+                  title={isMuted ? 'Réactiver le micro' : 'Couper le micro'}
                   disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
-                  className="flex items-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-soft disabled:opacity-40 aria-pressed:border-calm-warn-line aria-pressed:text-calm-warn"
+                  className="tap-target flex items-center justify-center rounded-full text-calm-secondary transition hover:bg-calm-accent-wash hover:text-calm-ink disabled:opacity-40 aria-pressed:bg-calm-accent-soft aria-pressed:text-calm-accent-deep"
                 >
-                  {isMuted ? <MicOff className="size-4" aria-hidden /> : <Mic className="size-4" aria-hidden />}
-                  {isMuted ? 'Réactiver le micro' : 'Couper le micro'}
+                  {isMuted ? <MicOff className="size-5" aria-hidden /> : <Mic className="size-5" aria-hidden />}
                 </button>
                 {confirmEnd && !isEnding ? (
                   <>
                     <button
                       type="button"
                       onClick={handleEnd}
-                      className="flex items-center gap-2 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-2.5 text-sm font-semibold text-calm-warn transition hover:bg-calm-warn-soft"
+                      className="tap-target flex items-center gap-2 rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
                     >
                       <PhoneOff className="size-4" aria-hidden />
                       Confirmer la fin
@@ -296,7 +297,7 @@ export default function SimulationPage() {
                     <button
                       type="button"
                       onClick={() => setConfirmEnd(false)}
-                      className="rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-soft"
+                      className="tap-target rounded-xl px-4 py-2.5 text-sm font-medium text-calm-secondary transition hover:bg-calm-accent-wash"
                     >
                       Continuer
                     </button>
@@ -306,16 +307,16 @@ export default function SimulationPage() {
                     type="button"
                     onClick={() => setConfirmEnd(true)}
                     disabled={isEnding}
-                    className="group flex items-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-5 py-2.5 text-sm font-medium text-calm-secondary transition-all duration-200 hover:border-calm-warn-line hover:bg-calm-warn-soft hover:text-calm-warn disabled:opacity-40"
+                    className="tap-target group flex items-center gap-2 rounded-xl border border-calm-accent-line bg-calm-surface px-5 py-2.5 text-sm font-semibold text-calm-accent-deep transition-colors duration-200 hover:bg-calm-accent-wash disabled:opacity-40"
                   >
                     {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
-                    {isEnding ? 'Finalisation…' : 'Terminer'}
+                    {isEnding ? 'Finalisation…' : 'Terminer l’entretien'}
                   </button>
                 )}
               </div>
             </div>
-            <p className="mt-3 text-center text-xs text-calm-secondary">
-              Parlez naturellement : Alexandra détecte automatiquement quand vous avez fini. Alexandra est une IA.
+            <p className="mt-3 text-center text-sm text-calm-secondary">
+              Respirez. Vous pouvez reformuler à tout moment.
             </p>
           </div>
         </div>

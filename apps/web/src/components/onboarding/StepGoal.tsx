@@ -70,7 +70,7 @@ export function StepGoal({
           tabIndex={-1}
           className="text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
-          Quel est votre premier objectif ?
+          Quel est votre premier objectif ?
         </h2>
         <p className="text-sm leading-relaxed text-calm-secondary">
           Choisissez le type de simulation par lequel commencer. Vous pourrez

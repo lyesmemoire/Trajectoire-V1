@@ -297,7 +297,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                 <Briefcase className="h-4 w-4" />
               </div>
               <h2 className="text-lg font-bold text-calm-ink">
-                Quel poste visez-vous ?
+                Quel poste visez-vous ?
               </h2>
             </div>
 
@@ -324,7 +324,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               </div>
               <div className="flex flex-1 items-center gap-3">
                 <h2 className="text-lg font-bold text-calm-ink">
-                  Vous avez l'offre d'emploi ?
+                  Vous avez l'offre d'emploi ?
                 </h2>
                 <span className="rounded-full bg-calm-accent-soft px-2.5 py-0.5 text-xs font-semibold text-calm-accent">
                   Recommandé
@@ -456,7 +456,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                   Style de la recruteuse
                 </label>
                 <p className="mb-3 text-sm text-calm-secondary">
-                  Le ton et la voix changent ; c&apos;est toujours Alexandra, une recruteuse simulée par IA.
+                  Le ton et la voix changent ; c&apos;est toujours Alexandra, une recruteuse simulée par IA.
                 </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {[
@@ -516,7 +516,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               {/* Question imposée */}
               <div>
                 <label htmlFor="mandatoryQuestion" className="mb-1 block text-sm font-semibold text-calm-ink">
-                  Une question que vous redoutez ? <span className="font-normal text-calm-secondary">(facultatif)</span>
+                  Une question que vous redoutez ? <span className="font-normal text-calm-secondary">(facultatif)</span>
                 </label>
                 <p className="mb-3 text-sm text-calm-secondary">
                   Elle sera posée une fois, mot pour mot, vers la moitié de l&apos;entretien.

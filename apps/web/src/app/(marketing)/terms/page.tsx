@@ -101,7 +101,7 @@ export default function TermsPage() {
             </h2>
             <p className="text-ink-700">
               Pour toute question relative aux présentes CGV, vous pouvez nous
-              contacter à l'adresse email : {contactEmail()}
+              contacter à l'adresse email : {contactEmail()}
             </p>
           </section>
 
@@ -119,7 +119,7 @@ export default function TermsPage() {
 
         <div className="mt-12 pt-8 border-t border-ivoire-200">
           <p className="text-sm text-ink-500">
-            Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
+            Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
           </p>
         </div>
       </div>

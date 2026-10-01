@@ -108,8 +108,8 @@ export function ChatWorkspace() {
               <div className="h-96 overflow-y-auto mb-4 space-y-4">
                 {messages.length === 0 && (
                   <div className="text-center text-calm-tertiary py-8">
-                    <p>Bonjour ! Je suis votre assistant RH.</p>
-                    <p className="mt-2">Comment puis-je vous aider aujourd'hui ?</p>
+                    <p>Bonjour ! Je suis votre assistant RH.</p>
+                    <p className="mt-2">Comment puis-je vous aider aujourd'hui ?</p>
                     <p className="mt-4 text-sm">
                       Exemples: "Trouve un Data Engineer senior" ou "Pourquoi ce score ?"
                     </p>

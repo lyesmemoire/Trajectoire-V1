@@ -49,7 +49,7 @@ export default async function CVListPage() {
       {analyses.length === 0 ? (
         <div className="rounded-2xl border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-8 text-center">
           <h2 className="mb-2 text-xl font-semibold text-calm-ink">Aucune analyse pour le moment</h2>
-          <p className="mb-6 text-calm-secondary">Importez votre CV et, si vous en avez une, une offre : le score apparaîtra ici.</p>
+          <p className="mb-6 text-calm-secondary">Importez votre CV et, si vous en avez une, une offre : le score apparaîtra ici.</p>
           <Link href="/analyze">
             <Button variant="dark" size="md">
               Lancer une analyse

@@ -234,7 +234,7 @@ export function NewOpportunityForm() {
             <Sparkles className="h-5 w-5 text-calm-accent" />
 
             <h2 className="mt-4 text-lg font-bold text-calm-ink">
-              Bientôt : analyse intelligente
+              Bientôt : analyse intelligente
             </h2>
 
             <p className="mt-2 text-sm leading-6 text-calm-secondary">

@@ -39,7 +39,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           </button>
           {error.digest ? (
             <p className="mt-8 text-xs text-foreground-muted">
-              Référence à communiquer au support : {error.digest}
+              Référence à communiquer au support : {error.digest}
             </p>
           ) : null}
         </main>

@@ -315,7 +315,7 @@ export function AnalyzeOpportunityClient({
                   ) : null}
                   {opportunity.matchScore !== null ? (
                     <p className="mt-1 text-sm font-medium text-calm-accent-deep">
-                      Score actuel : {opportunity.matchScore}/100
+                      Score actuel : {opportunity.matchScore}/100
                       {opportunity.recommendationLabel ? ` · ${opportunity.recommendationLabel}` : ""}
                     </p>
                   ) : null}
