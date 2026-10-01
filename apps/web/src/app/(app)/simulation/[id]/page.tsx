@@ -155,7 +155,8 @@ export default function SimulationPage() {
     processing        : 'bg-calm-secondary animate-pulse',
     error             : 'bg-calm-secondary',
   }
-  const statusLabel = copy.subtitle
+  // Pastille d'en-tête : libellé court (le sous-titre complet est dans la zone de contrôle).
+  const statusLabel = copy.title ?? "Voix indisponible"
   const statusDot = dotByState[uiState]
 
   // Action du bouton du micro, selon l'état (libellés dans lib/interview/simulation-ui-state.ts).
