@@ -1,7 +1,10 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { LazyMotion, domAnimation, m, useReducedMotion } from "framer-motion"
+import { LazyMotion, m, useReducedMotion } from "framer-motion"
+
+// Chargement différé des fonctionnalités (domAnimation) : le premier affichage n'embarque que le composant m.
+const loadFeatures = () => import("./motion-features").then((mod) => mod.default)
 
 /**
  * Apparition douce au défilement (fondu + léger décalage). Jamais sur le héros. Rendu sans animation si
@@ -19,7 +22,7 @@ export function Reveal({
   const reduce = useReducedMotion()
   if (reduce) return <div className={className}>{children}</div>
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={loadFeatures}>
       <m.div
         className={className}
         initial={{ opacity: 0, y: 14 }}
