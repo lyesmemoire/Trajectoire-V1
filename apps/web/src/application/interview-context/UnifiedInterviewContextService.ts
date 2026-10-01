@@ -363,7 +363,7 @@ export class UnifiedInterviewContextService {
       await this.supabase
         .from("interview_sessions")
         .select(
-          "id,user_id,job_title,job_description,level,interview_type,opportunityId",
+          "id,user_id,job_title,job_description,level,interview_type",
         )
         .eq("id", sessionId)
         .eq("user_id", userId)
@@ -380,6 +380,28 @@ export class UnifiedInterviewContextService {
 
     const sessionRow =
       session as SessionRow;
+
+    /*
+     * Lien optionnel avec une opportunité. Lu dans une requête séparée : la colonne `opportunityId` n'existe
+     * pas encore sur `interview_sessions` (la migration du 2026-09-15 l'a ajoutée à l'ancienne table
+     * `InterviewSession`). La sélectionner avec les autres colonnes faisait échouer toute la requête, donc
+     * tout le contexte (CV, offre) était indisponible. Ici, une colonne absente donne simplement « pas de lien ».
+     */
+    try {
+      const { data: link, error: linkError } =
+        await this.supabase
+          .from("interview_sessions")
+          .select("opportunityId")
+          .eq("id", sessionId)
+          .eq("user_id", userId)
+          .maybeSingle();
+
+      if (!linkError && link && typeof link.opportunityId === "string") {
+        sessionRow.opportunityId = link.opportunityId;
+      }
+    } catch {
+      /* lien indisponible : on continue sans */
+    }
 
     /*
      * ----------------------------------------------------------

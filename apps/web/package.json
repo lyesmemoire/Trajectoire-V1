@@ -15,7 +15,8 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:fix": "tsx src/e2e/run-e2e.ts",
     "test:api": "tsx src/e2e/api-test-runner.ts",
-    "test:check": "tsx src/e2e/simple-api-test.ts"
+    "test:check": "tsx src/e2e/simple-api-test.ts",
+    "radar:check-ft": "tsx --env-file=.env.local scripts/manual/check-france-travail.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.44",

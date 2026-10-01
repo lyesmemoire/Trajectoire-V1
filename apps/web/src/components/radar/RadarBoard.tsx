@@ -2,7 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react"
 import Link from "next/link"
-import { ExternalLink, Loader2, Mic2, Plus, RefreshCw, Telescope, Trash2 } from "lucide-react"
+import { ExternalLink, Loader2, Plus, RefreshCw, Telescope, Trash2 } from "lucide-react"
+import { PrepareInterviewButton } from "@/components/opportunities/PrepareInterviewButton"
 import { csrfFetch } from "@/lib/security/csrf-client"
 import { CONTRACT_TYPES } from "@/lib/radar/schemas"
 import { cn } from "@/lib/utils"
@@ -350,9 +351,7 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
                   {m.opportunityId ? (
                     <>
                       <Link href={`/opportunities/${m.opportunityId}`} className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white/80 transition hover:bg-white/10">Ouvrir l&apos;opportunité</Link>
-                      <Link href={`/simulation/new?opportunity=${m.opportunityId}`} className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-indigo-400">
-                        <Mic2 className="size-3.5" aria-hidden /> Simuler cet entretien
-                      </Link>
+                      <PrepareInterviewButton opportunityId={m.opportunityId} />
                     </>
                   ) : (
                     <button type="button" onClick={() => track(m)} disabled={busy === m.id} className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50">
