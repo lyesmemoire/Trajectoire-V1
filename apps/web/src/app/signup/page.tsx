@@ -5,6 +5,7 @@ import Link from "next/link"
 import { createClient } from "@/lib/supabase"
 import { darkTokens } from "@/lib/theme/dark-tokens"
 import { usePreviewStorage } from "@/hooks/usePreviewStorage"
+import { postAuthPathFromIntent } from "@/lib/auth/checkout-intent"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import { isValidEmail, normalizeEmail, validatePassword, MIN_PASSWORD_LENGTH } from "@/lib/auth/credentials"
 import { translateAuthError } from "@/lib/auth/auth-errors"
@@ -113,7 +114,7 @@ export default function SignupPage() {
       // attend le clic sur le lien de confirmation. Plus de chemin propre au développement.
       if (signUpData.session) {
         if (hasToken()) await claimPreview()
-        window.location.href = "/dashboard"
+        window.location.href = postAuthPathFromIntent()
         return
       }
 

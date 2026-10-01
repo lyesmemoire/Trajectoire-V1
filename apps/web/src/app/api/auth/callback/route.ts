@@ -21,6 +21,7 @@ import type { EmailOtpType } from "@supabase/supabase-js"
 import { createClient } from "@/lib/supabase/server"
 import { logger } from "@/lib/logger"
 import { PreviewTransferService } from "@/lib/preview/PreviewTransferService"
+import { CHECKOUT_INTENT_COOKIE, resolvePostAuthDestination } from "@/lib/auth/checkout-intent"
 
 export const dynamic = "force-dynamic"
 
@@ -107,7 +108,13 @@ export async function GET(request: NextRequest) {
     return loginError(origin, "link_invalid")
   }
 
-  const response = NextResponse.redirect(`${origin}${next}`)
+  // Plan choisi sur /pricing avant l'inscription : seule la destination par défaut est remplacée
+  // (jamais un `next` explicite). Le témoin est supprimé dans tous les cas.
+  const checkoutIntent = request.cookies.get(CHECKOUT_INTENT_COOKIE)?.value
+  const destination = resolvePostAuthDestination(next, checkoutIntent)
+
+  const response = NextResponse.redirect(`${origin}${destination}`)
+  if (checkoutIntent !== undefined) response.cookies.delete(CHECKOUT_INTENT_COOKIE)
 
   const previewToken = request.cookies.get(PREVIEW_COOKIE)?.value
   if (previewToken) {
