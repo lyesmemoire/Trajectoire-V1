@@ -69,6 +69,10 @@ export interface DashboardTimelineEvent {
   date: Date
   /** Statut */
   status: 'completed' | 'in-progress' | 'upcoming'
+  /** Lien d'action facultatif (rapport, reprise d'une séance…) */
+  href?: string
+  /** Libellé de l'action, avec `href` */
+  actionLabel?: string
 }
 
 /**

@@ -612,6 +612,14 @@ export function DashboardWidgets({
                             <span className="hidden text-xs tabular-nums text-white/35 sm:inline">
                               {formatDate(event.date)}
                             </span>
+                            {event.href && event.actionLabel ? (
+                              <Link
+                                href={event.href}
+                                className={`rounded-md px-2 py-1 text-xs font-medium text-indigo-300 transition-colors hover:bg-white/[0.05] hover:text-indigo-200 ${focusRing}`}
+                              >
+                                {event.actionLabel}
+                              </Link>
+                            ) : null}
                             {event.status === "completed" ? (
                               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
                                 <span className="size-1.5 rounded-full bg-emerald-400" />
