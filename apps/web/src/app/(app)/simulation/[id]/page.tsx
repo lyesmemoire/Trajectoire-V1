@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
+  SIMULATION_REASSURANCE,
   SIMULATION_UI_COPY,
   deriveSimulationUiState,
   friendlyVoiceError,
@@ -302,7 +303,7 @@ export default function SimulationPage() {
               <SoundWave active={uiState === 'listening' && isUserSpeaking} color="bg-calm-accent" />
 
               <p className="text-center text-sm text-calm-secondary">
-                Respirez. Vous pouvez reformuler à tout moment.
+                {SIMULATION_REASSURANCE}
               </p>
 
               {confirmEnd && !isEnding ? (

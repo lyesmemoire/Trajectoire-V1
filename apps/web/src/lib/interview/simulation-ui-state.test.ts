@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest"
 import {
+  SIMULATION_REASSURANCE,
   SIMULATION_UI_COPY,
   deriveSimulationUiState,
   friendlyVoiceError,
@@ -103,5 +104,17 @@ describe("friendlyVoiceError", () => {
       expect(out).not.toMatch(/openai|realtime|\b[45]\d{2}\b|sdp/i)
     }
     expect(friendlyVoiceError(null)).toBe(VOICE_FALLBACK_ERROR)
+  })
+})
+
+describe("ligne de rassurance", () => {
+  it("texte exact du skill", () => {
+    expect(SIMULATION_REASSURANCE).toBe("Respirez. Vous pouvez reformuler à tout moment.")
+  })
+  it("la page l’affiche en permanence, quel que soit l’état (rendu hors de toute condition d’état)", async () => {
+    const { readFileSync } = await import("node:fs")
+    const src = readFileSync(new URL("../../app/(app)/simulation/[id]/page.tsx", import.meta.url), "utf-8")
+    expect(src).toMatch(/{SIMULATION_REASSURANCE}/)
+    expect(src).not.toMatch(/Respirez./)
   })
 })
