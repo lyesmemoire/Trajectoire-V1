@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useId, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { X } from "lucide-react"
 
@@ -23,15 +23,55 @@ export function Modal({
   size = "md",
   showClose = true,
 }: ModalProps) {
-  // Close on Escape key
+  const titleId = useId()
+  const panelRef = useRef<HTMLDivElement | null>(null)
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
+
+  // Dialogue accessible : Échap ferme ; le focus entre dans le dialogue, y reste (Tab / Maj+Tab) puis revient à
+  // l'élément qui l'a ouvert à la fermeture.
   useEffect(() => {
     if (!isOpen) return
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const panel = panelRef.current
+    const focusables = () =>
+      Array.from(
+        panel?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      )
+    // Focus initial : l'élément marqué data-autofocus (action la moins risquée), sinon le premier focusable.
+    ;(panel?.querySelector<HTMLElement>("[data-autofocus]") ?? focusables()[0] ?? panel)?.focus()
+
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
+      if (e.key === "Escape") {
+        e.stopPropagation()
+        onCloseRef.current()
+        return
+      }
+      if (e.key !== "Tab") return
+      const items = focusables()
+      if (items.length === 0) {
+        e.preventDefault()
+        return
+      }
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey && (active === first || !panel?.contains(active))) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && (active === last || !panel?.contains(active))) {
+        e.preventDefault()
+        first.focus()
+      }
     }
     document.addEventListener("keydown", handler)
-    return () => document.removeEventListener("keydown", handler)
-  }, [isOpen, onClose])
+    return () => {
+      document.removeEventListener("keydown", handler)
+      opener?.focus()
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
@@ -54,13 +94,16 @@ export function Modal({
       {/* Modal panel */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div
+          ref={panelRef}
+          tabIndex={-1}
           className={cn(
-            "relative w-full bg-calm-surface text-calm-ink rounded-2xl shadow-2xl shadow-calm-ink/10 border border-calm-line",
+            "relative w-full bg-calm-surface text-calm-ink rounded-2xl shadow-2xl shadow-calm-ink/10 border border-calm-line outline-none",
             sizes[size],
           )}
           role="dialog"
           aria-modal="true"
-          aria-labelledby={title ? "modal-title" : undefined}
+          aria-labelledby={title ? titleId : undefined}
+          aria-label={title ? undefined : "Boîte de dialogue"}
         >
           {/* Header */}
           {(title || showClose) && (
@@ -68,7 +111,7 @@ export function Modal({
               <div className="min-w-0">
                 {title && (
                   <h2
-                    id="modal-title"
+                    id={titleId}
                     className="text-base font-semibold text-calm-ink leading-snug"
                   >
                     {title}
@@ -134,21 +177,24 @@ export function ConfirmModal({
       <p className="text-sm text-calm-secondary mb-5">{message}</p>
       <div className="flex gap-2.5">
         <button
+          type="button"
+          data-autofocus
           onClick={onClose}
-          className="flex-1 py-2.5 bg-calm-accent-wash text-calm-ink text-sm font-medium rounded-lg hover:bg-calm-accent-soft transition-colors disabled:opacity-50"
+          className="min-h-[44px] flex-1 py-2.5 bg-calm-accent-wash text-calm-ink text-sm font-medium rounded-lg hover:bg-calm-accent-soft transition-colors disabled:opacity-50"
           disabled={isLoading}
         >
           {cancelText}
         </button>
         <button
+          type="button"
           onClick={onConfirm}
           className={cn(
-            "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-colors disabled:opacity-50",
+            "min-h-[44px] flex-1 py-2.5 text-sm font-semibold rounded-lg transition-colors disabled:opacity-50",
             confirmStyles[variant],
           )}
           disabled={isLoading}
         >
-          {isLoading ? "Chargement…" : confirmText}
+          {isLoading ? "Un instant…" : confirmText}
         </button>
       </div>
     </Modal>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
+import { ConfirmModal } from '@/components/ui/modal'
 import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
@@ -318,39 +319,30 @@ export default function SimulationPage() {
                 {SIMULATION_REASSURANCE}
               </p>
 
-              {confirmEnd && !isEnding ? (
-                <div role="alertdialog" aria-label="Terminer l’entretien" className="flex flex-wrap items-center justify-center gap-2 text-sm text-calm-ink">
-                  <span>Terminer maintenant ? Le rapport sera généré sur ce qui a été dit.</span>
-                  <button
-                    type="button"
-                    onClick={handleEnd}
-                    className="tap-target rounded-xl px-3 font-semibold text-calm-accent-deep underline underline-offset-4 hover:bg-calm-accent-wash"
-                  >
-                    Oui, terminer
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setConfirmEnd(false)}
-                    className="tap-target rounded-xl px-3 text-calm-secondary hover:bg-calm-accent-wash"
-                  >
-                    Continuer
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setConfirmEnd(true)}
-                  disabled={isEnding}
-                  className="tap-target inline-flex items-center gap-2 rounded-xl px-3 text-sm text-calm-secondary underline underline-offset-4 transition-colors hover:text-calm-ink disabled:opacity-40"
-                >
-                  {isEnding ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <PhoneOff className="size-4" aria-hidden />}
-                  {isEnding ? 'Finalisation…' : 'Terminer l\u2019entretien'}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => setConfirmEnd(true)}
+                disabled={isEnding}
+                className="tap-target inline-flex items-center gap-2 rounded-xl px-3 text-sm text-calm-secondary underline underline-offset-4 transition-colors hover:text-calm-ink disabled:opacity-40"
+              >
+                {isEnding ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <PhoneOff className="size-4" aria-hidden />}
+                {isEnding ? 'Finalisation…' : 'Terminer l’entretien'}
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <ConfirmModal
+        isOpen={confirmEnd}
+        onClose={() => { if (!isEnding) setConfirmEnd(false) }}
+        onConfirm={() => { void handleEnd() }}
+        title="Terminer l’entretien ?"
+        message="Le rapport sera généré à partir de ce qui a été dit. La simulation prendra fin : vous ne pourrez plus y répondre."
+        confirmText="Oui, terminer"
+        cancelText="Continuer"
+        variant="info"
+        isLoading={isEnding}
+      />    </div>
   )
 }
