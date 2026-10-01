@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
+import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
   SIMULATION_REASSURANCE,
   SIMULATION_UI_COPY,
   deriveSimulationUiState,
   friendlyVoiceError,
+  isWrittenFallbackVisible,
   shouldAutoMute,
   type SimulationUiState,
 } from '@/lib/interview/simulation-ui-state'
@@ -165,6 +167,7 @@ export default function SimulationPage() {
     : copy.mic.action === 'none' && uiState !== 'recruiter_speaking' ? Loader2
     : Mic
   const voiceError = friendlyVoiceError(errorMessage)
+  const lastAssistantText = [...transcripts].reverse().find((t) => t.role === 'assistant')?.text ?? null
 
   return (
     <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-calm-bg text-calm-ink md:h-full md:min-h-0">
@@ -301,6 +304,15 @@ export default function SimulationPage() {
               </button>
 
               <SoundWave active={uiState === 'listening' && isUserSpeaking} color="bg-calm-accent" />
+
+              {/* Repli écrit : voix indisponible (micro refusé ou absent, connexion ou jeton en échec). */}
+              {isWrittenFallbackVisible(uiState) && !isEnding && (
+                <WrittenAnswer
+                  sessionId={sessionId}
+                  knownQuestion={lastAssistantText}
+                  onEnded={() => { void handleEndRef.current() }}
+                />
+              )}
 
               <p className="text-center text-sm text-calm-secondary">
                 {SIMULATION_REASSURANCE}
