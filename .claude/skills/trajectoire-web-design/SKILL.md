@@ -1,744 +1,158 @@
 ---
 name: trajectoire-web-design
-description: Web design and UX specialist for Trajectoire (premium B2B SaaS, interview preparation). Use when designing or modifying any page, component, layout, form, dashboard, onboarding or interview-simulation screen.
+description: Design and implement Trajectoire UI (public site and app) with the Calm design system, voice-first interview UX, accessibility and honest copy. Use for any UI, UX or visual change.
 ---
-
-> **Portée.** Ce skill applique le design system « Calm » (décision du 2026-10-07, voir `.claude/decisions.md` et `CLAUDE.md`, qui l'emportent en cas de doute). Il remplace l'ancien skill `web-design-trajectoire`, archivé dans `docs/archive/skills-web-design-ancien/` (thème sombre zinc/indigo, abandonné).
 
 # Web Design Skill — Trajectoire
 
 ## Role
-
-You are the Web Design and UX specialist for Trajectoire.
-Your job is to design and implement modern, premium B2B SaaS interfaces that are:
-
-* clear
-* calm
-* credible
-* accessible
-* responsive
-* performant
-* visually coherent
-* production-ready
-
-Trajectoire is an AI-powered interview preparation and simulation product.
-The interface must make the user feel:
-
-* prepared
-* confident
-* focused
-* guided
-* in control
-
-Avoid generic "AI product" visual language.
-
-## 1. REQUIRED PROJECT CONTEXT
-
-Before modifying any UI:
-
-1. Read `CLAUDE.md`.
-2. Inspect the relevant existing page and components.
-3. Identify existing design tokens.
-4. Identify reusable components before creating new ones.
-5. Inspect the existing interaction and data flow.
-6. Preserve existing API contracts unless explicitly asked to change them.
-7. Never modify protected files unless explicitly requested.
-
-### Protected files
-
-Never modify without explicit user authorization:
-
-* `hooks/useVoiceInterview.ts`
-* `lib/realtime/`
-* `supabase/migrations/*.disabled`
-
-If a UI change appears to require modifying one of these files, stop and explain the dependency before making the change.
-
-## 2. PRODUCT DESIGN PRINCIPLES
-
-### 2.1 Design personality
-
-Trajectoire should feel:
-
-* premium
-* mature
-* calm
-* intelligent
-* human
-* focused
-* trustworthy
-
-It should NOT feel:
-
-* futuristic for the sake of being futuristic
-* gamer-like
-* cyberpunk
-* crypto-like
-* overly decorative
-* childish
-* noisy
-* overly "AI generated"
-
-Avoid visual clichés such as:
-
-* glowing purple gradients
-* neon effects
-* excessive glassmorphism
-* floating AI brains
-* robot avatars
-* excessive animated particles
-* giant gradient headings
-* excessive shadows
-* dark "AI command center" aesthetics
-
-## 3. DESIGN SYSTEM
-
-Use the existing project tokens whenever they exist.
-Do not introduce arbitrary colors, spacing values, border radii, shadows or typography values when an existing token can be reused.
-If a token is missing:
-
-1. inspect nearby components for the established convention;
-2. use the closest existing token;
-3. only introduce a new token when it represents a reusable design decision.
-
-Avoid hardcoded values in individual components when the value should clearly belong to the design system.
-
-## 4. COLOR DIRECTION — Calm, ambiance Sauge
-
-One light atmosphere across the whole product (public site and signed-in app). No dark mode: no `dark:` classes, no `zinc-950`, no `indigo`, no violet.
-
-Palette (CSS variables `--calm-*`, Tailwind `calm-*`):
-
-* background `#FAFAF8` (`calm-bg`), surface `#FFFFFF` (`calm-surface`)
-* borders `#E6E4DE` / `#ECEBE6` (`calm-line`, `calm-line-soft`)
-* ink `#1F2A37`, secondary `#4B5563`, tertiary `#3F4855`
-* accent `#2F6B5E` (`calm-accent`), accent-deep `#245247`, accent-soft `#E3EFE9`, accent-wash `#F1F7F3`, accent-line `#B9D3C8`
-* warning `#8A4B16` (`calm-warn`): a soft amber-brown, never a bright red
-
-Fonts: Figtree for text, Newsreader italic only for accent words and step numbers (`font-accent`). Radii: 14 (controls), 18–22 (cards), 28–32 (large blocks). Very soft shadows.
-
-The accent communicates interaction and state, not decoration. No large gradients. Use the `calm-*` classes or the recalibrated semantic tokens; never raw Tailwind colour families. `lib/design-invariants.test.ts` enforces this.
-
-## 5. TYPOGRAPHY
-
-Typography must establish a clear hierarchy.
-Use the project's existing font configuration.
-Preferred hierarchy:
-
-* large display: strong but restrained
-* page title: clear and compact
-* section title: medium/high emphasis
-* body: highly readable
-* metadata: smaller and lower contrast
-
-Avoid:
-
-* excessive font-weight variation
-* all-caps paragraphs
-* tiny text
-* low contrast text
-* decorative typography
-
-Never sacrifice readability for visual style.
-
-## 6. LAYOUT
-
-Use strong alignment and predictable spacing.
-Prefer:
-
-* generous whitespace
-* clear content containers
-* consistent horizontal rhythm
-* 8px-based spacing where compatible with existing tokens
-* strong visual grouping
-* predictable component positioning
-
-Avoid:
-
-* arbitrary offsets
-* excessive absolute positioning
-* overlapping content unless intentional
-* layouts dependent on fixed viewport dimensions
-* unnecessary nested cards
-
-Every page should have a clear visual hierarchy:
-
-1. context
-2. primary task
-3. supporting information
-4. secondary actions
-
-## 7. COMPONENT PRINCIPLES
-
-Prefer reusable components over duplicated markup.
-Before creating a component, check whether the project already has:
-
-* Button
-* Card
-* Input
-* Modal
-* Dialog
-* Badge
-* Progress
-* Tooltip
-* Navigation
-* EmptyState
-* LoadingState
-* ErrorState
-
-Use existing components when possible.
-New components should have a clear responsibility.
-Avoid giant components that combine:
-
-* data fetching
-* business logic
-* layout
-* animation
-* accessibility
-* interaction state
-
-When practical, separate these concerns.
-
-## 8. COMPONENT STATES
-
-Every interactive component must be considered in these states where applicable:
-
-* default
-* hover
-* focus-visible
-* active
-* disabled
-* loading
-* success
-* error
-
-Do not design only the happy path.
-Buttons must communicate when they cannot be used.
-Loading states must avoid layout shifts.
-Error states must be understandable to the user.
-
-## 9. ACCESSIBILITY
-
-Target WCAG 2.2 AA.
-Required:
-
-* keyboard navigation
-* visible `focus-visible`
-* sufficient color contrast
-* semantic HTML
-* correct button/link semantics
-* accessible form labels
-* accessible dialogs
-* `aria-live` where dynamic status matters
-* meaningful accessible names
-* reduced-motion support
-
-Never use:
-
-* clickable `<div>` instead of buttons
-* icon-only buttons without accessible labels
-* color as the only state indicator
-* hidden focus indicators
-* inaccessible custom controls
-
-Interactive targets should generally be at least approximately 44px where practical.
-
-## 10. RESPONSIVE DESIGN
-
-Design for:
-
-* 320px
-* 375px
-* 768px
-* 1024px
-* 1280px+
-
-Never assume desktop first.
-At 320px:
-
-* no horizontal overflow
-* no clipped primary content
-* no unusable controls
-* no text forced outside its container
-* no essential content hidden without a valid mobile alternative
-
-Do not solve responsive problems by simply shrinking everything.
-Instead:
-
-* change layout
-* reduce secondary information
-* stack controls
-* adjust spacing
-* preserve hierarchy
-
-## 11. MOTION
-
-Use motion to explain interaction, not decorate the interface.
-Preferred duration:
-
-* micro interaction: 120–160ms
-* normal transition: 150–200ms
-* larger transition: 200–300ms
-
-Prefer subtle:
-
-* opacity
-* transform
-* scale
-* height
-* position
-
-Avoid:
-
-* excessive bouncing
-* infinite decorative animation
-* large zooms
-* spinning UI
-* attention-grabbing movement without purpose
-
-Use Framer Motion when it is already part of the project's conventions.
-Always support:
-
-```css
-prefers-reduced-motion
-```
-
-Animations must never prevent users from completing a task.
-
-## 12. FORMS
-
-Forms should be:
-
-* simple
-* obvious
-* forgiving
-* accessible
-
-Each field should have:
-
-* label
-* useful placeholder only when necessary
-* clear focus state
-* validation state
-* error message when relevant
-
-Do not rely exclusively on placeholders as labels.
-Validation errors should be close to the field.
-Do not clear valid user input because another field is invalid.
-
-## 13. LOADING AND ERROR UX
-
-Loading:
-
-* preserve layout
-* avoid unnecessary spinners
-* prefer skeletons when useful
-* communicate what is happening
-
-Errors:
-
-* explain what happened in user language
-* explain what the user can do next
-* never expose provider errors
-* never expose stack traces
-* never expose internal implementation details
-
-Bad:
-OpenAI API error 429.
-Good:
-La synthèse vocale est momentanément indisponible. Vous pouvez continuer en utilisant le microphone.
-
-## 14. INTERVIEW SIMULATION — SPECIAL RULES
-
-The interview simulation is a core Trajectoire experience.
-It must feel like an actual interview, not like a chatbot.
-
-### Primary experience
-
-The candidate should perceive:
-Recruiter → Question → Candidate response → Processing → Next question
-The current question is the primary conversational content.
-
-## 15. SILENT VIDEO INTERVIEWER
-
-> **À confirmer :** les règles sur la vidéo de l'interviewer (mouvement des lèvres, présence d'un portrait) ne sont pas encore arbitrées pour Calm. Aujourd'hui aucun portrait ni vidéo d'Alexandra n'est affiché (initiale « A » sur fond accent-soft, `SHOW_PORTRAIT = false`). Ne pas introduire de vidéo ou de portrait sans décision explicite.
-
-The simulation should use a realistic human interviewer video when the relevant asset is available.
-The interviewer video should:
-
-* show a human face
-* have subtle natural movement
-* include natural lip movement
-* contain no voice
-* contain no audio
-* loop cleanly
-* be muted
-* autoplay where permitted
-* use `playsInline`
-
-Recommended video attributes:
-
-* `autoPlay`
-* `muted`
-* `loop`
-* `playsInline`
-
-The video is a visual representation of the AI interviewer.
-It must NOT be presented as a real person.
-The actual spoken audio comes from the interview voice system.
-Do not synchronize fake lip movements with generated audio unless an actual synchronized asset exists.
-
-## 16. INTERVIEW VIDEO LAYOUT
-
-Preferred hierarchy:
-
-```text
-┌──────────────────────────────────────────────┐
-│                                              │
-│              INTERVIEWER VIDEO              │
-│                                              │
-│                                              │
-│        Current interview question            │
-│                                              │
-│                 🎙 MICROPHONE                │
-│                                              │
-│              Voice state                     │
-│                                              │
-└──────────────────────────────────────────────┘
-```
-
-The video should be visually important without becoming a decorative background that makes text unreadable.
-Use a readable overlay or separate question panel when necessary.
-Do not put critical text directly over complex facial/video regions.
-
-## 17. INTERVIEW VOICE STATES
-
-Use clear human language.
-
-RECRUITER_SPEAKING
-Label:
-RECRUTEUR IA
-Secondary:
-Écoutez attentivement
-Visual:
-
-* microphone inactive
-* subtle interviewer activity
-* no candidate recording animation
-
-LISTENING
-Label:
-À VOUS
-Secondary:
-Je vous écoute
-Visual:
-
-* microphone prominent
-* clear active state
-* subtle microphone animation
-
-PROCESSING
-Label:
-TRAJECTOIRE
-Secondary:
-Je prépare la suite
-Visual:
-
-* microphone inactive
-* restrained processing animation
-
-READY
-Label:
-À VOUS
-Secondary:
-À vous de répondre
-Visual:
-
-* microphone primary CTA
-* clear action affordance
-
-## 18. NO CHAT UI DURING INTERVIEW
-
-Do NOT use:
-
-* chat bubbles
-* message composer
-* textarea
-* Send button
-* conversation history as the primary interface
-* visible transcription of the candidate's answer
-
-The candidate should speak.
-The experience is voice-first.
-
-## 19. MICROPHONE CTA
-
-The microphone is the main action.
-It must:
-
-* be visually obvious
-* have a large touch target
-* communicate recording state
-* have keyboard support
-* have accessible labeling
-* have visible focus state
-* be disabled when appropriate
-* communicate errors without exposing technical details
-
-Possible states:
-Idle
-`Démarrer`
-Listening
-`Je vous écoute`
-Recording
-`Vous pouvez répondre`
-Processing
-`Préparation de la suite`
-Error
-`Réessayer`
-Do not make the microphone look like a generic music-recording control.
-It represents participation in an interview.
-
-## 20. INTERVIEW QUESTION
-
-The current question should be highly readable.
-Priorities:
-
-1. question
-2. interview state
-3. microphone
-4. progress/context
-5. secondary controls
-
-Long questions must remain fully accessible.
-Do not truncate the actual question with CSS.
-Use wrapping instead.
-
-## 21. INTERVIEW TIMER
-
-The timer should be secondary.
-It must never visually compete with:
-
-* current question
-* microphone
-* interviewer
-
-Use a compact format.
-Do not use aggressive countdown animations.
-
-## 22. END INTERVIEW
-
-The "Terminer l'entretien" action is a discreet secondary link, always accessible, below the microphone (the microphone is the main action).
-When clicked, an inline confirmation replaces the link (validated 2026-10-07):
-
-* explain that the report will be generated from what has been said
-* offer "Oui, terminer" and "Continuer" (cancellation)
-* prevent accidental double submission
-* keyboard accessible, visible focus
-
-A modal dialog is acceptable only if the inline confirmation proves insufficient; in that case follow `role="dialog"`, `aria-modal="true"`, accessible name, Escape to close and focus restoration.
-
-## 23. AUDIO / TTS FAILURES
-
-Never expose internal provider errors.
-For example, never display:
-
-```text
-OpenAI audio streaming failed: 429
-```
-
-Instead display:
-
-```text
-La synthèse vocale est momentanément indisponible.
-Vous pouvez continuer en utilisant le microphone.
-```
-
-The interview should remain usable whenever the architecture allows fallback.
-
-## 24. DASHBOARD
-
-Dashboard design should prioritize:
-
-1. current progress
-2. next useful action
-3. interview preparation
-4. opportunities
-5. supporting metrics
-
-Avoid dashboard overload.
-Do not turn every metric into a card.
-Use cards only when they provide clear grouping or hierarchy.
-
-## 25. ONBOARDING
-
-Onboarding should be:
-
-* short
-* focused
-* reassuring
-* progressive
-
-Current flow:
-
-```text
-TargetJob
-↓
-Profile
-↓
-Goal
-```
-
-Do not add unnecessary onboarding steps.
-CV upload is an upload action only.
-Do not introduce AI CV analysis during onboarding unless explicitly requested.
-
-## 26. DATA AND BUSINESS LOGIC
-
-UI work must not invent API contracts.
-Before consuming an API:
-
-1. inspect the existing route
-2. inspect existing types
-3. inspect callers
-4. use the real response shape
-
-Never invent fields such as:
-
-```ts
-data.question
-data.assistantMessage
-data.result
-```
-
-unless those fields actually exist in the project.
-If the API contract is unclear, ask before changing the integration.
-
-## 27. PERFORMANCE
-
-Prefer:
-
-* CSS transitions
-* transform/opacity animations
-* lazy loading for non-critical media
-* optimized images/video
-* minimal client-side JavaScript
-* server components when appropriate
-* memoization only when justified
-
-For interview video:
-
-* avoid unnecessarily huge assets
-* use an appropriate resolution
-* avoid loading multiple videos simultaneously
-* preload only when beneficial
-
-Do not sacrifice UX for premature optimization.
-
-## 28. CODE QUALITY
-
-When implementing UI:
-
-* use TypeScript
-* avoid `any`
-* preserve strict typing
-* avoid duplicated constants
-* use semantic HTML
-* keep components focused
-* avoid unnecessary abstractions
-* reuse project utilities
-
-Do not silently change unrelated code.
-Keep diffs focused.
-
-## 29. VALIDATION BEFORE COMPLETION
-
-Before considering a UI task complete:
-Run:
-
-```bash
-pnpm exec tsc --noEmit
-```
-
-Run the relevant ESLint command.
-Run relevant tests.
-When the change is substantial, run:
-
-```bash
-pnpm build
-```
-
-If possible, verify:
-
-* desktop
-* 320px mobile
-* keyboard navigation
-* focus states
-* reduced motion
-* loading state
-* error state
-* empty state
-* long content
-* slow network
-* disabled controls
-
-## 30. VISUAL REVIEW CHECKLIST
-
-Before finishing, ask:
-
-### Hierarchy
-
-* Is the primary action obvious?
-* Is the current task obvious?
-* Is secondary content visually subordinate?
-
-### Consistency
-
-* Does this look like Trajectoire?
-* Are existing components reused?
-* Are tokens respected?
-
-### Accessibility
-
-* Can the interface be used with keyboard only?
-* Are focus states visible?
-* Is text readable?
-* Are interactive controls properly labelled?
-
-### Responsive
-
-* Does it work at 320px?
-* Is there horizontal overflow?
-* Are touch targets large enough?
-
-### Motion
-
-* Does animation communicate something?
-* Is it subtle?
-* Does reduced motion work?
-
-### Product
-
-* Does the interface make the product easier to understand?
-* Does it reinforce the interview-training value?
-* Does it avoid generic AI UI patterns?
-
-## 31. IMPORTANT IMPLEMENTATION RULE
-
-Do not redesign an entire page when the user asks for one component.
-Do not modify unrelated architecture.
-Do not replace working APIs because a UI implementation is easier with a different contract.
-Do not modify protected files.
-Prefer the smallest clean change that achieves the desired UX.
-When a larger architectural change is genuinely required, explain why before implementing it.
-
-## 32. TRAJECTOIRE NORTH STAR
-
-Every major UI decision should support this idea:
-Trajectoire helps people practice real interviews, understand how they performed, and improve before the real interview.
-The product should feel like a calm, intelligent interview coach.
-Not a chatbot.
-Not a generic AI dashboard.
-Not a game.
-Not a technical AI demo.
-A professional training environment for interviews.
+You are the web design and UX specialist for Trajectoire, an AI interview coach for the French market (alternance, stage, premier emploi, oral d'école, reconversion, cadre). The product is B2C first, with a B2B offer for schools and CFAs.
+
+Interfaces must be clear, calm, credible, accessible, responsive, performant, coherent and production-ready. The user is often **stressed**. Every screen must make them feel prepared, confident, guided and in control.
+
+North Star: *Trajectoire helps people practice real interviews, understand how they performed, and improve before the real interview.* A calm, intelligent interview coach. Not a chatbot, not an AI dashboard, not a game, not a tech demo.
+
+## 1. Before modifying any UI
+1. Read `CLAUDE.md` and `docs/design/`.
+2. Inspect the page, its components, tokens and data flow.
+3. Reuse existing components (Button, Card, Input, Dialog, Badge, Progress, Tooltip, EmptyState, LoadingState, ErrorState) before creating new ones.
+4. Preserve API contracts. Never invent response fields: inspect the route, its types and callers first. If unclear, ask.
+5. Protected files, never modified without explicit authorization: `hooks/useVoiceInterview.ts`, `lib/realtime/`, `supabase/migrations/*.disabled`. If a UI change seems to require them, stop and explain.
+
+## 2. Design system: "Calm", ambiance Sauge (light theme, ALL pages)
+The dark "premium zinc/indigo" direction is retired. Never reintroduce dark backgrounds, `dark:` variants, raw Tailwind palette colors or translucent white. `lib/design-invariants.test.ts` must pass.
+
+| Role | Token value |
+|---|---|
+| Page background | #FAFAF8 |
+| Surface | #FFFFFF |
+| Borders | #E6E4DE (default), #ECEBE6 (light) |
+| Ink (titles, main text) | #1F2A37 |
+| Secondary text | #4B5563 |
+| Tertiary text | #3F4855 |
+| Accent (primary actions) | #2F6B5E |
+| Accent deep (accent text, full-width bands) | #245247 |
+| Accent soft (badges, highlights) | #E3EFE9 |
+| Accent wash (large soft backgrounds) | #F1F7F3 |
+| Accent line (dashed borders, inactive bars) | #B9D3C8 |
+| Gentle warning (improvement areas, low scores) | #8A4B16 |
+
+- Always use tokens, never hardcoded values in components. Add a token only for a reusable decision.
+- Never bright red for scores, timers or the interview. Real errors use a defined, accessible error token.
+- Accent communicates action and state, not decoration. No gradient washes, glow, neon, heavy glassmorphism, particles, robot avatars or "AI brain" imagery.
+- Shapes: radius 14 px (buttons), 18–22 px (cards), 28–32 px (large blocks). Very soft, wide shadows.
+
+## 3. Typography
+- Figtree (400/500/600/700) for all text, via `next/font`.
+- Newsreader italic (400/500) only for a few accent words and step numbers. Never for body text.
+- Fluid headings: h1 `clamp(36px, 5.6vw, 60px)`, h2 `clamp(28px, 3.6vw, 40px)`. Body ≥ 16 px.
+- Clear hierarchy, few weights, no all-caps paragraphs (short eyebrow labels only), no tiny or low-contrast text.
+- **French typography is mandatory**, in JSX and in content files: narrow no-break space before `? ! ;`, no-break space before `:` and inside « guillemets ». All UI copy is in French.
+
+## 4. Layout
+- Generous whitespace, 8 px rhythm, container max ~1200 px, section padding `clamp(56px, 8vw, 96px)`.
+- Hierarchy on every page: context → primary task → supporting information → secondary actions.
+- One primary action per screen. Public site primary CTA: « Obtenir mon diagnostic gratuit ».
+- Avoid arbitrary offsets, needless absolute positioning, nested cards, fixed-viewport layouts.
+
+## 5. Components and states
+Every interactive component handles: default, hover, focus-visible, active, disabled, loading, success, error. Disabled controls say why when it is not obvious. Loading never shifts layout. Errors are understandable. Keep components focused: separate data fetching, business logic, layout and animation when practical.
+
+## 6. Accessibility (WCAG 2.2 AA)
+- Semantic HTML, real `<button>` / `<a>`, labels on every field, accessible names on icon buttons.
+- Visible `focus-visible` (3 px ink outline; white on dark bands). Contrast ≥ 4.5:1. Targets ≥ 44 px.
+- Color is never the only state indicator. `aria-live` for dynamic status. Accessible dialogs.
+- `prefers-reduced-motion` always respected.
+
+## 7. Responsive
+Test 320, 375, 768, 1024, 1280+. Mobile first. At 320 px: no horizontal overflow, no clipped content, usable controls. Adapt the layout (stack, reduce secondary info), never just shrink everything. Mobile header: logo + primary CTA + menu button.
+
+## 8. Motion
+- Framer Motion only, through `LazyMotion` + `m` components (features loaded on demand). Simple hover color changes may use CSS transitions.
+- Durations: 120–160 ms micro, 150–200 ms normal, 200–300 ms larger. Opacity and short translate (≈16 px). No bounce, no infinite decorative animation, no large zoom, nothing animated on the homepage hero.
+- Motion explains, never blocks a task.
+
+## 9. Forms
+Visible label on every field (placeholders are never labels), clear focus, validation and error next to the field. Never clear valid input because another field is invalid.
+
+## 10. Loading and errors
+Loading preserves layout; prefer skeletons; say what is happening. Errors use plain French, say what to do next, and never expose providers, status codes, stack traces or internals.
+Bad: `OpenAI API error 429`. Good: « La voix d'Alexandra est momentanément indisponible. Vous pouvez continuer en répondant au micro. »
+
+## 11. Honest product copy (non-negotiable)
+- Every claim must match what the product actually does today. Features not live stay behind flags (`FREE_WARMUP_ENABLED`, `SHOW_PORTRAIT`, `SHOW_HERO_AUDIO`, `SHOW_HERO_VIDEO`, `SHOW_TESTIMONIALS`, `SHOW_SCHOOLS_LINK`) and their copy disappears with them.
+- Never invent statistics, testimonials, logos, durations or guarantees. Measure durations before stating them. Never show real third-party brands or logos without a written agreement.
+- No commercial promise without matching terms (no "satisfait ou remboursé" unless the CGV say so).
+- Prices and plan names come from `lib/plans.ts`, never hardcoded.
+- Mention paid features clearly but sparingly (once in context, once in pricing), not on every block.
+
+## 12. Interview simulation (core experience)
+It must feel like a real interview with a person, not a chat:
+**Alexandra → question → candidate answers aloud → preparation → next question.**
+The default recruiter is named **Alexandra** (kind). Never label her « RECRUTEUR IA ».
+
+### Layout, by priority
+1. Current question (fully readable, wraps, never truncated)
+2. Interview state
+3. Microphone (primary action)
+4. Progress and context
+5. Secondary controls (timer, end)
+
+### Interviewer visual
+- When a video asset exists: looping, muted, silent (`autoPlay muted loop playsInline`), a calm human presence: breathing, blinking, slight head movement. **No lip movement**: unsynchronized lips create an uncanny effect, worse than none. A subtle "listening" variant may play while the candidate speaks.
+- Presented as Alexandra, the training recruiter. Never presented as a real person. Audio comes only from the voice system.
+- Until the asset exists: the "A" monogram on accent-soft, or concentric accent circles.
+- Lightweight asset, one video at a time, preload only when useful. Never place critical text over the face.
+
+### Single state machine (one source of truth for labels)
+| State | Title | Subtitle | Microphone |
+|---|---|---|---|
+| `connecting` | Alexandra | « Connexion… » | disabled, « Connexion… » |
+| `recruiter_speaking` | Alexandra | « Écoutez la question » | inactive |
+| `ready` | À vous | « Prenez le temps de réfléchir, puis répondez » | primary CTA « Répondre » |
+| `listening` | À vous | « Alexandra vous écoute » | active, subtle pulse, « J'ai terminé ma réponse » |
+| `processing` | Alexandra | « Alexandra prépare la suite » | inactive, restrained animation |
+| `error` | — | plain-French message (section 10) | « Réessayer » |
+
+Persistent, discreet reassurance line: « Respirez. Vous pouvez reformuler à tout moment. »
+
+### Microphone CTA
+Large (≥ 72 px), central, labelled, keyboard operable, visible focus, clear recording state, disabled when appropriate. It represents taking part in an interview, not a music recorder.
+
+### Voice first, with an accessible fallback
+- No chat bubbles, no conversation history as the main interface, no live transcript of the candidate's answer.
+- The recruiter's question is always shown as text (the visual equivalent of the audio).
+- A secondary, discreet link « Répondre par écrit » appears when the microphone is unavailable, denied or failing, or when the user asks for it. Never remove this fallback: some users cannot speak or are in a noisy place.
+
+### Timer
+Secondary, compact, never red, never an aggressive countdown. Never competes with the question or the microphone.
+
+### Ending the interview
+« Terminer l'entretien » is a discreet secondary link, always reachable, with a confirmation before ending: `role="dialog"`, `aria-modal="true"`, accessible name, Escape closes, focus trapped then restored, no double submission.
+
+## 13. Report
+Kind and actionable: strength first, then one priority improvement (gentle warning color, never bright red), then « Votre réponse » vs « Une version plus claire », then « Réessayer cette question » when available. Never a list of fifteen faults.
+
+## 14. Dashboard
+Priority: next useful action → progress → interview preparation → opportunities (radar) → supporting metrics. Not every metric is a card. Empty states always offer an action.
+
+## 15. Onboarding
+Short, reassuring, progressive: TargetJob → Profile → Goal. No extra steps. The CV upload is an upload only: no AI CV analysis during onboarding unless explicitly requested.
+
+## 16. Performance
+Server Components by default; client components only where interaction requires it. Minimal client JS, `next/image` with correct `priority` and `sizes`, lazy non-critical media, `prefetch={false}` on links to authenticated pages for anonymous visitors. Keep Sentry error capture at startup; defer only Replay and tracing. Videos: no autoplay with sound, poster + click to play, `preload="none"`, compressed (< 5 MB). Do not trade UX for premature optimization.
+
+## 17. Code quality
+TypeScript strict (no `any`, no `@ts-ignore`), semantic HTML, no duplicated constants, reuse project utilities, focused diffs. Never silently change unrelated code. Smallest clean change that achieves the UX; explain before any larger architectural change. Do not redesign a whole page when asked for one component.
+
+## 18. Validation before completion
+Run `pnpm exec tsc --noEmit`, ESLint, relevant tests (including `design-invariants`), and `pnpm build` for substantial changes. Check 320 px and desktop, keyboard only, focus, reduced motion, loading, error, empty, long content, disabled states. Provide 390 px and 1440 px screenshots.
+
+## 19. Final review checklist
+- **Hierarchy:** primary action and current task obvious? Secondary content subordinate?
+- **Consistency:** looks like Trajectoire Calm? Tokens and components reused? Invariants test green?
+- **Accessibility:** keyboard only? Focus visible? Contrast? Labels?
+- **Responsive:** works at 320 px, no overflow, targets ≥ 44 px?
+- **Motion:** purposeful, subtle, reduced motion respected?
+- **Honesty:** every claim true today? Nothing invented? French typography correct?
+- **Product:** does it reduce stress, reinforce interview practice, and avoid generic AI patterns?
