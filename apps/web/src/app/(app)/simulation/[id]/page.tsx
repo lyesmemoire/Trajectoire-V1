@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { ConfirmModal } from '@/components/ui/modal'
+import { endDestination } from '@/lib/interview/report-resolution'
 import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
@@ -124,6 +125,7 @@ export default function SimulationPage() {
     // on les attend, sinon le rapport est généré sans elles.
     await flushTranscripts()
 
+    let redirectedTo: string | null = null
     try {
       // /api/simulation/end bascule le statut de la session, puis appelle
       // lui-même /api/report/generate en interne : pas d'appel séparé requis.
@@ -137,13 +139,12 @@ export default function SimulationPage() {
         body  : formData,
       })
 
-      if (res.redirected) {
-        router.push(new URL(res.url).pathname)
-        return
-      }
-    } catch { /* réseau indisponible : redirection de repli ci-dessous */ }
+      // Rapport généré : la route redirige vers /report/<id du rapport>. Tout autre cas (génération en échec,
+      // conflit, réseau) : l'id de séance, que la page rapport résout ou fait attendre — jamais un 404.
+      redirectedTo = res.redirected ? new URL(res.url).pathname : null
+    } catch { /* réseau indisponible : destination de repli ci-dessous */ }
 
-    router.push('/report/' + sessionId)
+    router.push(endDestination({ redirectedTo, sessionId }))
   }
   handleEndRef.current = handleEnd
 
