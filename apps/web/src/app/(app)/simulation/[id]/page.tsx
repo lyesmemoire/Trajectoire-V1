@@ -287,7 +287,7 @@ export default function SimulationPage() {
               </p>
 
               {confirmEnd && !isEnding ? (
-                <div role="alertdialog" aria-label="Terminer l\u2019entretien" className="flex flex-wrap items-center justify-center gap-2 text-sm text-calm-ink">
+                <div role="alertdialog" aria-label="Terminer l’entretien" className="flex flex-wrap items-center justify-center gap-2 text-sm text-calm-ink">
                   <span>Terminer maintenant ? Le rapport sera généré sur ce qui a été dit.</span>
                   <button
                     type="button"
