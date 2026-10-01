@@ -16,6 +16,7 @@ import {
   Upload,
   X,
 } from "lucide-react"
+import { FORM_NOTE } from "@/components/home/content"
 import { PreviewTokenManager } from "@/lib/preview-analysis/previewTokenManager"
 import {
   CV_ACCEPT_ATTRIBUTE,
@@ -320,7 +321,7 @@ export function CvPreviewForm() {
         >
           {showJob ? "− Masquer l’offre visée" : "+ Ajouter l’offre visée"}
         </button>
-        <p className="text-sm text-calm-secondary">Gratuit · sans carte bancaire · résultat en 1 minute</p>
+        <p className="text-sm text-calm-secondary">{FORM_NOTE}</p>
       </div>
 
       <div id="offre-visee" hidden={!showJob} className="mt-2">

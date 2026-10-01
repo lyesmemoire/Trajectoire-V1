@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { SHOW_HERO_AUDIO, SHOW_PORTRAIT, HERO_QUESTION } from "./content"
+import { HERO_CARD_NOTE, HERO_QUESTION, SHOW_HERO_AUDIO, SHOW_PORTRAIT } from "./content"
 import { HeroAudioPlayer } from "./HeroAudioPlayer"
 
 /** Avatar d'Alexandra : initiale tant que SHOW_PORTRAIT est faux (aucun vrai portrait n'existe encore). */
@@ -57,6 +57,8 @@ export function HeroProductCard() {
         </span>
         <p className="mt-3 text-lg leading-relaxed text-calm-ink">«&nbsp;{HERO_QUESTION}&nbsp;»</p>
       </div>
+
+      {HERO_CARD_NOTE && <p className="mt-3 text-xs text-calm-tertiary">{HERO_CARD_NOTE}</p>}
 
       {SHOW_HERO_AUDIO && <HeroAudioPlayer />}
 

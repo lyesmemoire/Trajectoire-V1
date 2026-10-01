@@ -4,7 +4,19 @@ import { PLANS, type Plan } from "@/lib/plans"
 import { canShowLegalNotice } from "@/lib/legal/publisher"
 import { Reveal } from "./Reveal"
 import { Logo } from "./Logo"
-import { FAQ, REASSURANCE, REPORT_EXAMPLE, SHOW_SCHOOLS_LINK, SHOW_TESTIMONIALS, STEPS, TESTIMONIALS } from "./content"
+import {
+  FAQ,
+  FINAL_TEXT,
+  PRICING_INTRO,
+  REASSURANCE,
+  REPORT_EXAMPLE,
+  REPORT_NOTE,
+  SHOW_SCHOOLS_LINK,
+  SHOW_TESTIMONIALS,
+  STEPS,
+  STEPS_TITLE,
+  TESTIMONIALS,
+} from "./content"
 
 const container = "mx-auto w-full max-w-[1200px] px-5"
 const eyebrow = "text-xs font-semibold uppercase tracking-[0.16em] text-calm-accent-deep"
@@ -21,7 +33,7 @@ export function HowItWorks() {
         <Reveal>
           <p className={eyebrow}>Comment ça marche</p>
           <h2 id="comment-titre" className="mt-3 text-calm-h1 font-semibold text-calm-ink">
-            Trois étapes, moins de dix minutes
+            {STEPS_TITLE}
           </h2>
         </Reveal>
         <ol className="mt-10 grid gap-8 min-[900px]:grid-cols-3 min-[900px]:gap-10">
@@ -72,9 +84,13 @@ export function ReportSection() {
               <p className="text-xs font-semibold uppercase tracking-wide text-calm-accent-deep">Une version plus claire</p>
               <p className="mt-1 text-calm-ink">«&nbsp;{REPORT_EXAMPLE.clearer}&nbsp;»</p>
             </div>
-            <a href="#diagnostic" className={`${outlineBtn} mt-6`}>
-              Réessayer cette question
-            </a>
+            {REPORT_NOTE ? (
+              <p className="mt-6 text-sm text-calm-secondary">{REPORT_NOTE}</p>
+            ) : (
+              <a href="#diagnostic" className={`${outlineBtn} mt-6`}>
+                Réessayer cette question
+              </a>
+            )}
           </div>
         </Reveal>
       </div>
@@ -145,8 +161,7 @@ export function PricingSection() {
             Commencez gratuitement
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-calm-secondary">
-            Commencez sans payer, puis choisissez l’offre qui correspond à votre recherche. L’offre Pro est sans
-            engagement et résiliable à tout moment.
+            {PRICING_INTRO}
           </p>
         </Reveal>
         <ul className="mt-10 grid items-stretch gap-5 min-[900px]:grid-cols-3">
@@ -237,7 +252,7 @@ export function FinalCta() {
           Votre prochain entretien se prépare aujourd’hui.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-calm-secondary">
-          Déposez votre CV, découvrez ce qu’un recruteur va vous demander, et entraînez-vous au calme.
+          {FINAL_TEXT}
         </p>
         <a href="#diagnostic" className={`${solidBtn} mx-auto mt-8 !w-auto px-8`}>
           Obtenir mon diagnostic gratuit

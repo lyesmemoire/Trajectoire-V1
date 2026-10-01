@@ -13,12 +13,12 @@ import {
   Testimonials,
 } from "@/components/home/Sections"
 import { CvPreviewForm } from "@/components/marketing/CvPreviewForm"
+import { HERO_SUBTITLE, HOME_DESCRIPTION } from "@/components/home/content"
 
 const ogImage = "/images/og-home.jpg"
 
 const homeTitle = "Trajectoire – Entraînez-vous face au recruteur qui a lu votre CV"
-const homeDescription =
-  "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser. Diagnostic gratuit."
+const homeDescription = HOME_DESCRIPTION
 
 export const metadata: Metadata = {
   title: { absolute: homeTitle },
@@ -52,8 +52,7 @@ export default function HomePage() {
                 <span className="font-accent text-calm-accent-deep">lu votre CV</span>.
               </h1>
               <p className="max-w-xl text-lg leading-relaxed text-calm-secondary">
-                Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix
-                haute, sans jugement, puis un rapport clair pour progresser.
+                {HERO_SUBTITLE}
               </p>
               <AlexandraStrip />
               <div id="diagnostic" className="scroll-mt-24">
