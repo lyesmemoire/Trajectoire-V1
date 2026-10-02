@@ -20,32 +20,33 @@ North Star: *Trajectoire helps people practice real interviews, understand how t
 5. Protected files, never modified without explicit authorization: `hooks/useVoiceInterview.ts`, `lib/realtime/`, `supabase/migrations/*.disabled`. If a UI change seems to require them, stop and explain.
 
 ## 2. Design system: "Calm", ambiance Sauge (light theme, ALL pages)
-The dark "premium zinc/indigo" direction is retired. Never reintroduce dark backgrounds, `dark:` variants, raw Tailwind palette colors or translucent white. `lib/design-invariants.test.ts` must pass.
+The dark "premium zinc/indigo" direction is retired. Never reintroduce dark backgrounds, `dark:` variants, raw Tailwind palette colors or translucent white. `lib/design-invariants.test.ts` must pass (it also checks the token values and their contrast ratios).
 
 | Role | Token value |
 |---|---|
-| Page background | #FAFAF8 |
-| Surface | #FFFFFF |
-| Borders | #E6E4DE (default), #ECEBE6 (light) |
-| Ink (titles, main text) | #1F2A37 |
-| Secondary text | #4B5563 |
-| Tertiary text | #3F4855 |
-| Accent (primary actions) | #2F6B5E |
-| Accent deep (accent text, full-width bands) | #245247 |
-| Accent soft (badges, highlights) | #E3EFE9 |
-| Accent wash (large soft backgrounds) | #F1F7F3 |
-| Accent line (dashed borders, inactive bars) | #B9D3C8 |
+| Page background, surface | #FFFFFF |
+| Alternate section background (`calm-alt`) | #F4F5F2 |
+| Ink (titles, main text) | #161B19 |
+| Secondary text | #565D59 |
+| Introduction text (`calm-tertiary`) | #444C48 |
+| Accent (primary actions, accent bands) | #195747 |
+| Accent deep (hover) | #103C31 |
+| Accent soft (badges, highlights) | #DCE8DF |
+| Rules | #E0E3DE (light), #161B19 (strong, `calm-rule`), #BFC4BE (drop zones, `calm-field`) |
+| On an accent background | text #FFFFFF, secondary #D7E3DA, markers #CFE1D3 |
 | Gentle warning (improvement areas, low scores) | #8A4B16 |
+| Focus | 3 px outline #B0703A, offset 4 px (global `:focus-visible`) |
 
 - Always use tokens, never hardcoded values in components. Add a token only for a reusable decision.
+- Form-field outlines stay at `calm-input` (≥ 3:1 on white, WCAG 1.4.11); `calm-field` (#BFC4BE) is for decorative zones such as the CV drop zone, never for the only visible edge of a control.
 - Never bright red for scores, timers or the interview. Real errors use a defined, accessible error token.
 - Accent communicates action and state, not decoration. No gradient washes, glow, neon, heavy glassmorphism, particles, robot avatars or "AI brain" imagery.
-- Shapes: radius 14 px (buttons), 18–22 px (cards), 28–32 px (large blocks). Very soft, wide shadows.
+- Shapes: radius 4–6 px everywhere (`rounded-full` only for dots and avatars). No shadows, except the portrait (`shadow-portrait`) and the report card (`shadow-report`).
 
 ## 3. Typography
-- Figtree (400/500/600/700) for all text, via `next/font`.
-- Newsreader italic (400/500) only for a few accent words and step numbers. Never for body text.
-- Fluid headings: h1 `clamp(36px, 5.6vw, 60px)`, h2 `clamp(28px, 3.6vw, 40px)`. Body ≥ 16 px.
+- DM Sans (400–700) for all body text, via `next/font`.
+- Cormorant Garamond (500 and 600, roman; italic 500) for headings, quotes and prices. `h1`–`h3` are serif, weight 500, letter-spacing -0.045em, `text-wrap: balance`; accent words are italic in the accent colour (`font-accent`). Paragraphs use `text-wrap: pretty`. Never serif for body text or small UI labels.
+- Fluid headings on the homepage: h1 `clamp(46px, 5.6vw, 82px)` with line-height 0.94, h2 `clamp(40px, 5.6vw, 76px)`; in the app, `text-calm-h1/h2/h3`. Body ≥ 16 px; nothing under 12 px.
 - Clear hierarchy, few weights, no all-caps paragraphs (short eyebrow labels only), no tiny or low-contrast text.
 - **French typography is mandatory**, in JSX and in content files: narrow no-break space before `? ! ;`, no-break space before `:` and inside « guillemets ». All UI copy is in French.
 

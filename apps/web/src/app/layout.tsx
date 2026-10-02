@@ -1,18 +1,19 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import { Figtree, Newsreader } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans } from "next/font/google"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 import { MotionProvider } from "@/components/providers/MotionProvider"
 
-// Design system « Calm » : Figtree pour le texte, Newsreader italique pour les accents (un mot, une courte phrase).
-// Servies depuis nos propres fichiers par next/font (pas d'appel à Google à l'exécution, compatible avec la CSP
-// `font-src 'self'`).
-const figtree = Figtree({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-figtree" })
-const newsreader = Newsreader({
+// Design system « Calm » : DM Sans pour le texte, Cormorant Garamond pour les titres, citations et prix (romain 500/600,
+// italique 500 pour les mots d'accent). Servies depuis nos propres fichiers par next/font (pas d'appel à Google à
+// l'exécution, compatible avec la CSP `font-src 'self'`).
+const dmSans = DM_Sans({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-dmsans" })
+const cormorant = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
-  style: ["italic"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-newsreader",
+  variable: "--font-cormorant",
 })
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.app"
@@ -44,7 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const styleNonce = await getStyleNonce()
 
   return (
-    <html lang="fr" className={`scroll-smooth ${figtree.variable} ${newsreader.variable}`}>
+    <html lang="fr" className={`scroll-smooth ${dmSans.variable} ${cormorant.variable}`}>
       <head>
         {/* CSP Nonce - Pass nonces to client via data attributes */}
         <script

@@ -25,6 +25,13 @@ const config: Config = {
         // Palette Calm
         calm: {
           bg: calm("bg"),
+          alt: calm("alt"),
+          rule: calm("rule"),
+          field: calm("field"),
+          "on-accent": calm("on-accent"),
+          "on-accent-2": calm("on-accent-2"),
+          "on-accent-mark": calm("on-accent-mark"),
+          focus: calm("focus"),
           surface: calm("surface"),
           line: calm("line"),
           "line-soft": calm("line-soft"),
@@ -138,8 +145,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-figtree)", "Figtree", "system-ui", "sans-serif"],
-        accent: ["var(--font-newsreader)", "Georgia", "serif"],
+        sans: ["var(--font-dmsans)", "DM Sans", "system-ui", "sans-serif"],
+        serif: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "serif"],
+        accent: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "serif"],
       },
       // Titres fluides : clamp(min, préféré, max).
       fontSize: {
@@ -148,16 +156,19 @@ const config: Config = {
         "calm-h2": ["clamp(1.5rem, 1.15rem + 1.4vw, 2.125rem)", { lineHeight: "1.2", letterSpacing: "-0.015em" }],
         "calm-h3": ["clamp(1.125rem, 1rem + 0.5vw, 1.375rem)", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
       },
+      // Plus d'ombres, sauf le portrait et la carte du rapport. Les noms historiques restent (sans effet) pour que
+      // les écrans existants suivent sans retouche.
       boxShadow: {
-        // Ombres douces teintées d'encre (aucun noir pur).
-        premium: "0 4px 24px -6px rgba(31, 42, 55, 0.08)",
-        "premium-lg": "0 16px 48px -12px rgba(31, 42, 55, 0.12)",
-        "premium-inset": "inset 0 0 0 1px rgba(31, 42, 55, 0.06)",
-        subtle: "0 1px 2px 0 rgba(31, 42, 55, 0.05)",
-        elevated: "0 4px 12px -2px rgba(31, 42, 55, 0.08), 0 2px 4px -2px rgba(31, 42, 55, 0.04)",
-        calm: "0 1px 2px rgba(31, 42, 55, 0.04), 0 8px 24px -12px rgba(31, 42, 55, 0.10)",
+        premium: "none",
+        "premium-lg": "none",
+        "premium-inset": "none",
+        subtle: "none",
+        elevated: "none",
+        calm: "none",
+        portrait: "0 24px 60px -24px rgba(22, 27, 25, 0.35)",
+        report: "0 18px 50px -24px rgba(22, 27, 25, 0.22)",
       },
-      // Rayons Calm : 14 (contrôles), 20 (cartes), 30 (grands panneaux).
+      // Rayons Calm : 4 à 6 px partout.
       borderRadius: {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
@@ -166,9 +177,9 @@ const config: Config = {
         "2xl": "var(--radius-xl)",
         "3xl": "var(--radius-xl)",
         xl2: "var(--radius-lg)",
-        "calm-md": "14px",
-        "calm-lg": "20px",
-        "calm-xl": "30px",
+        "calm-md": "6px",
+        "calm-lg": "6px",
+        "calm-xl": "6px",
       },
       transitionTimingFunction: {
         premium: "cubic-bezier(0.16, 1, 0.3, 1)",

@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url"
  * Règles de design et de fiabilité (voir .claude/decisions.md), vérifiées statiquement pour qu'une régression
  * échoue en CI plutôt qu'en production.
  *
- * Design system « Calm » (décision du 2026-10-07) : une seule ambiance claire, palette Sauge, Figtree et
- * Newsreader italique, jamais de rouge vif. Les règles de couleur s'appliquent aux écrans déjà migrés :
+ * Design system « Calm » (décision du 2026-10-07) : une seule ambiance claire, palette Sauge, Cormorant Garamond
+ * (titres) et DM Sans, jamais de rouge vif. Les règles de couleur s'appliquent aux écrans déjà migrés :
  * `PENDING` liste les préfixes qui ne le sont pas encore ; il se vide au fil des lots et sera vide à la fin.
  */
 
@@ -31,18 +31,69 @@ const all = walk(SRC)
 /** Fichiers sous un ou plusieurs préfixes (chemins relatifs à src, séparateur « / »). */
 const under = (...prefixes: string[]) => all.filter(f => prefixes.some(p => rel(f).startsWith(p)))
 
-describe("polices : Figtree et Newsreader italique", () => {
-  it("aucun font-serif dans le code (les accents passent par font-accent)", () => {
-    const offenders = all.filter(f => /\bfont-serif\b/.test(read(f))).map(rel)
-    expect(offenders).toEqual([])
+describe("polices : Cormorant Garamond (titres) et DM Sans (texte)", () => {
+  it("le layout racine charge Cormorant Garamond (romain et italique) et DM Sans, plus Inter", () => {
+    const layout = read(all.find(f => rel(f) === "app/layout.tsx")!)
+    expect(layout).toMatch(/Cormorant_Garamond\(/)
+    expect(layout).toMatch(/DM_Sans\(/)
+    expect(layout).toMatch(/style:\s*\["normal",\s*"italic"\]/)
+    expect(layout).not.toMatch(/Inter\(/)
   })
 
-  it("le layout racine charge Figtree et Newsreader (italique), plus Inter", () => {
-    const layout = read(all.find(f => rel(f) === "app/layout.tsx")!)
-    expect(layout).toMatch(/Figtree\(/)
-    expect(layout).toMatch(/Newsreader\(/)
-    expect(layout).toMatch(/style:\s*\["italic"\]/)
-    expect(layout).not.toMatch(/\bInter\(/)
+  it("plus de Figtree, Newsreader ni Fraunces dans le code", () => {
+    const offenders = all
+      .filter(f => /(Figtree|Newsreader|Fraunces)/i.test(read(f)) && rel(f) !== "lib/design-invariants.test.ts")
+      .map(rel)
+    expect(offenders).toEqual([])
+  })
+})
+
+describe("jetons Calm : valeurs et contrastes", () => {
+  const css = read(all.find(f => rel(f) === "app/globals.css")!)
+  const channels = (name: string) => css.match(new RegExp(`--calm-${name}:\\s*(\\d+) (\\d+) (\\d+);`))!.slice(1).map(Number)
+  const lum = ([r, g, b]: number[]) => {
+    const f = (c: number) => ((c /= 255) <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+  }
+  const ratio = (a: string, b: string) => {
+    const [x, y] = [lum(channels(a)), lum(channels(b))].sort((m, n) => n - m)
+    return (x + 0.05) / (y + 0.05)
+  }
+
+  it("les valeurs de la palette validée", () => {
+    expect(channels("bg")).toEqual([255, 255, 255])
+    expect(channels("alt")).toEqual([244, 245, 242])
+    expect(channels("ink")).toEqual([22, 27, 25])
+    expect(channels("secondary")).toEqual([86, 93, 89])
+    expect(channels("tertiary")).toEqual([68, 76, 72])
+    expect(channels("accent")).toEqual([25, 87, 71])
+    expect(channels("accent-deep")).toEqual([16, 60, 49])
+    expect(channels("accent-soft")).toEqual([220, 232, 223])
+    expect(channels("warn")).toEqual([138, 75, 22])
+  })
+
+  it.each([
+    ["ink", "bg"],
+    ["ink", "alt"],
+    ["secondary", "bg"],
+    ["secondary", "alt"],
+    ["tertiary", "bg"],
+    ["accent", "bg"],
+    ["accent", "alt"],
+    ["accent", "accent-soft"],
+    ["warn", "bg"],
+    ["warn", "alt"],
+    ["on-accent", "accent"],
+    ["on-accent-2", "accent"],
+    ["on-accent-mark", "accent"],
+    ["on-accent", "accent-deep"],
+  ])("contraste texte %s sur %s ≥ 4,5:1", (fg, bg) => {
+    expect(ratio(fg, bg)).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it("le contour de champ reste ≥ 3:1 sur blanc (WCAG 1.4.11) et le focus ≥ 3:1", () => {
+    expect(ratio("input", "bg")).toBeGreaterThanOrEqual(3)
+    expect(ratio("focus", "bg")).toBeGreaterThanOrEqual(3)
   })
 })
 

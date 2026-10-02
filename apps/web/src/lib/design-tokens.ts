@@ -11,17 +11,24 @@
 
 // ─── Palette ──────────────────────────────────────────────────────────────
 export const palette = {
-  bg: "#FAFAF8", // fond
+  bg: "#FFFFFF", // fond
+  alt: "#F4F5F2", // fond alterné des sections
   surface: "#FFFFFF", // cartes, panneaux
-  line: "#E6E4DE", // bordures
-  lineSoft: "#ECEBE6", // bordures discrètes
-  ink: "#1F2A37", // texte principal
-  secondary: "#4B5563", // texte secondaire
-  tertiary: "#3F4855", // texte tertiaire (≥ 4,5:1 sur le fond)
-  accent: "#2F6B5E", // sauge : actions, liens, focus
-  accentDeep: "#245247", // survol, texte sur fond sauge clair
-  accentSoft: "#E3EFE9", // pastilles, fonds d'état
-  accentWash: "#F1F7F3", // aplat très léger
+  line: "#E0E3DE", // filets légers
+  lineSoft: "#E0E3DE", // filets discrets
+  rule: "#161B19", // filet fort
+  field: "#BFC4BE", // zones de dépôt (décoratif ; les champs gardent `input`)
+  ink: "#161B19", // texte principal
+  secondary: "#565D59", // texte secondaire
+  tertiary: "#444C48", // texte d’introduction
+  accent: "#195747", // sauge : actions, liens
+  accentDeep: "#103C31", // survol
+  accentSoft: "#DCE8DF", // pastilles, fonds d'état
+  accentWash: "#F4F5F2", // aplat très léger (= fond alterné)
+  onAccent: "#FFFFFF", // texte sur fond accent
+  onAccent2: "#D7E3DA", // texte secondaire sur fond accent
+  onAccentMark: "#CFE1D3", // repères sur fond accent
+  focus: "#B0703A", // contour de focus : 3 px, décalage 4 px
   accentLine: "#B9D3C8", // bordure sauge
   warn: "#8A4B16", // avertissement doux
   warnSoft: "#FBF3E8", // fond d'avertissement (dérivé)
@@ -43,25 +50,27 @@ export const colors = {
   },
 } as const
 
-// ─── Rayons : 14 / 20 / 30 px ─────────────────────────────────────────────
+// ─── Rayons : 4 à 6 px ─────────────────────────────────────────────
 export const radius = {
-  control: "rounded-lg", // 14 px : boutons, champs, pastilles
-  card: "rounded-xl", // 20 px : cartes
-  panel: "rounded-2xl", // 30 px : grands panneaux, héros
+  control: "rounded-lg", // 6 px : boutons, champs
+  card: "rounded-xl", // 6 px : cartes
+  panel: "rounded-2xl", // 6 px : grands panneaux
 } as const
 
 // ─── Typographie ──────────────────────────────────────────────────────────
 export const fonts = {
-  /** Texte et titres : Figtree (variable CSS `--font-figtree`). */
+  /** Texte : DM Sans (variable CSS `--font-dmsans`). */
   body: "font-sans",
-  /** Accents : Newsreader italique, un mot ou une courte phrase seulement. */
+  /** Titres, citations, prix : Cormorant Garamond (`--font-cormorant`), graisse 500. */
+  title: "font-serif",
+  /** Mots d’accent : Cormorant italique, couleur accent, un mot ou une courte phrase seulement. */
   accent: "font-accent",
 } as const
 
 /** Titres fluides (clamp) : `text-calm-display`, `text-calm-h1`, `text-calm-h2`, `text-calm-h3`. */
 export const headings = ["text-calm-display", "text-calm-h1", "text-calm-h2", "text-calm-h3"] as const
 
-// ─── Ombres ───────────────────────────────────────────────────────────────
+// ─── Ombres : aucune, sauf le portrait (`shadow-portrait`) et la carte du rapport (`shadow-report`) ───────────────────────────────────────────────────────────────
 export const shadow = {
   subtle: "shadow-subtle",
   card: "shadow-calm",
@@ -71,7 +80,7 @@ export const shadow = {
 /**
  * RÈGLES FONDAMENTALES
  *
- * 1. Polices : Figtree (texte) et Newsreader italique (accents), chargées par next/font dans `app/layout.tsx`.
+ * 1. Polices : DM Sans (texte) et Cormorant Garamond (titres, citations, prix, accents), chargées par next/font dans `app/layout.tsx`.
  * 2. Une seule ambiance claire : aucune classe sombre (`bg-zinc-950`, `text-white/80`…), aucun `dark:`.
  * 3. Contraste ≥ 4,5:1 pour le texte, ≥ 3:1 pour les contours de champs et les icônes porteuses de sens.
  * 4. CTA primaire : `bg-calm-accent text-white` (survol `bg-calm-accent-deep`) ; focus visible : anneau sauge.
