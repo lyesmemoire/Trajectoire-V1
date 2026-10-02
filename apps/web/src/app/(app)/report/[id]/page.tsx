@@ -7,6 +7,8 @@ import { RecommendationsSection } from "@/components/dashboard/RecommendationsSe
 import { UpgradeCTA } from "@/components/premium/UpgradeCTA"
 import { checkUserSubscription } from "@/lib/subscription/check-subscription"
 import { QuestionByQuestionSection } from "@/components/report/QuestionByQuestionSection"
+import { ReportPending } from "@/components/report/ReportPending"
+import { decideReportView } from "@/lib/interview/report-resolution"
 
 export const metadata: Metadata = {
   title: "Rapport – Trajectoire",
@@ -55,7 +57,26 @@ export default async function ReportPage({
     .eq("interview_sessions.user_id", user.id)
     .single()
 
+  // L'id peut être celui de la SÉANCE (fin d'entretien) : on retrouve alors son rapport, ou on attend sa génération.
   if (!report) {
+    const { data: ownSession } = await supabase
+      .from("interview_sessions")
+      .select("id, status")
+      .eq("id", id)
+      .eq("user_id", user.id)
+      .maybeSingle()
+    const { data: sessionReport } = ownSession
+      ? await supabase.from("reports").select("id").eq("session_id", id).maybeSingle()
+      : { data: null }
+    const view = decideReportView({ foundReport: false, session: ownSession, reportIdForSession: sessionReport?.id ?? null })
+    if (view.kind === "redirect") redirect(`/report/${view.reportId}`)
+    if (view.kind === "pending" || view.kind === "in_progress") {
+      return (
+        <div className="mx-auto max-w-4xl">
+          <ReportPending sessionId={id} mode={view.kind} />
+        </div>
+      )
+    }
     return (
       <div className="mx-auto max-w-4xl">
         <div className="mb-8">
