@@ -7,7 +7,9 @@
 export const SHOW_PORTRAIT = true
 /** Portrait d'Alexandra : personnage généré par IA (jamais présenté comme une personne réelle). */
 export const ALEXANDRA_PORTRAIT_SRC = "/images/alexandra-portrait.jpg"
-export const ALEXANDRA_PORTRAIT_CAPTION = "Alexandra, votre recruteuse d’entraînement"
+export const ALEXANDRA_NAME = "Alexandra"
+export const ALEXANDRA_ROLE = "votre recruteuse d’entraînement"
+export const ALEXANDRA_PORTRAIT_CAPTION = `${ALEXANDRA_NAME}, ${ALEXANDRA_ROLE}`
 export const ALEXANDRA_PORTRAIT_NOTE = "Personnage généré par IA"
 /** Lecteur « Écouter Alexandra » : masqué tant qu'aucun extrait audio réel n'existe. */
 export const SHOW_HERO_AUDIO = false
@@ -28,16 +30,16 @@ export const FREE_PLAN_EXTRAS = ["Résultat immédiat, sans carte bancaire", "Le
  */
 export const FREE_WARMUP_ENABLED = false
 
-export const HERO_SUBTITLE = FREE_WARMUP_ENABLED
-  ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser."
-  : "Déposez votre CV : Trajectoire repère ce qu’un recruteur voudra creuser. Puis entraînez-vous à voix haute avec Alexandra, sans jugement."
+export const HERO_EYEBROW = "L’entretien commence avant l’entretien"
+export const HERO_SUBTITLE =
+  "Déposez votre CV. Trajectoire repère ce qu’un recruteur voudra creuser, puis vous entraîne à voix haute avec Alexandra, sans jugement."
 
 export const HOME_DESCRIPTION = FREE_WARMUP_ENABLED
   ? "Alexandra, votre recruteuse d’entraînement, vous pose les vraies questions de l’offre que vous visez. À voix haute, sans jugement, puis un rapport clair pour progresser. Diagnostic gratuit."
   : "Découvrez gratuitement ce qu’un recruteur voudra creuser dans votre CV, puis entraînez-vous à voix haute avec Alexandra, votre recruteuse d’entraînement, avec une offre payante."
 
-/** Mesuré en local : l'aperçu gratuit répond en moins de 0,1 s (analyse déterministe, sans IA). */
-export const FORM_NOTE = "Gratuit · sans carte bancaire · résultat immédiat"
+/** Aperçu anonyme : aucun compte requis (tunnel /api/public/analyze-preview), analyse déterministe sans IA. */
+export const FORM_NOTE = "Gratuit · sans carte bancaire · sans compte"
 
 export const HERO_CARD_BADGE = FREE_WARMUP_ENABLED ? null : "Offres payantes"
 
@@ -116,36 +118,72 @@ export const SEGMENTS: readonly Segment[] = [
   },
 ]
 
-export const STEPS_TITLE = "Trois étapes, à votre rythme"
+export const METHOD = {
+  index: "01 / La méthode",
+  title: "Pas de questions génériques.",
+  accent: "Les vôtres.",
+  text: "Trajectoire lit entre les lignes de votre CV pour faire émerger les expériences qui méritent une réponse claire, concrète et personnelle.",
+}
 
 export const STEPS = [
   {
+    kicker: "Étape 1 · résultat immédiat, gratuit",
     title: "Déposez votre CV",
     text: "Et l’offre visée si vous l’avez. Trajectoire repère vos atouts et ce qu’un recruteur voudra creuser.",
-    duration: "Résultat immédiat",
   },
   {
+    // Durées proposées à la création d'une simulation : 10, 15, 20 ou 30 minutes.
+    kicker: "Étape 2 · 10 à 30 minutes",
     title: "Échangez avec Alexandra",
     text: FREE_WARMUP_ENABLED
       ? "Un échauffement à voix haute, comme un vrai entretien. Elle s’appuie sur votre parcours, sans vous piéger."
       : "L’entretien à voix haute fait partie des offres payantes. Alexandra s’appuie sur votre parcours, sans vous piéger.",
-    // Durées proposées à la création d'une simulation : 10, 15, 20 ou 30 minutes.
-    duration: "10 à 30 minutes",
   },
   {
+    kicker: "Étape 3 · à la fin de l’entretien",
     title: "Progressez, question par question",
-    text: "Un point fort, un axe prioritaire, une version plus claire de votre réponse. Analysez vos retours et ajustez vos réponses.",
-    duration: "À la fin de l’entretien",
+    text: "Un point fort, un axe prioritaire, une version plus claire de votre réponse.",
   },
 ] as const
 
+export const FOR_WHOM = {
+  index: "02 / Pour qui",
+  title: "Pour les moments où l’on veut être prêt, pas parfait.",
+  text: "Alternance, premier poste, reconversion, entretien final : entraînez-vous à raconter ce que vous savez déjà faire.",
+  pickerTitle: "Le jour J, vous aurez déjà répondu à ces questions.",
+  pickerLabel: "Type d’entretien",
+}
+
+export const REPORT_INTRO = {
+  index: "03 / Le rapport",
+  title: "Un rapport qui vous fait progresser,",
+  accent: "pas douter.",
+  text: "Pas de liste de quinze défauts. L’essentiel, formulé avec bienveillance.",
+}
+
+export const CONVICTION = {
+  eyebrow: "Notre conviction",
+  title: "Ici, vous avez le droit de",
+  accent: "vous tromper.",
+  text: "Le stress se travaille comme le reste. Plus vous vous entraînez au calme, plus le jour J ressemble à quelque chose que vous connaissez déjà.",
+}
+
+export const PRICING_HEAD = { index: "04 / Tarifs", title: "Commencez", accent: "gratuitement." }
+
+export const FAQ_INDEX = "05 / Questions fréquentes"
+
+export const CLOSING = {
+  eyebrow: "Votre prochaine réponse",
+  title: "Elle commence",
+  accent: "ici.",
+  note: "Gratuit · sans carte bancaire",
+}
+
+export const FOOTER_TAGLINE = "Préparez ce que votre CV ne peut pas dire seul."
+
 export const PRICING_INTRO = FREE_WARMUP_ENABLED
   ? "Commencez sans payer, puis choisissez l’offre qui correspond à votre recherche. L’offre Pro est sans engagement et résiliable à tout moment."
-  : "Le diagnostic de votre CV est gratuit, sans carte bancaire. L’entretien vocal fait partie des offres payantes ; l’offre Pro est sans engagement et résiliable à tout moment."
-
-export const FINAL_TEXT = FREE_WARMUP_ENABLED
-  ? "Déposez votre CV, découvrez ce qu’un recruteur va vous demander, et entraînez-vous au calme."
-  : "Déposez votre CV et découvrez ce qu’un recruteur voudra creuser. Entraînez-vous ensuite au calme avec Alexandra."
+  : "Le diagnostic de votre CV est gratuit, sans carte bancaire. L’entretien vocal fait partie des offres payantes."
 
 export const REPORT_EXAMPLE = {
   strength: "Des exemples concrets, tirés de vos expériences.",
@@ -166,11 +204,11 @@ export const REASSURANCE = [
   },
   {
     title: "Reformulez librement",
-    text: "Vous pouvez reformuler à tout moment. Une réponse maladroite n’est pas une note : c’est un point de départ.",
+    text: "Une réponse maladroite n’est pas une note : c’est un point de départ.",
   },
   {
     title: "Vos données vous appartiennent",
-    text: "Supprimez votre compte à tout moment depuis les paramètres : vos CV et vos simulations sont supprimés avec lui.",
+    text: "Supprimez votre compte à tout moment : vos CV et vos simulations sont supprimés avec lui.",
   },
 ] as const
 
@@ -198,7 +236,7 @@ export const FAQ = [
   },
   {
     q: "Je suis très stressé en entretien. Est-ce adapté ?",
-    a: "Oui, c’est fait pour ça. Vous vous entraînez à votre rythme, sans public, et vous pouvez reformuler à tout moment. Le stress se travaille comme le reste : en s’entraînant au calme.",
+    a: "Oui, c’est fait pour ça. Vous vous entraînez à votre rythme, sans public. Le stress se travaille comme le reste : en s’entraînant au calme.",
   },
   {
     q: "Que deviennent mon CV et mes réponses ?",
@@ -215,7 +253,7 @@ export const FAQ = [
 ] as const
 
 export const NAV_LINKS = [
-  { href: "#comment", label: "Comment ça marche" },
+  { href: "#methode", label: "La méthode" },
   { href: "#pour-qui", label: "Pour qui" },
   { href: "#tarifs", label: "Tarifs" },
 ] as const

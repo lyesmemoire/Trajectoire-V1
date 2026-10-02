@@ -1,21 +1,20 @@
 import Link from "next/link"
 
-/** Logo : carré arrondi accent-soft avec une courbe montante et un point en accent. */
-export function Logo({ href = "/" }: { href?: string }) {
+/** Logo : « Trajectoire » en serif, précédé d'un point accent. `size` : en-tête (29 px) ou pied de page (23 px). */
+export function Logo({ href = "/", size = "header" }: { href?: string; size?: "header" | "footer" }) {
+  const header = size === "header"
   return (
-    <Link href={href} className="inline-flex min-h-11 items-center gap-2.5 rounded-[14px] font-bold text-calm-ink">
-      <span className="flex size-9 items-center justify-center rounded-[11px] bg-calm-accent-soft" aria-hidden="true">
-        <svg viewBox="0 0 24 24" className="size-6" fill="none">
-          <path
-            d="M3 17c4 0 5-6 9-6 2.3 0 3.4 1.4 5 1.4"
-            stroke="rgb(var(--calm-accent))"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <circle cx="19" cy="7.5" r="2.4" fill="rgb(var(--calm-accent))" />
-        </svg>
-      </span>
-      <span className="text-[17px]">Trajectoire</span>
+    <Link
+      href={href}
+      className={`inline-flex min-h-11 items-center font-serif font-semibold tracking-[-0.04em] text-calm-ink no-underline ${
+        header ? "gap-[9px] text-[29px] max-[700px]:text-[25px]" : "gap-2 text-[23px]"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className={`rounded-full bg-calm-accent ${header ? "mt-[5px] size-[7px]" : "mt-1 size-1.5"}`}
+      />
+      Trajectoire
     </Link>
   )
 }

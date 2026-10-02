@@ -10,8 +10,6 @@ import {
 } from "react"
 import { useRouter } from "next/navigation"
 import {
-  ArrowRight,
-  Check,
   CheckCircle2,
   Loader2,
   Upload,
@@ -71,6 +69,7 @@ export function CvPreviewForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [notice, setNotice] = useState("")
+  const [dragging, setDragging] = useState(false)
 
   const fileMeta = useMemo(() => {
     if (!file) return null
@@ -227,34 +226,49 @@ export function CvPreviewForm() {
   }
 
   // CTA principal fixe : il ne change jamais de libellé.
-  const ctaLabel = "Obtenir mon diagnostic gratuit"
+  const ctaLabel = "Obtenir mon diagnostic gratuit"
 
   return (
-    <form
-      onSubmit={handleAnalyze}
-      className="w-full rounded-[22px] border border-calm-line bg-calm-surface p-5 shadow-calm sm:p-6"
-    >
-      {/* Dépôt du CV : toute la zone est cliquable (étiquette du champ fichier) */}
+    <form onSubmit={handleAnalyze} className="w-[min(100%,550px)]" noValidate>
+      {/* Dépôt du CV : toute la zone est cliquable (étiquette du champ fichier) et accepte le glisser-déposer. */}
       <label
+        htmlFor="cv-fichier"
         onDragOver={(event) => {
           event.preventDefault()
           event.stopPropagation()
+          if (!loading) setDragging(true)
         }}
-        onDrop={handleDrop}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(event) => {
+          setDragging(false)
+          handleDrop(event)
+        }}
         className={[
-          "flex min-h-[88px] cursor-pointer flex-col items-center justify-center gap-0.5 rounded-[18px] border-2 border-dashed border-calm-accent-line bg-calm-accent-wash p-3 text-center transition-colors hover:bg-calm-accent-soft",
-          "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-calm-accent",
+          "relative flex min-h-[78px] cursor-pointer items-center gap-3.5 rounded-[5px] border bg-white px-4 py-3.5 max-[520px]:flex-wrap max-[520px]:gap-x-3.5 max-[520px]:gap-y-2.5",
+          dragging ? "border-calm-accent bg-calm-alt" : "border-calm-field",
+          "has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-calm-focus",
           loading ? "pointer-events-none opacity-70" : "",
         ].join(" ")}
       >
-        <span className="flex size-11 items-center justify-center rounded-full bg-calm-accent-soft text-calm-accent-deep">
-          {file ? <CheckCircle2 className="size-5" aria-hidden="true" /> : <Upload className="size-5" aria-hidden="true" />}
+        {file ? (
+          <CheckCircle2 className="size-6 shrink-0 text-calm-accent" strokeWidth={1.5} aria-hidden="true" />
+        ) : (
+          <Upload className="size-6 shrink-0 text-calm-accent" strokeWidth={1.5} aria-hidden="true" />
+        )}
+        <span className="flex min-w-0 grow flex-col gap-px">
+          <strong className="truncate text-[15px] font-bold">{file ? file.name : "Déposez votre CV"}</strong>
+          <span className="text-[13px] text-calm-secondary">
+            {fileMeta ?? `PDF, DOCX ou TXT · ${CV_MAX_FILE_SIZE_LABEL} maximum`}
+          </span>
+          {!file && (
+            <span className="text-[13px] text-calm-secondary max-[520px]:hidden">ou glissez-déposez votre fichier ici</span>
+          )}
         </span>
-        <span className="mt-1 max-w-full truncate font-semibold text-calm-ink">{file ? file.name : "Déposez votre CV"}</span>
-        <span className="text-sm text-calm-secondary">
-          {fileMeta ?? `PDF, DOCX ou TXT · ${CV_MAX_FILE_SIZE_LABEL} maximum`}
+        <span className="whitespace-nowrap border-b border-current pb-0.5 text-[13px] font-semibold">
+          {file ? "Changer de fichier" : "Choisir un fichier"}
         </span>
         <input
+          id="cv-fichier"
           ref={fileInputRef}
           className="sr-only"
           type="file"
@@ -269,35 +283,30 @@ export function CvPreviewForm() {
           type="button"
           onClick={resetFile}
           disabled={loading}
-          className="tap-target mt-2 inline-flex items-center gap-2 rounded-[14px] px-3 text-sm text-calm-secondary transition-colors hover:text-calm-ink disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-1 inline-flex min-h-11 items-center gap-2 text-[13px] text-calm-secondary transition-colors hover:text-calm-ink disabled:cursor-not-allowed disabled:opacity-50"
         >
           <X className="size-4" aria-hidden="true" />
           Retirer le fichier
         </button>
       )}
 
-      {/* Notice */}
       {notice && !error && (
-        <div className="mt-3 rounded-[14px] border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-secondary">{notice}</div>
+        <p role="status" className="mt-3 text-[13px] text-calm-secondary">
+          {notice}
+        </p>
       )}
 
-      {/* Erreur */}
       {error && (
-        <div
-          role="alert"
-          aria-live="assertive"
-          className="mt-3 rounded-[14px] border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn"
-        >
+        <p role="alert" className="mt-3 border-l-[3px] border-calm-warn bg-calm-warn-soft px-3.5 py-2.5 text-sm text-calm-warn">
           {error}
-        </div>
+        </p>
       )}
 
-      {/* CTA principal (unique) */}
       <button
         type="submit"
         disabled={loading}
         aria-busy={loading}
-        className="tap-target mt-4 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[14px] bg-calm-accent px-5 py-3.5 text-[15px] font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-2.5 inline-flex min-h-14 w-full items-center justify-center gap-3.5 rounded-[4px] bg-calm-accent px-5 text-base font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>
@@ -307,24 +316,29 @@ export function CvPreviewForm() {
         ) : (
           <>
             {ctaLabel}
-            <ArrowRight className="size-4" aria-hidden="true" />
+            <span aria-hidden="true" className="text-xl font-normal">
+              →
+            </span>
           </>
         )}
       </button>
 
-      <div className="mt-2">
+      <div className="mt-[13px] flex flex-wrap items-center justify-between gap-x-5 gap-y-2 text-[13px] text-calm-secondary">
+        <span>{FORM_NOTE}</span>
         <button
           type="button"
           aria-expanded={showJob}
           aria-controls="offre-visee"
           onClick={() => setShowJob((v) => !v)}
-          className="tap-target rounded-[14px] px-1 text-sm font-semibold text-calm-accent-deep underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center border-0 bg-transparent p-0 text-[13px] text-calm-ink"
         >
-          {showJob ? "− Masquer l’offre visée" : "+ Ajouter l’offre visée"}
+          <span className="border-b border-calm-secondary pb-0.5">
+            {showJob ? "− Masquer l’offre visée" : "+ Ajouter l’offre visée"}
+          </span>
         </button>
       </div>
 
-      <div id="offre-visee" hidden={!showJob} className="mt-2">
+      <div id="offre-visee" hidden={!showJob} className="mt-1">
         <label htmlFor="offre-texte" className="sr-only">
           Texte de l’offre visée
         </label>
@@ -335,16 +349,10 @@ export function CvPreviewForm() {
           placeholder="Collez l’offre (missions, profil recherché, compétences, outils…)"
           rows={5}
           disabled={loading}
-          className="w-full resize-none rounded-[14px] border border-calm-input bg-calm-surface px-4 py-3 text-sm text-calm-ink placeholder:text-calm-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-calm-accent disabled:cursor-not-allowed disabled:bg-calm-bg"
+          className="w-full resize-none rounded-[5px] border border-calm-input bg-white px-4 py-3 text-sm text-calm-ink placeholder:text-calm-secondary disabled:cursor-not-allowed disabled:bg-calm-alt"
         />
-        <p className="mt-2 text-xs text-calm-secondary">
-          Plus l’offre est détaillée, plus les questions seront ciblées.
-        </p>
+        <p className="mt-2 text-xs text-calm-secondary">Plus l’offre est détaillée, plus les questions seront ciblées.</p>
       </div>
-      <p className="mt-2 flex items-start justify-center gap-2 text-center text-sm text-calm-tertiary">
-        <Check className="mt-0.5 size-4 shrink-0 text-calm-accent" aria-hidden="true" />
-        {FORM_NOTE}
-      </p>
     </form>
   )
 }

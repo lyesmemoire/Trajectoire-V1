@@ -1,57 +1,49 @@
 "use client"
 
 import { useState } from "react"
-import { SEGMENTS } from "./content"
+import { FOR_WHOM, SEGMENTS } from "./content"
 
-const focusWhite =
-  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-
-/** Bande « Pour qui » : segments interactifs et questions du segment actif (client). */
-export function SegmentsSection() {
+/**
+ * Bloc de droite de « Pour qui » : segments (boutons rectangulaires) et trois questions du segment actif.
+ * Client uniquement pour le choix du segment.
+ */
+export function SegmentPicker() {
   const [active, setActive] = useState(SEGMENTS[0].id)
   const segment = SEGMENTS.find((s) => s.id === active) ?? SEGMENTS[0]
 
   return (
-    <section id="pour-qui" aria-labelledby="pour-qui-titre" className="scroll-mt-20 bg-calm-accent-deep text-white">
-      <div className="mx-auto grid w-full max-w-[1200px] gap-10 px-5 py-16 min-[900px]:grid-cols-2 min-[900px]:gap-14 min-[900px]:py-20">
-        <div>
-          <h2 id="pour-qui-titre" className="text-calm-h1 font-semibold">
-            Le jour J, vous aurez déjà répondu à <span className="font-accent">ces questions</span>.
-          </h2>
-          <p className="mt-6 text-base text-white">Vous préparez&nbsp;:</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {SEGMENTS.map((s) => {
-              const on = s.id === active
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => setActive(s.id)}
-                  className={`tap-target rounded-full border px-5 text-sm font-semibold transition-colors ${focusWhite} ${
-                    on
-                      ? "border-white bg-white text-calm-accent-deep"
-                      : "border-[rgba(255,255,255,0.45)] bg-transparent text-white hover:bg-[rgba(255,255,255,0.1)]"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <ul aria-live="polite" className="flex flex-col gap-3">
-          {segment.questions.map((q) => (
-            <li
-              key={q}
-              className="rounded-[20px] border border-[rgba(255,255,255,0.22)] bg-[rgba(255,255,255,0.1)] p-5 text-lg leading-relaxed"
+    <article className="flex min-h-[400px] flex-col gap-[22px] bg-calm-alt p-[clamp(24px,3vw,36px)]">
+      <h3 className="m-0 text-[clamp(26px,2.4vw,32px)] leading-[1.05] tracking-[-0.03em]">{FOR_WHOM.pickerTitle}</h3>
+      <div role="group" aria-label={FOR_WHOM.pickerLabel} className="flex flex-wrap gap-2">
+        {SEGMENTS.map((s) => {
+          const on = s.id === active
+          return (
+            <button
+              key={s.id}
+              type="button"
+              aria-pressed={on}
+              onClick={() => setActive(s.id)}
+              className={`min-h-11 rounded-[4px] border px-[15px] py-[9px] text-sm font-semibold transition-colors ${
+                on
+                  ? "border-calm-accent bg-calm-accent text-white"
+                  : "border-calm-field bg-transparent text-calm-ink hover:border-calm-accent"
+              }`}
             >
-              «&nbsp;{q}&nbsp;»
-            </li>
-          ))}
-        </ul>
+              {s.label}
+            </button>
+          )
+        })}
       </div>
-    </section>
+      <ul aria-live="polite" className="m-0 mt-auto list-none border-t border-calm-field p-0">
+        {segment.questions.map((q) => (
+          <li
+            key={q}
+            className="border-b border-calm-field py-4 font-serif text-[clamp(22px,2.1vw,27px)] font-medium leading-[1.12] tracking-[-0.02em]"
+          >
+            «&nbsp;{q}&nbsp;»
+          </li>
+        ))}
+      </ul>
+    </article>
   )
 }

@@ -1,19 +1,16 @@
 import Image from "next/image"
-import { Mic } from "lucide-react"
+import { CvPreviewForm } from "@/components/marketing/CvPreviewForm"
 import {
-  ALEXANDRA_PORTRAIT_CAPTION,
+  ALEXANDRA_NAME,
+  ALEXANDRA_ROLE,
   ALEXANDRA_PORTRAIT_NOTE,
   ALEXANDRA_PORTRAIT_SRC,
-  HERO_CARD_BADGE,
+  HERO_EYEBROW,
   HERO_QUESTION,
-  HERO_VIDEO_BUTTON,
-  HERO_VIDEO_CAPTION,
-  SHOW_HERO_AUDIO,
-  SHOW_HERO_VIDEO,
+  HERO_SUBTITLE,
   SHOW_PORTRAIT,
 } from "./content"
-import { HeroVideo } from "./HeroVideo"
-import { HeroAudioPlayer } from "./HeroAudioPlayer"
+import { eyebrow } from "./styles"
 
 /** Avatar d'Alexandra : portrait si SHOW_PORTRAIT, sinon initiale. */
 export function AlexandraAvatar({ size }: { size: number }) {
@@ -33,151 +30,61 @@ export function AlexandraAvatar({ size }: { size: number }) {
   )
 }
 
-/** Bande mobile (< 760 px) au-dessus du formulaire. */
-export function AlexandraStrip() {
-  // Le grand portrait suit le formulaire sur mobile : la bande ferait doublon.
-  if (SHOW_PORTRAIT && !SHOW_HERO_VIDEO) return null
+/** Portrait 4:5 d'Alexandra (max 492 px) avec la question tirée du CV posée en bas ; légende dessous. */
+function HeroPortrait() {
   return (
-    <div className="flex items-center gap-3 rounded-[20px] border border-calm-line bg-calm-surface p-3 min-[760px]:hidden">
-      <AlexandraAvatar size={44} />
-      <div>
-        <p className="font-semibold text-calm-ink">Alexandra</p>
-        <p className="text-sm text-calm-secondary">Votre recruteuse d’entraînement, bienveillante</p>
-      </div>
-    </div>
-  )
-}
-
-/** Carte d'Alexandra (ancienne colonne de droite) : conservée derrière SHOW_HERO_VIDEO = false. */
-function HeroAlexandraCard() {
-  return (
-    <div className="relative w-full pb-6 pr-6">
-      {/* Fond arrondi décalé de 24 px en bas à droite : de la profondeur, rien d'interactif. */}
-      <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-[40px] bg-calm-accent-wash" />
-    <aside
-      aria-label="Aperçu d’une question d’Alexandra"
-      className="relative w-full rounded-[28px] border border-calm-line bg-calm-surface p-6 shadow-calm sm:p-8"
-    >
-      <div className="flex items-center gap-4">
-        <AlexandraAvatar size={84} />
-        <div className="min-w-0">
-          <p className="text-xl font-semibold text-calm-ink">Alexandra</p>
-          <p className="text-sm text-calm-secondary">Recruteuse d’entraînement · bienveillante</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
-              Alternance · Chargée de communication
-            </span>
-            {HERO_CARD_BADGE && (
-              <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
-                {HERO_CARD_BADGE}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 rounded-[20px] bg-calm-bg p-5">
-        <span className="inline-block rounded-full bg-calm-accent-soft px-3 py-1 text-xs font-semibold text-calm-accent-deep">
-          Question tirée de votre CV
-        </span>
-        <p className="mt-3 text-lg leading-relaxed text-calm-ink">«&nbsp;{HERO_QUESTION}&nbsp;»</p>
-      </div>
-
-      {/* Illustration statique : ni son ni interaction (le vrai lecteur reste derrière SHOW_HERO_AUDIO). */}
-      <div aria-hidden="true" className="mt-5 flex items-center justify-center gap-4">
-        <span className="flex size-[84px] shrink-0 items-center justify-center rounded-full bg-calm-accent-wash">
-          <span className="flex size-[62px] items-center justify-center rounded-full bg-calm-accent-soft">
-            <span className="flex size-[42px] items-center justify-center rounded-full bg-calm-accent">
-              <Mic className="size-5 text-white" />
-            </span>
-          </span>
-        </span>
-        <div>
-          <p className="text-sm font-medium text-calm-ink">Alexandra vous écoute…</p>
-          <div className="mt-2 flex h-6 items-center gap-[3px]">
-            {[6, 12, 18, 10, 22, 14, 8, 20, 12, 16, 9, 18, 7, 13].map((h, i) => (
-              <span key={i} className="w-[3px] rounded-full bg-calm-accent-line" style={{ height: h }} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {SHOW_HERO_AUDIO && <HeroAudioPlayer />}
-
-      <p className="mt-6 text-center text-sm text-calm-secondary">Respirez. Vous pouvez reformuler à tout moment.</p>
-    </aside>
-    </div>
-  )
-}
-
-/** Portrait d'Alexandra en 4:5, avec la question tirée du CV posée en bas de la photo (SHOW_PORTRAIT = true). */
-function HeroPortraitCard() {
-  return (
-    <figure className="relative w-full pb-6 pr-6">
-      <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-[40px] bg-calm-accent-wash" />
-      <div className="relative overflow-hidden rounded-[28px] border border-calm-line bg-calm-surface shadow-calm">
-        <Image
-          src={ALEXANDRA_PORTRAIT_SRC}
-          alt="Portrait d’Alexandra, recruteuse d’entraînement"
-          width={960}
-          height={1200}
-          sizes="(min-width: 1024px) 520px, 100vw"
-          className="aspect-[4/5] w-full object-cover object-top"
+    <figure className="m-0 w-full max-w-[492px] justify-self-end max-[980px]:justify-self-start">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[#4B4944] shadow-portrait">
+        {SHOW_PORTRAIT && (
+          <Image
+            src={ALEXANDRA_PORTRAIT_SRC}
+            alt="Alexandra, recruteuse d’entraînement, face caméra"
+            fill
+            sizes="(max-width: 520px) calc(100vw - 32px), 492px"
+            className="object-cover object-top"
+          />
+        )}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,18,16,0)_45%,rgba(10,20,17,0.34)_100%)]"
         />
-        <div className="absolute inset-x-4 bottom-4 rounded-[20px] border border-calm-line bg-calm-surface p-5 sm:inset-x-5 sm:bottom-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-block rounded-full bg-calm-accent-soft px-3 py-1 text-xs font-semibold text-calm-accent-deep">
-              Question tirée de votre CV
-            </span>
-            {HERO_CARD_BADGE && (
-              <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
-                {HERO_CARD_BADGE}
-              </span>
-            )}
-          </div>
-          <p className="font-accent mt-3 text-lg leading-snug text-calm-ink sm:text-xl">«&nbsp;{HERO_QUESTION}&nbsp;»</p>
+        <div className="absolute inset-x-4 bottom-4 rounded-[5px] bg-white px-[18px] pb-4 pt-[17px] shadow-report">
+          <span className="block text-xs font-bold uppercase tracking-[0.13em] text-calm-accent">Question tirée de votre CV</span>
+          <p className="mb-0 mt-2.5 font-serif text-[21px] font-medium leading-[1.15] tracking-[-0.015em]">
+            «&nbsp;{HERO_QUESTION}&nbsp;»
+          </p>
         </div>
       </div>
-      <figcaption className="relative mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-1">
-        <span className="font-accent text-lg text-calm-ink">{ALEXANDRA_PORTRAIT_CAPTION}</span>
-        <span className="text-sm text-calm-secondary">{ALEXANDRA_PORTRAIT_NOTE}</span>
+      <figcaption className="mt-3 text-sm leading-[1.4]">
+        <strong>{ALEXANDRA_NAME}</strong>, {ALEXANDRA_ROLE}
+        <br />
+        <span className="text-[13px] text-calm-secondary">{ALEXANDRA_PORTRAIT_NOTE}</span>
       </figcaption>
-      {SHOW_HERO_AUDIO && <HeroAudioPlayer />}
     </figure>
   )
 }
 
-/** Cadre commun de la colonne de droite : carte blanche arrondie et fond accent-wash décalé de 24 px. */
-function HeroFrame({ label, children }: { label: string; children: React.ReactNode }) {
+/** Héros : deux colonnes centrées verticalement. Rien d'animé. */
+export function Hero() {
   return (
-    <div className="relative w-full pb-6 pr-6">
-      <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-[40px] bg-calm-accent-wash" />
-      <aside aria-label={label} className="relative w-full rounded-[28px] border border-calm-line bg-calm-surface p-4 shadow-calm sm:p-5">
-        {children}
-      </aside>
-    </div>
-  )
-}
-
-/** Carte vidéo : poster + bouton, légende et badge. Aucune lecture automatique. */
-function HeroVideoCard() {
-  return (
-    <HeroFrame label="Démonstration vidéo">
-      <HeroVideo label={HERO_VIDEO_BUTTON} />
-      <div className="mt-4 flex flex-wrap items-center gap-2 px-1 pb-1">
-        <p className="text-sm font-medium text-calm-ink">{HERO_VIDEO_CAPTION}</p>
-        {HERO_CARD_BADGE && (
-          <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
-            {HERO_CARD_BADGE}
-          </span>
-        )}
+    <section
+      aria-labelledby="hero-titre"
+      className="home-wrap grid grid-cols-[minmax(0,1fr)_minmax(360px,0.82fr)] items-center gap-[9%] pb-[clamp(56px,6vw,88px)] pt-[clamp(44px,5.5vw,78px)] max-[980px]:grid-cols-1 max-[980px]:gap-12"
+    >
+      <div className="max-w-[650px]">
+        <p className={`${eyebrow} mb-[22px]`}>
+          <i aria-hidden="true" className="inline-block h-px w-6 bg-current" />
+          {HERO_EYEBROW}
+        </p>
+        <h1 id="hero-titre" className="text-[clamp(46px,5.5vw,82px)] leading-[0.94]">
+          Entraînez-vous face au recruteur qui a <em>lu votre&nbsp;CV.</em>
+        </h1>
+        <p className="mb-7 mt-7 max-w-[560px] text-lg leading-[1.6] text-calm-tertiary">{HERO_SUBTITLE}</p>
+        <div id="diagnostic">
+          <CvPreviewForm />
+        </div>
       </div>
-    </HeroFrame>
+      <HeroPortrait />
+    </section>
   )
-}
-
-/** Colonne de droite du héros : vidéo (SHOW_HERO_VIDEO), sinon portrait (SHOW_PORTRAIT), sinon carte au monogramme. */
-export function HeroProductCard() {
-  if (SHOW_HERO_VIDEO) return <HeroVideoCard />
-  return SHOW_PORTRAIT ? <HeroPortraitCard /> : <HeroAlexandraCard />
 }

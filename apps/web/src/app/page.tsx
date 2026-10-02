@@ -1,19 +1,18 @@
 import type { Metadata } from "next"
 import { HomeHeader } from "@/components/home/HomeHeader"
-import { AlexandraStrip, HeroProductCard } from "@/components/home/Hero"
-import { SegmentsSection } from "@/components/home/SegmentsSection"
+import { Hero } from "@/components/home/Hero"
 import {
+  ClosingSection,
+  ConvictionSection,
   FaqSection,
-  FinalCta,
+  ForWhomSection,
   HomeFooter,
-  HowItWorks,
+  MethodSection,
   PricingSection,
-  Reassurance,
   ReportSection,
   Testimonials,
 } from "@/components/home/Sections"
-import { CvPreviewForm } from "@/components/marketing/CvPreviewForm"
-import { HERO_SUBTITLE, HOME_DESCRIPTION } from "@/components/home/content"
+import { HOME_DESCRIPTION } from "@/components/home/content"
 
 const ogImage = "/images/og-home.jpg"
 
@@ -36,41 +35,23 @@ export const metadata: Metadata = {
 }
 
 /**
- * Homepage V3 (docs/design/homepage-v3-brief.md) : composant serveur. Client uniquement pour le menu mobile, les
- * segments, le dépôt du CV et l'apparition au défilement. Pas de photo : la colonne de droite est la carte produit.
+ * Homepage (référence : docs/design/homepage-finale-apercu.html) : composant serveur. Client uniquement pour le menu
+ * déplié, les segments, le dépôt du CV et l'apparition au défilement. Rien d'animé dans le héros.
  */
 export default function HomePage() {
   return (
     <>
       <HomeHeader />
       <main id="main">
-        <section aria-labelledby="hero-titre" className="mx-auto w-full max-w-[1200px] px-5 pb-16 pt-10 min-[900px]:pb-20 min-[900px]:pt-16">
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-center gap-10 min-[900px]:gap-14">
-            <div className="flex flex-col gap-6">
-              <h1 id="hero-titre" className="text-[clamp(36px,5.6vw,60px)] font-semibold leading-[1.08] tracking-[-0.02em] text-calm-ink">
-                Entraînez-vous face au recruteur qui a{" "}
-                <span className="font-accent text-calm-accent-deep">lu votre CV</span>.
-              </h1>
-              <p className="max-w-xl text-lg leading-relaxed text-calm-secondary">
-                {HERO_SUBTITLE}
-              </p>
-              <AlexandraStrip />
-              <div id="diagnostic" className="scroll-mt-24">
-                <CvPreviewForm />
-              </div>
-            </div>
-            <HeroProductCard />
-          </div>
-        </section>
-
-        <SegmentsSection />
-        <HowItWorks />
+        <Hero />
+        <MethodSection />
+        <ForWhomSection />
         <ReportSection />
-        <Reassurance />
+        <ConvictionSection />
         <Testimonials />
         <PricingSection />
         <FaqSection />
-        <FinalCta />
+        <ClosingSection />
       </main>
       <HomeFooter />
     </>

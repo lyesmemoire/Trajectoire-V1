@@ -102,6 +102,12 @@
   p {
     text-wrap: pretty;
   }
+  /* Mots d'accent des titres : italique, couleur accent. */
+  h1 em,
+  h2 em {
+    font-style: italic;
+    color: rgb(var(--calm-accent));
+  }
 
   ::selection {
     background-color: rgb(var(--calm-accent-soft));
@@ -134,6 +140,21 @@
     font-style: italic;
     font-weight: 500;
     color: rgb(var(--calm-accent));
+  }
+  /* Conteneur de la homepage : 80 px de marge latérale, 40 px sous 980 px, 32 px sous 520 px. */
+  .home-wrap {
+    width: min(100% - 80px, 1276px);
+    margin-inline: auto;
+  }
+  @media (max-width: 980px) {
+    .home-wrap {
+      width: min(100% - 40px, 720px);
+    }
+  }
+  @media (max-width: 520px) {
+    .home-wrap {
+      width: calc(100% - 32px);
+    }
   }
   /* Cible tactile ≥ 44 px (WCAG 2.5.5) pour les boutons et liens compacts. */
   .tap-target {
