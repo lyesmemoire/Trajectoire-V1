@@ -35,6 +35,14 @@ function setup(messages: Array<{ role: string; content: string }>) {
 describe("ReportService.generateReport : garde-fous", () => {
   beforeEach(() => vi.resetAllMocks())
 
+  it("séance d'un autre utilisateur : 403, aucun appel IA, aucun rapport créé", async () => {
+    const { service, reportRepository, quotaService } = setup([{ role: "user", content: words(MIN_CANDIDATE_WORDS) }])
+    await expect(service.generateReport({ userId: "u2", sessionId: "s1" })).rejects.toMatchObject({ statusCode: 403 })
+    expect(ai.generateReport).not.toHaveBeenCalled()
+    expect(reportRepository.create).not.toHaveBeenCalled()
+    expect(quotaService.incrementQuota).not.toHaveBeenCalled()
+  })
+
   it("entretien sans réponse du candidat : 422, aucun appel IA, rien d'enregistré", async () => {
     const { service, reportRepository, quotaService } = setup([{ role: "assistant", content: "Bonjour, parlez-moi de vous." }])
     await expect(service.generateReport({ userId: "u1", sessionId: "s1" })).rejects.toMatchObject({ statusCode: 422 })
