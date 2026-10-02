@@ -15,12 +15,7 @@ export const SHOW_HERO_AUDIO = false
 export const SHOW_TESTIMONIALS = false
 /** Lien « offre établissements » (/ecoles) : masqué tant que la page n'existe pas (elle répondrait 404). */
 export const SHOW_SCHOOLS_LINK = false
-/**
- * Achat des offres payantes depuis la homepage : faux tant que la production ne peut pas livrer une simulation et son
- * rapport de bout en bout. Ne masque que les boutons de la homepage : /pricing et le paiement restent à verrouiller.
- */
-export const PURCHASE_ENABLED = false
-export const PURCHASE_SOON_LABEL = "Bientôt disponible"
+export { PURCHASE_ENABLED, PURCHASE_SOON_LABEL } from "@/lib/billing/purchase-gate"
 /** Badge de l'offre mise en avant (plan.highlighted dans lib/plans.ts). */
 export const FEATURED_PLAN_BADGE = "Recommandé"
 /** Avantages réels de l'offre gratuite, affichés à la place des lignes « non inclus ». */

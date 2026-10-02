@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { Check, ChevronDown, X } from "lucide-react"
 import { PLANS, type Plan, type PlanId } from "@/lib/plans"
+import { PURCHASE_ENABLED, PURCHASE_SOON_LABEL } from "@/lib/billing/purchase-gate"
 
 // Aucun prix ni aucune limite n'est écrit ici : tout vient de lib/plans.ts.
 // Seuls les textes éditoriaux (accroches, FAQ) vivent dans ce fichier, et ils
@@ -238,6 +239,14 @@ function PlanCard({
       </ul>
 
       <div className="mt-auto">
+        {plan.id !== "FREE" && !PURCHASE_ENABLED ? (
+          <p
+            id={`btn-plan-${plan.id.toLowerCase()}`}
+            className="flex w-full items-center justify-center rounded-xl border border-border bg-surface-muted px-5 py-4 text-sm font-semibold text-foreground-muted"
+          >
+            {PURCHASE_SOON_LABEL}
+          </p>
+        ) : (
         <button
           id={`btn-plan-${plan.id.toLowerCase()}`}
           onClick={() => onSelect(plan.id)}
@@ -257,6 +266,7 @@ function PlanCard({
             {reassurance(plan)}
           </span>
         </button>
+        )}
       </div>
     </motion.div>
   )
@@ -513,6 +523,7 @@ export default function PricingPage() {
             Commencez gratuitement. Passez au Pack quand vous en avez besoin.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            {PURCHASE_ENABLED && (
             <button
               id="btn-cta-pack"
               onClick={() => handleSelect("PACK")}
@@ -523,6 +534,7 @@ export default function PricingPage() {
                 ? "Redirection…"
                 : `${pack.name} – ${formatPrice(pack)}`}
             </button>
+            )}
             <button
               id="btn-cta-free"
               onClick={() => handleSelect("FREE")}
