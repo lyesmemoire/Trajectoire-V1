@@ -7,7 +7,7 @@ export function Logo({ href = "/", size = "header" }: { href?: string; size?: "h
     <Link
       href={href}
       className={`inline-flex min-h-11 items-center font-serif font-semibold tracking-[-0.04em] text-calm-ink no-underline ${
-        header ? "gap-[9px] text-[29px] max-[700px]:text-[25px]" : "gap-2 text-[23px]"
+        header ? "gap-[9px] text-[29px] max-[700px]:text-[25px] max-[400px]:text-[21px]" : "gap-2 text-[23px]"
       }`}
     >
       <span

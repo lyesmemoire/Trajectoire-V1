@@ -337,7 +337,7 @@ export function ClosingSection() {
 /** 10. Pied de page */
 export function HomeFooter() {
   const item =
-    "inline-flex min-h-11 items-center text-[13px] text-calm-secondary no-underline transition-colors hover:text-calm-accent"
+    "inline-flex min-h-11 min-w-11 items-center justify-center text-[13px] text-calm-secondary no-underline transition-colors hover:text-calm-accent"
   return (
     <footer className="home-wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-3.5 border-t border-calm-line pb-7 pt-[22px] text-[13px] text-calm-secondary max-[520px]:flex-col max-[520px]:items-start">
       <Logo size="footer" />
