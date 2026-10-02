@@ -4,13 +4,27 @@
  */
 
 /** Interrupteurs de la page : composants prêts, masqués tant qu'il n'y a ni visuel ni contenu réel. */
-export const SHOW_PORTRAIT = false
+export const SHOW_PORTRAIT = true
+/** Portrait d'Alexandra : personnage généré par IA (jamais présenté comme une personne réelle). */
+export const ALEXANDRA_PORTRAIT_SRC = "/images/alexandra-portrait.jpg"
+export const ALEXANDRA_PORTRAIT_CAPTION = "Alexandra, votre recruteuse d’entraînement"
+export const ALEXANDRA_PORTRAIT_NOTE = "Personnage généré par IA"
 /** Lecteur « Écouter Alexandra » : masqué tant qu'aucun extrait audio réel n'existe. */
 export const SHOW_HERO_AUDIO = false
 /** Témoignages : composant prêt, masqué tant qu'il n'existe aucun témoignage réel. */
 export const SHOW_TESTIMONIALS = false
 /** Lien « offre établissements » (/ecoles) : masqué tant que la page n'existe pas (elle répondrait 404). */
 export const SHOW_SCHOOLS_LINK = false
+/**
+ * Achat des offres payantes depuis la homepage : faux tant que la production ne peut pas livrer une simulation et son
+ * rapport de bout en bout. Ne masque que les boutons de la homepage : /pricing et le paiement restent à verrouiller.
+ */
+export const PURCHASE_ENABLED = false
+export const PURCHASE_SOON_LABEL = "Bientôt disponible"
+/** Badge de l'offre mise en avant (plan.highlighted dans lib/plans.ts). */
+export const FEATURED_PLAN_BADGE = "Recommandé"
+/** Avantages réels de l'offre gratuite, affichés à la place des lignes « non inclus ». */
+export const FREE_PLAN_EXTRAS = ["Résultat immédiat, sans carte bancaire", "Le texte de votre CV n’est pas conservé"] as const
 
 /**
  * Échauffement gratuit (simulation vocale incluse dans l'offre gratuite) : faux tant que le lot B et la voix ne sont
@@ -125,7 +139,7 @@ export const STEPS = [
   },
   {
     title: "Progressez, question par question",
-    text: "Un point fort, un axe prioritaire, une version plus claire de votre réponse. Puis réessayez tout de suite.",
+    text: "Un point fort, un axe prioritaire, une version plus claire de votre réponse. Analysez vos retours et ajustez vos réponses.",
     duration: "À la fin de l’entretien",
   },
 ] as const
@@ -152,11 +166,11 @@ export const REASSURANCE = [
     text: "Vous vous entraînez seul(e) face à Alexandra, sans public et sans note partagée.",
   },
   {
-    title: "Exigence à votre mesure",
+    title: "Un entraînement sur mesure",
     text: "Les questions partent de votre CV et de l’offre visée, pas d’un script générique.",
   },
   {
-    title: "Recommencez librement",
+    title: "Reformulez librement",
     text: "Vous pouvez reformuler à tout moment. Une réponse maladroite n’est pas une note : c’est un point de départ.",
   },
   {
@@ -175,6 +189,18 @@ export interface Testimonial {
 export const TESTIMONIALS: readonly Testimonial[] = []
 
 export const FAQ = [
+  {
+    q: "Qu’est-ce qui est gratuit ?",
+    a: "Le diagnostic de votre CV : un score et trois remarques, sans carte bancaire. Les simulations d’entretien et le rapport détaillé font partie des offres payantes.",
+  },
+  {
+    q: "Comment se passe un entretien ?",
+    a: "Vous indiquez le poste visé et choisissez une durée, de 10 à 30 minutes. Alexandra vous pose ses questions à voix haute et vous répondez au micro. Si le micro pose problème, vous pouvez répondre par écrit.",
+  },
+  {
+    q: "Que contient le rapport ?",
+    a: "Un point fort, un axe à travailler en priorité, puis un retour question par question avec une version plus claire de vos réponses. Il est préparé à la fin de chaque simulation.",
+  },
   {
     q: "Je suis très stressé en entretien. Est-ce adapté ?",
     a: "Oui, c’est fait pour ça. Vous vous entraînez à votre rythme, sans public, et vous pouvez reformuler à tout moment. Le stress se travaille comme le reste : en s’entraînant au calme.",

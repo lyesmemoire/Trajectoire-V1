@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Check, X } from "lucide-react"
+import { Check } from "lucide-react"
 import { PLANS, type Plan } from "@/lib/plans"
 import { canShowLegalNotice } from "@/lib/legal/publisher"
 import { Reveal } from "./Reveal"
@@ -7,8 +7,12 @@ import { Logo } from "./Logo"
 import {
   FAQ,
   FREE_WARMUP_ENABLED,
+  FEATURED_PLAN_BADGE,
   FINAL_TEXT,
+  FREE_PLAN_EXTRAS,
   PRICING_INTRO,
+  PURCHASE_ENABLED,
+  PURCHASE_SOON_LABEL,
   REASSURANCE,
   REPORT_EXAMPLE,
   SHOW_SCHOOLS_LINK,
@@ -142,8 +146,15 @@ export function Testimonials() {
   )
 }
 
+/** Prix par simulation d'un pack à paiement unique (ex. 29 € pour 5 simulations : 5,80 €). */
+function perSimulation(plan: Plan): string | null {
+  if (plan.interval !== "one_time" || !plan.simulationLimit) return null
+  const unit = (plan.price / plan.simulationLimit).toFixed(2).replace(".", ",")
+  return `Soit ${unit}\u00a0€ par simulation`
+}
+
 function priceLabel(plan: Plan) {
-  if (plan.price === 0) return { amount: "0 €", note: "sans engagement" }
+  if (plan.price === 0) return { amount: "0 €", note: "sans carte bancaire" }
   if (plan.interval === "one_time") return { amount: `${plan.price} €`, note: "paiement unique" }
   return { amount: `${plan.price} €`, note: "par mois" }
 }
@@ -166,6 +177,12 @@ export function PricingSection() {
           {plans.map((plan) => {
             const { amount, note } = priceLabel(plan)
             const featured = plan.highlighted
+            const unitPrice = perSimulation(plan)
+            // Seuls les avantages inclus sont listés : pas de lignes « non inclus » sur la homepage.
+            const labels = [
+              ...plan.features.filter((f) => f.included).map((f) => f.label),
+              ...(plan.id === "FREE" ? FREE_PLAN_EXTRAS : []),
+            ]
             return (
               <li
                 key={plan.id}
@@ -175,7 +192,7 @@ export function PricingSection() {
               >
                 {featured && (
                   <span className="absolute -top-3 left-6 rounded-full bg-calm-accent px-3 py-1 text-xs font-semibold text-white">
-                    Idéal pour la saison
+                    {FEATURED_PLAN_BADGE}
                   </span>
                 )}
                 <h3 className="text-lg font-semibold text-calm-ink">{plan.name}</h3>
@@ -184,18 +201,12 @@ export function PricingSection() {
                   <span className="text-sm text-calm-secondary">{note}</span>
                 </p>
                 {plan.price > 0 && <p className="text-xs text-calm-tertiary">TTC</p>}
+                {unitPrice && <p className="mt-1 text-sm font-medium text-calm-accent-deep">{unitPrice}</p>}
                 <ul className="mt-5 flex-1 space-y-2 text-sm">
-                  {plan.features.map((f) => (
-                    <li key={f.label} className="flex items-start gap-2 text-calm-ink">
-                      {f.included ? (
-                        <Check className="mt-0.5 size-4 shrink-0 text-calm-accent" aria-hidden="true" />
-                      ) : (
-                        <X className="mt-0.5 size-4 shrink-0 text-calm-tertiary" aria-hidden="true" />
-                      )}
-                      <span className={f.included ? "" : "text-calm-secondary"}>
-                        {f.included ? "" : <span className="sr-only">Non inclus : </span>}
-                        {f.label}
-                      </span>
+                  {labels.map((label) => (
+                    <li key={label} className="flex items-start gap-2 text-calm-ink">
+                      <Check className="mt-0.5 size-4 shrink-0 text-calm-accent" aria-hidden="true" />
+                      <span>{label}</span>
                     </li>
                   ))}
                 </ul>
@@ -203,10 +214,14 @@ export function PricingSection() {
                   <a href="#diagnostic" className={`${outlineBtn} mt-6`}>
                     Obtenir mon diagnostic gratuit
                   </a>
-                ) : (
+                ) : PURCHASE_ENABLED ? (
                   <Link href="/pricing" className={`${featured ? solidBtn : outlineBtn} mt-6`}>
                     Choisir {plan.name}
                   </Link>
+                ) : (
+                  <p className="tap-target mt-6 inline-flex w-full items-center justify-center rounded-[14px] border border-dashed border-calm-line px-5 text-sm font-semibold text-calm-secondary">
+                    {PURCHASE_SOON_LABEL}
+                  </p>
                 )}
               </li>
             )

@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
 import { ConfirmModal } from '@/components/ui/modal'
 import { endDestination } from '@/lib/interview/report-resolution'
-import { SHOW_PORTRAIT } from '@/components/home/content'
+import { ALEXANDRA_PORTRAIT_SRC, SHOW_PORTRAIT } from '@/components/home/content'
 import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
 import {
@@ -213,13 +213,13 @@ export default function SimulationPage() {
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
 
         <div className="relative h-64 w-full shrink-0 overflow-hidden bg-calm-surface md:h-auto md:w-[52%]">
-          {/* Aucun vrai visuel d'Alexandra n'existe encore (interviewer.png est une capture d'écran) : monogramme tant que
+          {/* Portrait d'Alexandra (personnage généré par IA) si SHOW_PORTRAIT ; monogramme tant que
               SHOW_PORTRAIT est faux, comme sur la homepage. */}
           {SHOW_PORTRAIT ? (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/interviewer.png"
+                src={ALEXANDRA_PORTRAIT_SRC}
                 alt="Alexandra"
                 className={'absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out ' + (isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
               />

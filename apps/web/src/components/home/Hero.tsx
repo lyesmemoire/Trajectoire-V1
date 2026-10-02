@@ -1,6 +1,9 @@
 import Image from "next/image"
 import { Mic } from "lucide-react"
 import {
+  ALEXANDRA_PORTRAIT_CAPTION,
+  ALEXANDRA_PORTRAIT_NOTE,
+  ALEXANDRA_PORTRAIT_SRC,
   HERO_CARD_BADGE,
   HERO_QUESTION,
   HERO_VIDEO_BUTTON,
@@ -12,11 +15,11 @@ import {
 import { HeroVideo } from "./HeroVideo"
 import { HeroAudioPlayer } from "./HeroAudioPlayer"
 
-/** Avatar d'Alexandra : initiale tant que SHOW_PORTRAIT est faux (aucun vrai portrait n'existe encore). */
+/** Avatar d'Alexandra : portrait si SHOW_PORTRAIT, sinon initiale. */
 export function AlexandraAvatar({ size }: { size: number }) {
   if (SHOW_PORTRAIT) {
     return (
-      <Image src="/interviewer.png" alt="" width={size} height={size} className="shrink-0 rounded-full object-cover" style={{ width: size, height: size }} />
+      <Image src={ALEXANDRA_PORTRAIT_SRC} alt="" width={size} height={size} className="shrink-0 rounded-full object-cover object-top" style={{ width: size, height: size }} />
     )
   }
   return (
@@ -32,6 +35,8 @@ export function AlexandraAvatar({ size }: { size: number }) {
 
 /** Bande mobile (< 760 px) au-dessus du formulaire. */
 export function AlexandraStrip() {
+  // Le grand portrait suit le formulaire sur mobile : la bande ferait doublon.
+  if (SHOW_PORTRAIT && !SHOW_HERO_VIDEO) return null
   return (
     <div className="flex items-center gap-3 rounded-[20px] border border-calm-line bg-calm-surface p-3 min-[760px]:hidden">
       <AlexandraAvatar size={44} />
@@ -105,6 +110,43 @@ function HeroAlexandraCard() {
   )
 }
 
+/** Portrait d'Alexandra en 4:5, avec la question tirée du CV posée en bas de la photo (SHOW_PORTRAIT = true). */
+function HeroPortraitCard() {
+  return (
+    <figure className="relative w-full pb-6 pr-6">
+      <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-[40px] bg-calm-accent-wash" />
+      <div className="relative overflow-hidden rounded-[28px] border border-calm-line bg-calm-surface shadow-calm">
+        <Image
+          src={ALEXANDRA_PORTRAIT_SRC}
+          alt="Portrait d’Alexandra, recruteuse d’entraînement"
+          width={960}
+          height={1200}
+          sizes="(min-width: 1024px) 520px, 100vw"
+          className="aspect-[4/5] w-full object-cover object-top"
+        />
+        <div className="absolute inset-x-4 bottom-4 rounded-[20px] border border-calm-line bg-calm-surface p-5 sm:inset-x-5 sm:bottom-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-block rounded-full bg-calm-accent-soft px-3 py-1 text-xs font-semibold text-calm-accent-deep">
+              Question tirée de votre CV
+            </span>
+            {HERO_CARD_BADGE && (
+              <span className="inline-block rounded-full bg-calm-line-soft px-3 py-1 text-xs font-medium text-calm-secondary">
+                {HERO_CARD_BADGE}
+              </span>
+            )}
+          </div>
+          <p className="font-accent mt-3 text-lg leading-snug text-calm-ink sm:text-xl">«&nbsp;{HERO_QUESTION}&nbsp;»</p>
+        </div>
+      </div>
+      <figcaption className="relative mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-1">
+        <span className="font-accent text-lg text-calm-ink">{ALEXANDRA_PORTRAIT_CAPTION}</span>
+        <span className="text-sm text-calm-secondary">{ALEXANDRA_PORTRAIT_NOTE}</span>
+      </figcaption>
+      {SHOW_HERO_AUDIO && <HeroAudioPlayer />}
+    </figure>
+  )
+}
+
 /** Cadre commun de la colonne de droite : carte blanche arrondie et fond accent-wash décalé de 24 px. */
 function HeroFrame({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -134,7 +176,8 @@ function HeroVideoCard() {
   )
 }
 
-/** Colonne de droite du héros : vidéo de démonstration, ou carte d'Alexandra selon SHOW_HERO_VIDEO. */
+/** Colonne de droite du héros : vidéo (SHOW_HERO_VIDEO), sinon portrait (SHOW_PORTRAIT), sinon carte au monogramme. */
 export function HeroProductCard() {
-  return SHOW_HERO_VIDEO ? <HeroVideoCard /> : <HeroAlexandraCard />
+  if (SHOW_HERO_VIDEO) return <HeroVideoCard />
+  return SHOW_PORTRAIT ? <HeroPortraitCard /> : <HeroAlexandraCard />
 }
