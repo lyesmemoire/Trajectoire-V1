@@ -6,6 +6,7 @@
  */
 
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/service";
 import { IRepository, QueryOptions } from "@/core/interfaces/IRepository";
 import { AppError, ErrorCode, ConflictError } from "@/core/errors";
 import { ITransaction } from "@/core/database/Transaction";
@@ -123,8 +124,28 @@ export class ReportRepository implements IRepository<Report> {
     entity: Omit<Report, "id" | "created_at" | "updated_at" | "version">,
     transaction?: ITransaction
   ): Promise<Report> {
-    const supabase = await createClient();
-    
+    // Un rapport porte un score : les utilisateurs n'ont AUCUNE policy INSERT sur la table reports (il ne doit pas être
+    // falsifiable). L'écriture passe par le client service, uniquement après avoir vérifié, avec le client de
+    // l'utilisateur authentifié (soumis à la RLS), que la séance lui appartient.
+    const userClient = await createClient();
+    const {
+      data: { user },
+    } = await userClient.auth.getUser();
+    if (!user) {
+      throw new AppError("Authentication required", ErrorCode.UNAUTHORIZED, 401);
+    }
+    const { data: ownedSession } = await userClient
+      .from("interview_sessions")
+      .select("id")
+      .eq("id", entity.session_id)
+      .eq("user_id", user.id)
+      .maybeSingle();
+    if (!ownedSession) {
+      throw new AppError("Access denied", ErrorCode.FORBIDDEN, 403);
+    }
+
+    const supabase = createAdminClient();
+
     // Try to insert, if conflict on session_id, return existing report
     const { data, error } = await supabase
       .from("reports")
