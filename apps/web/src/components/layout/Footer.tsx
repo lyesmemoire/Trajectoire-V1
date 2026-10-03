@@ -11,7 +11,7 @@ export default function Footer() {
           </h2>
           <p className="max-w-[280px] leading-relaxed">
             Préparez vos entretiens avec une intelligence contextuelle basée
-            sur votre CV et l&apos;offre visée.
+            sur votre CV et l’offre visée.
           </p>
         </div>
 

@@ -56,7 +56,7 @@ export function Navbar({
     setLoggingOut(true);
 
     try {
-      // Import différé : le client Supabase (≈ 190 Ko) n'est utile qu'à la déconnexion, pas au premier affichage.
+      // Import différé : le client Supabase (≈ 190 Ko) n’est utile qu’à la déconnexion, pas au premier affichage.
       const { createClient } = await import("@/lib/supabase");
       const supabase = createClient();
 

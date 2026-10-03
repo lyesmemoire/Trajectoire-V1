@@ -22,7 +22,7 @@ export default function SignupPage() {
 
   const { token: previewToken, claimPreview, hasToken } = usePreviewStorage()
 
-  // Utilisateur déjà connecté : inutile de créer un compte, on l'envoie sur son espace.
+  // Utilisateur déjà connecté : inutile de créer un compte, on l’envoie sur son espace.
   useEffect(() => {
     let cancelled = false
     fetch("/api/auth/me", { cache: "no-store" })
@@ -36,7 +36,7 @@ export default function SignupPage() {
     }
   }, [])
 
-  // Délai avant un nouvel envoi (limite d'envoi d'e-mails côté Supabase).
+  // Délai avant un nouvel envoi (limite d’envoi d’e-mails côté Supabase).
   useEffect(() => {
     if (cooldown <= 0) return
     const timer = setTimeout(() => setCooldown((c) => c - 1), 1000)
@@ -77,7 +77,7 @@ export default function SignupPage() {
     }
     const normalizedEmail = normalizeEmail(email)
     if (!isValidEmail(normalizedEmail)) {
-      setError("Cette adresse e-mail n'est pas valide.")
+      setError("Cette adresse e-mail n’est pas valide.")
       return
     }
     const passwordError = validatePassword(password)
@@ -90,7 +90,7 @@ export default function SignupPage() {
       return
     }
     if (!acceptCGU) {
-      setError("Vous devez accepter les conditions d'utilisation.")
+      setError("Vous devez accepter les conditions d’utilisation.")
       return
     }
 
@@ -109,7 +109,7 @@ export default function SignupPage() {
       if (signUpError) throw signUpError
 
       // Même comportement dans tous les environnements : si Supabase renvoie une session
-      // (confirmation d'e-mail désactivée dans le projet), on entre directement ; sinon on
+      // (confirmation d’e-mail désactivée dans le projet), on entre directement ; sinon on
       // attend le clic sur le lien de confirmation. Plus de chemin propre au développement.
       if (signUpData.session) {
         if (hasToken()) await claimPreview()
@@ -156,7 +156,7 @@ export default function SignupPage() {
             <p role="alert" className="text-sm text-calm-warn">{error}</p>
           )}
           {resendState === "sent" && cooldown > 0 && (
-            <p role="status" className="text-sm text-calm-accent">Un nouvel e-mail vient d&apos;être envoyé.</p>
+            <p role="status" className="text-sm text-calm-accent">Un nouvel e-mail vient d’être envoyé.</p>
           )}
           <button
             type="button"
@@ -167,8 +167,8 @@ export default function SignupPage() {
             {resendState === "sending"
               ? "Envoi…"
               : cooldown > 0
-                ? `Renvoyer l'e-mail (${cooldown} s)`
-                : "Renvoyer l'e-mail de confirmation"}
+                ? `Renvoyer l’e-mail (${cooldown} s)`
+                : "Renvoyer l’e-mail de confirmation"}
           </button>
           <Link href="/login" className="block mt-6 rounded text-sm text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">
             Retour à la connexion
@@ -187,7 +187,7 @@ export default function SignupPage() {
       <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-medium text-calm-ink mb-2">Créer un compte</h1>
-          <p className="text-calm-secondary text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
+          <p className="text-calm-secondary text-sm">Rejoignez la plateforme d’entraînement stratégique.</p>
         </div>
 
         {error && (
@@ -252,7 +252,7 @@ export default function SignupPage() {
               className="mt-0.5 size-5 shrink-0 cursor-pointer rounded border-calm-accent-line bg-calm-bg accent-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
             />
             <label htmlFor="cgu" className="text-sm text-calm-secondary cursor-pointer leading-tight">
-              J'accepte les <Link href="/terms" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d'utilisation</Link> et la <Link href="/privacy" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">politique de confidentialité</Link>.
+              J’accepte les <Link href="/terms" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-zinc-900">conditions d’utilisation</Link> et la <Link href="/privacy" className="rounded text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg">politique de confidentialité</Link>.
             </label>
           </div>
 
@@ -261,7 +261,7 @@ export default function SignupPage() {
             disabled={loading}
             className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? "Création en cours..." : "S'inscrire"}
+            {loading ? "Création en cours..." : "S’inscrire"}
           </button>
         </form>
 

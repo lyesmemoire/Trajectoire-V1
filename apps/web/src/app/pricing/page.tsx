@@ -8,7 +8,7 @@ import { PLANS, type Plan, type PlanId } from "@/lib/plans"
 import { FEATURED_PLAN_BADGE } from "@/components/home/content"
 import { PURCHASE_ENABLED, PURCHASE_SOON_LABEL } from "@/lib/billing/purchase-gate"
 
-// Aucun prix ni aucune limite n'est écrit ici : tout vient de lib/plans.ts.
+// Aucun prix ni aucune limite n’est écrit ici : tout vient de lib/plans.ts.
 // Seuls les textes éditoriaux (accroches, FAQ) vivent dans ce fichier, et ils
 // interpolent les valeurs du plan.
 
@@ -19,11 +19,11 @@ const PLAN_ORDER: PlanId[] = ["FREE", "PACK", "PRO"]
 const TAGLINES: Record<PlanId, { audience: string; pitch: string }> = {
   FREE: {
     audience: "Je découvre Trajectoire",
-    pitch: "Testez la qualité de l'analyse sur votre CV, sans carte bancaire.",
+    pitch: "Testez la qualité de l’analyse sur votre CV, sans carte bancaire.",
   },
   PACK: {
-    audience: "J'ai un entretien important à préparer",
-    pitch: "Préparez l'entretien qui compte, avec un budget maîtrisé.",
+    audience: "J’ai un entretien important à préparer",
+    pitch: "Préparez l’entretien qui compte, avec un budget maîtrisé.",
   },
   PRO: {
     audience: "Je suis en recherche active",
@@ -320,7 +320,7 @@ export default function PricingPage() {
       }
 
       if (response.status === 401) {
-        // Non connecté : on passe par l'inscription plutôt que d'afficher une erreur.
+        // Non connecté : on passe par l’inscription plutôt que d’afficher une erreur.
         router.push("/signup")
         return
       }
@@ -345,7 +345,7 @@ export default function PricingPage() {
             transition={{ duration: 0.4 }}
             className="mb-8 text-xs font-bold uppercase tracking-[0.22em] text-primary-700"
           >
-            Préparation d&apos;entretien par IA
+            Préparation d’entretien par IA
           </motion.p>
 
           <motion.h1
@@ -362,7 +362,7 @@ export default function PricingPage() {
           </motion.h1>
 
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground-muted md:text-xl">
-            Trajectoire analyse votre CV et l&apos;offre que vous visez, identifie
+            Trajectoire analyse votre CV et l’offre que vous visez, identifie
             les points qui peuvent vous coûter le poste, puis vous entraîne
             précisément là où cela compte.
           </p>
@@ -420,10 +420,10 @@ export default function PricingPage() {
             La méthode
           </p>
           <h2 className="mb-14 text-center text-3xl font-semibold tracking-tight text-foreground md:text-[2.5rem]">
-            Ce n&apos;est pas un chatbot d&apos;entretien.
+            Ce n’est pas un chatbot d’entretien.
             <br />
             <span className="text-foreground-muted">
-              C&apos;est une préparation à cet entretien.
+              C’est une préparation à cet entretien.
             </span>
           </h2>
 
@@ -456,14 +456,14 @@ export default function PricingPage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
-            Exemple d&apos;interface
+            Exemple d’interface
           </p>
           <h2 className="mb-4 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Ce que Trajectoire identifie pour vous.
           </h2>
           <p className="mb-12 text-center text-base text-foreground-muted">
             Exemple représentatif — vos priorités seront dérivées de votre CV et
-            de l&apos;offre réelle.
+            de l’offre réelle.
           </p>
 
           <div className="overflow-hidden rounded-2xl border border-border bg-surface">

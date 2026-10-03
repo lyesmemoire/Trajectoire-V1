@@ -36,29 +36,29 @@ function sanitizeRedirect(value: string | null) {
   return value
 }
 
-// Codes d'erreur posés par /api/auth/callback (`?error=`). Le message Supabase
-// brut n'est jamais affiché : toute valeur inconnue retombe sur un message
+// Codes d’erreur posés par /api/auth/callback (`?error=`). Le message Supabase
+// brut n’est jamais affiché : toute valeur inconnue retombe sur un message
 // générique.
 const CALLBACK_ERRORS: Record<string, string> = {
   link_expired:
     "Ce lien a expiré. Demandez-en un nouveau depuis « Mot de passe oublié » ou reconnectez-vous.",
   link_invalid:
-    "Ce lien n'est plus valide ou a déjà été utilisé. Demandez-en un nouveau ou connectez-vous.",
+    "Ce lien n’est plus valide ou a déjà été utilisé. Demandez-en un nouveau ou connectez-vous.",
   missing_code:
-    "Le lien de confirmation est incomplet. Ouvrez-le depuis l'e-mail reçu ou demandez-en un nouveau.",
+    "Le lien de confirmation est incomplet. Ouvrez-le depuis l’e-mail reçu ou demandez-en un nouveau.",
 }
 
 const GENERIC_CALLBACK_ERROR =
   "La confirmation a échoué. Veuillez réessayer ou vous connecter."
 
-// `?reason=` est posé par le middleware (texte libre) : on n'affiche que des
-// messages maîtrisés, jamais la valeur de l'URL.
+// `?reason=` est posé par le middleware (texte libre) : on n’affiche que des
+// messages maîtrisés, jamais la valeur de l’URL.
 function reasonNotice(reason: string | null): string {
   if (!reason) return ""
   if (reason === "Authentication required") {
     return "Connectez-vous pour accéder à cette page."
   }
-  return "Vous n'avez pas accès à cette page avec ce compte."
+  return "Vous n’avez pas accès à cette page avec ce compte."
 }
 
 function LoginFallback() {
@@ -203,7 +203,7 @@ function LoginContent() {
     }
   }
 
-  // Renvoi de l'e-mail de confirmation (compte créé mais adresse jamais confirmée).
+  // Renvoi de l’e-mail de confirmation (compte créé mais adresse jamais confirmée).
   const handleResend = async () => {
     if (resendState === "sending") return
     setResendState("sending")
@@ -286,7 +286,7 @@ function LoginContent() {
           <div className="mb-6 text-center">
             {resendState === "sent" ? (
               <p role="status" className="text-sm text-calm-accent">
-                Un nouvel e-mail de confirmation vient d&apos;être envoyé à {normalizeEmail(email)}.
+                Un nouvel e-mail de confirmation vient d’être envoyé à {normalizeEmail(email)}.
               </p>
             ) : (
               <button
@@ -295,7 +295,7 @@ function LoginContent() {
                 disabled={resendState === "sending"}
                 className="text-sm font-medium text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent disabled:opacity-60"
               >
-                {resendState === "sending" ? "Envoi…" : "Renvoyer l'e-mail de confirmation"}
+                {resendState === "sending" ? "Envoi…" : "Renvoyer l’e-mail de confirmation"}
               </button>
             )}
           </div>
@@ -432,7 +432,7 @@ function LoginContent() {
                 href="/signup"
                 className="inline-flex min-h-11 items-center rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
-                S&apos;inscrire
+                S’inscrire
               </Link>
             </p>
           </>
