@@ -89,14 +89,16 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 
-  h1, h2, h3 {
+  /* Cormorant Garamond : h1, h2 et grands chiffres (prix) seulement. h3 et plus petits : DM Sans 600. */
+  h1, h2 {
     font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
     font-weight: 500;
     letter-spacing: -0.045em;
     text-wrap: balance;
   }
-  h4 {
-    @apply font-sans font-semibold tracking-tight;
+  h3, h4 {
+    @apply font-sans font-semibold;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
   p {

@@ -13,7 +13,7 @@ export function SegmentPicker() {
 
   return (
     <article className="flex min-h-[400px] flex-col gap-[22px] bg-calm-alt p-[clamp(24px,3vw,36px)]">
-      <h3 className="m-0 text-[clamp(26px,2.4vw,32px)] leading-[1.05] tracking-[-0.03em]">{FOR_WHOM.pickerTitle}</h3>
+      <h3 className="m-0 text-[clamp(22px,2.1vw,26px)] leading-[1.15] tracking-[-0.02em]">{FOR_WHOM.pickerTitle}</h3>
       <div role="group" aria-label={FOR_WHOM.pickerLabel} className="flex flex-wrap gap-2">
         {SEGMENTS.map((s) => {
           const on = s.id === active
@@ -38,7 +38,7 @@ export function SegmentPicker() {
         {segment.questions.map((q) => (
           <li
             key={q}
-            className="border-b border-calm-field py-4 font-serif text-[clamp(22px,2.1vw,27px)] font-medium leading-[1.12] tracking-[-0.02em]"
+            className="border-b border-calm-field py-4 text-[clamp(19px,1.8vw,22px)] font-medium leading-[1.25] tracking-[-0.01em]"
           >
             «&nbsp;{q}&nbsp;»
           </li>

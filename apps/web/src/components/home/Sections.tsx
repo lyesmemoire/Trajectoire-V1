@@ -53,7 +53,7 @@ export function MethodSection() {
           {STEPS.map((step) => (
             <li key={step.title} className="flex flex-col gap-2.5 border-t border-calm-rule pt-[22px]">
               <span className={idx}>{step.kicker}</span>
-              <h3 className="m-0 text-[30px] leading-[1.05] tracking-[-0.03em]">{step.title}</h3>
+              <h3 className="m-0 text-[26px] leading-[1.1] tracking-[-0.02em]">{step.title}</h3>
               <p className="m-0 text-calm-secondary">{step.text}</p>
             </li>
           ))}
@@ -95,11 +95,11 @@ export function ReportSection() {
           <div className="rounded-[6px] border border-calm-line p-[clamp(22px,3vw,34px)] shadow-report">
             <div className="border-b border-calm-line pb-5">
               <span className={idx}>Votre point fort</span>
-              <p className="mb-0 mt-2 font-serif text-[28px] font-medium leading-[1.1] tracking-[-0.02em]">{REPORT_EXAMPLE.strength}</p>
+              <p className="mb-0 mt-2 text-2xl font-semibold leading-[1.2] tracking-[-0.015em]">{REPORT_EXAMPLE.strength}</p>
             </div>
             <div className="border-b border-calm-line py-5">
               <span className="text-xs font-bold uppercase tracking-[0.12em] text-calm-warn">À travailler en priorité</span>
-              <p className="mb-0 mt-2 font-serif text-[28px] font-medium leading-[1.1] tracking-[-0.02em]">{REPORT_EXAMPLE.priority}</p>
+              <p className="mb-0 mt-2 text-2xl font-semibold leading-[1.2] tracking-[-0.015em]">{REPORT_EXAMPLE.priority}</p>
             </div>
             <div className="grid grid-cols-2 gap-6 pt-5 max-[980px]:grid-cols-1">
               <div>
@@ -157,7 +157,7 @@ export function Testimonials() {
       <ul className="m-0 mt-8 grid list-none grid-cols-3 gap-5 p-0 max-[980px]:grid-cols-1">
         {TESTIMONIALS.map((t) => (
           <li key={t.author} className="border-t border-calm-rule pt-5">
-            <blockquote className="m-0 font-serif text-2xl">«&nbsp;{t.quote}&nbsp;»</blockquote>
+            <blockquote className="m-0 text-xl font-medium">«&nbsp;{t.quote}&nbsp;»</blockquote>
             <p className="mb-0 mt-4 text-sm font-semibold">{t.author}</p>
             <p className="m-0 text-sm text-calm-secondary">{t.context}</p>
           </li>
@@ -288,7 +288,7 @@ export function FaqSection() {
         <div className="border-t border-calm-rule">
           {FAQ.map((item) => (
             <details key={item.q} className="group border-b border-calm-line py-5">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-serif text-[27px] font-medium leading-[1.1] tracking-[-0.02em] [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[22px] font-semibold leading-[1.2] tracking-[-0.015em] [&::-webkit-details-marker]:hidden">
                 {item.q}
                 <span aria-hidden="true" className="font-sans text-2xl font-normal text-calm-accent transition-transform group-open:rotate-45">
                   +

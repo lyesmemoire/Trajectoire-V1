@@ -50,7 +50,7 @@ function HeroPortrait() {
         />
         <div className="absolute inset-x-4 bottom-4 rounded-[5px] bg-white px-[18px] pb-4 pt-[17px] shadow-report">
           <span className="block text-xs font-bold uppercase tracking-[0.13em] text-calm-accent">Question tirée de votre CV</span>
-          <p className="mb-0 mt-2.5 font-serif text-[21px] font-medium leading-[1.15] tracking-[-0.015em]">
+          <p className="mb-0 mt-2.5 text-[18px] font-medium leading-[1.3] tracking-[-0.01em]">
             «&nbsp;{HERO_QUESTION}&nbsp;»
           </p>
         </div>

@@ -48,6 +48,28 @@ describe("polices : Cormorant Garamond (titres) et DM Sans (texte)", () => {
   })
 })
 
+describe("Cormorant Garamond réservée aux h1, h2 et grands chiffres", () => {
+  it("la règle de base applique le serif à h1 et h2 seulement (h3 et plus petits en DM Sans)", () => {
+    const css = read(all.find(f => rel(f) === "app/globals.css")!)
+    const block = css.match(/([^{}]+)\{[^{}]*--font-cormorant[^{}]*font-weight:\s*500/)
+    expect(block).not.toBeNull()
+    expect(block![1].replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, "")).toBe("h1,h2")
+  })
+
+  it("font-serif n'est utilisé que pour le logo et les prix (64 px), jamais sur un h3 ou plus petit", () => {
+    const offenders: string[] = []
+    for (const f of all.filter(f => /\.tsx$/.test(f))) {
+      read(f).split("\n").forEach((line, i) => {
+        if (!/font-serif/.test(line)) return
+        const logo = rel(f) === "components/home/Logo.tsx"
+        const price = rel(f) === "components/home/Sections.tsx" && /text-\[64px\]/.test(line)
+        if (!logo && !price) offenders.push(`${rel(f)}:${i + 1}`)
+      })
+    }
+    expect(offenders).toEqual([])
+  })
+})
+
 describe("jetons Calm : valeurs et contrastes", () => {
   const css = read(all.find(f => rel(f) === "app/globals.css")!)
   const channels = (name: string) => css.match(new RegExp(`--calm-${name}:\\s*(\\d+) (\\d+) (\\d+);`))!.slice(1).map(Number)

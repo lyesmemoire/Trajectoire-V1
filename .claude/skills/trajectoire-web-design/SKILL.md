@@ -45,7 +45,7 @@ The dark "premium zinc/indigo" direction is retired. Never reintroduce dark back
 
 ## 3. Typography
 - DM Sans (400–700) for all body text, via `next/font`.
-- Cormorant Garamond (500 and 600, roman; italic 500) for headings, quotes and prices. `h1`–`h3` are serif, weight 500, letter-spacing -0.045em, `text-wrap: balance`; accent words are italic in the accent colour (`font-accent`). Paragraphs use `text-wrap: pretty`. Never serif for body text or small UI labels.
+- Cormorant Garamond (500 and 600, roman; italic 500) is reserved for **`h1`, `h2` and large figures (prices)**, plus the logo wordmark. Weight 500, letter-spacing -0.045em, `text-wrap: balance`; accent words are italic in the accent colour (`font-accent`). `h3` and smaller (card titles, questions, quotes, FAQ, labels) are **DM Sans 600** (500 for long quoted sentences), letter-spacing -0.01em. Paragraphs use `text-wrap: pretty`. `lib/design-invariants.test.ts` enforces it.
 - Fluid headings on the homepage: h1 `clamp(46px, 5.6vw, 82px)` with line-height 0.94, h2 `clamp(40px, 5.6vw, 76px)`; in the app, `text-calm-h1/h2/h3`. Body ≥ 16 px; nothing under 12 px.
 - Clear hierarchy, few weights, no all-caps paragraphs (short eyebrow labels only), no tiny or low-contrast text.
 - **French typography is mandatory**, in JSX and in content files: narrow no-break space before `? ! ;`, no-break space before `:` and inside « guillemets ». All UI copy is in French.
