@@ -205,11 +205,7 @@ export function PricingSection() {
             const featured = plan.highlighted
             // Seuls les avantages inclus sont listés : pas de lignes « non inclus » sur la homepage.
             const labels = [
-              ...plan.features
-                .filter((f) => f.included)
-                // « Paiement unique, sans renouvellement » double la mention sous le prix : on ne la répète pas ici.
-                .filter((f) => !(plan.interval === "one_time" && /^Paiement unique/.test(f.label)))
-                .map((f) => f.label),
+              ...plan.features.filter((f) => f.included).map((f) => f.label),
               ...(plan.id === "FREE" ? FREE_PLAN_EXTRAS : []),
             ]
             const outline =

@@ -83,7 +83,6 @@ export const PLANS: Record<PlanId, Plan> = {
       { label: "Valables 3 mois", included: true },
       { label: "Rapport détaillé après chaque simulation", included: true },
       { label: "Analyse de CV complète", included: true },
-      { label: "Paiement unique, sans renouvellement", included: true },
     ],
     highlighted: true,
     stripePriceId: null,
