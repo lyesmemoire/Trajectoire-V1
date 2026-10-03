@@ -187,7 +187,7 @@ export default function SignupPage() {
       <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-medium text-calm-ink mb-2">Créer un compte</h1>
-          <p className="text-calm-secondary text-sm">Rejoignez la plateforme d’entraînement stratégique.</p>
+          <p className="text-calm-secondary text-sm">Créez votre compte pour préparer vos entretiens.</p>
         </div>
 
         {error && (
