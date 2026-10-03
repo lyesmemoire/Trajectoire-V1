@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { Check, ChevronDown, X } from "lucide-react"
 import { PLANS, type Plan, type PlanId } from "@/lib/plans"
+import { FEATURED_PLAN_BADGE } from "@/components/home/content"
 import { PURCHASE_ENABLED, PURCHASE_SOON_LABEL } from "@/lib/billing/purchase-gate"
 
 // Aucun prix ni aucune limite n'est écrit ici : tout vient de lib/plans.ts.
@@ -181,7 +182,7 @@ function PlanCard({
     >
       {highlighted && (
         <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary-600 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-white">
-          Le plus choisi
+          {FEATURED_PLAN_BADGE}
         </span>
       )}
 
