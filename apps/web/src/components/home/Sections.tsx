@@ -40,7 +40,7 @@ export function MethodSection() {
       className="home-wrap border-t border-calm-line pb-[clamp(56px,7vw,96px)] pt-[clamp(72px,9vw,130px)]"
     >
       <Reveal>
-        <div className={`${split} mx-auto max-w-[1060px]`}>
+        <div className={split}>
           <div className={idx}>{METHOD.index}</div>
           <div>
             <h2 id="methode-titre" className={h2Big}>
