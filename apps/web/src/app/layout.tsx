@@ -1,12 +1,23 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans } from "next/font/google"
 import { getScriptNonce, getStyleNonce } from "@/lib/security/csp-nonce"
 import { MotionProvider } from "@/components/providers/MotionProvider"
 
-// Police unique du produit (décision du 2026-10-02 : tout en Inter). Servie depuis nos propres
-// fichiers par next/font (pas d'appel à Google à l'exécution, compatible avec la CSP `font-src 'self'`).
-const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-inter" })
+// Design system « Calm » : DM Sans pour le texte, Cormorant Garamond pour les titres, citations et prix (romain 500/600,
+// italique 500 pour les mots d'accent). Servies depuis nos propres fichiers par next/font (pas d'appel à Google à
+// l'exécution, compatible avec la CSP `font-src 'self'`).
+const dmSans = DM_Sans({ subsets: ["latin"], display: "swap", variable: "--font-dmsans" })
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  // Non préchargée : le titre du héros (LCP) s'affiche tout de suite avec la police de repli ajustée, puis passe à
+  // Cormorant dès qu'elle est reçue ; la précharger retardait le premier affichage.
+  preload: false,
+  variable: "--font-cormorant",
+})
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://trajectoire.app"
 
@@ -37,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const styleNonce = await getStyleNonce()
 
   return (
-    <html lang="fr" className={`scroll-smooth ${inter.variable}`}>
+    <html lang="fr" className={`scroll-smooth ${dmSans.variable} ${cormorant.variable}`}>
       <head>
         {/* CSP Nonce - Pass nonces to client via data attributes */}
         <script
@@ -51,12 +62,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </script>
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased font-sans">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded-lg z-50"
-        >
-          Aller au contenu principal
-        </a>
+        {/* Dans un repère (landmark) : sinon le lien est « hors contenu » pour les lecteurs d'écran. */}
+        <nav aria-label="Accès rapide">
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-3 rounded-[4px] z-50"
+          >
+            Aller au contenu principal
+          </a>
+        </nav>
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

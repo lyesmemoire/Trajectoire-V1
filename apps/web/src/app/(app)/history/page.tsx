@@ -57,20 +57,20 @@ export default async function HistoryPage() {
       <div className="mb-8">
         <Link
           href="/dashboard"
-          className="inline-flex items-center text-sm text-zinc-400 hover:text-zinc-50 mb-4 transition-colors"
+          className="inline-flex items-center text-sm text-calm-secondary hover:text-calm-ink mb-4 transition-colors"
         >
           ← Retour au tableau de bord
         </Link>
-        <h1 className="text-3xl font-sans font-bold text-zinc-50 mb-2">
+        <h1 className="text-3xl font-sans font-bold text-calm-ink mb-2">
           Historique des simulations
         </h1>
-        <p className="text-zinc-400">Consultez toutes vos simulations et leurs rapports.</p>
+        <p className="text-calm-secondary">Consultez toutes vos simulations et leurs rapports.</p>
       </div>
 
       {!sessions || sessions.length === 0 ? (
-        <div className="bg-gradient-to-br from-indigo-500/[0.12] via-indigo-500/[0.03] to-transparent p-8 rounded-2xl border border-indigo-400/20 text-center">
-          <h3 className="text-xl font-sans font-semibold text-zinc-50 mb-2">Aucune simulation</h3>
-          <p className="text-zinc-400 mb-6">Vous n&apos;avez pas encore réalisé de simulation.</p>
+        <div className="bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-8 rounded-2xl border border-calm-accent-line text-center">
+          <h3 className="text-xl font-sans font-semibold text-calm-ink mb-2">Aucune simulation</h3>
+          <p className="text-calm-secondary mb-6">Vous n&apos;avez pas encore réalisé de simulation.</p>
           <Link href="/simulation/new">
             <Button variant="dark" size="md">
               Commencer ma première simulation
@@ -92,19 +92,19 @@ export default async function HistoryPage() {
           </div>
 
           {/* History Table */}
-          <div className="bg-zinc-900 rounded-2xl border border-white/[0.08] overflow-hidden">
+          <div className="bg-calm-surface rounded-2xl border border-calm-line overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-white/[0.03] border-b border-white/[0.08]">
+                <thead className="bg-calm-accent-wash border-b border-calm-line">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Date</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Poste</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Niveau</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Type</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Durée</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Score</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Statut</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-zinc-50">Action</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Date</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Poste</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Niveau</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Type</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Durée</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Score</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Statut</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-calm-ink">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -113,34 +113,34 @@ export default async function HistoryPage() {
                     const isCompleted = session.status === "completed"
                     
                     return (
-                      <tr key={session.id} className="border-b border-white/[0.06] last:border-0 hover:bg-white/[0.03] transition-colors">
-                        <td className="px-6 py-4 text-sm text-zinc-400">
+                      <tr key={session.id} className="border-b border-calm-line last:border-0 hover:bg-calm-accent-wash transition-colors">
+                        <td className="px-6 py-4 text-sm text-calm-secondary">
                           {formatDate(session.created_at)}
                         </td>
-                        <td className="px-6 py-4 text-sm font-medium text-zinc-50">
+                        <td className="px-6 py-4 text-sm font-medium text-calm-ink">
                           {session.job_title}
                         </td>
-                        <td className="px-6 py-4 text-sm text-zinc-400">
+                        <td className="px-6 py-4 text-sm text-calm-secondary">
                           {session.level}
                         </td>
-                        <td className="px-6 py-4 text-sm text-zinc-400">
+                        <td className="px-6 py-4 text-sm text-calm-secondary">
                           {session.interview_type}
                         </td>
-                        <td className="px-6 py-4 text-sm text-zinc-400">
+                        <td className="px-6 py-4 text-sm text-calm-secondary">
                           {session.duration_seconds ? formatDuration(session.duration_seconds) : "-"}
                         </td>
                         <td className="px-6 py-4 text-sm">
                           {report ? (
-                            <span className="font-semibold text-zinc-50">{report.overall_score}%</span>
+                            <span className="font-semibold text-calm-ink">{report.overall_score}%</span>
                           ) : (
-                            <span className="text-zinc-500">-</span>
+                            <span className="text-calm-tertiary">-</span>
                           )}
                         </td>
                         <td className="px-6 py-4">
                           <span className={`px-2.5 py-1 text-xs font-medium rounded-full ring-1 ring-inset ${
                             isCompleted
-                              ? "bg-emerald-500/15 text-emerald-300 ring-emerald-400/20"
-                              : "bg-amber-500/15 text-amber-300 ring-amber-400/20"
+                              ? "bg-calm-accent-soft text-calm-accent ring-calm-accent-line"
+                              : "bg-calm-warn-soft text-calm-warn ring-calm-warn-line"
                           }`}>
                             {isCompleted ? "Terminé" : "En cours"}
                           </span>
@@ -149,12 +149,12 @@ export default async function HistoryPage() {
                           {report && isCompleted ? (
                             <Link
                               href={`/report/${report.id}`}
-                              className="text-sm text-indigo-400 hover:text-indigo-300 hover:underline font-medium transition-colors"
+                              className="text-sm text-calm-accent hover:text-calm-accent hover:underline font-medium transition-colors"
                             >
                               Voir rapport
                             </Link>
                           ) : (
-                            <span className="text-sm text-zinc-500">-</span>
+                            <span className="text-sm text-calm-tertiary">-</span>
                           )}
                         </td>
                       </tr>

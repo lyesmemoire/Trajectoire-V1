@@ -13,9 +13,9 @@ const MAX_EXPERIENCES = 20
 const MAX_EDUCATION = 10
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
-const inputClass = `w-full rounded-xl border border-white/10 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 ${focusRing}`
-const buttonGhost = `inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
+const inputClass = `w-full rounded-xl border border-calm-line bg-calm-bg px-3 py-2.5 text-sm text-calm-ink placeholder:text-calm-tertiary ${focusRing}`
+const buttonGhost = `inline-flex min-h-11 items-center justify-center rounded-xl border border-calm-line bg-calm-accent-wash px-4 text-sm font-medium text-calm-ink transition-colors hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`
 
 const EMPTY_EXPERIENCE: ExperienceForm = { title: "", company: "", startDate: "", endDate: "", current: false, bulletsText: "" }
 const EMPTY_EDUCATION: EducationForm = { degree: "", institution: "", year: "" }
@@ -33,19 +33,19 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-sm font-medium text-zinc-200">
+      <label htmlFor={id} className="block text-sm font-medium text-calm-ink">
         {label}
       </label>
       {children}
-      {hint && <p className="text-xs text-zinc-400">{hint}</p>}
+      {hint && <p className="text-xs text-calm-secondary">{hint}</p>}
     </div>
   )
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-white/[0.08] bg-zinc-900 p-6">
-      <h2 className="mb-4 text-lg font-semibold text-zinc-50">{title}</h2>
+    <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
+      <h2 className="font-sans mb-4 text-lg font-semibold text-calm-ink tracking-normal">{title}</h2>
       <div className="space-y-4">{children}</div>
     </section>
   )
@@ -92,7 +92,7 @@ export function CvExportEditor({
 
     const document = documentFromForm(form)
     if (!document.personal.name.trim()) {
-      setError("Renseignez votre nom : il sert de titre au CV et au nom du fichier.")
+      setError("Renseignez votre nom : il sert de titre au CV et au nom du fichier.")
       return
     }
     const check = CvDocumentSchema.safeParse(document)
@@ -161,7 +161,7 @@ export function CvExportEditor({
             <input id="cv-linkedin" className={inputClass} maxLength={200} value={form.personal.linkedin} onChange={(e) => setPersonal("linkedin", e.target.value)} />
           </Field>
         </div>
-        <Field id="cv-headline" label="Titre professionnel" hint="Par exemple : « Développeuse full stack ».">
+        <Field id="cv-headline" label="Titre professionnel" hint="Par exemple : « Développeuse full stack ».">
           <input id="cv-headline" className={inputClass} maxLength={160} value={form.headline} onChange={(e) => patch({ headline: e.target.value })} />
         </Field>
       </Section>
@@ -172,11 +172,11 @@ export function CvExportEditor({
         </Field>
         {summaries.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-zinc-200">Utiliser une version réécrite</p>
+            <p className="text-sm font-medium text-calm-ink">Utiliser une version réécrite</p>
             <ul className="space-y-2">
               {summaries.map((s) => (
-                <li key={s.id} className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-3">
-                  <p className="line-clamp-3 whitespace-pre-wrap text-sm text-zinc-300">{s.text}</p>
+                <li key={s.id} className="rounded-xl border border-calm-line bg-calm-bg/50 p-3">
+                  <p className="line-clamp-3 whitespace-pre-wrap text-sm text-calm-ink">{s.text}</p>
                   <button type="button" className={`${buttonGhost} mt-2`} onClick={() => patch({ summary: s.text.slice(0, 2000) })}>
                     Insérer dans le profil
                   </button>
@@ -188,10 +188,10 @@ export function CvExportEditor({
       </Section>
 
       <Section title="Expérience professionnelle">
-        {form.experiences.length === 0 && <p className="text-sm text-zinc-400">Aucune expérience. Ajoutez-en une si elle figure sur votre CV.</p>}
+        {form.experiences.length === 0 && <p className="text-sm text-calm-secondary">Aucune expérience. Ajoutez-en une si elle figure sur votre CV.</p>}
         {form.experiences.map((e, i) => (
-          <fieldset key={i} className="space-y-4 rounded-xl border border-white/[0.06] bg-zinc-950/40 p-4">
-            <legend className="px-1 text-sm font-medium text-zinc-300">Expérience {i + 1}</legend>
+          <fieldset key={i} className="space-y-4 rounded-xl border border-calm-line bg-calm-bg/40 p-4">
+            <legend className="px-1 text-sm font-medium text-calm-ink">Expérience {i + 1}</legend>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field id={`exp-title-${i}`} label="Poste">
                 <input id={`exp-title-${i}`} className={inputClass} maxLength={160} value={e.title} onChange={(ev) => setExperience(i, { title: ev.target.value })} />
@@ -206,8 +206,8 @@ export function CvExportEditor({
                 <input id={`exp-end-${i}`} className={`${inputClass} disabled:opacity-50`} maxLength={40} value={e.current ? "" : e.endDate} disabled={e.current} onChange={(ev) => setExperience(i, { endDate: ev.target.value })} />
               </Field>
             </div>
-            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-zinc-200">
-              <input type="checkbox" className="size-5 accent-indigo-500" checked={e.current} onChange={(ev) => setExperience(i, { current: ev.target.checked })} />
+            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-calm-ink">
+              <input type="checkbox" className="size-5 accent-calm-accent" checked={e.current} onChange={(ev) => setExperience(i, { current: ev.target.checked })} />
               Poste actuel
             </label>
             <Field id={`exp-bullets-${i}`} label="Missions et réalisations" hint="Une ligne par point. Conservez vos chiffres et résultats.">
@@ -224,10 +224,10 @@ export function CvExportEditor({
       </Section>
 
       <Section title="Formation">
-        {form.education.length === 0 && <p className="text-sm text-zinc-400">Aucune formation.</p>}
+        {form.education.length === 0 && <p className="text-sm text-calm-secondary">Aucune formation.</p>}
         {form.education.map((e, i) => (
-          <fieldset key={i} className="space-y-4 rounded-xl border border-white/[0.06] bg-zinc-950/40 p-4">
-            <legend className="px-1 text-sm font-medium text-zinc-300">Formation {i + 1}</legend>
+          <fieldset key={i} className="space-y-4 rounded-xl border border-calm-line bg-calm-bg/40 p-4">
+            <legend className="px-1 text-sm font-medium text-calm-ink">Formation {i + 1}</legend>
             <Field id={`edu-degree-${i}`} label="Diplôme">
               <input id={`edu-degree-${i}`} className={inputClass} maxLength={200} value={e.degree} onChange={(ev) => setEducation(i, { degree: ev.target.value })} />
             </Field>
@@ -261,14 +261,14 @@ export function CvExportEditor({
         </Field>
       </Section>
 
-      <section className="rounded-2xl border border-white/[0.08] bg-zinc-900 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-zinc-50">Télécharger</h2>
-        <p className="mb-4 text-sm text-zinc-400">
-          Une seule colonne, titres standards, texte sélectionnable : le format attendu par les logiciels de recrutement. Le PDF ne gère
+      <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
+        <h2 className="font-sans mb-2 text-lg font-semibold text-calm-ink tracking-normal">Télécharger</h2>
+        <p className="mb-4 text-sm text-calm-secondary">
+          Une seule colonne, titres standards, texte sélectionnable : le format attendu par les logiciels de recrutement. Le PDF ne gère
           pas les alphabets non latins (utilisez alors le DOCX).
         </p>
         <div className="flex flex-wrap gap-3">
-          <button type="button" disabled={busy !== null} onClick={() => download("docx")} className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}>
+          <button type="button" disabled={busy !== null} onClick={() => download("docx")} className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 ${focusRing}`}>
             {busy === "docx" ? "Génération…" : "Télécharger en DOCX"}
           </button>
           <button type="button" disabled={busy !== null} onClick={() => download("pdf")} className={buttonGhost}>
@@ -277,16 +277,16 @@ export function CvExportEditor({
         </div>
 
         <div aria-live="polite" className="mt-4 space-y-3">
-          {done && <p className="rounded-xl border border-emerald-500/30 bg-emerald-950/40 p-3 text-sm text-emerald-200">{done}</p>}
+          {done && <p className="rounded-xl border border-calm-accent-line bg-calm-accent-soft p-3 text-sm text-calm-accent">{done}</p>}
           {error && (
-            <p role="alert" className="rounded-xl border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-200">
+            <p role="alert" className="rounded-xl border border-calm-warn-line bg-calm-warn-soft p-3 text-sm text-calm-warn">
               {error}
             </p>
           )}
           {planRequired && (
-            <div role="alert" className="rounded-xl border border-indigo-400/30 bg-indigo-500/10 p-4 text-sm text-indigo-100">
+            <div role="alert" className="rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4 text-sm text-calm-accent">
               <p className="font-medium">L&apos;export est inclus dans le Pack Entretien et dans Pro.</p>
-              <Link href="/pricing" className={`mt-2 inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-indigo-200 underline underline-offset-4 ${focusRing}`}>
+              <Link href="/pricing" className={`mt-2 inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-calm-accent underline underline-offset-4 ${focusRing}`}>
                 Voir les formules
               </Link>
             </div>

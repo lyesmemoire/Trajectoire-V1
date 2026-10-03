@@ -155,22 +155,22 @@ export function OnboardingWizard({ initialName = "" }: OnboardingWizardProps) {
         {/* Halo d'ambiance */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.16),transparent_70%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(31,42,55,0.16),transparent_70%)]"
         />
 
         <div className="relative mx-auto flex min-h-dvh w-full max-w-xl flex-col px-5 py-8 sm:py-12">
           <header className="mb-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5">
-              <div className="grid size-[30px] place-items-center rounded-lg bg-indigo-500 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.1)_inset,0_6px_18px_-6px_rgba(99,102,241,0.7)]">
+              <div className="grid size-[30px] place-items-center rounded-lg bg-calm-accent text-white shadow-[0_0_0_1px_rgba(241,247,243,0.1)_inset,0_6px_18px_-6px_rgba(31,42,55,0.7)]">
                 <Target className="size-[15px]" strokeWidth={2} aria-hidden />
               </div>
-              <span className="text-[15px] font-semibold tracking-tight text-white/80">
+              <span className="text-[15px] font-semibold tracking-tight text-calm-ink">
                 Trajectoire
               </span>
             </div>
-            <p className="text-xs font-medium text-white/50">
+            <p className="text-xs font-medium text-calm-secondary">
               Étape {step + 1} sur {STEP_COUNT}
-              <span className="text-white/30"> · {STEP_TITLES[step]}</span>
+              <span className="text-calm-tertiary"> · {STEP_TITLES[step]}</span>
             </p>
           </header>
 
@@ -181,10 +181,10 @@ export function OnboardingWizard({ initialName = "" }: OnboardingWizardProps) {
             aria-valuemax={STEP_COUNT}
             aria-valuenow={step + 1}
             aria-valuetext={`Étape ${step + 1} sur ${STEP_COUNT} : ${STEP_TITLES[step]}`}
-            className="h-1 w-full overflow-hidden rounded-full bg-white/[0.08]"
+            className="h-1 w-full overflow-hidden rounded-full bg-calm-accent-soft"
           >
             <motion.div
-              className="h-full rounded-full bg-indigo-500"
+              className="h-full rounded-full bg-calm-accent"
               initial={false}
               animate={{ width: `${((step + 1) / STEP_COUNT) * 100}%` }}
               transition={{ duration: 0.4, ease: EASE }}
@@ -262,7 +262,7 @@ export function OnboardingWizard({ initialName = "" }: OnboardingWizardProps) {
                       <ArrowRight className="size-4" aria-hidden />
                     </button>
                     {!stepValid[step] ? (
-                      <p id="onboarding-step-hint" className="text-xs text-white/40">
+                      <p id="onboarding-step-hint" className="text-xs text-calm-tertiary">
                         {data.cvStatus === "uploading" && step === 1
                           ? "Lecture du CV en cours…"
                           : STEP_HINTS[step]}

@@ -53,7 +53,7 @@ export default function QADesignPage() {
         </header>
 
         {/* 1) Badges (collision Bronze vs autres) */}
-        <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
+        <section className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium">
           <h2 className="font-sans text-xl text-ink-900 mb-4">Badges</h2>
           <div className="flex flex-wrap items-center gap-3">
             <Badge variant="free" />
@@ -61,12 +61,12 @@ export default function QADesignPage() {
             <Badge variant="expert" />
           </div>
           <p className="mt-3 text-xs text-ink-500">
-            Vérifier : PRO (bronze) ne doit pas ressembler à un warning (terracotta) ni à un danger (brick).
+            Vérifier : PRO (bronze) ne doit pas ressembler à un warning (terracotta) ni à un danger (brick).
           </p>
         </section>
 
         {/* 2) Scores (Forest / Terracotta / Brick) */}
-        <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
+        <section className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium">
           <h2 className="font-sans text-xl text-ink-900 mb-4">Scores</h2>
           <div className="flex flex-wrap gap-10 items-center">
             <div className="text-center space-y-2">
@@ -85,7 +85,7 @@ export default function QADesignPage() {
         </section>
 
         {/* 3) Boutons (inclure danger) */}
-        <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
+        <section className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium">
           <h2 className="font-sans text-xl text-ink-900 mb-4">Boutons</h2>
           <div className="flex flex-wrap gap-3">
             <Button variant="primary">Primary (Ink)</Button>
@@ -95,41 +95,41 @@ export default function QADesignPage() {
             <Button variant="danger">Danger (Brick)</Button>
           </div>
           <p className="mt-3 text-xs text-ink-500">
-            Vérifier : danger = brick (irréversible). Jamais terracotta pour danger.
+            Vérifier : danger = brick (irréversible). Jamais terracotta pour danger.
             Premium = bronze (rare, accent). Primary = ink (structurel).
           </p>
         </section>
 
         {/* 4) Leaderboard + Badge PRO (test collision) */}
         <section className="grid lg:grid-cols-2 gap-6">
-          <div className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
+          <div className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium">
             <h2 className="font-sans text-xl text-ink-900 mb-4">Leaderboard</h2>
             <LiveLeaderboard entries={entries} />
           </div>
 
-          <div className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium space-y-4">
+          <div className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium space-y-4">
             <h2 className="font-sans text-xl text-ink-900">Collision test</h2>
             <p className="text-sm text-ink-600">
-              Mets le badge PRO à côté du podium : ils ne doivent pas partager la même "signature" couleur.
+              Mets le badge PRO à côté du podium : ils ne doivent pas partager la même "signature" couleur.
               Le podium utilise des hex isolés (#B8860B, #8A8A8A, #CD7F32), le badge PRO utilise bronze-* tokens.
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-ink-700">Plan :</span>
+              <span className="text-sm text-ink-700">Plan :</span>
               <Badge variant="pro" />
             </div>
             <div className="mt-4 p-4 bg-ivoire-50 rounded-lg border border-ivoire-200">
-              <p className="text-xs text-ink-600 font-medium mb-2">Palette Podium (hex isolés) :</p>
+              <p className="text-xs text-ink-600 font-medium mb-2">Palette Podium (hex isolés) :</p>
               <div className="flex gap-2 text-xs">
-                <span className="px-2 py-1 rounded text-white" style={{backgroundColor: "#B8860B"}}>Gold #B8860B</span>
-                <span className="px-2 py-1 rounded text-white" style={{backgroundColor: "#8A8A8A"}}>Silver #8A8A8A</span>
-                <span className="px-2 py-1 rounded text-white" style={{backgroundColor: "#CD7F32"}}>Bronze #CD7F32</span>
+                <span className="px-2 py-1 rounded text-calm-ink" style={{backgroundColor: "#B8860B"}}>Gold #B8860B</span>
+                <span className="px-2 py-1 rounded text-calm-ink" style={{backgroundColor: "#8A8A8A"}}>Silver #8A8A8A</span>
+                <span className="px-2 py-1 rounded text-calm-ink" style={{backgroundColor: "#CD7F32"}}>Bronze #CD7F32</span>
               </div>
             </div>
           </div>
         </section>
 
         {/* 5) État système (success/neutral/danger) */}
-        <section className="bg-white border border-ivoire-200 rounded-2xl p-6 shadow-premium">
+        <section className="bg-calm-surface border border-ivoire-200 rounded-2xl p-6 shadow-premium">
           <h2 className="font-sans text-xl text-ink-900 mb-4">États système</h2>
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-forest-50 border border-forest-200 rounded-lg">

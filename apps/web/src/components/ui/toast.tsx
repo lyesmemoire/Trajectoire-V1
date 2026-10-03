@@ -182,7 +182,7 @@ function ToastItem({
       </div>
       <button
         onClick={onDismiss}
-        className="p-1 rounded hover:bg-black/5 transition-colors"
+        className="p-1 rounded hover:bg-calm-bg transition-colors"
         aria-label="Fermer"
       >
         <svg

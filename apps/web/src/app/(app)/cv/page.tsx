@@ -28,13 +28,13 @@ export default async function CVListPage() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
       <div className="mb-8">
-        <Link href="/dashboard" className="mb-4 inline-flex items-center text-sm text-zinc-400 transition-colors hover:text-zinc-50">
+        <Link href="/dashboard" className="mb-4 inline-flex items-center text-sm text-calm-secondary transition-colors hover:text-calm-ink">
           ← Retour au tableau de bord
         </Link>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="mb-2 text-3xl font-bold text-zinc-50">Mes analyses de CV</h1>
-            <p className="text-zinc-400">Score ATS et pistes d&apos;amélioration de chaque CV analysé.</p>
+            <h1 className="mb-2 text-3xl font-bold text-calm-ink">Mes analyses de CV</h1>
+            <p className="text-calm-secondary">Score ATS et pistes d&apos;amélioration de chaque CV analysé.</p>
           </div>
           {analyses.length > 0 && (
             <Link href="/analyze">
@@ -47,9 +47,9 @@ export default async function CVListPage() {
       </div>
 
       {analyses.length === 0 ? (
-        <div className="rounded-2xl border border-indigo-400/20 bg-gradient-to-br from-indigo-500/[0.12] via-indigo-500/[0.03] to-transparent p-8 text-center">
-          <h2 className="mb-2 text-xl font-semibold text-zinc-50">Aucune analyse pour le moment</h2>
-          <p className="mb-6 text-zinc-400">Importez votre CV et, si vous en avez une, une offre : le score apparaîtra ici.</p>
+        <div className="rounded-2xl border border-calm-accent-line bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-8 text-center">
+          <h2 className="font-sans mb-2 text-xl font-semibold text-calm-ink tracking-normal">Aucune analyse pour le moment</h2>
+          <p className="mb-6 text-calm-secondary">Importez votre CV et, si vous en avez une, une offre : le score apparaîtra ici.</p>
           <Link href="/analyze">
             <Button variant="dark" size="md">
               Lancer une analyse
@@ -67,17 +67,17 @@ export default async function CVListPage() {
               <li key={analysis.id}>
                 <Link
                   href={`/cv/${analysis.id}`}
-                  className="flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-zinc-900 p-5 transition-colors hover:bg-white/[0.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400"
+                  className="flex items-center gap-4 rounded-2xl border border-calm-line bg-calm-surface p-5 transition-colors hover:bg-calm-accent-wash focus-visible:outline focus-visible:outline-2 focus-visible:outline-calm-accent"
                 >
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-300">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                     <FileText className="size-5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-medium text-zinc-50">{analysis.fileName.trim() || "CV sans titre"}</span>
-                    <span className="block text-sm text-zinc-400">{formatDate(analysis.createdAt)}</span>
+                    <span className="block truncate font-medium text-calm-ink">{analysis.fileName.trim() || "CV sans titre"}</span>
+                    <span className="block text-sm text-calm-secondary">{formatDate(analysis.createdAt)}</span>
                   </span>
                   {delta !== null && (
-                    <span className={`text-sm font-medium tabular-nums ${delta >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
+                    <span className={`text-sm font-medium tabular-nums ${delta >= 0 ? "text-calm-accent-deep" : "text-calm-warn"}`}>
                       {delta >= 0 ? "+" : ""}
                       {delta} pts
                     </span>
@@ -85,7 +85,7 @@ export default async function CVListPage() {
                   {analysis.atsScoreAfter !== null ? (
                     <ScoreBadge score={analysis.atsScoreAfter} />
                   ) : (
-                    <span className="text-sm text-zinc-500">Pas de score</span>
+                    <span className="text-sm text-calm-tertiary">Pas de score</span>
                   )}
                 </Link>
               </li>

@@ -10,12 +10,9 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
   
-  integrations: [
-    Sentry.replayIntegration({
-      maskAllText: true,
-      blockAllMedia: true,
-    }),
-  ],
+
+  // Le tracing de performance du navigateur est ajouté plus tard, à l'idle (voir plus bas), comme Replay.
+  integrations: (defaults) => defaults.filter((integration) => integration.name !== "BrowserTracing"),
 
   beforeSend(event, hint) {
     // Filter out client-side errors that are not critical
@@ -50,6 +47,23 @@ Sentry.init({
     return breadcrumb;
   },
 });
+
+// Le cœur de Sentry (capture des erreurs, y compris d'hydratation) est chargé tout de suite. Seuls le tracing de performance
+// du navigateur et l'intégration Replay, les parties les plus lourdes, sont ajoutés plus tard, à l'idle après le chargement de la page.
+if (typeof window !== "undefined") {
+  const addReplay = () => {
+    void import("@sentry/nextjs").then((S) => {
+      S.addIntegration(S.browserTracingIntegration());
+      S.addIntegration(S.replayIntegration({ maskAllText: true, blockAllMedia: true }));
+    });
+  };
+  const idle = () => {
+    if ("requestIdleCallback" in window) window.requestIdleCallback(addReplay, { timeout: 4000 });
+    else setTimeout(addReplay, 2000);
+  };
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle, { once: true });
+}
 
 // Required hooks for Next.js 15 + Sentry
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

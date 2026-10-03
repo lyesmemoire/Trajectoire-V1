@@ -55,7 +55,7 @@ export default async function AIOperatingSystemDashboardPage() {
       <div className="bg-gradient-to-r from-bronze-600 to-ink-600 p-6 rounded-lg text-ivoire-50 shadow-premium">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-2xl font-bold">Global Intelligence Score</h2>
+            <h2 className="font-sans text-2xl font-semibold tracking-normal">Global Intelligence Score</h2>
             <p className="text-bronze-200 mt-1">Overall AI system performance</p>
           </div>
           <div className="text-5xl font-bold">
@@ -67,7 +67,7 @@ export default async function AIOperatingSystemDashboardPage() {
       {/* Engine Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Execution Graph */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Execution Graph</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -90,7 +90,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Lifecycle Manager */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Lifecycle Manager</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -113,7 +113,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Explainability */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Explainability</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -136,7 +136,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Optimization */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Optimization</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -160,7 +160,7 @@ export default async function AIOperatingSystemDashboardPage() {
       </div>
 
       {/* Health Scores Grid */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
         <h3 className="text-lg font-semibold text-ink-900 mb-4">Engine Health Scores</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {healthSnapshot && (
@@ -221,7 +221,7 @@ export default async function AIOperatingSystemDashboardPage() {
       {/* Governance and Improvement */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Governance */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Governance</h3>
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
@@ -256,7 +256,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Continuous Improvement */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Continuous Improvement</h3>
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
@@ -294,7 +294,7 @@ export default async function AIOperatingSystemDashboardPage() {
       {/* Timeline and Observability */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Timeline */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Timeline Engine</h3>
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
@@ -325,7 +325,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Observability */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Observability Platform</h3>
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
@@ -361,7 +361,7 @@ export default async function AIOperatingSystemDashboardPage() {
       </div>
 
       {/* Product Evolution */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
         <h3 className="text-lg font-semibold text-ink-900 mb-4">Product Evolution</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           <div className="flex justify-between text-sm">
@@ -404,7 +404,7 @@ export default async function AIOperatingSystemDashboardPage() {
       </div>
 
       {/* Cost Monitoring */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
         <h3 className="text-lg font-semibold text-ink-900 mb-4">Cost Monitoring</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-4 bg-ivoire-50 rounded-lg">
@@ -429,7 +429,7 @@ export default async function AIOperatingSystemDashboardPage() {
       {/* Alerts and Warnings */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Health Alerts */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Health Alerts</h3>
           <div className="space-y-2">
             {aiHealthMonitor.getActiveAlerts().slice(0, 5).map(alert => (
@@ -459,7 +459,7 @@ export default async function AIOperatingSystemDashboardPage() {
         </div>
 
         {/* Optimization Proposals */}
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
+        <div className="bg-calm-accent-line backdrop-blur-xl p-6 rounded-lg border border-ivoire-200 shadow-premium">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Optimization Proposals</h3>
           <div className="space-y-2">
             {autonomousOptimizationEngine.getProposals().slice(0, 5).map(proposal => (
@@ -492,7 +492,7 @@ export default async function AIOperatingSystemDashboardPage() {
       </div>
 
       {/* System Status */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
         <h3 className="text-lg font-semibold text-ink-900 mb-4">System Status</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="flex items-center gap-2">

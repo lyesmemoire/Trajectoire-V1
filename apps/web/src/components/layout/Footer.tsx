@@ -6,32 +6,32 @@ export default function Footer() {
     <footer className="border-t border-border bg-background py-12 text-sm text-foreground-muted">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-3">
         <div>
-          <h3 className="mb-2 font-sans font-bold text-foreground">
+          <h2 className="mb-2 font-sans font-bold text-foreground">
             Trajectoire
-          </h3>
+          </h2>
           <p className="max-w-[280px] leading-relaxed">
             Préparez vos entretiens avec une intelligence contextuelle basée
-            sur votre CV et l&apos;offre visée.
+            sur votre CV et l’offre visée.
           </p>
         </div>
 
         <div>
-          <h4 className="mb-2 font-semibold text-foreground">
+          <h3 className="mb-2 font-semibold text-foreground">
             Produit
-          </h4>
+          </h3>
           <ul className="space-y-0">
             <li>
-              <Link href="/analyze" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/analyze" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Analyser ma candidature
               </Link>
             </li>
             <li>
-              <Link href="/pricing" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/pricing" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Tarifs
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/dashboard" prefetch={false} className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Dashboard
               </Link>
             </li>
@@ -39,23 +39,23 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-2 font-semibold text-foreground">
+          <h3 className="mb-2 font-semibold text-foreground">
             Légal
-          </h4>
+          </h3>
           <ul className="space-y-0">
             <li>
-              <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Conditions générales
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Politique de confidentialité
               </Link>
             </li>
             {canShowLegalNotice() && (
               <li>
-                <Link href="/mentions-legales" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+                <Link href="/mentions-legales" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                   Mentions légales
                 </Link>
               </li>
@@ -63,7 +63,7 @@ export default function Footer() {
             <li>
               <a
                 href={`mailto:${contactEmail()}`}
-                className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
+                className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground"
               >
                 {contactEmail()}
               </a>

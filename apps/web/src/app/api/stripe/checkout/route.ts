@@ -12,6 +12,7 @@ import { PLANS, canSimulate, getRemainingSimulations, isExpired, type PlanId } f
 import { isProAccessStatus }          from "@/lib/quota/plan-access";
 import { buildCheckoutReturnUrls }      from "@/lib/billing/checkout-plan";
 import Stripe from 'stripe';
+import { PURCHASE_ENABLED, PURCHASE_DISABLED_MESSAGE } from "@/lib/billing/purchase-gate";
 
 // ── Client Stripe (resilient) ──────────────────────────────────────────────────────────
 function getStripe() {
@@ -31,6 +32,11 @@ function resolveStripePriceId(plan: CheckoutPlan): string | null {
 }
 
 export async function POST(request: NextRequest) {
+
+  // ── Verrou d'achat : aucune session de paiement tant que l'achat n'est pas ouvert ──
+  if (!PURCHASE_ENABLED) {
+    return NextResponse.json({ error: PURCHASE_DISABLED_MESSAGE }, { status: 503 });
+  }
 
   // ── Guard : Stripe configuré ───────────────────────────────────────────
   if (!envServer.STRIPE_SECRET_KEY) {

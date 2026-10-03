@@ -43,7 +43,7 @@ export function CVUploader({ file, onFile }: Props) {
         className={`relative flex flex-col items-center justify-center w-full min-h-[120px] p-4 border border-dashed rounded-xl cursor-pointer transition-all duration-300 ${
           isDragging 
             ? "border-bronze-400 bg-bronze-50" 
-            : "border-ivoire-300 bg-white/80 hover:border-bronze-400"
+            : "border-ivoire-300 bg-calm-accent-line hover:border-bronze-400"
         }`}
       >
         <input

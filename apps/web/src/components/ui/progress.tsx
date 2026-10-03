@@ -35,10 +35,10 @@ export function Progress({
 
   const colors = {
     primary: "bg-primary",
-    success: "bg-emerald-500",
-    warning: "bg-amber-500",
-    danger: "bg-rose-500",
-    info: "bg-sky-500",
+    success: "bg-calm-accent",
+    warning: "bg-calm-warn",
+    danger: "bg-calm-warn",
+    info: "bg-calm-accent",
   }
 
   return (
@@ -102,10 +102,10 @@ export function CircularProgress({
   const offset = circumference - (percentage / 100) * circumference
 
   const strokeColors = {
-    primary: "#7C3AED",
-    success: "#10B981",
-    warning: "#F59E0B",
-    danger: "#EF4444",
+    primary: "#2F6B5E",
+    success: "#2F6B5E",
+    warning: "#8A4B16",
+    danger: "#8A4B16",
   }
 
   return (

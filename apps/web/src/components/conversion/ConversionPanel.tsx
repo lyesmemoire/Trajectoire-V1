@@ -74,21 +74,21 @@ export function ConversionPanel({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-calm-surface rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-ivoire-200 p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-calm-surface border-b border-ivoire-200 p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-bronze-100 rounded-lg">
               <Sparkles className="w-5 h-5 text-bronze-600" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-ink-900">
+              <h2 className="font-sans text-xl font-semibold text-ink-900 tracking-normal">
                 Votre analyse est prête
               </h2>
               {atsScore && (
                 <p className="text-sm text-ink-600">
-                  Score ATS : {atsScore}/100
+                  Score ATS : {atsScore}/100
                 </p>
               )}
             </div>

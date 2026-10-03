@@ -69,8 +69,8 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Analyse de Similarité</h2>
+    <div className="bg-calm-surface rounded-lg shadow p-6">
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Analyse de Similarité</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       {loading && <LoadingOverlay message="Analyse en cours..." />}
@@ -81,8 +81,8 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
             onClick={() => setTab('candidates')}
             className={`px-4 py-2 rounded-lg transition-colors ${
               tab === 'candidates'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-calm-accent text-white'
+                : 'bg-calm-line-soft text-calm-ink hover:bg-calm-line-soft'
             }`}
           >
             Candidats Similaires
@@ -91,8 +91,8 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
             onClick={() => setTab('jobs')}
             className={`px-4 py-2 rounded-lg transition-colors ${
               tab === 'jobs'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-calm-accent text-white'
+                : 'bg-calm-line-soft text-calm-ink hover:bg-calm-line-soft'
             }`}
           >
             Postes Similaires
@@ -102,7 +102,7 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
         <button
           onClick={handleSearch}
           disabled={!targetGraph || (tab === 'candidates' && (!candidateGraphs || candidateGraphs.length === 0)) || (tab === 'jobs' && (!jobGraphs || jobGraphs.length === 0))}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="bg-calm-accent text-white px-6 py-2 rounded-lg hover:bg-calm-accent-deep transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
         >
           Analyser
         </button>
@@ -110,17 +110,17 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
 
       {results && Array.isArray(results) && (
         <div className="space-y-4">
-          <h3 className="font-medium text-gray-700 mb-3">
+          <h3 className="font-medium text-calm-ink mb-3">
             {results.length} {tab === 'candidates' ? 'candidat(s)' : 'poste(s)'} similaire(s)
           </h3>
           <div className="space-y-3">
             {results.map((result, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-4">
+              <div key={index} className="bg-calm-accent-wash rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="font-medium">{result.candidateId || result.jobId}</div>
-                  <div className="text-2xl font-bold text-blue-600">{result.score}%</div>
+                  <div className="text-2xl font-bold text-calm-accent-deep">{result.score}%</div>
                 </div>
-                <div className="text-sm text-gray-600">{result.explanation}</div>
+                <div className="text-sm text-calm-tertiary">{result.explanation}</div>
               </div>
             ))}
           </div>
@@ -128,7 +128,7 @@ export function SimilarityView({ targetGraph, candidateGraphs = [], jobGraphs = 
       )}
 
       {!targetGraph && (
-        <p className="text-gray-500 text-center py-8">
+        <p className="text-calm-tertiary text-center py-8">
           Veuillez charger un candidat ou un poste cible pour effectuer une analyse de similarité
         </p>
       )}

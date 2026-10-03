@@ -387,9 +387,9 @@ export function MatchingForm({
     cvText.trim().length > 0;
 
   return (
-    <div className="rounded-2xl border border-ivoire-200 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-ivoire-200 bg-calm-surface p-6 shadow-sm">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-ink-900">
+        <h2 className="font-sans text-xl font-semibold text-ink-900 tracking-normal">
           Nouveau Matching
         </h2>
 
@@ -501,10 +501,10 @@ export function MatchingForm({
               />
             </div>
           ) : (
-            <div className="flex items-center justify-between rounded-xl border border-green-200 bg-green-50 p-4">
+            <div className="flex items-center justify-between rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4">
               <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
-                  <FileText className="h-5 w-5 text-green-700" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-calm-surface">
+                  <FileText className="h-5 w-5 text-calm-accent-deep" />
                 </div>
 
                 <div className="min-w-0">
@@ -515,10 +515,10 @@ export function MatchingForm({
                       }
                     </p>
 
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-green-600" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-calm-accent-deep" />
                   </div>
 
-                  <p className="text-sm text-green-700">
+                  <p className="text-sm text-calm-accent-deep">
                     {formatFileSize(
                       uploadedFileSize,
                     )}{" "}
@@ -534,7 +534,7 @@ export function MatchingForm({
                   resetFile();
                   setError(null);
                 }}
-                className="ml-3 rounded-lg p-2 text-ink-500 transition hover:bg-white hover:text-red-600"
+                className="ml-3 rounded-lg p-2 text-ink-500 transition hover:bg-calm-surface hover:text-calm-warn"
                 aria-label="Supprimer le CV"
               >
                 <Trash2 className="h-5 w-5" />
@@ -568,7 +568,7 @@ export function MatchingForm({
             maxLength={
               50_000
             }
-            className="w-full resize-y rounded-xl border border-ivoire-300 bg-white p-4 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-bronze-500 focus:ring-2 focus:ring-bronze-500/20"
+            className="w-full resize-y rounded-xl border border-ivoire-300 bg-calm-surface p-4 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-bronze-500 focus:ring-2 focus:ring-bronze-500/20"
             placeholder="Collez ici la description du poste, les responsabilités et les compétences recherchées..."
             required
           />
@@ -584,7 +584,7 @@ export function MatchingForm({
         {error && (
           <div
             role="alert"
-            className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+            className="rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4 text-sm text-calm-warn"
           >
             {error}
           </div>
@@ -598,7 +598,7 @@ export function MatchingForm({
             !hasCv ||
             !jobDescription.trim()
           }
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-bronze-600 px-5 py-3 font-medium text-white transition hover:bg-bronze-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-calm-accent px-5 py-3 font-medium text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>

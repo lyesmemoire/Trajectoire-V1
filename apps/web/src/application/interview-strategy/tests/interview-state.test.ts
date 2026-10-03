@@ -264,7 +264,7 @@ describe("InterviewStateService - Factual Memory", () => {
   });
 
   it("F. Aucun claim extrait -> aucun crash et état inchangé", () => {
-    let state = InterviewStateService.initializeState(["React"]);
+    const state = InterviewStateService.initializeState(["React"]);
     state.claims = [{ key: "test", value: "1", statement: "", category: "other", sourceTurn: 0, competency: "React" }];
 
     // Evaluate with empty claims
@@ -446,7 +446,7 @@ describe("InterviewStateService - Top Risks Priority", () => {
   });
 
   it("2. HIGH topRisk competency PROVEN → ne monopolise plus", () => {
-    let state = InterviewStateService.initializeState(["React", "Leadership"]);
+    const state = InterviewStateService.initializeState(["React", "Leadership"]);
     state.competencies[1].status = "PROVEN"; // Leadership is PROVEN
     const topRisks = [
       { category: "missing_skill", competency: "Leadership", severity: "HIGH", evidenceStatus: "MISSING", id: "1", title: "", reason: "", source: "" }
@@ -505,7 +505,7 @@ describe("InterviewStateService - Top Risks Priority", () => {
   });
 
   it("8. attempts élevés → pas de boucle infinie", () => {
-    let state = InterviewStateService.initializeState(["React", "Leadership"]);
+    const state = InterviewStateService.initializeState(["React", "Leadership"]);
     state.competencies[1].attempts = 3; // Max attempts reached for Leadership
     state.competencies[1].status = "WEAK";
     const topRisks = [

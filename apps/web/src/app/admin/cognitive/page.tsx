@@ -45,7 +45,7 @@ export default async function CognitiveDashboardPage() {
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* World Model */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">World Model</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -68,7 +68,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Reasoning Engine */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Reasoning Engine</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -91,7 +91,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Reflection Engine */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Reflection Engine</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -114,7 +114,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Multi-Agent Collaboration */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Multi-Agent Collaboration</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -137,7 +137,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Hierarchical Memory */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Hierarchical Memory</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -160,7 +160,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Meta Cognition */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-2">Meta Cognition</h3>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -186,7 +186,7 @@ export default async function CognitiveDashboardPage() {
       {/* Detailed Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Reasoning Stage Distribution */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Reasoning Stage Distribution</h3>
           <div className="space-y-3">
             {Object.entries(reasoningStats.stageDistribution).map(([stage, count]) => (
@@ -205,7 +205,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Insight Distribution */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Insight Distribution</h3>
           <div className="space-y-3">
             {Object.entries(reflectionStats.insightDistribution).map(([type, count]) => (
@@ -224,7 +224,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Memory Type Distribution */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Memory Type Distribution</h3>
           <div className="space-y-3">
             {Object.entries(memoryStats.memoriesByType).map(([type, count]) => (
@@ -243,7 +243,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Learning Event Distribution */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Learning Event Distribution</h3>
           <div className="space-y-3">
             {Object.entries(reflectionStats.learningEventDistribution).map(([type, count]) => (
@@ -265,7 +265,7 @@ export default async function CognitiveDashboardPage() {
       {/* Alerts and Proposals */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Alerts */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Recent Alerts</h3>
           {latestReport?.alerts && latestReport.alerts.length > 0 ? (
             <div className="space-y-2">
@@ -282,7 +282,7 @@ export default async function CognitiveDashboardPage() {
         </div>
 
         {/* Improvement Proposals */}
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
           <h3 className="text-lg font-semibold text-ink-900 mb-4">Improvement Proposals</h3>
           {latestReport?.improvementProposals && latestReport.improvementProposals.length > 0 ? (
             <div className="space-y-2">
@@ -311,7 +311,7 @@ export default async function CognitiveDashboardPage() {
       </div>
 
       {/* Summary */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 shadow-sm">
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 shadow-sm">
         <h3 className="text-lg font-semibold text-ink-900 mb-4">System Summary</h3>
         <p className="text-sm text-ink-600">{latestReport?.summary || "No summary available"}</p>
       </div>

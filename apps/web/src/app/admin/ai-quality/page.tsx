@@ -94,22 +94,22 @@ export default async function AIQualityDashboardPage() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Score Global</p>
           <p className="text-3xl font-bold text-ink-900">{qualityMetrics.overallScore}/100</p>
           <p className="text-xs text-ink-500 mt-2">Qualité globale de l'IA</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Score Conversation</p>
           <p className="text-3xl font-bold text-ink-900">{qualityMetrics.conversationScore}/100</p>
           <p className="text-xs text-ink-500 mt-2">Qualité des conversations</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Score Prompt</p>
           <p className="text-3xl font-bold text-ink-900">{qualityMetrics.promptScore}/100</p>
           <p className="text-xs text-ink-500 mt-2">Qualité des prompts</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Score Coaching</p>
           <p className="text-3xl font-bold text-ink-900">{qualityMetrics.coachingScore}/100</p>
           <p className="text-xs text-ink-500 mt-2">Qualité du coaching</p>
@@ -117,8 +117,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* Criteria Scores */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Scores par Critère</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Scores par Critère</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {Object.entries(criteriaScores).map(([key, value]) => (
             <div key={key} className="flex justify-between items-center">
@@ -130,8 +130,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* Metrics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Métriques de Performance</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Métriques de Performance</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <p className="text-sm text-ink-600">Coût moyen</p>
@@ -153,8 +153,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* Regression History */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Historique des Régressions</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Historique des Régressions</h2>
         <div className="space-y-2">
           {regressionHistory.map((item) => (
             <div key={item.version} className="flex justify-between items-center">
@@ -166,8 +166,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* A/B Tests */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Tests A/B</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Tests A/B</h2>
         <div className="space-y-2">
           {abTests.map((test) => (
             <div key={test.id} className="flex justify-between items-center">
@@ -192,8 +192,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* Golden Dataset Coverage */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Couverture du Golden Dataset</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Couverture du Golden Dataset</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-ink-600">Scénarios totaux</p>
@@ -211,8 +211,8 @@ export default async function AIQualityDashboardPage() {
       </div>
 
       {/* Report Score */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Score Rapport</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Score Rapport</h2>
         <div className="flex justify-between items-center">
           <span className="text-sm text-ink-600">Qualité des rapports générés</span>
           <span className="text-2xl font-bold text-ink-900">{qualityMetrics.reportScore}/100</span>

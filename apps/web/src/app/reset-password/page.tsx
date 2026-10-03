@@ -7,7 +7,6 @@ import { useEffect, useState, type FormEvent } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-import { darkTokens } from "@/lib/theme/dark-tokens"
 
 type SessionState = "checking" | "ready" | "invalid"
 type Status = "idle" | "loading" | "success" | "error"
@@ -120,58 +119,57 @@ export default function ResetPasswordPage() {
 
   return (
     <div
-      style={darkTokens}
-      className="min-h-screen bg-zinc-950 text-white/80 flex flex-col items-center justify-center p-6"
+      className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
     >
       <Link
         href="/"
-        className="rounded-md text-2xl font-semibold tracking-tight text-white/80 mb-8 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
         Trajectoire
       </Link>
 
-      <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl shadow-black/40">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         {sessionState === "checking" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-white/80">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Réinitialisation du mot de passe
             </h1>
-            <p role="status" className="text-sm text-zinc-300">
+            <p role="status" className="text-sm text-calm-ink">
               Vérification du lien…
             </p>
           </div>
         ) : sessionState === "invalid" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-white/80">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Lien invalide ou expiré
             </h1>
-            <p role="alert" className="text-sm text-zinc-300">
+            <p role="alert" className="text-sm text-calm-ink">
               Ce lien de réinitialisation n&apos;est plus valide. Demandez-en
               un nouveau.
             </p>
             <Link
               href="/forgot-password"
-              className="inline-block mt-2 rounded text-sm text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="inline-block mt-2 rounded text-sm text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
             >
               Demander un nouveau lien
             </Link>
           </div>
         ) : status === "success" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-white/80">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Mot de passe mis à jour
             </h1>
-            <p role="status" className="text-sm text-zinc-300">
+            <p role="status" className="text-sm text-calm-ink">
               Redirection vers la connexion…
             </p>
           </div>
         ) : (
           <>
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-semibold tracking-tight text-white/80 mb-2">
+              <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink mb-2">
                 Nouveau mot de passe
               </h1>
-              <p className="text-sm text-zinc-300">
+              <p className="text-sm text-calm-ink">
                 Choisissez un nouveau mot de passe pour votre compte.
               </p>
             </div>
@@ -179,9 +177,9 @@ export default function ResetPasswordPage() {
             {status === "error" && (
               <div
                 role="alert"
-                className="mb-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4"
+                className="mb-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4"
               >
-                <p className="text-rose-300 text-sm font-medium text-center">
+                <p className="text-calm-warn text-sm font-medium text-center">
                   {errorMessage}
                 </p>
               </div>
@@ -191,7 +189,7 @@ export default function ResetPasswordPage() {
               <div>
                 <label
                   htmlFor="reset-password-new"
-                  className="block text-sm font-medium text-zinc-300 mb-1"
+                  className="block text-sm font-medium text-calm-ink mb-1"
                 >
                   Nouveau mot de passe
                 </label>
@@ -200,7 +198,7 @@ export default function ResetPasswordPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="new-password"
                   required
@@ -212,7 +210,7 @@ export default function ResetPasswordPage() {
               <div>
                 <label
                   htmlFor="reset-password-confirm"
-                  className="block text-sm font-medium text-zinc-300 mb-1"
+                  className="block text-sm font-medium text-calm-ink mb-1"
                 >
                   Confirmer le mot de passe
                 </label>
@@ -221,7 +219,7 @@ export default function ResetPasswordPage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 text-white/80 placeholder-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="new-password"
                   required
@@ -233,7 +231,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {status === "loading"
                   ? "Mise à jour en cours..."
@@ -241,10 +239,10 @@ export default function ResetPasswordPage() {
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-zinc-300">
+            <p className="mt-6 text-center text-sm text-calm-ink">
               <Link
                 href="/login"
-                className="rounded text-indigo-400 font-medium hover:text-indigo-300 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                className="rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
                 Retour à la connexion
               </Link>

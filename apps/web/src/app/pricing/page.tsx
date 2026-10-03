@@ -8,8 +8,10 @@ import Link from "next/link"
 import { PLANS, type Plan, type PlanId } from "@/lib/plans"
 import { parsePaidPlan, type PaidPlan } from "@/lib/billing/checkout-plan"
 import { setCheckoutIntent } from "@/lib/auth/checkout-intent"
+import { FEATURED_PLAN_BADGE } from "@/components/home/content"
+import { PURCHASE_ENABLED, PURCHASE_SOON_LABEL } from "@/lib/billing/purchase-gate"
 
-// Aucun prix ni aucune limite n'est écrit ici : tout vient de lib/plans.ts.
+// Aucun prix ni aucune limite n’est écrit ici : tout vient de lib/plans.ts.
 // Seuls les textes éditoriaux (accroches, FAQ) vivent dans ce fichier, et ils
 // interpolent les valeurs du plan.
 
@@ -20,11 +22,11 @@ const PLAN_ORDER: PlanId[] = ["FREE", "PACK", "PRO"]
 const TAGLINES: Record<PlanId, { audience: string; pitch: string }> = {
   FREE: {
     audience: "Je découvre Trajectoire",
-    pitch: "Testez la qualité de l'analyse sur votre CV, sans carte bancaire.",
+    pitch: "Testez la qualité de l’analyse sur votre CV, sans carte bancaire.",
   },
   PACK: {
-    audience: "J'ai un entretien important à préparer",
-    pitch: "Préparez l'entretien qui compte, avec un budget maîtrisé.",
+    audience: "J’ai un entretien important à préparer",
+    pitch: "Préparez l’entretien qui compte, avec un budget maîtrisé.",
   },
   PRO: {
     audience: "Je suis en recherche active",
@@ -98,7 +100,7 @@ function buildFaq() {
     },
     {
       q: "Que contient l’analyse de CV gratuite ?",
-      a: `Un aperçu : votre score ATS et jusqu’à ${FREE.cvPreviewRemarksMax ?? 3} remarques. L’analyse complète, avec le détail et les recommandations, est incluse dans le Pack et dans Pro.`,
+      a: `Un aperçu : votre score ATS et jusqu’à ${FREE.cvPreviewRemarksMax ?? 3} remarques. L’analyse complète, avec le détail et les recommandations, est incluse dans le Pack et dans Pro.`,
     },
     {
       q: "Les prix sont-ils TTC ?",
@@ -177,13 +179,13 @@ function PlanCard({
       transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       className={`relative flex flex-col rounded-3xl p-8 md:p-10 ${
         highlighted
-          ? "border border-primary-500/60 bg-surface shadow-premium-lg ring-1 ring-primary-500/30 md:-my-4 md:py-14"
-          : "border border-border bg-surface shadow-premium"
+          ? "border border-primary-500/60 bg-surface ring-1 ring-primary-500/30 md:-my-4 md:py-14"
+          : "border border-border bg-surface"
       }`}
     >
       {highlighted && (
         <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary-600 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-white">
-          Le plus choisi
+          {FEATURED_PLAN_BADGE}
         </span>
       )}
 
@@ -196,7 +198,7 @@ function PlanCard({
       </p>
 
       <div className="mt-5 flex items-baseline gap-2">
-        <span className="text-5xl font-semibold tracking-tight text-foreground">
+        <span className="font-serif text-6xl font-medium tracking-[-0.04em] text-foreground">
           {formatPrice(plan)}
         </span>
         <span className="text-sm font-medium text-foreground-muted">
@@ -241,13 +243,21 @@ function PlanCard({
       </ul>
 
       <div className="mt-auto">
+        {plan.id !== "FREE" && !PURCHASE_ENABLED ? (
+          <p
+            id={`btn-plan-${plan.id.toLowerCase()}`}
+            className="flex w-full items-center justify-center rounded-xl border border-border bg-surface-muted px-5 py-4 text-sm font-semibold text-foreground-muted"
+          >
+            {PURCHASE_SOON_LABEL}
+          </p>
+        ) : (
         <button
           id={`btn-plan-${plan.id.toLowerCase()}`}
           onClick={() => onSelect(plan.id)}
           disabled={loading !== null}
           className={`flex w-full flex-col items-center gap-1 rounded-xl px-5 py-4 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-60 ${
             highlighted
-              ? "bg-primary-600 text-white shadow-[0_8px_24px_-8px_rgba(124,58,237,0.45)] hover:bg-primary-700"
+              ? "bg-primary-600 text-white hover:bg-primary-700"
               : "border border-border bg-surface text-foreground hover:bg-surface-muted"
           }`}
         >
@@ -260,6 +270,7 @@ function PlanCard({
             {reassurance(plan)}
           </span>
         </button>
+        )}
       </div>
     </motion.div>
   )
@@ -310,10 +321,10 @@ function ResumeNotice({ onContinue, loading }: { onContinue: (plan: PaidPlan) =>
   return (
     <section
       aria-label="Récapitulatif du plan choisi"
-      className="mx-auto mt-8 max-w-xl rounded-2xl border border-border bg-surface p-6 text-left shadow-sm"
+      className="mx-auto mt-8 max-w-xl rounded-2xl border border-border bg-surface p-6 text-left"
     >
       <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Votre choix</p>
-      <h2 className="mt-1 text-xl font-semibold text-foreground">{plan.name}</h2>
+      <h2 className="font-sans mt-1 text-xl font-semibold text-foreground tracking-normal">{plan.name}</h2>
       <p className="mt-1 text-sm text-foreground-muted">
         {formatPrice(plan)} TTC {intervalLabel(plan)}
       </p>
@@ -326,6 +337,7 @@ function ResumeNotice({ onContinue, loading }: { onContinue: (plan: PaidPlan) =>
         ))}
       </ul>
       <div className="mt-6 flex flex-wrap items-center gap-4">
+        {PURCHASE_ENABLED ? (
         <button
           type="button"
           onClick={() => onContinue(planId)}
@@ -334,6 +346,11 @@ function ResumeNotice({ onContinue, loading }: { onContinue: (plan: PaidPlan) =>
         >
           {loading === planId ? "Redirection…" : "Continuer vers le paiement"}
         </button>
+        ) : (
+          <p className="m-0 rounded-lg border border-dashed border-border px-5 py-2.5 text-sm font-semibold text-foreground-muted">
+            {PURCHASE_SOON_LABEL}
+          </p>
+        )}
         <Link href="/pricing" className="text-sm font-medium text-primary-700 underline-offset-2 hover:underline">
           Choisir un autre plan
         </Link>
@@ -373,8 +390,8 @@ export default function PricingPage() {
       }
 
       if (response.status === 401) {
-        // Non connecté : on passe par l'inscription plutôt que d'afficher une erreur, en gardant le
-        // plan choisi : après l'inscription ou la connexion, l'utilisateur revient sur /pricing?resume=<plan>.
+        // Non connecté : on passe par l’inscription plutôt que d’afficher une erreur, en gardant le
+        // plan choisi : après l’inscription ou la connexion, l’utilisateur revient sur /pricing?resume=<plan>.
         const paid = parsePaidPlan(planId)
         if (paid) setCheckoutIntent(paid)
         router.push("/signup")
@@ -401,7 +418,7 @@ export default function PricingPage() {
             transition={{ duration: 0.4 }}
             className="mb-8 text-xs font-bold uppercase tracking-[0.22em] text-primary-700"
           >
-            Préparation d&apos;entretien par IA
+            Préparation d’entretien par IA
           </motion.p>
 
           <motion.h1
@@ -418,7 +435,7 @@ export default function PricingPage() {
           </motion.h1>
 
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground-muted md:text-xl">
-            Trajectoire analyse votre CV et l&apos;offre que vous visez, identifie
+            Trajectoire analyse votre CV et l’offre que vous visez, identifie
             les points qui peuvent vous coûter le poste, puis vous entraîne
             précisément là où cela compte.
           </p>
@@ -438,7 +455,7 @@ export default function PricingPage() {
           {error && (
             <div
               role="alert"
-              className="mx-auto mt-8 max-w-md rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-medium text-rose-700"
+              className="mx-auto mt-8 max-w-md rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4 text-sm font-medium text-calm-warn"
             >
               {error}
             </div>
@@ -484,10 +501,10 @@ export default function PricingPage() {
             La méthode
           </p>
           <h2 className="mb-14 text-center text-3xl font-semibold tracking-tight text-foreground md:text-[2.5rem]">
-            Ce n&apos;est pas un chatbot d&apos;entretien.
+            Ce n’est pas un chatbot d’entretien.
             <br />
             <span className="text-foreground-muted">
-              C&apos;est une préparation à cet entretien.
+              C’est une préparation à cet entretien.
             </span>
           </h2>
 
@@ -520,14 +537,14 @@ export default function PricingPage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
-            Exemple d&apos;interface
+            Exemple d’interface
           </p>
           <h2 className="mb-4 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Ce que Trajectoire identifie pour vous.
           </h2>
           <p className="mb-12 text-center text-base text-foreground-muted">
             Exemple représentatif — vos priorités seront dérivées de votre CV et
-            de l&apos;offre réelle.
+            de l’offre réelle.
           </p>
 
           <div className="overflow-hidden rounded-2xl border border-border bg-surface">
@@ -588,16 +605,18 @@ export default function PricingPage() {
             Commencez gratuitement. Passez au Pack quand vous en avez besoin.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            {PURCHASE_ENABLED && (
             <button
               id="btn-cta-pack"
               onClick={() => handleSelect("PACK")}
               disabled={loading !== null}
-              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_24px_-8px_rgba(124,58,237,0.45)] transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {loading === "PACK"
                 ? "Redirection…"
                 : `${pack.name} – ${formatPrice(pack)}`}
             </button>
+            )}
             <button
               id="btn-cta-free"
               onClick={() => handleSelect("FREE")}

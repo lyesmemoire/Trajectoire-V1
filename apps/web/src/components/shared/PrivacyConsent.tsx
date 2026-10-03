@@ -8,7 +8,7 @@ export function PrivacyConsent({ onAccept }: { onAccept: () => void }) {
   const [agreed, setAgreed] = useState(false)
 
   return (
-    <div className="bg-ink-900 border border-white/10 rounded-[3rem] p-10 space-y-8 text-center shadow-2xl relative overflow-hidden">
+    <div className="bg-ink-900 border border-calm-line rounded-[3rem] p-10 space-y-8 text-center shadow-2xl relative overflow-hidden">
       <div className="absolute top-0 right-0 p-8 opacity-5">
         <Lock className="w-24 h-24" />
       </div>
@@ -18,7 +18,7 @@ export function PrivacyConsent({ onAccept }: { onAccept: () => void }) {
       </div>
 
       <div className="space-y-4 relative z-10">
-        <h3 className="text-2xl font-black text-white">
+        <h3 className="text-2xl font-black text-calm-ink">
           Transparence & Vie Privée
         </h3>
         <p className="text-ink-400 font-medium leading-relaxed text-sm max-w-sm mx-auto">

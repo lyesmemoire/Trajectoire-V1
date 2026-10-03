@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  // Métadonnées (description, Open Graph) dans le <head> pour tous les clients : sans cela Next 15 les diffère
+  // dans le corps de la page et les audits SEO ne les voient pas.
+  htmlLimitedBots: /.*/,
   // Désactive le mode standalone sous Windows pour éviter l'erreur EPERM sur les liens symboliques
   output: process.platform === "win32" ? undefined : "standalone",
   // PDF extraction runs only in the Node.js runtime.

@@ -87,7 +87,7 @@ export const fr = {
                          Vous évaluez l'ensemble du candidat
                          à travers le prisme d'un seul point positif.`,
     SIMILARITY_BIAS   : `Vous appréciez ce candidat parce qu'il vous ressemble.
-                         Posez-vous la question :
+                         Posez-vous la question :
                          est-ce que je recrute ou est-ce que je me reconnais ?`,
     AFFINITY_BIAS     : `Un lien implicite favorise ce candidat.
                          École, région, parcours similaire.
@@ -365,7 +365,7 @@ export const fr = {
     // Biais
     biais: {
       detecte   : (type: string) =>
-        `Biais détecté : ${type}. Pénalité appliquée. Question corrective déclenchée.`,
+        `Biais détecté : ${type}. Pénalité appliquée. Question corrective déclenchée.`,
       corrige   : (type: string) =>
         `Biais ${type} corrigé. Preuve contraire obtenue.`,
       nonResolu : (type: string) =>
@@ -375,9 +375,9 @@ export const fr = {
     // Hypothèses
     hypotheses: {
       generee   : (label: string) =>
-        `Nouvelle hypothèse générée : "${label}".`,
+        `Nouvelle hypothèse générée : "${label}".`,
       confirmee : (label: string, conf: number) =>
-        `Hypothèse "${label}" confirmée. Confiance : ${(conf * 100).toFixed(0)}%.`,
+        `Hypothèse "${label}" confirmée. Confiance : ${(conf * 100).toFixed(0)}%.`,
       infirmee  : (label: string) =>
         `Hypothèse "${label}" infirmée. Preuve contraire suffisante.`,
       suspendue : (label: string) =>
@@ -401,15 +401,15 @@ export const fr = {
          Observations disponibles : ${actuel}/${requis}.
          Aucun ajustement déclenché.`,
       propositionGeneree: (label: string, delta: string) =>
-        `Proposition générée : ${label} (${delta}).
+        `Proposition générée : ${label} (${delta}).
          En attente de validation humaine.`,
       propositionApprouvee: (label: string) =>
-        `Proposition approuvée : ${label}. Poids mis à jour.`,
+        `Proposition approuvée : ${label}. Poids mis à jour.`,
       propositionRejetee: (label: string, raison: string) =>
-        `Proposition rejetée : ${label}. Raison : ${raison}`,
+        `Proposition rejetée : ${label}. Raison : ${raison}`,
       violationEquite: (dimension: string, delta: string) =>
         `Violation d'équité détectée sur la dimension "${dimension}".
-         Écart observé : ${delta}. Proposition bloquée.`,
+         Écart observé : ${delta}. Proposition bloquée.`,
     },
 
     // Erreurs
@@ -417,7 +417,7 @@ export const fr = {
       outcomeInvalide       : `Le résultat soumis est invalide. Vérifiez les champs requis.`,
       validationHumaine     : `La validation humaine est obligatoire. Renseignez "validé par".`,
       propositionIntrouvable: `Proposition introuvable. Vérifiez l'identifiant.`,
-      rollbackImpossible     : `Rollback impossible : ce poids n'a pas encore été appliqué.`,
+      rollbackImpossible     : `Rollback impossible : ce poids n'a pas encore été appliqué.`,
     },
   },
 

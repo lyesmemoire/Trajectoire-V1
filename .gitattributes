@@ -16,3 +16,11 @@
 *.mp3 binary
 *.wav binary
 *.mp4 binary
+*.gz binary
+*.tgz binary
+*.tar binary
+*.zip binary
+*.class binary
+*.jar binary
+*.webm binary
+*.mov binary

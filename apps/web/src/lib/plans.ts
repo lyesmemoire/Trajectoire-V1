@@ -6,9 +6,9 @@
 //
 // Module pur : aucune dépendance (ni Prisma, ni Supabase, ni env) — utilisable
 // côté serveur comme côté client. Les identifiants de prix Stripe, eux, vivent
-// dans les variables d'environnement et sont résolus côté serveur (checkout).
+// dans les variables d’environnement et sont résolus côté serveur (checkout).
 //
-// Attention : `PlanId` reprend les valeurs de l'enum Prisma `Plan`
+// Attention : `PlanId` reprend les valeurs de l’enum Prisma `Plan`
 // (FREE | PACK | PRO) mais les deux types sont indépendants.
 
 export type PlanId = "FREE" | "PACK" | "PRO"
@@ -41,9 +41,9 @@ export interface Plan {
   /** Offre mise en avant sur /pricing. */
   highlighted: boolean
   /**
-   * Emplacement réservé : l'identifiant de prix Stripe dépend de
-   * l'environnement (test / live) et est lu côté serveur depuis les variables
-   * d'environnement, jamais depuis ce fichier.
+   * Emplacement réservé : l’identifiant de prix Stripe dépend de
+   * l’environnement (test / live) et est lu côté serveur depuis les variables
+   * d’environnement, jamais depuis ce fichier.
    */
   stripePriceId: string | null
 }
@@ -61,9 +61,9 @@ export const PLANS: Record<PlanId, Plan> = {
     cvPreviewRemarksMax: 3,
     features: [
       { label: "Analyse de CV en aperçu (score + 3 remarques)", included: true },
-      { label: "Simulations d'entretien", included: false },
+      { label: "Simulations d’entretien", included: false },
       { label: "Analyse de CV complète", included: false },
-      { label: "Rapport détaillé d'entretien", included: false },
+      { label: "Rapport détaillé d’entretien", included: false },
     ],
     highlighted: false,
     stripePriceId: null,
@@ -79,11 +79,10 @@ export const PLANS: Record<PlanId, Plan> = {
     cvAnalysis: "full",
     cvPreviewRemarksMax: null,
     features: [
-      { label: "5 simulations d'entretien", included: true },
+      { label: "5 simulations d’entretien", included: true },
       { label: "Valables 3 mois", included: true },
       { label: "Rapport détaillé après chaque simulation", included: true },
       { label: "Analyse de CV complète", included: true },
-      { label: "Paiement unique, sans renouvellement", included: true },
     ],
     highlighted: true,
     stripePriceId: null,
@@ -99,7 +98,7 @@ export const PLANS: Record<PlanId, Plan> = {
     cvAnalysis: "full",
     cvPreviewRemarksMax: null,
     features: [
-      { label: "Simulations d'entretien illimitées", included: true },
+      { label: "Simulations d’entretien illimitées", included: true },
       { label: "Rapport détaillé après chaque simulation", included: true },
       { label: "Analyse de CV complète", included: true },
       { label: "Résiliable à tout moment", included: true },
@@ -109,7 +108,7 @@ export const PLANS: Record<PlanId, Plan> = {
   },
 }
 
-/** Sous-ensemble de l'utilisateur dont dépendent les droits (colonnes `users`). */
+/** Sous-ensemble de l’utilisateur dont dépendent les droits (colonnes `users`). */
 export interface PlanUser {
   plan: PlanId
   simulationsUsed: number
@@ -127,9 +126,9 @@ function toTime(value: Date | string | null): number | null {
 }
 
 /**
- * Vrai si le Pack de l'utilisateur est arrivé à échéance. Seul le plan PACK
- * expire. Un PACK sans date d'expiration (donnée incohérente) n'est PAS
- * considéré comme expiré : on ne verrouille pas un client payant à cause d'un
+ * Vrai si le Pack de l’utilisateur est arrivé à échéance. Seul le plan PACK
+ * expire. Un PACK sans date d’expiration (donnée incohérente) n’est PAS
+ * considéré comme expiré : on ne verrouille pas un client payant à cause d’un
  * défaut de données.
  */
 export function isExpired(user: PlanUser, now: Date = new Date()): boolean {
@@ -171,8 +170,8 @@ export function canFullCVAnalysis(
 }
 
 /**
- * Date d'expiration d'un Pack acheté à `from` (ajoute `simulationExpiry`).
- * `null` si le plan n'expire pas.
+ * Date d’expiration d’un Pack acheté à `from` (ajoute `simulationExpiry`).
+ * `null` si le plan n’expire pas.
  */
 export function computePackExpiry(
   planId: PlanId,

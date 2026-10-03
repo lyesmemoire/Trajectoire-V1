@@ -108,11 +108,11 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
         <h2
           data-step-heading
           tabIndex={-1}
-          className="text-2xl font-semibold tracking-tight text-white/80 outline-none"
+          className="font-sans text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
           Parlons de vous
         </h2>
-        <p className="text-sm leading-relaxed text-white/50">
+        <p className="text-sm leading-relaxed text-calm-secondary">
           Ces informations personnalisent vos simulations et votre tableau de
           bord.
         </p>
@@ -121,7 +121,7 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
       <div className="space-y-2">
         <label
           htmlFor="onboarding-name"
-          className="block text-sm font-medium text-white/80"
+          className="block text-sm font-medium text-calm-ink"
         >
           Votre nom
         </label>
@@ -137,8 +137,8 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
 
       <div className="space-y-3">
         <div className="flex items-baseline justify-between gap-3">
-          <span className="text-sm font-medium text-white/80">CV</span>
-          <span className="text-xs text-white/40">Optionnel</span>
+          <span className="text-sm font-medium text-calm-ink">CV</span>
+          <span className="text-xs text-calm-tertiary">Optionnel</span>
         </div>
 
         <input
@@ -157,14 +157,14 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
         />
 
         {data.cvStatus === "ready" ? (
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-emerald-400/25 bg-emerald-500/[0.06] px-4 py-3">
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-calm-accent-line bg-calm-accent-soft px-4 py-3">
             <div className="flex min-w-0 items-center gap-3">
-              <CheckCircle2 className="size-5 shrink-0 text-emerald-400" aria-hidden />
+              <CheckCircle2 className="size-5 shrink-0 text-calm-accent" aria-hidden />
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-white/80">
+                <p className="truncate text-sm font-medium text-calm-ink">
                   {data.cvFileName}
                 </p>
-                <p className="text-xs text-emerald-300" role="status">
+                <p className="text-xs text-calm-accent" role="status">
                   CV lu avec succès
                 </p>
               </div>
@@ -186,9 +186,9 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
             type="button"
             disabled={uploading}
             onClick={() => fileInputRef.current?.click()}
-            className={`flex w-full items-center gap-3 rounded-lg border border-dashed border-white/[0.14] bg-zinc-950 px-4 py-4 text-left transition-colors hover:border-indigo-400/50 hover:bg-white/[0.02] disabled:cursor-wait disabled:opacity-70 ${FOCUS_RING}`}
+            className={`flex w-full items-center gap-3 rounded-lg border border-dashed border-calm-accent-line bg-calm-bg px-4 py-4 text-left transition-colors hover:border-calm-accent-line hover:bg-calm-accent-wash disabled:cursor-wait disabled:opacity-70 ${FOCUS_RING}`}
           >
-            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-indigo-500/10 text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
+            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-calm-accent-soft text-calm-accent ring-1 ring-inset ring-calm-accent-line">
               {uploading ? (
                 <Loader2 className="size-5 animate-spin" aria-hidden />
               ) : (
@@ -196,10 +196,10 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
               )}
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-medium text-white/80">
+              <span className="block text-sm font-medium text-calm-ink">
                 {uploading ? "Lecture du CV…" : "Ajouter mon CV"}
               </span>
-              <span className="mt-0.5 flex items-center gap-1.5 text-xs text-white/40">
+              <span className="mt-0.5 flex items-center gap-1.5 text-xs text-calm-tertiary">
                 <FileText className="size-3.5" aria-hidden />
                 {uploading && data.cvFileName
                   ? data.cvFileName
@@ -212,14 +212,14 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
         {data.cvStatus === "error" && data.cvError ? (
           <p
             role="alert"
-            className="flex items-start gap-2 rounded-lg border border-rose-400/20 bg-rose-500/10 px-3 py-2 text-sm text-rose-300"
+            className="flex items-start gap-2 rounded-lg border border-calm-warn-line bg-calm-warn-soft px-3 py-2 text-sm text-calm-warn"
           >
             <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
             {data.cvError}
           </p>
         ) : null}
 
-        <p className="text-xs leading-relaxed text-white/40">{CV_NOTICE}</p>
+        <p className="text-xs leading-relaxed text-calm-tertiary">{CV_NOTICE}</p>
       </div>
     </div>
   )

@@ -431,25 +431,25 @@ export function CareerMemoryPanel({
   return (
     <section
       id="career-memory"
-      className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7"
+      className="rounded-[28px] border border-calm-line bg-calm-surface p-6 sm:p-7"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="rounded-2xl bg-indigo-500/10 p-3 text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
+          <div className="rounded-2xl bg-calm-accent-soft p-3 text-calm-accent ring-1 ring-inset ring-calm-accent-line">
             <BrainCircuit className="h-5 w-5" />
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-accent">
               Career Intelligence
             </p>
 
-            <h2 className="mt-1 text-xl font-semibold text-white/80">
+            <h2 className="font-sans mt-1 text-xl font-semibold text-calm-ink tracking-normal">
               Career Memory
             </h2>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
-              Une mémoire professionnelle durable :
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-calm-secondary">
+              Une mémoire professionnelle durable :
               faits, forces et preuves que Trajectoire
               peut réutiliser sans inventer ton parcours.
             </p>
@@ -466,7 +466,7 @@ export function CareerMemoryPanel({
             onClick={() =>
               void recommendMemories()
             }
-            className="inline-flex items-center gap-2 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-2.5 text-sm font-semibold text-calm-accent transition hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
           >
             {recommending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -485,7 +485,7 @@ export function CareerMemoryPanel({
                 (current) => !current,
               )
             }}
-            className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
+            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
           >
           {showForm ? (
             <X className="h-4 w-4" />
@@ -517,10 +517,10 @@ export function CareerMemoryPanel({
         />
       </div>
 
-      <div className="mt-5 flex items-start gap-3 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-4 py-3">
-        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
+      <div className="mt-5 flex items-start gap-3 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-3">
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-calm-accent" />
 
-        <p className="text-sm leading-6 text-indigo-200">
+        <p className="text-sm leading-6 text-calm-accent">
           Une suggestion détectée par Trajectoire
           reste une hypothèse jusqu’à ta confirmation.
           Seuls les faits confirmés peuvent devenir
@@ -529,7 +529,7 @@ export function CareerMemoryPanel({
       </div>
 
       {error && (
-        <div className="mt-5 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+        <div className="mt-5 rounded-2xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn">
           {error}
         </div>
       )}
@@ -537,9 +537,9 @@ export function CareerMemoryPanel({
       {showForm && (
         <form
           onSubmit={createMemory}
-          className="mt-6 rounded-[24px] border border-indigo-400/20 bg-indigo-500/[0.05] p-5 sm:p-6"
+          className="mt-6 rounded-[24px] border border-calm-accent-line bg-calm-accent-soft p-5 sm:p-6"
         >
-          <div className="flex items-center gap-2 text-indigo-300">
+          <div className="flex items-center gap-2 text-calm-accent">
             <Sparkles className="h-4 w-4" />
 
             <p className="text-sm font-semibold">
@@ -549,7 +549,7 @@ export function CareerMemoryPanel({
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <label className="block">
-              <span className="text-sm font-semibold text-white/80">
+              <span className="text-sm font-semibold text-calm-ink">
                 Catégorie
               </span>
 
@@ -562,7 +562,7 @@ export function CareerMemoryPanel({
                       event.target.value,
                   }))
                 }
-                className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+                className="mt-2 w-full rounded-2xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-ink outline-none transition focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
               >
                 <option value="achievement">
                   Réussite
@@ -599,7 +599,7 @@ export function CareerMemoryPanel({
           </div>
 
           <label className="mt-4 block">
-            <span className="text-sm font-semibold text-white/80">
+            <span className="text-sm font-semibold text-calm-ink">
               Fait confirmé
             </span>
 
@@ -614,7 +614,7 @@ export function CareerMemoryPanel({
                 }))
               }
               placeholder="Ex. J’ai dirigé une équipe de 8 personnes pendant 2 ans."
-              className="mt-2 w-full resize-y rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+              className="mt-2 w-full resize-y rounded-2xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
             />
           </label>
 
@@ -622,7 +622,7 @@ export function CareerMemoryPanel({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50"
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -638,18 +638,18 @@ export function CareerMemoryPanel({
 
       <div className="mt-6">
         {loading ? (
-          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-white/[0.1] bg-white/[0.02]">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
+          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-calm-line bg-calm-accent-wash">
+            <Loader2 className="h-5 w-5 animate-spin text-calm-accent" />
           </div>
         ) : memories.length === 0 ? (
-          <div className="rounded-[24px] border border-dashed border-indigo-400/20 bg-indigo-500/[0.05] px-6 py-10 text-center">
-            <BrainCircuit className="mx-auto h-7 w-7 text-indigo-400" />
+          <div className="rounded-[24px] border border-dashed border-calm-accent-line bg-calm-accent-soft px-6 py-10 text-center">
+            <BrainCircuit className="mx-auto h-7 w-7 text-calm-accent" />
 
-            <p className="mt-4 font-semibold text-white/80">
+            <p className="mt-4 font-semibold text-calm-ink">
               Career Memory est vide
             </p>
 
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/50">
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-calm-secondary">
               Ajoute une première information
               professionnelle fiable. Elle pourra
               ensuite enrichir plusieurs candidatures.
@@ -691,17 +691,17 @@ export function CareerMemoryPanel({
                         />
 
                         {selected && (
-                          <span className="rounded-full bg-indigo-500/15 px-2.5 py-1 text-[11px] font-semibold text-indigo-300">
+                          <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-accent">
                             Preuve active
                           </span>
                         )}
                       </div>
 
-                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
+                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-tertiary">
                         {memory.category}
                       </p>
 
-                      <h3 className="mt-1 text-base font-semibold text-white/80">
+                      <h3 className="mt-1 text-base font-semibold text-calm-ink">
                         {memory.key}
                       </h3>
                     </div>
@@ -719,42 +719,42 @@ export function CareerMemoryPanel({
                           ? "Retirer des favoris"
                           : "Ajouter aux favoris"
                       }
-                      className="rounded-xl p-2 text-white/40 transition hover:bg-white/[0.06] hover:text-amber-400 disabled:opacity-50"
+                      className="rounded-xl p-2 text-calm-tertiary transition hover:bg-calm-accent-wash hover:text-calm-warn disabled:opacity-50"
                     >
                       <Star
                         className={
                           memory.isFavorite
-                            ? "h-4 w-4 fill-current text-amber-500"
+                            ? "h-4 w-4 fill-current text-calm-warn"
                             : "h-4 w-4"
                         }
                       />
                     </button>
                   </div>
 
-                  <p className="mt-4 text-sm leading-6 text-white/80">
+                  <p className="mt-4 text-sm leading-6 text-calm-ink">
                     {memory.value}
                   </p>
 
-                  <div className="mt-4 flex items-center justify-between gap-3 text-xs text-white/50">
+                  <div className="mt-4 flex items-center justify-between gap-3 text-xs text-calm-secondary">
                     <span>
                       Confiance {memory.confidence}%
                     </span>
 
                     {link?.relevance !== null &&
                       link?.relevance !== undefined && (
-                        <span className="font-semibold text-indigo-300">
+                        <span className="font-semibold text-calm-accent">
                           Pertinence {link.relevance}%
                         </span>
                       )}
                   </div>
 
                   {link?.reason && (
-                    <div className="mt-4 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-4 py-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-300">
+                    <div className="mt-4 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-accent">
                         Contexte candidature
                       </p>
 
-                      <p className="mt-1 text-sm leading-5 text-white/50">
+                      <p className="mt-1 text-sm leading-5 text-calm-secondary">
                         {link.reason}
                       </p>
                     </div>
@@ -772,7 +772,7 @@ export function CareerMemoryPanel({
                             "confirm",
                           )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-400 disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                       >
                         {busy ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -792,7 +792,7 @@ export function CareerMemoryPanel({
                             "reject",
                           )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-rose-400/25 bg-rose-500/5 px-4 py-2.5 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/15 disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-calm-warn-line bg-calm-warn-soft px-4 py-2.5 text-sm font-semibold text-calm-warn transition hover:bg-calm-warn-soft disabled:opacity-50"
                       >
                         <XCircle className="h-4 w-4" />
                         Rejeter
@@ -813,8 +813,8 @@ export function CareerMemoryPanel({
                         }
                         className={
                           selected
-                            ? "inline-flex items-center justify-center gap-2 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20 disabled:opacity-50"
-                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50"
+                            ? "inline-flex items-center justify-center gap-2 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-2.5 text-sm font-semibold text-calm-accent transition hover:bg-calm-accent-soft disabled:opacity-50"
+                            : "inline-flex items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                         }
                       >
                         {busy ? (
@@ -840,7 +840,7 @@ export function CareerMemoryPanel({
                           )
                         }
                         aria-label="Archiver"
-                        className="inline-flex items-center justify-center rounded-2xl border border-white/[0.1] bg-white/[0.04] px-3 py-2.5 text-white/50 transition hover:bg-white/[0.08] hover:text-white/80 disabled:opacity-50"
+                        className="inline-flex items-center justify-center rounded-2xl border border-calm-line bg-calm-accent-wash px-3 py-2.5 text-calm-secondary transition hover:bg-calm-accent-soft hover:text-calm-ink disabled:opacity-50"
                       >
                         <Archive className="h-4 w-4" />
                       </button>
@@ -851,7 +851,7 @@ export function CareerMemoryPanel({
                     "REJECTED" ||
                     memory.status ===
                       "ARCHIVED") && (
-                    <div className="mt-5 rounded-2xl bg-white/[0.05] px-4 py-3 text-xs font-medium text-white/50">
+                    <div className="mt-5 rounded-2xl bg-calm-accent-wash px-4 py-3 text-xs font-medium text-calm-secondary">
                       Cette information n’est pas
                       utilisée comme preuve active.
                     </div>
@@ -874,12 +874,12 @@ function Metric({
   value: number
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
+    <div className="rounded-2xl border border-calm-line bg-calm-accent-wash px-4 py-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-tertiary">
         {label}
       </p>
 
-      <p className="mt-1 text-xl font-semibold text-white/80">
+      <p className="mt-1 text-xl font-semibold text-calm-ink">
         {value}
       </p>
     </div>
@@ -893,7 +893,7 @@ function StatusBadge({
 }) {
   if (status === "CONFIRMED") {
     return (
-      <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-semibold text-emerald-300">
+      <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-accent">
         Confirmé
       </span>
     )
@@ -901,7 +901,7 @@ function StatusBadge({
 
   if (status === "SUGGESTED") {
     return (
-      <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-[11px] font-semibold text-amber-300">
+      <span className="rounded-full bg-calm-warn-soft px-2.5 py-1 text-[11px] font-semibold text-calm-warn">
         À confirmer
       </span>
     )
@@ -909,14 +909,14 @@ function StatusBadge({
 
   if (status === "REJECTED") {
     return (
-      <span className="rounded-full bg-rose-500/15 px-2.5 py-1 text-[11px] font-semibold text-rose-300">
+      <span className="rounded-full bg-calm-warn-soft px-2.5 py-1 text-[11px] font-semibold text-calm-warn">
         Rejeté
       </span>
     )
   }
 
   return (
-    <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/50">
+    <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-secondary">
       Archivé
     </span>
   )
@@ -935,7 +935,7 @@ function OriginBadge({
         : "Utilisateur"
 
   return (
-    <span className="rounded-full border border-white/[0.1] bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-white/50">
+    <span className="rounded-full border border-calm-line bg-calm-accent-wash px-2.5 py-1 text-[11px] font-semibold text-calm-secondary">
       {label}
     </span>
   )
@@ -946,21 +946,21 @@ function cardClass(
   selected: boolean,
 ) {
   if (selected) {
-    return "rounded-[24px] border border-indigo-400/25 bg-indigo-500/[0.06] p-5"
+    return "rounded-[24px] border border-calm-accent-line bg-calm-accent-soft p-5"
   }
 
   if (status === "SUGGESTED") {
-    return "rounded-[24px] border border-amber-400/25 bg-amber-500/[0.06] p-5"
+    return "rounded-[24px] border border-calm-warn-line bg-calm-warn-soft p-5"
   }
 
   if (
     status === "REJECTED" ||
     status === "ARCHIVED"
   ) {
-    return "rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-5 opacity-75"
+    return "rounded-[24px] border border-calm-line bg-calm-accent-wash p-5 opacity-75"
   }
 
-  return "rounded-[24px] border border-emerald-400/20 bg-emerald-500/[0.04] p-5"
+  return "rounded-[24px] border border-calm-accent-line bg-calm-accent-soft p-5"
 }
 
 function Field({
@@ -976,7 +976,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-semibold text-white/80">
+      <span className="text-sm font-semibold text-calm-ink">
         {label}
       </span>
 
@@ -986,7 +986,7 @@ function Field({
           onChange(event.target.value)
         }
         placeholder={placeholder}
-        className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+        className="mt-2 w-full rounded-2xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
       />
     </label>
   )

@@ -231,29 +231,29 @@ export default async function ApplicationWorkspacePage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
           href={`/opportunities/${opportunity.id}`}
-          className="inline-flex items-center gap-2 text-sm font-medium text-white/50 transition hover:text-white/80"
+          className="inline-flex items-center gap-2 text-sm font-medium text-calm-secondary transition hover:text-calm-ink"
         >
           <ArrowLeft className="h-4 w-4" />
           Voir la fiche opportunité
         </Link>
 
-        <div className="rounded-full border border-white/[0.1] bg-zinc-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
+        <div className="rounded-full border border-calm-line bg-calm-surface px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-calm-secondary">
           {statusLabel(opportunity.status)}
         </div>
       </div>
 
-      <section className="relative overflow-hidden rounded-[32px] bg-zinc-900 px-6 py-7 text-white/80 ring-1 ring-white/[0.08] sm:px-8 lg:px-10 lg:py-9">
-        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-40 w-80 rounded-full bg-indigo-500/10 blur-3xl" />
+      <section className="relative overflow-hidden rounded-[32px] bg-calm-surface px-6 py-7 text-calm-ink ring-1 ring-calm-line sm:px-8 lg:px-10 lg:py-9">
+        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-calm-accent-soft blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-40 w-80 rounded-full bg-calm-accent-soft blur-3xl" />
 
         <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-indigo-300">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-semibold text-calm-accent">
               <Sparkles className="h-3.5 w-3.5" />
               Application Intelligence
             </div>
 
-            <p className="text-sm font-medium text-white/50">
+            <p className="text-sm font-medium text-calm-secondary">
               {opportunity.company || "Entreprise à préciser"}
             </p>
 
@@ -261,17 +261,17 @@ export default async function ApplicationWorkspacePage({
               {opportunity.title}
             </h1>
 
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/50 sm:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-calm-secondary sm:text-base">
               Ton cockpit de candidature centralise la décision,
               le CV, la préparation entretien et les prochaines
               actions pour cette opportunité.
             </p>
           </div>
 
-          <div className="rounded-[26px] border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
+          <div className="rounded-[26px] border border-calm-line bg-calm-accent-wash p-5 backdrop-blur">
             <div className="flex items-end justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-tertiary">
                   Préparation
                 </p>
                 <p className="mt-2 text-4xl font-semibold">
@@ -280,18 +280,18 @@ export default async function ApplicationWorkspacePage({
               </div>
 
               <div className="text-right">
-                <p className="text-sm font-semibold text-indigo-300">
+                <p className="text-sm font-semibold text-calm-accent">
                   {completedSteps}/{preparationSteps.length}
                 </p>
-                <p className="text-xs text-white/40">
+                <p className="text-xs text-calm-tertiary">
                   étapes complétées
                 </p>
               </div>
             </div>
 
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-calm-accent-soft">
               <div
-                className="h-full rounded-full bg-indigo-500"
+                className="h-full rounded-full bg-calm-accent"
                 style={{ width: `${readiness}%` }}
               />
             </div>
@@ -299,32 +299,32 @@ export default async function ApplicationWorkspacePage({
         </div>
       </section>
 
-      <section className="overflow-hidden rounded-[30px] border border-white/[0.08] bg-zinc-900">
+      <section className="overflow-hidden rounded-[30px] border border-calm-line bg-calm-surface">
         <div className="grid gap-0 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)]">
           <div className="p-6 sm:p-7 lg:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 px-3 py-1.5 text-xs font-semibold text-indigo-300 ring-1 ring-indigo-400/20">
+              <div className="inline-flex items-center gap-2 rounded-full bg-calm-accent-soft px-3 py-1.5 text-xs font-semibold text-calm-accent ring-1 ring-calm-accent-line">
                 <Sparkles className="h-3.5 w-3.5" />
                 Prochaine meilleure action
               </div>
 
-              <span className="rounded-full bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/50 ring-1 ring-white/[0.1]">
+              <span className="rounded-full bg-calm-accent-wash px-3 py-1.5 text-xs font-semibold text-calm-secondary ring-1 ring-calm-line">
                 {recommendedAction.eyebrow}
               </span>
             </div>
 
-            <h2 className="mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-white/80 sm:text-3xl">
+            <h2 className="font-sans mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
               {recommendedAction.title}
             </h2>
 
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/50">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-calm-secondary">
               {recommendedAction.description}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link
                 href={recommendedAction.href}
-                className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-indigo-400"
+                className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep"
               >
                 {recommendedAction.action}
                 <ArrowRight className="h-4 w-4" />
@@ -332,39 +332,39 @@ export default async function ApplicationWorkspacePage({
 
               <Link
                 href={`/opportunities/${opportunity.id}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white/80 ring-1 ring-white/[0.1] transition hover:bg-white/[0.08]"
+                className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent-wash px-5 py-3 text-sm font-semibold text-calm-ink ring-1 ring-calm-line transition hover:bg-calm-accent-soft"
               >
                 Voir l&apos;opportunité
               </Link>
             </div>
           </div>
 
-          <div className="border-t border-white/[0.08] bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent p-6 sm:p-7 lg:border-l lg:border-t-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
+          <div className="border-t border-calm-line bg-gradient-to-br from-calm-accent-soft via-transparent to-transparent p-6 sm:p-7 lg:border-l lg:border-t-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-accent">
               Niveau de préparation
             </p>
 
             <div className="mt-3 flex items-end gap-2">
-              <span className="text-5xl font-semibold tracking-[-0.05em] text-white/80">
+              <span className="text-5xl font-semibold tracking-[-0.05em] text-calm-ink">
                 {readiness}
               </span>
-              <span className="pb-1.5 text-lg font-semibold text-white/40">
+              <span className="pb-1.5 text-lg font-semibold text-calm-tertiary">
                 %
               </span>
             </div>
 
-            <p className="mt-2 text-sm leading-6 text-white/50">
+            <p className="mt-2 text-sm leading-6 text-calm-secondary">
               {completedSteps}/{preparationSteps.length} étapes clés sont déjà complétées.
             </p>
 
-            <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white/[0.06] ring-1 ring-white/[0.08]">
+            <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-calm-accent-wash ring-1 ring-calm-line">
               <div
-                className="h-full rounded-full bg-indigo-500 transition-all"
+                className="h-full rounded-full bg-calm-accent transition-all"
                 style={{ width: `${readiness}%` }}
               />
             </div>
 
-            <p className="mt-4 text-xs font-medium text-white/50">
+            <p className="mt-4 text-xs font-medium text-calm-secondary">
               {readiness >= 75
                 ? "Candidature fortement préparée"
                 : readiness >= 50
@@ -374,7 +374,7 @@ export default async function ApplicationWorkspacePage({
           </div>
         </div>
 
-        <div className="border-t border-white/[0.06] bg-white/[0.02] px-5 py-5 sm:px-7">
+        <div className="border-t border-calm-line bg-calm-accent-wash px-5 py-5 sm:px-7">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {pipelineStages.map((stage, index) => {
               const isActive =
@@ -389,20 +389,20 @@ export default async function ApplicationWorkspacePage({
                   key={stage.key}
                   className={
                     isActive
-                      ? "rounded-2xl bg-indigo-500 px-3 py-3 text-white"
+                      ? "rounded-2xl bg-calm-accent px-3 py-3 text-white"
                       : isComplete
-                        ? "rounded-2xl bg-emerald-500/10 px-3 py-3 text-emerald-300 ring-1 ring-emerald-400/20"
-                        : "rounded-2xl bg-white/[0.03] px-3 py-3 text-white/40 ring-1 ring-white/[0.08]"
+                        ? "rounded-2xl bg-calm-accent-soft px-3 py-3 text-calm-accent ring-1 ring-calm-accent-line"
+                        : "rounded-2xl bg-calm-accent-wash px-3 py-3 text-calm-tertiary ring-1 ring-calm-line"
                   }
                 >
                   <div className="flex items-center gap-2">
                     <span
                       className={
                         isActive
-                          ? "grid h-5 w-5 place-items-center rounded-full bg-white/20 text-[10px] font-bold"
+                          ? "grid h-5 w-5 place-items-center rounded-full bg-calm-accent-line text-[10px] font-bold"
                           : isComplete
-                            ? "grid h-5 w-5 place-items-center rounded-full bg-emerald-500/15 text-[10px] font-bold text-emerald-300"
-                            : "grid h-5 w-5 place-items-center rounded-full bg-white/[0.06] text-[10px] font-bold text-white/40"
+                            ? "grid h-5 w-5 place-items-center rounded-full bg-calm-accent-soft text-[10px] font-bold text-calm-accent"
+                            : "grid h-5 w-5 place-items-center rounded-full bg-calm-accent-wash text-[10px] font-bold text-calm-tertiary"
                       }
                     >
                       {isComplete ? "✓" : index + 1}
@@ -471,18 +471,18 @@ export default async function ApplicationWorkspacePage({
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(340px,0.65fr)]">
         <div className="space-y-6">
-          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7">
+          <div className="rounded-[28px] border border-calm-line bg-calm-surface p-6 sm:p-7">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-accent">
                   Mission control
                 </p>
-                <h2 className="mt-2 text-xl font-semibold text-white/80">
+                <h2 className="font-sans mt-2 text-xl font-semibold text-calm-ink tracking-normal">
                   Préparer ma candidature
                 </h2>
               </div>
 
-              <span className="rounded-full bg-indigo-500/10 px-3 py-1.5 text-xs font-semibold text-indigo-300">
+              <span className="rounded-full bg-calm-accent-soft px-3 py-1.5 text-xs font-semibold text-calm-accent">
                 {readiness}% prêt
               </span>
             </div>
@@ -531,17 +531,17 @@ export default async function ApplicationWorkspacePage({
           />
           <div
             id="company-research"
-            className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7"
+            className="rounded-[28px] border border-calm-line bg-calm-surface p-6 sm:p-7"
           >
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-white/[0.06] p-3 text-white/70">
+              <div className="rounded-2xl bg-calm-accent-wash p-3 text-calm-secondary">
                 <Building2 className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-tertiary">
                   Company Intelligence
                 </p>
-                <h2 className="text-lg font-semibold text-white/80">
+                <h2 className="font-sans text-lg font-semibold text-calm-ink tracking-normal">
                   Recherche entreprise
                 </h2>
               </div>
@@ -555,10 +555,10 @@ export default async function ApplicationWorkspacePage({
               ].map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4"
+                  className="rounded-2xl border border-calm-line bg-calm-accent-wash p-4"
                 >
-                  <Circle className="h-4 w-4 text-white/25" />
-                  <p className="mt-3 text-sm font-medium text-white/80">
+                  <Circle className="h-4 w-4 text-calm-tertiary" />
+                  <p className="mt-3 text-sm font-medium text-calm-ink">
                     {item}
                   </p>
                 </div>
@@ -571,11 +571,11 @@ export default async function ApplicationWorkspacePage({
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+          <div className="rounded-[28px] border border-calm-line bg-calm-surface p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-tertiary">
               Progression
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-white/80">
+            <h2 className="font-sans mt-2 text-lg font-semibold text-calm-ink tracking-normal">
               Checklist candidature
             </h2>
 
@@ -586,16 +586,16 @@ export default async function ApplicationWorkspacePage({
                   className="flex items-center gap-3"
                 >
                   {step.complete ? (
-                    <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-calm-accent" />
                   ) : (
-                    <Circle className="h-5 w-5 shrink-0 text-white/25" />
+                    <Circle className="h-5 w-5 shrink-0 text-calm-tertiary" />
                   )}
 
                   <span
                     className={
                       step.complete
-                        ? "text-sm font-medium text-white/80"
-                        : "text-sm text-white/50"
+                        ? "text-sm font-medium text-calm-ink"
+                        : "text-sm text-calm-secondary"
                     }
                   >
                     {step.label}
@@ -605,22 +605,22 @@ export default async function ApplicationWorkspacePage({
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6">
+          <div className="rounded-[28px] border border-calm-line bg-calm-surface p-6">
             <div className="flex items-center gap-3">
-              <BriefcaseBusiness className="h-5 w-5 text-indigo-400" />
-              <h2 className="font-semibold text-white/80">
+              <BriefcaseBusiness className="h-5 w-5 text-calm-accent" />
+              <h2 className="font-sans font-semibold text-calm-ink tracking-normal">
                 Prochaine action
               </h2>
             </div>
 
-            <p className="mt-4 text-sm leading-6 text-white/50">
+            <p className="mt-4 text-sm leading-6 text-calm-secondary">
               {opportunity.nextAction ||
                 "Choisis la prochaine action qui fera avancer cette candidature."}
             </p>
 
             <Link
               href={`/opportunities/${opportunity.id}`}
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-calm-accent hover:text-calm-accent"
             >
               Gérer le pipeline
               <ArrowRight className="h-4 w-4" />
@@ -645,18 +645,18 @@ function MetricCard({
   icon: React.ReactNode
 }) {
   return (
-    <div className="rounded-[24px] border border-white/[0.08] bg-zinc-900 p-5">
+    <div className="rounded-[24px] border border-calm-line bg-calm-surface p-5">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/40">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-calm-tertiary">
           {label}
         </p>
-        <div className="text-indigo-400">{icon}</div>
+        <div className="text-calm-accent">{icon}</div>
       </div>
 
-      <p className="mt-4 text-2xl font-semibold tracking-tight text-white/80">
+      <p className="mt-4 text-2xl font-semibold tracking-tight text-calm-ink">
         {value}
       </p>
-      <p className="mt-1 truncate text-sm text-white/50">
+      <p className="mt-1 truncate text-sm text-calm-secondary">
         {detail}
       </p>
     </div>
@@ -679,30 +679,30 @@ function ActionCard({
   complete: boolean
 }) {
   return (
-    <div className="group rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-5 transition hover:border-indigo-400/30 hover:bg-indigo-500/[0.06]">
+    <div className="group rounded-[24px] border border-calm-line bg-calm-accent-wash p-5 transition hover:border-calm-accent-line hover:bg-calm-accent-soft">
       <div className="flex items-start justify-between gap-4">
-        <div className="rounded-2xl bg-white/[0.06] p-3 text-indigo-300 ring-1 ring-inset ring-white/[0.08]">
+        <div className="rounded-2xl bg-calm-accent-wash p-3 text-calm-accent ring-1 ring-inset ring-calm-line">
           {icon}
         </div>
 
         {complete && (
-          <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-semibold text-emerald-300">
+          <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-accent">
             Disponible
           </span>
         )}
       </div>
 
-      <h3 className="mt-5 font-semibold text-white/80">
+      <h3 className="mt-5 font-semibold text-calm-ink">
         {title}
       </h3>
 
-      <p className="mt-2 min-h-[48px] text-sm leading-6 text-white/50">
+      <p className="mt-2 min-h-[48px] text-sm leading-6 text-calm-secondary">
         {description}
       </p>
 
       <Link
         href={href}
-        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-indigo-400"
+        className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-calm-accent"
       >
         {action}
         <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />

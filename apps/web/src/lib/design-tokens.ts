@@ -1,81 +1,90 @@
 /**
- * Design tokens — Trajectoire (Career Intelligence Workspace)
+ * Design tokens — Trajectoire, design system « Calm » (ambiance Sauge, décision du 2026-10-07).
  *
- * Ce fichier documente le système de tokens SÉMANTIQUES.
- * Toutes les pages et composants de l'espace authentifié DOIVENT utiliser
- * ces tokens plutôt que des couleurs hardcodées.
+ * Les valeurs vivent dans `app/globals.css` (variables `--calm-*` en RGB, jetons sémantiques en HSL) et sont
+ * exposées à Tailwind par `tailwind.config.ts` (`bg-calm-bg`, `text-calm-ink`, `border-calm-line`…). Ce fichier
+ * documente le système et sert de référence aux tests de contraste.
  *
- * Les couleurs Tailwind old-school (ivoire, ink, bronze, terracotta, forest)
- * restent disponibles dans tailwind.config.ts pour la compatibilité avec
- * les composants marketing et landing — ne pas les supprimer.
+ * Une seule ambiance, claire : pas de mode sombre. Aucune couleur d'alerte vive : l'avertissement est un brun
+ * ambré doux (`warn`), jamais un rouge.
  */
 
-// ─── Palette sémantique applicative ───────────────────────────────────────
+// ─── Palette ──────────────────────────────────────────────────────────────
+export const palette = {
+  bg: "#FFFFFF", // fond
+  alt: "#F4F5F2", // fond alterné des sections
+  surface: "#FFFFFF", // cartes, panneaux
+  line: "#E0E3DE", // filets légers
+  lineSoft: "#E0E3DE", // filets discrets
+  rule: "#161B19", // filet fort
+  field: "#BFC4BE", // zones de dépôt (décoratif ; les champs gardent `input`)
+  ink: "#161B19", // texte principal
+  secondary: "#565D59", // texte secondaire
+  tertiary: "#444C48", // texte d’introduction
+  accent: "#195747", // sauge : actions, liens
+  accentDeep: "#103C31", // survol
+  accentSoft: "#DCE8DF", // pastilles, fonds d'état
+  accentWash: "#F4F5F2", // aplat très léger (= fond alterné)
+  onAccent: "#FFFFFF", // texte sur fond accent
+  onAccent2: "#D7E3DA", // texte secondaire sur fond accent
+  onAccentMark: "#CFE1D3", // repères sur fond accent
+  focus: "#B0703A", // contour de focus : 3 px, décalage 4 px
+  accentLine: "#B9D3C8", // bordure sauge
+  warn: "#8A4B16", // avertissement doux
+  warnSoft: "#FBF3E8", // fond d'avertissement (dérivé)
+  warnLine: "#E8D2B4", // bordure d'avertissement (dérivée)
+  input: "#7C8590", // contour de champ (≥ 3:1 sur blanc, WCAG 1.4.11)
+} as const
+
+// ─── Jetons sémantiques (variables CSS) ───────────────────────────────────
 export const colors = {
-  bg: {
-    primary: "hsl(var(--background))",    // #FAFAFC — fond global
-    surface: "hsl(var(--surface))",       // #FFFFFF — fond carte
-    muted: "hsl(var(--surface-muted))",   // #F3F4F6 — fond subtil
-  },
-  text: {
-    primary: "hsl(var(--foreground))",         // #0F172A — texte principal
-    secondary: "hsl(var(--foreground-muted))", // #64748B — texte secondaire
-  },
-  accent: {
-    violet: "#7C3AED",      // primary — Trajectoire brand
-    violetLight: "#F5F3FF", // primary-50
-  },
-  border: {
-    default: "hsl(var(--border))",  // #E2E8F0
-  },
+  bg: { primary: "hsl(var(--background))", surface: "hsl(var(--surface))", muted: "hsl(var(--surface-muted))" },
+  text: { primary: "hsl(var(--foreground))", secondary: "hsl(var(--foreground-muted))" },
+  accent: { default: "hsl(var(--primary))", soft: "hsl(var(--accent))" },
+  border: { default: "hsl(var(--border))" },
   state: {
-    success: "hsl(var(--success))", // #10B981 Emerald
-    warning: "hsl(var(--warning))", // #F59E0B Amber
-    danger: "hsl(var(--danger))",   // #EF4444 Rose
-    info: "hsl(var(--info))",       // #0EA5E9 Sky
+    success: "hsl(var(--success))",
+    warning: "hsl(var(--warning))",
+    danger: "hsl(var(--danger))", // = avertissement doux, jamais rouge
+    info: "hsl(var(--info))",
   },
 } as const
 
-// ─── Radius ───────────────────────────────────────────────────────────────
+// ─── Rayons : 4 à 6 px ─────────────────────────────────────────────
 export const radius = {
-  sm: "rounded-md",   // 0.5rem  — inputs, badges
-  md: "rounded-lg",   // 0.75rem — buttons, small cards
-  lg: "rounded-xl",   // 1rem    — standard cards
-  xl: "rounded-2xl",  // 1.5rem  — modals, hero sections
+  control: "rounded-lg", // 6 px : boutons, champs
+  card: "rounded-xl", // 6 px : cartes
+  panel: "rounded-2xl", // 6 px : grands panneaux
 } as const
 
-// ─── Shadow ───────────────────────────────────────────────────────────────
-export const shadow = {
-  subtle:   "shadow-[0_1px_2px_0_rgba(0,0,0,0.04)]",
-  card:     "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]",
-  elevated: "shadow-[0_4px_12px_-2px_rgba(30,27,75,0.08),0_2px_4px_-2px_rgba(30,27,75,0.04)]",
-} as const
-
-// ─── Typography ───────────────────────────────────────────────────────────
+// ─── Typographie ──────────────────────────────────────────────────────────
 export const fonts = {
-  /** App : tous les titres fonctionnels */
-  heading: "font-sans",
-  /** Corps de texte */
+  /** Texte : DM Sans (variable CSS `--font-dmsans`). */
   body: "font-sans",
-  /** Marketing / moments de marque uniquement */
-  brand: "font-sans",
+  /** Titres, citations, prix : Cormorant Garamond (`--font-cormorant`), graisse 500. */
+  title: "font-serif",
+  /** Mots d’accent : Cormorant italique, couleur accent, un mot ou une courte phrase seulement. */
+  accent: "font-accent",
 } as const
 
-// ─── Spacing scale (px) ───────────────────────────────────────────────────
-// Rythme recommandé : 8 / 12 / 16 / 20 / 24 / 32 / 48
-export const spacing = {
-  cardPadding: "p-5",       // standard card inner padding
-  sectionGap: "gap-6",      // gap between page sections
-  pageHeader: "pb-5",       // page header bottom spacing
+/** Titres fluides (clamp) : `text-calm-display`, `text-calm-h1`, `text-calm-h2`, `text-calm-h3`. */
+export const headings = ["text-calm-display", "text-calm-h1", "text-calm-h2", "text-calm-h3"] as const
+
+// ─── Ombres : aucune, sauf le portrait (`shadow-portrait`) et la carte du rapport (`shadow-report`) ───────────────────────────────────────────────────────────────
+export const shadow = {
+  subtle: "shadow-subtle",
+  card: "shadow-calm",
+  elevated: "shadow-elevated",
 } as const
 
 /**
  * RÈGLES FONDAMENTALES
  *
- * 1. Police unique : Inter (font-sans, chargée par next/font dans app/layout.tsx), partout :
- *    site public et espace connecté (décision du 2026-10-02). Plus de serif.
- * 2. (réservé)
- * 3. CTA primaire : bg-primary text-white (violet) — jamais bg-ink-900 dans l'app
- * 4. Densité : paddings 20–24px pour les cartes, 16–20px pour les items de liste
- * 5. Ombres ultra-subtiles — max shadow-sm sur cards normales
+ * 1. Polices : DM Sans (texte) et Cormorant Garamond (titres, citations, prix, accents), chargées par next/font dans `app/layout.tsx`.
+ * 2. Une seule ambiance claire : aucune classe sombre (`bg-zinc-950`, `text-white/80`…), aucun `dark:`.
+ * 3. Contraste ≥ 4,5:1 pour le texte, ≥ 3:1 pour les contours de champs et les icônes porteuses de sens.
+ * 4. CTA primaire : `bg-calm-accent text-white` (survol `bg-calm-accent-deep`) ; focus visible : anneau sauge.
+ * 5. Cibles tactiles ≥ 44 px ; mouvement doux, coupé si `prefers-reduced-motion`.
+ * 6. Jamais de rouge vif : avertissement = `warn` / `warn-soft` / `warn-line`.
+ * 7. Typographie française : espaces insécables avant « : ; ? ! % » et dans « … ».
  */

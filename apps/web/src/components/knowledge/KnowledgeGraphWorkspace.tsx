@@ -32,17 +32,17 @@ export function KnowledgeGraphWorkspace() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-calm-line-soft">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Knowledge Graph</h1>
-          <p className="text-gray-600 mt-2">Visualisez et explorez les relations entre compétences et métiers</p>
+          <h1 className="text-3xl font-bold text-calm-ink">Knowledge Graph</h1>
+          <p className="text-calm-tertiary mt-2">Visualisez et explorez les relations entre compétences et métiers</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Graphe de connaissances</h2>
+            <div className="bg-calm-surface p-6 rounded-lg shadow">
+              <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Graphe de connaissances</h2>
               
               <div className="mb-4">
                 <input
@@ -54,9 +54,9 @@ export function KnowledgeGraphWorkspace() {
                 />
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4 min-h-[400px] flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <svg className="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-calm-accent-wash rounded-lg p-4 min-h-[400px] flex items-center justify-center">
+                <div className="text-center text-calm-tertiary">
+                  <svg className="w-16 h-16 mx-auto mb-4 text-calm-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                   </svg>
                   <p>Visualisation interactive du graphe</p>
@@ -67,15 +67,15 @@ export function KnowledgeGraphWorkspace() {
           </div>
 
           <div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Nœuds</h2>
+            <div className="bg-calm-surface p-6 rounded-lg shadow">
+              <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Nœuds</h2>
               
               {loading ? (
-                <div className="text-sm text-gray-500 text-center py-4">
+                <div className="text-sm text-calm-tertiary text-center py-4">
                   Chargement...
                 </div>
               ) : nodes.length === 0 ? (
-                <div className="text-sm text-gray-500 text-center py-4">
+                <div className="text-sm text-calm-tertiary text-center py-4">
                   Aucun nœud disponible
                 </div>
               ) : (
@@ -85,11 +85,11 @@ export function KnowledgeGraphWorkspace() {
                       key={node.id}
                       onClick={() => setSelectedNode(node)}
                       className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                        selectedNode?.id === node.id ? 'bg-blue-100 border-blue-500' : 'bg-gray-50 hover:bg-gray-100'
+                        selectedNode?.id === node.id ? 'bg-calm-accent-soft border-calm-accent' : 'bg-calm-accent-wash hover:bg-calm-line-soft'
                       }`}
                     >
                       <div className="font-medium">{node.name}</div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-calm-tertiary">
                         {node.type} • {node.connections} connexions
                       </div>
                     </div>
@@ -99,30 +99,30 @@ export function KnowledgeGraphWorkspace() {
             </div>
 
             {selectedNode && (
-              <div className="bg-white p-6 rounded-lg shadow mt-6">
-                <h2 className="text-xl font-semibold mb-4">Détails</h2>
+              <div className="bg-calm-surface p-6 rounded-lg shadow mt-6">
+                <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Détails</h2>
                 
                 <div className="space-y-4">
                   <div>
-                    <div className="text-sm text-gray-500">Nom</div>
+                    <div className="text-sm text-calm-tertiary">Nom</div>
                     <div className="font-medium">{selectedNode.name}</div>
                   </div>
                   
                   <div>
-                    <div className="text-sm text-gray-500">Type</div>
+                    <div className="text-sm text-calm-tertiary">Type</div>
                     <div className="font-medium">{selectedNode.type}</div>
                   </div>
                   
                   <div>
-                    <div className="text-sm text-gray-500">Connexions</div>
+                    <div className="text-sm text-calm-tertiary">Connexions</div>
                     <div className="font-medium">{selectedNode.connections}</div>
                   </div>
 
                   <div>
-                    <div className="text-sm text-gray-500 mb-2">Nœuds connectés</div>
+                    <div className="text-sm text-calm-tertiary mb-2">Nœuds connectés</div>
                     <div className="flex flex-wrap gap-2">
                       {nodes.filter((n: any) => n.id !== selectedNode.id).slice(0, 3).map((node: any) => (
-                        <span key={node.id} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+                        <span key={node.id} className="bg-calm-accent-soft text-calm-accent-deep px-2 py-1 rounded text-sm">
                           {node.name}
                         </span>
                       ))}

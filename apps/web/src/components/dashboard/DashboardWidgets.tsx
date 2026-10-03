@@ -61,7 +61,7 @@ const timelineIcons: Record<DashboardTimelineEvent["type"], LucideIcon> = {
 }
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 function getFirstName(name?: string) {
   const cleaned = name?.trim()
@@ -117,7 +117,7 @@ function SpotlightCard({
 }) {
   const x = useMotionValue(-200)
   const y = useMotionValue(-200)
-  const spotlight = useMotionTemplate`radial-gradient(240px circle at ${x}px ${y}px, rgba(99,102,241,0.14), transparent 70%)`
+  const spotlight = useMotionTemplate`radial-gradient(240px circle at ${x}px ${y}px, rgba(31,42,55,0.14), transparent 70%)`
 
   return (
     <div
@@ -130,7 +130,7 @@ function SpotlightCard({
         x.set(-200)
         y.set(-200)
       }}
-      className={`group relative overflow-hidden rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06] transition-colors duration-200 hover:bg-white/[0.035] hover:ring-white/[0.12] ${className}`}
+      className={`group relative overflow-hidden rounded-xl bg-calm-accent-wash ring-1 ring-calm-line transition-colors duration-200 hover:bg-calm-accent-wash hover:ring-calm-line ${className}`}
     >
       <motion.div
         aria-hidden
@@ -144,7 +144,7 @@ function SpotlightCard({
 
 function IconTile({ icon: Icon }: { icon: LucideIcon }) {
   return (
-    <div className="grid size-9 place-items-center rounded-lg bg-indigo-500/10 text-indigo-400 ring-1 ring-inset ring-indigo-400/20 transition-transform duration-200 group-hover:scale-105">
+    <div className="grid size-9 place-items-center rounded-lg bg-calm-accent-soft text-calm-accent ring-1 ring-inset ring-calm-accent-line transition-transform duration-200 group-hover:scale-105">
       <Icon className="size-4" strokeWidth={1.75} />
     </div>
   )
@@ -162,14 +162,14 @@ function Panel({
   children: ReactNode
 }) {
   return (
-    <section className="overflow-hidden rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06]">
-      <header className="flex items-center justify-between gap-4 border-b border-white/[0.06] px-5 py-4">
+    <section className="overflow-hidden rounded-xl bg-calm-accent-wash ring-1 ring-calm-line">
+      <header className="flex items-center justify-between gap-4 border-b border-calm-line px-5 py-4">
         <div className="min-w-0">
-          <h3 className="text-sm font-semibold tracking-tight text-white/80">
+          <h3 className="text-sm font-semibold tracking-tight text-calm-ink">
             {title}
           </h3>
           {subtitle ? (
-            <p className="mt-0.5 text-xs text-white/40">{subtitle}</p>
+            <p className="mt-0.5 text-xs text-calm-tertiary">{subtitle}</p>
           ) : null}
         </div>
         {action}
@@ -189,7 +189,7 @@ function TextLink({
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-1 rounded-md text-xs font-medium text-indigo-400 transition-colors hover:text-indigo-300 ${focusRing}`}
+      className={`inline-flex items-center gap-1 rounded-md text-xs font-medium text-calm-accent transition-colors hover:text-calm-accent ${focusRing}`}
     >
       {children}
     </Link>
@@ -218,7 +218,7 @@ function ScoreRing({ value }: { value: number }) {
         r={radius}
         fill="none"
         strokeWidth="6"
-        className="stroke-white/[0.07]"
+        className="stroke-calm-tertiary"
       />
       <motion.circle
         cx="42"
@@ -227,7 +227,7 @@ function ScoreRing({ value }: { value: number }) {
         fill="none"
         strokeWidth="6"
         strokeLinecap="round"
-        className="stroke-indigo-500"
+        className="stroke-calm-accent"
         strokeDasharray={circumference}
         initial={{ strokeDashoffset: circumference }}
         animate={{
@@ -303,11 +303,11 @@ export function DashboardWidgets({
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative isolate min-h-[calc(100dvh-4rem)] text-white/80">
+      <div className="relative isolate min-h-[calc(100dvh-4rem)] text-calm-ink">
         {/* Halo d'ambiance (le fond zinc-950 vient du layout (app)) */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-8 -z-10 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.16),transparent_70%)]"
+          className="pointer-events-none absolute inset-x-0 -top-8 -z-10 h-[420px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(31,42,55,0.16),transparent_70%)]"
         />
 
         <motion.div
@@ -322,17 +322,17 @@ export function DashboardWidgets({
             className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
           >
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-white/50 ring-1 ring-white/[0.08]">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-calm-accent-wash px-2.5 py-1 text-[11px] font-medium text-calm-secondary ring-1 ring-calm-line">
                 <span className="relative flex size-1.5">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-indigo-400/60 motion-reduce:animate-none" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-indigo-500" />
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-calm-accent-soft motion-reduce:animate-none" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-calm-accent" />
                 </span>
                 Career Command Center
               </div>
-              <h1 className="text-2xl font-semibold tracking-tight text-white/80 sm:text-3xl">
+              <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
                 Bonjour {firstName}
               </h1>
-              <p className="mt-1.5 max-w-xl text-sm text-white/50">
+              <p className="mt-1.5 max-w-xl text-sm text-calm-secondary">
                 Voici où vous en êtes dans votre préparation et vos prochaines
                 étapes.
               </p>
@@ -341,14 +341,14 @@ export function DashboardWidgets({
             <div className="flex shrink-0 items-center gap-2.5">
               <Link
                 href="/analyze"
-                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-white/[0.04] px-3.5 text-sm font-medium text-white/80 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.07] hover:ring-white/[0.14] ${focusRing}`}
+                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent-wash px-3.5 text-sm font-medium text-calm-ink ring-1 ring-calm-line transition-colors hover:bg-calm-accent-wash hover:ring-calm-accent-line ${focusRing}`}
               >
-                <FileText className="size-4 text-white/50" />
+                <FileText className="size-4 text-calm-secondary" />
                 Analyser un CV
               </Link>
               <Link
                 href="/simulation/new"
-                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-indigo-500 px-3.5 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-400 ${focusRing}`}
+                className={`inline-flex h-9 items-center gap-2 rounded-lg bg-calm-accent px-3.5 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep ${focusRing}`}
               >
                 <Mic2 className="size-4" />
                 Nouvel entretien IA
@@ -364,7 +364,7 @@ export function DashboardWidgets({
             {/* Score ATS */}
             <SpotlightCard className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-white/50">
+                <span className="text-xs font-medium text-calm-secondary">
                   Score ATS
                 </span>
                 <IconTile icon={Target} />
@@ -372,25 +372,25 @@ export function DashboardWidgets({
               <div className="mt-4 flex items-baseline gap-1">
                 {hasCVAnalysis ? (
                   <>
-                    <span className="text-3xl font-semibold tracking-tight text-white/80">
+                    <span className="text-3xl font-semibold tracking-tight text-calm-ink">
                       <AnimatedNumber value={currentScore} />
                     </span>
-                    <span className="text-sm text-white/35">/100</span>
+                    <span className="text-sm text-calm-tertiary">/100</span>
                   </>
                 ) : (
-                  <span className="text-lg font-medium text-white/80">
+                  <span className="text-lg font-medium text-calm-ink">
                     {totalAnalyses > 0 ? "Score indisponible" : "Non analysé"}
                   </span>
                 )}
               </div>
-              <div className="mt-2.5 text-xs text-white/50">
+              <div className="mt-2.5 text-xs text-calm-secondary">
                 {hasCVAnalysis ? (
                   score.previousScore !== undefined ? (
                     <span
                       className={`inline-flex items-center gap-1 font-medium ${
                         currentScore >= score.previousScore
-                          ? "text-emerald-400"
-                          : "text-rose-400"
+                          ? "text-calm-accent"
+                          : "text-calm-warn"
                       }`}
                     >
                       <TrendingUp
@@ -417,20 +417,20 @@ export function DashboardWidgets({
             {/* Opportunités */}
             <SpotlightCard className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-white/50">
+                <span className="text-xs font-medium text-calm-secondary">
                   Opportunités suivies
                 </span>
                 <IconTile icon={BriefcaseBusiness} />
               </div>
               <div className="mt-4 flex items-baseline gap-1.5">
-                <span className="text-3xl font-semibold tracking-tight text-white/80">
+                <span className="text-3xl font-semibold tracking-tight text-calm-ink">
                   <AnimatedNumber value={opportunitySummary.activeCount} />
                 </span>
-                <span className="text-xs text-white/35">en cours</span>
+                <span className="text-xs text-calm-tertiary">en cours</span>
               </div>
-              <div className="mt-2.5 text-xs text-white/50">
+              <div className="mt-2.5 text-xs text-calm-secondary">
                 {opportunitySummary.highMatchCount > 0 ? (
-                  <span className="font-medium text-indigo-300">
+                  <span className="font-medium text-calm-accent">
                     {opportunitySummary.highMatchCount} à fort matching (≥75%)
                   </span>
                 ) : opportunitySummary.activeCount > 0 ? (
@@ -446,7 +446,7 @@ export function DashboardWidgets({
             {/* Simulations */}
             <SpotlightCard className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-white/50">
+                <span className="text-xs font-medium text-calm-secondary">
                   Simulations d&apos;entretien
                 </span>
                 <IconTile icon={Mic2} />
@@ -454,20 +454,20 @@ export function DashboardWidgets({
               <div className="mt-4 flex items-baseline gap-1.5">
                 {totalSimulations > 0 ? (
                   <>
-                    <span className="text-3xl font-semibold tracking-tight text-white/80">
+                    <span className="text-3xl font-semibold tracking-tight text-calm-ink">
                       <AnimatedNumber value={totalSimulations} />
                     </span>
-                    <span className="text-xs text-white/35">
+                    <span className="text-xs text-calm-tertiary">
                       réalisée{totalSimulations > 1 ? "s" : ""}
                     </span>
                   </>
                 ) : (
-                  <span className="text-lg font-medium text-white/80">
+                  <span className="text-lg font-medium text-calm-ink">
                     À démarrer
                   </span>
                 )}
               </div>
-              <div className="mt-2.5 text-xs text-white/50">
+              <div className="mt-2.5 text-xs text-calm-secondary">
                 {totalSimulations > 0 ? (
                   "Entraînements vocaux IA"
                 ) : (
@@ -482,18 +482,18 @@ export function DashboardWidgets({
             {/* Radar */}
             <SpotlightCard className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-white/50">
+                <span className="text-xs font-medium text-calm-secondary">
                   Radar de marché
                 </span>
                 <IconTile icon={Radar} />
               </div>
               <div className="mt-4 flex items-baseline gap-1.5">
-                <span className="text-3xl font-semibold tracking-tight text-white/80">
+                <span className="text-3xl font-semibold tracking-tight text-calm-ink">
                   <AnimatedNumber value={discoverySummary.liveCount} />
                 </span>
-                <span className="text-xs text-white/35">offres détectées</span>
+                <span className="text-xs text-calm-tertiary">offres détectées</span>
               </div>
-              <div className="mt-2.5 text-xs text-white/50">
+              <div className="mt-2.5 text-xs text-calm-secondary">
                 {discoverySummary.sourceCount} source
                 {discoverySummary.sourceCount > 1 ? "s" : ""} active
                 {discoverySummary.sourceCount > 1 ? "s" : ""}
@@ -508,34 +508,34 @@ export function DashboardWidgets({
               className="space-y-6 lg:col-span-7 xl:col-span-8"
             >
               {/* Hero next best action */}
-              <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/[0.14] via-indigo-500/[0.04] to-transparent p-6 ring-1 ring-indigo-400/25 sm:p-8">
+              <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-6 ring-1 ring-calm-accent-line sm:p-8">
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-indigo-500/20 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
+                  className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-calm-accent-soft blur-3xl transition-opacity duration-500 group-hover:opacity-80"
                 />
                 <div className="relative flex flex-col gap-6">
                   <div className="space-y-3">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-calm-accent-soft px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-calm-accent ring-1 ring-inset ring-calm-accent-line">
                       <Sparkles className="size-3.5" />
                       {heroLabel}
                     </div>
 
-                    <h2 className="text-xl font-semibold tracking-tight text-white/80 sm:text-2xl">
+                    <h2 className="font-sans text-xl font-semibold tracking-tight text-calm-ink sm:text-2xl">
                       {heroTitle}
                     </h2>
 
-                    <p className="max-w-2xl text-sm leading-relaxed text-white/50">
+                    <p className="max-w-2xl text-sm leading-relaxed text-calm-secondary">
                       {nextAction ? (
                         <>
                           Pour le poste{" "}
-                          <span className="font-medium text-white/80">
+                          <span className="font-medium text-calm-ink">
                             {nextAction.title}
                           </span>
                           {nextAction.company ? (
                             <>
                               {" "}
                               chez{" "}
-                              <span className="font-medium text-white/80">
+                              <span className="font-medium text-calm-ink">
                                 {nextAction.company}
                               </span>
                             </>
@@ -554,7 +554,7 @@ export function DashboardWidgets({
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href={heroHref}
-                      className={`inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-500 px-4 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_10px_30px_-10px_rgba(99,102,241,0.7)] transition-colors hover:bg-indigo-400 ${focusRing}`}
+                      className={`inline-flex h-10 items-center gap-2 rounded-lg bg-calm-accent px-4 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(241,247,243,0.08)_inset,0_10px_30px_-10px_rgba(31,42,55,0.7)] transition-colors hover:bg-calm-accent-deep ${focusRing}`}
                     >
                       {heroCta}
                       <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -563,7 +563,7 @@ export function DashboardWidgets({
                     {nextAction ? (
                       <Link
                         href="/opportunities"
-                        className={`inline-flex h-10 items-center rounded-lg px-3 text-xs font-medium text-white/50 transition-colors hover:bg-white/[0.04] hover:text-white/80 ${focusRing}`}
+                        className={`inline-flex h-10 items-center rounded-lg px-3 text-xs font-medium text-calm-secondary transition-colors hover:bg-calm-accent-wash hover:text-calm-ink ${focusRing}`}
                       >
                         Voir toutes les opportunités
                       </Link>
@@ -583,25 +583,25 @@ export function DashboardWidgets({
                 }
               >
                 {timeline.length > 0 ? (
-                  <ul className="divide-y divide-white/[0.05]">
+                  <ul className="divide-y divide-calm-line">
                     {timeline.slice(0, 4).map((event) => {
                       const Icon = timelineIcons[event.type] ?? History
 
                       return (
                         <li
                           key={event.id}
-                          className="group flex items-center justify-between gap-4 px-5 py-3.5 transition-colors hover:bg-white/[0.025]"
+                          className="group flex items-center justify-between gap-4 px-5 py-3.5 transition-colors hover:bg-calm-accent-wash"
                         >
                           <div className="flex min-w-0 items-center gap-3.5">
-                            <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/[0.04] text-white/50 ring-1 ring-inset ring-white/[0.06] transition-colors group-hover:text-indigo-300">
+                            <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-calm-accent-wash text-calm-secondary ring-1 ring-inset ring-calm-line transition-colors group-hover:text-calm-accent">
                               <Icon className="size-4" strokeWidth={1.75} />
                             </div>
                             <div className="min-w-0">
-                              <p className="truncate text-sm font-medium text-white/80">
+                              <p className="truncate text-sm font-medium text-calm-ink">
                                 {event.title}
                               </p>
                               {event.description && (
-                                <p className="mt-0.5 truncate text-xs text-white/40">
+                                <p className="mt-0.5 truncate text-xs text-calm-tertiary">
                                   {event.description}
                                 </p>
                               )}
@@ -609,30 +609,30 @@ export function DashboardWidgets({
                           </div>
 
                           <div className="flex shrink-0 items-center gap-3">
-                            <span className="hidden text-xs tabular-nums text-white/35 sm:inline">
+                            <span className="hidden text-xs tabular-nums text-calm-tertiary sm:inline">
                               {formatDate(event.date)}
                             </span>
                             {event.href && event.actionLabel ? (
                               <Link
                                 href={event.href}
-                                className={`rounded-md px-2 py-1 text-xs font-medium text-indigo-300 transition-colors hover:bg-white/[0.05] hover:text-indigo-200 ${focusRing}`}
+                                className={`rounded-md px-2 py-1 text-xs font-medium text-calm-accent transition-colors hover:bg-calm-accent-wash hover:text-calm-accent ${focusRing}`}
                               >
                                 {event.actionLabel}
                               </Link>
                             ) : null}
                             {event.status === "completed" ? (
-                              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
-                                <span className="size-1.5 rounded-full bg-emerald-400" />
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-calm-accent-soft px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-calm-accent ring-1 ring-inset ring-calm-accent-line">
+                                <span className="size-1.5 rounded-full bg-calm-accent" />
                                 Terminé
                               </span>
                             ) : event.status === "in-progress" ? (
-                              <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
-                                <span className="size-1.5 rounded-full bg-indigo-400" />
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-calm-accent-soft px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-calm-accent ring-1 ring-inset ring-calm-accent-line">
+                                <span className="size-1.5 rounded-full bg-calm-accent" />
                                 En cours
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/50 ring-1 ring-inset ring-white/[0.08]">
-                                <span className="size-1.5 rounded-full bg-white/30" />
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-calm-accent-wash px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-calm-secondary ring-1 ring-inset ring-calm-line">
+                                <span className="size-1.5 rounded-full bg-calm-accent-line" />
                                 Planifié
                               </span>
                             )}
@@ -643,11 +643,11 @@ export function DashboardWidgets({
                   </ul>
                 ) : (
                   <div className="flex min-h-[150px] flex-col items-center justify-center px-6 py-8 text-center">
-                    <CalendarClock className="mb-2 size-7 text-white/25" />
-                    <p className="text-sm font-medium text-white/80">
+                    <CalendarClock className="mb-2 size-7 text-calm-tertiary" />
+                    <p className="text-sm font-medium text-calm-ink">
                       Aucune activité récente
                     </p>
-                    <p className="mt-1 max-w-sm text-xs text-white/40">
+                    <p className="mt-1 max-w-sm text-xs text-calm-tertiary">
                       Vos analyses ATS et simulations d&apos;entretien
                       apparaîtront ici dès que vous les aurez lancées.
                     </p>
@@ -668,10 +668,10 @@ export function DashboardWidgets({
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ring-inset ${
                       currentScore >= 75
-                        ? "bg-emerald-500/10 text-emerald-400 ring-emerald-400/20"
+                        ? "bg-calm-accent-soft text-calm-accent ring-calm-accent-line"
                         : hasCVAnalysis
-                          ? "bg-indigo-500/10 text-indigo-300 ring-indigo-400/25"
-                          : "bg-white/[0.04] text-white/50 ring-white/[0.08]"
+                          ? "bg-calm-accent-soft text-calm-accent ring-calm-accent-line"
+                          : "bg-calm-accent-wash text-calm-secondary ring-calm-line"
                     }`}
                   >
                     {currentScore >= 75
@@ -687,17 +687,17 @@ export function DashboardWidgets({
                   <div className="flex items-center gap-4">
                     <div className="relative">
                       <ScoreRing value={hasCVAnalysis ? currentScore : 0} />
-                      <span className="absolute inset-0 grid place-items-center text-sm font-semibold tabular-nums text-white/80">
+                      <span className="absolute inset-0 grid place-items-center text-sm font-semibold tabular-nums text-calm-ink">
                         {hasCVAnalysis ? `${currentScore}%` : "—"}
                       </span>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white/80">
+                      <p className="text-sm font-medium text-calm-ink">
                         Optimisation ATS du CV
                       </p>
-                      <p className="mt-1 text-xs leading-relaxed text-white/40">
+                      <p className="mt-1 text-xs leading-relaxed text-calm-tertiary">
                         {currentScore >= 75
-                          ? "Score élevé : profil prêt pour les candidatures directes."
+                          ? "Score élevé : profil prêt pour les candidatures directes."
                           : hasCVAnalysis
                             ? "Recommandations disponibles pour augmenter votre score."
                             : "Analysez un CV pour générer votre premier diagnostic."}
@@ -706,9 +706,9 @@ export function DashboardWidgets({
                   </div>
 
                   {/* Pipeline */}
-                  <div className="space-y-3 border-t border-white/[0.06] pt-5">
+                  <div className="space-y-3 border-t border-calm-line pt-5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-white/80">
+                      <span className="text-xs font-medium text-calm-ink">
                         Pipeline d&apos;opportunités
                       </span>
                       <TextLink href="/opportunities">
@@ -724,12 +724,12 @@ export function DashboardWidgets({
                             key={stage.key}
                             className="flex items-center gap-3 text-xs"
                           >
-                            <span className="w-20 shrink-0 text-white/50">
+                            <span className="w-20 shrink-0 text-calm-secondary">
                               {stage.label}
                             </span>
-                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-calm-accent-wash">
                               <motion.div
-                                className="h-full rounded-full bg-indigo-500"
+                                className="h-full rounded-full bg-calm-accent"
                                 initial={{ width: 0 }}
                                 animate={{
                                   width: `${(count / pipelineMax) * 100}%`,
@@ -741,7 +741,7 @@ export function DashboardWidgets({
                                 }}
                               />
                             </div>
-                            <span className="w-5 shrink-0 text-right font-medium tabular-nums text-white/80">
+                            <span className="w-5 shrink-0 text-right font-medium tabular-nums text-calm-ink">
                               {count}
                             </span>
                           </li>
@@ -751,13 +751,13 @@ export function DashboardWidgets({
                   </div>
 
                   {/* Skills */}
-                  <div className="space-y-3 border-t border-white/[0.06] pt-5">
+                  <div className="space-y-3 border-t border-calm-line pt-5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-white/80">
+                      <span className="text-xs font-medium text-calm-ink">
                         Compétences identifiées
                       </span>
                       {skills.length > 4 ? (
-                        <span className="text-[11px] text-white/35">
+                        <span className="text-[11px] text-calm-tertiary">
                           +{skills.length - 4} autres
                         </span>
                       ) : null}
@@ -780,8 +780,8 @@ export function DashboardWidgets({
                               key={skill.name}
                               className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
                                 skill.category === "technical"
-                                  ? "bg-indigo-500/10 text-indigo-300 ring-indigo-400/20"
-                                  : "bg-white/[0.04] text-white/70 ring-white/[0.08]"
+                                  ? "bg-calm-accent-soft text-calm-accent ring-calm-accent-line"
+                                  : "bg-calm-accent-wash text-calm-secondary ring-calm-line"
                               }`}
                             >
                               {Icon && <Icon className="size-3 shrink-0" />}
@@ -793,7 +793,7 @@ export function DashboardWidgets({
                         })}
                       </div>
                     ) : (
-                      <p className="text-xs text-white/40">
+                      <p className="text-xs text-calm-tertiary">
                         Vos compétences clés apparaîtront ici après analyse de
                         votre CV.
                       </p>
@@ -806,7 +806,7 @@ export function DashboardWidgets({
 
           {/* Quick actions */}
           <motion.section variants={item} className="space-y-4">
-            <h3 className="text-sm font-semibold tracking-tight text-white/80">
+            <h3 className="text-sm font-semibold tracking-tight text-calm-ink">
               Continuer votre préparation
             </h3>
 
@@ -839,13 +839,13 @@ export function DashboardWidgets({
                   <SpotlightCard className="h-full p-5">
                     <div className="flex items-center justify-between">
                       <IconTile icon={action.icon} />
-                      <ArrowUpRight className="size-4 text-white/30 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-indigo-300" />
+                      <ArrowUpRight className="size-4 text-calm-tertiary transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-calm-accent" />
                     </div>
                     <div className="mt-4">
-                      <h4 className="text-sm font-semibold text-white/80">
+                      <h4 className="text-sm font-semibold text-calm-ink">
                         {action.title}
                       </h4>
-                      <p className="mt-1 text-xs leading-relaxed text-white/40">
+                      <p className="mt-1 text-xs leading-relaxed text-calm-tertiary">
                         {action.text}
                       </p>
                     </div>

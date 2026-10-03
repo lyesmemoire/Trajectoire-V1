@@ -58,7 +58,7 @@ export function ErrorState({
       {onRetry && (
         <button
           onClick={onRetry}
-          className="inline-flex items-center justify-center rounded-lg bg-foreground px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-foreground/90 active:scale-[0.98]"
+          className="inline-flex items-center justify-center rounded-lg bg-foreground px-5 py-2.5 text-sm font-semibold text-calm-ink transition-colors hover:bg-foreground/90 active:scale-[0.98]"
         >
           Réessayer
         </button>

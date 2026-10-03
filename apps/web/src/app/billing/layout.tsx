@@ -10,7 +10,7 @@ export default function BillingLayout({ children }: { children: ReactNode }) {
   return (
     <div
       style={darkTokens}
-      className="fixed inset-0 z-50 overflow-y-auto bg-zinc-950 text-white/80 selection:bg-indigo-500/30 selection:text-white"
+      className="fixed inset-0 z-50 overflow-y-auto bg-calm-bg text-calm-ink selection:bg-calm-accent-soft selection:text-calm-ink"
     >
       {children}
     </div>

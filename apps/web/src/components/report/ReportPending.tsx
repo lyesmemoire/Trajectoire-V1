@@ -75,12 +75,12 @@ export function ReportPending({ sessionId, mode }: ReportPendingProps) {
 
   if (mode === "in_progress") {
     return (
-      <div className="mx-auto max-w-xl rounded-lg border border-white/[0.08] bg-zinc-900 p-8 text-center">
-        <h1 className="text-xl font-semibold text-white/80">Cet entretien n’est pas terminé</h1>
-        <p className="mt-3 text-white/50">Le rapport sera disponible dès que vous aurez terminé la simulation.</p>
+      <div className="mx-auto max-w-xl rounded-xl border border-calm-line bg-calm-surface p-8 text-center">
+        <h1 className="text-calm-h2 font-semibold text-calm-ink">Cet entretien n’est pas terminé</h1>
+        <p className="mt-3 text-calm-secondary">Le rapport sera disponible dès que vous aurez terminé la simulation.</p>
         <Link
           href={`/simulation/${sessionId}`}
-          className="min-h-11 min-w-11 mt-6 inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-500"
+          className="tap-target mt-6 inline-flex items-center justify-center rounded-xl bg-calm-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-calm-accent-deep"
         >
           Reprendre l’entretien
         </Link>
@@ -89,32 +89,32 @@ export function ReportPending({ sessionId, mode }: ReportPendingProps) {
   }
 
   return (
-    <div className="mx-auto max-w-xl rounded-lg border border-white/[0.08] bg-zinc-900 p-8 text-center" role="status" aria-live="polite">
-      <Loader2 className="mx-auto size-8 animate-spin text-indigo-400" aria-hidden="true" />
-      <h1 className="mt-4 text-xl font-semibold text-white/80">Votre rapport se prépare</h1>
-      <p className="mt-3 text-white/50">
+    <div className="mx-auto max-w-xl rounded-xl border border-calm-line bg-calm-surface p-8 text-center" role="status" aria-live="polite">
+      <Loader2 className="mx-auto size-8 animate-spin text-calm-accent" aria-hidden="true" />
+      <h1 className="mt-4 text-calm-h2 font-semibold text-calm-ink">Votre rapport se prépare</h1>
+      <p className="mt-3 text-calm-secondary">
         Alexandra rassemble vos réponses. Cela prend généralement moins d’une minute : cette page s’ouvrira toute seule.
       </p>
       {slow && (
         <div className="mt-6">
-          <p className="text-sm text-white/50">Cela prend plus de temps que prévu.</p>
+          <p className="text-sm text-calm-secondary">Cela prend plus de temps que prévu.</p>
           <button
             type="button"
             onClick={() => void retry()}
             disabled={retrying}
             aria-busy={retrying}
-            className="min-h-11 min-w-11 mt-3 inline-flex items-center justify-center rounded-xl border border-indigo-500 px-6 py-3 font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/10 disabled:opacity-50"
+            className="tap-target mt-3 inline-flex items-center justify-center rounded-xl border border-calm-accent px-6 py-3 font-semibold text-calm-accent-deep transition-colors hover:bg-calm-accent-wash disabled:opacity-50"
           >
             {retrying ? "Génération…" : "Relancer la génération"}
           </button>
         </div>
       )}
       {error && (
-        <p role="alert" className="mt-4 text-sm text-amber-300">
+        <p role="alert" className="mt-4 text-sm text-calm-warn">
           {error}
         </p>
       )}
-      <Link href="/dashboard" className="min-h-11 min-w-11 mt-6 inline-flex items-center justify-center text-sm text-white/50 underline underline-offset-4 hover:text-white/80">
+      <Link href="/dashboard" className="tap-target mt-6 inline-flex items-center justify-center text-sm text-calm-secondary underline underline-offset-4 hover:text-calm-ink">
         Retour au tableau de bord
       </Link>
     </div>

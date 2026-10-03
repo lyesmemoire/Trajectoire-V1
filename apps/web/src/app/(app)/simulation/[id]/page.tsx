@@ -2,11 +2,23 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { Mic, MicOff, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
+import { Mic, Check, RotateCcw, PhoneOff, Loader2, AlertCircle, Volume2, Clock } from 'lucide-react'
+import { ConfirmModal } from '@/components/ui/modal'
 import { endDestination } from '@/lib/interview/report-resolution'
+import { ALEXANDRA_PORTRAIT_SRC, SHOW_PORTRAIT } from '@/components/home/content'
+import { WrittenAnswer } from '@/components/simulation/WrittenAnswer'
 import { useRealtimeInterview, type RealtimeTranscript } from '@/hooks/useRealtimeInterview'
+import {
+  SIMULATION_REASSURANCE,
+  SIMULATION_UI_COPY,
+  deriveSimulationUiState,
+  friendlyVoiceError,
+  isWrittenFallbackVisible,
+  shouldAutoMute,
+  type SimulationUiState,
+} from '@/lib/interview/simulation-ui-state'
 
-function SoundWave({ active, color = 'bg-indigo-400' }: { active: boolean; color?: string }) {
+function SoundWave({ active, color = 'bg-calm-accent' }: { active: boolean; color?: string }) {
   const heights = [3, 6, 10, 7, 14, 9, 12, 6, 10, 4]
   return (
     <div className="flex items-end gap-[3px]" aria-hidden>
@@ -30,20 +42,20 @@ function TranscriptBubble({ transcript }: { transcript: RealtimeTranscript }) {
   return (
     <div className={`flex gap-3 `+(isAI ? 'justify-start' : 'justify-end')}>
       {isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/60">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-xs font-bold text-calm-secondary">
           A
         </div>
       )}
       <div
-        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed `+(isAI ? 'bg-white/10 text-white/90' : 'bg-indigo-500/80 text-white')+` `+(!transcript.final ? 'opacity-50' : 'opacity-100')}
+        className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed `+(isAI ? 'bg-calm-accent-soft text-calm-ink' : 'bg-calm-accent-soft text-calm-ink')+` `+(!transcript.final ? 'opacity-50' : 'opacity-100')}
       >
         {transcript.text}
         {!transcript.final && (
-          <span className="ml-1 animate-pulse text-white/60">…</span>
+          <span className="ml-1 animate-pulse text-calm-secondary">…</span>
         )}
       </div>
       {!isAI && (
-        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-xs font-bold text-indigo-300">
+        <div className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-calm-accent-soft text-xs font-bold text-calm-accent">
           V
         </div>
       )}
@@ -90,7 +102,16 @@ export default function SimulationPage() {
   // Fin de séance : un premier clic demande confirmation (le quota est déjà consommé et le rapport généré
   // sur ce qui a été dit), un second confirme. La fin automatique (durée atteinte) passe directement.
   const [confirmEnd, setConfirmEnd] = useState(false)
-  const canResume = !isEnding && (status === 'error' || status === 'disconnected') && transcripts.length > 0
+  const lastTranscript = transcripts.length > 0 ? transcripts[transcripts.length - 1] : null
+  const uiState = deriveSimulationUiState({ status, isMuted, isEnding, lastTranscript })
+  const copy = SIMULATION_UI_COPY[uiState]
+
+  // À la fin de la question, le micro est coupé : la candidate prend le temps de réfléchir, puis appuie sur « Répondre ».
+  const previousUiState = useRef<SimulationUiState>(uiState)
+  useEffect(() => {
+    if (shouldAutoMute(previousUiState.current, uiState, isMuted)) toggleMute()
+    previousUiState.current = uiState
+  }, [uiState, isMuted, toggleMute])
   const clock = remainingSeconds === null
     ? null
     : String(Math.floor(remainingSeconds / 60)).padStart(2, '0') + ':' + String(remainingSeconds % 60).padStart(2, '0')
@@ -128,38 +149,51 @@ export default function SimulationPage() {
   }
   handleEndRef.current = handleEnd
 
-  const statusConfig: Record<string, { label: string; dot: string }> = {
-    idle         : { label: 'Initialisation…',   dot: 'bg-zinc-500' },
-    connecting   : { label: 'Connexion…',         dot: 'bg-amber-400 animate-pulse' },
-    connected    : { label: 'En ligne',           dot: 'bg-emerald-400' },
-    speaking_user: { label: 'Vous parlez…',       dot: 'bg-indigo-400 animate-pulse' },
-    speaking_ai  : { label: 'Alexandra parle…',   dot: 'bg-white animate-pulse' },
-    disconnected : { label: 'Déconnecté',         dot: 'bg-zinc-600' },
-    error        : { label: 'Erreur',             dot: 'bg-red-500' },
+  const dotByState: Record<SimulationUiState, string> = {
+    connecting        : 'bg-calm-secondary animate-pulse',
+    recruiter_speaking: 'bg-calm-accent-deep animate-pulse',
+    ready             : 'bg-calm-accent',
+    listening         : 'bg-calm-accent animate-pulse',
+    processing        : 'bg-calm-secondary animate-pulse',
+    error             : 'bg-calm-secondary',
   }
-  const { label: statusLabel, dot: statusDot } = statusConfig[status] ?? statusConfig.idle
+  // Pastille d'en-tête : libellé court (le sous-titre complet est dans la zone de contrôle).
+  const statusLabel = copy.title ?? "Voix indisponible"
+  const statusDot = dotByState[uiState]
+
+  // Action du bouton du micro, selon l'état (libellés dans lib/interview/simulation-ui-state.ts).
+  const onMicClick = () => {
+    if (copy.mic.action === 'retry') void connect()
+    else if (copy.mic.action === 'mute' || copy.mic.action === 'unmute') toggleMute()
+  }
+  const MicIcon = copy.mic.action === 'retry' ? RotateCcw
+    : copy.mic.action === 'mute' ? Check
+    : copy.mic.action === 'none' && uiState !== 'recruiter_speaking' ? Loader2
+    : Mic
+  const voiceError = friendlyVoiceError(errorMessage)
+  const lastAssistantText = [...transcripts].reverse().find((t) => t.role === 'assistant')?.text ?? null
 
   return (
-    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-zinc-950 text-white md:h-full md:min-h-0">
+    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-calm-bg text-calm-ink md:h-full md:min-h-0">
 
-      <header className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-6 py-3">
+      <header className="flex shrink-0 items-center justify-between border-b border-calm-line px-6 py-3">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold uppercase tracking-widest text-white/60">Trajectoire</span>
-          <span className="text-white/15">·</span>
-          <span className="text-xs text-white/60">Simulation d&apos;entretien</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-calm-secondary">Trajectoire</span>
+          <span className="text-calm-tertiary">·</span>
+          <span className="text-xs text-calm-secondary">Simulation d&apos;entretien</span>
         </div>
         <div className="flex items-center gap-3">
           {clock && (
             <span
-              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-white/80"
+              className="flex items-center gap-1.5 rounded-[6px] border border-calm-line bg-calm-accent-wash px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-calm-ink"
               title="Temps restant sur la durée choisie"
             >
               <Clock className="size-3.5" aria-hidden />
-              <span className="sr-only">Temps restant : </span>
+              <span className="sr-only">Temps restant : </span>
               {clock}
             </span>
           )}
-          <div role="status" className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70">
+          <div role="status" className="flex items-center gap-2 rounded-[6px] border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-secondary">
             <span className={`size-1.5 rounded-full `+statusDot} aria-hidden />
             {statusLabel}
           </div>
@@ -169,76 +203,83 @@ export default function SimulationPage() {
       {isNearTimeLimit && !isEnding && (
         <div
           role="status"
-          className="flex shrink-0 items-center justify-center gap-2 border-b border-amber-400/20 bg-amber-400/10 px-6 py-2 text-xs text-amber-200"
+          className="flex shrink-0 items-center justify-center gap-2 border-b border-calm-accent-line bg-calm-accent-wash px-6 py-2 text-sm text-calm-ink"
         >
           <Clock className="size-3.5" aria-hidden />
-          Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
+          Il reste moins de deux minutes : Alexandra va conclure l&apos;entretien, qui se terminera ensuite automatiquement.
         </div>
       )}
 
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
 
-        <div className="relative h-64 w-full shrink-0 overflow-hidden bg-zinc-900 md:h-auto md:w-[52%]">
-          <img
-            src="/interviewer.png"
-            alt="Alexandra"
-            className={`absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out `+(isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
-          />
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950/60 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
-          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-zinc-950/70 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-md">
-            <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-white' : 'bg-emerald-400')} />
+        <div className="relative h-64 w-full shrink-0 overflow-hidden bg-calm-surface md:h-auto md:w-[52%]">
+          {/* Portrait d'Alexandra (personnage généré par IA) si SHOW_PORTRAIT ; monogramme tant que
+              SHOW_PORTRAIT est faux, comme sur la homepage. */}
+          {SHOW_PORTRAIT ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={ALEXANDRA_PORTRAIT_SRC}
+                alt="Alexandra"
+                className={'absolute inset-0 size-full object-cover object-top transition-transform duration-700 ease-out ' + (isAISpeaking ? 'scale-[1.02]' : 'scale-100')}
+              />
+              <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-calm-bg/60 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-calm-bg via-calm-bg/70 to-transparent" />
+            </>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-calm-accent-wash" aria-hidden>
+              <span className="font-accent flex size-28 items-center justify-center rounded-full bg-calm-accent-soft text-[56px] leading-none text-calm-accent-deep md:size-40 md:text-[80px]">
+                A
+              </span>
+            </div>
+          )}
+          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-[6px] border border-calm-accent-line bg-calm-surface px-3 py-1.5 text-xs font-medium text-calm-ink">
+            <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-calm-surface' : 'bg-calm-accent')} />
             Alexandra · IA
           </div>
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-6 py-8">
             {isAISpeaking ? (
               <>
-                <div className="flex items-center gap-2 text-xs font-medium text-white/50">
+                <div className="flex items-center gap-2 text-xs font-medium text-calm-secondary">
                   <Volume2 className="size-3" />
-                  En train de parler
+                  Alexandra parle
                 </div>
-                <SoundWave active color="bg-indigo-400" />
+                <SoundWave active color="bg-calm-accent" />
               </>
             ) : (
-              <div className="flex items-center gap-2 text-xs text-white/60">
+              <div className="flex items-center gap-2 text-xs text-calm-secondary">
                 <Mic className="size-3" />
-                En écoute
+                {copy.subtitle}
               </div>
             )}
           </div>
         </div>
 
-        <div className="flex min-h-[26rem] flex-1 flex-col border-t border-white/[0.08] bg-zinc-950 md:min-h-0 md:border-l md:border-t-0">
+        <div className="flex min-h-[26rem] flex-1 flex-col border-t border-calm-line bg-calm-bg md:min-h-0 md:border-l md:border-t-0">
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6">
             {transcripts.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
                 {status === 'connecting' ? (
                   <>
-                    <Loader2 className="size-7 animate-spin text-white/60" />
-                    <p className="text-sm text-white/60">Connexion à l&apos;entretien…</p>
-                    <p className="text-xs text-white/60">Autorisez le microphone si le navigateur le demande</p>
+                    <Loader2 className="size-7 animate-spin text-calm-secondary" />
+                    <p className="text-sm text-calm-secondary">Connexion à l&apos;entretien…</p>
+                    <p className="text-xs text-calm-secondary">Autorisez le microphone si le navigateur le demande</p>
                   </>
-                ) : status === 'error' ? (
+                ) : uiState === 'error' ? (
                   <>
-                    <AlertCircle className="size-7 text-red-400/70" />
-                    <p className="max-w-xs text-sm text-white/60">
-                      {errorMessage ?? 'Erreur de connexion'}
+                    <AlertCircle className="size-7 text-calm-secondary" aria-hidden />
+                    <p className="max-w-xs text-sm text-calm-secondary">
+                      Vous pouvez réessayer la connexion vocale, ou répondre par écrit.
                     </p>
-                    <button
-                      onClick={connect}
-                      className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white/70 transition hover:bg-white/15"
-                    >
-                      Réessayer
-                    </button>
                   </>
                 ) : (
                   <>
-                    <div className="flex size-14 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                      <Mic className="size-5 text-white/60" />
+                    <div className="flex size-14 items-center justify-center rounded-full border border-calm-line bg-calm-accent-wash">
+                      <Mic className="size-5 text-calm-secondary" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white/60">L&apos;entretien va commencer</p>
-                      <p className="mt-1 text-xs text-white/60">Alexandra va poser la première question</p>
+                      <p className="text-sm font-medium text-calm-secondary">L&apos;entretien va commencer</p>
+                      <p className="mt-1 text-xs text-calm-secondary">Alexandra va poser la première question</p>
                     </div>
                   </>
                 )}
@@ -252,75 +293,66 @@ export default function SimulationPage() {
             )}
           </div>
 
-          <div className="shrink-0 border-t border-white/[0.08] bg-zinc-900/60 px-6 py-4 backdrop-blur-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-4">
-                <div className={`flex size-9 items-center justify-center rounded-full border transition-all duration-300 `+(isUserSpeaking ? 'border-indigo-400/50 bg-indigo-400/15 text-indigo-300' : 'border-white/10 bg-white/5 text-white/60')}>
-                  {isUserSpeaking ? <Mic className="size-4" /> : <MicOff className="size-4" />}
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-white/60">{isMuted ? 'Micro coupé' : isUserSpeaking ? 'Vous parlez' : 'En écoute'}</p>
-                  <p className="text-xs text-white/60">Détection automatique</p>
-                </div>
-                <SoundWave active={isUserSpeaking && !isMuted} color="bg-indigo-400" />
+          <div className="shrink-0 border-t border-calm-line bg-calm-surface px-6 py-6">
+            <div className="flex flex-col items-center gap-4">
+              <div className="min-h-[52px] text-center" aria-live="polite">
+                {copy.title && <p className="text-sm font-semibold text-calm-ink">{copy.title}</p>}
+                <p className="text-sm text-calm-secondary">{copy.subtitle}</p>
               </div>
-              <div className="flex items-center gap-2">
-                {canResume && (
-                  <button
-                    type="button"
-                    onClick={connect}
-                    className="rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
-                  >
-                    Reprendre l&apos;entretien
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={toggleMute}
-                  aria-pressed={isMuted}
-                  disabled={isEnding || status === 'idle' || status === 'connecting' || status === 'error' || status === 'disconnected'}
-                  className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10 disabled:opacity-40 aria-pressed:border-amber-400/40 aria-pressed:text-amber-200"
-                >
-                  {isMuted ? <MicOff className="size-4" aria-hidden /> : <Mic className="size-4" aria-hidden />}
-                  {isMuted ? 'Réactiver le micro' : 'Couper le micro'}
-                </button>
-                {confirmEnd && !isEnding ? (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleEnd}
-                      className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/15 px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:bg-red-500/25"
-                    >
-                      <PhoneOff className="size-4" aria-hidden />
-                      Confirmer la fin
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setConfirmEnd(false)}
-                      className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition hover:bg-white/10"
-                    >
-                      Continuer
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setConfirmEnd(true)}
-                    disabled={isEnding}
-                    className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/60 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-40"
-                  >
-                    {isEnding ? <Loader2 className="size-4 animate-spin" /> : <PhoneOff className="size-4" />}
-                    {isEnding ? 'Finalisation…' : 'Terminer'}
-                  </button>
-                )}
-              </div>
+
+              {uiState === 'error' && (
+                <p role="alert" className="max-w-sm text-center text-sm text-calm-ink">{voiceError}</p>
+              )}
+
+              <button
+                type="button"
+                onClick={onMicClick}
+                disabled={copy.mic.disabled}
+                className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-[6px] bg-calm-accent px-8 text-lg font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
+              >
+                <MicIcon className={`size-6 ${copy.mic.disabled && uiState !== 'recruiter_speaking' ? 'animate-spin' : ''}`} aria-hidden />
+                {copy.mic.label}
+              </button>
+
+              <SoundWave active={uiState === 'listening' && isUserSpeaking} color="bg-calm-accent" />
+
+              {/* Repli écrit : voix indisponible (micro refusé ou absent, connexion ou jeton en échec). */}
+              {isWrittenFallbackVisible(uiState) && !isEnding && (
+                <WrittenAnswer
+                  sessionId={sessionId}
+                  knownQuestion={lastAssistantText}
+                  onEnded={() => { void handleEndRef.current() }}
+                />
+              )}
+
+              <p className="text-center text-sm text-calm-secondary">
+                {SIMULATION_REASSURANCE}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setConfirmEnd(true)}
+                disabled={isEnding}
+                className="tap-target inline-flex items-center gap-2 rounded-xl px-3 text-sm text-calm-secondary underline underline-offset-4 transition-colors hover:text-calm-ink disabled:opacity-40"
+              >
+                {isEnding ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <PhoneOff className="size-4" aria-hidden />}
+                {isEnding ? 'Finalisation…' : 'Terminer l’entretien'}
+              </button>
             </div>
-            <p className="mt-3 text-center text-xs text-white/60">
-              Parlez naturellement : Alexandra détecte automatiquement quand vous avez fini. Alexandra est une IA.
-            </p>
           </div>
         </div>
       </div>
-    </div>
+
+      <ConfirmModal
+        isOpen={confirmEnd}
+        onClose={() => { if (!isEnding) setConfirmEnd(false) }}
+        onConfirm={() => { void handleEnd() }}
+        title="Terminer l’entretien ?"
+        message="Le rapport sera généré à partir de ce qui a été dit. La simulation prendra fin : vous ne pourrez plus y répondre."
+        confirmText="Oui, terminer"
+        cancelText="Continuer"
+        variant="info"
+        isLoading={isEnding}
+      />    </div>
   )
 }

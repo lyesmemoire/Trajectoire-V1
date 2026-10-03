@@ -133,24 +133,24 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Décisions Totales</p>
           <p className="text-3xl font-bold text-ink-900">{orchestratorStats.totalDecisions}</p>
           <p className="text-xs text-ink-500 mt-2">Décisions prises</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Exécutions Totales</p>
           <p className="text-3xl font-bold text-ink-900">{orchestratorStats.totalExecutions}</p>
           <p className="text-xs text-ink-500 mt-2">Actions exécutées</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Taux de Succès</p>
           <p className="text-3xl font-bold text-ink-900">
             {((orchestratorStats.successfulExecutions / orchestratorStats.totalExecutions) * 100).toFixed(1)}%
           </p>
           <p className="text-xs text-ink-500 mt-2">Exécutions réussies</p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Valeur Moyenne</p>
           <p className="text-3xl font-bold text-ink-900">{orchestratorStats.averageValue.toFixed(2)}</p>
           <p className="text-xs text-ink-500 mt-2">Valeur estimée</p>
@@ -158,8 +158,8 @@ export default async function AdaptiveIntelligenceDashboardPage() {
       </div>
 
       {/* Timing Metrics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Métriques de Performance</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Métriques de Performance</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <p className="text-sm text-ink-600">Temps de Décision Moyen</p>
@@ -181,8 +181,8 @@ export default async function AdaptiveIntelligenceDashboardPage() {
       </div>
 
       {/* Common Actions */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Actions les Plus Fréquentes</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Actions les Plus Fréquentes</h2>
         <div className="space-y-2">
           {Object.entries(orchestratorStats.commonActions).map(([action, count]) => (
             <div key={action} className="flex justify-between items-center">
@@ -194,8 +194,8 @@ export default async function AdaptiveIntelligenceDashboardPage() {
       </div>
 
       {/* Common Engines */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Moteurs les Plus Utilisés</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Moteurs les Plus Utilisés</h2>
         <div className="space-y-2">
           {Object.entries(orchestratorStats.commonEngines).map(([engine, count]) => (
             <div key={engine} className="flex justify-between items-center">
@@ -207,8 +207,8 @@ export default async function AdaptiveIntelligenceDashboardPage() {
       </div>
 
       {/* Recent Decisions */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Décisions Récentes</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Décisions Récentes</h2>
         <div className="space-y-4">
           {recentDecisions.map((decision) => (
             <div key={decision.id} className="border-b border-ivoire-100 pb-4 last:border-0 last:pb-0">
@@ -236,8 +236,8 @@ export default async function AdaptiveIntelligenceDashboardPage() {
       </div>
 
       {/* Engine Status */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Statut des Moteurs</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Statut des Moteurs</h2>
         <div className="space-y-2">
           {engineStatus.map((engine) => (
             <div key={engine.engine} className="flex justify-between items-center">

@@ -5,7 +5,7 @@ import Link from "next/link"
 import type { SubscriptionSummary } from "@/lib/quota/subscription-summary"
 
 const FOCUS =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) {
   const [loading, setLoading] = useState(false)
@@ -35,34 +35,34 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
   return (
     <section
       aria-labelledby="subscription-title"
-      className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8"
+      className="rounded-2xl border border-calm-line bg-calm-surface p-8"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2
             id="subscription-title"
-            className="text-xl font-semibold tracking-tight text-white/80"
+            className="font-sans text-xl font-semibold tracking-tight text-calm-ink"
           >
             Abonnement
           </h2>
-          <p className="mt-1 text-sm text-zinc-400">{summary.priceLabel}</p>
+          <p className="mt-1 text-sm text-calm-secondary">{summary.priceLabel}</p>
         </div>
         <span
           className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${
             paid
-              ? "border border-indigo-400/30 bg-indigo-500/15 text-indigo-300"
-              : "border border-zinc-700 bg-zinc-800 text-zinc-300"
+              ? "border border-calm-accent-line bg-calm-accent-soft text-calm-accent"
+              : "border border-calm-line bg-calm-accent-wash text-calm-ink"
           }`}
         >
           {summary.planName}
         </span>
       </div>
 
-      <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-zinc-500">
+      <div className="mt-8 rounded-xl border border-calm-line bg-calm-bg p-5">
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-calm-tertiary">
           Simulations
         </p>
-        <p className="mt-2 text-lg font-semibold text-white/80">{summary.headline}</p>
+        <p className="mt-2 text-lg font-semibold text-calm-ink">{summary.headline}</p>
 
         {summary.progress && (
           <div
@@ -71,10 +71,10 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
             aria-valuemin={0}
             aria-valuemax={summary.progress.limit}
             aria-valuenow={summary.progress.used}
-            className="mt-4 h-2 overflow-hidden rounded-full bg-zinc-800"
+            className="mt-4 h-2 overflow-hidden rounded-full bg-calm-accent-wash"
           >
             <div
-              className="h-full rounded-full bg-indigo-500 transition-[width] duration-500"
+              className="h-full rounded-full bg-calm-accent transition-[width] duration-500"
               style={{
                 width: `${
                   summary.progress.limit === 0
@@ -87,14 +87,14 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
         )}
 
         {summary.detail && (
-          <p className="mt-3 text-sm text-zinc-400">{summary.detail}</p>
+          <p className="mt-3 text-sm text-calm-secondary">{summary.detail}</p>
         )}
       </div>
 
       {error && (
         <div
           role="alert"
-          className="mt-6 rounded-xl border border-rose-400/20 bg-rose-500/10 p-4 text-sm font-medium text-rose-300"
+          className="mt-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-4 text-sm font-medium text-calm-warn"
         >
           {error}
         </div>
@@ -105,7 +105,7 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
           {summary.showUpgrade && (
             <Link
               href="/pricing"
-              className={`inline-flex h-11 items-center justify-center rounded-xl bg-indigo-600 px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.6)] transition-colors hover:bg-indigo-700 ${FOCUS}`}
+              className={`inline-flex h-11 items-center justify-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep ${FOCUS}`}
             >
               Voir les offres
             </Link>
@@ -115,7 +115,7 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
               type="button"
               onClick={openPortal}
               disabled={loading}
-              className={`inline-flex h-11 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-800 px-5 text-sm font-semibold text-white/80 transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60 ${FOCUS}`}
+              className={`inline-flex h-11 items-center justify-center rounded-xl border border-calm-line bg-calm-accent-wash px-5 text-sm font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-60 ${FOCUS}`}
             >
               {loading ? "Ouverture…" : "Gérer la facturation"}
             </button>

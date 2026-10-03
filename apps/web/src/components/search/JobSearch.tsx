@@ -38,8 +38,8 @@ export function JobSearch({ candidateGraph, jobGraphs = [] }: JobSearchProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Recherche de Postes</h2>
+    <div className="bg-calm-surface rounded-lg shadow p-6">
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Recherche de Postes</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       {loading && <LoadingOverlay message="Recherche en cours..." />}
@@ -48,7 +48,7 @@ export function JobSearch({ candidateGraph, jobGraphs = [] }: JobSearchProps) {
         <button
           onClick={handleSearch}
           disabled={!candidateGraph || !jobGraphs || jobGraphs.length === 0}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="bg-calm-accent text-white px-6 py-2 rounded-lg hover:bg-calm-accent-deep transition-colors disabled:bg-calm-line-soft disabled:cursor-not-allowed"
         >
           Rechercher des Postes
         </button>
@@ -56,7 +56,7 @@ export function JobSearch({ candidateGraph, jobGraphs = [] }: JobSearchProps) {
 
       {results.length > 0 ? (
         <div className="space-y-3">
-          <h3 className="font-medium text-gray-700">
+          <h3 className="font-medium text-calm-ink">
             {results.length} poste(s) trouvé(s)
           </h3>
           {results.map((result, index) => (
@@ -64,7 +64,7 @@ export function JobSearch({ candidateGraph, jobGraphs = [] }: JobSearchProps) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500 text-center py-8">
+        <p className="text-calm-tertiary text-center py-8">
           {!candidateGraph || !jobGraphs || jobGraphs.length === 0
             ? 'Veuillez charger un candidat et des postes pour effectuer une recherche'
             : 'Cliquez sur Rechercher pour lancer la recherche'}

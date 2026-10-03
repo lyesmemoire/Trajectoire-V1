@@ -72,7 +72,7 @@ export function OpportunityAnalysisActions({
         type="button"
         onClick={analyze}
         disabled={loading}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-indigo-500 px-5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-calm-accent px-5 text-sm font-bold text-white shadow-lg shadow-calm-ink/10 transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
         {loading ? (
           <>
@@ -90,12 +90,12 @@ export function OpportunityAnalysisActions({
       </button>
 
       {error ? (
-        <div className="rounded-md bg-rose-950/40 p-4 ring-1 ring-rose-500/30">
+        <div className="rounded-md bg-calm-warn-soft p-4 ring-1 ring-calm-warn-line">
           <div className="flex gap-3">
-            <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" />
+            <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-calm-warn" />
 
             <div>
-              <p className="text-sm font-semibold text-rose-200">
+              <p className="text-sm font-semibold text-calm-warn">
                 {error}
               </p>
 
@@ -103,7 +103,7 @@ export function OpportunityAnalysisActions({
               errorCode === "EMPTY_CV" ? (
                 <Link
                   href={`/analyze?opportunity=${opportunityId}`}
-                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded text-sm font-bold text-indigo-300 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded text-sm font-bold text-calm-accent outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
                 >
                   Analyser mon CV
                   <ArrowRight className="h-4 w-4" />
@@ -123,14 +123,14 @@ export function RecommendationIcon({
   recommendation: string | null
 }) {
   if (recommendation === "APPLY") {
-    return <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+    return <CheckCircle2 className="h-5 w-5 text-calm-accent" />
   }
 
   if (recommendation === "SKIP") {
-    return <XCircle className="h-5 w-5 text-rose-400" />
+    return <XCircle className="h-5 w-5 text-calm-warn" />
   }
 
-  return <Target className="h-5 w-5 text-amber-400" />
+  return <Target className="h-5 w-5 text-calm-warn" />
 }
 
 export function FutureActions({
@@ -142,21 +142,21 @@ export function FutureActions({
     <div className="grid gap-3 sm:grid-cols-2">
       <Link
         href={`/analyze?opportunity=${opportunityId}`}
-        className="group rounded-md border border-white/[0.08] bg-zinc-900 p-4 transition hover:border-indigo-400/40 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="group rounded-md border border-calm-line bg-calm-surface p-4 transition hover:border-calm-accent-line outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-calm-accent-soft text-calm-accent">
           <FileText className="h-4 w-4" />
         </div>
 
-        <p className="mt-3 text-sm font-bold text-white/90">
+        <p className="mt-3 text-sm font-bold text-calm-ink">
           Adapter mon CV
         </p>
 
-        <p className="mt-1 text-xs leading-5 text-zinc-400">
+        <p className="mt-1 text-xs leading-5 text-calm-secondary">
           Utiliser cette opportunité comme contexte pour renforcer le CV.
         </p>
 
-        <div className="mt-3 flex items-center gap-1 text-xs font-bold text-indigo-300">
+        <div className="mt-3 flex items-center gap-1 text-xs font-bold text-calm-accent">
           Continuer
           <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
         </div>
@@ -164,21 +164,21 @@ export function FutureActions({
 
       <Link
         href={`/simulation/new?opportunity=${opportunityId}`}
-        className="group rounded-md border border-white/[0.08] bg-zinc-900 p-4 transition hover:border-indigo-400/40 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+        className="group rounded-md border border-calm-line bg-calm-surface p-4 transition hover:border-calm-accent-line outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-calm-accent-soft text-calm-accent">
           <Sparkles className="h-4 w-4" />
         </div>
 
-        <p className="mt-3 text-sm font-bold text-white/90">
+        <p className="mt-3 text-sm font-bold text-calm-ink">
           Préparer l'entretien
         </p>
 
-        <p className="mt-1 text-xs leading-5 text-zinc-400">
+        <p className="mt-1 text-xs leading-5 text-calm-secondary">
           Préparer une simulation contextualisée sur cette opportunité.
         </p>
 
-        <div className="mt-3 flex items-center gap-1 text-xs font-bold text-indigo-300">
+        <div className="mt-3 flex items-center gap-1 text-xs font-bold text-calm-accent">
           Continuer
           <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
         </div>
@@ -374,36 +374,36 @@ export function OpportunityStatusActions({
   }
 
   return (
-    <div className="rounded-md border border-white/[0.08] bg-zinc-900 p-6">
+    <div className="rounded-md border border-calm-line bg-calm-surface p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-indigo-300">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-calm-accent">
             Décision & suivi
           </p>
 
-          <h2 className="mt-2 text-lg font-bold text-white">
+          <h2 className="font-sans mt-2 text-lg font-semibold text-calm-ink tracking-normal">
             Piloter cette opportunité
           </h2>
 
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-zinc-400">
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-calm-secondary">
             Trajectoire recommande. La décision et les changements
             d'étape restent toujours sous ton contrôle.
           </p>
         </div>
 
-        <span className="rounded-full bg-white/[0.06] px-3 py-1.5 text-xs font-bold text-zinc-200">
+        <span className="rounded-full bg-calm-accent-wash px-3 py-1.5 text-xs font-bold text-calm-ink">
           {status.replaceAll("_", " ")}
         </span>
       </div>
 
       {recommendation === "APPLY" &&
       status === "TO_ANALYZE" ? (
-        <div className="mt-5 rounded-md bg-emerald-950/40 p-4 ring-1 ring-emerald-500/30">
-          <p className="text-sm font-bold text-emerald-200">
+        <div className="mt-5 rounded-md bg-calm-accent-soft p-4 ring-1 ring-calm-accent-line">
+          <p className="text-sm font-bold text-calm-accent">
             Trajectoire recommande cette candidature.
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-emerald-300">
+          <p className="mt-1 text-xs leading-5 text-calm-accent">
             Rien ne sera déplacé dans ton pipeline avant ta décision.
           </p>
         </div>
@@ -430,8 +430,8 @@ export function OpportunityStatusActions({
               }
               className={
                 primary
-                  ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 text-sm font-bold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-                  : "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm font-bold text-zinc-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-calm-accent px-4 text-sm font-bold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
+                  : "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-calm-line bg-calm-accent-wash px-4 text-sm font-bold text-calm-ink transition hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
               }
             >
               {loading ? (
@@ -445,7 +445,7 @@ export function OpportunityStatusActions({
       </div>
 
       {statusError ? (
-        <p className="mt-4 rounded-md bg-rose-950/40 p-3 text-sm font-semibold text-rose-200">
+        <p className="mt-4 rounded-md bg-calm-warn-soft p-3 text-sm font-semibold text-calm-warn">
           {statusError}
         </p>
       ) : null}

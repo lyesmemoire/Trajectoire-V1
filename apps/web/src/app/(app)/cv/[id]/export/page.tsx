@@ -34,26 +34,26 @@ export default async function CVExportPage({ params }: { params: Promise<{ id: s
     <div className="mx-auto max-w-3xl px-6 py-12">
       <Link
         href={`/cv/${id}`}
-        className="mb-4 inline-flex min-h-11 items-center text-sm text-zinc-400 transition-colors hover:text-zinc-50"
+        className="mb-4 inline-flex min-h-11 items-center text-sm text-calm-secondary transition-colors hover:text-calm-ink"
       >
         ← Retour à l&apos;analyse
       </Link>
-      <h1 className="mb-2 text-3xl font-bold text-zinc-50">Exporter mon CV</h1>
-      <p className="mb-8 max-w-2xl text-sm leading-relaxed text-zinc-400">
+      <h1 className="mb-2 text-3xl font-bold text-calm-ink">Exporter mon CV</h1>
+      <p className="mb-8 max-w-2xl text-sm leading-relaxed text-calm-secondary">
         Voici les informations que nous avons pu lire dans «&nbsp;{exportDraft.fileName.trim() || "votre CV"}&nbsp;». La lecture
-        automatique peut oublier ou déplacer des éléments : relisez et complétez chaque section avant de télécharger. Le fichier est
+        automatique peut oublier ou déplacer des éléments : relisez et complétez chaque section avant de télécharger. Le fichier est
         généré à partir de ce que vous validez ici, rien n&apos;est ajouté ni inventé.
       </p>
 
       {allowed ? (
         <CvExportEditor analysisId={exportDraft.id} initialDocument={exportDraft.draft} summaries={summaries} />
       ) : (
-        <div className="rounded-2xl border border-white/[0.08] bg-zinc-900 p-6">
-          <h2 className="mb-2 text-lg font-semibold text-zinc-50">L&apos;export est inclus dans le Pack Entretien et dans Pro</h2>
-          <p className="mb-5 text-sm text-zinc-400">Téléchargez votre CV en DOCX ou en PDF, lisible par les logiciels de recrutement.</p>
+        <div className="rounded-2xl border border-calm-line bg-calm-surface p-6">
+          <h2 className="font-sans mb-2 text-lg font-semibold text-calm-ink tracking-normal">L&apos;export est inclus dans le Pack Entretien et dans Pro</h2>
+          <p className="mb-5 text-sm text-calm-secondary">Téléchargez votre CV en DOCX ou en PDF, lisible par les logiciels de recrutement.</p>
           <Link
             href="/pricing"
-            className="inline-flex min-h-11 items-center rounded-xl bg-indigo-500 px-5 text-sm font-semibold text-white outline-none transition-colors hover:bg-indigo-400 focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+            className="inline-flex min-h-11 items-center rounded-xl bg-calm-accent px-5 text-sm font-semibold text-white outline-none transition-colors hover:bg-calm-accent-deep focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
           >
             Voir les formules
           </Link>

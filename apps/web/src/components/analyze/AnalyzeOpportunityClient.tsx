@@ -265,7 +265,7 @@ export function AnalyzeOpportunityClient({
         {opportunity ? (
           <Link
             href={`/opportunities/${opportunity.id}`}
-            className="inline-flex items-center gap-2 text-sm font-medium text-violet-600 transition hover:text-violet-800"
+            className="inline-flex items-center gap-2 text-sm font-medium text-calm-accent-deep transition hover:text-calm-accent-deep"
           >
             <ArrowLeft className="size-4" />
             Retour à l'opportunité
@@ -280,10 +280,10 @@ export function AnalyzeOpportunityClient({
             {/* HEADER */}
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-violet-100">
-                  <Zap className="size-4 text-violet-600" />
+                <div className="flex size-8 items-center justify-center rounded-lg bg-calm-accent-soft">
+                  <Zap className="size-4 text-calm-accent-deep" />
                 </div>
-                <span className="text-xs font-semibold uppercase tracking-widest text-violet-600">
+                <span className="text-xs font-semibold uppercase tracking-widest text-calm-accent-deep">
                   Analyse ATS
                 </span>
               </div>
@@ -299,12 +299,12 @@ export function AnalyzeOpportunityClient({
 
             {/* Opportunité connectée */}
             {opportunity ? (
-              <div className="flex items-start gap-4 rounded-xl border border-violet-200 bg-violet-50 p-4">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-violet-100">
-                  <Building2 className="size-4 text-violet-600" />
+              <div className="flex items-start gap-4 rounded-xl border border-calm-accent-line bg-calm-accent-soft p-4">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-calm-accent-soft">
+                  <Building2 className="size-4 text-calm-accent-deep" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-calm-accent">
                     Opportunité ciblée
                   </p>
                   <p className="mt-0.5 text-base font-semibold text-foreground">
@@ -314,8 +314,8 @@ export function AnalyzeOpportunityClient({
                     <p className="text-sm text-foreground-muted">{opportunity.company}</p>
                   ) : null}
                   {opportunity.matchScore !== null ? (
-                    <p className="mt-1 text-sm font-medium text-violet-700">
-                      Score actuel : {opportunity.matchScore}/100
+                    <p className="mt-1 text-sm font-medium text-calm-accent-deep">
+                      Score actuel : {opportunity.matchScore}/100
                       {opportunity.recommendationLabel ? ` · ${opportunity.recommendationLabel}` : ""}
                     </p>
                   ) : null}
@@ -325,7 +325,7 @@ export function AnalyzeOpportunityClient({
 
             {loading && !file ? (
               <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-xl border border-border bg-surface p-6 shadow-sm">
-                <Loader2 className="size-8 animate-spin text-violet-600" />
+                <Loader2 className="size-8 animate-spin text-calm-accent-deep" />
                 <p className="text-sm font-medium text-foreground-muted">
                   Récupération de votre diagnostic...
                 </p>
@@ -337,7 +337,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 01 — CV */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-calm-accent text-xs font-bold text-white">
                       1
                     </div>
                     <div className="flex items-center gap-2">
@@ -356,7 +356,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 02 — Offre */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-calm-accent text-xs font-bold text-white">
                       2
                     </div>
                     <div className="flex items-center gap-2">
@@ -366,7 +366,7 @@ export function AnalyzeOpportunityClient({
                       </span>
                     </div>
                     {opportunity ? (
-                      <span className="ml-auto rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                      <span className="ml-auto rounded-full bg-calm-accent-soft px-2 py-0.5 text-xs font-medium text-calm-accent-deep">
                         Préremplie
                       </span>
                     ) : null}
@@ -384,7 +384,7 @@ export function AnalyzeOpportunityClient({
                 {/* Étape 03 — Lancer */}
                 <div className="rounded-xl border border-border bg-surface p-6 shadow-sm">
                   <div className="mb-5 flex items-center gap-3">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-calm-accent text-xs font-bold text-white">
                       3
                     </div>
                     <span className="text-sm font-semibold text-foreground">
@@ -393,7 +393,7 @@ export function AnalyzeOpportunityClient({
                   </div>
 
                   {error ? (
-                    <div className="mb-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm font-medium text-rose-700">
+                    <div className="mb-4 rounded-lg border border-calm-warn-line bg-calm-warn-soft p-3 text-sm font-medium text-calm-warn">
                       {error}
                     </div>
                   ) : null}
@@ -401,7 +401,7 @@ export function AnalyzeOpportunityClient({
                   <AnalyzeButton disabled={!canAnalyze} loading={loading} onClick={handleAnalyze} />
 
                   <div className="mt-4 flex items-start gap-2">
-                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-calm-accent-deep" />
                     <p className="text-xs leading-relaxed text-foreground-muted">
                       Trajectoire reformule uniquement ce qui est déjà dans votre CV.
                       Aucune expérience fictive ne sera ajoutée.
@@ -455,7 +455,7 @@ export function AnalyzeOpportunityClient({
                       </p>
                       <Link
                         href="/pricing"
-                        className="mt-4 inline-flex text-sm font-semibold text-violet-600 hover:text-violet-800"
+                        className="mt-4 inline-flex text-sm font-semibold text-calm-accent-deep hover:text-calm-accent-deep"
                       >
                         Voir les offres
                       </Link>
@@ -473,8 +473,8 @@ export function AnalyzeOpportunityClient({
           {/* ============== COLONNE LATÉRALE ============== */}
           <aside className="h-fit rounded-xl bg-foreground p-6 text-background lg:sticky lg:top-8">
             <div className="flex items-center gap-2">
-              <div className="flex size-7 items-center justify-center rounded-lg bg-violet-500/20">
-                <Sparkles className="size-4 text-violet-300" />
+              <div className="flex size-7 items-center justify-center rounded-lg bg-calm-accent-soft">
+                <Sparkles className="size-4 text-calm-accent" />
               </div>
               <span className="text-xs font-bold uppercase tracking-widest text-background/50">
                 CV Targeting IA
@@ -494,13 +494,13 @@ export function AnalyzeOpportunityClient({
               <div className="mt-6 space-y-5">
                 {opportunity.strengths.length > 0 ? (
                   <div>
-                    <p className="mb-2 text-xs font-bold uppercase tracking-widest text-emerald-400">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-widest text-calm-accent">
                       ✓ Vos forces détectées
                     </p>
                     <ul className="space-y-2">
                       {opportunity.strengths.slice(0, 3).map((s) => (
                         <li key={s} className="flex gap-2 text-sm leading-5 text-background/70">
-                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-400" />
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-calm-accent" />
                           {s}
                         </li>
                       ))}
@@ -510,13 +510,13 @@ export function AnalyzeOpportunityClient({
 
                 {opportunity.gaps.length > 0 ? (
                   <div>
-                    <p className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-400">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-widest text-calm-warn">
                       → À mieux démontrer
                     </p>
                     <ul className="space-y-2">
                       {opportunity.gaps.slice(0, 3).map((g) => (
                         <li key={g} className="flex gap-2 text-sm leading-5 text-background/70">
-                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber-400" />
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-calm-warn" />
                           {g}
                         </li>
                       ))}

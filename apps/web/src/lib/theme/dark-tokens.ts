@@ -1,6 +1,10 @@
 import type { CSSProperties } from "react"
 
 /**
+ * @deprecated Le mode sombre est supprimé (design system « Calm », 2026-10-07) : une seule ambiance, claire.
+ * Ne plus utiliser ces jetons ; ils ne subsistent que pour les écrans pas encore migrés et seront retirés avec
+ * le dernier. Voir `.claude/decisions.md` (« Design system Calm »).
+ *
  * Thème sombre (zinc-950) de l'espace authentifié et de l'onboarding.
  *
  * Les tokens sémantiques (--background, --foreground, --surface…) sont définis

@@ -22,20 +22,20 @@ export function StatsOverview({
   }
 
   const getConfidenceLevel = (score: number) => {
-    if (score >= 0.9) return { label: "Excellent", color: "text-emerald-300" }
-    if (score >= 0.75) return { label: "Très bon", color: "text-emerald-400" }
-    if (score >= 0.6) return { label: "Bon", color: "text-amber-400" }
-    if (score >= 0.4) return { label: "Moyen", color: "text-rose-400" }
-    return { label: "À améliorer", color: "text-rose-300" }
+    if (score >= 0.9) return { label: "Excellent", color: "text-calm-accent" }
+    if (score >= 0.75) return { label: "Très bon", color: "text-calm-accent" }
+    if (score >= 0.6) return { label: "Bon", color: "text-calm-warn" }
+    if (score >= 0.4) return { label: "Moyen", color: "text-calm-warn" }
+    return { label: "À améliorer", color: "text-calm-warn" }
   }
 
   const confidence = getConfidenceLevel(confidenceScore)
 
-  const StatCard = ({ title, value, subtitle, valueColor = "text-white/80" }: { title: string; value: string; subtitle: string; valueColor?: string }) => (
-    <div className="bg-zinc-900 p-6 rounded-xl border border-white/[0.08]">
-      <p className="text-sm font-medium text-white/50 mb-1">{title}</p>
+  const StatCard = ({ title, value, subtitle, valueColor = "text-calm-ink" }: { title: string; value: string; subtitle: string; valueColor?: string }) => (
+    <div className="bg-calm-surface p-6 rounded-xl border border-calm-line">
+      <p className="text-sm font-medium text-calm-secondary mb-1">{title}</p>
       <p className={`text-3xl font-bold ${valueColor}`}>{value}</p>
-      <p className="text-xs text-white/40 mt-1">{subtitle}</p>
+      <p className="text-xs text-calm-tertiary mt-1">{subtitle}</p>
     </div>
   )
 
@@ -60,7 +60,7 @@ export function StatsOverview({
         title="Meilleur score"
         value={`${bestScore.toFixed(0)}%`}
         subtitle="Record personnel"
-        valueColor="text-indigo-400"
+        valueColor="text-calm-accent"
       />
       <StatCard
         title="Série actuelle"

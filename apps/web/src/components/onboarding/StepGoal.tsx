@@ -35,16 +35,16 @@ function RecapRow({
   return (
     <div className="flex items-center justify-between gap-4 px-4 py-3">
       <div className="min-w-0">
-        <dt className="text-xs font-medium uppercase tracking-wider text-white/40">
+        <dt className="text-xs font-medium uppercase tracking-wider text-calm-tertiary">
           {label}
         </dt>
-        <dd className="mt-0.5 truncate text-sm text-white/80">{value}</dd>
+        <dd className="mt-0.5 truncate text-sm text-calm-ink">{value}</dd>
       </div>
       <button
         type="button"
         onClick={onEdit}
         aria-label={editLabel}
-        className={`inline-flex size-8 shrink-0 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white/80 ${FOCUS_RING}`}
+        className={`inline-flex size-8 shrink-0 items-center justify-center rounded-md text-calm-tertiary transition-colors hover:bg-calm-accent-wash hover:text-calm-ink ${FOCUS_RING}`}
       >
         <Pencil className="size-3.5" aria-hidden />
       </button>
@@ -68,18 +68,18 @@ export function StepGoal({
         <h2
           data-step-heading
           tabIndex={-1}
-          className="text-2xl font-semibold tracking-tight text-white/80 outline-none"
+          className="font-sans text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
-          Quel est votre premier objectif ?
+          Quel est votre premier objectif ?
         </h2>
-        <p className="text-sm leading-relaxed text-white/50">
+        <p className="text-sm leading-relaxed text-calm-secondary">
           Choisissez le type de simulation par lequel commencer. Vous pourrez
           en lancer d&apos;autres à tout moment.
         </p>
       </div>
 
       <fieldset>
-        <legend className="mb-3 text-sm font-medium text-white/80">
+        <legend className="mb-3 text-sm font-medium text-calm-ink">
           Type d&apos;entretien
         </legend>
         <div className="grid gap-2 sm:grid-cols-3">
@@ -95,11 +95,11 @@ export function StepGoal({
                   onChange={() => onChange({ interviewType: type })}
                   className="peer sr-only"
                 />
-                <span className="block h-full rounded-lg border border-white/[0.1] bg-zinc-950 p-4 transition-colors hover:bg-white/[0.04] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-zinc-900">
-                  <span className="block text-sm font-semibold text-white/80">
+                <span className="block h-full rounded-lg border border-calm-line bg-calm-bg p-4 transition-colors hover:bg-calm-accent-wash peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-focus-visible:ring-2 peer-focus-visible:ring-calm-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-calm-bg">
+                  <span className="block text-sm font-semibold text-calm-ink">
                     {option.label}
                   </span>
-                  <span className="mt-1 block text-xs leading-relaxed text-white/50">
+                  <span className="mt-1 block text-xs leading-relaxed text-calm-secondary">
                     {option.description}
                   </span>
                 </span>
@@ -112,11 +112,11 @@ export function StepGoal({
       <section aria-labelledby="onboarding-recap-title" className="space-y-3">
         <h3
           id="onboarding-recap-title"
-          className="text-sm font-medium text-white/80"
+          className="text-sm font-medium text-calm-ink"
         >
           Récapitulatif
         </h3>
-        <dl className="divide-y divide-white/[0.06] rounded-lg border border-white/[0.08] bg-zinc-950">
+        <dl className="divide-y divide-calm-line rounded-lg border border-calm-line bg-calm-bg">
           <RecapRow
             label="Poste visé"
             value={data.title.trim()}
@@ -151,7 +151,7 @@ export function StepGoal({
       {error ? (
         <p
           role="alert"
-          className="rounded-lg border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300"
+          className="rounded-lg border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn"
         >
           {error}
         </p>
@@ -188,7 +188,7 @@ export function StepGoal({
             )}
           </button>
           {data.interviewType === "" ? (
-            <p id="onboarding-goal-hint" className="text-xs text-white/40">
+            <p id="onboarding-goal-hint" className="text-xs text-calm-tertiary">
               Choisissez un type d&apos;entretien pour terminer.
             </p>
           ) : null}

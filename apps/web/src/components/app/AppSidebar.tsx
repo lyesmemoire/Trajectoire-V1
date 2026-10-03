@@ -41,7 +41,7 @@ export const SECONDARY_NAV: NavItem[] = [
 ]
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 export function isActive(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard"
@@ -59,7 +59,7 @@ function NavGroup({
 }) {
   return (
     <div>
-      <p className="mb-1.5 select-none px-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white/35">
+      <p className="mb-1.5 select-none px-2 text-[10px] font-medium uppercase tracking-[0.14em] text-calm-tertiary">
         {title}
       </p>
       <div className="space-y-0.5">
@@ -74,28 +74,28 @@ function NavGroup({
                 "relative flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-[13px] font-medium transition-colors duration-150",
                 focusRing,
                 active
-                  ? "text-white/80"
-                  : "text-white/50 hover:bg-white/[0.04] hover:text-white/80",
+                  ? "text-calm-ink"
+                  : "text-calm-secondary hover:bg-calm-accent-wash hover:text-calm-ink",
               )}
             >
               {active ? (
                 <motion.span
                   layoutId="app-sidebar-active"
                   aria-hidden
-                  className="absolute inset-0 rounded-lg bg-white/[0.06] ring-1 ring-inset ring-white/[0.08]"
+                  className="absolute inset-0 rounded-lg bg-calm-accent-wash ring-1 ring-inset ring-calm-line"
                   transition={{ type: "spring", stiffness: 500, damping: 40 }}
                 />
               ) : null}
               {active ? (
                 <span
                   aria-hidden
-                  className="absolute -left-3 top-2 h-5 w-[3px] rounded-r-full bg-indigo-500"
+                  className="absolute -left-3 top-2 h-5 w-[3px] rounded-r-full bg-calm-accent"
                 />
               ) : null}
               <Icon
                 className={cn(
                   "relative size-[17px] shrink-0 transition-colors duration-150",
-                  active ? "text-indigo-400" : "text-white/40",
+                  active ? "text-calm-accent" : "text-calm-tertiary",
                 )}
                 strokeWidth={2}
               />
@@ -113,7 +113,7 @@ export function AppSidebar() {
 
   return (
     <aside className="sticky top-0 hidden h-dvh w-[240px] shrink-0 flex-col lg:flex">
-      <div className="flex h-full flex-col border-r border-white/[0.06] bg-zinc-950">
+      <div className="flex h-full flex-col border-r border-calm-line bg-calm-bg">
         {/* ── Logo ── */}
         <div className="flex items-center gap-2.5 px-5 pb-4 pt-5">
           <Link
@@ -123,10 +123,10 @@ export function AppSidebar() {
               focusRing,
             )}
           >
-            <div className="grid size-[30px] shrink-0 place-items-center rounded-lg bg-indigo-500 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.1)_inset,0_6px_18px_-6px_rgba(99,102,241,0.7)]">
+            <div className="grid size-[30px] shrink-0 place-items-center rounded-lg bg-calm-accent text-white shadow-[0_0_0_1px_rgba(241,247,243,0.1)_inset,0_6px_18px_-6px_rgba(31,42,55,0.7)]">
               <Target className="size-[15px]" strokeWidth={2} />
             </div>
-            <span className="truncate text-[15px] font-semibold tracking-tight text-white/80">
+            <span className="truncate text-[15px] font-semibold tracking-tight text-calm-ink">
               Trajectoire
             </span>
           </Link>
@@ -142,22 +142,22 @@ export function AppSidebar() {
         </nav>
 
         {/* ── Bottom ── */}
-        <div className="space-y-0.5 border-t border-white/[0.06] px-3 py-3">
+        <div className="space-y-0.5 border-t border-calm-line px-3 py-3">
           <Link
             href="/simulation/new"
             className={cn(
-              "group flex items-center gap-2.5 rounded-lg px-2.5 py-2 transition-colors duration-150 hover:bg-white/[0.04]",
+              "group flex items-center gap-2.5 rounded-lg px-2.5 py-2 transition-colors duration-150 hover:bg-calm-accent-wash",
               focusRing,
             )}
           >
-            <div className="grid size-7 shrink-0 place-items-center rounded-md bg-indigo-500/10 ring-1 ring-inset ring-indigo-400/20">
-              <Sparkles className="size-3.5 text-indigo-400" />
+            <div className="grid size-7 shrink-0 place-items-center rounded-md bg-calm-accent-soft ring-1 ring-inset ring-calm-accent-line">
+              <Sparkles className="size-3.5 text-calm-accent" />
             </div>
             <div className="min-w-0">
-              <p className="truncate text-xs font-medium text-white/80">
+              <p className="truncate text-xs font-medium text-calm-ink">
                 Trajectoire AI
               </p>
-              <p className="truncate text-[10px] text-white/40">
+              <p className="truncate text-[10px] text-calm-tertiary">
                 Simulation · Analyse
               </p>
             </div>
@@ -166,7 +166,7 @@ export function AppSidebar() {
           <Link
             href="/logout"
             className={cn(
-              "flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-white/40 transition-colors hover:bg-white/[0.04] hover:text-white/80",
+              "flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-calm-tertiary transition-colors hover:bg-calm-accent-wash hover:text-calm-ink",
               focusRing,
             )}
           >

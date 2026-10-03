@@ -74,21 +74,21 @@ export default async function AdminAnalyticsPage() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Sessions totales</p>
           <p className="text-3xl font-bold text-ink-900">{sessionMetrics.totalSessions}</p>
           <p className="text-xs text-ink-500 mt-2">
             {sessionMetrics.averageDuration.toFixed(0)}s durée moyenne
           </p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Entretiens</p>
           <p className="text-3xl font-bold text-ink-900">{interviewMetrics.totalInterviews}</p>
           <p className="text-xs text-ink-500 mt-2">
             {(interviewMetrics.completionRate * 100).toFixed(0)}% complétion
           </p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">Rétention J7</p>
           <p className="text-3xl font-bold text-ink-900">
             {(retentionMetrics.day7Retention * 100).toFixed(0)}%
@@ -97,7 +97,7 @@ export default async function AdminAnalyticsPage() {
             {retentionMetrics.churnRate.toFixed(0)}% churn
           </p>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-ivoire-200">
+        <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
           <p className="text-sm text-ink-600 mb-1">NPS Score</p>
           <p className="text-3xl font-bold text-ink-900">{npsSegments.npsScore.toFixed(0)}</p>
           <p className="text-xs text-ink-500 mt-2">
@@ -107,8 +107,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Session Analytics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Analytics Sessions</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Analytics Sessions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-ink-600">Taux de rebond</p>
@@ -132,8 +132,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Interview Analytics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Analytics Entretiens</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Analytics Entretiens</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div>
             <p className="text-sm text-ink-600">Durée moyenne</p>
@@ -168,8 +168,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Funnel Analytics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Analytics Funnels</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Analytics Funnels</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-ink-600">Taux de conversion global</p>
@@ -193,8 +193,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Feature Usage */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Utilisation Fonctionnalités</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Utilisation Fonctionnalités</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <p className="text-sm text-ink-600">Utilisations totales</p>
@@ -221,8 +221,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Feedback Analytics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Analytics Feedback</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Analytics Feedback</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div>
             <p className="text-sm text-ink-600">NPS moyen</p>
@@ -253,8 +253,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Heatmap Events */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Heatmap Events</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Heatmap Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <p className="text-sm text-ink-600">Événements totaux</p>
@@ -281,8 +281,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* User Journey */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Parcours Utilisateur</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Parcours Utilisateur</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-ink-600">Parcours totaux</p>
@@ -304,8 +304,8 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Retention Analytics */}
-      <div className="bg-white p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Analytics Rétention</h2>
+      <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Analytics Rétention</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <p className="text-sm text-ink-600">Utilisateurs totaux</p>

@@ -62,8 +62,8 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Import Poste</h2>
+    <div className="bg-calm-surface rounded-lg shadow p-6">
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Import Poste</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       
@@ -72,7 +72,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
       {!profile ? (
         <div
           className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-            dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+            dragActive ? 'border-calm-accent bg-calm-accent-soft' : 'border-calm-line hover:border-calm-line'
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -90,13 +90,13 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
             htmlFor="job-upload"
             className="cursor-pointer"
           >
-            <div className="text-gray-600 mb-4">
-              <svg className="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-calm-tertiary mb-4">
+              <svg className="w-12 h-12 mx-auto mb-4 text-calm-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <p className="text-lg font-medium">Glissez-déposez une fiche de poste ici</p>
               <p className="text-sm">ou cliquez pour sélectionner</p>
-              <p className="text-xs text-gray-500 mt-2">PDF ou DOCX (max 10MB)</p>
+              <p className="text-xs text-calm-tertiary mt-2">PDF ou DOCX (max 10MB)</p>
             </div>
           </label>
         </div>
@@ -106,7 +106,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
             <h3 className="font-semibold text-lg">{profile.job.title}</h3>
             <button
               onClick={() => setProfile(null)}
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="text-sm text-calm-tertiary hover:text-calm-ink"
             >
               Changer
             </button>
@@ -114,19 +114,19 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
           
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-gray-500">Famille:</span>
+              <span className="text-calm-tertiary">Famille:</span>
               <span className="ml-2 font-medium">{profile.job.family || 'N/A'}</span>
             </div>
             <div>
-              <span className="text-gray-500">Séniorité:</span>
+              <span className="text-calm-tertiary">Séniorité:</span>
               <span className="ml-2 font-medium">{profile.job.seniority || 'N/A'}</span>
             </div>
             <div>
-              <span className="text-gray-500">Localisation:</span>
+              <span className="text-calm-tertiary">Localisation:</span>
               <span className="ml-2 font-medium">{profile.job.location || 'N/A'}</span>
             </div>
             <div>
-              <span className="text-gray-500">Contrat:</span>
+              <span className="text-calm-tertiary">Contrat:</span>
               <span className="ml-2 font-medium">{profile.job.contractType || 'N/A'}</span>
             </div>
           </div>
@@ -138,7 +138,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
                 <SkillBadge key={index} skill={skill.name} type="required" confidence={skill.confidence} />
               ))}
               {profile.requiredSkills.length > 8 && (
-                <span className="text-sm text-gray-500">+{profile.requiredSkills.length - 8} autres</span>
+                <span className="text-sm text-calm-tertiary">+{profile.requiredSkills.length - 8} autres</span>
               )}
             </div>
           </div>
@@ -151,7 +151,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
                   <SkillBadge key={index} skill={skill.name} type="preferred" confidence={skill.confidence} />
                 ))}
                 {profile.preferredSkills.length > 5 && (
-                  <span className="text-sm text-gray-500">+{profile.preferredSkills.length - 5} autres</span>
+                  <span className="text-sm text-calm-tertiary">+{profile.preferredSkills.length - 5} autres</span>
                 )}
               </div>
             </div>
@@ -165,7 +165,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
                   <SkillBadge key={index} skill={skill.name} type="soft" confidence={skill.confidence} />
                 ))}
                 {profile.softSkills.length > 5 && (
-                  <span className="text-sm text-gray-500">+{profile.softSkills.length - 5} autres</span>
+                  <span className="text-sm text-calm-tertiary">+{profile.softSkills.length - 5} autres</span>
                 )}
               </div>
             </div>

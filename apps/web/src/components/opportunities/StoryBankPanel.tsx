@@ -366,24 +366,24 @@ export function StoryBankPanel({
   return (
     <section
       id="story-bank"
-      className="rounded-[28px] border border-white/[0.08] bg-zinc-900 p-6 sm:p-7"
+      className="rounded-[28px] border border-calm-line bg-calm-surface p-6 sm:p-7"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="rounded-2xl bg-indigo-500/10 p-3 text-indigo-400 ring-1 ring-inset ring-indigo-400/20">
+          <div className="rounded-2xl bg-calm-accent-soft p-3 text-calm-accent ring-1 ring-inset ring-calm-accent-line">
             <BookOpen className="h-5 w-5" />
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-indigo-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-accent">
               Story Intelligence
             </p>
 
-            <h2 className="mt-1 text-xl font-semibold text-white/80">
+            <h2 className="font-sans mt-1 text-xl font-semibold text-calm-ink tracking-normal">
               Story Bank
             </h2>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-calm-secondary">
               Construis des preuves STAR réutilisables et
               sélectionne celles qui racontent le mieux ton
               impact pour cette candidature.
@@ -396,7 +396,7 @@ export function StoryBankPanel({
             type="button"
             disabled={recommending || stories.length === 0}
             onClick={() => void recommendStories()}
-            className="inline-flex items-center gap-2 rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-300 transition hover:bg-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-2.5 text-sm font-semibold text-calm-accent transition hover:bg-calm-accent-soft disabled:cursor-not-allowed disabled:opacity-50"
           >
             {recommending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -413,7 +413,7 @@ export function StoryBankPanel({
               setError(null)
               setShowForm((current) => !current)
             }}
-            className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400"
+            className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep"
           >
             {showForm ? (
               <X className="h-4 w-4" />
@@ -450,7 +450,7 @@ export function StoryBankPanel({
       </div>
 
       {error && (
-        <div className="mt-5 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+        <div className="mt-5 rounded-2xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn">
           {error}
         </div>
       )}
@@ -458,9 +458,9 @@ export function StoryBankPanel({
       {showForm && (
         <form
           onSubmit={createStory}
-          className="mt-6 rounded-[24px] border border-indigo-400/20 bg-indigo-500/[0.05] p-5 sm:p-6"
+          className="mt-6 rounded-[24px] border border-calm-accent-line bg-calm-accent-soft p-5 sm:p-6"
         >
-          <div className="flex items-center gap-2 text-indigo-300">
+          <div className="flex items-center gap-2 text-calm-accent">
             <Sparkles className="h-4 w-4" />
             <p className="text-sm font-semibold">
               Construire une histoire STAR
@@ -561,7 +561,7 @@ export function StoryBankPanel({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-2xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-2xl bg-calm-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -577,18 +577,18 @@ export function StoryBankPanel({
 
       <div className="mt-6">
         {loading ? (
-          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-white/[0.1] bg-white/[0.02]">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
+          <div className="flex min-h-44 items-center justify-center rounded-[24px] border border-dashed border-calm-line bg-calm-accent-wash">
+            <Loader2 className="h-5 w-5 animate-spin text-calm-accent" />
           </div>
         ) : stories.length === 0 ? (
-          <div className="rounded-[24px] border border-dashed border-indigo-400/20 bg-indigo-500/[0.05] px-6 py-10 text-center">
-            <BookOpen className="mx-auto h-7 w-7 text-indigo-400" />
+          <div className="rounded-[24px] border border-dashed border-calm-accent-line bg-calm-accent-soft px-6 py-10 text-center">
+            <BookOpen className="mx-auto h-7 w-7 text-calm-accent" />
 
-            <p className="mt-4 font-semibold text-white/80">
+            <p className="mt-4 font-semibold text-calm-ink">
               Ta Story Bank est vide
             </p>
 
-            <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-white/50">
+            <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-calm-secondary">
               Commence par une réussite dont tu es fier.
               Elle pourra ensuite être réutilisée dans
               plusieurs candidatures et simulations.
@@ -615,31 +615,31 @@ export function StoryBankPanel({
                   key={story.id}
                   className={
                     linked
-                      ? "rounded-[24px] border border-indigo-400/25 bg-indigo-500/[0.06] p-5"
-                      : "rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-5"
+                      ? "rounded-[24px] border border-calm-accent-line bg-calm-accent-soft p-5"
+                      : "rounded-[24px] border border-calm-line bg-calm-accent-wash p-5"
                   }
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
                         {linked && (
-                          <span className="rounded-full bg-indigo-500/15 px-2.5 py-1 text-[11px] font-semibold text-indigo-300">
+                          <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-accent">
                             Sélectionnée
                           </span>
                         )}
 
-                        <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/50">
+                        <span className="rounded-full bg-calm-accent-wash px-2.5 py-1 text-[11px] font-semibold text-calm-secondary">
                           Confiance {story.confidence}%
                         </span>
                         {opportunityLink?.relevance !== null &&
                           opportunityLink?.relevance !== undefined && (
-                            <span className="rounded-full bg-indigo-500/10 px-2.5 py-1 text-[11px] font-semibold text-indigo-300">
+                            <span className="rounded-full bg-calm-accent-soft px-2.5 py-1 text-[11px] font-semibold text-calm-accent">
                               Pertinence {opportunityLink.relevance}%
                             </span>
                           )}
                       </div>
 
-                      <h3 className="mt-3 text-base font-semibold text-white/80">
+                      <h3 className="mt-3 text-base font-semibold text-calm-ink">
                         {story.title}
                       </h3>
                     </div>
@@ -650,7 +650,7 @@ export function StoryBankPanel({
                       onClick={() =>
                         void toggleFavorite(story)
                       }
-                      className="rounded-xl p-2 text-white/40 transition hover:bg-white/[0.06] hover:text-amber-400 disabled:opacity-50"
+                      className="rounded-xl p-2 text-calm-tertiary transition hover:bg-calm-accent-wash hover:text-calm-warn disabled:opacity-50"
                       aria-label={
                         story.isFavorite
                           ? "Retirer des favoris"
@@ -660,7 +660,7 @@ export function StoryBankPanel({
                       <Star
                         className={
                           story.isFavorite
-                            ? "h-4 w-4 fill-current text-amber-500"
+                            ? "h-4 w-4 fill-current text-calm-warn"
                             : "h-4 w-4"
                         }
                       />
@@ -685,12 +685,12 @@ export function StoryBankPanel({
                   </div>
 
                   {opportunityLink?.reason && (
-                    <div className="mt-4 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-4 py-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-300">
+                    <div className="mt-4 rounded-2xl border border-calm-accent-line bg-calm-accent-soft px-4 py-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-accent">
                         Pourquoi cette histoire
                       </p>
 
-                      <p className="mt-1 text-sm leading-5 text-indigo-200">
+                      <p className="mt-1 text-sm leading-5 text-calm-accent">
                         {opportunityLink.reason}
                       </p>
                     </div>
@@ -702,7 +702,7 @@ export function StoryBankPanel({
                         .map((skill) => (
                           <span
                             key={skill}
-                            className="rounded-full border border-white/[0.1] bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-white/60"
+                            className="rounded-full border border-calm-line bg-calm-accent-wash px-2.5 py-1 text-[11px] font-medium text-calm-secondary"
                           >
                             {skill}
                           </span>
@@ -718,8 +718,8 @@ export function StoryBankPanel({
                     }
                     className={
                       linked
-                        ? "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white/80 transition hover:border-rose-400/30 hover:text-rose-300 disabled:opacity-50"
-                        : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50"
+                        ? "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm font-semibold text-calm-ink transition hover:border-calm-warn-line hover:text-calm-warn disabled:opacity-50"
+                        : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent-deep disabled:opacity-50"
                     }
                   >
                     {busy ? (
@@ -752,12 +752,12 @@ function StoryMetric({
   value: number
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
+    <div className="rounded-2xl border border-calm-line bg-calm-accent-wash px-4 py-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-tertiary">
         {label}
       </p>
 
-      <p className="mt-1 text-xl font-semibold text-white/80">
+      <p className="mt-1 text-xl font-semibold text-calm-ink">
         {value}
       </p>
     </div>
@@ -773,11 +773,11 @@ function StarSection({
 }) {
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-400">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-calm-accent">
         {label}
       </p>
 
-      <p className="mt-1 line-clamp-3 text-sm leading-6 text-white/50">
+      <p className="mt-1 line-clamp-3 text-sm leading-6 text-calm-secondary">
         {value}
       </p>
     </div>
@@ -799,7 +799,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-semibold text-white/80">
+      <span className="text-sm font-semibold text-calm-ink">
         {label}
       </span>
 
@@ -809,11 +809,11 @@ function Field({
           onChange(event.target.value)
         }
         placeholder={placeholder}
-        className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+        className="mt-2 w-full rounded-2xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
       />
 
       {help && (
-        <span className="mt-1.5 block text-xs text-white/40">
+        <span className="mt-1.5 block text-xs text-calm-tertiary">
           {help}
         </span>
       )}
@@ -834,7 +834,7 @@ function TextArea({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-semibold text-white/80">
+      <span className="text-sm font-semibold text-calm-ink">
         {label}
       </span>
 
@@ -845,7 +845,7 @@ function TextArea({
           onChange(event.target.value)
         }
         placeholder={placeholder}
-        className="mt-2 w-full resize-y rounded-2xl border border-white/[0.1] bg-zinc-950 px-4 py-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+        className="mt-2 w-full resize-y rounded-2xl border border-calm-line bg-calm-bg px-4 py-3 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
       />
     </label>
   )

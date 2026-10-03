@@ -17,17 +17,17 @@ interface FAQSectionProps {
 const defaultItems: FAQItem[] = [
   {
     question: 'Est-ce vraiment gratuit ?',
-    answer: 'Oui, la création de compte est 100% gratuite. Aucune carte bancaire n\'est requise.',
+    answer: 'La création du compte et le diagnostic de votre CV sont gratuits, sans carte bancaire. Les simulations d’entretien font partie des offres payantes.',
     category: 'pricing',
   },
   {
     question: 'Mes données sont-elles sécurisées ?',
-    answer: 'Absolument. Nous utilisons un chiffrement de niveau bancaire et sommes conformes au RGPD.',
+    answer: 'Votre connexion est protégée par HTTPS et l’accès à vos données est limité à votre compte.',
     category: 'security',
   },
   {
     question: 'Puis-je supprimer mon compte ?',
-    answer: 'Oui, vous pouvez supprimer votre compte et toutes vos données à tout moment en un clic.',
+    answer: 'Oui, vous pouvez supprimer votre compte et vos données depuis les paramètres.',
     category: 'account',
   },
   {

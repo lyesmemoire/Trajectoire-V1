@@ -10,7 +10,7 @@ type Props = {
 }
 
 const focusRing =
-  "outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+  "outline-none focus-visible:ring-2 focus-visible:ring-calm-accent-line focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
 
 /**
  * Erreur dans une page de l'espace connecté : le menu reste affiché (layout intact),
@@ -26,12 +26,12 @@ export default function AppError({ error, reset }: Props) {
       role="alert"
       className="mx-auto flex max-w-md flex-col items-center px-2 py-16 text-center sm:py-24"
     >
-      <p className="text-sm font-medium uppercase tracking-widest text-white/60">Erreur</p>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+      <p className="text-sm font-medium uppercase tracking-widest text-calm-secondary">Erreur</p>
+      <h1 className="font-sans mt-3 text-2xl font-semibold tracking-tight text-calm-ink">
         Un problème est survenu
       </h1>
-      <p className="mt-3 text-base leading-relaxed text-white/70">
-        Cette page n&apos;a pas pu s&apos;afficher. Vos données ne sont pas affectées : réessayez, ou revenez
+      <p className="mt-3 text-base leading-relaxed text-calm-secondary">
+        Cette page n&apos;a pas pu s&apos;afficher. Vos données ne sont pas affectées : réessayez, ou revenez
         au tableau de bord.
       </p>
 
@@ -39,20 +39,20 @@ export default function AppError({ error, reset }: Props) {
         <button
           type="button"
           onClick={reset}
-          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-indigo-400 ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-center rounded-xl bg-calm-accent px-6 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep ${focusRing}`}
         >
           Réessayer
         </button>
         <Link
           href="/dashboard"
-          className={`inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-6 text-sm font-semibold text-white/90 transition-colors hover:bg-white/[0.08] ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-center rounded-xl border border-calm-line bg-calm-accent-wash px-6 text-sm font-semibold text-calm-ink transition-colors hover:bg-calm-accent-soft ${focusRing}`}
         >
           Tableau de bord
         </Link>
       </div>
 
       {error.digest ? (
-        <p className="mt-8 text-xs text-white/60">Référence à communiquer au support : {error.digest}</p>
+        <p className="mt-8 text-xs text-calm-secondary">Référence à communiquer au support : {error.digest}</p>
       ) : null}
     </div>
   )

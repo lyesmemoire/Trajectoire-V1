@@ -57,7 +57,7 @@ const FILTERS: Array<{ value: Filter; label: string }> = [
   { value: "DISMISSED", label: "Écartées" },
 ]
 
-const field = "w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-3 text-sm text-white/80 outline-none transition placeholder:text-white/30 focus:border-indigo-500/60 focus:ring-4 focus:ring-indigo-500/15"
+const field = "w-full rounded-xl border border-calm-line bg-calm-bg px-3 text-sm text-calm-ink outline-none transition placeholder:text-calm-tertiary focus:border-calm-accent-line focus:ring-4 focus:ring-calm-accent-line"
 
 async function readError(res: Response): Promise<string> {
   const body = (await res.json().catch(() => ({}))) as { message?: string; error?: string }
@@ -67,12 +67,12 @@ async function readError(res: Response): Promise<string> {
 function ScoreBadge({ match }: { match: RadarMatchItem }) {
   if (match.score === null) {
     return (
-      <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/60">
+      <span className="rounded-full border border-calm-line bg-calm-accent-wash px-2.5 py-1 text-xs text-calm-secondary">
         {match.scoreDetails?.reason === "cv_missing" ? "Non évalué : ajoutez votre CV" : "Non évalué"}
       </span>
     )
   }
-  const tone = match.score >= 70 ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300" : match.score >= 40 ? "border-amber-400/30 bg-amber-400/10 text-amber-200" : "border-white/10 bg-white/5 text-white/60"
+  const tone = match.score >= 70 ? "border-calm-accent-line bg-calm-accent-soft text-calm-accent" : match.score >= 40 ? "border-calm-warn-line bg-calm-warn-soft text-calm-warn" : "border-calm-line bg-calm-accent-wash text-calm-secondary"
   return <span className={cn("rounded-full border px-2.5 py-1 text-xs font-semibold", tone)}>Compatibilité {match.score} %</span>
 }
 
@@ -203,39 +203,39 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
   const empty = useMemo(() => matches.length === 0, [matches])
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-8 text-white">
+    <div className="mx-auto max-w-5xl px-6 py-8 text-calm-ink">
       <header className="mb-6 flex items-start gap-3">
-        <div className="flex size-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400"><Telescope className="size-5" aria-hidden /></div>
+        <div className="flex size-10 items-center justify-center rounded-xl bg-calm-accent-soft text-calm-accent"><Telescope className="size-5" aria-hidden /></div>
         <div>
-          <h1 className="text-2xl font-bold">Radar des offres</h1>
-          <p className="mt-1 max-w-2xl text-sm text-white/60">
+          <h1 className="font-sans text-2xl font-semibold tracking-normal">Radar des offres</h1>
+          <p className="mt-1 max-w-2xl text-sm text-calm-secondary">
             Enregistrez une recherche : le radar retrouve des offres en France et les compare à votre CV. La compatibilité mesure la part des exigences de l&apos;offre que votre CV mentionne ; elle ne prédit pas le résultat d&apos;une candidature.
           </p>
         </div>
       </header>
 
       {!sourcesConfigured && (
-        <p role="status" className="mb-4 rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">
+        <p role="status" className="mb-4 rounded-xl border border-calm-warn-line bg-calm-warn-soft px-4 py-3 text-sm text-calm-warn">
           Les sources d&apos;offres ne sont pas encore connectées : vous pouvez préparer vos recherches, elles s&apos;exécuteront dès l&apos;activation.
         </p>
       )}
       {!hasCv && (
-        <p role="status" className="mb-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70">
+        <p role="status" className="mb-4 rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-3 text-sm text-calm-secondary">
           Sans CV analysé, les offres ne sont pas évaluées.{" "}
-          <Link href="/cv" className="font-medium text-indigo-300 underline-offset-2 hover:underline">Analyser mon CV</Link>
+          <Link href="/cv" className="font-medium text-calm-accent underline-offset-2 hover:underline">Analyser mon CV</Link>
         </p>
       )}
       {message && (
-        <p role="status" className={cn("mb-4 rounded-xl border px-4 py-3 text-sm", message.kind === "ok" ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-200" : "border-red-400/20 bg-red-400/10 text-red-200")}>
+        <p role="status" className={cn("mb-4 rounded-xl border px-4 py-3 text-sm", message.kind === "ok" ? "border-calm-accent-line bg-calm-accent-soft text-calm-accent" : "border-calm-warn-line bg-calm-warn-soft text-calm-warn")}>
           {message.text}
         </p>
       )}
 
-      <section aria-labelledby="searches-title" className="mb-8 rounded-2xl border border-white/10 bg-zinc-900 p-5">
+      <section aria-labelledby="searches-title" className="mb-8 rounded-2xl border border-calm-line bg-calm-surface p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 id="searches-title" className="text-base font-semibold text-white/90">Mes recherches ({searches.length}/{maxSearches})</h2>
+          <h2 id="searches-title" className="font-sans text-base font-semibold text-calm-ink tracking-normal">Mes recherches ({searches.length}/{maxSearches})</h2>
           {canAdd && !showForm && (
-            <button type="button" onClick={() => setShowForm(true)} className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-indigo-400">
+            <button type="button" onClick={() => setShowForm(true)} className="inline-flex items-center gap-1.5 rounded-lg bg-calm-accent px-3 py-2 text-sm font-semibold text-white transition hover:bg-calm-accent">
               <Plus className="size-4" aria-hidden /> Nouvelle recherche
             </button>
           )}
@@ -244,22 +244,22 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
         {searches.length > 0 && (
           <ul className="mb-4 space-y-2">
             {searches.map(s => (
-              <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-zinc-950 px-4 py-3">
+              <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-calm-line bg-calm-bg px-4 py-3">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-white/90">{s.name}{!s.enabled && <span className="ml-2 text-xs text-white/50">(en pause)</span>}</p>
-                  <p className="truncate text-xs text-white/60">
+                  <p className="truncate text-sm font-medium text-calm-ink">{s.name}{!s.enabled && <span className="ml-2 text-xs text-calm-secondary">(en pause)</span>}</p>
+                  <p className="truncate text-xs text-calm-secondary">
                     {s.keywords}{s.departments.length ? ` · dép. ${s.departments.join(", ")}` : ""}{s.contractTypes.length ? ` · ${s.contractTypes.join(", ")}` : ""}
                   </p>
-                  {s.lastRunError && <p className="mt-1 text-xs text-amber-200">Dernière actualisation incomplète : {s.lastRunError}</p>}
+                  {s.lastRunError && <p className="mt-1 text-xs text-calm-warn">Dernière actualisation incomplète : {s.lastRunError}</p>}
                 </div>
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={() => runSearch(s)} disabled={busy === s.id || !sourcesConfigured} className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10 disabled:opacity-40">
+                  <button type="button" onClick={() => runSearch(s)} disabled={busy === s.id || !sourcesConfigured} className="inline-flex items-center gap-1.5 rounded-lg border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-ink transition hover:bg-calm-accent-soft disabled:opacity-40">
                     {busy === s.id ? <Loader2 className="size-3.5 animate-spin" aria-hidden /> : <RefreshCw className="size-3.5" aria-hidden />} Actualiser
                   </button>
-                  <button type="button" onClick={() => toggleSearch(s)} disabled={busy === s.id} className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10 disabled:opacity-40">
+                  <button type="button" onClick={() => toggleSearch(s)} disabled={busy === s.id} className="rounded-lg border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-ink transition hover:bg-calm-accent-soft disabled:opacity-40">
                     {s.enabled ? "Mettre en pause" : "Reprendre"}
                   </button>
-                  <button type="button" onClick={() => deleteSearch(s)} disabled={busy === s.id} aria-label={`Supprimer la recherche ${s.name}`} className="rounded-lg border border-white/10 bg-white/5 p-2 text-white/60 transition hover:bg-red-500/10 hover:text-red-300 disabled:opacity-40">
+                  <button type="button" onClick={() => deleteSearch(s)} disabled={busy === s.id} aria-label={`Supprimer la recherche ${s.name}`} className="rounded-lg border border-calm-line bg-calm-accent-wash p-2 text-calm-secondary transition hover:bg-calm-warn-soft hover:text-calm-warn disabled:opacity-40">
                     <Trash2 className="size-3.5" aria-hidden />
                   </button>
                 </div>
@@ -270,32 +270,32 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
 
         {showForm && (
           <form onSubmit={createSearch} className="grid gap-3 md:grid-cols-2">
-            <label className="text-xs text-white/60">Nom
+            <label className="text-xs text-calm-secondary">Nom
               <input required maxLength={80} value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ex. Développeur à Paris" className={cn(field, "mt-1 h-11")} />
             </label>
-            <label className="text-xs text-white/60">Mots-clés
+            <label className="text-xs text-calm-secondary">Mots-clés
               <input required minLength={2} maxLength={120} value={form.keywords} onChange={e => setForm(f => ({ ...f, keywords: e.target.value }))} placeholder="Ex. développeur typescript" className={cn(field, "mt-1 h-11")} />
             </label>
-            <label className="text-xs text-white/60">Départements (facultatif)
+            <label className="text-xs text-calm-secondary">Départements (facultatif)
               <input value={form.departments} onChange={e => setForm(f => ({ ...f, departments: e.target.value }))} placeholder="75, 92, 2A" className={cn(field, "mt-1 h-11")} />
             </label>
-            <fieldset className="text-xs text-white/60">
+            <fieldset className="text-xs text-calm-secondary">
               <legend className="mb-1">Contrats (facultatif)</legend>
               <div className="flex flex-wrap gap-2">
                 {CONTRACT_TYPES.map(c => (
                   <label key={c} className="cursor-pointer">
                     <input type="checkbox" className="peer sr-only" checked={form.contractTypes.includes(c)} onChange={e => setForm(f => ({ ...f, contractTypes: e.target.checked ? [...f.contractTypes, c] : f.contractTypes.filter(x => x !== c) }))} />
-                    <span className="inline-flex h-9 items-center rounded-lg border border-white/10 bg-zinc-950 px-3 text-xs text-white/60 transition peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500/40">{c}</span>
+                    <span className="inline-flex h-9 items-center rounded-lg border border-calm-line bg-calm-bg px-3 text-xs text-calm-secondary transition peer-checked:border-calm-accent peer-checked:bg-calm-accent-soft peer-checked:text-calm-accent peer-focus-visible:ring-2 peer-focus-visible:ring-calm-accent-line">{c}</span>
                   </label>
                 ))}
               </div>
             </fieldset>
             <div className="flex gap-2 md:col-span-2">
-              <button type="submit" disabled={busy === "create"} className="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50">
+              <button type="submit" disabled={busy === "create"} className="inline-flex items-center gap-2 rounded-xl bg-calm-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-calm-accent disabled:opacity-50">
                 {busy === "create" && <Loader2 className="size-4 animate-spin" aria-hidden />} Enregistrer la recherche
               </button>
               {searches.length > 0 && (
-                <button type="button" onClick={() => setShowForm(false)} className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white/70 transition hover:bg-white/10">Annuler</button>
+                <button type="button" onClick={() => setShowForm(false)} className="rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm text-calm-secondary transition hover:bg-calm-accent-soft">Annuler</button>
               )}
             </div>
           </form>
@@ -304,10 +304,10 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
 
       <section aria-labelledby="offers-title">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 id="offers-title" className="text-base font-semibold text-white/90">Offres</h2>
+          <h2 id="offers-title" className="font-sans text-base font-semibold text-calm-ink tracking-normal">Offres</h2>
           <div role="group" aria-label="Filtrer les offres" className="flex gap-2">
             {FILTERS.map(f => (
-              <button key={f.value} type="button" onClick={() => changeFilter(f.value)} aria-pressed={filter === f.value} className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition", filter === f.value ? "border-indigo-500 bg-indigo-500/10 text-indigo-300" : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10")}>
+              <button key={f.value} type="button" onClick={() => changeFilter(f.value)} aria-pressed={filter === f.value} className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition", filter === f.value ? "border-calm-accent bg-calm-accent-soft text-calm-accent" : "border-calm-line bg-calm-accent-wash text-calm-secondary hover:bg-calm-accent-soft")}>
                 {f.label}
               </button>
             ))}
@@ -315,19 +315,19 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
         </div>
 
         {busy === "list" ? (
-          <p className="flex items-center gap-2 text-sm text-white/60"><Loader2 className="size-4 animate-spin" aria-hidden /> Chargement…</p>
+          <p className="flex items-center gap-2 text-sm text-calm-secondary"><Loader2 className="size-4 animate-spin" aria-hidden /> Chargement…</p>
         ) : empty ? (
-          <p className="rounded-2xl border border-dashed border-white/10 px-6 py-10 text-center text-sm text-white/60">
+          <p className="rounded-2xl border border-dashed border-calm-line px-6 py-10 text-center text-sm text-calm-secondary">
             {filter === "ACTIVE" ? "Aucune offre pour le moment. Actualisez une recherche pour en trouver." : "Rien ici."}
           </p>
         ) : (
           <ul className="space-y-3">
             {matches.map(m => (
-              <li key={m.id} className="rounded-2xl border border-white/10 bg-zinc-900 p-5">
+              <li key={m.id} className="rounded-2xl border border-calm-line bg-calm-surface p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h3 className="text-base font-semibold text-white/90">{m.offer.title}</h3>
-                    <p className="text-sm text-white/60">
+                    <h3 className="text-base font-semibold text-calm-ink">{m.offer.title}</h3>
+                    <p className="text-sm text-calm-secondary">
                       {[m.offer.company, m.offer.locationLabel, m.offer.contractType].filter(Boolean).join(" · ")}
                       {m.offer.salaryLabel ? ` · ${m.offer.salaryLabel}` : ""}
                     </p>
@@ -335,31 +335,31 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
                   <ScoreBadge match={m} />
                 </div>
                 {m.offer.status !== "LIVE" && (
-                  <p className="mt-2 text-xs text-amber-200">{m.offer.status === "CLOSED" ? "Offre probablement pourvue : plus revue depuis plus d'une semaine." : "Offre non revue depuis quelques jours : vérifiez qu'elle est toujours ouverte."}</p>
+                  <p className="mt-2 text-xs text-calm-warn">{m.offer.status === "CLOSED" ? "Offre probablement pourvue : plus revue depuis plus d'une semaine." : "Offre non revue depuis quelques jours : vérifiez qu'elle est toujours ouverte."}</p>
                 )}
                 {m.scoreDetails && m.score !== null && (
                   <div className="mt-3 space-y-1.5 text-xs">
-                    {!!m.scoreDetails.matched?.length && <p className="text-emerald-300/90"><span className="text-white/50">Retrouvés dans votre CV : </span>{m.scoreDetails.matched.slice(0, 6).join(", ")}</p>}
-                    {!!m.scoreDetails.missing?.length && <p className="text-amber-200/90"><span className="text-white/50">Absents de votre CV : </span>{m.scoreDetails.missing.slice(0, 6).join(", ")}</p>}
+                    {!!m.scoreDetails.matched?.length && <p className="text-calm-accent"><span className="text-calm-secondary">Retrouvés dans votre CV : </span>{m.scoreDetails.matched.slice(0, 6).join(", ")}</p>}
+                    {!!m.scoreDetails.missing?.length && <p className="text-calm-warn"><span className="text-calm-secondary">Absents de votre CV : </span>{m.scoreDetails.missing.slice(0, 6).join(", ")}</p>}
                   </div>
                 )}
-                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/60">{m.offer.description}</p>
+                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-calm-secondary">{m.offer.description}</p>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <a href={m.offer.applyUrl ?? m.offer.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => m.state === "NEW" && void setState(m, "SEEN")} className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white/80 transition hover:bg-white/10">
+                  <a href={m.offer.applyUrl ?? m.offer.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => m.state === "NEW" && void setState(m, "SEEN")} className="inline-flex items-center gap-1.5 rounded-lg border border-calm-line bg-calm-accent-wash px-3 py-2 text-xs font-medium text-calm-ink transition hover:bg-calm-accent-soft">
                     Voir l&apos;offre <ExternalLink className="size-3.5" aria-hidden />
                   </a>
                   {m.opportunityId ? (
                     <>
-                      <Link href={`/opportunities/${m.opportunityId}`} className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white/80 transition hover:bg-white/10">Ouvrir l&apos;opportunité</Link>
+                      <Link href={`/opportunities/${m.opportunityId}`} className="rounded-lg border border-calm-line bg-calm-accent-wash px-3 py-2 text-xs font-medium text-calm-ink transition hover:bg-calm-accent-soft">Ouvrir l&apos;opportunité</Link>
                       <PrepareInterviewButton opportunityId={m.opportunityId} />
                     </>
                   ) : (
-                    <button type="button" onClick={() => track(m)} disabled={busy === m.id} className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-50">
+                    <button type="button" onClick={() => track(m)} disabled={busy === m.id} className="inline-flex items-center gap-1.5 rounded-lg bg-calm-accent px-3 py-2 text-xs font-semibold text-white transition hover:bg-calm-accent disabled:opacity-50">
                       {busy === m.id && <Loader2 className="size-3.5 animate-spin" aria-hidden />} Suivre cette offre
                     </button>
                   )}
                   {m.state !== "DISMISSED" && (
-                    <button type="button" onClick={() => setState(m, "DISMISSED")} disabled={busy === m.id} className="rounded-lg px-3 py-2 text-xs text-white/60 transition hover:text-white/90 disabled:opacity-40">Écarter</button>
+                    <button type="button" onClick={() => setState(m, "DISMISSED")} disabled={busy === m.id} className="rounded-lg px-3 py-2 text-xs text-calm-secondary transition hover:text-calm-ink disabled:opacity-40">Écarter</button>
                   )}
                 </div>
               </li>
@@ -369,7 +369,7 @@ export function RadarBoard({ initialSearches, initialMatches, initialCursor, sou
 
         {cursor && busy !== "list" && (
           <div className="mt-4 text-center">
-            <button type="button" onClick={more} disabled={busy === "more"} className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white/80 transition hover:bg-white/10 disabled:opacity-50">
+            <button type="button" onClick={more} disabled={busy === "more"} className="rounded-xl border border-calm-line bg-calm-accent-wash px-4 py-2.5 text-sm text-calm-ink transition hover:bg-calm-accent-soft disabled:opacity-50">
               {busy === "more" ? "Chargement…" : "Voir plus"}
             </button>
           </div>
