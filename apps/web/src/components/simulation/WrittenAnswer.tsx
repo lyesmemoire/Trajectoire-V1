@@ -110,7 +110,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="tap-target inline-flex items-center gap-2 rounded-[14px] px-3 text-sm font-medium text-calm-accent-deep underline underline-offset-4 transition-colors hover:bg-calm-accent-wash"
+        className="tap-target inline-flex items-center gap-2 rounded-[6px] px-3 text-sm font-medium text-calm-accent-deep underline underline-offset-4 transition-colors hover:bg-calm-accent-wash"
       >
         <PenLine className="size-4" aria-hidden="true" />
         Répondre par écrit
@@ -119,7 +119,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
   }
 
   return (
-    <section aria-labelledby={`${uid}-titre`} className="w-full max-w-md rounded-[20px] border border-calm-line bg-calm-surface p-4 text-left">
+    <section aria-labelledby={`${uid}-titre`} className="w-full max-w-md rounded-[6px] border border-calm-line bg-calm-surface p-4 text-left">
       <h2 id={`${uid}-titre`} className="text-sm font-semibold text-calm-ink">
         Question d’Alexandra
       </h2>
@@ -140,7 +140,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
         disabled={sending}
         aria-describedby={error ? `${uid}-erreur` : undefined}
         aria-invalid={error ? true : undefined}
-        className="mt-1 w-full resize-y rounded-[14px] border border-calm-input bg-calm-surface px-4 py-3 text-base text-calm-ink placeholder:text-calm-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-calm-accent disabled:bg-calm-bg"
+        className="mt-1 w-full resize-y rounded-[6px] border border-calm-input bg-calm-surface px-4 py-3 text-base text-calm-ink placeholder:text-calm-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-calm-accent disabled:bg-calm-bg"
         placeholder="Écrivez votre réponse ici."
       />
 
@@ -158,7 +158,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
           type="button"
           onClick={() => setOpen(false)}
           disabled={sending}
-          className="tap-target rounded-[14px] px-3 text-sm text-calm-secondary underline underline-offset-4 hover:text-calm-ink disabled:opacity-50"
+          className="tap-target rounded-[6px] px-3 text-sm text-calm-secondary underline underline-offset-4 hover:text-calm-ink disabled:opacity-50"
         >
           Revenir à la voix
         </button>
@@ -167,7 +167,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
           onClick={() => void send()}
           disabled={sending || text.trim().length === 0 || !question}
           aria-busy={sending}
-          className="tap-target inline-flex items-center gap-2 rounded-[14px] bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
+          className="tap-target inline-flex items-center gap-2 rounded-[6px] bg-calm-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
         >
           {sending && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}
           {sending ? "Envoi…" : "Envoyer ma réponse"}

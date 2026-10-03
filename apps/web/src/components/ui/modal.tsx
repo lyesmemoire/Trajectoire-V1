@@ -86,7 +86,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-calm-ink/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-calm-ink/40 transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -97,7 +97,7 @@ export function Modal({
           ref={panelRef}
           tabIndex={-1}
           className={cn(
-            "relative w-full bg-calm-surface text-calm-ink rounded-2xl shadow-2xl shadow-calm-ink/10 border border-calm-line outline-none",
+            "relative w-full bg-calm-surface text-calm-ink rounded-2xl border border-calm-line outline-none",
             sizes[size],
           )}
           role="dialog"

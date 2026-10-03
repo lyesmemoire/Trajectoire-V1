@@ -185,7 +185,7 @@ export default function SimulationPage() {
         <div className="flex items-center gap-3">
           {clock && (
             <span
-              className="flex items-center gap-1.5 rounded-full border border-calm-line bg-calm-accent-wash px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-calm-ink"
+              className="flex items-center gap-1.5 rounded-[6px] border border-calm-line bg-calm-accent-wash px-3 py-1.5 font-mono text-xs font-medium tabular-nums text-calm-ink"
               title="Temps restant sur la durée choisie"
             >
               <Clock className="size-3.5" aria-hidden />
@@ -193,7 +193,7 @@ export default function SimulationPage() {
               {clock}
             </span>
           )}
-          <div role="status" className="flex items-center gap-2 rounded-full border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-secondary">
+          <div role="status" className="flex items-center gap-2 rounded-[6px] border border-calm-line bg-calm-accent-wash px-3 py-1.5 text-xs font-medium text-calm-secondary">
             <span className={`size-1.5 rounded-full `+statusDot} aria-hidden />
             {statusLabel}
           </div>
@@ -233,7 +233,7 @@ export default function SimulationPage() {
               </span>
             </div>
           )}
-          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-calm-accent-line bg-calm-bg/70 px-3 py-1.5 text-xs font-medium text-calm-ink backdrop-blur-md">
+          <div className="absolute left-5 top-5 flex items-center gap-2 rounded-[6px] border border-calm-accent-line bg-calm-surface px-3 py-1.5 text-xs font-medium text-calm-ink">
             <span className={`size-1.5 rounded-full `+(isAISpeaking ? 'animate-pulse bg-calm-surface' : 'bg-calm-accent')} />
             Alexandra · IA
           </div>
@@ -308,7 +308,7 @@ export default function SimulationPage() {
                 type="button"
                 onClick={onMicClick}
                 disabled={copy.mic.disabled}
-                className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-full bg-calm-accent px-8 text-lg font-semibold text-white shadow-calm transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
+                className="flex min-h-[72px] w-full max-w-sm items-center justify-center gap-3 rounded-[6px] bg-calm-accent px-8 text-lg font-semibold text-white transition-colors hover:bg-calm-accent-deep disabled:opacity-50"
               >
                 <MicIcon className={`size-6 ${copy.mic.disabled && uiState !== 'recruiter_speaking' ? 'animate-spin' : ''}`} aria-hidden />
                 {copy.mic.label}
