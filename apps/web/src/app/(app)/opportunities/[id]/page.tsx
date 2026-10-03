@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { PrepareInterviewButton } from "@/components/opportunities/PrepareInterviewButton"
 import { notFound, redirect } from "next/navigation"
 import {
   ArrowLeft,
@@ -347,12 +348,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
                         </li>
                       ))}
                     </ul>
-                    <Link href={`/simulation/new?opportunity=${opportunity.id}`}>
-                       <Button variant="dark" size="sm">
-                         <Sparkles className="mr-2 size-3.5" />
-                         Démarrer une simulation sur ces points
-                       </Button>
-                    </Link>
+                    <PrepareInterviewButton opportunityId={opportunity.id} label="Démarrer une simulation sur ces points" className="px-4 py-2.5 text-sm" />
                   </div>
                 )}
 

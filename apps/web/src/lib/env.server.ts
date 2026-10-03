@@ -1,5 +1,6 @@
 ﻿import { z } from "zod";
 import { logError } from "@/lib/logger/Logger";
+import { optionalNonEmptyString } from "@/lib/env-helpers";
 
 const EnvServerSchema = z.object({
 
@@ -139,6 +140,11 @@ OPENAI_BASE_URL: z
     .string()
     .min(1)
     .optional(),
+
+  // Radar des offres : identifiants d'application France Travail (OAuth2 client_credentials).
+  // Sans eux, la source n'est pas branchée (lib/radar/sources.ts). Chaîne vide = absente (pas d'échec).
+  FRANCE_TRAVAIL_CLIENT_ID: optionalNonEmptyString(),
+  FRANCE_TRAVAIL_CLIENT_SECRET: optionalNonEmptyString(),
 
   // â”€â”€ Analytics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   POSTHOG_API_KEY: z

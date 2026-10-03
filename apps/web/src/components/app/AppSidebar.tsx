@@ -16,6 +16,7 @@ import {
   Sparkles,
   Target,
   BriefcaseBusiness,
+  Telescope,
   type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -25,6 +26,7 @@ export type NavItem = { label: string; href: string; icon: LucideIcon }
 export const NAV: NavItem[] = [
   { label: "Aperçu", href: "/dashboard", icon: LayoutDashboard },
   { label: "Opportunités", href: "/opportunities", icon: BriefcaseBusiness },
+  { label: "Radar d'offres", href: "/radar", icon: Telescope },
   { label: "Discovery", href: "/discovery", icon: Radar },
   { label: "Simulation", href: "/simulation/new", icon: Mic2 },
   { label: "Historique", href: "/history", icon: History },
