@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { prisma } from "@/lib/prisma"
+import { loadInterviewActivity } from "@/lib/dashboard/interview-activity"
 import { DashboardWidgets } from "@/components/dashboard/DashboardWidgets"
 import { previewAnalysisService } from "@/lib/preview-analysis/PreviewAnalysisService"
 import type {
@@ -204,26 +205,20 @@ export default async function DashboardPage() {
   const previousAnalysis = analyses[1]
 
   // RÃ©cupÃ©rer les sessions d'entretien
-  const interviewSessions = await prisma.interviewSession.findMany({
-    where: { userId: user.id },
-    orderBy: { createdAt: "desc" },
-    take: 3,
-  })
+  // (table interview_sessions : celle que la simulation alimente réellement)
+  const { completedCount: interviewSessionsCount, events: interviewEvents } =
+    await loadInterviewActivity(user.id)
 
   // VÃ©rifier quota
 
   // Career Command Center
   const [
     analysesCount,
-    interviewSessionsCount,
     dashboardOpportunities,
     liveDiscoveryCount,
     activeDiscoverySourceCount,
   ] = await Promise.all([
     prisma.cVAnalysis.count({
-      where: { userId: user.id },
-    }),
-    prisma.interviewSession.count({
       where: { userId: user.id },
     }),
     prisma.opportunity.findMany({
@@ -414,15 +409,8 @@ export default async function DashboardPage() {
       date: analysis.createdAt,
       status: 'completed' as const,
     })),
-    ...interviewSessions.slice(0, 2).map((session) => ({
-      id: `timeline-interview-${session.id}`,
-      type: 'interview' as const,
-      title: 'Entretien simulé',
-      description: session.score !== null ? `Score : ${session.score}/100` : undefined,
-      date: session.createdAt,
-      status: session.completedAt ? ('completed' as const) : ('in-progress' as const),
-    })),
-  ]
+    ...interviewEvents,
+  ].sort((a, b) => b.date.getTime() - a.date.getTime())
 
   return (
     <DashboardWidgets

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { createClient } from "@/lib/supabase/server"
 import { prisma } from "@/lib/prisma"
+import { findOpportunityInterview } from "@/lib/interview/session-reader"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -74,7 +75,7 @@ async function getOrCreateWorkspace(
   opportunityId: string,
   userId: string,
 ) {
-  return prisma.applicationWorkspace.upsert({
+  const workspace = await prisma.applicationWorkspace.upsert({
     where: {
       opportunityId,
     },
@@ -93,19 +94,15 @@ async function getOrCreateWorkspace(
           createdAt: true,
         },
       },
-      interviewSession: {
-        select: {
-          id: true,
-          jobTitle: true,
-          company: true,
-          score: true,
-          status: true,
-          startedAt: true,
-          completedAt: true,
-        },
-      },
     },
   })
+
+  // L'entretien préparé pour cette offre est celui que la simulation a lié à l'opportunité
+  // (interview_sessions.opportunityId). La colonne application_workspaces.interviewSessionId, qui pointe vers
+  // l'ancienne table InterviewSession, n'est plus utilisée.
+  const interviewSession = await findOpportunityInterview(userId, opportunityId)
+
+  return { ...workspace, interviewSession }
 }
 
 export async function GET(
@@ -191,7 +188,6 @@ export async function PATCH(
     const data: {
       readiness?: any
       selectedCVAnalysisId?: string | null
-      interviewSessionId?: string | null
       companyResearch?: any
       preparation?: any
       tasks?: any
@@ -266,36 +262,16 @@ export async function PATCH(
     }
 
     if (body.interviewSessionId !== undefined) {
-      if (body.interviewSessionId === null) {
-        data.interviewSessionId = null
-      } else {
-        if (typeof body.interviewSessionId !== "string") {
-          return NextResponse.json(
-            { error: "Invalid interview session id" },
-            { status: 400 },
-          )
-        }
-
-        const interview =
-          await prisma.interviewSession.findFirst({
-            where: {
-              id: body.interviewSessionId,
-              userId: user.id,
-            },
-            select: {
-              id: true,
-            },
-          })
-
-        if (!interview) {
-          return NextResponse.json(
-            { error: "Interview session not found" },
-            { status: 404 },
-          )
-        }
-
-        data.interviewSessionId = interview.id
-      }
+      // Plus pris en charge : l'entretien est lié à l'offre par interview_sessions.opportunityId, renseigné
+      // à la création de la simulation. Aucun client n'envoyait ce champ ; on refuse plutôt que d'ignorer
+      // en silence.
+      return NextResponse.json(
+        {
+          error: "interviewSessionId n'est plus pris en charge : l'entretien est lié à l'opportunité par la simulation.",
+          code: "INTERVIEW_SESSION_LINK_UNSUPPORTED",
+        },
+        { status: 400 },
+      )
     }
 
     if (body.companyResearch !== undefined) {

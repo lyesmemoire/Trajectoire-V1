@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getVerifiedUserWithRetry } from "@/lib/auth/verified-user";
 import { createAdminClient } from "@/lib/supabase/service";
 import { prisma } from "@/lib/prisma";
+import { isUuid } from "@/lib/interview/session-reader";
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,16 +19,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Validate ownership
-    const session = await prisma.interviewSession.findUnique({
-      where: { id: sessionId },
-      select: { userId: true, analysis: true }
-    });
+    // Validate ownership (table interview_sessions : celle que la simulation alimente).
+    // Identifiant mal formé : même réponse qu'une séance absente.
+    const session = isUuid(sessionId)
+      ? await prisma.interview_sessions.findUnique({
+          where: { id: sessionId },
+          select: { user_id: true, analysis: true }
+        })
+      : null;
 
     if (!session) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
     }
-    if (session.userId !== user.id) {
+    if (session.user_id !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

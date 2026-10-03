@@ -70,6 +70,7 @@ const AUTHENTICATED_PAGE_PREFIXES = [
   "/matching",
   "/settings",
   "/onboarding",
+  "/billing",
   "/copilot",
 
   "/opportunities",

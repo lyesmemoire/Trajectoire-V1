@@ -4,7 +4,10 @@ import { Suspense, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { Check, ChevronDown, X } from "lucide-react"
+import Link from "next/link"
 import { PLANS, type Plan, type PlanId } from "@/lib/plans"
+import { parsePaidPlan, type PaidPlan } from "@/lib/billing/checkout-plan"
+import { setCheckoutIntent } from "@/lib/auth/checkout-intent"
 
 // Aucun prix ni aucune limite n'est écrit ici : tout vient de lib/plans.ts.
 // Seuls les textes éditoriaux (accroches, FAQ) vivent dans ce fichier, et ils
@@ -278,6 +281,67 @@ function QuotaNotice() {
   )
 }
 
+// ─── Bandeau « paiement annulé » (?checkout=cancelled, cancel_url de Stripe) ──
+
+function CheckoutCancelledNotice() {
+  const params = useSearchParams()
+  if (params.get("checkout") !== "cancelled") return null
+
+  return (
+    <div
+      role="status"
+      className="mx-auto mt-8 max-w-xl rounded-xl border border-border bg-surface p-4 text-sm font-medium text-foreground"
+    >
+      Paiement annulé : aucun montant n&apos;a été débité. Vous pouvez choisir une offre quand vous le souhaitez.
+    </div>
+  )
+}
+
+// ─── Récapitulatif du plan choisi (?resume=<plan>, après inscription ou connexion) ──
+
+function ResumeNotice({ onContinue, loading }: { onContinue: (plan: PaidPlan) => void; loading: PlanId | null }) {
+  const params = useSearchParams()
+  const planId = parsePaidPlan(params.get("resume"))
+  if (!planId) return null
+
+  const plan = PLANS[planId]
+  const included = plan.features.filter((feature) => feature.included).slice(0, 3)
+
+  return (
+    <section
+      aria-label="Récapitulatif du plan choisi"
+      className="mx-auto mt-8 max-w-xl rounded-2xl border border-border bg-surface p-6 text-left shadow-sm"
+    >
+      <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Votre choix</p>
+      <h2 className="mt-1 text-xl font-semibold text-foreground">{plan.name}</h2>
+      <p className="mt-1 text-sm text-foreground-muted">
+        {formatPrice(plan)} TTC {intervalLabel(plan)}
+      </p>
+      <ul className="mt-4 flex flex-col gap-2">
+        {included.map((feature) => (
+          <li key={feature.label} className="flex items-start gap-2 text-sm text-foreground">
+            <Check className="mt-0.5 size-4 shrink-0 text-primary-600" aria-hidden />
+            {feature.label}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        <button
+          type="button"
+          onClick={() => onContinue(planId)}
+          disabled={loading !== null}
+          className="rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-700 disabled:opacity-60"
+        >
+          {loading === planId ? "Redirection…" : "Continuer vers le paiement"}
+        </button>
+        <Link href="/pricing" className="text-sm font-medium text-primary-700 underline-offset-2 hover:underline">
+          Choisir un autre plan
+        </Link>
+      </div>
+    </section>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
@@ -309,7 +373,10 @@ export default function PricingPage() {
       }
 
       if (response.status === 401) {
-        // Non connecté : on passe par l'inscription plutôt que d'afficher une erreur.
+        // Non connecté : on passe par l'inscription plutôt que d'afficher une erreur, en gardant le
+        // plan choisi : après l'inscription ou la connexion, l'utilisateur revient sur /pricing?resume=<plan>.
+        const paid = parsePaidPlan(planId)
+        if (paid) setCheckoutIntent(paid)
         router.push("/signup")
         return
       }
@@ -358,6 +425,14 @@ export default function PricingPage() {
 
           <Suspense fallback={null}>
             <QuotaNotice />
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <CheckoutCancelledNotice />
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <ResumeNotice onContinue={handleSelect} loading={loading} />
           </Suspense>
 
           {error && (

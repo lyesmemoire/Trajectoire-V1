@@ -1,3 +1,5 @@
+// ⚠ GELÉ : ce module écrit (en plus de interview_sessions) dans l'ancienne table InterviewSession, ne pas utiliser.
+// Aucun appelant (voir .claude/tasks.md, lot « Nettoyage »). La table active est interview_sessions.
 import { envServer } from "@/lib/env.server";
 import prisma from "@/lib/prisma";
 import { AnalyticsEngine } from "@/lib/analytics/interview.engine";

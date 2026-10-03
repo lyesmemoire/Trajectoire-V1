@@ -15,6 +15,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { darkTokens } from "@/lib/theme/dark-tokens"
 
+import { postAuthPathFromIntent } from "@/lib/auth/checkout-intent"
 type SessionState = "checking" | "authenticated" | "guest"
 
 type MeResponse = {
@@ -200,7 +201,8 @@ function LoginContent() {
       }
 
       // Authentication cookies are now available to middleware.
-      window.location.href = redirectTo
+      // Plan choisi sur /pricing avant la connexion : remplace seulement la destination par défaut.
+      window.location.href = postAuthPathFromIntent(redirectTo)
     } catch {
       setError(
         "Une erreur critique est survenue. Veuillez réessayer."

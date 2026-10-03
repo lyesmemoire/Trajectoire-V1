@@ -3,6 +3,8 @@ import { getVerifiedUserWithRetry } from "@/lib/auth/verified-user";
 import { createAdminClient } from "@/lib/supabase/service";
 import { DistributedLock } from "@/lib/concurrency/DistributedLock";
 import { prisma } from "@/lib/prisma";
+import { isUuid } from "@/lib/interview/session-reader";
+import type { Prisma } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,16 +37,19 @@ export async function POST(request: NextRequest) {
     return await DistributedLock.execute(
       `session:${sessionId}`,
       async () => {
-        // Fetch session directly via prisma
-        const session = await prisma.interviewSession.findUnique({
-          where: { id: sessionId },
-          select: { userId: true, analysis: true }
-        });
+        // Fetch session directly via prisma (table interview_sessions). `version` sert au verrou optimiste :
+        // les autres écritures de `analysis` (ConversationService) s'appuient sur la même colonne.
+        const session = isUuid(sessionId)
+          ? await prisma.interview_sessions.findUnique({
+              where: { id: sessionId },
+              select: { user_id: true, analysis: true, version: true }
+            })
+          : null;
 
         if (!session) {
           return NextResponse.json({ error: "Session not found" }, { status: 404 });
         }
-        if (session.userId !== user.id) {
+        if (session.user_id !== user.id) {
           return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 
@@ -91,10 +96,15 @@ export async function POST(request: NextRequest) {
           durationMs: qna.oralPerformance?.durationMs || null, // Optional enhancement
         };
 
-        await prisma.interviewSession.update({
-          where: { id: sessionId },
-          data: { analysis: analysis as any },
+        // Écriture conditionnelle à la version lue : si une autre écriture (réponse en cours) est passée entre
+        // temps, on ne l'écrase pas et on demande de réessayer.
+        const written = await prisma.interview_sessions.updateMany({
+          where: { id: sessionId, version: session.version },
+          data: { analysis: analysis as Prisma.InputJsonValue, version: { increment: 1 }, updated_at: new Date() },
         });
+        if (written.count === 0) {
+          return NextResponse.json({ error: "Session modified concurrently, retry" }, { status: 409 });
+        }
 
         return NextResponse.json({ success: true, path: storagePath });
       },

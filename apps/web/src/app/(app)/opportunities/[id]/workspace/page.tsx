@@ -1,3 +1,4 @@
+import { findOpportunityInterview } from "@/lib/interview/session-reader"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import {
@@ -75,18 +76,8 @@ export default async function ApplicationWorkspacePage({
           createdAt: true,
         },
       }),
-      prisma.interviewSession.findFirst({
-        where: { userId: user.id },
-        orderBy: { createdAt: "desc" },
-        select: {
-          id: true,
-          jobTitle: true,
-          company: true,
-          score: true,
-          status: true,
-          completedAt: true,
-        },
-      }),
+      // Entretien lié à cette offre (interview_sessions.opportunityId), terminé ou en cours.
+      findOpportunityInterview(user.id, id),
       prisma.careerProfile.findUnique({
         where: { userId: user.id },
         select: {
@@ -117,7 +108,7 @@ export default async function ApplicationWorkspacePage({
     },
     {
       label: "Préparation entretien",
-      complete: Boolean(latestInterview),
+      complete: latestInterview?.status === "completed",
     },
   ]
 
@@ -512,7 +503,7 @@ export default async function ApplicationWorkspacePage({
                 href={`/simulation/new?opportunity=${opportunity.id}`}
                 action="Lancer la préparation"
                 icon={<MessageSquareText className="h-5 w-5" />}
-                complete={Boolean(latestInterview)}
+                complete={latestInterview?.status === "completed"}
               />
 
               <ActionCard
