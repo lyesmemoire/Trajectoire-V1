@@ -22,7 +22,7 @@ const defaultItems: FAQItem[] = [
   },
   {
     question: 'Mes données sont-elles sécurisées ?',
-    answer: 'Absolument. Nous utilisons un chiffrement de niveau bancaire et sommes conformes au RGPD.',
+    answer: 'Votre connexion est protégée par HTTPS et l’accès à vos données est limité à votre compte.',
     category: 'security',
   },
   {

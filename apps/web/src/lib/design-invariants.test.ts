@@ -74,6 +74,7 @@ describe("aucune preuve sociale inventée", () => {
   // Aucune vente à ce jour : ni nombre d'utilisateurs, ni note moyenne, ni « le plus choisi/populaire », ni « 100 % gratuit ».
   const FORBIDDEN: RegExp[] = [
     /utilisateurs actifs/i,
+    /niveau bancaire/i,
     /note moyenne/i,
     /100\s?%\s?gratuit/i,
     /le plus (choisi|populaire|vendu)/i,
