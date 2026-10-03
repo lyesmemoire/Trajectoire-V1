@@ -120,7 +120,7 @@ export function WrittenAnswer({ sessionId, knownQuestion, onEnded }: WrittenAnsw
 
   return (
     <section aria-labelledby={`${uid}-titre`} className="w-full max-w-md rounded-[6px] border border-calm-line bg-calm-surface p-4 text-left">
-      <h2 id={`${uid}-titre`} className="text-sm font-semibold text-calm-ink">
+      <h2 id={`${uid}-titre`} className="font-sans text-sm font-semibold tracking-normal text-calm-ink">
         Question d’Alexandra
       </h2>
       <p className="mt-1 whitespace-pre-wrap text-base leading-relaxed text-calm-ink">
