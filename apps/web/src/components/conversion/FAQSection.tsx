@@ -27,7 +27,7 @@ const defaultItems: FAQItem[] = [
   },
   {
     question: 'Puis-je supprimer mon compte ?',
-    answer: 'Oui, vous pouvez supprimer votre compte et toutes vos données à tout moment en un clic.',
+    answer: 'Oui, vous pouvez supprimer votre compte et vos données depuis les paramètres.',
     category: 'account',
   },
   {
