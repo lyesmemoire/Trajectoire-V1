@@ -17,7 +17,7 @@ interface FAQSectionProps {
 const defaultItems: FAQItem[] = [
   {
     question: 'Est-ce vraiment gratuit ?',
-    answer: 'Oui, la création de compte est 100% gratuite. Aucune carte bancaire n\'est requise.',
+    answer: 'La création du compte et le diagnostic de votre CV sont gratuits, sans carte bancaire. Les simulations d’entretien font partie des offres payantes.',
     category: 'pricing',
   },
   {

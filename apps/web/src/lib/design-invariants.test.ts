@@ -70,6 +70,28 @@ describe("Cormorant Garamond réservée aux h1, h2 et grands chiffres", () => {
   })
 })
 
+describe("aucune preuve sociale inventée", () => {
+  // Aucune vente à ce jour : ni nombre d'utilisateurs, ni note moyenne, ni « le plus choisi/populaire », ni « 100 % gratuit ».
+  const FORBIDDEN: RegExp[] = [
+    /utilisateurs actifs/i,
+    /note moyenne/i,
+    /100\s?%\s?gratuit/i,
+    /le plus (choisi|populaire|vendu)/i,
+    /des milliers de (candidats|candidates|utilisateurs)/i,
+    /\d[0-9 ,.]*\+?\s*(utilisateurs|candidats|candidates)/i,
+  ]
+
+  it("aucun fichier de l'app ne contient ces formulations", () => {
+    const offenders: string[] = []
+    for (const f of all.filter(f => /\.(tsx|ts)$/.test(f) && !/\.test\.tsx?$/.test(f))) {
+      if (rel(f) === "lib/design-invariants.test.ts") continue
+      const text = read(f)
+      for (const re of FORBIDDEN) if (re.test(text)) offenders.push(`${rel(f)} : ${re}`)
+    }
+    expect(offenders).toEqual([])
+  })
+})
+
 describe("jetons Calm : valeurs et contrastes", () => {
   const css = read(all.find(f => rel(f) === "app/globals.css")!)
   const channels = (name: string) => css.match(new RegExp(`--calm-${name}:\\s*(\\d+) (\\d+) (\\d+);`))!.slice(1).map(Number)

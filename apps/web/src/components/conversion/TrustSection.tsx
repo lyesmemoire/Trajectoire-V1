@@ -1,12 +1,15 @@
 // apps/web/src/components/conversion/TrustSection.tsx
 //
-// Section de confiance (statistiques, témoignages)
-// MVP-009 — Conversion Funnel
+// Engagements affichés avec l'aperçu gratuit. Aucun chiffre ni note : seulement des faits vérifiables dans le code
+// (un test d'invariants interdit toute preuve sociale chiffrée ou superlative, voir lib/design-invariants.test.ts).
+//  - Diagnostic gratuit sans carte : /api/public/analyze-preview est anonyme et sans paiement.
+//  - Texte du CV non conservé : seul le RÉSULTAT de l'aperçu est enregistré (PreviewAnalysisService, 24 h).
+//  - Suppression du compte : /api/account/delete (AccountService + purge-user-data), depuis les paramètres.
 
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Star, Shield, Award } from 'lucide-react'
+import { CreditCard, FileText, Trash2, type LucideIcon } from 'lucide-react'
 import { TrustElement } from '@/types/conversion'
 
 interface TrustSectionProps {
@@ -14,36 +17,12 @@ interface TrustSectionProps {
 }
 
 const defaultElements: TrustElement[] = [
-  {
-    type: 'statistic',
-    content: '50,000+',
-    subtitle: 'Utilisateurs actifs',
-    value: 50000,
-  },
-  {
-    type: 'statistic',
-    content: '4.8/5',
-    subtitle: 'Note moyenne',
-    value: 4.8,
-  },
-  {
-    type: 'badge',
-    content: 'RGPD Compliant',
-    subtitle: 'Vos données sont protégées',
-  },
-  {
-    type: 'badge',
-    content: '100% Gratuit',
-    subtitle: 'Pas de carte bancaire requise',
-  },
+  { type: 'badge', content: 'Diagnostic gratuit, sans carte bancaire' },
+  { type: 'badge', content: 'Le texte de votre CV n’est pas conservé' },
+  { type: 'badge', content: 'Suppression de votre compte et de vos données à tout moment' },
 ]
 
-const iconMap: Record<string, any> = {
-  Users,
-  Star,
-  Shield,
-  Award,
-}
+const icons: LucideIcon[] = [CreditCard, FileText, Trash2]
 
 export function TrustSection({ elements = defaultElements }: TrustSectionProps) {
   return (
@@ -51,39 +30,33 @@ export function TrustSection({ elements = defaultElements }: TrustSectionProps) 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4 }}
-      className="mt-8 pt-8 border-t border-ivoire-200"
+      className="mt-8 border-t border-calm-line pt-8"
     >
-      <h3 className="text-sm font-medium text-ink-900 mb-4 text-center">
-        Rejoignez des milliers de candidats
-      </h3>
-      
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <h3 className="mb-4 text-center text-sm text-calm-ink">Nos engagements</h3>
+
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {elements.map((element, index) => {
-          const Icon = element.type === 'statistic' ? Users : Shield
-          
+          const Icon = icons[index % icons.length]
+
           return (
-            <motion.div
-              key={index}
+            <motion.li
+              key={element.content}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-              className="text-center p-4 bg-ivoire-50 rounded-lg"
+              className="rounded-[6px] bg-calm-alt p-4 text-center"
             >
-              <div className="flex justify-center mb-2">
-                <div className="p-2 bg-calm-surface rounded-full">
-                  <Icon className="w-5 h-5 text-bronze-600" />
+              <div className="mb-2 flex justify-center">
+                <div className="rounded-full bg-calm-surface p-2">
+                  <Icon className="h-5 w-5 text-calm-accent" aria-hidden="true" />
                 </div>
               </div>
-              <p className="text-lg font-bold text-ink-900">
-                {element.content}
-              </p>
-              <p className="text-xs text-ink-600 mt-1">
-                {element.subtitle}
-              </p>
-            </motion.div>
+              <p className="text-sm text-calm-ink">{element.content}</p>
+              {element.subtitle && <p className="mt-1 text-xs text-calm-secondary">{element.subtitle}</p>}
+            </motion.li>
           )
         })}
-      </div>
+      </ul>
     </motion.div>
   )
 }
