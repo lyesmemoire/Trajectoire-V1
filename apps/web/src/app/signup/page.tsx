@@ -143,7 +143,7 @@ export default function SignupPage() {
       >
         <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 text-center space-y-4">
           <div className="text-calm-accent text-5xl mb-4" aria-hidden="true">✉️</div>
-          <h2 className="text-2xl font-semibold tracking-tight text-calm-ink">Vérifiez vos emails</h2>
+          <h2 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">Vérifiez vos emails</h2>
           <p className="text-calm-secondary">
             Un lien de confirmation a été envoyé à <span className="font-medium text-calm-ink">{email}</span>.
             Cliquez dessus pour activer votre compte.

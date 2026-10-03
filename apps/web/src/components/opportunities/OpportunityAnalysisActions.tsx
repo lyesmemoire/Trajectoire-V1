@@ -381,7 +381,7 @@ export function OpportunityStatusActions({
             Décision & suivi
           </p>
 
-          <h2 className="mt-2 text-lg font-bold text-calm-ink">
+          <h2 className="font-sans mt-2 text-lg font-semibold text-calm-ink tracking-normal">
             Piloter cette opportunité
           </h2>
 

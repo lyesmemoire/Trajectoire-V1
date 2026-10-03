@@ -39,7 +39,7 @@ export function JobSearch({ candidateGraph, jobGraphs = [] }: JobSearchProps) {
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Recherche de Postes</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Recherche de Postes</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       {loading && <LoadingOverlay message="Recherche en cours..." />}

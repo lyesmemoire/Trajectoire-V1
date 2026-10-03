@@ -223,7 +223,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
 
           <section className="space-y-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+              <h2 className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
                 Analyse CV × Offre
               </h2>
             </div>
@@ -382,7 +382,7 @@ export default async function OpportunityDetailPage({ params }: PageProps) {
 
           {/* DESCRIPTION DE L'OFFRE */}
           <section className="space-y-6">
-            <h2 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+            <h2 className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">
               Description originale
             </h2>
             <div className="rounded-md border border-border/60 bg-surface p-8 text-[14px] leading-relaxed text-foreground-muted whitespace-pre-wrap">

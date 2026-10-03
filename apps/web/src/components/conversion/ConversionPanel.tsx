@@ -83,7 +83,7 @@ export function ConversionPanel({
               <Sparkles className="w-5 h-5 text-bronze-600" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-ink-900">
+              <h2 className="font-sans text-xl font-semibold text-ink-900 tracking-normal">
                 Votre analyse est prête
               </h2>
               {atsScore && (

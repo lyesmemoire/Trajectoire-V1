@@ -26,7 +26,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           role="alert"
           className="flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center"
         >
-          <h1 className="text-2xl font-semibold tracking-tight">Une erreur est survenue</h1>
+          <h1 className="font-sans text-2xl font-semibold tracking-tight">Une erreur est survenue</h1>
           <p className="mt-3 max-w-md text-base leading-relaxed text-foreground-muted">
             Une erreur inattendue s&apos;est produite. Veuillez réessayer.
           </p>

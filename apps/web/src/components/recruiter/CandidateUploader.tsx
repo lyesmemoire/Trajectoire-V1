@@ -63,7 +63,7 @@ export function CandidateUploader({ onCandidateLoaded }: CandidateUploaderProps)
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Import Candidat</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Import Candidat</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       

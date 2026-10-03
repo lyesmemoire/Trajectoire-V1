@@ -91,7 +91,7 @@ export default async function ConversionAnalyticsPage() {
 
       {/* Funnel Visualization */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Funnel Principal</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Funnel Principal</h2>
         <div className="space-y-4">
           {funnelData.map((step, index) => (
             <div key={step.step} className="relative">
@@ -120,7 +120,7 @@ export default async function ConversionAnalyticsPage() {
 
       {/* Dropoff Points */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Points d'Abandon</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Points d'Abandon</h2>
         <div className="space-y-3">
           {dropoffPoints.slice(0, 5).map((point) => (
             <div key={point.step} className="flex items-center justify-between">
@@ -138,7 +138,7 @@ export default async function ConversionAnalyticsPage() {
 
       {/* Time Between Steps */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Temps Moyen Entre Étapes</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Temps Moyen Entre Étapes</h2>
         <div className="space-y-3">
           {timeBetweenSteps.map((time) => (
             <div key={`${time.from}-${time.to}`} className="flex items-center justify-between">
@@ -156,7 +156,7 @@ export default async function ConversionAnalyticsPage() {
 
       {/* Detailed Conversion Stats */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Statistiques Détaillées</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Statistiques Détaillées</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-sm font-medium text-ink-700 mb-3">Engagement</h3>

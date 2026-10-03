@@ -39,7 +39,7 @@ export function CareerPathView({ candidateGraph, jobGraphs = [] }: CareerPathVie
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Parcours de Carrière</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Parcours de Carrière</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       {loading && <LoadingOverlay message="Construction du parcours en cours..." />}

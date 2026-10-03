@@ -45,7 +45,7 @@ function Field({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
-      <h2 className="mb-4 text-lg font-semibold text-calm-ink">{title}</h2>
+      <h2 className="font-sans mb-4 text-lg font-semibold text-calm-ink tracking-normal">{title}</h2>
       <div className="space-y-4">{children}</div>
     </section>
   )
@@ -262,7 +262,7 @@ export function CvExportEditor({
       </Section>
 
       <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
-        <h2 className="mb-2 text-lg font-semibold text-calm-ink">Télécharger</h2>
+        <h2 className="font-sans mb-2 text-lg font-semibold text-calm-ink tracking-normal">Télécharger</h2>
         <p className="mb-4 text-sm text-calm-secondary">
           Une seule colonne, titres standards, texte sélectionnable : le format attendu par les logiciels de recrutement. Le PDF ne gère
           pas les alphabets non latins (utilisez alors le DOCX).

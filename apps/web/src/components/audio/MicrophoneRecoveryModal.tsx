@@ -49,7 +49,7 @@ export function MicrophoneRecoveryModal({
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-2xl font-black text-ink-900 leading-tight">{title}</h2>
+          <h2 className="font-sans text-2xl font-semibold text-ink-900 leading-tight tracking-normal">{title}</h2>
           <p className="text-ink-500 font-medium">{desc}</p>
         </div>
 

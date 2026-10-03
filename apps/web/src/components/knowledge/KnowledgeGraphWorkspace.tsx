@@ -42,7 +42,7 @@ export function KnowledgeGraphWorkspace() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <div className="bg-calm-surface p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Graphe de connaissances</h2>
+              <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Graphe de connaissances</h2>
               
               <div className="mb-4">
                 <input
@@ -68,7 +68,7 @@ export function KnowledgeGraphWorkspace() {
 
           <div>
             <div className="bg-calm-surface p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Nœuds</h2>
+              <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Nœuds</h2>
               
               {loading ? (
                 <div className="text-sm text-calm-tertiary text-center py-4">
@@ -100,7 +100,7 @@ export function KnowledgeGraphWorkspace() {
 
             {selectedNode && (
               <div className="bg-calm-surface p-6 rounded-lg shadow mt-6">
-                <h2 className="text-xl font-semibold mb-4">Détails</h2>
+                <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Détails</h2>
                 
                 <div className="space-y-4">
                   <div>

@@ -22,7 +22,7 @@ export default function TermsPage() {
 
         <div className="prose prose-slate max-w-none space-y-8">
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               1. Éditeur du service
             </h2>
             <p className="text-ink-700">
@@ -37,7 +37,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               2. Description du service
             </h2>
             <p className="text-ink-700">
@@ -49,7 +49,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               3. Abonnements et tarifs
             </h2>
             <p className="text-ink-700">
@@ -61,7 +61,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               4. Résiliation
             </h2>
             <p className="text-ink-700">
@@ -73,7 +73,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               5. Responsabilité
             </h2>
             <p className="text-ink-700">
@@ -85,7 +85,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               6. Données personnelles
             </h2>
             <p className="text-ink-700">
@@ -96,7 +96,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               7. Contact
             </h2>
             <p className="text-ink-700">
@@ -106,7 +106,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               8. Modification des CGV
             </h2>
             <p className="text-ink-700">

@@ -39,7 +39,7 @@ export function CandidateSearch({ jobGraph, candidateGraphs = [] }: CandidateSea
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Recherche de Candidats</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Recherche de Candidats</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       {loading && <LoadingOverlay message="Recherche en cours..." />}

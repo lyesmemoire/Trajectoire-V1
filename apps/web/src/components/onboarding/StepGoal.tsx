@@ -68,7 +68,7 @@ export function StepGoal({
         <h2
           data-step-heading
           tabIndex={-1}
-          className="text-2xl font-semibold tracking-tight text-calm-ink outline-none"
+          className="font-sans text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
           Quel est votre premier objectif ?
         </h2>

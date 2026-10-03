@@ -159,7 +159,7 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Timing Metrics */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Métriques de Performance</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Métriques de Performance</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <p className="text-sm text-ink-600">Temps de Décision Moyen</p>
@@ -182,7 +182,7 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Common Actions */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Actions les Plus Fréquentes</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Actions les Plus Fréquentes</h2>
         <div className="space-y-2">
           {Object.entries(orchestratorStats.commonActions).map(([action, count]) => (
             <div key={action} className="flex justify-between items-center">
@@ -195,7 +195,7 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Common Engines */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Moteurs les Plus Utilisés</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Moteurs les Plus Utilisés</h2>
         <div className="space-y-2">
           {Object.entries(orchestratorStats.commonEngines).map(([engine, count]) => (
             <div key={engine} className="flex justify-between items-center">
@@ -208,7 +208,7 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Recent Decisions */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Décisions Récentes</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Décisions Récentes</h2>
         <div className="space-y-4">
           {recentDecisions.map((decision) => (
             <div key={decision.id} className="border-b border-ivoire-100 pb-4 last:border-0 last:pb-0">
@@ -237,7 +237,7 @@ export default async function AdaptiveIntelligenceDashboardPage() {
 
       {/* Engine Status */}
       <div className="bg-calm-surface p-6 rounded-lg border border-ivoire-200 mb-6">
-        <h2 className="text-lg font-semibold text-ink-900 mb-4">Statut des Moteurs</h2>
+        <h2 className="font-sans text-lg font-semibold text-ink-900 mb-4 tracking-normal">Statut des Moteurs</h2>
         <div className="space-y-2">
           {engineStatus.map((engine) => (
             <div key={engine.engine} className="flex justify-between items-center">

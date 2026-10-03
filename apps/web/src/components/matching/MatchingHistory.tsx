@@ -38,7 +38,7 @@ export function MatchingHistory({
   return (
     <div className="bg-calm-surface p-6 rounded-lg shadow">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Historique</h2>
+        <h2 className="font-sans text-xl font-semibold tracking-normal">Historique</h2>
         <button
           onClick={onToggleHistory}
           className="text-calm-accent-deep hover:text-calm-accent-deep text-sm"

@@ -12,7 +12,7 @@ export function GraphViewer({ candidateGraph, jobGraph }: GraphViewerProps) {
   if (!candidateGraph && !jobGraph) {
     return (
       <div className="bg-calm-surface rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Visualisation du Graphe</h2>
+        <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Visualisation du Graphe</h2>
         <p className="text-calm-tertiary text-center py-8">
           Chargez un candidat et un poste pour voir les graphes
         </p>
@@ -22,7 +22,7 @@ export function GraphViewer({ candidateGraph, jobGraph }: GraphViewerProps) {
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Visualisation du Graphe</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Visualisation du Graphe</h2>
       
       <div className="space-y-6">
         {candidateGraph && (

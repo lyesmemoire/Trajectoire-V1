@@ -322,7 +322,7 @@ export default async function ApplicationWorkspacePage({
               </span>
             </div>
 
-            <h2 className="mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
+            <h2 className="font-sans mt-5 max-w-3xl text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
               {recommendedAction.title}
             </h2>
 
@@ -486,7 +486,7 @@ export default async function ApplicationWorkspacePage({
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-accent">
                   Mission control
                 </p>
-                <h2 className="mt-2 text-xl font-semibold text-calm-ink">
+                <h2 className="font-sans mt-2 text-xl font-semibold text-calm-ink tracking-normal">
                   Préparer ma candidature
                 </h2>
               </div>
@@ -550,7 +550,7 @@ export default async function ApplicationWorkspacePage({
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-tertiary">
                   Company Intelligence
                 </p>
-                <h2 className="text-lg font-semibold text-calm-ink">
+                <h2 className="font-sans text-lg font-semibold text-calm-ink tracking-normal">
                   Recherche entreprise
                 </h2>
               </div>
@@ -584,7 +584,7 @@ export default async function ApplicationWorkspacePage({
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-calm-tertiary">
               Progression
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-calm-ink">
+            <h2 className="font-sans mt-2 text-lg font-semibold text-calm-ink tracking-normal">
               Checklist candidature
             </h2>
 
@@ -617,7 +617,7 @@ export default async function ApplicationWorkspacePage({
           <div className="rounded-[28px] border border-calm-line bg-calm-surface p-6">
             <div className="flex items-center gap-3">
               <BriefcaseBusiness className="h-5 w-5 text-calm-accent" />
-              <h2 className="font-semibold text-calm-ink">
+              <h2 className="font-sans font-semibold text-calm-ink tracking-normal">
                 Prochaine action
               </h2>
             </div>

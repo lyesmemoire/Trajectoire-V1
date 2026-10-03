@@ -112,7 +112,7 @@ export function Modal({
                 {title && (
                   <h2
                     id={titleId}
-                    className="text-base font-semibold text-calm-ink leading-snug"
+                    className="font-sans text-base font-semibold text-calm-ink leading-snug tracking-normal"
                   >
                     {title}
                   </h2>

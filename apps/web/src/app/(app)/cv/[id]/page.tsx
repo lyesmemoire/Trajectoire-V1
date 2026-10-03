@@ -22,7 +22,7 @@ const REWRITE_LABELS: Record<string, string> = {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="rounded-2xl border border-calm-line bg-calm-surface p-6">
-      <h2 className="mb-4 text-lg font-semibold text-calm-ink">{title}</h2>
+      <h2 className="font-sans mb-4 text-lg font-semibold text-calm-ink tracking-normal">{title}</h2>
       {children}
     </section>
   )

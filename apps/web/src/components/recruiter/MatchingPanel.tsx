@@ -42,7 +42,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
   if (!candidateGraph || !jobGraph) {
     return (
       <div className="bg-calm-surface rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Matching</h2>
+        <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Matching</h2>
         <p className="text-calm-tertiary text-center py-8">
           Veuillez d'abord charger un candidat et un poste
         </p>
@@ -52,7 +52,7 @@ export function MatchingPanel({ candidateGraph, jobGraph, onReportGenerated }: M
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Matching</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Matching</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       

@@ -41,7 +41,7 @@ export function SubscriptionCard({ summary }: { summary: SubscriptionSummary }) 
         <div>
           <h2
             id="subscription-title"
-            className="text-xl font-semibold tracking-tight text-calm-ink"
+            className="font-sans text-xl font-semibold tracking-tight text-calm-ink"
           >
             Abonnement
           </h2>

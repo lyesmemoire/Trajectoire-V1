@@ -42,7 +42,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="mb-4 text-2xl font-bold text-ink-900">{title}</h2>
+      <h2 className="font-sans mb-4 text-2xl font-semibold text-ink-900 tracking-normal">{title}</h2>
       {children}
     </section>
   )

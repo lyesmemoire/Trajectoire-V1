@@ -97,7 +97,7 @@ export function PremiumModal({
             <div className="rounded-full bg-calm-accent-soft p-2">
               <Sparkles className="h-5 w-5 text-calm-accent" />
             </div>
-            <h2 className="text-xl font-bold text-calm-ink">
+            <h2 className="font-sans text-xl font-semibold text-calm-ink tracking-normal">
               Débloquez {feature}
             </h2>
           </div>

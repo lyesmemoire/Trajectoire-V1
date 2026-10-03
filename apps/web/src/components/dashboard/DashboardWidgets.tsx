@@ -329,7 +329,7 @@ export function DashboardWidgets({
                 </span>
                 Career Command Center
               </div>
-              <h1 className="text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
+              <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
                 Bonjour {firstName}
               </h1>
               <p className="mt-1.5 max-w-xl text-sm text-calm-secondary">
@@ -520,7 +520,7 @@ export function DashboardWidgets({
                       {heroLabel}
                     </div>
 
-                    <h2 className="text-xl font-semibold tracking-tight text-calm-ink sm:text-2xl">
+                    <h2 className="font-sans text-xl font-semibold tracking-tight text-calm-ink sm:text-2xl">
                       {heroTitle}
                     </h2>
 

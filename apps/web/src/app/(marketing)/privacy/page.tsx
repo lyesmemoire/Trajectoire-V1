@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
         <div className="prose prose-slate max-w-none space-y-8">
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               1. Données collectées
             </h2>
             <p className="text-ink-700">
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               2. Finalité du traitement
             </h2>
             <p className="text-ink-700">
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               3. Conservation des données
             </h2>
             <p className="text-ink-700">
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               4. Paiement et Stripe
             </h2>
             <p className="text-ink-700">
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               5. Vos droits
             </h2>
             <p className="text-ink-700">
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               6. Sécurité
             </h2>
             <p className="text-ink-700">
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               7. Partage des données
             </h2>
             <p className="text-ink-700">
@@ -127,7 +127,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               8. Cookies
             </h2>
             <p className="text-ink-700">
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-ink-900 mb-4">
+            <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-4 tracking-normal">
               9. Contact
             </h2>
             <p className="text-ink-700">

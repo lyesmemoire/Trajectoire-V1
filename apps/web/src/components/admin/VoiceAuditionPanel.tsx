@@ -19,7 +19,7 @@ export function VoiceAuditionPanel() {
           <li key={persona} className="rounded-2xl border border-calm-line bg-calm-surface p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-base font-semibold text-calm-ink">{PERSONA_LABELS[persona].label}</h2>
+                <h2 className="font-sans text-base font-semibold text-calm-ink tracking-normal">{PERSONA_LABELS[persona].label}</h2>
                 <p className="text-sm text-calm-secondary">{PERSONA_LABELS[persona].hint}</p>
               </div>
               <label className="text-xs text-calm-secondary">

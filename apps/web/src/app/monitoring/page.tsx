@@ -159,7 +159,7 @@ export default function MonitoringDashboard() {
         {/* CPU & Memory */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-calm-accent-wash rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">CPU</h2>
+            <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">CPU</h2>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-2">
@@ -187,7 +187,7 @@ export default function MonitoringDashboard() {
           </div>
 
           <div className="bg-calm-accent-wash rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Memory</h2>
+            <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Memory</h2>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-2">
@@ -221,7 +221,7 @@ export default function MonitoringDashboard() {
 
         {/* Operations */}
         <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Operations</h2>
+          <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Operations</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {Object.entries(metrics.operations).map(([key, value]) => (
               <div key={key} className="bg-calm-accent-soft rounded-lg p-4">
@@ -247,7 +247,7 @@ export default function MonitoringDashboard() {
 
         {/* Latency */}
         <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Latency</h2>
+          <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Latency</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-calm-accent-soft rounded-lg p-4">
               <span className="block text-calm-secondary">P50</span>
@@ -271,7 +271,7 @@ export default function MonitoringDashboard() {
         {/* Graph Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-calm-accent-wash rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Graph</h2>
+            <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Graph</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -295,7 +295,7 @@ export default function MonitoringDashboard() {
           </div>
 
           <div className="bg-calm-accent-wash rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Cache</h2>
+            <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Cache</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-3 gap-4">
                 <div>
@@ -329,7 +329,7 @@ export default function MonitoringDashboard() {
 
         {/* Errors */}
         <div className="bg-calm-accent-wash rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Errors</h2>
+          <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Errors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-calm-accent-soft rounded-lg p-4">
               <span className="block text-calm-secondary">Total Errors</span>
@@ -351,7 +351,7 @@ export default function MonitoringDashboard() {
 
         {/* Uptime */}
         <div className="bg-calm-accent-wash rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">System</h2>
+          <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">System</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-calm-accent-soft rounded-lg p-4">
               <span className="block text-calm-secondary">Uptime</span>

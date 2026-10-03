@@ -131,7 +131,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         {sessionState === "checking" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-calm-ink">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Réinitialisation du mot de passe
             </h1>
             <p role="status" className="text-sm text-calm-ink">
@@ -140,7 +140,7 @@ export default function ResetPasswordPage() {
           </div>
         ) : sessionState === "invalid" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-calm-ink">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Lien invalide ou expiré
             </h1>
             <p role="alert" className="text-sm text-calm-ink">
@@ -156,7 +156,7 @@ export default function ResetPasswordPage() {
           </div>
         ) : status === "success" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-calm-ink">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Mot de passe mis à jour
             </h1>
             <p role="status" className="text-sm text-calm-ink">
@@ -166,7 +166,7 @@ export default function ResetPasswordPage() {
         ) : (
           <>
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
+              <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink mb-2">
                 Nouveau mot de passe
               </h1>
               <p className="text-sm text-calm-ink">

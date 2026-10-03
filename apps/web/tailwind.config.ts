@@ -153,7 +153,7 @@ const config: Config = {
       fontSize: {
         "calm-display": ["clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem)", { lineHeight: "1.08", letterSpacing: "-0.02em" }],
         "calm-h1": ["clamp(1.875rem, 1.3rem + 2.4vw, 3rem)", { lineHeight: "1.12", letterSpacing: "-0.02em" }],
-        "calm-h2": ["clamp(1.5rem, 1.15rem + 1.4vw, 2.125rem)", { lineHeight: "1.2", letterSpacing: "-0.015em" }],
+        "calm-h2": ["clamp(1.75rem, 1.3rem + 1.4vw, 2.125rem)", { lineHeight: "1.2", letterSpacing: "-0.015em" }],
         "calm-h3": ["clamp(1.125rem, 1rem + 0.5vw, 1.375rem)", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
       },
       // Plus d'ombres, sauf le portrait et la carte du rapport. Les noms historiques restent (sans effet) pour que

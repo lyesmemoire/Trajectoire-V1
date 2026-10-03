@@ -138,7 +138,7 @@ export default function SignupConversionPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">
+          <h2 className="font-sans text-2xl font-semibold text-ink-900 mb-2 tracking-normal">
             Compte créé avec succès !
           </h2>
           <p className="text-ink-600 mb-6">
@@ -169,7 +169,7 @@ export default function SignupConversionPage() {
 
         <div className="bg-calm-surface p-8 rounded-2xl shadow-premium">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-ink-900 mb-2">
+            <h1 className="font-sans text-2xl font-semibold text-ink-900 mb-2 tracking-normal">
               Créez votre compte
             </h1>
             <p className="text-ink-600">

@@ -4,7 +4,7 @@ export function MatchingResults({ results, onReset }: { results: any; onReset: (
   return (
     <div className="bg-calm-surface p-6 rounded-lg shadow">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Résultats du Matching</h2>
+        <h2 className="font-sans text-xl font-semibold tracking-normal">Résultats du Matching</h2>
         <button
           onClick={onReset}
           className="text-calm-accent-deep hover:text-calm-accent-deep text-sm"

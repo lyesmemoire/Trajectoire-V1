@@ -108,7 +108,7 @@ export function StepProfile({ data, onChange }: StepProfileProps) {
         <h2
           data-step-heading
           tabIndex={-1}
-          className="text-2xl font-semibold tracking-tight text-calm-ink outline-none"
+          className="font-sans text-2xl font-semibold tracking-tight text-calm-ink outline-none"
         >
           Parlons de vous
         </h2>

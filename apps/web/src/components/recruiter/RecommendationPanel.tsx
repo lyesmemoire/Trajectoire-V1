@@ -11,7 +11,7 @@ export function RecommendationPanel({ report }: RecommendationPanelProps) {
   if (!report) {
     return (
       <div className="bg-calm-surface rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Recommandations</h2>
+        <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Recommandations</h2>
         <p className="text-calm-tertiary text-center py-8">
           Lancez le matching pour voir les recommandations
         </p>
@@ -21,7 +21,7 @@ export function RecommendationPanel({ report }: RecommendationPanelProps) {
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Recommandations</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Recommandations</h2>
       
       <div className="space-y-6">
         <div>

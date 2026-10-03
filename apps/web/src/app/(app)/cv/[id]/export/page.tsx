@@ -49,7 +49,7 @@ export default async function CVExportPage({ params }: { params: Promise<{ id: s
         <CvExportEditor analysisId={exportDraft.id} initialDocument={exportDraft.draft} summaries={summaries} />
       ) : (
         <div className="rounded-2xl border border-calm-line bg-calm-surface p-6">
-          <h2 className="mb-2 text-lg font-semibold text-calm-ink">L&apos;export est inclus dans le Pack Entretien et dans Pro</h2>
+          <h2 className="font-sans mb-2 text-lg font-semibold text-calm-ink tracking-normal">L&apos;export est inclus dans le Pack Entretien et dans Pro</h2>
           <p className="mb-5 text-sm text-calm-secondary">Téléchargez votre CV en DOCX ou en PDF, lisible par les logiciels de recrutement.</p>
           <Link
             href="/pricing"

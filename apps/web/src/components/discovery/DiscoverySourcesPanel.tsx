@@ -177,7 +177,7 @@ export function DiscoverySourcesPanel({ initialSources }: Props) {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-foreground">Sources Discovery</h2>
+              <h2 className="font-sans text-sm font-semibold text-foreground tracking-normal">Sources Discovery</h2>
               <span className="rounded-full bg-surface-muted px-2 py-0.5 text-[10px] font-semibold text-foreground-muted">
                 {activeCount} active{activeCount > 1 ? "s" : ""}
               </span>

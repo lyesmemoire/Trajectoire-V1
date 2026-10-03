@@ -296,7 +296,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                 <Briefcase className="h-4 w-4" />
               </div>
-              <h2 className="text-lg font-bold text-calm-ink">
+              <h2 className="font-sans text-lg font-semibold text-calm-ink tracking-normal">
                 Quel poste visez-vous ?
               </h2>
             </div>
@@ -323,7 +323,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
                 <FileText className="h-4 w-4" />
               </div>
               <div className="flex flex-1 items-center gap-3">
-                <h2 className="text-lg font-bold text-calm-ink">
+                <h2 className="font-sans text-lg font-semibold text-calm-ink tracking-normal">
                   Vous avez l'offre d'emploi ?
                 </h2>
                 <span className="rounded-full bg-calm-accent-soft px-2.5 py-0.5 text-xs font-semibold text-calm-accent">
@@ -353,7 +353,7 @@ export default async function NewSimulationPage({ searchParams }: PageProps) {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-calm-accent-soft text-calm-accent">
                 <Settings className="h-4 w-4" />
               </div>
-              <h2 className="text-lg font-bold text-calm-ink">
+              <h2 className="font-sans text-lg font-semibold text-calm-ink tracking-normal">
                 Votre entretien
               </h2>
             </div>

@@ -104,7 +104,7 @@ export function NewOpportunityForm() {
             <BriefcaseBusiness className="h-5 w-5" />
           </div>
 
-          <h1 className="mt-5 text-2xl font-bold tracking-tight text-calm-ink sm:text-3xl">
+          <h1 className="font-sans mt-5 text-2xl font-semibold tracking-tight text-calm-ink sm:text-3xl">
             Ajouter une opportunité
           </h1>
 
@@ -233,7 +233,7 @@ export function NewOpportunityForm() {
           <div className="rounded-[26px] bg-gradient-to-br from-calm-accent-soft via-calm-accent-soft to-transparent p-5 text-calm-ink ring-1 ring-calm-accent-line">
             <Sparkles className="h-5 w-5 text-calm-accent" />
 
-            <h2 className="mt-4 text-lg font-bold text-calm-ink">
+            <h2 className="font-sans mt-4 text-lg font-semibold text-calm-ink tracking-normal">
               Bientôt : analyse intelligente
             </h2>
 

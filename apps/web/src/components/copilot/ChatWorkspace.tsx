@@ -96,7 +96,7 @@ export function ChatWorkspace() {
           <div className="lg:col-span-2">
             <div className="bg-calm-surface rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">Conversation</h2>
+                <h2 className="font-sans text-xl font-semibold tracking-normal">Conversation</h2>
                 <button
                   onClick={handleClearConversation}
                   className="text-sm text-calm-tertiary hover:text-calm-ink"

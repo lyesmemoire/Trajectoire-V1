@@ -227,7 +227,7 @@ export default async function ReportPage({
           aria-labelledby="point-fort"
           className="mb-4 rounded-xl border border-calm-accent-line bg-calm-accent-wash p-6"
         >
-          <h2 id="point-fort" className="mb-2 text-sm font-semibold text-calm-accent-deep">
+          <h2 id="point-fort" className="font-sans mb-2 text-sm font-semibold text-calm-accent-deep tracking-normal">
             Votre point fort
           </h2>
           <p className="text-lg leading-relaxed text-calm-ink">{strengths[0]}</p>
@@ -240,7 +240,7 @@ export default async function ReportPage({
           aria-labelledby="axe-prioritaire"
           className="mb-6 rounded-xl border border-calm-warn-line bg-calm-warn-soft p-6"
         >
-          <h2 id="axe-prioritaire" className="mb-2 text-sm font-semibold text-calm-warn">
+          <h2 id="axe-prioritaire" className="font-sans mb-2 text-sm font-semibold text-calm-warn tracking-normal">
             Votre axe prioritaire
           </h2>
           <p className="text-lg leading-relaxed text-calm-ink">{improvements[0]}</p>

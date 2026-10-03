@@ -20,7 +20,7 @@ export default async function VoiceAuditionPage() {
   return (
     <main className="min-h-screen bg-calm-bg px-6 py-10 text-calm-ink">
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-2xl font-bold">Écoute des voix de la recruteuse</h1>
+        <h1 className="font-sans text-2xl font-semibold tracking-normal">Écoute des voix de la recruteuse</h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-calm-secondary">
           Chaque lecture appelle la synthèse vocale d&apos;OpenAI (quelques centimes au plus ; une réécoute identique est mise en cache
           par le navigateur). L&apos;aperçu est proche de la voix de l&apos;entretien en direct, pas identique. Le portrait est celui

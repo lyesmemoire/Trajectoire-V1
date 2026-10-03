@@ -145,7 +145,7 @@ function OpportunityCard({ cluster, promoting, onPromote }: {
                 <Building2 className="size-4" />
               </div>
               <div className="min-w-0">
-                <h2 className="text-base font-semibold text-foreground">{canonical.title}</h2>
+                <h2 className="font-sans text-base font-semibold text-foreground tracking-normal">{canonical.title}</h2>
                 <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground-muted">
                   <span>{canonical.company}</span>
                   {canonical.location && (

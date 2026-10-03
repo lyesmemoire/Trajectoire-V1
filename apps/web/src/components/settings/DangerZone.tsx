@@ -44,7 +44,7 @@ export function DangerZone() {
     >
       <h2
         id="danger-title"
-        className="text-xl font-semibold tracking-tight text-calm-ink"
+        className="font-sans text-xl font-semibold tracking-tight text-calm-ink"
       >
         Zone de danger
       </h2>

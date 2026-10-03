@@ -379,7 +379,7 @@ export function StoryBankPanel({
               Story Intelligence
             </p>
 
-            <h2 className="mt-1 text-xl font-semibold text-calm-ink">
+            <h2 className="font-sans mt-1 text-xl font-semibold text-calm-ink tracking-normal">
               Story Bank
             </h2>
 

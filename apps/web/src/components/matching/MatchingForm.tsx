@@ -389,7 +389,7 @@ export function MatchingForm({
   return (
     <div className="rounded-2xl border border-ivoire-200 bg-calm-surface p-6 shadow-sm">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-ink-900">
+        <h2 className="font-sans text-xl font-semibold text-ink-900 tracking-normal">
           Nouveau Matching
         </h2>
 

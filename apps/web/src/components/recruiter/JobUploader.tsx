@@ -63,7 +63,7 @@ export function JobUploader({ onJobLoaded }: JobUploaderProps) {
 
   return (
     <div className="bg-calm-surface rounded-lg shadow p-6">
-      <h2 className="text-xl font-semibold mb-4">Import Poste</h2>
+      <h2 className="font-sans text-xl font-semibold mb-4 tracking-normal">Import Poste</h2>
       
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
       

@@ -55,7 +55,7 @@ export default async function AIOperatingSystemDashboardPage() {
       <div className="bg-gradient-to-r from-bronze-600 to-ink-600 p-6 rounded-lg text-ivoire-50 shadow-premium">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-2xl font-bold">Global Intelligence Score</h2>
+            <h2 className="font-sans text-2xl font-semibold tracking-normal">Global Intelligence Score</h2>
             <p className="text-bronze-200 mt-1">Overall AI system performance</p>
           </div>
           <div className="text-5xl font-bold">

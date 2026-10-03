@@ -70,6 +70,44 @@ describe("Cormorant Garamond réservée aux h1, h2 et grands chiffres", () => {
   })
 })
 
+describe("Cormorant Garamond à partir de 28 px seulement (règle par taille, pas par balise)", () => {
+  const SIZES: Record<string, number> = {
+    xs: 12, sm: 14, base: 16, lg: 18, xl: 20, "2xl": 24, "3xl": 30, "4xl": 36, "5xl": 48, "6xl": 60, "7xl": 72, "8xl": 96, "9xl": 128,
+    "calm-display": 36, "calm-h1": 30, "calm-h2": 28, "calm-h3": 18,
+  }
+  // Taille de départ (sans préfixe responsive) d'un h1/h2 d'après ses classes ; 16 px si aucune n'est donnée.
+  const baseSize = (cls: string): number => {
+    let size = 16
+    for (const t of cls.split(/\s+/)) {
+      if (t.split("[")[0].includes(":")) continue
+      const px = t.match(/^text-\[clamp\((\d+)px/) ?? t.match(/^text-\[(\d+)px\]/)
+      if (px) size = Number(px[1])
+      else if (t.startsWith("text-") && SIZES[t.slice(5)]) size = SIZES[t.slice(5)]
+    }
+    return size
+  }
+
+  it("tout h1/h2 de moins de 28 px est en DM Sans (font-sans)", () => {
+    const offenders: string[] = []
+    for (const f of all.filter(f => /\.tsx$/.test(f) && !/\.test\.tsx$/.test(f))) {
+      const src = read(f)
+      for (const m of src.matchAll(/<(h1|h2)\b([^>]*?)>/g)) {
+        const cm = m[2].match(/className=(?:"([^"]*)"|\{`([^`]*)`\})/)
+        if (!cm) continue
+        const cls = cm[1] ?? cm[2]
+        if (cls.includes("${")) continue
+        if (baseSize(cls) < 28 && !/\bfont-sans\b/.test(cls)) offenders.push(`${rel(f)}:${src.slice(0, m.index).split("\n").length}`)
+      }
+    }
+    expect(offenders).toEqual([])
+  })
+
+  it("le jeton calm-h2 ne descend pas sous 28 px", () => {
+    const cfg = readFileSync(join(SRC, "..", "tailwind.config.ts"), "utf-8")
+    expect(cfg).toMatch(/"calm-h2":\s*\["clamp\(1\.75rem/)
+  })
+})
+
 describe("aucune preuve sociale inventée", () => {
   // Aucune vente à ce jour : ni nombre d'utilisateurs, ni note moyenne, ni « le plus choisi/populaire », ni « 100 % gratuit ».
   const FORBIDDEN: RegExp[] = [

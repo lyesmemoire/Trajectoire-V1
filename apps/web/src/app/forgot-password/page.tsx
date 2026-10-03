@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
         {status === "success" ? (
           <div className="text-center space-y-4">
-            <h1 className="text-2xl font-semibold tracking-tight text-calm-ink">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink">
               Vérifiez vos e-mails
             </h1>
             <p role="status" className="text-sm text-calm-ink">
@@ -80,7 +80,7 @@ export default function ForgotPasswordPage() {
         ) : (
           <>
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
+              <h1 className="font-sans text-2xl font-semibold tracking-tight text-calm-ink mb-2">
                 Mot de passe oublié
               </h1>
               <p className="text-sm text-calm-ink">

@@ -27,7 +27,7 @@ export default function AppError({ error, reset }: Props) {
       className="mx-auto flex max-w-md flex-col items-center px-2 py-16 text-center sm:py-24"
     >
       <p className="text-sm font-medium uppercase tracking-widest text-calm-secondary">Erreur</p>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-calm-ink">
+      <h1 className="font-sans mt-3 text-2xl font-semibold tracking-tight text-calm-ink">
         Un problème est survenu
       </h1>
       <p className="mt-3 text-base leading-relaxed text-calm-secondary">
