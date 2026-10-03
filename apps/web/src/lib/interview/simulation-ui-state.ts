@@ -94,7 +94,7 @@ export const SIMULATION_UI_COPY: Record<SimulationUiState, SimulationUiCopy> = {
 }
 
 /** Ligne de rassurance, toujours affichée. */
-export const SIMULATION_REASSURANCE = "Respirez. Vous pouvez reformuler à tout moment."
+export const SIMULATION_REASSURANCE = "Respirez. Prenez le temps de répondre."
 
 /** Message d'erreur vocale affiché quand le hook n'en fournit pas (ou en fournit un illisible). */
 export const VOICE_FALLBACK_ERROR =

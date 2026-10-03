@@ -109,7 +109,7 @@ describe("friendlyVoiceError", () => {
 
 describe("ligne de rassurance", () => {
   it("texte exact du skill", () => {
-    expect(SIMULATION_REASSURANCE).toBe("Respirez. Vous pouvez reformuler à tout moment.")
+    expect(SIMULATION_REASSURANCE).toBe("Respirez. Prenez le temps de répondre.")
   })
   it("la page l’affiche en permanence, quel que soit l’état (rendu hors de toute condition d’état)", async () => {
     const { readFileSync } = await import("node:fs")
