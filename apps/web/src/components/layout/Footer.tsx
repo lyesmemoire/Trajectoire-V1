@@ -21,17 +21,17 @@ export default function Footer() {
           </h3>
           <ul className="space-y-0">
             <li>
-              <Link href="/analyze" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/analyze" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Analyser ma candidature
               </Link>
             </li>
             <li>
-              <Link href="/pricing" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/pricing" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Tarifs
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" prefetch={false} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/dashboard" prefetch={false} className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Dashboard
               </Link>
             </li>
@@ -44,18 +44,18 @@ export default function Footer() {
           </h3>
           <ul className="space-y-0">
             <li>
-              <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Conditions générales
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+              <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                 Politique de confidentialité
               </Link>
             </li>
             {canShowLegalNotice() && (
               <li>
-                <Link href="/mentions-legales" className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+                <Link href="/mentions-legales" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground">
                   Mentions légales
                 </Link>
               </li>
@@ -63,7 +63,7 @@ export default function Footer() {
             <li>
               <a
                 href={`mailto:${contactEmail()}`}
-                className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
+                className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground"
               >
                 {contactEmail()}
               </a>

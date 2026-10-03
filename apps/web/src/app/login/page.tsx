@@ -1,5 +1,6 @@
 "use client"
 
+import { Logo } from "@/components/home/Logo"
 import { createClient } from "@/lib/supabase/client"
 import { normalizeEmail } from "@/lib/auth/credentials"
 import { translateAuthError } from "@/lib/auth/auth-errors"
@@ -65,16 +66,11 @@ function LoginFallback() {
     <div
       className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
     >
-      <Link
-        href="/"
-        className="rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
-      >
-        Trajectoire
-      </Link>
+      <div className="mb-8"><Logo /></div>
 
-      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
+          <h1 className="text-3xl font-medium text-calm-ink mb-2">
             Bon retour
           </h1>
 
@@ -256,16 +252,11 @@ function LoginContent() {
     <div
       className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
     >
-      <Link
-        href="/"
-        className="rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg"
-      >
-        Trajectoire
-      </Link>
+      <div className="mb-8"><Logo /></div>
 
-      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">
+          <h1 className="text-3xl font-medium text-calm-ink mb-2">
             Bon retour
           </h1>
 
@@ -346,7 +337,7 @@ function LoginContent() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href={redirectTo}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-calm-accent px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-calm-accent px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
                 Aller au dashboard
               </a>
@@ -384,7 +375,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
-                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-input bg-white p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="vous@exemple.com"
                   autoComplete="email"
                   required
@@ -403,7 +394,7 @@ function LoginContent() {
 
                   <Link
                     href="/forgot-password"
-                    className="rounded text-xs text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+                    className="inline-flex min-h-11 items-center rounded text-xs text-calm-accent hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
                   >
                     Mot de passe oublié ?
                   </Link>
@@ -416,7 +407,7 @@ function LoginContent() {
                   onChange={(e) =>
                     setPassword(e.target.value)
                   }
-                  className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
+                  className="w-full rounded-xl border border-calm-input bg-white p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:opacity-60"
                   placeholder="••••••••"
                   autoComplete="current-password"
                   required
@@ -427,7 +418,7 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? "Connexion en cours..."
@@ -439,7 +430,7 @@ function LoginContent() {
               Pas encore de compte ?{" "}
               <Link
                 href="/signup"
-                className="rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+                className="inline-flex min-h-11 items-center rounded text-calm-accent font-medium hover:text-calm-accent hover:underline focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               >
                 S&apos;inscrire
               </Link>

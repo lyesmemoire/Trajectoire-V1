@@ -175,8 +175,8 @@ function PlanCard({
       transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       className={`relative flex flex-col rounded-3xl p-8 md:p-10 ${
         highlighted
-          ? "border border-primary-500/60 bg-surface shadow-premium-lg ring-1 ring-primary-500/30 md:-my-4 md:py-14"
-          : "border border-border bg-surface shadow-premium"
+          ? "border border-primary-500/60 bg-surface ring-1 ring-primary-500/30 md:-my-4 md:py-14"
+          : "border border-border bg-surface"
       }`}
     >
       {highlighted && (
@@ -194,7 +194,7 @@ function PlanCard({
       </p>
 
       <div className="mt-5 flex items-baseline gap-2">
-        <span className="text-5xl font-semibold tracking-tight text-foreground">
+        <span className="font-serif text-6xl font-medium tracking-[-0.04em] text-foreground">
           {formatPrice(plan)}
         </span>
         <span className="text-sm font-medium text-foreground-muted">
@@ -253,7 +253,7 @@ function PlanCard({
           disabled={loading !== null}
           className={`flex w-full flex-col items-center gap-1 rounded-xl px-5 py-4 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-60 ${
             highlighted
-              ? "bg-primary-600 text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] hover:bg-primary-700"
+              ? "bg-primary-600 text-white hover:bg-primary-700"
               : "border border-border bg-surface text-foreground hover:bg-surface-muted"
           }`}
         >
@@ -528,7 +528,7 @@ export default function PricingPage() {
               id="btn-cta-pack"
               onClick={() => handleSelect("PACK")}
               disabled={loading !== null}
-              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.45)] transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full rounded-xl bg-primary-600 px-8 py-4 text-base font-bold text-white transition-colors hover:bg-primary-700 outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {loading === "PACK"
                 ? "Redirection…"

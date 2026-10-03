@@ -1,5 +1,6 @@
 "use client"
 
+import { Logo } from "@/components/home/Logo"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase"
@@ -140,7 +141,7 @@ export default function SignupPage() {
       <div
         className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
       >
-        <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 text-center shadow-2xl shadow-calm-ink/10 space-y-4">
+        <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 text-center space-y-4">
           <div className="text-calm-accent text-5xl mb-4" aria-hidden="true">✉️</div>
           <h2 className="text-2xl font-semibold tracking-tight text-calm-ink">Vérifiez vos emails</h2>
           <p className="text-calm-secondary">
@@ -181,13 +182,11 @@ export default function SignupPage() {
     <div
         className="min-h-screen bg-calm-bg text-calm-ink flex flex-col items-center justify-center p-6"
       >
-      <Link href="/" className="inline-flex min-h-11 items-center rounded-md text-2xl font-semibold tracking-tight text-calm-ink mb-8 outline-none focus-visible:ring-2 focus-visible:ring-calm-accent focus-visible:ring-offset-2 focus-visible:ring-offset-calm-bg">
-        Trajectoire
-      </Link>
+      <div className="mb-8"><Logo /></div>
 
-      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8 shadow-2xl shadow-calm-ink/10">
+      <div className="w-full max-w-md rounded-2xl border border-calm-line bg-calm-surface p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-calm-ink mb-2">Créer un compte</h1>
+          <h1 className="text-3xl font-medium text-calm-ink mb-2">Créer un compte</h1>
           <p className="text-calm-secondary text-sm">Rejoignez la plateforme d'entraînement stratégique.</p>
         </div>
 
@@ -206,7 +205,7 @@ export default function SignupPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+              className="w-full rounded-xl border border-calm-input bg-white p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="vous@exemple.com"
               required
             />
@@ -221,7 +220,7 @@ export default function SignupPage() {
               aria-describedby="pw-hint"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+              className="w-full rounded-xl border border-calm-input bg-white p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="••••••••"
               required
             />
@@ -238,7 +237,7 @@ export default function SignupPage() {
               autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-xl border border-calm-line bg-calm-bg p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
+              className="w-full rounded-xl border border-calm-input bg-white p-3 text-calm-ink placeholder-calm-tertiary transition-colors focus:border-calm-accent focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg"
               placeholder="••••••••"
               required
             />
@@ -260,7 +259,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(31,42,55,0.6)] transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-calm-accent px-4 text-sm font-semibold text-white transition-colors hover:bg-calm-accent-deep focus:outline-none focus:ring-2 focus:ring-calm-accent focus:ring-offset-2 focus:ring-offset-calm-bg disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Création en cours..." : "S'inscrire"}
           </button>
