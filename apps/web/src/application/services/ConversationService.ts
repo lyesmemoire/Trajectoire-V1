@@ -615,7 +615,7 @@ export class ConversationService {
       const currentAnalysis =
         (sessionData.analysis as Record<string, any>) ?? {};
 
-      let qnaEvaluations = Array.isArray(currentAnalysis.qnaEvaluations)
+      const qnaEvaluations = Array.isArray(currentAnalysis.qnaEvaluations)
         ? [...currentAnalysis.qnaEvaluations]
         : [];
 
